@@ -1,0 +1,6 @@
+@import "./lib/twintrinsic.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+

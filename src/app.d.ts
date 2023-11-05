@@ -8,4 +8,7 @@ declare namespace App {
 	// interface Locals {}
 	// interface PageData {}
 	// interface Platform {}
+
 }
+
+type TypeLevel = 'info' | 'success' | 'warn' | 'warning' | 'information' | null | undefined;
