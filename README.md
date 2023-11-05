@@ -2,13 +2,7 @@
 A tailwind-based collection of svelte components.
 
 ## Components:
-
-- [ ] App:
-  - [ ] AppHeader
-  - [ ] SideBar
-  - [ ] 
-
-### Heirarchy
+This is in order of heirarchy.
 - [ ] Container
   - [ ] Panel (collapsible content and header)
     - [ ] Sidebar (attaches to side of parent)
