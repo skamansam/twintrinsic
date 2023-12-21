@@ -1,6 +1,11 @@
 <script>
   import "../app.css";
   import "../lib/twintrinsic.css";
+  import { App } from "$lib";
 </script>
 
-<slot />
+<App appName="TWIntrinsic">
+  <div slot="leftPanel">
+  </div>
+  <slot />
+</App>

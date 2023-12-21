@@ -1,8 +1,20 @@
+<script>
+  import { onDestroy, setContext } from 'svelte';
+  export let darkMode = false;
+
+  setContext('appDarkMode', {
+	  getDarkMode: () => darkMode,
+  });
+  export let appName = 'Twintrinsic App';
+  export let leftPanelWidth = '300px';
+  export let rightPanelWidth = '300px';
+</script>
+
 <svelte:head>
   <title>{appName}</title>
 </svelte:head>
 <!-- <svelte:body class="{darkMode ? "dark" : "light"}"/> -->
-<div class='app bg-element-100 dark:bg-dark dark:text-light min-h-screen'>
+<div class='app bg-element-100 dark:bg-dark dark:text-light min-h-screen' style="--left-panel-width: {leftPanelWidth}; --right-panel-width: {rightPanelWidth};">
   {#if $$slots.menu}
     <div class="appMenu">
       <slot name="menu"/>
@@ -40,13 +52,3 @@
   {/if}
 </div>
 
-<script>
-  import { onDestroy, setContext } from 'svelte';
-  export let darkMode = false;
-
-  setContext('appDarkMode', {
-	  getDarkMode: () => darkMode,
-  });
-  export let appName = 'Twintrinsic App';
-
-</script>
