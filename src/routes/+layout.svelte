@@ -1,5 +1,6 @@
 <script lang="ts">
   import '../app.css';
+  import '../lib/twintrinsic.css';
   import { onMount } from 'svelte';
 
   const { children } = $props();

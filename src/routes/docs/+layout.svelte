@@ -55,7 +55,7 @@ Documentation site layout with left navigation, right theme sidebar, and header
   <!-- Left Sidebar (Components) -->
   <Sidebar
     expanded={leftSidebarExpanded}
-    on:toggle={({ detail }) => leftSidebarExpanded = detail.expanded}
+    toggle={({ detail }) => leftSidebarExpanded = detail.expanded}
   >
     <svelte:fragment slot="header">Components</svelte:fragment>
     <nav class="docs-nav">
@@ -80,7 +80,7 @@ Documentation site layout with left navigation, right theme sidebar, and header
   <Sidebar
     expanded={rightSidebarExpanded}
     position="right"
-    on:toggle={({ detail }) => rightSidebarExpanded = detail.expanded}
+    toggle={({ detail }) => rightSidebarExpanded = detail.expanded}
   >
     <svelte:fragment slot="header">Theme Colors</svelte:fragment>
     <div class="docs-colors">

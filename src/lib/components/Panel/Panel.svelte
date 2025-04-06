@@ -21,6 +21,7 @@ Usage:
 -->
 <script>
   import { slide } from 'svelte/transition';
+  import { createEventDispatcher } from 'svelte';
 
   const {
     /** @type {boolean} - Whether the panel is expanded */
@@ -48,7 +49,7 @@ Usage:
     header
   } = $props();
 
-  const dispatch = $createEventDispatcher();
+  const dispatch = createEventDispatcher();
   let isExpanded = $state(expanded);
 
   // Internal state
@@ -94,12 +95,16 @@ Usage:
     aria-controls="{id}-content"
     aria-label={ariaLabel}
     {disabled}
-    on:click={handleToggle}
-    on:keydown={handleKeydown}
+    onclick={handleToggle}
+    onkeydown={handleKeydown}
     bind:this={headerEl}
   >
     <div class="flex items-center gap-2">
-      {@render header() ?? 'Panel'}
+      {#if header}
+        {@render header()}
+      {:else}
+        Panel
+      {/if}
     </div>
 
     {#if showIcon}
@@ -128,12 +133,13 @@ Usage:
       transition:slide={{ duration: 200 }}
       bind:this={contentEl}
     >
-      {@render children()}
+      {@render children?.()}
     </div>
   {/if}
 </div>
 
 <style>
+  @reference "../../twintrinsic.css";
   /* Base styles that work with Tailwind */
   .panel {
     @apply overflow-hidden;

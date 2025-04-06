@@ -22,7 +22,6 @@ Usage:
 -->
 <script>
   import { slide } from 'svelte/transition';
-  import { state, props } from 'svelte';
 
   /** @type {string | { name: string, logo?: string, href?: string }} - Brand information */
   /** @type {{ name: string, avatar?: string, href?: string } | null} - User information */
@@ -84,22 +83,21 @@ Usage:
     this?.dispatchEvent(customEvent);
   }
 
-  $: brandName = typeof brand === 'string' ? brand : brand.name;
-  $: brandLogo = typeof brand === 'string' ? null : brand.logo;
-  $: brandHref = typeof brand === 'string' ? '/' : (brand.href || '/');
+  const brandName = $derived(typeof brand === 'string' ? brand : brand.name);
+  const brandLogo = $derived(typeof brand === 'string' ? null : brand.logo);
+  const brandHref = $derived(typeof brand === 'string' ? '/' : (brand.href || '/'));
 </script>
 
-<svelte:window on:keydown={handleKeydown} />
+<svelte:window onkeydown={handleKeydown} />
 
 <header
   class="app-header {className}"
   {id}
-  role="banner"
 >
   <div class="app-header-container">
     <!-- Brand -->
     <div class="app-header-brand">
-      <a {href} class="app-header-brand-link" aria-label={brandName}>
+      <a {brandHref} class="app-header-brand-link" aria-label={brandName}>
         {#if brandLogo}
           <img
             src={brandLogo}
@@ -119,7 +117,7 @@ Usage:
       class="app-header-mobile-menu"
       aria-expanded={mobileMenuOpen}
       aria-controls="{id}-nav"
-      on:click={toggleMobileMenu}
+      click={toggleMobileMenu}
     >
       <span class="sr-only">Open main menu</span>
       <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -136,7 +134,6 @@ Usage:
       id="{id}-nav"
       class="app-header-nav"
       class:app-header-nav-open={mobileMenuOpen}
-      role="navigation"
     >
       <ul class="app-header-nav-list">
         {#each navItems as item}
@@ -165,7 +162,7 @@ Usage:
               class="app-header-search-input"
               placeholder="Search..."
               bind:value={searchQuery}
-              on:input={handleSearch}
+              input={handleSearch}
             />
             <svg class="w-5 h-5 app-header-search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -180,7 +177,7 @@ Usage:
             type="button"
             class="app-header-notifications-button"
             aria-expanded={notificationsOpen}
-            on:click={toggleNotifications}
+            click={toggleNotifications}
           >
             <span class="sr-only">View notifications</span>
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -196,7 +193,7 @@ Usage:
               transition:slide={{ duration: 200 }}
             >
               <slot name="notifications">
-                <div class="p-4 text-center text-muted">
+                <div class="p-4 text-center text-text-muted">
                   No new notifications
                 </div>
               </slot>
@@ -211,7 +208,7 @@ Usage:
             type="button"
             class="app-header-user-button"
             aria-expanded={userMenuOpen}
-            on:click={toggleUserMenu}
+            click={toggleUserMenu}
           >
             <span class="sr-only">Open user menu</span>
             {#if user.avatar}
@@ -247,7 +244,7 @@ Usage:
                   <button
                     type="button"
                     class="app-header-user-menu-item text-error-500"
-                    on:click={() => dispatch('signout')}
+                    click={() => dispatch('signout')}
                   >
                     Sign out
                   </button>
@@ -262,13 +259,14 @@ Usage:
 </header>
 
 <style>
+  @reference "../../twintrinsic.css";
   /* Base header styles */
   .app-header {
     @apply bg-background border-b border-border sticky top-0 z-50;
   }
 
   .app-header-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-7xl mx-auto px-4 px-6 lg:px-8;
     @apply flex items-center justify-between h-16;
   }
 
@@ -355,7 +353,7 @@ Usage:
   }
 
   .app-header-search-icon {
-    @apply absolute left-3 top-1/2 -translate-y-1/2 text-muted;
+    @apply absolute left-3 top-1/2 -translate-y-1/2 text-text-muted;
   }
 
   /* Notifications styles */

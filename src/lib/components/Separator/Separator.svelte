@@ -55,13 +55,14 @@ Usage:
   aria-label={ariaLabel}
 >
   {#if hasContent}
-    <div class="separator-content">
+  <div class="separator-content">
       {@render children()}
-    </div>
+  </div>
   {/if}
 </svelte:element>
 
 <style>
+  @reference "../../twintrinsic.css";
   /* Base separator styles */
   .separator {
     @apply relative border-0;
@@ -69,7 +70,7 @@ Usage:
 
   /* Horizontal separator */
   .separator-horizontal {
-    @apply w-full h-px my-4;
+    @apply w-full h-px mt-4 mb-4;
   }
 
   .separator-horizontal:not(.separator-with-content) {

@@ -74,7 +74,7 @@ Usage:
   }
 </script>
 
-<svelte:window on:keydown={handleKeydown} />
+<svelte:window onkeydown={handleKeydown} />
 
 <div
   class="
@@ -91,7 +91,7 @@ Usage:
   {#if showBackdrop && isExpanded}
     <div
       class="sidebar-backdrop"
-      on:click={handleBackdropClick}
+      onclick={handleBackdropClick}
       transition:slide={{ duration: 200 }}
       aria-hidden="true"
     />
@@ -109,7 +109,7 @@ Usage:
       expanded={isExpanded}
       {disabled}
       bordered={false}
-      on:toggle={handleToggle}
+      toggle={handleToggle}
     >
       <svelte:fragment slot="header">
         <slot name="header" />
@@ -120,6 +120,7 @@ Usage:
 </div>
 
 <style>
+  @reference "../../twintrinsic.css";
   .sidebar-container {
     @apply relative;
   }

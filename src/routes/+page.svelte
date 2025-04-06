@@ -4,7 +4,6 @@
   import Separator from '$lib/components/Separator/Separator.svelte';
   import Panel from '$lib/components/Panel/Panel.svelte';
   import AppHeader from '$lib/components/AppHeader/AppHeader.svelte';
-  import ButtonDropdown from '$lib/components/ButtonDropdown/ButtonDropdown.svelte';
 
   const features = [
     {
@@ -43,7 +42,6 @@
     { name: 'AppHeader', description: 'Application header with navigation' },
     { name: 'Sidebar', description: 'Collapsible side panel' },
     { name: 'BottomBar', description: 'Collapsible bottom panel' },
-    { name: 'ButtonDropdown', description: 'Accessible dropdown menu' },
     { name: 'Panel', description: 'Content panel with header and footer' },
     { name: 'Container', description: 'Responsive container' },
     { name: 'Separator', description: 'Visual divider with content' },
@@ -199,7 +197,7 @@
   <Container>
     <div
       class="text-center max-w-3xl mx-auto"
-      in:fade={{ duration: 500 }}
+      transition:fade={{ duration: 500 }}
     >
       <h2 class="text-3xl sm:text-4xl font-bold">
         Ready to get started?
