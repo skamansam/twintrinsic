@@ -100,7 +100,7 @@ Usage:
 
   /* Content styles */
   .separator-content {
-    @apply flex items-center gap-2 px-3 text-text-muted;
+    @apply flex items-center gap-2 px-3 text-muted;
   }
 
   .separator-vertical .separator-content {

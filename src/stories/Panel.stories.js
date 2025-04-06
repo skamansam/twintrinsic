@@ -49,7 +49,7 @@ export const Default = {
     template: `
       <Panel {...args}>
         <svelte:fragment slot="header">Panel Title</svelte:fragment>
-        <p class="text-text-muted">This is the panel content. It can contain any elements.</p>
+        <p class="text-muted">This is the panel content. It can contain any elements.</p>
       </Panel>
     `
   }),
@@ -97,7 +97,7 @@ export const CustomHeader = {
           <span class="ml-2 font-medium">Settings</span>
         </svelte:fragment>
         <div class="space-y-4">
-          <p class="text-text-muted">Configure your preferences here.</p>
+          <p class="text-muted">Configure your preferences here.</p>
           <div class="flex items-center justify-between">
             <span>Dark Mode</span>
             <button class="px-3 py-1 bg-primary-500 text-white rounded-md">Toggle</button>

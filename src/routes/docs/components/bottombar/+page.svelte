@@ -146,7 +146,7 @@ BottomBar documentation page
     <tbody>
       <tr>
         <td><code>toggle</code></td>
-        <td><code>{ expanded: boolean }</code></td>
+        <td><code>{`{ expanded: boolean }`}</code></td>
         <td>Fired when the bottom bar is toggled</td>
       </tr>
     </tbody>

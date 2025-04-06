@@ -169,7 +169,7 @@ interface NavItem {
     <tbody>
       <tr>
         <td><code>search</code></td>
-        <td><code>{ query: string }</code></td>
+        <td><code>{`{ query: string }`}</code></td>
         <td>Fired when search input changes</td>
       </tr>
       <tr>

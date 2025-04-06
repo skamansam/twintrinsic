@@ -104,7 +104,7 @@ Theming documentation page
     To customize the theme, override these CSS variables in your stylesheet:
   </p>
 
-  <pre class="language-css"><code>:root {
+  <pre class="language-css"><code>{`:root {
   /* Base colors */
   --color-background: 255 255 255;    /* White */
   --color-surface: 249 250 251;       /* Gray 50 */
@@ -138,7 +138,7 @@ Theming documentation page
 
   /* Info colors */
   --color-info-500: 6 182 212;
-}</code></pre>
+}`}</code></pre>
 
   <h2>Dark Mode</h2>
   <p>
@@ -146,13 +146,13 @@ Theming documentation page
     the root element. Customize dark mode colors by overriding these variables:
   </p>
 
-  <pre class="language-css"><code>:root[data-theme="dark"] {
+  <pre class="language-css"><code>{`:root[data-theme="dark"] {
   --color-background: 17 24 39;       /* Gray 900 */
   --color-surface: 31 41 55;          /* Gray 800 */
   --color-border: 75 85 99;           /* Gray 600 */
   --color-text: 243 244 246;          /* Gray 100 */
   --color-muted: 156 163 175;         /* Gray 400 */
-}</code></pre>
+}`}</code></pre>
 
   <h2>Tailwind Configuration</h2>
   <p>
@@ -160,7 +160,7 @@ Theming documentation page
     configure your <code>tailwind.config.js</code>:
   </p>
 
-  <pre class="language-javascript"><code>module.exports = {
+  <pre class="language-javascript"><code>{`module.exports = {
   theme: {
     extend: {
       colors: {
@@ -180,5 +180,5 @@ Theming documentation page
       },
     },
   },
-}</code></pre>
+}`}</code></pre>
 </Container>

@@ -22,6 +22,7 @@ Usage:
 -->
 <script>
   import { slide } from 'svelte/transition';
+  import ThemeToggle from '../ThemeToggle/ThemeToggle.svelte';
 
   /** @type {string | { name: string, logo?: string, href?: string }} - Brand information */
   /** @type {{ name: string, avatar?: string, href?: string } | null} - User information */
@@ -154,6 +155,7 @@ Usage:
 
     <!-- Actions -->
     <div class="app-header-actions">
+      <ThemeToggle />
       {#if showSearch}
         <div class="app-header-search">
           <label for="{id}-search" class="sr-only">Search</label>
@@ -195,7 +197,7 @@ Usage:
               transition:slide={{ duration: 200 }}
             >
               <slot name="notifications">
-                <div class="p-4 text-center text-text-muted">
+                <div class="p-4 text-center text-muted">
                   No new notifications
                 </div>
               </slot>
@@ -355,7 +357,7 @@ Usage:
   }
 
   .app-header-search-icon {
-    @apply absolute left-3 top-1/2 -translate-y-1/2 text-text-muted;
+    @apply absolute left-3 top-1/2 -translate-y-1/2 text-muted;
   }
 
   /* Notifications styles */

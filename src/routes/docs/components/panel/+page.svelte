@@ -22,7 +22,7 @@ Panel documentation page
   <div class="not-prose mb-8">
     <Panel class="max-w-xl">
       <svelte:fragment slot="header">Basic Panel</svelte:fragment>
-      <p class="text-text-muted">
+      <p class="text-muted">
         This is a basic panel with default settings. Click the header or use the
         keyboard to toggle it.
       </p>
@@ -44,7 +44,7 @@ Panel documentation page
         <span class="ml-2 font-medium">Settings Panel</span>
       </svelte:fragment>
       <div class="space-y-4">
-        <p class="text-text-muted">Panels can have custom headers with icons and styling.</p>
+        <p class="text-muted">Panels can have custom headers with icons and styling.</p>
       </div>
     </Panel>
   </div>
@@ -53,7 +53,7 @@ Panel documentation page
   <div class="not-prose mb-8">
     <Panel disabled class="max-w-xl">
       <svelte:fragment slot="header">Disabled Panel</svelte:fragment>
-      <p class="text-text-muted">This panel cannot be toggled.</p>
+      <p class="text-muted">This panel cannot be toggled.</p>
     </Panel>
   </div>
 
@@ -61,7 +61,7 @@ Panel documentation page
   <div class="not-prose mb-8">
     <Panel bordered={false} class="max-w-xl">
       <svelte:fragment slot="header">Borderless Panel</svelte:fragment>
-      <p class="text-text-muted">A panel without borders for a cleaner look.</p>
+      <p class="text-muted">A panel without borders for a cleaner look.</p>
     </Panel>
   </div>
 
@@ -127,7 +127,7 @@ Panel documentation page
     <tbody>
       <tr>
         <td><code>toggle</code></td>
-        <td><code>{ expanded: boolean }</code></td>
+        <td><code>{`{ expanded: boolean }`}</code></td>
         <td>Fired when the panel is toggled</td>
       </tr>
     </tbody>

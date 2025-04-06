@@ -10,7 +10,7 @@ Documentation home page
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  {@render children()}
+  {@render children?.()}
   <h1>Twintrinsic Documentation</h1>
   
   <p>
@@ -19,18 +19,18 @@ Documentation home page
   </p>
 
   <Separator>
-    {@render children('Getting Started')}
+    {@render children?.('Getting Started')}
   </Separator>
 
   <h2>Installation</h2>
   <pre class="language-bash"><code>npm install twintrinsic</code></pre>
 
   <h2>Usage</h2>
-  <pre class="language-javascript"><code>// In your app.css
+  <pre class="language-javascript"><code>{`// In your app.css
 @import 'twintrinsic/styles.css';
 
 // In your component
-import { Container, AppHeader } from 'twintrinsic';</code></pre>
+import { Container, AppHeader } from 'twintrinsic';`}</code></pre>
 
   <h2>Features</h2>
   <ul>
@@ -43,7 +43,7 @@ import { Container, AppHeader } from 'twintrinsic';</code></pre>
   </ul>
 
   <Separator>
-    {@render children('Components')}
+    {@render children?.('Components')}
   </Separator>
 
   <p>
@@ -73,7 +73,7 @@ import { Container, AppHeader } from 'twintrinsic';</code></pre>
   </div>
 
   <Separator>
-    {@render children('Theming')}
+    {@render children?.('Theming')}
   </Separator>
 
   <p>
@@ -81,7 +81,7 @@ import { Container, AppHeader } from 'twintrinsic';</code></pre>
     by overriding these variables in your CSS:
   </p>
 
-  <pre class="language-css"><code>:root {
+  <pre class="language-css"><code>{`:root {
   --color-primary-500: 59 130 246;   /* Blue */
   --color-secondary-500: 99 102 241;  /* Indigo */
   --color-background: 255 255 255;    /* White */
@@ -90,7 +90,7 @@ import { Container, AppHeader } from 'twintrinsic';</code></pre>
   --color-text: 17 24 39;            /* Gray 900 */
   --color-muted: 107 114 128;        /* Gray 500 */
   --color-error-500: 239 68 68;      /* Red */
-}</code></pre>
+}`}</code></pre>
 
   <h2>Dark Mode</h2>
   <p>
@@ -98,11 +98,11 @@ import { Container, AppHeader } from 'twintrinsic';</code></pre>
     dark mode colors:
   </p>
 
-  <pre class="language-css"><code>:root[data-theme="dark"] {
+  <pre class="language-css"><code>{`:root[data-theme="dark"] {
   --color-background: 17 24 39;       /* Gray 900 */
   --color-surface: 31 41 55;          /* Gray 800 */
   --color-border: 75 85 99;           /* Gray 600 */
   --color-text: 243 244 246;          /* Gray 100 */
   --color-muted: 156 163 175;         /* Gray 400 */
-}</code></pre>
+}`}</code></pre>
 </Container>

@@ -107,6 +107,7 @@ Documentation site layout with left navigation, right theme sidebar, and header
 </div>
 
 <style>
+  @reference '$lib/twintrinsic.css';
   .docs-layout {
     @apply min-h-screen flex flex-col;
   }
