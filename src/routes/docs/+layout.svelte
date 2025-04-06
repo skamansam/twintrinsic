@@ -3,10 +3,12 @@
 Documentation site layout with left navigation, right theme sidebar, and header
 -->
 <script>
+  import App from '$lib/components/App/App.svelte';
   import AppHeader from '$lib/components/AppHeader/AppHeader.svelte';
   import Sidebar from '$lib/components/Sidebar/Sidebar.svelte';
   import { page } from '$app/stores';
   import TwintrinsicLogo from '$lib/components/icons/TwintrinsicLogo.svelte';
+  import ThemeToggle from '$lib/components/ThemeToggle/ThemeToggle.svelte';
 
   const navItems = [
     { label: 'Getting Started', href: '/docs', current: $page.url.pathname === '/docs' },
@@ -19,6 +21,7 @@ Documentation site layout with left navigation, right theme sidebar, and header
 
   // Component links for the left sidebar
   const componentLinks = [
+    { name: 'ThemeToggle', href: '/docs/components/themetoggle' },
     { name: 'AppHeader', href: '/docs/components/appheader' },
     { name: 'BottomBar', href: '/docs/components/bottombar' },
     { name: 'ButtonDropdown', href: '/docs/components/buttondropdown' },
@@ -42,28 +45,37 @@ Documentation site layout with left navigation, right theme sidebar, and header
   ];
 </script>
 
-<div class="docs-layout">
-  <!-- Header -->
-  <AppHeader
-    brand={{
-      name: 'Twintrinsic',
-      href: '/'
-    }}
-    {navItems}
-    class="relative"
-  >
-    <div slot="logo" class="flex items-center gap-2">
-      <TwintrinsicLogo size="2rem" class="text-primary-500" />
-      <span class="font-semibold">Twintrinsic</span>
-    </div>
-  </AppHeader>
+<App appName="Twintrinsic Documentation" leftPanelWidth="16rem">
+  <div slot="header">
+    <AppHeader
+      brand={{
+        name: 'Twintrinsic',
+        href: '/'
+      }}
+      {navItems}
+      class="relative"
+    >
+      <div slot="logo" class="flex items-center gap-2">
+        <button
+          type="button"
+          class="lg:hidden -ml-2 p-2 rounded-md text-muted hover:text-text focus:outline-none focus:ring-2 focus:ring-primary-500"
+          on:click={() => leftSidebarExpanded = !leftSidebarExpanded}
+          aria-label="Toggle navigation menu"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <TwintrinsicLogo size="2rem" class="text-primary-500" />
+        <span class="font-semibold">Twintrinsic</span>
+      </div>
+      <div slot="actions">
+        <ThemeToggle />
+      </div>
+    </AppHeader>
+  </div>
 
-  <!-- Left Sidebar (Components) -->
-  <Sidebar
-    expanded={leftSidebarExpanded}
-    toggle={({ detail }) => leftSidebarExpanded = detail.expanded}
-  >
-    <svelte:fragment slot="header">Components</svelte:fragment>
+  <div slot="leftPanel">
     <nav class="docs-nav">
       {#each componentLinks as link}
         <a
@@ -75,48 +87,13 @@ Documentation site layout with left navigation, right theme sidebar, and header
         </a>
       {/each}
     </nav>
-  </Sidebar>
+  </div>
 
-  <!-- Main Content -->
-  <main class="docs-main">
-    <slot />
-  </main>
-
-  <!-- Right Sidebar (Theme) -->
-  <Sidebar
-    expanded={rightSidebarExpanded}
-    position="right"
-    toggle={({ detail }) => rightSidebarExpanded = detail.expanded}
-  >
-    <svelte:fragment slot="header">Theme Colors</svelte:fragment>
-    <div class="docs-colors">
-      {#each themeColors as color}
-        <div class="docs-color-item">
-          <div
-            class="docs-color-preview"
-            style:background-color={color.value}
-          />
-          <div class="docs-color-info">
-            <div class="docs-color-name">{color.name}</div>
-            <div class="docs-color-value">{color.value}</div>
-          </div>
-        </div>
-      {/each}
-    </div>
-  </Sidebar>
-</div>
+  <slot />
+</App>
 
 <style>
   @reference '$lib/twintrinsic.css';
-  .docs-layout {
-    @apply min-h-screen flex flex-col;
-  }
-
-  .docs-main {
-    @apply flex-1 px-4 py-8 sm:px-6 lg:px-8;
-    @apply ml-64 mr-64; /* Space for sidebars */
-  }
-
   .docs-nav {
     @apply flex flex-col gap-2 p-4;
   }
@@ -128,29 +105,5 @@ Documentation site layout with left navigation, right theme sidebar, and header
 
   .docs-nav-link.active {
     @apply bg-primary-500 text-white;
-  }
-
-  .docs-colors {
-    @apply flex flex-col gap-4 p-4;
-  }
-
-  .docs-color-item {
-    @apply flex items-center gap-3;
-  }
-
-  .docs-color-preview {
-    @apply w-10 h-10 rounded-md border border-border;
-  }
-
-  .docs-color-info {
-    @apply flex flex-col;
-  }
-
-  .docs-color-name {
-    @apply text-sm font-medium;
-  }
-
-  .docs-color-value {
-    @apply text-xs text-muted;
   }
 </style>

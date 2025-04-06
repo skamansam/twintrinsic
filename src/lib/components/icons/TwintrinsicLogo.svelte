@@ -4,12 +4,12 @@ A modern, dynamic logo for Twintrinsic that represents Tailwind's utility-first 
 and the intrinsic nature of web design.
 -->
 <script>
-  const { class: className = '', size = '3rem' } = $props();
+const { class: className = '', size = '3rem' } = $props()
 </script>
 
 <svg
   xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 100 100"
+  viewBox="0 0 180 180"
   class={className}
   width={size}
   height={size}
@@ -17,42 +17,27 @@ and the intrinsic nature of web design.
   stroke="currentColor"
   aria-label="Twintrinsic Logo"
 >
-  <!-- Outer hexagon representing Tailwind's utility-first approach -->
-  <path
-    class="tw-logo-hex"
-    d="M50 10 L85 30 L85 70 L50 90 L15 70 L15 30 Z"
-    stroke-width="4"
-    stroke-linejoin="round"
-  />
-  
-  <!-- Inner "tw" letters -->
-  <g class="tw-logo-letters" stroke-width="3" stroke-linecap="round">
-    <!-- 't' letter -->
-    <path d="M35 35 L35 65" />
-    <path d="M25 40 L45 40" />
-    
-    <!-- 'w' letter -->
-    <path d="M55 40 L60 65 L65 50 L70 65 L75 40" />
-  </g>
-  
-  <!-- Dynamic dots representing intrinsic responsiveness -->
-  <g class="tw-logo-dots" fill="currentColor">
-    <circle cx="50" cy="25" r="3" />
-    <circle cx="75" cy="25" r="3" />
-    <circle cx="25" cy="25" r="3" />
-    <circle cx="50" cy="75" r="3" />
-    <circle cx="75" cy="75" r="3" />
-    <circle cx="25" cy="75" r="3" />
-  </g>
-  
-  <!-- Animated wave pattern for web fluidity -->
-  <path
-    class="tw-logo-wave"
-    d="M30 50 Q40 45, 50 50 T70 50"
-    stroke-width="2"
-    stroke-linecap="round"
-    fill="none"
-  />
+<rect
+  style="opacity:0.995712;fill:none;stroke:#5b21b6;stroke-width:8;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+  id="rect1"
+  width="172"
+  height="172"
+  x="4"
+  y="4" />
+<path
+  style="fill:none;stroke:#5b21b6;stroke-width:6.15013;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+  d="M 0,45 H 180"
+  id="path2" />
+<text
+  xml:space="preserve"
+  style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:105.833px;line-height:1.25;font-family:'OpenDyslexicMono Nerd Font';-inkscape-font-specification:'OpenDyslexicMono Nerd Font, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#5b21b6;fill-opacity:1;stroke:none;stroke-width:0.265;stroke-dasharray:none;stroke-opacity:1"
+  x="9.6828251"
+  y="145.79205"
+  id="text5"><tspan
+    id="tspan5"
+    style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:105.833px;font-family:'OpenDyslexicMono Nerd Font';-inkscape-font-specification:'OpenDyslexicMono Nerd Font, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#5b21b6;fill-opacity:1;stroke:none;stroke-width:0.265;stroke-dasharray:none;stroke-opacity:1"
+    x="9.6828251"
+    y="145.79205">Tw</tspan></text>
 </svg>
 
 <style>
