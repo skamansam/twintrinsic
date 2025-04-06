@@ -2,16 +2,10 @@
 A tailwind-based collection of svelte components.
 
 # WTF is Twintrinsic?
-I got this idea during the christmas break of 2022 when I was looking for a new UI library that was flexible enough to 
-allow me to extend it in ways I wanted and had good accessibility support. After combing through a bunch, I got the idea 
-to try to create a small lib that was basically extensions of HTML. Since HTML elements already have basic accessibility 
-built-in, it's a no-brainer to use these instead of fancy custom elements. I also wanted to use Tailwind for its themeability
-and easy customization. HTML in intrinsic to the web and tailwind is an extension, so i got `tailwind + intrinsic = twintrinsic`.
+I got this idea during the christmas break of 2022 when I was looking for a new UI library that was flexible enough to allow me to extend it in ways I wanted and had good accessibility support. After combing through a bunch, I got the idea to try to create a small lib that was basically extensions of HTML. Since HTML elements already have basic accessibility built-in, it's a no-brainer to use these instead of fancy custom elements. I also wanted to use Tailwind for its themeability and easy customization. HTML in intrinsic to the web and tailwind is an extension, so i got `tailwind + intrinsic = twintrinsic`.
 
 # Performance
-I am not going to worry about performance for now. I am going to use available HTML and CSS as much as possible, without 
-using Javascript for interactivity unless absolutely necessary. This should keep the compiled bundle pretty performant. My
-main focus is going to be on code readability, accessibility, and extensibility.
+I am not going to worry about performance for now. I am going to use available HTML and CSS as much as possible, without using Javascript for interactivity unless absolutely necessary. This should keep the compiled bundle pretty performant. My main focus is going to be on code readability, accessibility, and extensibility.
 
 ## Components:
 This is in order of heirarchy.
@@ -158,9 +152,6 @@ This is in order of heirarchy.
 ## Recommended IDE Setup
 
 - [VSCode](https://code.visualstudio.com/)
-
-
-
 
 
 # create-svelte

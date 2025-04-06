@@ -1,0 +1,25 @@
+# Coding Guidelines 
+- Use early returns when possible
+- Avoid using else statements, in lieu of early returns
+- Always add documentation when creating new functions and classes
+- use modern web technologies as much as possible, favoring CSS over JS where possible
+- make everything accessible and add the proper aria labels where necessary
+- all css should use tailwind classes and @reference the tailwind css file where possible
+
+# Documentation Guidelines
+- use JSDoc comments where necessary
+- add JSDoc types where necessary
+- reference typescript types in *.d.ts files where possible
+
+# Technologies Used
+- we are using playwright for all testing
+- we are using vite and svelte 5 for development
+- we are using tailwind v4 for styling
+
+# Tailwind
+- instead of creating inline colors, add them to the @theme rule in the lib/twintrinsic.css
+
+# Testing
+- for every component, we want to create a new storybook story for it
+- for every component, we want to create a new playwright test for it inside the storybook story
+- for every component, we need to add documentation to our main demo site, in routes, with a new route for every component

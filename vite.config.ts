@@ -1,13 +1,15 @@
-/// <reference types="histoire" />
+import { paraglideVitePlugin } from '@inlang/paraglide-js';
+import tailwindcss from '@tailwindcss/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vitest/config';
-import { HstSvelte } from '@histoire/plugin-svelte';
+import { defineConfig } from 'vite';
 
-/** @type {import('vite').UserConfig} */
 export default defineConfig({
-	plugins: [sveltekit()],
-	test: {
-		include: ['src/**/*.{test,spec}.{js,ts}']
-	}
-	// histoire: { plugins: [HstSvelte()], setupFile: '/histoire-setup.ts' }
+	plugins: [
+		tailwindcss(),
+		sveltekit(),
+		paraglideVitePlugin({
+			project: './project.inlang',
+			outdir: './src/lib/paraglide'
+		})
+	]
 });

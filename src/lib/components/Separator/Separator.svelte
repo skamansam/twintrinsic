@@ -1,0 +1,109 @@
+<!--
+@component
+Separator - A visual divider that can be horizontal or vertical with optional text/icon content.
+
+Usage:
+```svelte
+<Separator />
+<Separator>or</Separator>
+<Separator vertical />
+<Separator>
+  <Icon name="star" />
+  Featured Content
+</Separator>
+```
+-->
+<script>
+  /** @type {boolean} - Whether the separator should be vertical */
+  export let vertical = false;
+
+  /** @type {string} - Additional CSS classes */
+  export let class = '';
+
+  /** @type {string} - ARIA label */
+  export let ariaLabel = undefined;
+
+  /** @type {"div" | "hr"} - HTML element to render */
+  export let as = $$slots.default ? 'div' : 'hr';
+
+  /** @type {string} - Color variant */
+  export let color = 'default';
+
+  // Determine if we have content
+  const hasContent = $$slots.default;
+
+  // Color variants mapping
+  const colorClasses = {
+    default: 'border-border',
+    primary: 'border-primary-200 dark:border-primary-800',
+    success: 'border-success/30',
+    warning: 'border-warning/30',
+    error: 'border-error/30'
+  };
+</script>
+
+<svelte:element
+  this={as}
+  class="
+    separator
+    {colorClasses[color]}
+    {vertical ? 'separator-vertical' : 'separator-horizontal'}
+    {hasContent ? 'separator-with-content' : ''}
+    {class}
+  "
+  role={as === 'div' ? 'separator' : undefined}
+  aria-orientation={vertical ? 'vertical' : 'horizontal'}
+  aria-label={ariaLabel}
+>
+  {#if hasContent}
+    <div class="separator-content">
+      <slot />
+    </div>
+  {/if}
+</svelte:element>
+
+<style>
+  /* Base separator styles */
+  .separator {
+    @apply relative border-0;
+  }
+
+  /* Horizontal separator */
+  .separator-horizontal {
+    @apply w-full h-px my-4;
+  }
+
+  .separator-horizontal:not(.separator-with-content) {
+    @apply border-t;
+  }
+
+  .separator-horizontal.separator-with-content {
+    @apply flex items-center text-center before:content-[''] after:content-[''];
+    @apply before:flex-1 before:border-t;
+    @apply after:flex-1 after:border-t;
+  }
+
+  /* Vertical separator */
+  .separator-vertical {
+    @apply h-full w-px mx-4 inline-block align-middle;
+  }
+
+  .separator-vertical:not(.separator-with-content) {
+    @apply border-l;
+  }
+
+  .separator-vertical.separator-with-content {
+    @apply flex flex-col items-center text-center before:content-[''] after:content-[''];
+    @apply before:flex-1 before:border-l;
+    @apply after:flex-1 after:border-l;
+  }
+
+  /* Content styles */
+  .separator-content {
+    @apply flex items-center gap-2 px-3 text-text-muted;
+  }
+
+  .separator-vertical .separator-content {
+    @apply py-3 px-0 rotate-180 [writing-mode:vertical-lr];
+  }
+</style>

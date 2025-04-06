@@ -1,11 +1,59 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
 
-ul {
+@theme {
+  /* Base Colors (Light Mode) */
+  --color-primary-50: #f5f3ff;
+  --color-primary-100: #ede9fe;
+  --color-primary-200: #ddd6fe;
+  --color-primary-300: #c4b5fd;
+  --color-primary-400: #a78bfa;
+  --color-primary-500: #8b5cf6;
+  --color-primary-600: #7c3aed;
+  --color-primary-700: #6d28d9;
+  --color-primary-800: #5b21b6;
+  --color-primary-900: #4c1d95;
 
+  --color-background: #ffffff;
+  --color-surface: #f8fafc;
+  --color-text: #1e293b;
+  --color-text-muted: #64748b;
+  --color-border: #e2e8f0;
+  --color-shadow: rgba(0, 0, 0, 0.1);
+
+  /* Interactive States */
+  --color-hover: #f8f7ff;
+  --color-focus-ring: #c4b5fd;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
 }
-ul li, ol li {
-  margin-left: 2em;
-}
 
-h1, h2, h3, h4, h5, h6 {
-  font-weight: bold;
+/* Dark mode overrides using Tailwind's class-based approach */
+:where(.dark, .dark *) {
+  --color-primary-50: #2d2b55;
+  --color-primary-100: #393679;
+  --color-primary-200: #44408c;
+  --color-primary-300: #5b54bc;
+  --color-primary-400: #6e66d9;
+  --color-primary-500: #8b5cf6;
+  --color-primary-600: #9f75ff;
+  --color-primary-700: #b18aff;
+  --color-primary-800: #c3a0ff;
+  --color-primary-900: #d4b6ff;
+
+  --color-background: #0f172a;
+  --color-surface: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+  --color-border: #334155;
+  --color-shadow: rgba(0, 0, 0, 0.25);
+
+  /* Interactive States */
+  --color-hover: #1e1b4b;
+  --color-focus-ring: #6e66d9;
+  --color-success: #059669;
+  --color-warning: #d97706;
+  --color-error: #dc2626;
 }
