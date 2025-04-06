@@ -15,30 +15,29 @@ Usage:
 ```
 -->
 <script>
-  /** @type {boolean} - If true, container will be full-width */
-  export let fluid = false;
-  
-  /** @type {string} - Additional CSS classes to apply */
-  export let class = '';
-  
-  /** @type {"main" | "section" | "article" | "div"} - HTML element to render */
-  export let as = 'div';
-  
-  /** @type {string} - ARIA role if needed */
-  export let role = undefined;
-  
-  /** @type {string} - ARIA label if needed */
-  export let ariaLabel = undefined;
+  const {
+    /** @type {boolean} - If true, container will be full-width */
+    fluid = false,
+    
+    /** @type {string} - Additional CSS classes to apply */
+    class: className = '',
+    
+    /** @type {"main" | "section" | "article" | "div"} - HTML element to render */
+    as = 'div',
+    
+    /** @type {string} - ARIA role if needed */
+    role,
+    
+    /** @type {string} - ARIA label if needed */
+    ariaLabel
+  } = $props();
 </script>
 
 <svelte:element 
   this={as}
-  class="
-    {fluid ? 'w-full' : 'container mx-auto px-4 sm:px-6 lg:px-8'} 
-    {class}
-  "
-  role={role}
+  class="{fluid ? 'w-full' : 'container mx-auto px-4 sm:px-6 lg:px-8'} {className}"
+  {role}
   aria-label={ariaLabel}
 >
-  <slot />
+  {@render children()}
 </svelte:element>

@@ -14,23 +14,24 @@ Usage:
 ```
 -->
 <script>
-  /** @type {boolean} - Whether the separator should be vertical */
-  export let vertical = false;
+  const {
+    /** @type {boolean} - Whether the separator should be vertical */
+    vertical = false,
 
-  /** @type {string} - Additional CSS classes */
-  export let class = '';
+    /** @type {string} - Additional CSS classes */
+    class: className = '',
 
-  /** @type {string} - ARIA label */
-  export let ariaLabel = undefined;
+    /** @type {string} - ARIA label */
+    ariaLabel,
 
-  /** @type {"div" | "hr"} - HTML element to render */
-  export let as = $$slots.default ? 'div' : 'hr';
+    /** @type {string} - Color variant */
+    color = 'default',
 
-  /** @type {string} - Color variant */
-  export let color = 'default';
+    /** @type {"div" | "hr"} - HTML element to render */
+    as,
 
-  // Determine if we have content
-  const hasContent = $$slots.default;
+    children
+  } = $props();
 
   // Color variants mapping
   const colorClasses = {
@@ -40,24 +41,22 @@ Usage:
     warning: 'border-warning/30',
     error: 'border-error/30'
   };
+
+  // Determine if we have content and element type
+  const hasContent = children !== undefined;
+  const element = as ?? (hasContent ? 'div' : 'hr');
 </script>
 
 <svelte:element
-  this={as}
-  class="
-    separator
-    {colorClasses[color]}
-    {vertical ? 'separator-vertical' : 'separator-horizontal'}
-    {hasContent ? 'separator-with-content' : ''}
-    {class}
-  "
-  role={as === 'div' ? 'separator' : undefined}
+  this={element}
+  class="separator {colorClasses[color]} {vertical ? 'separator-vertical' : 'separator-horizontal'} {hasContent ? 'separator-with-content' : ''} {className}"
+  role={element === 'div' ? 'separator' : undefined}
   aria-orientation={vertical ? 'vertical' : 'horizontal'}
   aria-label={ariaLabel}
 >
   {#if hasContent}
     <div class="separator-content">
-      <slot />
+      {@render children()}
     </div>
   {/if}
 </svelte:element>
