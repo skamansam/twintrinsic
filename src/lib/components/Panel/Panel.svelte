@@ -21,30 +21,35 @@ Usage:
 -->
 <script>
   import { slide } from 'svelte/transition';
-  import { createEventDispatcher } from 'svelte';
 
-  const dispatch = createEventDispatcher();
+  const {
+    /** @type {boolean} - Whether the panel is expanded */
+    expanded = true,
 
-  /** @type {boolean} - Whether the panel is expanded */
-  export let expanded = true;
+    /** @type {string} - Additional CSS classes */
+    class: className = '',
 
-  /** @type {string} - Additional CSS classes */
-  export let class = '';
+    /** @type {string} - HTML id for accessibility */
+    id = crypto.randomUUID(),
 
-  /** @type {string} - HTML id for accessibility */
-  export let id = crypto.randomUUID();
+    /** @type {string} - ARIA label for the header button */
+    ariaLabel,
 
-  /** @type {string} - ARIA label for the header button */
-  export let ariaLabel = undefined;
+    /** @type {boolean} - Whether to disable the panel controls */
+    disabled = false,
 
-  /** @type {boolean} - Whether to disable the panel controls */
-  export let disabled = false;
+    /** @type {boolean} - Whether to show a border */
+    bordered = true,
 
-  /** @type {boolean} - Whether to show a border */
-  export let bordered = true;
+    /** @type {boolean} - Whether to show the expand/collapse icon */
+    showIcon = true,
 
-  /** @type {boolean} - Whether to show the expand/collapse icon */
-  export let showIcon = true;
+    children,
+    header
+  } = $props();
+
+  const dispatch = $createEventDispatcher();
+  let isExpanded = $state(expanded);
 
   // Internal state
   let headerEl;
@@ -53,8 +58,8 @@ Usage:
   // Handle toggle
   function handleToggle() {
     if (!disabled) {
-      expanded = !expanded;
-      dispatch('toggle', { expanded });
+      isExpanded = !isExpanded;
+      dispatch('toggle', { expanded: isExpanded });
     }
   }
 
@@ -70,11 +75,7 @@ Usage:
 </script>
 
 <div 
-  class="
-    panel
-    {bordered ? 'border border-border rounded-lg' : ''} 
-    {class}
-  "
+  class="panel {bordered ? 'border border-border rounded-lg' : ''} {className}"
   class:disabled
 >
   <button
@@ -89,7 +90,7 @@ Usage:
       disabled:opacity-50 disabled:cursor-not-allowed
       {bordered ? 'rounded-t-lg' : 'rounded-lg'}
     "
-    aria-expanded={expanded}
+    aria-expanded={isExpanded}
     aria-controls="{id}-content"
     aria-label={ariaLabel}
     {disabled}
@@ -98,12 +99,12 @@ Usage:
     bind:this={headerEl}
   >
     <div class="flex items-center gap-2">
-      <slot name="header">Panel</slot>
+      {@render header() ?? 'Panel'}
     </div>
 
     {#if showIcon}
       <svg
-        class="w-5 h-5 transform transition-transform duration-200 {expanded ? 'rotate-180' : ''}"
+        class="w-5 h-5 transform transition-transform duration-200 {isExpanded ? 'rotate-180' : ''}"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
         fill="currentColor"
@@ -118,7 +119,7 @@ Usage:
     {/if}
   </button>
 
-  {#if expanded}
+  {#if isExpanded}
     <div
       id="{id}-content"
       class="px-4 py-3 bg-background {bordered ? 'rounded-b-lg' : ''}"
@@ -127,7 +128,7 @@ Usage:
       transition:slide={{ duration: 200 }}
       bind:this={contentEl}
     >
-      <slot />
+      {@render children()}
     </div>
   {/if}
 </div>

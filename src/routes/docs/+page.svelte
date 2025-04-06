@@ -8,6 +8,7 @@ Documentation home page
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
+  {@render children()}
   <h1>Twintrinsic Documentation</h1>
   
   <p>
@@ -15,7 +16,9 @@ Documentation home page
     accessible, customizable components built with Svelte 5 and Tailwind CSS.
   </p>
 
-  <Separator>Getting Started</Separator>
+  <Separator>
+    {@render children('Getting Started')}
+  </Separator>
 
   <h2>Installation</h2>
   <pre class="language-bash"><code>npm install twintrinsic</code></pre>
@@ -37,7 +40,9 @@ import { Container, AppHeader } from 'twintrinsic';</code></pre>
     <li>TypeScript support</li>
   </ul>
 
-  <Separator>Components</Separator>
+  <Separator>
+    {@render children('Components')}
+  </Separator>
 
   <p>
     Twintrinsic provides a set of essential components to build modern web applications:
@@ -65,7 +70,9 @@ import { Container, AppHeader } from 'twintrinsic';</code></pre>
     </div>
   </div>
 
-  <Separator>Theming</Separator>
+  <Separator>
+    {@render children('Theming')}
+  </Separator>
 
   <p>
     Twintrinsic uses CSS variables for theming. You can customize the look and feel

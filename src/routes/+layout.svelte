@@ -61,7 +61,7 @@
 <button
   type="button"
   class="fixed bottom-4 right-4 p-2 rounded-full bg-surface border border-border shadow-lg hover:bg-hover focus:outline-none focus:ring-2 focus:ring-primary-500 z-50"
-  on:click={toggleTheme}
+  onclick={toggleTheme}
   aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
 >
   {#if theme === 'dark'}

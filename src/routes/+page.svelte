@@ -54,7 +54,7 @@
 <!-- Hero Section -->
 <section class="relative overflow-hidden bg-gradient-to-b from-primary-500/10 to-transparent">
   <Container class="py-16 sm:py-24">
-    <div class="text-center" in:fade={{ duration: 500 }}>
+    <div class="text-center" transition:fade={{ duration: 500 }}>
       <h1 class="text-5xl sm:text-6xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
         Twintrinsic
       </h1>
@@ -86,7 +86,7 @@
     </div>
 
     <!-- Example Components -->
-    <div class="mt-16 grid grid-cols-1 gap-8" in:fade={{ duration: 500, delay: 200 }}>
+    <div class="mt-16 grid grid-cols-1 gap-8" transition:fade={{ duration: 500, delay: 200 }}>
       <div class="-mx-4 sm:-mx-6 bg-surface/50 backdrop-blur-sm border-y border-border">
         <AppHeader
           brand={{
@@ -131,7 +131,7 @@
 <!-- Features Section -->
 <section class="py-16 sm:py-24 bg-surface">
   <Container>
-    <div class="text-center mb-16" in:fade={{ duration: 500 }}>
+    <div class="text-center mb-16" transition:fade={{ duration: 500 }}>
       <h2 class="text-3xl sm:text-4xl font-bold">
         Everything you need to build modern web apps
       </h2>
@@ -142,12 +142,12 @@
 
     <div
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-      in:fade={{ duration: 500, delay: 200 }}
+      transition:fade={{ duration: 500, delay: 200 }}
     >
       {#each features as feature, i}
         <div
           class="flex gap-4 p-6 rounded-lg bg-background border border-border hover:border-primary-500/50 transition-colors"
-          in:fly={{ y: 20, delay: 300 + i * 100 }}
+          transition:fly={{ y: 20, delay: 300 + i * 100 }}
         >
           <div
             class="flex-shrink-0 w-12 h-12 rounded-lg bg-primary-500/10 text-primary-500 flex items-center justify-center"
@@ -167,7 +167,7 @@
 <!-- Components Overview -->
 <section class="py-16 sm:py-24">
   <Container>
-    <div class="text-center mb-16" in:fade={{ duration: 500 }}>
+    <div class="text-center mb-16" transition:fade={{ duration: 500 }}>
       <h2 class="text-3xl sm:text-4xl font-bold">
         Powerful components for every need
       </h2>
@@ -178,13 +178,13 @@
 
     <div
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
-      in:fade={{ duration: 500, delay: 200 }}
+      transition:fade={{ duration: 500, delay: 200 }}
     >
       {#each components as component, i}
         <a
           href="/docs/components/{component.name.toLowerCase()}"
           class="block p-4 rounded-lg bg-surface border border-border hover:border-primary-500/50 transition-colors"
-          in:fly={{ y: 20, delay: 300 + i * 100 }}
+          transition:fly={{ y: 20, delay: 300 + i * 100 }}
         >
           <h3 class="font-medium mb-1">{component.name}</h3>
           <p class="text-sm text-muted">{component.description}</p>
