@@ -98,16 +98,18 @@ Usage:
     <!-- Brand -->
     <div class="app-header-brand">
       <a {brandHref} class="app-header-brand-link" aria-label={brandName}>
-        {#if brandLogo}
-          <img
-            src={brandLogo}
-            alt={brandName}
-            class="app-header-logo"
-            width="32"
-            height="32"
-          />
-        {/if}
-        <span class="app-header-brand-name">{brandName}</span>
+        <slot name="logo">
+          {#if brandLogo}
+            <img
+              src={brandLogo}
+              alt={brandName}
+              class="app-header-logo"
+              width="32"
+              height="32"
+            />
+          {/if}
+          <span class="app-header-brand-name">{brandName}</span>
+        </slot>
       </a>
     </div>
 

@@ -6,6 +6,7 @@ Documentation site layout with left navigation, right theme sidebar, and header
   import AppHeader from '$lib/components/AppHeader/AppHeader.svelte';
   import Sidebar from '$lib/components/Sidebar/Sidebar.svelte';
   import { page } from '$app/stores';
+  import TwintrinsicLogo from '$lib/components/icons/TwintrinsicLogo.svelte';
 
   const navItems = [
     { label: 'Getting Started', href: '/docs', current: $page.url.pathname === '/docs' },
@@ -46,11 +47,16 @@ Documentation site layout with left navigation, right theme sidebar, and header
   <AppHeader
     brand={{
       name: 'Twintrinsic',
-      logo: '/logo.svg',
       href: '/'
     }}
     {navItems}
-  />
+    class="relative"
+  >
+    <div slot="logo" class="flex items-center gap-2">
+      <TwintrinsicLogo size="2rem" class="text-primary-500" />
+      <span class="font-semibold">Twintrinsic</span>
+    </div>
+  </AppHeader>
 
   <!-- Left Sidebar (Components) -->
   <Sidebar
