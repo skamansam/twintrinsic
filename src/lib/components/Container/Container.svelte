@@ -23,7 +23,7 @@ const {
 	class: className = '',
 
 	/** @type {"main" | "section" | "article" | "div"} - HTML element to render */
-	as = 'div',
+	as = 'section',
 
 	/** @type {string} - ARIA role if needed */
 	role,
@@ -37,7 +37,7 @@ const {
 
 <svelte:element 
   this={as}
-  class="{fluid ? 'w-full' : 'container mx-auto px-4 sm:px-6 lg:px-8'} {className}"
+  class="container {fluid ? 'w-full' : 'container mx-auto px-4 sm:px-6 lg:px-8'} {className}"
   {role}
   aria-label={ariaLabel}
 >

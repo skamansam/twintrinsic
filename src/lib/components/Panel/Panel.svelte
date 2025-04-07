@@ -76,7 +76,7 @@ Usage:
 </script>
 
 <div 
-  class="panel {bordered ? 'border border-border rounded-lg' : ''} {className}"
+  class="panel {bordered ? 'border border-border dark:border-border rounded-lg' : ''} {className}"
   class:disabled
 >
   <button
@@ -86,9 +86,11 @@ Usage:
       w-full flex items-center justify-between
       px-4 py-3
       text-left
-      bg-surface hover:bg-hover
-      focus:outline-none focus:ring-2 focus:ring-focus-ring
+      bg-surface dark:bg-surface
+      hover:bg-hover dark:hover:bg-hover
+      focus:outline-none focus:ring-2 focus:ring-focus-ring dark:focus:ring-focus-ring
       disabled:opacity-50 disabled:cursor-not-allowed
+      text-text dark:text-text
       {bordered ? 'rounded-t-lg' : 'rounded-lg'}
     "
     aria-expanded={isExpanded}
@@ -109,7 +111,7 @@ Usage:
 
     {#if showIcon}
       <svg
-        class="w-5 h-5 transform transition-transform duration-200 {isExpanded ? 'rotate-180' : ''}"
+        class="w-5 h-5 transform transition-transform duration-200 text-muted dark:text-muted {isExpanded ? 'rotate-180' : ''}"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
         fill="currentColor"
@@ -127,7 +129,7 @@ Usage:
   {#if isExpanded}
     <div
       id="{id}-content"
-      class="px-4 py-3 bg-background {bordered ? 'rounded-b-lg' : ''}"
+      class="px-4 py-3 bg-background dark:bg-background text-text dark:text-text {bordered ? 'rounded-b-lg' : ''}"
       role="region"
       aria-labelledby="{id}-header"
       transition:slide={{ duration: 200 }}

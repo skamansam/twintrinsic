@@ -56,183 +56,175 @@ const components = [
 </style>
 
 <!-- Hero Section -->
-<section class="relative overflow-hidden bg-gradient-to-b from-primary-500/10 to-transparent">
-  <Container class="py-16 sm:py-24">
-    <div class="text-center" transition:fade={{ duration: 500 }}>
-      <div class="flex flex-col items-center justify-center gap-6">
-        <TwintrinsicLogo size="8rem" class="text-primary-500 hover:text-primary-600" />
-        <h1 class="text-5xl sm:text-6xl font-bold bg-gradient-to-b from-primary-600 to-secondary-600 via-primary-500 bg-clip-text text-transparent">
-          Twintrinsic
-        </h1>
-      </div>
-      <p class="mt-4 text-xl sm:text-2xl text-muted">
-        A modern component library for Svelte 5 and Tailwind CSS
-      </p>
-      <div class="mt-8 flex justify-center gap-4">
-        <a
-          href="/docs"
-          class="inline-flex items-center px-6 py-3 rounded-lg bg-primary-500 text-white font-medium hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors"
-        >
-          Get Started
-          <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-          </svg>
-        </a>
-        <a
-          href="https://github.com/skamansam/twintrinsic"
-          class="inline-flex items-center px-6 py-3 rounded-lg bg-surface text-text font-medium hover:bg-hover focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View on GitHub
-          <svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-          </svg>
-        </a>
-      </div>
+<Container fluid class="py-16 sm:py-24 relative overflow-hidden bg-gradient-to-b from-primary-500/10 to-transparent">
+  <div class="text-center" transition:fade={{ duration: 500 }}>
+    <div class="flex flex-col items-center justify-center gap-6">
+      <TwintrinsicLogo size="8rem" class="text-primary-500 hover:text-primary-600" />
+      <h1 class="text-5xl sm:text-6xl font-bold bg-gradient-to-b from-primary-600 to-secondary-600 via-primary-500 bg-clip-text text-transparent">
+        Twintrinsic
+      </h1>
     </div>
-
-    <!-- Example Components -->
-    <div class="mt-16 grid grid-cols-1 gap-8" transition:fade={{ duration: 500, delay: 200 }}>
-      <div class="-mx-4 sm:-mx-6 bg-surface/50 backdrop-blur-sm border-y border-border">
-        <AppHeader
-          brand={{
-            name: 'Twintrinsic',
-            href: '/'
-          }}
-          class="relative"
-          showSearch
-          user={{
-            name: 'John Doe',
-            avatar: 'https://via.placeholder.com/32'
-          }}
-          navItems={[
-            { label: 'Home', href: '#', current: true },
-            { label: 'Components', href: '/docs/components' },
-            { label: 'Documentation', href: '/docs' }
-          ]}
-        >
-      <div slot="logo" class="flex items-center gap-2">
-        <TwintrinsicLogo size="2rem" class="text-primary-500" />
-        <span class="font-semibold">Twintrinsic</span>
-      </div>
-    </AppHeader>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {#each components.slice(0, 3) as component}
-          <Panel>
-            <svelte:fragment slot="header">
-              {component.name}
-            </svelte:fragment>
-            <p class="text-muted">{component.description}</p>
-            <svelte:fragment slot="footer">
-              <a
-                href="/docs/components/{component.name.toLowerCase()}"
-                class="text-sm text-primary-500 hover:text-primary-600 font-medium"
-              >
-                Learn more →
-              </a>
-            </svelte:fragment>
-          </Panel>
-        {/each}
-      </div>
+    <p class="mt-4 text-xl sm:text-2xl text-muted">
+      A modern component library for Svelte 5 and Tailwind CSS
+    </p>
+    <div class="mt-8 flex justify-center gap-4">
+      <a
+        href="/docs"
+        class="inline-flex items-center px-6 py-3 rounded-lg bg-primary-500 text-white font-medium hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors"
+      >
+        Get Started
+        <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+        </svg>
+      </a>
+      <a
+        href="https://github.com/skamansam/twintrinsic"
+        class="inline-flex items-center px-6 py-3 rounded-lg bg-surface text-text font-medium hover:bg-hover focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        View on GitHub
+        <svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+        </svg>
+      </a>
     </div>
-  </Container>
-</section>
+  </div>
+
+  <!-- Example Components -->
+  <div class="mt-16 grid grid-cols-1 gap-8" transition:fade={{ duration: 500, delay: 200 }}>
+    <div class="-mx-4 sm:-mx-6 bg-surface/50 backdrop-blur-sm border-y border-border">
+      <AppHeader
+        brand={{
+          name: 'Twintrinsic',
+          href: '/'
+        }}
+        class="relative"
+        showSearch
+        user={{
+          name: 'John Doe',
+          avatar: 'https://via.placeholder.com/32'
+        }}
+        navItems={[
+          { label: 'Home', href: '#', current: true },
+          { label: 'Components', href: '/docs/components' },
+          { label: 'Documentation', href: '/docs' }
+        ]}
+      >
+    <div slot="logo" class="flex items-center gap-2">
+      <TwintrinsicLogo size="2rem" class="text-primary-500" />
+      <span class="font-semibold">Twintrinsic</span>
+    </div>
+  </AppHeader>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {#each components.slice(0, 3) as component}
+        <Panel>
+          <svelte:fragment slot="header">
+            {component.name}
+          </svelte:fragment>
+          <p class="text-muted">{component.description}</p>
+          <svelte:fragment slot="footer">
+            <a
+              href="/docs/components/{component.name.toLowerCase()}"
+              class="text-sm text-primary-500 hover:text-primary-600 font-medium"
+            >
+              Learn more →
+            </a>
+          </svelte:fragment>
+        </Panel>
+      {/each}
+    </div>
+  </div>
+</Container>
 
 <!-- Features Section -->
-<section class="py-16 sm:py-24 bg-surface">
-  <Container>
-    <div class="text-center mb-16" transition:fade={{ duration: 500 }}>
-      <h2 class="text-3xl sm:text-4xl font-bold">
-        Everything you need to build modern web apps
-      </h2>
-      <p class="mt-4 text-lg text-muted">
-        A comprehensive suite of components built with accessibility and customization in mind
-      </p>
-    </div>
+<Container fluid class="py-16 sm:py-24">
+  <div class="text-center mb-16" transition:fade={{ duration: 500 }}>
+    <h2 class="text-3xl sm:text-4xl font-bold">
+      Everything you need to build modern web apps
+    </h2>
+    <p class="mt-4 text-lg text-muted">
+      A comprehensive suite of components built with accessibility and customization in mind
+    </p>
+  </div>
 
-    <div
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-      transition:fade={{ duration: 500, delay: 200 }}
-    >
-      {#each features as feature, i}
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+    transition:fade={{ duration: 500, delay: 200 }}
+  >
+    {#each features as feature, i}
+      <div
+        class="flex gap-4 p-6 rounded-lg bg-background border border-border hover:border-primary-500/50 transition-colors"
+        transition:fly={{ y: 20, delay: 300 + i * 100 }}
+      >
         <div
-          class="flex gap-4 p-6 rounded-lg bg-background border border-border hover:border-primary-500/50 transition-colors"
-          transition:fly={{ y: 20, delay: 300 + i * 100 }}
+          class="flex-shrink-0 w-12 h-12 rounded-lg bg-primary-500/10 text-primary-500 flex items-center justify-center"
         >
-          <div
-            class="flex-shrink-0 w-12 h-12 rounded-lg bg-primary-500/10 text-primary-500 flex items-center justify-center"
-          >
-            {@html feature.icon}
-          </div>
-          <div>
-            <h3 class="text-lg font-medium mb-2">{feature.title}</h3>
-            <p class="text-muted">{feature.description}</p>
-          </div>
+          {@html feature.icon}
         </div>
-      {/each}
-    </div>
-  </Container>
-</section>
+        <div>
+          <h3 class="text-lg font-medium mb-2">{feature.title}</h3>
+          <p class="text-muted">{feature.description}</p>
+        </div>
+      </div>
+    {/each}
+  </div>
+</Container>
 
 <!-- Components Overview -->
-<section class="py-16 sm:py-24">
-  <Container>
-    <div class="text-center mb-16" transition:fade={{ duration: 500 }}>
-      <h2 class="text-3xl sm:text-4xl font-bold">
-        Powerful components for every need
-      </h2>
-      <p class="mt-4 text-lg text-muted">
-        Start building faster with our growing collection of components
-      </p>
-    </div>
+<Container fluid class="py-16 sm:py-24">
+  <div class="text-center mb-16" transition:fade={{ duration: 500 }}>
+    <h2 class="text-3xl sm:text-4xl font-bold">
+      Powerful components for every need
+    </h2>
+    <p class="mt-4 text-lg text-muted">
+      Start building faster with our growing collection of components
+    </p>
+  </div>
 
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
-      transition:fade={{ duration: 500, delay: 200 }}
-    >
-      {#each components as component, i}
-        <a
-          href="/docs/components/{component.name.toLowerCase()}"
-          class="block p-4 rounded-lg bg-surface border border-border hover:border-primary-500/50 transition-colors"
-          transition:fly={{ y: 20, delay: 300 + i * 100 }}
-        >
-          <h3 class="font-medium mb-1">{component.name}</h3>
-          <p class="text-sm text-muted">{component.description}</p>
-        </a>
-      {/each}
-    </div>
-  </Container>
-</section>
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+    transition:fade={{ duration: 500, delay: 200 }}
+  >
+    {#each components as component, i}
+      <a
+        href="/docs/components/{component.name.toLowerCase()}"
+        class="block p-4 rounded-lg bg-surface border border-border hover:border-primary-500/50 transition-colors"
+        transition:fly={{ y: 20, delay: 300 + i * 100 }}
+      >
+        <h3 class="font-medium mb-1">{component.name}</h3>
+        <p class="text-sm text-muted">{component.description}</p>
+      </a>
+    {/each}
+  </div>
+</Container>
 
 <!-- CTA Section -->
-<section class="py-16 sm:py-24 bg-gradient-to-b from-transparent to-primary-500/10">
-  <Container>
-    <div
-      class="text-center max-w-3xl mx-auto"
-      transition:fade={{ duration: 500 }}
-    >
-      <h2 class="text-3xl sm:text-4xl font-bold">
-        Ready to get started?
-      </h2>
-      <p class="mt-4 text-lg text-muted">
-        Join the growing community of developers building with Twintrinsic
-      </p>
-      <div class="mt-8 flex justify-center gap-4">
-        <a
-          href="/docs"
-          class="inline-flex items-center px-6 py-3 rounded-lg bg-primary-500 text-white font-medium hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors"
-        >
-          Read the docs
-        </a>
-        <a
-          href="/docs/components"
-          class="inline-flex items-center px-6 py-3 rounded-lg bg-surface text-text font-medium hover:bg-hover focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors"
-        >
-          Browse components
-        </a>
-      </div>
+<Container fluid class="py-16 sm:py-24 bg-gradient-to-b from-transparent to-primary-500/10">
+  <div
+    class="text-center max-w-3xl mx-auto"
+    transition:fade={{ duration: 500 }}
+  >
+    <h2 class="text-3xl sm:text-4xl font-bold">
+      Ready to get started?
+    </h2>
+    <p class="mt-4 text-lg text-muted">
+      Join the growing community of developers building with Twintrinsic
+    </p>
+    <div class="mt-8 flex justify-center gap-4">
+      <a
+        href="/docs"
+        class="inline-flex items-center px-6 py-3 rounded-lg bg-primary-500 text-white font-medium hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors"
+      >
+        Read the docs
+      </a>
+      <a
+        href="/docs/components"
+        class="inline-flex items-center px-6 py-3 rounded-lg bg-surface text-text font-medium hover:bg-hover focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors"
+      >
+        Browse components
+      </a>
     </div>
-  </Container>
-</section>
+  </div>
+</Container>
