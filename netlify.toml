@@ -3,5 +3,5 @@
   publish = ".netlify/functions/server"
 
 [dev]
-  command = "npm run dev"
+  command = "pnpm run dev"
   targetPort = 5173
