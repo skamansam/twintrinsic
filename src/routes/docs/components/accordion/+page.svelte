@@ -2,6 +2,10 @@
 @component
 Documentation page for the Accordion component
 -->
+
+<style>
+  @reference '$lib/twintrinsic.css';
+</style>
 <script>
   import Accordion from '$lib/components/Panel/Accordion.svelte';
   import Panel from '$lib/components/Panel/Panel.svelte';

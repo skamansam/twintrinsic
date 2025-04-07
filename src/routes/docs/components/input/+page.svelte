@@ -264,6 +264,7 @@ Documentation page for the Input component.
 </ul>
 
 <style>
+  @reference '$lib/twintrinsic.css';
   .example {
     @apply my-4 p-4 border border-border rounded-md;
     @apply flex flex-col gap-4 max-w-md;

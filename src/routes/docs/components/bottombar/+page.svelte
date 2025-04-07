@@ -2,6 +2,10 @@
 @component
 BottomBar documentation page
 -->
+
+<style>
+  @reference '$lib/twintrinsic.css';
+</style>
 <script>
   import Container from '$lib/components/Container/Container.svelte';
   import BottomBar from '$lib/components/BottomBar/BottomBar.svelte';

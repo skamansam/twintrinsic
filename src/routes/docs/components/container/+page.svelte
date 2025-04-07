@@ -2,6 +2,10 @@
 @component
 Container documentation page
 -->
+
+<style>
+  @reference '$lib/twintrinsic.css';
+</style>
 <script>
   import Container from '$lib/components/Container/Container.svelte';
 </script>
