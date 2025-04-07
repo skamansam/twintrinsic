@@ -22,6 +22,37 @@
   --color-border: #e2e8f0;
   --color-shadow: rgba(0, 0, 0, 0.1);
 
+  /* Semantic Colors */
+  --color-primary: var(--color-primary-500);
+  --color-primary-bg: var(--color-primary-50);
+  --color-primary-hover: var(--color-primary-600);
+  --color-primary-text: #ffffff;
+  --color-primary-bold: var(--color-primary-700);
+
+  --color-success: #22c55e;
+  --color-success-bg: #f0fdf4;
+  --color-success-hover: #16a34a;
+  --color-success-text: #166534;
+  --color-success-bold: #15803d;
+
+  --color-warning: #f59e0b;
+  --color-warning-bg: #fffbeb;
+  --color-warning-hover: #d97706;
+  --color-warning-text: #92400e;
+  --color-warning-bold: #b45309;
+
+  --color-error: #ef4444;
+  --color-error-bg: #fef2f2;
+  --color-error-hover: #dc2626;
+  --color-error-text: #991b1b;
+  --color-error-bold: #b91c1c;
+
+  --color-info: #3b82f6;
+  --color-info-bg: #eff6ff;
+  --color-info-hover: #2563eb;
+  --color-info-text: #1e40af;
+  --color-info-bold: #1d4ed8;
+
   /* Interactive States */
   --color-hover: #f8f7ff;
   --color-focus-ring: #c4b5fd;

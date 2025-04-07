@@ -3,8 +3,8 @@
 Documentation page for the Checkbox component.
 -->
 <script>
-  import { Checkbox } from '$lib/components';
-  import { CodeBlock, PropsTable, EventsTable } from '$lib/docs';
+  import { Checkbox, CodeBlock } from '$lib/index.js';
+  import { PropsTable, EventsTable } from '$lib/docs/index.js';
 </script>
 
 <h1>Checkbox</h1>

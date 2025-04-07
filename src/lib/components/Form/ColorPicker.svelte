@@ -7,7 +7,7 @@ Usage:
 ```svelte
 <ColorPicker
   value="#FF0000"
-  on:change={handleChange}
+  onchange={handleChange}
 />
 
 <ColorPicker
@@ -254,17 +254,17 @@ Usage:
 <div
   class="color-picker {className}"
   use:clickOutside
-  on:clickOutside={() => showPicker = false}
+  onclickOutside={() => showPicker = false}
 >
   <Input
     {label}
     {disabled}
     {error}
     value={inputValue}
-    on:input={handleInput}
-    on:click={() => showPicker = !showPicker}
+    oninput={handleInput}
+    onclick={() => showPicker = !showPicker}
     rightIcon="palette"
-    on:rightIconClick={() => showPicker = !showPicker}
+    onrightIconClick={() => showPicker = !showPicker}
   />
   
   {#if showPicker}
@@ -277,8 +277,8 @@ Usage:
       <div
         class="color-wheel"
         bind:this={pickerRef}
-        on:mousedown={handleColorWheel}
-        on:mousemove={event => {
+        onmousedown={handleColorWheel}
+        onmousemove={event => {
           if (event.buttons === 1) handleColorWheel(event);
         }}
         style="
@@ -299,7 +299,7 @@ Usage:
             max="100"
             value={lightness}
             disabled={disabled}
-            on:input={handleLightness}
+            oninput={handleLightness}
           />
         </label>
         
@@ -312,7 +312,7 @@ Usage:
               max="100"
               value={alpha}
               disabled={disabled}
-              on:input={handleAlpha}
+              oninput={handleAlpha}
             />
           </label>
         {/if}

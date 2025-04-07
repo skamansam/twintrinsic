@@ -247,7 +247,7 @@ Usage:
                   <hr class="app-header-user-menu-separator" />
                   <button
                     type="button"
-                    class="app-header-user-menu-item text-error-500"
+                    class="app-header-user-menu-item text-error-bold"
                     click={() => dispatch('signout')}
                   >
                     Sign out

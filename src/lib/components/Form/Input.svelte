@@ -21,7 +21,7 @@ Usage:
   type="password"
   leftIcon="lock"
   rightIcon="eye"
-  on:rightIconClick={togglePassword}
+  onrightIconClick={togglePassword}
 />
 ```
 -->
@@ -181,7 +181,7 @@ Usage:
       <button
         type="button"
         class="form-input-icon form-input-icon-left"
-        on:click={handleLeftIconClick}
+        onclick={handleLeftIconClick}
         tabindex="-1"
         aria-hidden="true"
       >
@@ -201,16 +201,16 @@ Usage:
       {required}
       aria-invalid={!!error}
       aria-describedby={error || helpText ? `${id}-description` : undefined}
-      on:focus={handleFocus}
-      on:blur={handleBlur}
-      on:input={handleInput}
+      onfocus={handleFocus}
+      onblur={handleBlur}
+      oninput={handleInput}
     />
 
     {#if rightIcon}
       <button
         type="button"
         class="form-input-icon form-input-icon-right"
-        on:click={handleRightIconClick}
+        onclick={handleRightIconClick}
         tabindex="-1"
         aria-hidden="true"
       >
@@ -245,7 +245,7 @@ Usage:
   }
 
   .form-input-label-error {
-    @apply text-error-500;
+    @apply text-error-bold;
   }
 
   .form-input-label-disabled {
@@ -253,7 +253,7 @@ Usage:
   }
 
   .form-input-required {
-    @apply text-error-500 ml-1;
+    @apply text-error-bold ml-1;
   }
 
   /* Input wrapper */
@@ -275,8 +275,8 @@ Usage:
   }
 
   .form-input-field-error {
-    @apply border-error-500;
-    @apply focus:ring-error-500 focus:border-error-500;
+    @apply border-error-bold;
+    @apply focus:ring-error-bold focus:border-error-bold;
   }
 
   /* Icons */
@@ -291,7 +291,7 @@ Usage:
   .form-input-icon {
     @apply absolute inset-y-0 flex items-center;
     @apply p-2 text-muted transition-colors;
-    @apply hover:text-foreground focus:outline-none;
+    @apply hover:text-primary-text focus:outline-none;
   }
 
   .form-input-icon-left {
@@ -323,6 +323,6 @@ Usage:
   }
 
   .form-input-error-text {
-    @apply text-error-500;
+    @apply text-error-bold;
   }
 </style>

@@ -74,8 +74,8 @@ Usage:
   {id}
   role={clickable ? 'button' : 'article'}
   aria-label={ariaLabel}
-  on:click={handleClick}
-  on:keydown={event => {
+  onclick={handleClick}
+  onkeydown={event => {
     if (clickable && (event.key === 'Enter' || event.key === ' ')) {
       event.preventDefault();
       handleClick(event);

@@ -81,7 +81,10 @@
     "svelte"
   ],
   "dependencies": {
-    "@inlang/paraglide-js": "^2.0.0"
+    "@inlang/paraglide-js": "^2.0.0",
+    "prism-svelte": "^0.5.0",
+    "prismjs": "^1.30.0",
+    "prismjs-themes": "^2.0.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

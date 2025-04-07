@@ -3,8 +3,8 @@
 Documentation page for the AutoComplete component.
 -->
 <script>
-  import { AutoComplete } from '$lib/components';
-  import { CodeBlock, PropsTable, EventsTable } from '$lib/docs';
+  import { AutoComplete, CodeBlock } from '$lib/index.js';
+  import { PropsTable, EventsTable } from '$lib/docs/index.js';
 
   const countries = [
     { label: 'United States', value: 'US' },

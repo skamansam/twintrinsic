@@ -67,7 +67,7 @@ BottomBar documentation page
         <div class="font-mono text-sm p-4 space-y-2">
           <p class="text-success-500">✓ Build completed successfully</p>
           <p class="text-warning-500">⚠ Unused variable detected</p>
-          <p class="text-error-500">✕ Failed to load resource</p>
+          <p class="text-error-bold">✕ Failed to load resource</p>
           <p>> Loading dependencies...</p>
           <p>> Starting development server...</p>
           <p class="text-success-500">✓ Server is running on port 3000</p>

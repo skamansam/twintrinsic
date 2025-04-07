@@ -8,7 +8,7 @@ Usage:
 <Select
   label="Country"
   options={countries}
-  on:change={handleChange}
+  onchange={handleChange}
 />
 
 <Select
@@ -22,7 +22,7 @@ Usage:
 <script>
   import { createEventDispatcher } from 'svelte';
   import { slide } from 'svelte/transition';
-  import { clickOutside } from '$lib/actions';
+  import { clickOutside } from '$lib/actions/index.js';
 
   const dispatch = createEventDispatcher();
 
@@ -163,7 +163,8 @@ Usage:
   }
 
   // Clear selection
-  function clearSelection() {
+  function clearSelection(event) {
+    event.stopPropagation();
     if (disabled) return;
     selectedValues = [];
     dispatch('change', { value: multiple ? [] : '' });
@@ -192,7 +193,7 @@ Usage:
   class:select-error={!!error}
   class:select-disabled={disabled}
   use:clickOutside
-  on:clickOutside={() => showDropdown = false}
+  onclickOutside={() => showDropdown = false}
 >
   <label class="select-label">
     {#if label}
@@ -215,8 +216,8 @@ Usage:
       aria-invalid={!!error}
       aria-describedby={error ? 'select-error' : undefined}
       tabindex={disabled ? -1 : 0}
-      on:click={() => !disabled && (showDropdown = !showDropdown)}
-      on:keydown={handleKeydown}
+      onclick={() => !disabled && (showDropdown = !showDropdown)}
+      onkeydown={handleKeydown}
     >
       <div class="select-value">
         {#if selectedValues.length}
@@ -226,7 +227,7 @@ Usage:
               type="button"
               class="select-clear"
               aria-label="Clear selection"
-              on:click|stopPropagation={clearSelection}
+              onclick={clearSelection}
             >
               ×
             </button>
@@ -278,7 +279,7 @@ Usage:
             type="text"
             placeholder="Search..."
             bind:value={searchValue}
-            on:click|stopPropagation
+            onclick={event => event.stopPropagation()}
           />
         </div>
       {/if}
@@ -295,7 +296,7 @@ Usage:
                   class:select-option-focused={focusedIndex === index}
                   role="option"
                   aria-selected={selectedValues.includes(option.value)}
-                  on:click={() => selectOption(option)}
+                  onclick={() => selectOption(option)}
                 >
                   {option.label}
                 </div>
@@ -309,7 +310,7 @@ Usage:
                 class:select-option-focused={focusedIndex === index}
                 role="option"
                 aria-selected={selectedValues.includes(option.value)}
-                on:click={() => selectOption(option)}
+                onclick={() => selectOption(option)}
               >
                 {option.label}
               </div>
@@ -375,8 +376,8 @@ Usage:
   }
 
   .select-clear {
-    @apply ml-2 text-lg text-muted hover:text-body;
-    @apply focus:outline-none focus:text-body;
+    @apply ml-2 text-lg text-muted hover:text-primary-text;
+    @apply focus:outline-none focus:text-primary-text;
   }
 
   .select-indicator {

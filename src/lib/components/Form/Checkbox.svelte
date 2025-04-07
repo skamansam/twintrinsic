@@ -7,7 +7,7 @@ Usage:
 ```svelte
 <Checkbox
   label="Accept terms"
-  on:change={handleChange}
+  onchange={handleChange}
 />
 
 <Checkbox
@@ -78,7 +78,7 @@ Usage:
       {required}
       aria-invalid={!!error}
       aria-describedby={error ? `${name}-error` : undefined}
-      on:change={handleChange}
+      onchange={handleChange}
     />
     <span class="checkbox-control" aria-hidden="true">
       {#if checked && !indeterminate}
@@ -142,7 +142,7 @@ Usage:
     @apply flex items-center justify-center;
     @apply w-5 h-5 rounded;
     @apply border-2 border-border;
-    @apply text-primary-foreground;
+    @apply text-primary;
     @apply transition-colors;
   }
 
@@ -164,15 +164,15 @@ Usage:
 
   /* Error state */
   .checkbox-error .checkbox-control {
-    @apply border-error-500;
+    @apply border-error;
   }
 
   .checkbox-error:hover .checkbox-control {
-    @apply border-error-600;
+    @apply border-error-bold;
   }
 
   .checkbox-error input:checked + .checkbox-control {
-    @apply bg-error-500 border-error-500;
+    @apply bg-error border-error-bold;
   }
 
   /* Label */
@@ -181,7 +181,7 @@ Usage:
   }
 
   .checkbox-required {
-    @apply ml-1 text-error-500;
+    @apply ml-1 text-error;
   }
 
   /* Description */
@@ -192,7 +192,7 @@ Usage:
 
   /* Error message */
   .checkbox-error-text {
-    @apply text-sm text-error-500;
+    @apply text-sm text-error;
     @apply pl-7; /* Align with label text */
   }
 </style>

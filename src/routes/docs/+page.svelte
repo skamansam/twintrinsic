@@ -88,7 +88,7 @@ import { Container, AppHeader } from 'twintrinsic';`}</code></pre>
   --color-border: 229 231 235;        /* Gray 200 */
   --color-text: 17 24 39;            /* Gray 900 */
   --color-muted: 107 114 128;        /* Gray 500 */
-  --color-error-500: 239 68 68;      /* Red */
+  --color-error-bold: 239 68 68;      /* Red */
 }`}</code></pre>
 
   <h2>Dark Mode</h2>

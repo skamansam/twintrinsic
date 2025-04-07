@@ -128,7 +128,7 @@ Theming documentation page
   --color-secondary-500: 99 102 241;
 
   /* Error colors */
-  --color-error-500: 239 68 68;
+  --color-error-bold: 239 68 68;
 
   /* Success colors */
   --color-success-500: 34 197 94;

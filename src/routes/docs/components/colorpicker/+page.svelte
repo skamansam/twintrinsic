@@ -3,8 +3,8 @@
 Documentation page for the ColorPicker component.
 -->
 <script>
-  import { ColorPicker } from '$lib/components';
-  import { CodeBlock, PropsTable, EventsTable } from '$lib/docs';
+  import { ColorPicker, v } from '$lib/index.js';
+  import { PropsTable, EventsTable } from '$lib/docs/index.js';
 </script>
 
 <h1>ColorPicker</h1>

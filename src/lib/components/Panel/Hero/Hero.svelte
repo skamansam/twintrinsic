@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Section } from '../../';
+	import Container from '../../Container/Container.svelte';
 	let propClasses = '';
 	export let heading: string | null = '';
 	export let type: TypeLevel = null;
@@ -8,12 +8,13 @@
 	export { propClasses as class };
 </script>
 
-<Section {...$$restProps} class="twin-hero {typeClass} {propClasses}  ">
+<Container as="section" {...$$restProps} class="twin-hero {typeClass} {propClasses}  ">
 	<h1 slot="heading">{heading}</h1>
 	<slot></slot>
-</Section>
+</Container>
 
 <style>
+	@reference "../../../twintrinsic.css";
 	:global(.twin-hero) {
 		@apply p-4;
 	}

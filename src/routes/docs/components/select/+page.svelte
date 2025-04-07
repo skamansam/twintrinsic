@@ -3,8 +3,8 @@
 Documentation page for the Select component.
 -->
 <script>
-  import { Select } from '$lib/components';
-  import { CodeBlock, PropsTable, EventsTable } from '$lib/docs';
+  import { Select, CodeBlock } from '$lib/index.js';
+  import { PropsTable, EventsTable } from '$lib/docs/index.js';
 
   const countries = [
     { value: 'us', label: 'United States' },

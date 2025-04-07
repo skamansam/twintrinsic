@@ -40,7 +40,7 @@ Documentation site layout with left navigation, right theme sidebar, and header
     { name: 'Border', value: 'rgb(var(--color-border))' },
     { name: 'Text', value: 'rgb(var(--color-text))' },
     { name: 'Muted', value: 'rgb(var(--color-muted))' },
-    { name: 'Error', value: 'rgb(var(--color-error-500))' },
+    { name: 'Error', value: 'rgb(var(--color-error-bold))' },
   ];
 </script>
 
@@ -58,7 +58,7 @@ Documentation site layout with left navigation, right theme sidebar, and header
         <button
           type="button"
           class="lg:hidden -ml-2 p-2 rounded-md text-muted hover:text-text focus:outline-none focus:ring-2 focus:ring-primary-500"
-          on:click={() => leftSidebarExpanded = !leftSidebarExpanded}
+          onclick={() => leftSidebarExpanded = !leftSidebarExpanded}
           aria-label="Toggle navigation menu"
         >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

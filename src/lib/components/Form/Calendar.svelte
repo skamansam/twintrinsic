@@ -7,7 +7,7 @@ Usage:
 ```svelte
 <Calendar
   value={selectedDate}
-  on:select={handleSelect}
+  onselect={handleSelect}
 />
 
 <Calendar
@@ -15,7 +15,7 @@ Usage:
   range={true}
   minDate={minDate}
   maxDate={maxDate}
-  on:select={handleRangeSelect}
+  onselect={handleRangeSelect}
 />
 ```
 -->
@@ -254,7 +254,7 @@ Usage:
 <div
   class="calendar-container {className}"
   use:clickOutside
-  on:clickOutside={() => showCalendar = false}
+  onclickOutside={() => showCalendar = false}
 >
   <Input
     {label}
@@ -262,8 +262,8 @@ Usage:
     value={inputValue}
     readonly
     rightIcon="calendar"
-    on:click={() => showCalendar = !showCalendar}
-    on:rightIconClick={() => showCalendar = !showCalendar}
+    onclick={() => showCalendar = !showCalendar}
+    onrightIconClick={() => showCalendar = !showCalendar}
   />
   
   {#if showCalendar}
@@ -272,13 +272,13 @@ Usage:
       role="dialog"
       aria-label="Calendar"
       transition:slide={{ duration: 150 }}
-      on:keydown={handleKeydown}
+      onkeydown={handleKeydown}
     >
       <div class="calendar-header">
         <button
           type="button"
           class="calendar-nav-btn"
-          on:click={() => navigateMonth(-1)}
+          onclick={() => navigateMonth(-1)}
           aria-label="Previous month"
           disabled={disabled}
         >
@@ -294,7 +294,7 @@ Usage:
         <button
           type="button"
           class="calendar-nav-btn"
-          on:click={() => navigateMonth(1)}
+          onclick={() => navigateMonth(1)}
           aria-label="Next month"
           disabled={disabled}
         >
@@ -336,8 +336,8 @@ Usage:
                     <button
                       type="button"
                       disabled={isDisabled(day)}
-                      on:click={() => handleDateSelect(day)}
-                      on:mouseenter={() => handleDateHover(day)}
+                      onclick={() => handleDateSelect(day)}
+                      onmouseenter={() => handleDateHover(day)}
                       aria-label={formatDate(day)}
                       aria-selected={isSelected(day)}
                     >
@@ -404,8 +404,8 @@ Usage:
   }
 
   .calendar-day-selected button {
-    @apply bg-primary-500 text-primary-foreground;
-    @apply hover:bg-primary-600 focus:bg-primary-600;
+    @apply bg-primary text-primary-text;
+    @apply hover:bg-primary-hover focus:bg-primary-hover;
   }
 
   .calendar-day-in-range {

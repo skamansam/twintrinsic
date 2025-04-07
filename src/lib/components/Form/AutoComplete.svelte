@@ -8,7 +8,7 @@ Usage:
 <AutoComplete
   label="Country"
   items={countries}
-  on:select={handleSelect}
+  onselect={handleSelect}
 />
 
 <AutoComplete
@@ -230,17 +230,17 @@ Usage:
 <div
   class="autocomplete {className}"
   use:clickOutside
-  on:clickOutside={() => showSuggestions = false}
+  onclickOutside={() => showSuggestions = false}
 >
   <Input
     {label}
     {placeholder}
     {disabled}
     value={inputValue}
-    on:input={handleInput}
-    on:focus={handleFocus}
-    on:blur={handleBlur}
-    on:keydown={handleKeydown}
+    oninput={handleInput}
+    onfocus={handleFocus}
+    onblur={handleBlur}
+    onkeydown={handleKeydown}
   />
   
   {#if multiple && selectedItems.length > 0}
@@ -251,7 +251,7 @@ Usage:
           <button
             type="button"
             class="autocomplete-chip-remove"
-            on:click={() => removeItem(item)}
+            onclick={() => removeItem(item)}
             aria-label="Remove {getItemLabel(item)}"
           >
             <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
@@ -280,8 +280,8 @@ Usage:
             class:autocomplete-item-highlighted={index === highlightedIndex}
             role="option"
             aria-selected={index === highlightedIndex}
-            on:mouseenter={() => highlightedIndex = index}
-            on:click={() => selectItem(item)}
+            onmouseenter={() => highlightedIndex = index}
+            onclick={() => selectItem(item)}
           >
             {#if itemTemplate}
               <svelte:component this={itemTemplate} {item} />
@@ -352,7 +352,7 @@ Usage:
   }
 
   .autocomplete-chip-remove {
-    @apply p-0.5 hover:text-error-500 focus:outline-none;
-    @apply focus:text-error-500 transition-colors;
+    @apply p-0.5 hover:text-error focus:outline-none;
+    @apply focus:text-error transition-colors;
   }
 </style>
