@@ -29,7 +29,6 @@ Documentation site layout with left navigation, right theme sidebar, and header
     { name: 'Panel', href: '/docs/components/panel' },
     { name: 'Separator', href: '/docs/components/separator' },
     { name: 'Sidebar', href: '/docs/components/sidebar' },
-    { name: 'ViewerHeader', href: '/docs/components/viewerheader' },
   ];
 
   // Theme colors for the right sidebar

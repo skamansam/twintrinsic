@@ -67,7 +67,6 @@ import { Container, AppHeader } from 'twintrinsic';`}</code></pre>
         <li>Panel - Collapsible content panel</li>
         <li>ButtonDropdown - Accessible dropdown menu</li>
         <li>Separator - Visual divider with optional content</li>
-        <li>ViewerHeader - Document viewer header</li>
       </ul>
     </div>
   </div>

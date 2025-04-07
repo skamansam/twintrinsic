@@ -40,11 +40,6 @@ Components overview page
           name: 'ButtonDropdown',
           description: 'Accessible dropdown menu with customizable items',
           href: '/docs/components/buttondropdown'
-        },
-        {
-          name: 'ViewerHeader',
-          description: 'Document viewer header with navigation controls',
-          href: '/docs/components/viewerheader'
         }
       ]
     },

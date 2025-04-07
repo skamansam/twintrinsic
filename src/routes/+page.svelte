@@ -47,7 +47,6 @@ const components = [
 	{ name: 'Panel', description: 'Content panel with header and footer' },
 	{ name: 'Container', description: 'Responsive container' },
 	{ name: 'Separator', description: 'Visual divider with content' },
-	{ name: 'ViewerHeader', description: 'Document viewer header' }
 ]
 </script>
 
