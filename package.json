@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build && npm run prepack",
+    "build": "vite build",
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
     "prepack": "svelte-kit sync && svelte-package && publint",
@@ -50,6 +50,7 @@
     "@storybook/svelte": "^8.6.12",
     "@storybook/sveltekit": "^8.6.12",
     "@storybook/test": "^8.6.12",
+    "@sveltejs/adapter-netlify": "^5.0.0",
     "@sveltejs/adapter-vercel": "^5.6.3",
     "@sveltejs/kit": "^2.16.0",
     "@sveltejs/package": "^2.0.0",

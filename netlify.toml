@@ -1,12 +1,7 @@
 [build]
-  command = "npm run build"
-  publish = "dist"
+  command = "pnpm install && pnpm build"
+  publish = ".netlify/functions/server"
 
 [dev]
   command = "npm run dev"
   targetPort = 5173
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
