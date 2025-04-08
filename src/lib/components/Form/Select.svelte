@@ -51,7 +51,7 @@ Usage:
   let searchValue = $state('');
   let selectedValues = $state([]);
   let focusedIndex = $state(-1);
-  let dropdownRef;
+  let dropdownRef = $state(null);
 
   // Initialize selected values
   $effect(() => {

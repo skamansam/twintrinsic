@@ -18,6 +18,7 @@
 
 # Tailwind
 - instead of creating inline colors, add them to the @theme rule in the lib/twintrinsic.css
+- we need to @reference the twintrinsic css in all our components
 
 # Testing
 - for every component, we want to create a new storybook story for it

@@ -118,11 +118,11 @@
 		"formatter": {
 			"jsxQuoteStyle": "double",
 			"quoteProperties": "asNeeded",
-			"trailingCommas": "none",
+			"trailingCommas": "es5",
 			"semicolons": "asNeeded",
 			"arrowParentheses": "always",
 			"bracketSameLine": false,
-			"quoteStyle": "single",
+			"quoteStyle": "double",
 			"attributePosition": "auto",
 			"bracketSpacing": true
 		},
@@ -271,10 +271,14 @@
 						"noUnreachable": "off",
 						"noUnreachableSuper": "off"
 					},
+					"nursery": {
+						"useSortedClasses": "error"
+					},
 					"style": {
 						"noArguments": "error",
 						"noVar": "error",
-						"useConst": "error"
+						"useConst": "off",
+						"useImportType": "off"
 					},
 					"suspicious": {
 						"noClassAssign": "off",
@@ -300,12 +304,7 @@
 			}
 		},
 		{
-			"include": [
-				"*.svelte.js",
-				"*.svelte.ts",
-				"**/*.svelte.js",
-				"**/*.svelte.ts"
-			],
+			"include": ["*.svelte.js", "*.svelte.ts", "**/*.svelte.js", "**/*.svelte.ts"],
 			"javascript": { "globals": [] }
 		},
 		{
@@ -318,12 +317,7 @@
 			}
 		},
 		{
-			"include": [
-				"*.svelte.js",
-				"*.svelte.ts",
-				"**/*.svelte.js",
-				"**/*.svelte.ts"
-			],
+			"include": ["*.svelte.js", "*.svelte.ts", "**/*.svelte.js", "**/*.svelte.ts"],
 			"javascript": { "globals": [] }
 		},
 		{
