@@ -3,62 +3,62 @@
 Components overview page
 -->
 <script>
-  import Container from '$lib/components/Container/Container.svelte';
-  import Separator from '$lib/components/Separator/Separator.svelte';
-  import Panel from '$lib/components/Panel/Panel.svelte';
+import Container from "$lib/components/Container/Container.svelte"
+import Separator from "$lib/components/Separator/Separator.svelte"
+import Panel from "$lib/components/Panel/Panel.svelte"
 
-  const components = [
-    {
-      name: 'Layout',
-      items: [
-        {
-          name: 'AppHeader',
-          description: 'Application header with navigation, search, and user menu',
-          href: '/docs/components/appheader'
-        },
-        {
-          name: 'Sidebar',
-          description: 'Collapsible side panel with customizable content',
-          href: '/docs/components/sidebar'
-        },
-        {
-          name: 'BottomBar',
-          description: 'Collapsible bottom panel with customizable content',
-          href: '/docs/components/bottombar'
-        },
-        {
-          name: 'Container',
-          description: 'Responsive container with consistent padding',
-          href: '/docs/components/container'
-        }
-      ]
-    },
-    {
-      name: 'Navigation',
-      items: [
-        {
-          name: 'ButtonDropdown',
-          description: 'Accessible dropdown menu with customizable items',
-          href: '/docs/components/buttondropdown'
-        }
-      ]
-    },
-    {
-      name: 'UI Elements',
-      items: [
-        {
-          name: 'Panel',
-          description: 'Collapsible content panel with header and footer slots',
-          href: '/docs/components/panel'
-        },
-        {
-          name: 'Separator',
-          description: 'Visual divider with optional content',
-          href: '/docs/components/separator'
-        }
-      ]
-    }
-  ];
+const components = [
+  {
+    name: "Layout",
+    items: [
+      {
+        name: "AppHeader",
+        description: "Application header with navigation, search, and user menu",
+        href: "/docs/components/appheader",
+      },
+      {
+        name: "Sidebar",
+        description: "Collapsible side panel with customizable content",
+        href: "/docs/components/sidebar",
+      },
+      {
+        name: "BottomBar",
+        description: "Collapsible bottom panel with customizable content",
+        href: "/docs/components/bottombar",
+      },
+      {
+        name: "Container",
+        description: "Responsive container with consistent padding",
+        href: "/docs/components/container",
+      },
+    ],
+  },
+  {
+    name: "Navigation",
+    items: [
+      {
+        name: "ButtonDropdown",
+        description: "Accessible dropdown menu with customizable items",
+        href: "/docs/components/buttondropdown",
+      },
+    ],
+  },
+  {
+    name: "UI Elements",
+    items: [
+      {
+        name: "Panel",
+        description: "Collapsible content panel with header and footer slots",
+        href: "/docs/components/panel",
+      },
+      {
+        name: "Separator",
+        description: "Visual divider with optional content",
+        href: "/docs/components/separator",
+      },
+    ],
+  },
+]
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

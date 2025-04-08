@@ -24,72 +24,72 @@ Usage:
 ```
 -->
 <script>
-  import { onMount } from 'svelte';
+import { onMount } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - ARIA label */
-    ariaLabel = 'Accordion',
+  /** @type {string} - ARIA label */
+  ariaLabel = "Accordion",
 
-    /** @type {boolean} - Whether to allow multiple panels to be expanded */
-    multiple = false,
+  /** @type {boolean} - Whether to allow multiple panels to be expanded */
+  multiple = false,
 
-    /** @type {boolean} - Whether to add dividers between panels */
-    dividers = true,
+  /** @type {boolean} - Whether to add dividers between panels */
+  dividers = true,
 
-    /** @type {boolean} - Whether to disable all panels */
-    disabled = false,
+  /** @type {boolean} - Whether to disable all panels */
+  disabled = false,
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  let panels = $state([]);
-  let activePanel = $state(null);
+let panels = $state([])
+let activePanel = $state(null)
 
-  // Register a panel with the accordion
-  function registerPanel(panel) {
-    panels = [...panels, panel];
-    return () => {
-      panels = panels.filter(p => p !== panel);
-    };
+// Register a panel with the accordion
+function registerPanel(panel) {
+  panels = [...panels, panel]
+  return () => {
+    panels = panels.filter((p) => p !== panel)
   }
+}
 
-  // Handle panel toggle
-  function handlePanelToggle(panel, expanded) {
-    if (!multiple) {
-      // If not multiple, collapse other panels
-      panels.forEach(p => {
-        if (p !== panel && p.isExpanded) {
-          p.collapse();
-        }
-      });
-    }
-
-    // Update active panel
-    activePanel = expanded ? panel : null;
-
-    // Dispatch event
-    const customEvent = new CustomEvent('change', {
-      detail: {
-        panel,
-        expanded,
-        activePanels: panels.filter(p => p.isExpanded)
+// Handle panel toggle
+function handlePanelToggle(panel, expanded) {
+  if (!multiple) {
+    // If not multiple, collapse other panels
+    panels.forEach((p) => {
+      if (p !== panel && p.isExpanded) {
+        p.collapse()
       }
-    });
-    this?.dispatchEvent(customEvent);
+    })
   }
 
-  // Context for child panels
-  const context = {
-    registerPanel,
-    onToggle: handlePanelToggle,
-    disabled
-  };
+  // Update active panel
+  activePanel = expanded ? panel : null
+
+  // Dispatch event
+  const customEvent = new CustomEvent("change", {
+    detail: {
+      panel,
+      expanded,
+      activePanels: panels.filter((p) => p.isExpanded),
+    },
+  })
+  this?.dispatchEvent(customEvent)
+}
+
+// Context for child panels
+const context = {
+  registerPanel,
+  onToggle: handlePanelToggle,
+  disabled,
+}
 </script>
 
 <div

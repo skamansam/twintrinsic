@@ -3,45 +3,49 @@
 Documentation site layout with left navigation, right theme sidebar, and header
 -->
 <script>
-  import App from '$lib/components/App/App.svelte';
-  import AppHeader from '$lib/components/AppHeader/AppHeader.svelte';
-  import Sidebar from '$lib/components/Sidebar/Sidebar.svelte';
-  import { page } from '$app/stores';
-  import TwintrinsicLogo from '$lib/components/icons/TwintrinsicLogo.svelte';
-  import ThemeToggle from '$lib/components/ThemeToggle/ThemeToggle.svelte';
+import App from "$lib/components/App/App.svelte"
+import AppHeader from "$lib/components/AppHeader/AppHeader.svelte"
+import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
+import { page } from "$app/stores"
+import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte"
+import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
 
-  const navItems = [
-    { label: 'Getting Started', href: '/docs', current: $page.url.pathname === '/docs' },
-    { label: 'Components', href: '/docs/components', current: $page.url.pathname.startsWith('/docs/components') },
-    { label: 'Theming', href: '/docs/theming', current: $page.url.pathname === '/docs/theming' },
-  ];
+const navItems = [
+  { label: "Getting Started", href: "/docs", current: $page.url.pathname === "/docs" },
+  {
+    label: "Components",
+    href: "/docs/components",
+    current: $page.url.pathname.startsWith("/docs/components"),
+  },
+  { label: "Theming", href: "/docs/theming", current: $page.url.pathname === "/docs/theming" },
+]
 
-  let leftSidebarExpanded = true;
-  let rightSidebarExpanded = true;
+let leftSidebarExpanded = true
+let rightSidebarExpanded = true
 
-  // Component links for the left sidebar
-  const componentLinks = [
-    { name: 'ThemeToggle', href: '/docs/components/themetoggle' },
-    { name: 'AppHeader', href: '/docs/components/appheader' },
-    { name: 'BottomBar', href: '/docs/components/bottombar' },
-    { name: 'ButtonDropdown', href: '/docs/components/buttondropdown' },
-    { name: 'Container', href: '/docs/components/container' },
-    { name: 'Panel', href: '/docs/components/panel' },
-    { name: 'Separator', href: '/docs/components/separator' },
-    { name: 'Sidebar', href: '/docs/components/sidebar' },
-  ];
+// Component links for the left sidebar
+const componentLinks = [
+  { name: "ThemeToggle", href: "/docs/components/themetoggle" },
+  { name: "AppHeader", href: "/docs/components/appheader" },
+  { name: "BottomBar", href: "/docs/components/bottombar" },
+  { name: "ButtonDropdown", href: "/docs/components/buttondropdown" },
+  { name: "Container", href: "/docs/components/container" },
+  { name: "Panel", href: "/docs/components/panel" },
+  { name: "Separator", href: "/docs/components/separator" },
+  { name: "Sidebar", href: "/docs/components/sidebar" },
+]
 
-  // Theme colors for the right sidebar
-  const themeColors = [
-    { name: 'Primary', value: 'rgb(var(--color-primary-500))' },
-    { name: 'Secondary', value: 'rgb(var(--color-secondary-500))' },
-    { name: 'Background', value: 'rgb(var(--color-background))' },
-    { name: 'Surface', value: 'rgb(var(--color-surface))' },
-    { name: 'Border', value: 'rgb(var(--color-border))' },
-    { name: 'Text', value: 'rgb(var(--color-text))' },
-    { name: 'Muted', value: 'rgb(var(--color-muted))' },
-    { name: 'Error', value: 'rgb(var(--color-error-bold))' },
-  ];
+// Theme colors for the right sidebar
+const themeColors = [
+  { name: "Primary", value: "rgb(var(--color-primary-500))" },
+  { name: "Secondary", value: "rgb(var(--color-secondary-500))" },
+  { name: "Background", value: "rgb(var(--color-background))" },
+  { name: "Surface", value: "rgb(var(--color-surface))" },
+  { name: "Border", value: "rgb(var(--color-border))" },
+  { name: "Text", value: "rgb(var(--color-text))" },
+  { name: "Muted", value: "rgb(var(--color-muted))" },
+  { name: "Error", value: "rgb(var(--color-error-bold))" },
+]
 </script>
 
 <App appName="Twintrinsic Documentation" leftPanelWidth="16rem">

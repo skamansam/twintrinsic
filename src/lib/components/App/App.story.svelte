@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { HstSvelte as Histoire } from '@histoire/plugin-svelte';
-	export let Hst: Histoire;
-	import App from './App.svelte';
+import type { HstSvelte as Histoire } from "@histoire/plugin-svelte"
+export let Hst: Histoire
+import App from "./App.svelte"
 
-	let appName = 'Twintrinsic Histoire App';
-	let mainContent = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam hic ipsa, quia labore assumenda quo aperiam! Harum, reiciendis nihil ad nostrum temporibus in et, nulla, facilis cumque itaque maxime laboriosam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium sequi in maiores eum modi veniam porro quas! Dolore magnam nulla explicabo itaque. Cupiditate, quidem! Adipisci iusto cum odit magni consequuntur.
+let appName = "Twintrinsic Histoire App"
+let mainContent = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam hic ipsa, quia labore assumenda quo aperiam! Harum, reiciendis nihil ad nostrum temporibus in et, nulla, facilis cumque itaque maxime laboriosam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium sequi in maiores eum modi veniam porro quas! Dolore magnam nulla explicabo itaque. Cupiditate, quidem! Adipisci iusto cum odit magni consequuntur.
   Porro veritatis culpa odio vel ullam excepturi amet? Repudiandae dignissimos ullam beatae unde cum inventore, recusandae dolore delectus quaerat reprehenderit doloribus officia, magnam asperiores neque expedita maxime eum, cumque voluptatibus.
   Et ipsa facere numquam. Nulla perspiciatis repellendus distinctio temporibus, rerum a, odit corporis beatae qui sequi suscipit voluptatum quibusdam voluptatem laborum dolores consectetur! Laboriosam totam quaerat ab, exercitationem doloribus sunt.
   Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus ullam, a similique autem dolorem esse voluptatibus repudiandae! Ipsam est ea accusamus? Dolore iusto amet, hic in nam odio necessitatibus? Odio.
@@ -38,58 +38,58 @@
   Veniam optio quae iusto dolore perspiciatis exercitationem, sint sit repudiandae illo vero ut atque doloremque, consectetur numquam ratione nam nisi fuga dignissimos soluta sunt praesentium iure maiores? Illo, excepturi corrupti?
   Illo voluptatibus eos sed iusto voluptatem amet aliquam beatae culpa possimus earum vel maxime nihil quod necessitatibus quasi laborum accusamus quam labore nostrum, ea pariatur distinctio. Laboriosam numquam quod rerum.
   Magnam excepturi quo non explicabo dignissimos, cupiditate nostrum esse officiis quisquam id molestiae eveniet incidunt provident dolorem error eius quidem reprehenderit illum quae vel consequatur debitis iusto! Aliquam, ea repellendus.
-  Velit veritatis inventore ut corporis qui vero, rem blanditiis, nihil magni odit excepturi atque, quisquam animi. Vero atque sapiente possimus quis magnam aperiam, earum deserunt fugiat quas omnis est aspernatur! Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore.`;
-	let menuContent =
-		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore.';
-	let headerContent =
-		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore.';
-	let rightContent =
-		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore.';
-	let leftContent =
-		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore.';
-	let footerContent =
-		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore.';
-	let darkMode = false;
-	let menu = {
-		'Hide Left Panel': () => {
-			leftContent = '';
-		},
-		'Show Left Panel': () => {
-			leftContent =
-				'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore.';
-		},
-		'Hide Right Panel': () => {
-			rightContent = '';
-		},
-		'Show Right Panel': () => {
-			rightContent =
-				'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore.';
-		},
-		'Hide Header': () => {
-			headerContent = '';
-		},
-		'Show Header': () => {
-			headerContent =
-				'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore.';
-		},
-		'Hide Footer': () => {
-			footerContent = '';
-		},
-		'Show Footer': () => {
-			footerContent =
-				'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore.';
-		},
-		'Hide Menu': () => {
-			menuContent = '';
-		},
-		'Show Menu': () => {
-			menuContent =
-				'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore.';
-		},
-		'Hide Main': () => {
-			mainContent = '';
-		}
-	};
+  Velit veritatis inventore ut corporis qui vero, rem blanditiis, nihil magni odit excepturi atque, quisquam animi. Vero atque sapiente possimus quis magnam aperiam, earum deserunt fugiat quas omnis est aspernatur! Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore.`
+let menuContent =
+  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore."
+let headerContent =
+  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore."
+let rightContent =
+  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore."
+let leftContent =
+  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore."
+let footerContent =
+  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore."
+let darkMode = false
+let menu = {
+  "Hide Left Panel": () => {
+    leftContent = ""
+  },
+  "Show Left Panel": () => {
+    leftContent =
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore."
+  },
+  "Hide Right Panel": () => {
+    rightContent = ""
+  },
+  "Show Right Panel": () => {
+    rightContent =
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore."
+  },
+  "Hide Header": () => {
+    headerContent = ""
+  },
+  "Show Header": () => {
+    headerContent =
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore."
+  },
+  "Hide Footer": () => {
+    footerContent = ""
+  },
+  "Show Footer": () => {
+    footerContent =
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore."
+  },
+  "Hide Menu": () => {
+    menuContent = ""
+  },
+  "Show Menu": () => {
+    menuContent =
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore."
+  },
+  "Hide Main": () => {
+    mainContent = ""
+  },
+}
 </script>
 
 <Hst.Story title="App/App" layout={{ type: 'single' }} icon="lucide:layout">

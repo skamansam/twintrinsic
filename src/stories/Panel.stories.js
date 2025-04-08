@@ -1,47 +1,47 @@
-import { expect, userEvent } from '@storybook/test';
-import Panel from '$lib/components/Panel/Panel.svelte';
+import { expect, userEvent } from "@storybook/test"
+import Panel from "$lib/components/Panel/Panel.svelte"
 
 export default {
-  title: 'Layout/Panel',
+  title: "Layout/Panel",
   component: Panel,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     expanded: {
-      control: 'boolean',
-      description: 'Whether the panel is expanded',
-      defaultValue: true
+      control: "boolean",
+      description: "Whether the panel is expanded",
+      defaultValue: true,
     },
     bordered: {
-      control: 'boolean',
-      description: 'Whether to show a border',
-      defaultValue: true
+      control: "boolean",
+      description: "Whether to show a border",
+      defaultValue: true,
     },
     disabled: {
-      control: 'boolean',
-      description: 'Whether to disable the panel controls',
-      defaultValue: false
+      control: "boolean",
+      description: "Whether to disable the panel controls",
+      defaultValue: false,
     },
     showIcon: {
-      control: 'boolean',
-      description: 'Whether to show the expand/collapse icon',
-      defaultValue: true
+      control: "boolean",
+      description: "Whether to show the expand/collapse icon",
+      defaultValue: true,
     },
     class: {
-      control: 'text',
-      description: 'Additional CSS classes'
+      control: "text",
+      description: "Additional CSS classes",
     },
     ariaLabel: {
-      control: 'text',
-      description: 'ARIA label for the header button'
-    }
-  }
-};
+      control: "text",
+      description: "ARIA label for the header button",
+    },
+  },
+}
 
 // Basic panel
 export const Default = {
   args: {
     expanded: true,
-    class: 'max-w-xl'
+    class: "max-w-xl",
   },
   render: (args) => ({
     Component: Panel,
@@ -51,39 +51,39 @@ export const Default = {
         <svelte:fragment slot="header">Panel Title</svelte:fragment>
         <p class="text-muted">This is the panel content. It can contain any elements.</p>
       </Panel>
-    `
+    `,
   }),
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const button = canvas.getByRole('button');
-    
+    const canvas = within(canvasElement)
+    const button = canvas.getByRole("button")
+
     // Test initial expanded state
-    expect(button).toHaveAttribute('aria-expanded', 'true');
-    
+    expect(button).toHaveAttribute("aria-expanded", "true")
+
     // Test clicking
-    await userEvent.click(button);
-    expect(button).toHaveAttribute('aria-expanded', 'false');
-    
+    await userEvent.click(button)
+    expect(button).toHaveAttribute("aria-expanded", "false")
+
     // Test keyboard navigation
-    await userEvent.tab();
-    expect(button).toHaveFocus();
-    await userEvent.keyboard('{Enter}');
-    expect(button).toHaveAttribute('aria-expanded', 'true');
-  }
-};
+    await userEvent.tab()
+    expect(button).toHaveFocus()
+    await userEvent.keyboard("{Enter}")
+    expect(button).toHaveAttribute("aria-expanded", "true")
+  },
+}
 
 // Collapsed panel
 export const Collapsed = {
   args: {
     expanded: false,
-    class: 'max-w-xl'
-  }
-};
+    class: "max-w-xl",
+  },
+}
 
 // Custom header with icon
 export const CustomHeader = {
   args: {
-    class: 'max-w-xl'
+    class: "max-w-xl",
   },
   render: (args) => ({
     Component: Panel,
@@ -104,22 +104,22 @@ export const CustomHeader = {
           </div>
         </div>
       </Panel>
-    `
-  })
-};
+    `,
+  }),
+}
 
 // Disabled panel
 export const Disabled = {
   args: {
     disabled: true,
-    class: 'max-w-xl'
-  }
-};
+    class: "max-w-xl",
+  },
+}
 
 // Borderless panel
 export const Borderless = {
   args: {
     bordered: false,
-    class: 'max-w-xl'
-  }
-};
+    class: "max-w-xl",
+  },
+}

@@ -3,21 +3,21 @@
 Documentation page for the AutoComplete component.
 -->
 <script>
-  import { AutoComplete, CodeBlock } from '$lib/index.js';
-  import { PropsTable, EventsTable } from '$lib/docs/index.js';
+import { AutoComplete, CodeBlock } from "$lib/index.js"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
 
-  const countries = [
-    { label: 'United States', value: 'US' },
-    { label: 'United Kingdom', value: 'UK' },
-    { label: 'Canada', value: 'CA' },
-    { label: 'Australia', value: 'AU' },
-    { label: 'Germany', value: 'DE' }
-  ];
+const countries = [
+  { label: "United States", value: "US" },
+  { label: "United Kingdom", value: "UK" },
+  { label: "Canada", value: "CA" },
+  { label: "Australia", value: "AU" },
+  { label: "Germany", value: "DE" },
+]
 
-  const users = [
-    { label: 'John Doe', value: '1', avatar: 'https://i.pravatar.cc/40?u=1' },
-    { label: 'Jane Smith', value: '2', avatar: 'https://i.pravatar.cc/40?u=2' }
-  ];
+const users = [
+  { label: "John Doe", value: "1", avatar: "https://i.pravatar.cc/40?u=1" },
+  { label: "Jane Smith", value: "2", avatar: "https://i.pravatar.cc/40?u=2" },
+]
 </script>
 
 <h1>AutoComplete</h1>

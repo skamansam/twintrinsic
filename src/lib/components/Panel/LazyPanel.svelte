@@ -13,72 +13,72 @@ Usage:
 ```
 -->
 <script>
-  import { onMount } from 'svelte';
-  import Panel from './Panel.svelte';
+import { onMount } from "svelte"
+import Panel from "./Panel.svelte"
 
-  const {
-    /** @type {boolean} - Whether the panel is expanded */
-    expanded = true,
+const {
+  /** @type {boolean} - Whether the panel is expanded */
+  expanded = true,
 
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - ARIA label */
-    ariaLabel,
+  /** @type {string} - ARIA label */
+  ariaLabel,
 
-    /** @type {boolean} - Whether to disable the panel controls */
-    disabled = false,
+  /** @type {boolean} - Whether to disable the panel controls */
+  disabled = false,
 
-    /** @type {boolean} - Whether to show a border */
-    bordered = true,
+  /** @type {boolean} - Whether to show a border */
+  bordered = true,
 
-    /** @type {boolean} - Whether to show the expand/collapse icon */
-    showIcon = true,
+  /** @type {boolean} - Whether to show the expand/collapse icon */
+  showIcon = true,
 
-    /** @type {number} - Root margin for intersection observer */
-    rootMargin = '50px',
+  /** @type {number} - Root margin for intersection observer */
+  rootMargin = "50px",
 
-    /** @type {number} - Threshold for intersection observer */
-    threshold = 0,
+  /** @type {number} - Threshold for intersection observer */
+  threshold = 0,
 
-    children,
-    header,
-    loading
-  } = $props();
+  children,
+  header,
+  loading,
+} = $props()
 
-  let isVisible = $state(false);
-  let panelElement;
-  let observer;
+let isVisible = $state(false)
+let panelElement
+let observer
 
-  onMount(() => {
-    observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        if (entry.isIntersecting) {
-          isVisible = true;
-          // Once visible, disconnect the observer
-          observer.disconnect();
-        }
-      },
-      {
-        rootMargin,
-        threshold
+onMount(() => {
+  observer = new IntersectionObserver(
+    (entries) => {
+      const [entry] = entries
+      if (entry.isIntersecting) {
+        isVisible = true
+        // Once visible, disconnect the observer
+        observer.disconnect()
       }
-    );
-
-    if (panelElement) {
-      observer.observe(panelElement);
+    },
+    {
+      rootMargin,
+      threshold,
     }
+  )
 
-    return () => {
-      if (observer) {
-        observer.disconnect();
-      }
-    };
-  });
+  if (panelElement) {
+    observer.observe(panelElement)
+  }
+
+  return () => {
+    if (observer) {
+      observer.disconnect()
+    }
+  }
+})
 </script>
 
 <div bind:this={panelElement}>

@@ -19,47 +19,47 @@ Usage:
 ```
 -->
 <script>
-  import { createEventDispatcher } from 'svelte';
+import { createEventDispatcher } from "svelte"
 
-  const dispatch = createEventDispatcher();
+const dispatch = createEventDispatcher()
 
-  const {
-    /** @type {string} - Label text */
-    label,
-    /** @type {string} - Description text */
-    description = '',
-    /** @type {boolean} - Whether the checkbox is checked */
-    checked = false,
-    /** @type {boolean} - Whether the checkbox is in an indeterminate state */
-    indeterminate = false,
-    /** @type {boolean} - Whether the checkbox is disabled */
-    disabled = false,
-    /** @type {boolean} - Whether the checkbox is required */
-    required = false,
-    /** @type {string} - Error message */
-    error = '',
-    /** @type {string} - Name attribute */
-    name = '',
-    /** @type {string} - Value attribute */
-    value = '',
-    /** @type {string} - Additional CSS classes */
-    class: className = ''
-  } = $props();
+const {
+  /** @type {string} - Label text */
+  label,
+  /** @type {string} - Description text */
+  description = "",
+  /** @type {boolean} - Whether the checkbox is checked */
+  checked = false,
+  /** @type {boolean} - Whether the checkbox is in an indeterminate state */
+  indeterminate = false,
+  /** @type {boolean} - Whether the checkbox is disabled */
+  disabled = false,
+  /** @type {boolean} - Whether the checkbox is required */
+  required = false,
+  /** @type {string} - Error message */
+  error = "",
+  /** @type {string} - Name attribute */
+  name = "",
+  /** @type {string} - Value attribute */
+  value = "",
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
+} = $props()
 
-  let checkboxEl;
+let checkboxEl
 
-  // Update indeterminate state
-  $effect(() => {
-    if (checkboxEl) {
-      checkboxEl.indeterminate = indeterminate;
-    }
-  });
-
-  // Handle change event
-  function handleChange(event) {
-    const isChecked = event.target.checked;
-    dispatch('change', { checked: isChecked });
+// Update indeterminate state
+$effect(() => {
+  if (checkboxEl) {
+    checkboxEl.indeterminate = indeterminate
   }
+})
+
+// Handle change event
+function handleChange(event) {
+  const isChecked = event.target.checked
+  dispatch("change", { checked: isChecked })
+}
 </script>
 
 <div class="checkbox-container {className}">

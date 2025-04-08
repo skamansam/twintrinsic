@@ -1,22 +1,22 @@
-import Accordion from '../lib/components/Panel/Accordion.svelte';
-import Panel from '../lib/components/Panel/Panel.svelte';
+import Accordion from "../lib/components/Panel/Accordion.svelte"
+import Panel from "../lib/components/Panel/Panel.svelte"
 
 export default {
-  title: 'Components/Panel/Accordion',
+  title: "Components/Panel/Accordion",
   component: Accordion,
   argTypes: {
-    multiple: { control: 'boolean' },
-    dividers: { control: 'boolean' },
-    disabled: { control: 'boolean' }
-  }
-};
+    multiple: { control: "boolean" },
+    dividers: { control: "boolean" },
+    disabled: { control: "boolean" },
+  },
+}
 
 const Template = (args) => ({
   Component: Accordion,
-  props: args
-});
+  props: args,
+})
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   children: () => `
     <Panel>
@@ -37,10 +37,10 @@ Default.args = {
         <p>Content for section 3</p>
       </div>
     </Panel>
-  `
-};
+  `,
+}
 
-export const Multiple = Template.bind({});
+export const Multiple = Template.bind({})
 Multiple.args = {
   multiple: true,
   children: () => `
@@ -56,10 +56,10 @@ Multiple.args = {
         <p>Try expanding this while the other is open</p>
       </div>
     </Panel>
-  `
-};
+  `,
+}
 
-export const WithoutDividers = Template.bind({});
+export const WithoutDividers = Template.bind({})
 WithoutDividers.args = {
   dividers: false,
   children: () => `
@@ -75,10 +75,10 @@ WithoutDividers.args = {
         <p>Notice the clean look without separators</p>
       </div>
     </Panel>
-  `
-};
+  `,
+}
 
-export const Disabled = Template.bind({});
+export const Disabled = Template.bind({})
 Disabled.args = {
   disabled: true,
   children: () => `
@@ -94,5 +94,5 @@ Disabled.args = {
         <p>None of the panels can be interacted with</p>
       </div>
     </Panel>
-  `
-};
+  `,
+}

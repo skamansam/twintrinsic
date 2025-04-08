@@ -1,55 +1,55 @@
-import { expect } from '@storybook/test';
-import Separator from '$lib/components/Separator/Separator.svelte';
+import { expect } from "@storybook/test"
+import Separator from "$lib/components/Separator/Separator.svelte"
 
 export default {
-  title: 'Layout/Separator',
+  title: "Layout/Separator",
   component: Separator,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     vertical: {
-      control: 'boolean',
-      description: 'Whether the separator should be vertical',
-      defaultValue: false
+      control: "boolean",
+      description: "Whether the separator should be vertical",
+      defaultValue: false,
     },
     color: {
-      control: 'select',
-      options: ['default', 'primary', 'success', 'warning', 'error'],
-      description: 'Color variant of the separator',
-      defaultValue: 'default'
+      control: "select",
+      options: ["default", "primary", "success", "warning", "error"],
+      description: "Color variant of the separator",
+      defaultValue: "default",
     },
     as: {
-      control: 'select',
-      options: ['div', 'hr'],
-      description: 'HTML element to render',
+      control: "select",
+      options: ["div", "hr"],
+      description: "HTML element to render",
     },
     class: {
-      control: 'text',
-      description: 'Additional CSS classes'
+      control: "text",
+      description: "Additional CSS classes",
     },
     ariaLabel: {
-      control: 'text',
-      description: 'ARIA label'
-    }
-  }
-};
+      control: "text",
+      description: "ARIA label",
+    },
+  },
+}
 
 // Basic horizontal separator
 export const Default = {
   args: {},
   render: (args) => ({
     Component: Separator,
-    props: args
+    props: args,
   }),
   play: async ({ canvasElement }) => {
-    const separator = canvasElement.querySelector('hr');
-    expect(separator).toHaveAttribute('aria-orientation', 'horizontal');
-  }
-};
+    const separator = canvasElement.querySelector("hr")
+    expect(separator).toHaveAttribute("aria-orientation", "horizontal")
+  },
+}
 
 // Separator with text
 export const WithText = {
   args: {
-    class: 'max-w-sm'
+    class: "max-w-sm",
   },
   render: (args) => ({
     Component: Separator,
@@ -64,14 +64,14 @@ export const WithText = {
           Featured
         </Separator>
       </div>
-    `
-  })
-};
+    `,
+  }),
+}
 
 // Vertical separator
 export const Vertical = {
   args: {
-    vertical: true
+    vertical: true,
   },
   render: (args) => ({
     Component: Separator,
@@ -82,14 +82,14 @@ export const Vertical = {
         <Separator {...args} />
         <span>Right</span>
       </div>
-    `
-  })
-};
+    `,
+  }),
+}
 
 // Vertical with content
 export const VerticalWithContent = {
   args: {
-    vertical: true
+    vertical: true,
   },
   render: (args) => ({
     Component: Separator,
@@ -104,9 +104,9 @@ export const VerticalWithContent = {
         </Separator>
         <span>Section 2</span>
       </div>
-    `
-  })
-};
+    `,
+  }),
+}
 
 // Color variants
 export const Colors = {
@@ -121,6 +121,6 @@ export const Colors = {
         <Separator color="warning">Warning</Separator>
         <Separator color="error">Error</Separator>
       </div>
-    `
-  })
-};
+    `,
+  }),
+}

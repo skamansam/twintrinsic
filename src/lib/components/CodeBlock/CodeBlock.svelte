@@ -16,136 +16,138 @@ Usage:
 ```
 -->
 <script>
-  import { onMount } from 'svelte';
-  import Prism from 'prismjs';
-  import 'prismjs/components/prism-javascript';
-  import 'prismjs/components/prism-typescript';
-  import 'prismjs/components/prism-jsx';
-  import 'prismjs/components/prism-tsx';
-  import 'prismjs/components/prism-css';
-  import 'prismjs/components/prism-scss';
-  import 'prismjs/components/prism-markup';
-  import 'prismjs/components/prism-bash';
-  import 'prismjs/components/prism-json';
-  import 'prismjs/components/prism-yaml';
-  import 'prismjs/components/prism-markdown';
-  import 'prism-svelte';
+import { onMount } from "svelte"
+import Prism from "prismjs"
+import "prismjs/components/prism-javascript"
+import "prismjs/components/prism-typescript"
+import "prismjs/components/prism-jsx"
+import "prismjs/components/prism-tsx"
+import "prismjs/components/prism-css"
+import "prismjs/components/prism-scss"
+import "prismjs/components/prism-markup"
+import "prismjs/components/prism-bash"
+import "prismjs/components/prism-json"
+import "prismjs/components/prism-yaml"
+import "prismjs/components/prism-markdown"
+import "prism-svelte"
 
-  const {
-    /** @type {string} - The language for syntax highlighting */
-    language = '',
-    /** @type {string} - Additional CSS classes */
-    class: className = ''
-  } = $props();
+const {
+  /** @type {string} - The language for syntax highlighting */
+  language = "",
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
+} = $props()
 
-  let code = $state('');
-  let copied = $state(false);
-  let copyTimeout;
-  let codeElement;
+let code = $state("")
+let copied = $state(false)
+let copyTimeout
+let codeElement
 
-  // Get code from slot content
-  onMount(() => {
-    if (!codeElement) return;
-    
-    code = codeElement.textContent || '';
-    
-    // Auto-detect language if not specified
-    const detectedLang = language || detectLanguage(code);
-    
-    // Highlight code
-    if (detectedLang) {
-      const grammar = Prism.languages[detectedLang];
-      if (grammar) {
-        const highlighted = Prism.highlight(code, grammar, detectedLang);
-        codeElement.innerHTML = highlighted;
-      }
-    }
-  });
+// Get code from slot content
+onMount(() => {
+  if (!codeElement) return
 
-  // Clean up copy timeout
-  onDestroy(() => {
-    if (copyTimeout) {
-      clearTimeout(copyTimeout);
-    }
-  });
+  code = codeElement.textContent || ""
 
-  /**
-   * Detect code language based on content
-   * @param {string} content - Code content
-   * @returns {string} Detected language
-   */
-  function detectLanguage(content) {
-    const trimmed = content.trim();
-    
-    // HTML/SVG
-    if (trimmed.startsWith('<') && trimmed.endsWith('>')) {
-      if (trimmed.includes('</svg>')) return 'markup';
-      if (trimmed.includes('/>') || trimmed.includes('</')) return 'markup';
+  // Auto-detect language if not specified
+  const detectedLang = language || detectLanguage(code)
+
+  // Highlight code
+  if (detectedLang) {
+    const grammar = Prism.languages[detectedLang]
+    if (grammar) {
+      const highlighted = Prism.highlight(code, grammar, detectedLang)
+      codeElement.innerHTML = highlighted
     }
-    
-    // CSS
-    if (trimmed.includes('{') && trimmed.includes('}') && trimmed.includes(':')) {
-      if (trimmed.includes('@import') || trimmed.includes('@media')) return 'css';
-      if (trimmed.includes('$') || trimmed.includes('@mixin')) return 'scss';
-    }
-    
-    // JavaScript/TypeScript
-    if (trimmed.includes('function') || trimmed.includes('=>')) {
-      if (trimmed.includes(':') && trimmed.includes('interface')) return 'typescript';
-      if (trimmed.includes('React.') || trimmed.includes('jsx')) return 'jsx';
-      if (trimmed.includes('<') && trimmed.includes('/>')) return 'jsx';
-      return 'javascript';
-    }
-    
-    // JSON
-    if ((trimmed.startsWith('{') && trimmed.endsWith('}')) ||
-        (trimmed.startsWith('[') && trimmed.endsWith(']'))) {
-      try {
-        JSON.parse(trimmed);
-        return 'json';
-      } catch {}
-    }
-    
-    // YAML
-    if (trimmed.includes(':') && !trimmed.includes('{')) {
-      return 'yaml';
-    }
-    
-    // Markdown
-    if (trimmed.includes('#') || trimmed.includes('```')) {
-      return 'markdown';
-    }
-    
-    // Svelte
-    if (trimmed.includes('<script>') || trimmed.includes('$:')) {
-      return 'svelte';
-    }
-    
-    // Shell
-    if (trimmed.startsWith('$') || trimmed.startsWith('#!')) {
-      return 'bash';
-    }
-    
-    return 'javascript';
+  }
+})
+
+// Clean up copy timeout
+onDestroy(() => {
+  if (copyTimeout) {
+    clearTimeout(copyTimeout)
+  }
+})
+
+/**
+ * Detect code language based on content
+ * @param {string} content - Code content
+ * @returns {string} Detected language
+ */
+function detectLanguage(content) {
+  const trimmed = content.trim()
+
+  // HTML/SVG
+  if (trimmed.startsWith("<") && trimmed.endsWith(">")) {
+    if (trimmed.includes("</svg>")) return "markup"
+    if (trimmed.includes("/>") || trimmed.includes("</")) return "markup"
   }
 
-  /**
-   * Copy code to clipboard
-   */
-  async function copyCode() {
-    if (copied) return;
-    
+  // CSS
+  if (trimmed.includes("{") && trimmed.includes("}") && trimmed.includes(":")) {
+    if (trimmed.includes("@import") || trimmed.includes("@media")) return "css"
+    if (trimmed.includes("$") || trimmed.includes("@mixin")) return "scss"
+  }
+
+  // JavaScript/TypeScript
+  if (trimmed.includes("function") || trimmed.includes("=>")) {
+    if (trimmed.includes(":") && trimmed.includes("interface")) return "typescript"
+    if (trimmed.includes("React.") || trimmed.includes("jsx")) return "jsx"
+    if (trimmed.includes("<") && trimmed.includes("/>")) return "jsx"
+    return "javascript"
+  }
+
+  // JSON
+  if (
+    (trimmed.startsWith("{") && trimmed.endsWith("}")) ||
+    (trimmed.startsWith("[") && trimmed.endsWith("]"))
+  ) {
     try {
-      await navigator.clipboard.writeText(code);
-      copied = true;
-      
-      copyTimeout = setTimeout(() => {
-        copied = false;
-      }, 2000);
-    } catch (error) {
-      console.error('Failed to copy code:', error);
-    }
+      JSON.parse(trimmed)
+      return "json"
+    } catch {}
   }
+
+  // YAML
+  if (trimmed.includes(":") && !trimmed.includes("{")) {
+    return "yaml"
+  }
+
+  // Markdown
+  if (trimmed.includes("#") || trimmed.includes("```")) {
+    return "markdown"
+  }
+
+  // Svelte
+  if (trimmed.includes("<script>") || trimmed.includes("$:")) {
+    return "svelte"
+  }
+
+  // Shell
+  if (trimmed.startsWith("$") || trimmed.startsWith("#!")) {
+    return "bash"
+  }
+
+  return "javascript"
+}
+
+/**
+ * Copy code to clipboard
+ */
+async function copyCode() {
+  if (copied) return
+
+  try {
+    await navigator.clipboard.writeText(code)
+    copied = true
+
+    copyTimeout = setTimeout(() => {
+      copied = false
+    }, 2000)
+  } catch (error) {
+    console.error("Failed to copy code:", error)
+  }
+}
 </script>
 
 <div class="code-block {className}">

@@ -14,37 +14,37 @@ Usage:
 ```
 -->
 <script>
-  const {
-    /** @type {boolean} - Whether the separator should be vertical */
-    vertical = false,
+const {
+  /** @type {boolean} - Whether the separator should be vertical */
+  vertical = false,
 
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - ARIA label */
-    ariaLabel,
+  /** @type {string} - ARIA label */
+  ariaLabel,
 
-    /** @type {string} - Color variant */
-    color = 'default',
+  /** @type {string} - Color variant */
+  color = "default",
 
-    /** @type {"div" | "hr"} - HTML element to render */
-    as,
+  /** @type {"div" | "hr"} - HTML element to render */
+  as,
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  // Color variants mapping
-  const colorClasses = {
-    default: 'border-border',
-    primary: 'border-primary-200 dark:border-primary-800',
-    success: 'border-success/30',
-    warning: 'border-warning/30',
-    error: 'border-error/30'
-  };
+// Color variants mapping
+const colorClasses = {
+  default: "border-border",
+  primary: "border-primary-200 dark:border-primary-800",
+  success: "border-success/30",
+  warning: "border-warning/30",
+  error: "border-error/30",
+}
 
-  // Determine if we have content and element type
-  const hasContent = children !== undefined;
-  const element = as ?? (hasContent ? 'div' : 'hr');
+// Determine if we have content and element type
+const hasContent = children !== undefined
+const element = as ?? (hasContent ? "div" : "hr")
 </script>
 
 <svelte:element

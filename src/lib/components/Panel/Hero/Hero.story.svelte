@@ -1,11 +1,11 @@
 <script lang="ts">
-	// import type { HstSvelte as Histoire } from '@histoire/plugin-svelte';
-	export let Hst;
-	import Hero from './Hero.svelte';
+// import type { HstSvelte as Histoire } from '@histoire/plugin-svelte';
+export let Hst
+import Hero from "./Hero.svelte"
 
-	let heading = 'This is a HERO!';
-	let slotContent =
-		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore.';
+let heading = "This is a HERO!"
+let slotContent =
+  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel est nemo fugiat delectus perferendis adipisci maiores optio cupiditate hic ipsam dignissimos in quasi ea, minima, ut, reprehenderit quos tempora inventore."
 </script>
 
 <Hst.Story title="Panels/Hero" layout={{ type: 'grid', width: '100%' }} icon="tabler:section">

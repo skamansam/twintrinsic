@@ -9,27 +9,27 @@ Usage:
 ```
 -->
 <script>
-  import { onMount } from 'svelte';
+import { onMount } from "svelte"
 
-  let theme = $state('light');
-  let mounted = false;
+let theme = $state("light")
+let mounted = false
 
-  onMount(() => {
-    // Get initial theme from data-theme attribute or system preference
-    const rootEl = document.documentElement;
-    const savedTheme = rootEl.getAttribute('data-theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    theme = savedTheme || (prefersDark ? 'dark' : 'light');
-    rootEl.setAttribute('data-theme', theme);
-    mounted = true;
-  });
+onMount(() => {
+  // Get initial theme from data-theme attribute or system preference
+  const rootEl = document.documentElement
+  const savedTheme = rootEl.getAttribute("data-theme")
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
 
-  function toggleTheme() {
-    if (!mounted) return;
-    theme = theme === 'light' ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', theme);
-  }
+  theme = savedTheme || (prefersDark ? "dark" : "light")
+  rootEl.setAttribute("data-theme", theme)
+  mounted = true
+})
+
+function toggleTheme() {
+  if (!mounted) return
+  theme = theme === "light" ? "dark" : "light"
+  document.documentElement.setAttribute("data-theme", theme)
+}
 </script>
 
 <button

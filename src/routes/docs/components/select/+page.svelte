@@ -3,50 +3,50 @@
 Documentation page for the Select component.
 -->
 <script>
-  import { Select, CodeBlock } from '$lib/index.js';
-  import { PropsTable, EventsTable } from '$lib/docs/index.js';
+import { Select, CodeBlock } from "$lib/index.js"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
 
-  const countries = [
-    { value: 'us', label: 'United States' },
-    { value: 'ca', label: 'Canada' },
-    { value: 'mx', label: 'Mexico' },
-    { value: 'uk', label: 'United Kingdom' },
-    { value: 'fr', label: 'France' },
-    { value: 'de', label: 'Germany' }
-  ];
+const countries = [
+  { value: "us", label: "United States" },
+  { value: "ca", label: "Canada" },
+  { value: "mx", label: "Mexico" },
+  { value: "uk", label: "United Kingdom" },
+  { value: "fr", label: "France" },
+  { value: "de", label: "Germany" },
+]
 
-  const languages = [
-    {
-      group: 'Frontend',
-      value: 'js',
-      label: 'JavaScript'
-    },
-    {
-      group: 'Frontend',
-      value: 'ts',
-      label: 'TypeScript'
-    },
-    {
-      group: 'Backend',
-      value: 'python',
-      label: 'Python'
-    },
-    {
-      group: 'Backend',
-      value: 'java',
-      label: 'Java'
-    },
-    {
-      group: 'Mobile',
-      value: 'swift',
-      label: 'Swift'
-    },
-    {
-      group: 'Mobile',
-      value: 'kotlin',
-      label: 'Kotlin'
-    }
-  ];
+const languages = [
+  {
+    group: "Frontend",
+    value: "js",
+    label: "JavaScript",
+  },
+  {
+    group: "Frontend",
+    value: "ts",
+    label: "TypeScript",
+  },
+  {
+    group: "Backend",
+    value: "python",
+    label: "Python",
+  },
+  {
+    group: "Backend",
+    value: "java",
+    label: "Java",
+  },
+  {
+    group: "Mobile",
+    value: "swift",
+    label: "Swift",
+  },
+  {
+    group: "Mobile",
+    value: "kotlin",
+    label: "Kotlin",
+  },
+]
 </script>
 
 <h1>Select</h1>

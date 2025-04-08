@@ -21,72 +21,72 @@ Usage:
 ```
 -->
 <script>
-  import { slide } from 'svelte/transition';
-  import ThemeToggle from '../ThemeToggle/ThemeToggle.svelte';
+import { slide } from "svelte/transition"
+import ThemeToggle from "../ThemeToggle/ThemeToggle.svelte"
 
-  /** @type {string | { name: string, logo?: string, href?: string }} - Brand information */
-  /** @type {{ name: string, avatar?: string, href?: string } | null} - User information */
-  /** @type {boolean} - Whether to show the search input */
-  /** @type {boolean} - Whether to show notifications */
-  /** @type {string[]} - Navigation items */
-  /** @type {string} - Additional CSS classes */
-  /** @type {string} - HTML id for accessibility */
-  const {
-    brand,
-    user = null,
-    showSearch = false,
-    showNotifications = false,
-    navItems = [],
-    class: className = '',
-    id = crypto.randomUUID()
-  } = $props();
+/** @type {string | { name: string, logo?: string, href?: string }} - Brand information */
+/** @type {{ name: string, avatar?: string, href?: string } | null} - User information */
+/** @type {boolean} - Whether to show the search input */
+/** @type {boolean} - Whether to show notifications */
+/** @type {string[]} - Navigation items */
+/** @type {string} - Additional CSS classes */
+/** @type {string} - HTML id for accessibility */
+const {
+  brand,
+  user = null,
+  showSearch = false,
+  showNotifications = false,
+  navItems = [],
+  class: className = "",
+  id = crypto.randomUUID(),
+} = $props()
 
-  let mobileMenuOpen = $state(false);
-  let searchQuery = $state('');
-  let notificationsOpen = $state(false);
-  let userMenuOpen = $state(false);
+let mobileMenuOpen = $state(false)
+let searchQuery = $state("")
+let notificationsOpen = $state(false)
+let userMenuOpen = $state(false)
 
-  // Handle search input
-  function handleSearch(e) {
-    searchQuery = e.target.value;
-    dispatch('search', { query: searchQuery });
+// Handle search input
+function handleSearch(e) {
+  searchQuery = e.target.value
+  dispatch("search", { query: searchQuery })
+}
+
+// Handle mobile menu toggle
+function toggleMobileMenu() {
+  mobileMenuOpen = !mobileMenuOpen
+}
+
+// Handle notifications toggle
+function toggleNotifications() {
+  notificationsOpen = !notificationsOpen
+  if (notificationsOpen) userMenuOpen = false
+}
+
+// Handle user menu toggle
+function toggleUserMenu() {
+  userMenuOpen = !userMenuOpen
+  if (userMenuOpen) notificationsOpen = false
+}
+
+// Handle escape key
+function handleKeydown(event) {
+  if (event.key === "Escape") {
+    mobileMenuOpen = false
+    notificationsOpen = false
+    userMenuOpen = false
   }
+}
 
-  // Handle mobile menu toggle
-  function toggleMobileMenu() {
-    mobileMenuOpen = !mobileMenuOpen;
-  }
+// Emit events directly
+function dispatch(event, detail) {
+  const customEvent = new CustomEvent(event, { detail })
+  this?.dispatchEvent(customEvent)
+}
 
-  // Handle notifications toggle
-  function toggleNotifications() {
-    notificationsOpen = !notificationsOpen;
-    if (notificationsOpen) userMenuOpen = false;
-  }
-
-  // Handle user menu toggle
-  function toggleUserMenu() {
-    userMenuOpen = !userMenuOpen;
-    if (userMenuOpen) notificationsOpen = false;
-  }
-
-  // Handle escape key
-  function handleKeydown(event) {
-    if (event.key === 'Escape') {
-      mobileMenuOpen = false;
-      notificationsOpen = false;
-      userMenuOpen = false;
-    }
-  }
-
-  // Emit events directly
-  function dispatch(event, detail) {
-    const customEvent = new CustomEvent(event, { detail });
-    this?.dispatchEvent(customEvent);
-  }
-
-  const brandName = $derived(typeof brand === 'string' ? brand : brand.name);
-  const brandLogo = $derived(typeof brand === 'string' ? null : brand.logo);
-  const brandHref = $derived(typeof brand === 'string' ? '/' : (brand.href || '/'));
+const brandName = $derived(typeof brand === "string" ? brand : brand.name)
+const brandLogo = $derived(typeof brand === "string" ? null : brand.logo)
+const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
 </script>
 
 <svelte:window onkeydown={handleKeydown} />

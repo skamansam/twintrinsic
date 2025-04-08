@@ -26,144 +26,144 @@ Usage:
 ```
 -->
 <script>
-  import { createEventDispatcher } from 'svelte';
-  import { slide } from 'svelte/transition';
-  import Icon from '../Icon/Icon.svelte';
+import { createEventDispatcher } from "svelte"
+import { slide } from "svelte/transition"
+import Icon from "../Icon/Icon.svelte"
 
-  const dispatch = createEventDispatcher();
+const dispatch = createEventDispatcher()
 
-  const {
-    /** @type {string} - Input label text */
-    label,
-    /** @type {string} - Input type (text, email, password, etc.) */
-    type = 'text',
-    /** @type {string} - Input value */
-    value = '',
-    /** @type {string} - Placeholder text */
-    placeholder = '',
-    /** @type {string} - Name attribute */
-    name = '',
-    /** @type {string} - Id attribute */
-    id = crypto.randomUUID(),
-    /** @type {boolean} - Whether the input is disabled */
-    disabled = false,
-    /** @type {boolean} - Whether the input is required */
-    required = false,
-    /** @type {boolean} - Whether to use floating labels */
-    floating = false,
-    /** @type {boolean} - Whether the input is readonly */
-    readonly = false,
-    /** @type {string} - Error message to display */
-    error = '',
-    /** @type {string} - Help text to display below input */
-    helpText = '',
-    /** @type {string} - Left icon name */
-    leftIcon = '',
-    /** @type {string} - Right icon name */
-    rightIcon = '',
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
-    /** @type {string} - Input mask pattern */
-    mask = '',
-    /** @type {string} - ARIA description */
-    ariaDescription = '',
-  } = $props();
+const {
+  /** @type {string} - Input label text */
+  label,
+  /** @type {string} - Input type (text, email, password, etc.) */
+  type = "text",
+  /** @type {string} - Input value */
+  value = "",
+  /** @type {string} - Placeholder text */
+  placeholder = "",
+  /** @type {string} - Name attribute */
+  name = "",
+  /** @type {string} - Id attribute */
+  id = crypto.randomUUID(),
+  /** @type {boolean} - Whether the input is disabled */
+  disabled = false,
+  /** @type {boolean} - Whether the input is required */
+  required = false,
+  /** @type {boolean} - Whether to use floating labels */
+  floating = false,
+  /** @type {boolean} - Whether the input is readonly */
+  readonly = false,
+  /** @type {string} - Error message to display */
+  error = "",
+  /** @type {string} - Help text to display below input */
+  helpText = "",
+  /** @type {string} - Left icon name */
+  leftIcon = "",
+  /** @type {string} - Right icon name */
+  rightIcon = "",
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
+  /** @type {string} - Input mask pattern */
+  mask = "",
+  /** @type {string} - ARIA description */
+  ariaDescription = "",
+} = $props()
 
-  let inputValue = $state(value);
-  let focused = $state(false);
-  let touched = $state(false);
+let inputValue = $state(value)
+let focused = $state(false)
+let touched = $state(false)
 
-  // Handle input focus
-  function handleFocus() {
-    focused = true;
-    dispatch('focus');
+// Handle input focus
+function handleFocus() {
+  focused = true
+  dispatch("focus")
+}
+
+// Handle input blur
+function handleBlur() {
+  focused = false
+  touched = true
+  dispatch("blur")
+}
+
+// Handle input change
+function handleInput(event) {
+  const newValue = event.target.value
+
+  // Apply mask if provided
+  if (mask) {
+    inputValue = applyMask(newValue, mask)
+  } else {
+    inputValue = newValue
   }
 
-  // Handle input blur
-  function handleBlur() {
-    focused = false;
-    touched = true;
-    dispatch('blur');
-  }
+  dispatch("input", { value: inputValue })
+}
 
-  // Handle input change
-  function handleInput(event) {
-    const newValue = event.target.value;
-    
-    // Apply mask if provided
-    if (mask) {
-      inputValue = applyMask(newValue, mask);
+// Handle icon clicks
+function handleLeftIconClick() {
+  dispatch("leftIconClick")
+}
+
+function handleRightIconClick() {
+  dispatch("rightIconClick")
+}
+
+// Apply input mask
+function applyMask(value, pattern) {
+  let result = ""
+  let valueIndex = 0
+
+  for (let i = 0; i < pattern.length && valueIndex < value.length; i++) {
+    const maskChar = pattern[i]
+    const valueChar = value[valueIndex]
+
+    if (maskChar === "#") {
+      if (/\d/.test(valueChar)) {
+        result += valueChar
+        valueIndex++
+      }
+    } else if (maskChar === "A") {
+      if (/[a-zA-Z]/.test(valueChar)) {
+        result += valueChar
+        valueIndex++
+      }
+    } else if (maskChar === "*") {
+      result += valueChar
+      valueIndex++
     } else {
-      inputValue = newValue;
-    }
-    
-    dispatch('input', { value: inputValue });
-  }
-
-  // Handle icon clicks
-  function handleLeftIconClick() {
-    dispatch('leftIconClick');
-  }
-
-  function handleRightIconClick() {
-    dispatch('rightIconClick');
-  }
-
-  // Apply input mask
-  function applyMask(value, pattern) {
-    let result = '';
-    let valueIndex = 0;
-    
-    for (let i = 0; i < pattern.length && valueIndex < value.length; i++) {
-      const maskChar = pattern[i];
-      const valueChar = value[valueIndex];
-      
-      if (maskChar === '#') {
-        if (/\d/.test(valueChar)) {
-          result += valueChar;
-          valueIndex++;
-        }
-      } else if (maskChar === 'A') {
-        if (/[a-zA-Z]/.test(valueChar)) {
-          result += valueChar;
-          valueIndex++;
-        }
-      } else if (maskChar === '*') {
-        result += valueChar;
-        valueIndex++;
-      } else {
-        result += maskChar;
-        if (valueChar === maskChar) {
-          valueIndex++;
-        }
+      result += maskChar
+      if (valueChar === maskChar) {
+        valueIndex++
       }
     }
-    
-    return result;
   }
 
-  // Compute classes
-  const containerClasses = $derived(`
+  return result
+}
+
+// Compute classes
+const containerClasses = $derived(`
     form-input-container
-    ${floating ? 'form-input-floating' : ''}
-    ${error ? 'form-input-error' : ''}
-    ${disabled ? 'form-input-disabled' : ''}
+    ${floating ? "form-input-floating" : ""}
+    ${error ? "form-input-error" : ""}
+    ${disabled ? "form-input-disabled" : ""}
     ${className}
-  `);
+  `)
 
-  const labelClasses = $derived(`
+const labelClasses = $derived(`
     form-input-label
-    ${floating && (focused || inputValue) ? 'form-input-label-float' : ''}
-    ${error ? 'form-input-label-error' : ''}
-    ${disabled ? 'form-input-label-disabled' : ''}
-  `);
+    ${floating && (focused || inputValue) ? "form-input-label-float" : ""}
+    ${error ? "form-input-label-error" : ""}
+    ${disabled ? "form-input-label-disabled" : ""}
+  `)
 
-  const inputClasses = $derived(`
+const inputClasses = $derived(`
     form-input
-    ${leftIcon ? 'form-input-left-icon' : ''}
-    ${rightIcon ? 'form-input-right-icon' : ''}
-    ${error ? 'form-input-field-error' : ''}
-  `);
+    ${leftIcon ? "form-input-left-icon" : ""}
+    ${rightIcon ? "form-input-right-icon" : ""}
+    ${error ? "form-input-field-error" : ""}
+  `)
 </script>
 
 <div class={containerClasses}>

@@ -1,59 +1,59 @@
-import { expect } from '@storybook/test';
-import BottomBar from '$lib/components/BottomBar/BottomBar.svelte';
+import { expect } from "@storybook/test"
+import BottomBar from "$lib/components/BottomBar/BottomBar.svelte"
 
 export default {
-  title: 'Layout/BottomBar',
+  title: "Layout/BottomBar",
   component: BottomBar,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     expanded: {
-      control: 'boolean',
-      description: 'Whether the bottom bar is expanded',
-      defaultValue: true
+      control: "boolean",
+      description: "Whether the bottom bar is expanded",
+      defaultValue: true,
     },
     height: {
-      control: 'text',
-      description: 'Height of the bottom bar when expanded',
-      defaultValue: '16rem'
+      control: "text",
+      description: "Height of the bottom bar when expanded",
+      defaultValue: "16rem",
     },
     disabled: {
-      control: 'boolean',
-      description: 'Whether to disable the bottom bar controls',
-      defaultValue: false
+      control: "boolean",
+      description: "Whether to disable the bottom bar controls",
+      defaultValue: false,
     },
     showBackdrop: {
-      control: 'boolean',
-      description: 'Whether to show a backdrop when expanded on mobile',
-      defaultValue: true
+      control: "boolean",
+      description: "Whether to show a backdrop when expanded on mobile",
+      defaultValue: true,
     },
     floatOnMobile: {
-      control: 'boolean',
-      description: 'Whether to float over content on mobile',
-      defaultValue: true
+      control: "boolean",
+      description: "Whether to float over content on mobile",
+      defaultValue: true,
     },
     docked: {
-      control: 'boolean',
-      description: 'Whether to dock to viewport instead of parent',
-      defaultValue: false
+      control: "boolean",
+      description: "Whether to dock to viewport instead of parent",
+      defaultValue: false,
     },
     class: {
-      control: 'text',
-      description: 'Additional CSS classes'
+      control: "text",
+      description: "Additional CSS classes",
     },
     ariaLabel: {
-      control: 'text',
-      description: 'ARIA label'
-    }
+      control: "text",
+      description: "ARIA label",
+    },
   },
   parameters: {
-    layout: 'fullscreen'
-  }
-};
+    layout: "fullscreen",
+  },
+}
 
 // Basic bottom bar
 export const Default = {
   args: {
-    expanded: true
+    expanded: true,
   },
   render: (args) => ({
     Component: BottomBar,
@@ -72,20 +72,20 @@ export const Default = {
           </div>
         </BottomBar>
       </div>
-    `
+    `,
   }),
   play: async ({ canvasElement }) => {
-    const bottomBar = canvasElement.querySelector('[role="complementary"]');
-    expect(bottomBar).toBeVisible();
-    expect(bottomBar.querySelector('[role="region"]')).toBeVisible();
-  }
-};
+    const bottomBar = canvasElement.querySelector('[role="complementary"]')
+    expect(bottomBar).toBeVisible()
+    expect(bottomBar.querySelector('[role="region"]')).toBeVisible()
+  },
+}
 
 // Console example
 export const Console = {
   args: {
-    height: '20rem',
-    expanded: true
+    height: "20rem",
+    expanded: true,
   },
   render: (args) => ({
     Component: BottomBar,
@@ -111,27 +111,27 @@ export const Console = {
           </div>
         </BottomBar>
       </div>
-    `
-  })
-};
+    `,
+  }),
+}
 
 // Collapsed bottom bar
 export const Collapsed = {
   args: {
-    expanded: false
-  }
-};
+    expanded: false,
+  },
+}
 
 // Custom height
 export const CustomHeight = {
   args: {
-    height: '24rem'
-  }
-};
+    height: "24rem",
+  },
+}
 
 // Docked to viewport
 export const Docked = {
   args: {
-    docked: true
-  }
-};
+    docked: true,
+  },
+}

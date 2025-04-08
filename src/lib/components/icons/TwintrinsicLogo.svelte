@@ -4,7 +4,7 @@ A modern, dynamic logo for Twintrinsic that represents Tailwind's utility-first 
 and the intrinsic nature of web design.
 -->
 <script>
-const { class: className = '', size = '3rem' } = $props()
+const { class: className = "", size = "3rem" } = $props()
 </script>
 
 <svg

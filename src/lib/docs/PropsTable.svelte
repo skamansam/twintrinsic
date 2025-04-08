@@ -17,10 +17,10 @@ Usage:
 ```
 -->
 <script>
-  const {
-    /** @type {Array<{ name: string, type: string, default?: string, description: string }>} */
-    props = []
-  } = $props();
+const {
+  /** @type {Array<{ name: string, type: string, default?: string, description: string }>} */
+  props = [],
+} = $props()
 </script>
 
 <div class="props-table">

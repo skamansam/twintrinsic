@@ -3,8 +3,8 @@
 Documentation page for the CodeBlock component.
 -->
 <script>
-  import { CodeBlock } from '$lib/index.js';
-  import { PropsTable } from '$lib/docs/index.js';
+import { CodeBlock } from "$lib/index.js"
+import { PropsTable } from "$lib/docs/index.js"
 </script>
 
 <h1>CodeBlock</h1>

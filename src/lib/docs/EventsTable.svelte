@@ -16,10 +16,10 @@ Usage:
 ```
 -->
 <script>
-  const {
-    /** @type {Array<{ name: string, type: string, description: string }>} */
-    events = []
-  } = $props();
+const {
+  /** @type {Array<{ name: string, type: string, description: string }>} */
+  events = [],
+} = $props()
 </script>
 
 <div class="events-table">

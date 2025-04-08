@@ -7,8 +7,8 @@ AppHeader documentation page
   @reference '$lib/twintrinsic.css';
 </style>
 <script>
-  import Container from '$lib/components/Container/Container.svelte';
-  import AppHeader from '$lib/components/AppHeader/AppHeader.svelte';
+import Container from "$lib/components/Container/Container.svelte"
+import AppHeader from "$lib/components/AppHeader/AppHeader.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

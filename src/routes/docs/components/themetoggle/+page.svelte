@@ -1,6 +1,6 @@
 <script>
-  import Container from '$lib/components/Container/Container.svelte';
-  import ThemeToggle from '$lib/components/ThemeToggle/ThemeToggle.svelte';
+import Container from "$lib/components/Container/Container.svelte"
+import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
 </script>
 
 <Container class="prose dark:prose-invert max-w-3xl">

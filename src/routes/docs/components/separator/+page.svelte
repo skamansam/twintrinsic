@@ -3,8 +3,8 @@
 Separator documentation page
 -->
 <script>
-  import Container from '$lib/components/Container/Container.svelte';
-  import Separator from '$lib/components/Separator/Separator.svelte';
+import Container from "$lib/components/Container/Container.svelte"
+import Separator from "$lib/components/Separator/Separator.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

@@ -1,61 +1,61 @@
-import { expect } from '@storybook/test';
-import Sidebar from '$lib/components/Sidebar/Sidebar.svelte';
+import { expect } from "@storybook/test"
+import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
 
 export default {
-  title: 'Layout/Sidebar',
+  title: "Layout/Sidebar",
   component: Sidebar,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     expanded: {
-      control: 'boolean',
-      description: 'Whether the sidebar is expanded',
-      defaultValue: true
+      control: "boolean",
+      description: "Whether the sidebar is expanded",
+      defaultValue: true,
     },
     position: {
-      control: 'select',
-      options: ['left', 'right'],
-      description: 'Position of the sidebar',
-      defaultValue: 'left'
+      control: "select",
+      options: ["left", "right"],
+      description: "Position of the sidebar",
+      defaultValue: "left",
     },
     width: {
-      control: 'text',
-      description: 'Width of the sidebar when expanded',
-      defaultValue: '16rem'
+      control: "text",
+      description: "Width of the sidebar when expanded",
+      defaultValue: "16rem",
     },
     disabled: {
-      control: 'boolean',
-      description: 'Whether to disable the sidebar controls',
-      defaultValue: false
+      control: "boolean",
+      description: "Whether to disable the sidebar controls",
+      defaultValue: false,
     },
     showBackdrop: {
-      control: 'boolean',
-      description: 'Whether to show a backdrop when expanded on mobile',
-      defaultValue: true
+      control: "boolean",
+      description: "Whether to show a backdrop when expanded on mobile",
+      defaultValue: true,
     },
     floatOnMobile: {
-      control: 'boolean',
-      description: 'Whether to float over content on mobile',
-      defaultValue: true
+      control: "boolean",
+      description: "Whether to float over content on mobile",
+      defaultValue: true,
     },
     class: {
-      control: 'text',
-      description: 'Additional CSS classes'
+      control: "text",
+      description: "Additional CSS classes",
     },
     ariaLabel: {
-      control: 'text',
-      description: 'ARIA label'
-    }
+      control: "text",
+      description: "ARIA label",
+    },
   },
   parameters: {
-    layout: 'fullscreen'
-  }
-};
+    layout: "fullscreen",
+  },
+}
 
 // Basic sidebar
 export const Default = {
   args: {
     expanded: true,
-    class: 'h-[400px]'
+    class: "h-[400px]",
   },
   render: (args) => ({
     Component: Sidebar,
@@ -72,44 +72,44 @@ export const Default = {
           </nav>
         </Sidebar>
       </div>
-    `
+    `,
   }),
   play: async ({ canvasElement }) => {
-    const sidebar = canvasElement.querySelector('[role="complementary"]');
-    expect(sidebar).toBeVisible();
-    expect(sidebar.querySelector('[role="region"]')).toBeVisible();
-  }
-};
+    const sidebar = canvasElement.querySelector('[role="complementary"]')
+    expect(sidebar).toBeVisible()
+    expect(sidebar.querySelector('[role="region"]')).toBeVisible()
+  },
+}
 
 // Right-positioned sidebar
 export const RightSidebar = {
   args: {
-    position: 'right',
+    position: "right",
     expanded: true,
-    class: 'h-[400px]'
-  }
-};
+    class: "h-[400px]",
+  },
+}
 
 // Collapsed sidebar
 export const Collapsed = {
   args: {
     expanded: false,
-    class: 'h-[400px]'
-  }
-};
+    class: "h-[400px]",
+  },
+}
 
 // Custom width
 export const CustomWidth = {
   args: {
-    width: '24rem',
-    class: 'h-[400px]'
-  }
-};
+    width: "24rem",
+    class: "h-[400px]",
+  },
+}
 
 // With custom content
 export const WithCustomContent = {
   args: {
-    class: 'h-[400px]'
+    class: "h-[400px]",
   },
   render: (args) => ({
     Component: Sidebar,
@@ -145,6 +145,6 @@ export const WithCustomContent = {
           </div>
         </Sidebar>
       </div>
-    `
-  })
-};
+    `,
+  }),
+}

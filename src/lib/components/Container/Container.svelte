@@ -16,22 +16,22 @@ Usage:
 -->
 <script>
 const {
-	/** @type {boolean} - If true, container will be full-width */
-	fluid = false,
+  /** @type {boolean} - If true, container will be full-width */
+  fluid = false,
 
-	/** @type {string} - Additional CSS classes to apply */
-	class: className = '',
+  /** @type {string} - Additional CSS classes to apply */
+  class: className = "",
 
-	/** @type {"main" | "section" | "article" | "div"} - HTML element to render */
-	as = 'section',
+  /** @type {"main" | "section" | "article" | "div"} - HTML element to render */
+  as = "section",
 
-	/** @type {string} - ARIA role if needed */
-	role,
+  /** @type {string} - ARIA role if needed */
+  role,
 
-	/** @type {string} - ARIA label if needed */
-	ariaLabel,
+  /** @type {string} - ARIA label if needed */
+  ariaLabel,
 
-	children
+  children,
 } = $props()
 </script>
 

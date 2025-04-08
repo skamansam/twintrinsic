@@ -20,172 +20,163 @@ Usage:
 ```
 -->
 <script>
-  import { createEventDispatcher } from 'svelte';
-  import { slide } from 'svelte/transition';
-  import { clickOutside } from '$lib/actions/index.js';
+import { createEventDispatcher } from "svelte"
+import { slide } from "svelte/transition"
+import { clickOutside } from "$lib/actions/index.js"
 
-  const dispatch = createEventDispatcher();
+const dispatch = createEventDispatcher()
 
-  const {
-    /** @type {string} - Input label */
-    label = '',
-    /** @type {Array<{ value: string, label: string, group?: string }>} - Options to display */
-    options = [],
-    /** @type {string | string[]} - Selected value(s) */
-    value = '',
-    /** @type {boolean} - Whether multiple selection is allowed */
-    multiple = false,
-    /** @type {string} - Placeholder text */
-    placeholder = 'Select...',
-    /** @type {boolean} - Whether the select is disabled */
-    disabled = false,
-    /** @type {string} - Error message */
-    error = '',
-    /** @type {boolean} - Whether the field is required */
-    required = false,
-    /** @type {string} - Additional CSS classes */
-    class: className = ''
-  } = $props();
+const {
+  /** @type {string} - Input label */
+  label = "",
+  /** @type {Array<{ value: string, label: string, group?: string }>} - Options to display */
+  options = [],
+  /** @type {string | string[]} - Selected value(s) */
+  value = "",
+  /** @type {boolean} - Whether multiple selection is allowed */
+  multiple = false,
+  /** @type {string} - Placeholder text */
+  placeholder = "Select...",
+  /** @type {boolean} - Whether the select is disabled */
+  disabled = false,
+  /** @type {string} - Error message */
+  error = "",
+  /** @type {boolean} - Whether the field is required */
+  required = false,
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
+} = $props()
 
-  let showDropdown = $state(false);
-  let searchValue = $state('');
-  let selectedValues = $state([]);
-  let focusedIndex = $state(-1);
-  let dropdownRef = $state(null);
+let showDropdown = $state(false)
+let searchValue = $state("")
+let selectedValues = $state([])
+let focusedIndex = $state(-1)
+let dropdownRef = $state(null)
 
-  // Initialize selected values
-  $effect(() => {
-    selectedValues = Array.isArray(value) ? value : value ? [value] : [];
-  });
+// Initialize selected values
+$effect(() => {
+  selectedValues = Array.isArray(value) ? value : value ? [value] : []
+})
 
-  // Filter options based on search
-  const filteredOptions = $derived(() => {
-    const search = searchValue.toLowerCase();
-    return options.filter(option => 
-      option.label.toLowerCase().includes(search)
-    );
-  });
+// Filter options based on search
+const filteredOptions = $derived(() => {
+  const search = searchValue.toLowerCase()
+  return options.filter((option) => option.label.toLowerCase().includes(search))
+})
 
-  // Group options by their group property
-  const groupedOptions = $derived(() => {
-    const groups = new Map();
-    
-    for (const option of filteredOptions) {
-      const group = option.group || '';
-      if (!groups.has(group)) {
-        groups.set(group, []);
+// Group options by their group property
+const groupedOptions = $derived(() => {
+  const groups = new Map()
+
+  for (const option of filteredOptions) {
+    const group = option.group || ""
+    if (!groups.has(group)) {
+      groups.set(group, [])
+    }
+    groups.get(group).push(option)
+  }
+
+  return groups
+})
+
+// Handle option selection
+function selectOption(option) {
+  if (disabled) return
+
+  const value = option.value
+  let newValues
+
+  if (multiple) {
+    newValues = selectedValues.includes(value)
+      ? selectedValues.filter((v) => v !== value)
+      : [...selectedValues, value]
+  } else {
+    newValues = [value]
+    showDropdown = false
+  }
+
+  selectedValues = newValues
+  dispatch("change", {
+    value: multiple ? newValues : newValues[0],
+  })
+}
+
+// Handle keyboard navigation
+function handleKeydown(event) {
+  if (disabled) return
+
+  switch (event.key) {
+    case "Enter":
+    case " ":
+      if (!showDropdown) {
+        event.preventDefault()
+        showDropdown = true
+      } else if (focusedIndex >= 0) {
+        event.preventDefault()
+        selectOption(filteredOptions[focusedIndex])
       }
-      groups.get(group).push(option);
-    }
-    
-    return groups;
-  });
+      break
 
-  // Handle option selection
-  function selectOption(option) {
-    if (disabled) return;
-    
-    const value = option.value;
-    let newValues;
-    
-    if (multiple) {
-      newValues = selectedValues.includes(value)
-        ? selectedValues.filter(v => v !== value)
-        : [...selectedValues, value];
-    } else {
-      newValues = [value];
-      showDropdown = false;
-    }
-    
-    selectedValues = newValues;
-    dispatch('change', {
-      value: multiple ? newValues : newValues[0]
-    });
+    case "ArrowDown":
+      event.preventDefault()
+      if (!showDropdown) {
+        showDropdown = true
+      } else {
+        focusedIndex = Math.min(focusedIndex + 1, filteredOptions.length - 1)
+        scrollToOption(focusedIndex)
+      }
+      break
+
+    case "ArrowUp":
+      event.preventDefault()
+      if (showDropdown) {
+        focusedIndex = Math.max(focusedIndex - 1, 0)
+        scrollToOption(focusedIndex)
+      }
+      break
+
+    case "Escape":
+      showDropdown = false
+      break
+
+    case "Tab":
+      showDropdown = false
+      break
+  }
+}
+
+// Scroll focused option into view
+function scrollToOption(index) {
+  if (!dropdownRef) return
+
+  const options = dropdownRef.querySelectorAll(".select-option")
+  if (options[index]) {
+    options[index].scrollIntoView({
+      block: "nearest",
+    })
+  }
+}
+
+// Clear selection
+function clearSelection(event) {
+  event.stopPropagation()
+  if (disabled) return
+  selectedValues = []
+  dispatch("change", { value: multiple ? [] : "" })
+}
+
+// Get display value
+const displayValue = $derived(() => {
+  if (!selectedValues.length) return ""
+
+  const selected = options.filter((option) => selectedValues.includes(option.value))
+
+  if (multiple) {
+    return selected.length === 1 ? selected[0].label : `${selected.length} items selected`
   }
 
-  // Handle keyboard navigation
-  function handleKeydown(event) {
-    if (disabled) return;
-    
-    switch (event.key) {
-      case 'Enter':
-      case ' ':
-        if (!showDropdown) {
-          event.preventDefault();
-          showDropdown = true;
-        } else if (focusedIndex >= 0) {
-          event.preventDefault();
-          selectOption(filteredOptions[focusedIndex]);
-        }
-        break;
-        
-      case 'ArrowDown':
-        event.preventDefault();
-        if (!showDropdown) {
-          showDropdown = true;
-        } else {
-          focusedIndex = Math.min(
-            focusedIndex + 1,
-            filteredOptions.length - 1
-          );
-          scrollToOption(focusedIndex);
-        }
-        break;
-        
-      case 'ArrowUp':
-        event.preventDefault();
-        if (showDropdown) {
-          focusedIndex = Math.max(focusedIndex - 1, 0);
-          scrollToOption(focusedIndex);
-        }
-        break;
-        
-      case 'Escape':
-        showDropdown = false;
-        break;
-        
-      case 'Tab':
-        showDropdown = false;
-        break;
-    }
-  }
-
-  // Scroll focused option into view
-  function scrollToOption(index) {
-    if (!dropdownRef) return;
-    
-    const options = dropdownRef.querySelectorAll('.select-option');
-    if (options[index]) {
-      options[index].scrollIntoView({
-        block: 'nearest'
-      });
-    }
-  }
-
-  // Clear selection
-  function clearSelection(event) {
-    event.stopPropagation();
-    if (disabled) return;
-    selectedValues = [];
-    dispatch('change', { value: multiple ? [] : '' });
-  }
-
-  // Get display value
-  const displayValue = $derived(() => {
-    if (!selectedValues.length) return '';
-    
-    const selected = options.filter(
-      option => selectedValues.includes(option.value)
-    );
-    
-    if (multiple) {
-      return selected.length === 1
-        ? selected[0].label
-        : `${selected.length} items selected`;
-    }
-    
-    return selected[0]?.label || '';
-  });
+  return selected[0]?.label || ""
+})
 </script>
 
 <div

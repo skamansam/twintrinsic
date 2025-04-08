@@ -1,18 +1,18 @@
-import ThemeToggle from '../lib/components/ThemeToggle/ThemeToggle.svelte';
+import ThemeToggle from "../lib/components/ThemeToggle/ThemeToggle.svelte"
 
 export default {
-  title: 'Components/ThemeToggle',
+  title: "Components/ThemeToggle",
   component: ThemeToggle,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
-        component: 'A toggle button for switching between light and dark themes.'
-      }
-    }
-  }
-};
+        component: "A toggle button for switching between light and dark themes.",
+      },
+    },
+  },
+}
 
 export const Default = {
   render: (args) => ({
@@ -22,9 +22,9 @@ export const Default = {
       <div class="p-4">
         <ThemeToggle {...args} />
       </div>
-    `
-  })
-};
+    `,
+  }),
+}
 
 export const InHeader = {
   render: (args) => ({
@@ -36,6 +36,6 @@ export const InHeader = {
           <ThemeToggle {...args} />
         </div>
       </div>
-    `
-  })
-};
+    `,
+  }),
+}

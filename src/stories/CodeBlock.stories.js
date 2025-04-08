@@ -1,38 +1,38 @@
-import { CodeBlock } from '../lib/components/CodeBlock';
+import { CodeBlock } from "../lib/components/CodeBlock"
 
 export default {
-  title: 'Components/CodeBlock',
+  title: "Components/CodeBlock",
   component: CodeBlock,
   argTypes: {
     language: {
-      control: 'select',
+      control: "select",
       options: [
-        '',
-        'javascript',
-        'typescript',
-        'jsx',
-        'tsx',
-        'css',
-        'scss',
-        'markup',
-        'bash',
-        'json',
-        'yaml',
-        'markdown',
-        'svelte'
-      ]
-    }
-  }
-};
+        "",
+        "javascript",
+        "typescript",
+        "jsx",
+        "tsx",
+        "css",
+        "scss",
+        "markup",
+        "bash",
+        "json",
+        "yaml",
+        "markdown",
+        "svelte",
+      ],
+    },
+  },
+}
 
 export const JavaScript = {
   args: {
-    language: 'javascript'
+    language: "javascript",
   },
   render: () => ({
     Component: CodeBlock,
     props: {
-      language: 'javascript'
+      language: "javascript",
     },
     slots: {
       default: `function greet(name) {
@@ -40,19 +40,19 @@ export const JavaScript = {
 }
 
 const result = greet('world');
-console.log(result); // Hello, world!`
-    }
-  })
-};
+console.log(result); // Hello, world!`,
+    },
+  }),
+}
 
 export const TypeScript = {
   args: {
-    language: 'typescript'
+    language: "typescript",
   },
   render: () => ({
     Component: CodeBlock,
     props: {
-      language: 'typescript'
+      language: "typescript",
     },
     slots: {
       default: `interface Person {
@@ -69,19 +69,19 @@ const person: Person = {
   age: 30
 };
 
-console.log(greet(person));`
-    }
-  })
-};
+console.log(greet(person));`,
+    },
+  }),
+}
 
 export const Svelte = {
   args: {
-    language: 'svelte'
+    language: "svelte",
   },
   render: () => ({
     Component: CodeBlock,
     props: {
-      language: 'svelte'
+      language: "svelte",
     },
     slots: {
       default: `<script>
@@ -103,19 +103,19 @@ export const Svelte = {
   button {
     @apply px-4 py-2 bg-primary text-white rounded;
   }
-</style>`
-    }
-  })
-};
+</style>`,
+    },
+  }),
+}
 
 export const HTML = {
   args: {
-    language: 'markup'
+    language: "markup",
   },
   render: () => ({
     Component: CodeBlock,
     props: {
-      language: 'markup'
+      language: "markup",
     },
     slots: {
       default: `<!DOCTYPE html>
@@ -128,19 +128,19 @@ export const HTML = {
   <h1>Hello, world!</h1>
   <p>This is a paragraph.</p>
 </body>
-</html>`
-    }
-  })
-};
+</html>`,
+    },
+  }),
+}
 
 export const CSS = {
   args: {
-    language: 'css'
+    language: "css",
   },
   render: () => ({
     Component: CodeBlock,
     props: {
-      language: 'css'
+      language: "css",
     },
     slots: {
       default: `.container {
@@ -157,19 +157,19 @@ export const CSS = {
     flex-direction: column;
     padding: 0.5rem;
   }
-}`
-    }
-  })
-};
+}`,
+    },
+  }),
+}
 
 export const JSON = {
   args: {
-    language: 'json'
+    language: "json",
   },
   render: () => ({
     Component: CodeBlock,
     props: {
-      language: 'json'
+      language: "json",
     },
     slots: {
       default: `{
@@ -184,19 +184,19 @@ export const JSON = {
     "build": "vite build",
     "test": "playwright test"
   }
-}`
-    }
-  })
-};
+}`,
+    },
+  }),
+}
 
 export const Shell = {
   args: {
-    language: 'bash'
+    language: "bash",
   },
   render: () => ({
     Component: CodeBlock,
     props: {
-      language: 'bash'
+      language: "bash",
     },
     slots: {
       default: `#!/bin/bash
@@ -207,10 +207,10 @@ npm install
 npm run dev
 
 # Run tests
-npm test`
-    }
-  })
-};
+npm test`,
+    },
+  }),
+}
 
 export const AutoDetect = {
   render: () => ({
@@ -221,7 +221,7 @@ function add(a, b) {
   return a + b;
 }
 
-console.log(add(1, 2)); // 3`
-    }
-  })
-};
+console.log(add(1, 2)); // 3`,
+    },
+  }),
+}

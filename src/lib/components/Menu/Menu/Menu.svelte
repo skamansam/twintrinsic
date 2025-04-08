@@ -1,20 +1,20 @@
 <script>
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
-    
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
-    
-    /** @type {string} - ARIA label */
-    ariaLabel = 'Menu'
-  } = $props();
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-  let isOpen = $state(false);
-  
-  function toggleMenu() {
-    isOpen = !isOpen;
-  }
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
+
+  /** @type {string} - ARIA label */
+  ariaLabel = "Menu",
+} = $props()
+
+let isOpen = $state(false)
+
+function toggleMenu() {
+  isOpen = !isOpen
+}
 </script>
 
 <div class="menu {className}" {id}>

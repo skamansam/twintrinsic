@@ -18,237 +18,235 @@ Usage:
 ```
 -->
 <script>
-  import { createEventDispatcher } from 'svelte';
-  import { slide } from 'svelte/transition';
-  import { clickOutside } from '$lib/actions';
-  import Input from './Input.svelte';
+import { createEventDispatcher } from "svelte"
+import { slide } from "svelte/transition"
+import { clickOutside } from "$lib/actions"
+import Input from "./Input.svelte"
 
-  const dispatch = createEventDispatcher();
+const dispatch = createEventDispatcher()
 
-  const {
-    /** @type {string} - Color value in current format */
-    value = '#000000',
-    /** @type {'hex' | 'rgb' | 'rgba' | 'hsl' | 'hsla'} - Color format */
-    format = 'hex',
-    /** @type {boolean} - Whether to show alpha channel */
-    showAlpha = false,
-    /** @type {string} - Input label */
-    label = 'Color',
-    /** @type {boolean} - Whether the picker is disabled */
-    disabled = false,
-    /** @type {string} - Error message */
-    error = '',
-    /** @type {string} - Additional CSS classes */
-    class: className = ''
-  } = $props();
+const {
+  /** @type {string} - Color value in current format */
+  value = "#000000",
+  /** @type {'hex' | 'rgb' | 'rgba' | 'hsl' | 'hsla'} - Color format */
+  format = "hex",
+  /** @type {boolean} - Whether to show alpha channel */
+  showAlpha = false,
+  /** @type {string} - Input label */
+  label = "Color",
+  /** @type {boolean} - Whether the picker is disabled */
+  disabled = false,
+  /** @type {string} - Error message */
+  error = "",
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
+} = $props()
 
-  let showPicker = $state(false);
-  let hue = $state(0);
-  let saturation = $state(100);
-  let lightness = $state(50);
-  let alpha = $state(100);
-  let inputValue = $state('');
-  let pickerRef;
+let showPicker = $state(false)
+let hue = $state(0)
+let saturation = $state(100)
+let lightness = $state(50)
+let alpha = $state(100)
+let inputValue = $state("")
+let pickerRef
 
-  // Initialize color from value
-  $effect(() => {
-    if (value) {
-      const color = parseColor(value);
-      if (color) {
-        ({ hue, saturation, lightness, alpha } = color);
-        updateInputValue();
-      }
-    }
-  });
-
-  // Parse color string to HSL(A) values
-  function parseColor(colorStr) {
-    try {
-      const div = document.createElement('div');
-      div.style.color = colorStr;
-      document.body.appendChild(div);
-      const computed = getComputedStyle(div).color;
-      document.body.removeChild(div);
-      
-      const match = computed.match(/\d+(\.\d+)?/g);
-      if (!match) return null;
-      
-      const [r, g, b, a = 1] = match.map(Number);
-      const [h, s, l] = rgbToHsl(r, g, b);
-      
-      return {
-        hue: h,
-        saturation: s,
-        lightness: l,
-        alpha: a * 100
-      };
-    } catch {
-      return null;
-    }
-  }
-
-  // Convert RGB to HSL
-  function rgbToHsl(r, g, b) {
-    r /= 255;
-    g /= 255;
-    b /= 255;
-    
-    const max = Math.max(r, g, b);
-    const min = Math.min(r, g, b);
-    let h, s, l = (max + min) / 2;
-
-    if (max === min) {
-      h = s = 0;
-    } else {
-      const d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-      
-      switch (max) {
-        case r:
-          h = (g - b) / d + (g < b ? 6 : 0);
-          break;
-        case g:
-          h = (b - r) / d + 2;
-          break;
-        case b:
-          h = (r - g) / d + 4;
-          break;
-      }
-      
-      h /= 6;
-    }
-
-    return [h * 360, s * 100, l * 100];
-  }
-
-  // Convert HSL to RGB
-  function hslToRgb(h, s, l) {
-    h /= 360;
-    s /= 100;
-    l /= 100;
-    
-    let r, g, b;
-
-    if (s === 0) {
-      r = g = b = l;
-    } else {
-      const hue2rgb = (p, q, t) => {
-        if (t < 0) t += 1;
-        if (t > 1) t -= 1;
-        if (t < 1/6) return p + (q - p) * 6 * t;
-        if (t < 1/2) return q;
-        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-        return p;
-      };
-
-      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-      const p = 2 * l - q;
-      
-      r = hue2rgb(p, q, h + 1/3);
-      g = hue2rgb(p, q, h);
-      b = hue2rgb(p, q, h - 1/3);
-    }
-
-    return [
-      Math.round(r * 255),
-      Math.round(g * 255),
-      Math.round(b * 255)
-    ];
-  }
-
-  // Convert RGB to hex
-  function rgbToHex(r, g, b) {
-    const toHex = x => {
-      const hex = x.toString(16);
-      return hex.length === 1 ? '0' + hex : hex;
-    };
-    
-    return '#' + toHex(r) + toHex(g) + toHex(b);
-  }
-
-  // Update color from HSL values
-  function updateColor(h, s, l, a) {
-    hue = h;
-    saturation = s;
-    lightness = l;
-    alpha = a;
-    
-    updateInputValue();
-    dispatch('change', { value: inputValue });
-  }
-
-  // Update input value based on current color
-  function updateInputValue() {
-    const [r, g, b] = hslToRgb(hue, saturation, lightness);
-    const a = alpha / 100;
-    
-    switch (format) {
-      case 'hex':
-        inputValue = rgbToHex(r, g, b);
-        break;
-      case 'rgb':
-        inputValue = `rgb(${r}, ${g}, ${b})`;
-        break;
-      case 'rgba':
-        inputValue = `rgba(${r}, ${g}, ${b}, ${a})`;
-        break;
-      case 'hsl':
-        inputValue = `hsl(${Math.round(hue)}, ${Math.round(saturation)}%, ${Math.round(lightness)}%)`;
-        break;
-      case 'hsla':
-        inputValue = `hsla(${Math.round(hue)}, ${Math.round(saturation)}%, ${Math.round(lightness)}%, ${a})`;
-        break;
-    }
-  }
-
-  // Handle color wheel interaction
-  function handleColorWheel(event) {
-    if (disabled) return;
-    
-    const rect = pickerRef.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const radius = Math.min(centerX, centerY);
-    
-    const dx = x - centerX;
-    const dy = y - centerY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-    
-    if (distance <= radius) {
-      const angle = Math.atan2(dy, dx);
-      const newHue = ((angle * 180 / Math.PI) + 360) % 360;
-      const newSaturation = (distance / radius) * 100;
-      
-      updateColor(newHue, newSaturation, lightness, alpha);
-    }
-  }
-
-  // Handle lightness slider
-  function handleLightness(event) {
-    if (disabled) return;
-    const newLightness = Number(event.target.value);
-    updateColor(hue, saturation, newLightness, alpha);
-  }
-
-  // Handle alpha slider
-  function handleAlpha(event) {
-    if (disabled) return;
-    const newAlpha = Number(event.target.value);
-    updateColor(hue, saturation, lightness, newAlpha);
-  }
-
-  // Handle input change
-  function handleInput(event) {
-    const newValue = event.detail.value;
-    const color = parseColor(newValue);
-    
+// Initialize color from value
+$effect(() => {
+  if (value) {
+    const color = parseColor(value)
     if (color) {
-      updateColor(color.hue, color.saturation, color.lightness, color.alpha);
+      ;({ hue, saturation, lightness, alpha } = color)
+      updateInputValue()
     }
   }
+})
+
+// Parse color string to HSL(A) values
+function parseColor(colorStr) {
+  try {
+    const div = document.createElement("div")
+    div.style.color = colorStr
+    document.body.appendChild(div)
+    const computed = getComputedStyle(div).color
+    document.body.removeChild(div)
+
+    const match = computed.match(/\d+(\.\d+)?/g)
+    if (!match) return null
+
+    const [r, g, b, a = 1] = match.map(Number)
+    const [h, s, l] = rgbToHsl(r, g, b)
+
+    return {
+      hue: h,
+      saturation: s,
+      lightness: l,
+      alpha: a * 100,
+    }
+  } catch {
+    return null
+  }
+}
+
+// Convert RGB to HSL
+function rgbToHsl(r, g, b) {
+  r /= 255
+  g /= 255
+  b /= 255
+
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  let h,
+    s,
+    l = (max + min) / 2
+
+  if (max === min) {
+    h = s = 0
+  } else {
+    const d = max - min
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0)
+        break
+      case g:
+        h = (b - r) / d + 2
+        break
+      case b:
+        h = (r - g) / d + 4
+        break
+    }
+
+    h /= 6
+  }
+
+  return [h * 360, s * 100, l * 100]
+}
+
+// Convert HSL to RGB
+function hslToRgb(h, s, l) {
+  h /= 360
+  s /= 100
+  l /= 100
+
+  let r, g, b
+
+  if (s === 0) {
+    r = g = b = l
+  } else {
+    const hue2rgb = (p, q, t) => {
+      if (t < 0) t += 1
+      if (t > 1) t -= 1
+      if (t < 1 / 6) return p + (q - p) * 6 * t
+      if (t < 1 / 2) return q
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6
+      return p
+    }
+
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s
+    const p = 2 * l - q
+
+    r = hue2rgb(p, q, h + 1 / 3)
+    g = hue2rgb(p, q, h)
+    b = hue2rgb(p, q, h - 1 / 3)
+  }
+
+  return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)]
+}
+
+// Convert RGB to hex
+function rgbToHex(r, g, b) {
+  const toHex = (x) => {
+    const hex = x.toString(16)
+    return hex.length === 1 ? "0" + hex : hex
+  }
+
+  return "#" + toHex(r) + toHex(g) + toHex(b)
+}
+
+// Update color from HSL values
+function updateColor(h, s, l, a) {
+  hue = h
+  saturation = s
+  lightness = l
+  alpha = a
+
+  updateInputValue()
+  dispatch("change", { value: inputValue })
+}
+
+// Update input value based on current color
+function updateInputValue() {
+  const [r, g, b] = hslToRgb(hue, saturation, lightness)
+  const a = alpha / 100
+
+  switch (format) {
+    case "hex":
+      inputValue = rgbToHex(r, g, b)
+      break
+    case "rgb":
+      inputValue = `rgb(${r}, ${g}, ${b})`
+      break
+    case "rgba":
+      inputValue = `rgba(${r}, ${g}, ${b}, ${a})`
+      break
+    case "hsl":
+      inputValue = `hsl(${Math.round(hue)}, ${Math.round(saturation)}%, ${Math.round(lightness)}%)`
+      break
+    case "hsla":
+      inputValue = `hsla(${Math.round(hue)}, ${Math.round(saturation)}%, ${Math.round(lightness)}%, ${a})`
+      break
+  }
+}
+
+// Handle color wheel interaction
+function handleColorWheel(event) {
+  if (disabled) return
+
+  const rect = pickerRef.getBoundingClientRect()
+  const x = event.clientX - rect.left
+  const y = event.clientY - rect.top
+
+  const centerX = rect.width / 2
+  const centerY = rect.height / 2
+  const radius = Math.min(centerX, centerY)
+
+  const dx = x - centerX
+  const dy = y - centerY
+  const distance = Math.sqrt(dx * dx + dy * dy)
+
+  if (distance <= radius) {
+    const angle = Math.atan2(dy, dx)
+    const newHue = ((angle * 180) / Math.PI + 360) % 360
+    const newSaturation = (distance / radius) * 100
+
+    updateColor(newHue, newSaturation, lightness, alpha)
+  }
+}
+
+// Handle lightness slider
+function handleLightness(event) {
+  if (disabled) return
+  const newLightness = Number(event.target.value)
+  updateColor(hue, saturation, newLightness, alpha)
+}
+
+// Handle alpha slider
+function handleAlpha(event) {
+  if (disabled) return
+  const newAlpha = Number(event.target.value)
+  updateColor(hue, saturation, lightness, newAlpha)
+}
+
+// Handle input change
+function handleInput(event) {
+  const newValue = event.detail.value
+  const color = parseColor(newValue)
+
+  if (color) {
+    updateColor(color.hue, color.saturation, color.lightness, color.alpha)
+  }
+}
 </script>
 
 <div

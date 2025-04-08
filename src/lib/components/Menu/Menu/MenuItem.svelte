@@ -1,30 +1,30 @@
 <script>
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
-    
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
-    
-    /** @type {string} - ARIA label */
-    ariaLabel,
-    
-    /** @type {string} - Link href */
-    href = '#',
-    
-    /** @type {boolean} - Whether the item is active */
-    active = false,
-    
-    /** @type {boolean} - Whether the item is disabled */
-    disabled = false
-  } = $props();
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-  export let open = false;
-  export let value = {};
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-  const toggleMenu = () => {
-    open = !open;
-  };
+  /** @type {string} - ARIA label */
+  ariaLabel,
+
+  /** @type {string} - Link href */
+  href = "#",
+
+  /** @type {boolean} - Whether the item is active */
+  active = false,
+
+  /** @type {boolean} - Whether the item is disabled */
+  disabled = false,
+} = $props()
+
+export let open = false
+export let value = {}
+
+const toggleMenu = () => {
+  open = !open
+}
 </script>
 
 <svelte:element

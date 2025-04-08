@@ -1,49 +1,47 @@
 <script lang="ts">
-  import '../app.css';
-  import '../lib/twintrinsic.css';
-  import { onMount } from 'svelte';
+import "../app.css"
+import "../lib/twintrinsic.css"
+import { onMount } from "svelte"
 
-  const { children } = $props();
-  let theme = $state(getInitialTheme());
+const { children } = $props()
+let theme = $state(getInitialTheme())
 
-  // Get initial theme from system preference or localStorage
-  function getInitialTheme() {
-    if (typeof window === 'undefined') return 'light';
-    
-    const stored = localStorage.getItem('theme');
-    if (stored) return stored;
+// Get initial theme from system preference or localStorage
+function getInitialTheme() {
+  if (typeof window === "undefined") return "light"
 
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
+  const stored = localStorage.getItem("theme")
+  if (stored) return stored
+
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+}
+
+// Update theme in DOM and localStorage
+$effect(() => {
+  if (typeof document === "undefined") return
+
+  document.documentElement.dataset.theme = theme
+  localStorage.setItem("theme", theme)
+})
+
+// Listen for system theme changes
+onMount(() => {
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+
+  const handleChange = (e: MediaQueryListEvent) => {
+    if (!localStorage.getItem("theme")) {
+      theme = e.matches ? "dark" : "light"
+    }
   }
 
-  // Update theme in DOM and localStorage
-  $effect(() => {
-    if (typeof document === 'undefined') return;
-    
-    document.documentElement.dataset.theme = theme;
-    localStorage.setItem('theme', theme);
-  });
+  mediaQuery.addEventListener("change", handleChange)
+  return () => mediaQuery.removeEventListener("change", handleChange)
+})
 
-  // Listen for system theme changes
-  onMount(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    const handleChange = (e: MediaQueryListEvent) => {
-      if (!localStorage.getItem('theme')) {
-        theme = e.matches ? 'dark' : 'light';
-      }
-    };
-
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  });
-
-  // Toggle theme
-  function toggleTheme() {
-    theme = theme === 'dark' ? 'light' : 'dark';
-  }
+// Toggle theme
+function toggleTheme() {
+  theme = theme === "dark" ? "light" : "dark"
+}
 </script>
 
 <svelte:head>

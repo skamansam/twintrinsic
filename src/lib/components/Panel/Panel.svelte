@@ -20,59 +20,59 @@ Usage:
 ```
 -->
 <script>
-  import { slide } from 'svelte/transition';
-  import { createEventDispatcher } from 'svelte';
+import { slide } from "svelte/transition"
+import { createEventDispatcher } from "svelte"
 
-  const {
-    /** @type {boolean} - Whether the panel is expanded */
-    expanded = true,
+const {
+  /** @type {boolean} - Whether the panel is expanded */
+  expanded = true,
 
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - ARIA label for the header button */
-    ariaLabel,
+  /** @type {string} - ARIA label for the header button */
+  ariaLabel,
 
-    /** @type {boolean} - Whether to disable the panel controls */
-    disabled = false,
+  /** @type {boolean} - Whether to disable the panel controls */
+  disabled = false,
 
-    /** @type {boolean} - Whether to show a border */
-    bordered = true,
+  /** @type {boolean} - Whether to show a border */
+  bordered = true,
 
-    /** @type {boolean} - Whether to show the expand/collapse icon */
-    showIcon = true,
+  /** @type {boolean} - Whether to show the expand/collapse icon */
+  showIcon = true,
 
-    children,
-    header
-  } = $props();
+  children,
+  header,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  let isExpanded = $state(expanded);
+const dispatch = createEventDispatcher()
+let isExpanded = $state(expanded)
 
-  // Internal state
-  let headerEl;
-  let contentEl;
+// Internal state
+let headerEl
+let contentEl
 
-  // Handle toggle
-  function handleToggle() {
-    if (!disabled) {
-      isExpanded = !isExpanded;
-      dispatch('toggle', { expanded: isExpanded });
-    }
+// Handle toggle
+function handleToggle() {
+  if (!disabled) {
+    isExpanded = !isExpanded
+    dispatch("toggle", { expanded: isExpanded })
   }
+}
 
-  // Handle keyboard navigation
-  function handleKeydown(event) {
-    if (disabled) return;
-    
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      handleToggle();
-    }
+// Handle keyboard navigation
+function handleKeydown(event) {
+  if (disabled) return
+
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault()
+    handleToggle()
   }
+}
 </script>
 
 <div 

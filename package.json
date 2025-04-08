@@ -16,14 +16,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "files": [
-    "dist",
-    "!dist/**/*.test.*",
-    "!dist/**/*.spec.*"
-  ],
-  "sideEffects": [
-    "**/*.css"
-  ],
+  "files": ["dist", "!dist/**/*.test.*", "!dist/**/*.spec.*"],
+  "sideEffects": ["**/*.css"],
   "svelte": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
@@ -78,9 +72,7 @@
     "vite": "^6.2.5",
     "vitest": "^3.1.1"
   },
-  "keywords": [
-    "svelte"
-  ],
+  "keywords": ["svelte"],
   "dependencies": {
     "@inlang/paraglide-js": "^2.0.0",
     "prism-svelte": "^0.5.0",
@@ -88,8 +80,6 @@
     "prismjs-themes": "^2.0.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
+    "onlyBuiltDependencies": ["esbuild"]
   }
 }

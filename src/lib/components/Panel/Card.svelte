@@ -21,46 +21,46 @@ Usage:
 ```
 -->
 <script>
-  import Panel from './Panel.svelte';
+import Panel from "./Panel.svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - ARIA label */
-    ariaLabel,
+  /** @type {string} - ARIA label */
+  ariaLabel,
 
-    /** @type {boolean} - Whether to add hover effects */
-    hoverable = false,
+  /** @type {boolean} - Whether to add hover effects */
+  hoverable = false,
 
-    /** @type {boolean} - Whether to add shadow */
-    shadow = true,
+  /** @type {boolean} - Whether to add shadow */
+  shadow = true,
 
-    /** @type {"none" | "sm" | "md" | "lg" | "xl"} - Shadow size when shadow is true */
-    shadowSize = 'md',
+  /** @type {"none" | "sm" | "md" | "lg" | "xl"} - Shadow size when shadow is true */
+  shadowSize = "md",
 
-    /** @type {boolean} - Whether the card is clickable */
-    clickable = false,
+  /** @type {boolean} - Whether the card is clickable */
+  clickable = false,
 
-    children,
-    header,
-    footer,
-    media
-  } = $props();
+  children,
+  header,
+  footer,
+  media,
+} = $props()
 
-  // Handle click events if card is clickable
-  function handleClick(event) {
-    if (clickable) {
-      const customEvent = new CustomEvent('click', {
-        detail: { originalEvent: event },
-        bubbles: true
-      });
-      this?.dispatchEvent(customEvent);
-    }
+// Handle click events if card is clickable
+function handleClick(event) {
+  if (clickable) {
+    const customEvent = new CustomEvent("click", {
+      detail: { originalEvent: event },
+      bubbles: true,
+    })
+    this?.dispatchEvent(customEvent)
   }
+}
 </script>
 
 <div

@@ -1,11 +1,11 @@
 {
-    "recommendations": [
-        "eamodio.gitlens",
-        "github.vscode-pull-request-github",
-        "esbenp.prettier-vscode",
-        "bradlc.vscode-tailwindcss",
-        "formulahendry.auto-close-tag",
-        "formulahendry.auto-rename-tag",
-        "inlang.vs-code-extension"
-    ]
+  "recommendations": [
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-rename-tag",
+    "inlang.vs-code-extension"
+  ]
 }

@@ -3,20 +3,13 @@
 Theming documentation page
 -->
 <script>
-  import Container from '$lib/components/Container/Container.svelte';
-  import Separator from '$lib/components/Separator/Separator.svelte';
-  import Panel from '$lib/components/Panel/Panel.svelte';
+import Container from "$lib/components/Container/Container.svelte"
+import Separator from "$lib/components/Separator/Separator.svelte"
+import Panel from "$lib/components/Panel/Panel.svelte"
 
-  const colorScales = [
-    'primary',
-    'secondary',
-    'error',
-    'warning',
-    'success',
-    'info'
-  ];
+const colorScales = ["primary", "secondary", "error", "warning", "success", "info"]
 
-  const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

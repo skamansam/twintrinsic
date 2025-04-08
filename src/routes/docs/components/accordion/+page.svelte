@@ -7,9 +7,9 @@ Documentation page for the Accordion component
   @reference '$lib/twintrinsic.css';
 </style>
 <script>
-  import Accordion from '$lib/components/Panel/Accordion.svelte';
-  import Panel from '$lib/components/Panel/Panel.svelte';
-  import { CodeBlock } from '$lib/components/CodeBlock';
+import Accordion from "$lib/components/Panel/Accordion.svelte"
+import Panel from "$lib/components/Panel/Panel.svelte"
+import { CodeBlock } from "$lib/components/CodeBlock"
 </script>
 
 <article class="prose dark:prose-invert max-w-none">

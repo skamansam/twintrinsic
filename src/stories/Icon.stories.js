@@ -1,41 +1,74 @@
-import { Icon } from '../lib/components/Icon';
+import { Icon } from "../lib/components/Icon"
 
 export default {
-  title: 'Components/Icon',
+  title: "Components/Icon",
   component: Icon,
   argTypes: {
     name: {
-      control: 'select',
+      control: "select",
       options: [
         // Interface
-        'check', 'close', 'plus', 'minus', 'search', 'settings', 'menu', 'more',
+        "check",
+        "close",
+        "plus",
+        "minus",
+        "search",
+        "settings",
+        "menu",
+        "more",
         // Navigation
-        'arrow-left', 'arrow-right', 'arrow-up', 'arrow-down',
-        'chevron-left', 'chevron-right', 'chevron-up', 'chevron-down',
+        "arrow-left",
+        "arrow-right",
+        "arrow-up",
+        "arrow-down",
+        "chevron-left",
+        "chevron-right",
+        "chevron-up",
+        "chevron-down",
         // Actions
-        'edit', 'delete', 'save', 'refresh', 'download', 'upload', 'copy',
+        "edit",
+        "delete",
+        "save",
+        "refresh",
+        "download",
+        "upload",
+        "copy",
         // Forms
-        'calendar', 'eye', 'eye-off', 'lock', 'unlock',
+        "calendar",
+        "eye",
+        "eye-off",
+        "lock",
+        "unlock",
         // Media
-        'play', 'pause', 'stop', 'volume-up', 'volume-down', 'volume-mute', 'volume-off',
+        "play",
+        "pause",
+        "stop",
+        "volume-up",
+        "volume-down",
+        "volume-mute",
+        "volume-off",
         // Status
-        'info', 'warning', 'error', 'success', 'help'
-      ]
+        "info",
+        "warning",
+        "error",
+        "success",
+        "help",
+      ],
     },
     size: {
-      control: 'select',
-      options: ['sm', 'md', 'lg', 'xl']
-    }
-  }
-};
+      control: "select",
+      options: ["sm", "md", "lg", "xl"],
+    },
+  },
+}
 
 // Basic icon
 export const Basic = {
   args: {
-    name: 'check',
-    size: 'md'
-  }
-};
+    name: "check",
+    size: "md",
+  },
+}
 
 // All sizes
 export const Sizes = {
@@ -49,10 +82,10 @@ export const Sizes = {
           <Icon name="check" size="lg" />
           <Icon name="check" size="xl" />
         </div>
-      `
-    }
-  })
-};
+      `,
+    },
+  }),
+}
 
 // Interface icons
 export const Interface = {
@@ -94,10 +127,10 @@ export const Interface = {
             <span class="text-sm">more</span>
           </div>
         </div>
-      `
-    }
-  })
-};
+      `,
+    },
+  }),
+}
 
 // Navigation icons
 export const Navigation = {
@@ -139,10 +172,10 @@ export const Navigation = {
             <span class="text-sm">chevron-down</span>
           </div>
         </div>
-      `
-    }
-  })
-};
+      `,
+    },
+  }),
+}
 
 // Action icons
 export const Actions = {
@@ -180,10 +213,10 @@ export const Actions = {
             <span class="text-sm">copy</span>
           </div>
         </div>
-      `
-    }
-  })
-};
+      `,
+    },
+  }),
+}
 
 // Form icons
 export const Forms = {
@@ -213,10 +246,10 @@ export const Forms = {
             <span class="text-sm">unlock</span>
           </div>
         </div>
-      `
-    }
-  })
-};
+      `,
+    },
+  }),
+}
 
 // Media icons
 export const Media = {
@@ -254,10 +287,10 @@ export const Media = {
             <span class="text-sm">volume-off</span>
           </div>
         </div>
-      `
-    }
-  })
-};
+      `,
+    },
+  }),
+}
 
 // Status icons
 export const Status = {
@@ -287,7 +320,7 @@ export const Status = {
             <span class="text-sm">help</span>
           </div>
         </div>
-      `
-    }
-  })
-};
+      `,
+    },
+  }),
+}

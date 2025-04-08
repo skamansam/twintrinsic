@@ -17,61 +17,61 @@ Usage:
 ```
 -->
 <script>
-  import { slide } from 'svelte/transition';
-  import Panel from '../Panel/Panel.svelte';
+import { slide } from "svelte/transition"
+import Panel from "../Panel/Panel.svelte"
 
-  const {
-    /** @type {boolean} - Whether the sidebar is expanded */
-    expanded = true,
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
-    /** @type {string} - Position of the sidebar */
-    position = 'left',
-    /** @type {string} - Width of the sidebar when expanded */
-    width = '16rem',
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
-    /** @type {string} - ARIA label */
-    ariaLabel,
-    /** @type {boolean} - Whether to disable the sidebar controls */
-    disabled = false,
-    /** @type {boolean} - Whether to show a backdrop when expanded on mobile */
-    showBackdrop = true,
-    /** @type {boolean} - Whether to float over content on mobile */
-    floatOnMobile = true,
-    /** @type {boolean} - Whether to dock to viewport instead of parent */
-    docked = false
-  } = $props();
+const {
+  /** @type {boolean} - Whether the sidebar is expanded */
+  expanded = true,
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
+  /** @type {string} - Position of the sidebar */
+  position = "left",
+  /** @type {string} - Width of the sidebar when expanded */
+  width = "16rem",
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
+  /** @type {string} - ARIA label */
+  ariaLabel,
+  /** @type {boolean} - Whether to disable the sidebar controls */
+  disabled = false,
+  /** @type {boolean} - Whether to show a backdrop when expanded on mobile */
+  showBackdrop = true,
+  /** @type {boolean} - Whether to float over content on mobile */
+  floatOnMobile = true,
+  /** @type {boolean} - Whether to dock to viewport instead of parent */
+  docked = false,
+} = $props()
 
-  let isExpanded = $state(expanded);
+let isExpanded = $state(expanded)
 
-  // Handle toggle from Panel
-  function handleToggle(event) {
-    isExpanded = event.detail.expanded;
-    dispatch('toggle', { expanded: isExpanded });
+// Handle toggle from Panel
+function handleToggle(event) {
+  isExpanded = event.detail.expanded
+  dispatch("toggle", { expanded: isExpanded })
+}
+
+// Handle backdrop click
+function handleBackdropClick() {
+  if (!disabled) {
+    isExpanded = false
+    dispatch("toggle", { expanded: isExpanded })
   }
+}
 
-  // Handle backdrop click
-  function handleBackdropClick() {
-    if (!disabled) {
-      isExpanded = false;
-      dispatch('toggle', { expanded: isExpanded });
-    }
+// Handle escape key
+function handleKeydown(event) {
+  if (!disabled && event.key === "Escape" && isExpanded) {
+    isExpanded = false
+    dispatch("toggle", { expanded: isExpanded })
   }
+}
 
-  // Handle escape key
-  function handleKeydown(event) {
-    if (!disabled && event.key === 'Escape' && isExpanded) {
-      isExpanded = false;
-      dispatch('toggle', { expanded: isExpanded });
-    }
-  }
-
-  // Emit events directly
-  function dispatch(event, detail) {
-    const customEvent = new CustomEvent(event, { detail });
-    this?.dispatchEvent(customEvent);
-  }
+// Emit events directly
+function dispatch(event, detail) {
+  const customEvent = new CustomEvent(event, { detail })
+  this?.dispatchEvent(customEvent)
+}
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
