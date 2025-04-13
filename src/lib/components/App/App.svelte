@@ -27,7 +27,7 @@ export let rightPanelWidth = "300px"
   {/if}
   <div class="appWrapper w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 grow">
     {#if $$slots.leftPanel}
-      <div class="appLeftPanel w-fixed w-full shrink grow-0 px-4">
+      <div class="appLeftPanel shrink-0 px-4">
           <div class="sticky top-0 p-4 w-full h-full">
               <slot name="leftPanel"/>
           </div>
@@ -37,7 +37,7 @@ export let rightPanelWidth = "300px"
       <slot/>
     </main>
     {#if $$slots.rightPanel}
-      <div class="appRightPanel w-fixed w-full shrink grow-0 px-2">
+      <div class="appRightPanel shrink-0 px-2">
           <!-- fixed-width -->
           <div class="flex sm:flex-col px-2">
             <slot name="rightPanel"/>
@@ -52,3 +52,21 @@ export let rightPanelWidth = "300px"
   {/if}
 </div>
 
+<style>
+  @reference '$lib/twintrinsic.css';
+  
+  .appLeftPanel {
+    width: var(--left-panel-width);
+  }
+  
+  .appRightPanel {
+    width: var(--right-panel-width);
+  }
+  
+  @media (max-width: 640px) {
+    .appLeftPanel,
+    .appRightPanel {
+      width: 100%;
+    }
+  }
+</style>
