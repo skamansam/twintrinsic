@@ -136,16 +136,19 @@ Usage:
   }[shape] || 'rounded-full');
   
   // Determine status classes
-  const statusClasses = $derived(status ? {
+  const statusClasses = $derived({
     online: 'bg-success-500',
     offline: 'bg-muted',
     away: 'bg-warning-500',
     busy: 'bg-error-500'
-  }[status] || 'bg-muted' : '');
+  }[status] || 'bg-muted');
   
   // Generate a random color based on the name or fallback
-  const randomBgColor = $derived((() => {
-    if (bgColor) return bgColor);
+  const randomBgColor = $derived(generateRandomColor());
+  
+  // Function to generate a random color based on the name or fallback
+  function generateRandomColor() {
+    if (bgColor) return bgColor;
     
     const seed = name || fallback || id;
     const colors = [
@@ -162,7 +165,7 @@ Usage:
     
     const index = Math.abs(hash) % colors.length;
     return colors[index];
-  })();
+  }
 </script>
 
 <div

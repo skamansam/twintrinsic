@@ -25,6 +25,9 @@ Documentation site layout with left navigation, right theme sidebar, and header
   
   // Component links for the left sidebar
   const componentLinks = [
+    // Core Components
+    { category: "Core", name: "App", href: "/docs/components/app" },
+    
     // Layout Components
     { category: "Layout", name: "Container", href: "/docs/components/container" },
     { name: "Panel", href: "/docs/components/panel" },
@@ -35,28 +38,40 @@ Documentation site layout with left navigation, right theme sidebar, and header
     { category: "Navigation", name: "AppHeader", href: "/docs/components/appheader" },
     { name: "BottomBar", href: "/docs/components/bottombar" },
     { name: "Breadcrumb", href: "/docs/components/breadcrumb" },
+    { name: "Menu", href: "/docs/components/menu" },
+    { name: "MenuItem", href: "/docs/components/menuitem" },
+    { name: "Tabs", href: "/docs/components/tabs" },
     
     // Data Display Components
     { category: "Data Display", name: "Avatar", href: "/docs/components/avatar" },
     { name: "Badge", href: "/docs/components/badge" },
     { name: "Carousel", href: "/docs/components/carousel" },
+    { name: "Chip", href: "/docs/components/chip" },
     { name: "DataTable", href: "/docs/components/datatable" },
     { name: "Progress", href: "/docs/components/progress" },
     { name: "Skeleton", href: "/docs/components/skeleton" },
+    { name: "Table", href: "/docs/components/table" },
     { name: "Tag", href: "/docs/components/tag" },
+    { name: "Timeline", href: "/docs/components/timeline" },
+    { name: "Tooltip", href: "/docs/components/tooltip" },
     { name: "Tree", href: "/docs/components/tree" },
     
     // Form Components
-    { category: "Form", name: "Combobox", href: "/docs/components/combobox" },
+    { category: "Form", name: "Button", href: "/docs/components/button" },
+    { name: "Combobox", href: "/docs/components/combobox" },
     { name: "FileUpload", href: "/docs/components/fileupload" },
+    { name: "Form", href: "/docs/components/form" },
+    { name: "Input", href: "/docs/components/input" },
     { name: "Slider", href: "/docs/components/slider" },
     
     // Feedback Components
-    { category: "Feedback", name: "Stepper", href: "/docs/components/stepper" },
+    { category: "Feedback", name: "Modal", href: "/docs/components/modal" },
+    { name: "Stepper", href: "/docs/components/stepper" },
     { name: "Toast", href: "/docs/components/toast" },
     
     // Utility Components
-    { category: "Utility", name: "Masonry", href: "/docs/components/masonry" },
+    { category: "Utility", name: "Icon", href: "/docs/components/icon" },
+    { name: "Masonry", href: "/docs/components/masonry" },
     { name: "ThemeToggle", href: "/docs/components/themetoggle" },
   ]
   
