@@ -63,7 +63,7 @@ Usage:
   const dispatch = createEventDispatcher();
   
   // Determine variant classes
-  $derived variantClasses = outline 
+  const variantClasses = $derived(outline 
     ? {
         default: 'bg-transparent border border-muted text-text dark:border-muted dark:text-text',
         primary: 'bg-transparent border border-primary-500 text-primary-500 dark:border-primary-500 dark:text-primary-500',
@@ -81,21 +81,21 @@ Usage:
         warning: 'bg-warning-100 text-warning-800 dark:bg-warning-900 dark:text-warning-200',
         error: 'bg-error-100 text-error-800 dark:bg-error-900 dark:text-error-200',
         info: 'bg-info-100 text-info-800 dark:bg-info-900 dark:text-info-200'
-      }[variant];
+      }[variant]);
   
   // Determine size classes
-  $derived sizeClasses = {
+  const sizeClasses = $derived({
     sm: 'text-xs px-2 py-0.5 h-5',
     md: 'text-sm px-2.5 py-0.5 h-6',
     lg: 'text-base px-3 py-1 h-8'
-  }[size] || 'text-sm px-2.5 py-0.5 h-6';
+  }[size] || 'text-sm px-2.5 py-0.5 h-6');
   
   // Determine icon size classes
-  $derived iconSizeClasses = {
+  const iconSizeClasses = $derived({
     sm: 'w-3 h-3',
     md: 'w-4 h-4',
     lg: 'w-5 h-5'
-  }[size] || 'w-4 h-4';
+  }[size] || 'w-4 h-4');
   
   /**
    * Handles dismiss button click
