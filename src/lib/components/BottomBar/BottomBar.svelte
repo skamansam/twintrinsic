@@ -34,7 +34,7 @@ const {
   /** @type {boolean} - Whether to disable the bottom bar controls */
   disabled = false,
   /** @type {boolean} - Whether to show a backdrop when expanded on mobile */
-  showBackdrop = true,
+  showBackdrop = false,
   /** @type {boolean} - Whether to float over content on mobile */
   floatOnMobile = true,
   /** @type {boolean} - Whether to dock to viewport instead of parent */

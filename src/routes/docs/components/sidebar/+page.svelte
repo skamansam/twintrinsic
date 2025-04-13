@@ -6,6 +6,16 @@ Sidebar documentation page
 import Container from "$lib/components/Container/Container.svelte"
 import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
 import Panel from "$lib/components/Panel/Panel.svelte"
+import { onMount } from "svelte"
+
+let showExamples = false
+
+onMount(() => {
+  // Delay showing examples to prevent transition glitch on page load
+  setTimeout(() => {
+    showExamples = true
+  }, 100)
+})
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -22,15 +32,17 @@ import Panel from "$lib/components/Panel/Panel.svelte"
   <h3>Basic Sidebar</h3>
   <div class="not-prose mb-8">
     <div class="h-[400px] bg-surface relative">
-      <Sidebar>
-        <svelte:fragment slot="header">Navigation</svelte:fragment>
-        <nav class="space-y-2">
-          <a href="#" class="block p-2 rounded hover:bg-hover">Home</a>
-          <a href="#" class="block p-2 rounded hover:bg-hover">About</a>
-          <a href="#" class="block p-2 rounded hover:bg-hover">Settings</a>
-          <a href="#" class="block p-2 rounded hover:bg-hover">Help</a>
-        </nav>
-      </Sidebar>
+      {#if showExamples}
+        <Sidebar>
+          <svelte:fragment slot="header">Navigation</svelte:fragment>
+          <nav class="space-y-2">
+            <a href="#" class="block p-2 rounded hover:bg-hover">Home</a>
+            <a href="#" class="block p-2 rounded hover:bg-hover">About</a>
+            <a href="#" class="block p-2 rounded hover:bg-hover">Settings</a>
+            <a href="#" class="block p-2 rounded hover:bg-hover">Help</a>
+          </nav>
+        </Sidebar>
+      {/if}
     </div>
   </div>
 
@@ -47,19 +59,21 @@ import Panel from "$lib/components/Panel/Panel.svelte"
   <h3>Right-positioned Sidebar</h3>
   <div class="not-prose mb-8">
     <div class="h-[400px] bg-surface relative">
-      <Sidebar position="right">
-        <svelte:fragment slot="header">Settings</svelte:fragment>
-        <div class="space-y-4">
-          <div class="space-y-2">
-            <label class="block text-sm font-medium">Theme</label>
-            <select class="w-full rounded-md border-border bg-background">
-              <option>Light</option>
-              <option>Dark</option>
-              <option>System</option>
-            </select>
+      {#if showExamples}
+        <Sidebar position="right">
+          <svelte:fragment slot="header">Settings</svelte:fragment>
+          <div class="space-y-4">
+            <div class="space-y-2">
+              <label class="block text-sm font-medium">Theme</label>
+              <select class="w-full rounded-md border-border bg-background">
+                <option>Light</option>
+                <option>Dark</option>
+                <option>System</option>
+              </select>
+            </div>
           </div>
-        </div>
-      </Sidebar>
+        </Sidebar>
+      {/if}
     </div>
   </div>
 

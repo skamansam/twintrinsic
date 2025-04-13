@@ -25,14 +25,39 @@ let rightSidebarExpanded = true
 
 // Component links for the left sidebar
 const componentLinks = [
-  { name: "ThemeToggle", href: "/docs/components/themetoggle" },
-  { name: "AppHeader", href: "/docs/components/appheader" },
-  { name: "BottomBar", href: "/docs/components/bottombar" },
-  { name: "ButtonDropdown", href: "/docs/components/buttondropdown" },
-  { name: "Container", href: "/docs/components/container" },
+  // Layout Components
+  { category: "Layout", name: "Container", href: "/docs/components/container" },
   { name: "Panel", href: "/docs/components/panel" },
   { name: "Separator", href: "/docs/components/separator" },
   { name: "Sidebar", href: "/docs/components/sidebar" },
+  
+  // Navigation Components
+  { category: "Navigation", name: "AppHeader", href: "/docs/components/appheader" },
+  { name: "BottomBar", href: "/docs/components/bottombar" },
+  { name: "Breadcrumb", href: "/docs/components/breadcrumb" },
+  
+  // Data Display Components
+  { category: "Data Display", name: "Avatar", href: "/docs/components/avatar" },
+  { name: "Badge", href: "/docs/components/badge" },
+  { name: "Carousel", href: "/docs/components/carousel" },
+  { name: "DataTable", href: "/docs/components/datatable" },
+  { name: "Progress", href: "/docs/components/progress" },
+  { name: "Skeleton", href: "/docs/components/skeleton" },
+  { name: "Tag", href: "/docs/components/tag" },
+  { name: "Tree", href: "/docs/components/tree" },
+  
+  // Form Components
+  { category: "Form", name: "Combobox", href: "/docs/components/combobox" },
+  { name: "FileUpload", href: "/docs/components/fileupload" },
+  { name: "Slider", href: "/docs/components/slider" },
+  
+  // Feedback Components
+  { category: "Feedback", name: "Stepper", href: "/docs/components/stepper" },
+  { name: "Toast", href: "/docs/components/toast" },
+  
+  // Utility Components
+  { category: "Utility", name: "Masonry", href: "/docs/components/masonry" },
+  { name: "ThemeToggle", href: "/docs/components/themetoggle" },
 ]
 
 // Theme colors for the right sidebar
@@ -80,7 +105,10 @@ const themeColors = [
 
   <div slot="leftPanel">
     <nav class="docs-nav">
-      {#each componentLinks as link}
+      {#each componentLinks as link, i}
+        {#if link.category && (i === 0 || componentLinks[i-1].category !== link.category)}
+          <div class="docs-nav-category">{link.category}</div>
+        {/if}
         <a
           href={link.href}
           class="docs-nav-link"
@@ -99,6 +127,15 @@ const themeColors = [
   @reference '$lib/twintrinsic.css';
   .docs-nav {
     @apply flex flex-col gap-2 p-4;
+  }
+
+  .docs-nav-category {
+    @apply text-xs font-semibold uppercase tracking-wider text-muted;
+    @apply mt-4 mb-1 px-4;
+  }
+
+  .docs-nav-category:first-child {
+    @apply mt-0;
   }
 
   .docs-nav-link {
