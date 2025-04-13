@@ -64,7 +64,7 @@ Usage:
   });
   
   // Determine if this panel is selected
-  $derived isSelected = tabsContext.selectedIndex() === index;
+  const isSelected = $derived(tabsContext.selectedIndex() === index);
   
   // Update hasBeenSelected when selected
   $effect(() => {
@@ -74,13 +74,13 @@ Usage:
   });
   
   // Determine if content should be rendered
-  $derived shouldRenderContent = isSelected || (keepAlive && hasBeenSelected) || !lazy;
+  const shouldRenderContent = $derived(isSelected || (keepAlive && hasBeenSelected) || !lazy);
   
   // Generate unique ID if not provided
   const panelId = id || `panel-${crypto.randomUUID()}`;
   
   // Tab ID for aria-labelledby
-  $derived tabId = `tab-${panelId.replace('panel-', '')}`;
+  const tabId = $derived(`tab-${panelId.replace('panel-', '')}`);
 </script>
 
 <div

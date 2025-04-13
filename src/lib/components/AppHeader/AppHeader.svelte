@@ -39,6 +39,9 @@ const {
   navItems = [],
   class: className = "",
   id = crypto.randomUUID(),
+  logo,
+  notifications,
+  userMenu
 } = $props()
 
 let mobileMenuOpen = $state(false)
@@ -91,6 +94,43 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
 
 <svelte:window onkeydown={handleKeydown} />
 
+{#snippet defaultLogo()}
+  {#if brandLogo}
+    <img
+      src={brandLogo}
+      alt={brandName}
+      class="app-header-logo"
+      width="32"
+      height="32"
+    />
+  {/if}
+  <span class="app-header-brand-name">{brandName}</span>
+{/snippet}
+
+{#snippet defaultNotifications()}
+  <div class="p-4 text-center text-muted">
+    No new notifications
+  </div>
+{/snippet}
+
+{#snippet defaultUserMenu()}
+  <div class="app-header-user-menu-header">
+    <p class="app-header-user-name">{user.name}</p>
+  </div>
+  <div class="app-header-user-menu-items">
+    <a href="/profile" class="app-header-user-menu-item">Profile</a>
+    <a href="/settings" class="app-header-user-menu-item">Settings</a>
+    <hr class="app-header-user-menu-separator" />
+    <button
+      type="button"
+      class="app-header-user-menu-item text-error-bold"
+      click={() => dispatch('signout')}
+    >
+      Sign out
+    </button>
+  </div>
+{/snippet}
+
 <header
   class="app-header {className}"
   {id}
@@ -99,18 +139,7 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
     <!-- Brand -->
     <div class="app-header-brand">
       <a {brandHref} class="app-header-brand-link" aria-label={brandName}>
-        <slot name="logo">
-          {#if brandLogo}
-            <img
-              src={brandLogo}
-              alt={brandName}
-              class="app-header-logo"
-              width="32"
-              height="32"
-            />
-          {/if}
-          <span class="app-header-brand-name">{brandName}</span>
-        </slot>
+        {@render (logo ?? defaultLogo)()}
       </a>
     </div>
 
@@ -196,11 +225,7 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
               aria-label="Notifications"
               transition:slide={{ duration: 200 }}
             >
-              <slot name="notifications">
-                <div class="p-4 text-center text-muted">
-                  No new notifications
-                </div>
-              </slot>
+              {@render (notifications ?? defaultNotifications)()}
             </div>
           {/if}
         </div>
@@ -237,23 +262,7 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
               aria-label="User menu"
               transition:slide={{ duration: 200 }}
             >
-              <slot name="user-menu">
-                <div class="app-header-user-menu-header">
-                  <p class="app-header-user-name">{user.name}</p>
-                </div>
-                <div class="app-header-user-menu-items">
-                  <a href="/profile" class="app-header-user-menu-item">Profile</a>
-                  <a href="/settings" class="app-header-user-menu-item">Settings</a>
-                  <hr class="app-header-user-menu-separator" />
-                  <button
-                    type="button"
-                    class="app-header-user-menu-item text-error-bold"
-                    click={() => dispatch('signout')}
-                  >
-                    Sign out
-                  </button>
-                </div>
-              </slot>
+              {@render (userMenu ?? defaultUserMenu)()}
             </div>
           {/if}
         </div>

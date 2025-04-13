@@ -85,25 +85,25 @@ Usage:
   });
   
   // Computed values
-  $derived displayValue = hoverValue >= 0 ? hoverValue : currentValue;
-  $derived isInteractive = !readonly && !disabled;
+  const displayValue = $derived(hoverValue >= 0 ? hoverValue : currentValue);
+  const isInteractive = $derived(!readonly && !disabled);
   
   // Determine size classes
-  $derived sizeClasses = {
+  const sizeClasses = $derived({
     sm: 'text-sm gap-0.5',
     md: 'text-base gap-1',
     lg: 'text-lg gap-1.5'
-  }[size] || 'text-base gap-1';
+  }[size] || 'text-base gap-1');
   
   // Determine icon size classes
-  $derived iconSizeClasses = {
+  const iconSizeClasses = $derived({
     sm: 'w-4 h-4',
     md: 'w-5 h-5',
     lg: 'w-6 h-6'
-  }[size] || 'w-5 h-5';
+  }[size] || 'w-5 h-5');
   
   // Determine variant classes
-  $derived variantClasses = {
+  const variantClasses = $derived({
     default: 'text-muted dark:text-muted',
     primary: 'text-primary-500 dark:text-primary-500',
     secondary: 'text-secondary-500 dark:text-secondary-500',
@@ -111,10 +111,10 @@ Usage:
     warning: 'text-warning-500 dark:text-warning-500',
     error: 'text-error-500 dark:text-error-500',
     info: 'text-info-500 dark:text-info-500'
-  }[variant] || 'text-warning-500 dark:text-warning-500';
+  }[variant] || 'text-warning-500 dark:text-warning-500');
   
   // Generate items array based on max and precision
-  $derived items = Array.from({ length: max / precision }, (_, i) => (i + 1) * precision);
+  const items = $derived(Array.from({ length: max / precision }, (_, i) => (i + 1) * precision));
   
   /**
    * Calculates the value based on mouse position

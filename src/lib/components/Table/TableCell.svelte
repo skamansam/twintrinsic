@@ -36,11 +36,11 @@ Usage:
   } = $props();
 
   // Determine alignment classes
-  $derived alignClasses = {
+  const alignClasses = $derived({
     left: 'text-left',
     center: 'text-center',
     right: 'text-right'
-  }[align] || 'text-left';
+  }[align] || 'text-left');
 </script>
 
 <td

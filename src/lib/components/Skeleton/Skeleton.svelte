@@ -51,8 +51,8 @@ Usage:
   } = $props();
 
   // Determine height based on variant
-  $derived computedHeight = (() => {
-    if (height) return height;
+  const computedHeight = $derived((() => {
+    if (height) return height);
     if (size) return size;
     
     return {
@@ -61,30 +61,30 @@ Usage:
       circle: '40px',
       rounded: '40px'
     }[variant] || '100px';
-  })();
+  })());
   
   // Determine width based on variant
-  $derived computedWidth = (() => {
+  const computedWidth = $derived((() => {
     if (width) return width;
     if (size) return size;
     if (variant === 'circle') return computedHeight;
     
     return '100%';
-  })();
+  })());
   
   // Determine border radius based on variant
-  $derived borderRadius = {
+  const borderRadius = $derived({
     text: '4px',
     rectangle: '0',
     circle: '50%',
     rounded: '8px'
-  }[variant] || '0';
+  }[variant] || '0');
   
   // Generate array for multiple lines
-  $derived lineArray = Array.from({ length: lines });
+  const lineArray = $derived(Array.from({ length: lines }));
   
   // Determine if we should render multiple lines
-  $derived isMultiLine = variant === 'text' && lines > 1;
+  const isMultiLine = $derived(variant === 'text' && lines > 1);
 </script>
 
 {#if isMultiLine}

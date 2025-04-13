@@ -56,13 +56,13 @@ Usage:
   });
   
   // Determine spacing class based on the spacing prop
-  $derived spacingClass = `avatar-group-spacing-${spacing}`;
+  const spacingClass = $derived(`avatar-group-spacing-${spacing}`);
   
   // Determine if we need to show overflow
-  $derived showOverflow = max !== undefined && total !== undefined && total > max;
+  const showOverflow = $derived(max !== undefined && total !== undefined && total > max);
   
   // Calculate overflow count
-  $derived overflowCount = showOverflow ? total - max : 0;
+  const overflowCount = $derived(showOverflow ? total - max : 0);
 </script>
 
 <div

@@ -59,10 +59,10 @@ Usage:
   });
   
   // Determine if this tab is selected
-  $derived isSelected = tabsContext.selectedIndex() === index;
+  const isSelected = $derived(tabsContext.selectedIndex() === index);
   
   // Determine if tabs are disabled from parent
-  $derived isDisabled = disabled || tabsContext.disabled();
+  const isDisabled = $derived(disabled || tabsContext.disabled());
   
   /**
    * Handles tab click
@@ -87,7 +87,7 @@ Usage:
   const tabId = id || `tab-${crypto.randomUUID()}`;
   
   // Panel ID for aria-controls
-  $derived panelId = `panel-${tabId}`;
+  const panelId = $derived(`panel-${tabId}`);
 </script>
 
 <button

@@ -94,13 +94,13 @@ Usage:
   }
   
   // Determine if we should show an error
-  $derived showError = !!fieldError && touched;
+  const showError = $derived(!!fieldError && touched);
   
   // Determine the aria-describedby attribute value
-  $derived describedBy = [
+  const describedBy = $derived([
     helpText ? helpId : null,
     showError ? errorId : null
-  ].filter(Boolean).join(' ');
+  ].filter(Boolean).join(' '));
 </script>
 
 <div 

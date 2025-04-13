@@ -90,8 +90,8 @@ Usage:
   });
   
   // Determine step state based on context and props
-  $derived stepState = (() => {
-    if (error) return 'error';
+  const stepState = $derived((() => {
+    if (error) return 'error');
     if (completed) return 'completed';
     if (active) return 'active';
     
@@ -104,28 +104,28 @@ Usage:
   })();
   
   // Determine if this is the last step
-  $derived isLast = !stepElement?.nextElementSibling;
+  const isLast = $derived(!stepElement?.nextElementSibling);
   
   // Determine if step is clickable
-  $derived isClickable = !!onClick && !disabled;
+  const isClickable = $derived(!!onClick && !disabled);
   
   // Determine if content should be shown
-  $derived showContent = (stepperContext?.orientation === 'vertical' && (expanded || stepState === 'active')) && !!children;
+  const showContent = $derived((stepperContext?.orientation === 'vertical' && (expanded || stepState === 'active')) && !!children);
   
   // Determine variant from context
-  $derived variant = stepperContext?.variant || 'primary';
+  const variant = $derived(stepperContext?.variant || 'primary');
   
   // Determine orientation from context
-  $derived orientation = stepperContext?.orientation || 'horizontal';
+  const orientation = $derived(stepperContext?.orientation || 'horizontal');
   
   // Determine if using alternative labels
-  $derived alternativeLabels = stepperContext?.alternativeLabels || false;
+  const alternativeLabels = $derived(stepperContext?.alternativeLabels || false);
   
   // Determine if showing connector
-  $derived showConnector = stepperContext?.connector !== false && !isLast;
+  const showConnector = $derived(stepperContext?.connector !== false && !isLast);
   
   // Determine variant classes
-  $derived variantClasses = {
+  const variantClasses = $derived({
     default: 'text-muted dark:text-muted',
     primary: 'text-primary-500 dark:text-primary-500',
     secondary: 'text-secondary-500 dark:text-secondary-500',
@@ -133,7 +133,7 @@ Usage:
     warning: 'text-warning-500 dark:text-warning-500',
     error: 'text-error-500 dark:text-error-500',
     info: 'text-info-500 dark:text-info-500'
-  }[variant] || 'text-primary-500 dark:text-primary-500';
+  }[variant] || 'text-primary-500 dark:text-primary-500');
   
   // Handle click on step
   function handleClick() {

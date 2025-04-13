@@ -51,14 +51,14 @@ Usage:
   let container;
   
   // Determine position classes
-  $derived positionClasses = {
+  const positionClasses = $derived({
     'top-right': 'toast-top-right',
     'top-left': 'toast-top-left',
     'bottom-right': 'toast-bottom-right',
     'bottom-left': 'toast-bottom-left',
     'top-center': 'toast-top-center',
     'bottom-center': 'toast-bottom-center'
-  }[position] || 'toast-bottom-right';
+  }[position] || 'toast-bottom-right');
   
   // Subscribe to toast store
   onMount(() => {

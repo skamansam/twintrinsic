@@ -69,29 +69,29 @@ Usage:
   } = $props();
 
   // Calculate percentage for width
-  $derived percentage = Math.min(100, Math.max(0, ((value - min) / (max - min)) * 100));
+  const percentage = $derived(Math.min(100, Math.max(0, ((value - min) / (max - min)) * 100)));
   
   // Format value for display
-  $derived formattedValue = format 
+  const formattedValue = $derived(format 
     ? format(value, min, max) 
-    : `${Math.round(percentage)}%`;
+    : `${Math.round(percentage)}%`);
   
   // Determine size classes
-  $derived sizeClasses = {
+  const sizeClasses = $derived({
     sm: 'h-1.5',
     md: 'h-2.5',
     lg: 'h-4'
-  }[size] || 'h-2.5';
+  }[size] || 'h-2.5');
   
   // Determine text size classes
-  $derived textSizeClasses = {
+  const textSizeClasses = $derived({
     sm: 'text-xs',
     md: 'text-sm',
     lg: 'text-base'
-  }[size] || 'text-sm';
+  }[size] || 'text-sm');
   
   // Determine variant classes
-  $derived variantClasses = {
+  const variantClasses = $derived({
     default: 'bg-muted/20 dark:bg-muted/20',
     primary: 'bg-primary-500 dark:bg-primary-500',
     secondary: 'bg-secondary-500 dark:bg-secondary-500',
@@ -99,13 +99,13 @@ Usage:
     warning: 'bg-warning-500 dark:bg-warning-500',
     error: 'bg-error-500 dark:bg-error-500',
     info: 'bg-info-500 dark:bg-info-500'
-  }[variant] || 'bg-primary-500 dark:bg-primary-500';
+  }[variant] || 'bg-primary-500 dark:bg-primary-500');
   
   // Determine track classes
-  $derived trackClasses = 'bg-muted/10 dark:bg-muted/10';
+  const trackClasses = $derived('bg-muted/10 dark:bg-muted/10');
   
   // Generate ARIA label
-  $derived progressAriaLabel = ariaLabel || `Progress: ${formattedValue}`;
+  const progressAriaLabel = $derived(ariaLabel || `Progress: ${formattedValue}`);
 </script>
 
 <div 

@@ -159,14 +159,14 @@ Usage:
   });
   
   // Computed values
-  $derived totalRecords = data.length;
-  $derived totalPages = Math.max(1, Math.ceil(totalRecords / currentPageSize));
-  $derived startIndex = (currentPage - 1) * currentPageSize;
-  $derived endIndex = Math.min(startIndex + currentPageSize, totalRecords);
+  const totalRecords = $derived(data.length);
+  const totalPages = $derived(Math.max(1, Math.ceil(totalRecords / currentPageSize)));
+  const startIndex = $derived((currentPage - 1) * currentPageSize);
+  const endIndex = $derived(Math.min(startIndex + currentPageSize, totalRecords));
   
   // Process data with sorting, filtering, and pagination
-  $derived processedData = (() => {
-    let result = [...data];
+  const processedData = $derived((() => {
+    let result = [...data]);
     
     // Apply filters
     if (filterable && Object.keys(currentFilters).length > 0) {

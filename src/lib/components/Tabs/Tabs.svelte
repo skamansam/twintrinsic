@@ -151,19 +151,19 @@ Usage:
   });
   
   // Determine variant classes
-  $derived variantClasses = {
+  const variantClasses = $derived({
     default: 'tabs-default',
     underline: 'tabs-underline',
     pills: 'tabs-pills',
     enclosed: 'tabs-enclosed'
-  }[variant] || 'tabs-default';
+  }[variant] || 'tabs-default');
   
   // Determine size classes
-  $derived sizeClasses = {
+  const sizeClasses = $derived({
     sm: 'tabs-sm',
     md: 'tabs-md',
     lg: 'tabs-lg'
-  }[size] || 'tabs-md';
+  }[size] || 'tabs-md');
 </script>
 
 <div 

@@ -56,11 +56,11 @@ Usage:
   } = $props();
 
   // Determine if badge should be hidden
-  $derived isEmpty = !children || children().toString().trim() === '';
-  $derived isHidden = hideEmpty && isEmpty;
+  const isEmpty = $derived(!children || children().toString().trim() === '');
+  const isHidden = $derived(hideEmpty && isEmpty);
   
   // Determine variant classes
-  $derived variantClasses = {
+  const variantClasses = $derived({
     default: 'bg-muted/20 text-muted dark:bg-muted/20 dark:text-muted',
     primary: 'bg-primary-500 text-white dark:bg-primary-500 dark:text-white',
     secondary: 'bg-secondary-500 text-white dark:bg-secondary-500 dark:text-white',
@@ -68,10 +68,10 @@ Usage:
     warning: 'bg-warning-500 text-white dark:bg-warning-500 dark:text-white',
     error: 'bg-error-500 text-white dark:bg-error-500 dark:text-white',
     info: 'bg-info-500 text-white dark:bg-info-500 dark:text-white'
-  }[variant] || 'bg-muted/20 text-muted dark:bg-muted/20 dark:text-muted';
+  }[variant] || 'bg-muted/20 text-muted dark:bg-muted/20 dark:text-muted');
   
   // Determine outline variant classes
-  $derived outlineClasses = outline ? {
+  const outlineClasses = $derived(outline ? {
     default: 'bg-transparent border border-muted text-muted dark:border-muted dark:text-muted',
     primary: 'bg-transparent border border-primary-500 text-primary-500 dark:border-primary-500 dark:text-primary-500',
     secondary: 'bg-transparent border border-secondary-500 text-secondary-500 dark:border-secondary-500 dark:text-secondary-500',
@@ -79,29 +79,29 @@ Usage:
     warning: 'bg-transparent border border-warning-500 text-warning-500 dark:border-warning-500 dark:text-warning-500',
     error: 'bg-transparent border border-error-500 text-error-500 dark:border-error-500 dark:text-error-500',
     info: 'bg-transparent border border-info-500 text-info-500 dark:border-info-500 dark:text-info-500'
-  }[variant] : '';
+  }[variant] : '');
   
   // Determine size classes
-  $derived sizeClasses = {
+  const sizeClasses = $derived({
     sm: 'text-xs px-1.5 py-0.5 min-w-4 h-4',
     md: 'text-xs px-2 py-0.5 min-w-5 h-5',
     lg: 'text-sm px-2.5 py-0.5 min-w-6 h-6'
-  }[size] || 'text-xs px-2 py-0.5 min-w-5 h-5';
+  }[size] || 'text-xs px-2 py-0.5 min-w-5 h-5');
   
   // Determine dot size classes
-  $derived dotSizeClasses = {
+  const dotSizeClasses = $derived({
     sm: 'w-2 h-2',
     md: 'w-2.5 h-2.5',
     lg: 'w-3 h-3'
-  }[size] || 'w-2.5 h-2.5';
+  }[size] || 'w-2.5 h-2.5');
   
   // Determine position classes for overlay
-  $derived positionClasses = overlay ? {
+  const positionClasses = $derived(overlay ? {
     'top-right': 'absolute -top-1 -right-1',
     'top-left': 'absolute -top-1 -left-1',
     'bottom-right': 'absolute -bottom-1 -right-1',
     'bottom-left': 'absolute -bottom-1 -left-1'
-  }[position] || 'absolute -top-1 -right-1' : '';
+  }[position] || 'absolute -top-1 -right-1' : '');
 </script>
 
 {#if !isHidden}

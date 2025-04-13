@@ -94,13 +94,13 @@ Usage:
   });
   
   // Determine if node is selectable
-  $derived isSelectable = treeContext?.selectable && !disabled;
+  const isSelectable = $derived(treeContext?.selectable && !disabled);
   
   // Determine if node should show icons
-  $derived showIcons = treeContext?.showIcons !== false;
+  const showIcons = $derived(treeContext?.showIcons !== false);
   
   // Determine if tree should show lines
-  $derived showLines = treeContext?.showLines !== false;
+  const showLines = $derived(treeContext?.showLines !== false);
   
   /**
    * Toggles the expanded state

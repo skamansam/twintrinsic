@@ -71,13 +71,13 @@ Usage:
   let containerSize = 0;
   
   // Computed values
-  $derived isHorizontal = direction === 'horizontal';
-  $derived isVertical = direction === 'vertical';
-  $derived effectiveSize = collapseFirst ? 0 : collapseSecond ? 100 : size;
+  const isHorizontal = $derived(direction === 'horizontal');
+  const isVertical = $derived(direction === 'vertical');
+  const effectiveSize = $derived(collapseFirst ? 0 : collapseSecond ? 100 : size);
   
   // Divider aria label
-  $derived dividerLabel = dividerAriaLabel || 
-    `${isHorizontal ? 'Horizontal' : 'Vertical'} resizer. Use arrow keys to resize.`;
+  const dividerLabel = $derived(dividerAriaLabel || 
+    `${isHorizontal ? 'Horizontal' : 'Vertical'} resizer. Use arrow keys to resize.`);
   
   /**
    * Starts dragging the divider

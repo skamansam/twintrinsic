@@ -377,25 +377,25 @@ Usage:
   });
   
   // Computed values
-  $derived percentage = valueToPercentage(currentValue);
-  $derived arcDashArray = calculateArc(percentage);
-  $derived ticks = showTicks ? calculateTicks() : [];
+  const percentage = $derived(valueToPercentage(currentValue));
+  const arcDashArray = $derived(calculateArc(percentage));
+  const ticks = $derived(showTicks ? calculateTicks() : []);
   
   // Determine size classes
-  $derived sizeClasses = {
+  const sizeClasses = $derived({
     sm: 'w-16 h-16',
     md: 'w-24 h-24',
     lg: 'w-32 h-32',
     xl: 'w-40 h-40'
-  }[size] || 'w-24 h-24';
+  }[size] || 'w-24 h-24');
   
   // Determine font size classes
-  $derived fontSizeClasses = {
+  const fontSizeClasses = $derived({
     sm: 'text-xs',
     md: 'text-sm',
     lg: 'text-base',
     xl: 'text-lg'
-  }[size] || 'text-sm';
+  }[size] || 'text-sm');
 </script>
 
 <div

@@ -86,23 +86,23 @@ Usage:
   }
   
   // Determine switch size classes
-  $derived switchSizeClasses = {
+  const switchSizeClasses = $derived({
     sm: 'w-8 h-4',
     md: 'w-10 h-5',
     lg: 'w-12 h-6'
-  }[size] || 'w-10 h-5';
+  }[size] || 'w-10 h-5');
   
-  $derived thumbSizeClasses = {
+  const thumbSizeClasses = $derived({
     sm: 'w-3 h-3',
     md: 'w-4 h-4',
     lg: 'w-5 h-5'
-  }[size] || 'w-4 h-4';
+  }[size] || 'w-4 h-4');
   
-  $derived labelSizeClasses = {
+  const labelSizeClasses = $derived({
     sm: 'text-xs',
     md: 'text-sm',
     lg: 'text-base'
-  }[size] || 'text-sm';
+  }[size] || 'text-sm');
 </script>
 
 <label 

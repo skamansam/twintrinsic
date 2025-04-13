@@ -78,14 +78,14 @@ Usage:
   });
   
   // Determine transition styles based on context
-  $derived transitionType = carouselContext?.transition || 'slide';
-  $derived transitionDuration = carouselContext?.transitionDuration || 300;
-  $derived currentIndex = carouselContext?.currentIndex || 0;
+  const transitionType = $derived(carouselContext?.transition || 'slide');
+  const transitionDuration = $derived(carouselContext?.transitionDuration || 300);
+  const currentIndex = $derived(carouselContext?.currentIndex || 0);
   
   // Calculate transform for slide transition
-  $derived transform = (() => {
+  const transform = $derived((() => {
     if (transitionType === 'slide' && typeof index === 'number' && typeof currentIndex === 'number') {
-      const offset = (index - currentIndex) * 100;
+      const offset = (index - currentIndex) * 100);
       return `translateX(${offset}%)`;
     }
     return '';

@@ -96,11 +96,11 @@ Usage:
   });
   
   // Computed values
-  $derived isRange = sliderValues.length > 1;
-  $derived range = max - min;
+  const isRange = $derived(sliderValues.length > 1);
+  const range = $derived(max - min);
   
   // Determine variant classes
-  $derived variantClasses = {
+  const variantClasses = $derived({
     default: 'bg-muted dark:bg-muted',
     primary: 'bg-primary-500 dark:bg-primary-500',
     secondary: 'bg-secondary-500 dark:bg-secondary-500',
@@ -108,11 +108,11 @@ Usage:
     warning: 'bg-warning-500 dark:bg-warning-500',
     error: 'bg-error-500 dark:bg-error-500',
     info: 'bg-info-500 dark:bg-info-500'
-  }[variant] || 'bg-primary-500 dark:bg-primary-500';
+  }[variant] || 'bg-primary-500 dark:bg-primary-500');
   
   // Generate tick values if not provided
-  $derived ticks = (() => {
-    if (!showTicks) return [];
+  const ticks = $derived((() => {
+    if (!showTicks) return []);
     
     if (tickValues.length > 0) {
       return tickValues;

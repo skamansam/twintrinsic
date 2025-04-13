@@ -79,28 +79,28 @@ Usage:
   let index = $state(0);
   
   // Determine variant
-  $derived itemVariant = variant || timelineContext?.variant || 'primary';
+  const itemVariant = $derived(variant || timelineContext?.variant || 'primary');
   
   // Determine position
-  $derived itemPosition = position || timelineContext?.position || 'left';
+  const itemPosition = $derived(position || timelineContext?.position || 'left');
   
   // Determine orientation
-  $derived orientation = timelineContext?.orientation || 'vertical';
+  const orientation = $derived(timelineContext?.orientation || 'vertical');
   
   // Determine if connected
-  $derived connected = timelineContext?.connected !== false;
+  const connected = $derived(timelineContext?.connected !== false);
   
   // Determine if animated
-  $derived animated = timelineContext?.animated === true;
+  const animated = $derived(timelineContext?.animated === true);
   
   // Determine effective position based on alternate setting and index
-  $derived effectivePosition = (() => {
-    if (itemPosition !== 'alternate') return itemPosition;
+  const effectivePosition = $derived((() => {
+    if (itemPosition !== 'alternate') return itemPosition);
     return index % 2 === 0 ? 'left' : 'right';
   })();
   
   // Determine variant classes
-  $derived variantClasses = {
+  const variantClasses = $derived({
     default: 'text-text dark:text-text',
     primary: 'text-primary-500 dark:text-primary-500',
     secondary: 'text-secondary-500 dark:text-secondary-500',
@@ -108,10 +108,10 @@ Usage:
     warning: 'text-warning-500 dark:text-warning-500',
     error: 'text-error-500 dark:text-error-500',
     info: 'text-info-500 dark:text-info-500'
-  }[itemVariant] || 'text-primary-500 dark:text-primary-500';
+  }[itemVariant] || 'text-primary-500 dark:text-primary-500');
   
   // Determine icon background classes
-  $derived iconBgClasses = iconBackground || {
+  const iconBgClasses = $derived(iconBackground || {
     default: 'bg-surface dark:bg-surface',
     primary: 'bg-primary-100 dark:bg-primary-900',
     secondary: 'bg-secondary-100 dark:bg-secondary-900',
@@ -119,14 +119,14 @@ Usage:
     warning: 'bg-warning-100 dark:bg-warning-900',
     error: 'bg-error-100 dark:bg-error-900',
     info: 'bg-info-100 dark:bg-info-900'
-  }[itemVariant] || 'bg-primary-100 dark:bg-primary-900';
+  }[itemVariant] || 'bg-primary-100 dark:bg-primary-900');
   
   // Determine state classes
-  $derived stateClasses = {
+  const stateClasses = $derived({
     completed: 'timeline-item-completed',
     active: 'timeline-item-active',
     disabled: 'timeline-item-disabled'
-  };
+  });
   
   // Register with parent on mount and set up intersection observer
   onMount(() => {

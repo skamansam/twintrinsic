@@ -279,18 +279,18 @@ Usage:
   }
   
   // Determine size classes
-  $derived sizeClasses = {
+  const sizeClasses = $derived({
     sm: 'h-8 text-sm',
     md: 'h-10 text-base',
     lg: 'h-12 text-lg'
-  }[size] || 'h-10 text-base';
+  }[size] || 'h-10 text-base');
   
   // Determine button size classes
-  $derived buttonSizeClasses = {
+  const buttonSizeClasses = $derived({
     sm: 'w-6 h-6',
     md: 'w-8 h-8',
     lg: 'w-10 h-10'
-  }[size] || 'w-8 h-8';
+  }[size] || 'w-8 h-8');
 </script>
 
 <div

@@ -153,11 +153,11 @@ Usage:
   }
   
   // Determine input size classes
-  $derived sizeClasses = {
+  const sizeClasses = $derived({
     sm: 'h-8 text-sm px-2',
     md: 'h-10 text-base px-3',
     lg: 'h-12 text-lg px-4'
-  }[size] || 'h-10 text-base px-3';
+  }[size] || 'h-10 text-base px-3');
 </script>
 
 <div class="input-wrapper {className}">

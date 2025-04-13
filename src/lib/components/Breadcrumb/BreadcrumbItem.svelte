@@ -85,10 +85,10 @@ Usage:
   });
   
   // Determine if this is the last item
-  $derived isLast = index === -1 || !itemElement?.nextElementSibling;
+  const isLast = $derived(index === -1 || !itemElement?.nextElementSibling);
   
   // Determine if this is the current page
-  $derived isCurrent = current || isLast;
+  const isCurrent = $derived(current || isLast);
 </script>
 
 <li 

@@ -206,7 +206,7 @@ Usage:
   });
   
   // Determine size classes
-  $derived sizeClasses = {
+  const sizeClasses = $derived({
     sm: 'max-w-sm',
     md: 'max-w-md',
     lg: 'max-w-lg',
@@ -218,7 +218,7 @@ Usage:
     '6xl': 'max-w-6xl',
     '7xl': 'max-w-7xl',
     full: 'max-w-full'
-  }[size] || 'max-w-md';
+  }[size] || 'max-w-md');
 </script>
 
 <svelte:window on:keydown={handleKeydown} />

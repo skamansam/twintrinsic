@@ -429,14 +429,14 @@ Usage:
   }
   
   // Determine size classes
-  $derived sizeClasses = {
+  const sizeClasses = $derived({
     sm: 'h-8 text-sm',
     md: 'h-10 text-base',
     lg: 'h-12 text-lg'
-  }[size] || 'h-10 text-base';
+  }[size] || 'h-10 text-base');
   
   // Computed display value
-  $derived displayValue = getDisplayValue();
+  const displayValue = $derived(getDisplayValue());
 </script>
 
 <div

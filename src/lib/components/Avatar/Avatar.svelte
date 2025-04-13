@@ -111,41 +111,41 @@ Usage:
   }
   
   // Determine what to display as fallback
-  $derived displayFallback = fallback || (name ? generateInitials(name) : '');
+  const displayFallback = $derived(fallback || (name ? generateInitials(name) : ''));
   
   // Determine if we should show the image
-  $derived showImage = src && !imageError;
+  const showImage = $derived(src && !imageError);
   
   // Determine if we should show the fallback
-  $derived showFallback = !showImage && !!displayFallback;
+  const showFallback = $derived(!showImage && !!displayFallback);
   
   // Determine size classes
-  $derived sizeClasses = {
+  const sizeClasses = $derived({
     xs: 'w-6 h-6 text-xs',
     sm: 'w-8 h-8 text-sm',
     md: 'w-10 h-10 text-base',
     lg: 'w-12 h-12 text-lg',
     xl: 'w-16 h-16 text-xl'
-  }[size] || 'w-10 h-10 text-base';
+  }[size] || 'w-10 h-10 text-base');
   
   // Determine shape classes
-  $derived shapeClasses = {
+  const shapeClasses = $derived({
     circle: 'rounded-full',
     square: 'rounded-none',
     rounded: 'rounded-md'
-  }[shape] || 'rounded-full';
+  }[shape] || 'rounded-full');
   
   // Determine status classes
-  $derived statusClasses = status ? {
+  const statusClasses = $derived(status ? {
     online: 'bg-success-500',
     offline: 'bg-muted',
     away: 'bg-warning-500',
     busy: 'bg-error-500'
-  }[status] || 'bg-muted' : '';
+  }[status] || 'bg-muted' : '');
   
   // Generate a random color based on the name or fallback
-  $derived randomBgColor = (() => {
-    if (bgColor) return bgColor;
+  const randomBgColor = $derived((() => {
+    if (bgColor) return bgColor);
     
     const seed = name || fallback || id;
     const colors = [

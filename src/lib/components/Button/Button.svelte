@@ -88,32 +88,32 @@ Usage:
   const elementType = isLink ? 'a' : 'button';
   
   // Determine variant classes
-  $derived variantClasses = {
+  const variantClasses = $derived({
     default: 'bg-surface dark:bg-surface text-text dark:text-text border border-border dark:border-border hover:bg-hover dark:hover:bg-hover',
     primary: 'bg-primary-500 dark:bg-primary-500 text-white dark:text-white hover:bg-primary-600 dark:hover:bg-primary-600',
     secondary: 'bg-secondary-500 dark:bg-secondary-500 text-white dark:text-white hover:bg-secondary-600 dark:hover:bg-secondary-600',
     outline: 'bg-transparent dark:bg-transparent text-text dark:text-text border border-border dark:border-border hover:bg-hover dark:hover:bg-hover',
     ghost: 'bg-transparent dark:bg-transparent text-text dark:text-text hover:bg-hover dark:hover:bg-hover',
     link: 'bg-transparent dark:bg-transparent text-primary-500 dark:text-primary-400 hover:underline p-0 h-auto'
-  }[variant] || 'bg-surface dark:bg-surface text-text dark:text-text border border-border dark:border-border hover:bg-hover dark:hover:bg-hover';
+  }[variant] || 'bg-surface dark:bg-surface text-text dark:text-text border border-border dark:border-border hover:bg-hover dark:hover:bg-hover');
   
   // Determine size classes
-  $derived sizeClasses = variant === 'link' ? '' : {
+  const sizeClasses = $derived(variant === 'link' ? '' : {
     xs: 'text-xs h-6 px-2',
     sm: 'text-sm h-8 px-3',
     md: 'text-base h-10 px-4',
     lg: 'text-lg h-12 px-5',
     xl: 'text-xl h-14 px-6'
-  }[size] || 'text-base h-10 px-4';
+  }[size] || 'text-base h-10 px-4');
   
   // Determine icon size based on button size
-  $derived iconSize = {
+  const iconSize = $derived({
     xs: 'w-3 h-3',
     sm: 'w-4 h-4',
     md: 'w-5 h-5',
     lg: 'w-6 h-6',
     xl: 'w-7 h-7'
-  }[size] || 'w-5 h-5';
+  }[size] || 'w-5 h-5');
 </script>
 
 <svelte:element

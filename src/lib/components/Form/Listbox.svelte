@@ -334,7 +334,7 @@ Usage:
   });
   
   // Computed filtered options
-  $derived filteredOptions = filterOptions();
+  const filteredOptions = $derived(filterOptions());
 </script>
 
 <div class="listbox-container {className}">
