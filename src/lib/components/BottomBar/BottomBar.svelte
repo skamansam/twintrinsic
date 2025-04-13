@@ -33,8 +33,6 @@ const {
   ariaLabel,
   /** @type {boolean} - Whether to disable the bottom bar controls */
   disabled = false,
-  /** @type {boolean} - Whether to show a backdrop when expanded on mobile */
-  showBackdrop = false,
   /** @type {boolean} - Whether to float over content on mobile */
   floatOnMobile = true,
   /** @type {boolean} - Whether to dock to viewport instead of parent */
@@ -47,14 +45,6 @@ let isExpanded = $state(expanded)
 function handleToggle(event) {
   isExpanded = event.detail.expanded
   dispatch("toggle", { expanded: isExpanded })
-}
-
-// Handle backdrop click
-function handleBackdropClick() {
-  if (!disabled) {
-    isExpanded = false
-    dispatch("toggle", { expanded: isExpanded })
-  }
 }
 
 // Handle escape key
@@ -86,15 +76,6 @@ function dispatch(event, detail) {
   role="complementary"
   aria-label={ariaLabel}
 >
-  {#if showBackdrop && isExpanded}
-    <div
-      class="bottombar-backdrop"
-      onclick={handleBackdropClick}
-      transition:slide={{ duration: 200 }}
-      aria-hidden="true"
-    />
-  {/if}
-
   <div
     class="
       bottombar
@@ -144,19 +125,10 @@ function dispatch(event, detail) {
     @apply fixed bottom-0 left-0 right-0 z-50;
   }
 
-  /* Backdrop styles */
-  .bottombar-backdrop {
-    @apply fixed inset-0 bg-black/20 backdrop-blur-sm z-40;
-  }
-
   /* Mobile styles */
   @media (max-width: 640px) {
     .bottombar-float-mobile .bottombar {
       @apply fixed bottom-0 left-0 right-0 z-50;
-    }
-
-    .bottombar-float-mobile .bottombar-backdrop {
-      @apply z-40;
     }
   }
 
