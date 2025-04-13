@@ -58,11 +58,16 @@ Documentation site layout with left navigation, right theme sidebar, and header
     
     // Form Components
     { category: "Form", name: "Button", href: "/docs/components/button" },
+    { name: "Checkbox", href: "/docs/components/checkbox" },
     { name: "Combobox", href: "/docs/components/combobox" },
     { name: "FileUpload", href: "/docs/components/fileupload" },
     { name: "Form", href: "/docs/components/form" },
     { name: "Input", href: "/docs/components/input" },
+    { name: "RadioGroup", href: "/docs/components/radiogroup" },
+    { name: "Rating", href: "/docs/components/rating" },
     { name: "Slider", href: "/docs/components/slider" },
+    { name: "Switch", href: "/docs/components/switch" },
+    { name: "Textarea", href: "/docs/components/textarea" },
     
     // Feedback Components
     { category: "Feedback", name: "Modal", href: "/docs/components/modal" },
