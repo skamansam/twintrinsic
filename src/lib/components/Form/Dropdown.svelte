@@ -451,8 +451,8 @@ Usage:
 >
   <div
     class="dropdown-control {sizeClasses}"
-    on:click={toggleDropdown}
-    on:keydown={handleKeydown}
+    onclick={toggleDropdown}
+    onkeydown={handleKeydown}
     tabindex={disabled ? undefined : 0}
     role="combobox"
     aria-expanded={isOpen}
@@ -467,8 +467,8 @@ Usage:
         class="dropdown-filter"
         placeholder={placeholder}
         value={filterValue}
-        on:input={handleFilterInput}
-        on:keydown={handleKeydown}
+        oninput={handleFilterInput}
+        onkeydown={handleKeydown}
         bind:this={inputElement}
         {disabled}
       />
@@ -488,7 +488,7 @@ Usage:
           type="button"
           class="dropdown-clear-button"
           aria-label="Clear selection"
-          on:click|stopPropagation={clearSelection}
+          onclick|stopPropagation={clearSelection}
           tabindex="-1"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -530,8 +530,8 @@ Usage:
             role="option"
             aria-selected={isSelected ? 'true' : 'false'}
             data-index={index}
-            on:click={() => selectOption(option)}
-            on:mouseenter={() => {
+            onclick={() => selectOption(option)}
+            onmouseenter={() => {
               highlightedIndex = index;
               if (hasChildren) {
                 openSubmenu(option);
@@ -583,7 +583,7 @@ Usage:
                       "
                       role="option"
                       aria-selected={isChildSelected ? 'true' : 'false'}
-                      on:click|stopPropagation={() => selectOption(childOption)}
+                      onclick|stopPropagation={() => selectOption(childOption)}
                     >
                       <div class="dropdown-option-content">
                         {#if multiple}

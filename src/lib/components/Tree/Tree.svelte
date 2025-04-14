@@ -18,7 +18,7 @@ Usage:
 <Tree
   selectable
   multiSelect
-  on:select={handleSelect}
+  onselect={handleSelect}
 >
   <TreeNode 
     label="Documents" 

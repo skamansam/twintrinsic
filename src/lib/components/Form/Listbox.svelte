@@ -345,8 +345,8 @@ Usage:
         class="listbox-filter-input"
         placeholder={filterPlaceholder}
         value={filterValue}
-        on:input={handleFilterInput}
-        on:keydown={handleKeydown}
+        oninput={handleFilterInput}
+        onkeydown={handleKeydown}
         bind:this={filterInputElement}
         {disabled}
         aria-controls={`${id}-listbox`}
@@ -363,7 +363,7 @@ Usage:
     aria-multiselectable={multiple ? 'true' : undefined}
     aria-label={ariaLabel || name}
     aria-disabled={disabled ? 'true' : undefined}
-    on:keydown={handleKeydown}
+    onkeydown={handleKeydown}
     bind:this={listboxElement}
   >
     {#if filteredOptions.length > 0}
@@ -381,8 +381,8 @@ Usage:
             role="option"
             aria-selected={isSelected ? 'true' : 'false'}
             data-index={index}
-            on:click={() => selectOption(option)}
-            on:mouseenter={() => highlightedIndex = index}
+            onclick={() => selectOption(option)}
+            onmouseenter={() => highlightedIndex = index}
           >
             <div class="listbox-option-content">
               {#if multiple && showCheckbox}

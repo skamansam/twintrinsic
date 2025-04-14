@@ -62,6 +62,36 @@ Usage:
 
     /** @type {string} - ARIA label for accessibility */
     ariaLabel,
+    
+    /** @type {string} - Form ID that this button is associated with */
+    form,
+    
+    /** @type {string} - Name attribute for form buttons */
+    name,
+    
+    /** @type {string} - Value attribute for form buttons */
+    value,
+    
+    /** @type {boolean} - Whether the button should be autofocused */
+    autofocus = false,
+    
+    /** @type {string} - Form submission method (post, get, etc.) */
+    formmethod,
+    
+    /** @type {string} - Form submission encoding */
+    formenctype,
+    
+    /** @type {string} - Form validation mode */
+    formnovalidate,
+    
+    /** @type {string} - Form target */
+    formtarget,
+    
+    /** @type {string} - Relationship attribute for links */
+    rel,
+    
+    /** @type {string} - Download attribute for links */
+    download,
 
     children
   } = $props();
@@ -133,8 +163,17 @@ Usage:
   {disabled}
   aria-disabled={disabled || loading ? 'true' : undefined}
   aria-label={ariaLabel}
-  on:click={handleClick}
-  {...$$restProps}
+  onclick={handleClick}
+  {form}
+  {name}
+  {value}
+  {autofocus}
+  {formmethod}
+  {formenctype}
+  {formnovalidate}
+  {formtarget}
+  {rel}
+  {download}
 >
   {#if loading}
     <span class="button-loader {iconSize}" aria-hidden="true"></span>

@@ -62,13 +62,13 @@ Usage:
     table-row
     {selected ? 'table-row-selected' : ''}
     {disabled ? 'table-row-disabled' : ''}
-    {clickable || $$slots.on:click ? 'table-row-clickable' : ''}
+    {clickable || $$slots.onclick ? 'table-row-clickable' : ''}
     {hoverable ? 'table-row-hoverable' : ''}
     {className}
   "
   aria-selected={selected ? 'true' : undefined}
   aria-disabled={disabled ? 'true' : undefined}
-  on:click={handleClick}
+  onclick={handleClick}
   {...$$restProps}
 >
   {@render children?.()}

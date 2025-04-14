@@ -21,10 +21,10 @@ Usage:
   filterable
   pageable
   selectable
-  on:sort={handleSort}
-  on:filter={handleFilter}
-  on:page={handlePage}
-  on:select={handleSelect}
+  onsort={handleSort}
+  onfilter={handleFilter}
+  onpage={handlePage}
+  onselect={handleSelect}
 />
 ```
 -->
@@ -165,8 +165,8 @@ Usage:
   const endIndex = $derived(Math.min(startIndex + currentPageSize, totalRecords));
   
   // Process data with sorting, filtering, and pagination
-  const processedData = $derived((() => {
-    let result = [...data]);
+  const processedData = $derived(() => {
+    let result = [...data];
     
     // Apply filters
     if (filterable && Object.keys(currentFilters).length > 0) {
@@ -217,7 +217,7 @@ Usage:
       rows: result,
       filteredTotal
     };
-  })();
+  });
   
   /**
    * Handles sorting
@@ -427,7 +427,7 @@ Usage:
                   <input
                     type="checkbox"
                     checked={allSelected}
-                    on:change={toggleSelectAll}
+                    onchange={toggleSelectAll}
                     aria-label="Select all rows"
                   />
                 </div>
@@ -443,7 +443,7 @@ Usage:
                 {column.class || ''}
               "
               style={column.style || ''}
-              on:click={() => column.sortable !== false && sortable && handleSort(column.field)}
+              onclick={() => column.sortable !== false && sortable && handleSort(column.field)}
               aria-sort={currentSortField === column.field 
                 ? (currentSortOrder === 'asc' ? 'ascending' : 'descending') 
                 : undefined}
@@ -481,8 +481,8 @@ Usage:
                     type="text"
                     placeholder="Filter..."
                     value={currentFilters[column.field] || ''}
-                    on:input={(e) => handleFilter(column.field, e.target.value)}
-                    on:click={(e) => e.stopPropagation()}
+                    oninput={(e) => handleFilter(column.field, e.target.value)}
+                    onclick={(e) => e.stopPropagation()}
                     aria-label={`Filter by ${column.header || column.field}`}
                     class="data-table-filter-input"
                   />
@@ -516,7 +516,7 @@ Usage:
           {#each processedData.rows as row, rowIndex}
             <tr
               class={getRowClasses(row, rowIndex)}
-              on:click={() => selectable && toggleRowSelection(row[keyField])}
+              onclick={() => selectable && toggleRowSelection(row[keyField])}
               aria-selected={selectable && selectedRows.includes(row[keyField])}
             >
               {#if selectable}
@@ -525,10 +525,10 @@ Usage:
                     <input
                       type={multiSelect ? 'checkbox' : 'radio'}
                       checked={selectedRows.includes(row[keyField])}
-                      on:change={() => toggleRowSelection(row[keyField])}
+                      onchange={() => toggleRowSelection(row[keyField])}
                       name={multiSelect ? undefined : `${id}-selection`}
                       aria-label={`Select row ${rowIndex + 1}`}
-                      on:click={(e) => e.stopPropagation()}
+                      onclick={(e) => e.stopPropagation()}
                     />
                   </div>
                 </td>
@@ -569,7 +569,7 @@ Usage:
             <span>Rows per page:</span>
             <select 
               value={currentPageSize} 
-              on:change={handlePageSizeChange}
+              onchange={handlePageSizeChange}
               aria-label="Rows per page"
             >
               {#each pageSizeOptions as option}
@@ -584,7 +584,7 @@ Usage:
             type="button"
             class="data-table-page-button"
             disabled={currentPage === 1}
-            on:click={() => handlePageChange(1)}
+            onclick={() => handlePageChange(1)}
             aria-label="First page"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -596,7 +596,7 @@ Usage:
             type="button"
             class="data-table-page-button"
             disabled={currentPage === 1}
-            on:click={() => handlePageChange(currentPage - 1)}
+            onclick={() => handlePageChange(currentPage - 1)}
             aria-label="Previous page"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -612,7 +612,7 @@ Usage:
             type="button"
             class="data-table-page-button"
             disabled={currentPage === totalPages}
-            on:click={() => handlePageChange(currentPage + 1)}
+            onclick={() => handlePageChange(currentPage + 1)}
             aria-label="Next page"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -624,7 +624,7 @@ Usage:
             type="button"
             class="data-table-page-button"
             disabled={currentPage === totalPages}
-            on:click={() => handlePageChange(totalPages)}
+            onclick={() => handlePageChange(totalPages)}
             aria-label="Last page"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

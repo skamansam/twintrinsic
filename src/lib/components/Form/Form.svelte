@@ -5,7 +5,7 @@ Handles form submission, validation, and provides context for form controls.
 
 Usage:
 ```svelte
-<Form on:submit={handleSubmit}>
+<Form onsubmit={handleSubmit}>
   <FormField label="Username" name="username" required>
     <TextInput />
   </FormField>
@@ -243,7 +243,7 @@ Usage:
   {method}
   {action}
   novalidate={!useNativeValidation}
-  on:submit={handleSubmit}
+  onsubmit={handleSubmit}
   bind:this={formElement}
 >
   {@render children?.()}

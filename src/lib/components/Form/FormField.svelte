@@ -127,15 +127,15 @@ Usage:
   <div class="form-control-container">
     <div class="form-control">
       <!-- Slot for the actual form control -->
-      <slot
-        id={fieldId}
-        name={name}
-        disabled={fieldDisabled}
-        aria-invalid={showError ? 'true' : undefined}
-        aria-describedby={describedBy || undefined}
-        aria-required={required ? 'true' : undefined}
-        required={required}
-      />
+      {@render children({
+        name: fieldName,
+        id: fieldId,
+        disabled: fieldDisabled,
+        'aria-invalid': showError ? 'true' : undefined,
+        'aria-describedby': describedBy || undefined,
+        'aria-required': required ? 'true' : undefined,
+        required
+      })}
     </div>
     
     {#if helpText && !showError}

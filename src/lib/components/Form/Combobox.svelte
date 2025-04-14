@@ -8,7 +8,7 @@ Usage:
 <Combobox 
   options={['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry']}
   placeholder="Select a fruit"
-  on:change={(e) => console.log(e.detail.value)}
+  onchange={(e) => console.log(e.detail.value)}
 />
 
 <Combobox 
@@ -16,7 +16,7 @@ Usage:
   optionLabel="name"
   optionValue="id"
   placeholder="Select a user"
-  on:change={(e) => console.log(e.detail.value)}
+  onchange={(e) => console.log(e.detail.value)}
 />
 
 <Combobox 
@@ -436,10 +436,10 @@ Usage:
       {disabled}
       {readonly}
       {required}
-      on:focus={handleFocus}
-      on:blur={handleBlur}
-      on:input={handleInput}
-      on:keydown={handleKeydown}
+      onfocus={handleFocus}
+      onblur={handleBlur}
+      oninput={handleInput}
+      onkeydown={handleKeydown}
       bind:this={inputElement}
     />
     
@@ -458,7 +458,7 @@ Usage:
           type="button"
           class="combobox-clear"
           aria-label="Clear selection"
-          on:click={clearSelection}
+          onclick={clearSelection}
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -470,7 +470,7 @@ Usage:
         type="button"
         class="combobox-toggle"
         aria-label={isOpen ? 'Close dropdown' : 'Open dropdown'}
-        on:click={toggleDropdown}
+        onclick={toggleDropdown}
         disabled={disabled || readonly}
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -504,8 +504,8 @@ Usage:
             role="option"
             aria-selected={selectedOption && getOptionValue(selectedOption) === getOptionValue(option)}
             data-index={i}
-            on:click={() => selectOption(option)}
-            on:mouseenter={() => highlightedIndex = i}
+            onclick={() => selectOption(option)}
+            onmouseenter={() => highlightedIndex = i}
           >
             {#if optionTemplate}
               {@render optionTemplate(option)}

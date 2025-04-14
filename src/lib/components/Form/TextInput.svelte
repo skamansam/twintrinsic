@@ -183,9 +183,9 @@ Usage:
       {autocomplete}
       aria-label={ariaLabel}
       class="input {sizeClasses} {startIcon ? 'pl-9' : ''} {(endIcon || clearable) ? 'pr-9' : ''}"
-      on:input={handleInput}
-      on:focus={handleFocus}
-      on:blur={handleBlur}
+      oninput={handleInput}
+      onfocus={handleFocus}
+      onblur={handleBlur}
       {...$$restProps}
     />
     
@@ -194,7 +194,7 @@ Usage:
         type="button"
         class="input-clear-button"
         aria-label="Clear input"
-        on:click={clearInput}
+        onclick={clearInput}
         tabindex="-1"
       >
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

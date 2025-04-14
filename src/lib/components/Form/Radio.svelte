@@ -119,7 +119,7 @@ Usage:
       disabled={disabled || (fieldApi && fieldApi.isDisabled())}
       aria-label={ariaLabel || label}
       class="radio-input"
-      on:change={handleChange}
+      onchange={handleChange}
       {...$$restProps}
     />
     

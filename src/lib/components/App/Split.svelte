@@ -253,9 +253,9 @@ Usage:
       aria-valuenow={resizable ? size : undefined}
       aria-valuemin={resizable ? minSize : undefined}
       aria-valuemax={resizable ? maxSize : undefined}
-      on:mousedown={startDrag}
-      on:touchstart={startDrag}
-      on:keydown={handleKeydown}
+      onmousedown={startDrag}
+      ontouchstart={startDrag}
+      onkeydown={handleKeydown}
       bind:this={dividerElement}
     >
       <div class="split-divider-handle"></div>

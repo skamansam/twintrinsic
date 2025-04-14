@@ -16,7 +16,7 @@ Usage:
 ```
 -->
 <script>
-import { onMount } from "svelte"
+import { onMount, onDestroy } from "svelte"
 import Prism from "prismjs"
 import "prismjs/components/prism-javascript"
 import "prismjs/components/prism-typescript"
@@ -217,17 +217,18 @@ async function copyCode() {
   .code-pre {
     @apply m-0 p-4 overflow-x-auto;
     @apply font-mono text-sm;
+    @apply bg-surface dark:bg-surface;
   }
 
   :global(.code-pre .token.comment),
   :global(.code-pre .token.prolog),
   :global(.code-pre .token.doctype),
   :global(.code-pre .token.cdata) {
-    @apply text-muted;
+    @apply text-muted dark:text-muted;
   }
 
   :global(.code-pre .token.punctuation) {
-    @apply text-primary-200;
+    @apply text-primary-600 dark:text-primary-400;
   }
 
   :global(.code-pre .token.property),
@@ -236,7 +237,7 @@ async function copyCode() {
   :global(.code-pre .token.number),
   :global(.code-pre .token.constant),
   :global(.code-pre .token.symbol) {
-    @apply text-primary;
+    @apply text-primary-700 dark:text-primary-300;
   }
 
   :global(.code-pre .token.selector),

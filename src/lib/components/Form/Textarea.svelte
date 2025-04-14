@@ -165,9 +165,9 @@ Usage:
     {autocomplete}
     aria-label={ariaLabel}
     class="textarea {isFocused ? 'is-focused' : ''}"
-    on:input={handleInput}
-    on:focus={handleFocus}
-    on:blur={handleBlur}
+    oninput={handleInput}
+    onfocus={handleFocus}
+    onblur={handleBlur}
     bind:this={textareaEl}
     {...$$restProps}
   ></textarea>

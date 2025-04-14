@@ -11,7 +11,7 @@ Usage:
 
 <Tag variant="success" icon="<svg>...</svg>">Success</Tag>
 
-<Tag variant="warning" dismissible on:dismiss={() => handleDismiss()}>Warning</Tag>
+<Tag variant="warning" dismissible ondismiss={() => handleDismiss()}>Warning</Tag>
 ```
 -->
 <script>
@@ -130,7 +130,7 @@ Usage:
       {clickable || href ? 'tag-clickable' : ''}
       {className}
     "
-    on:click={handleClick}
+    onclick={handleClick}
   >
     {#if icon}
       <span class="tag-icon {iconSizeClasses}">
@@ -147,7 +147,7 @@ Usage:
         type="button"
         class="tag-dismiss"
         aria-label={dismissAriaLabel}
-        on:click={handleDismiss}
+        onclick={handleDismiss}
       >
         {#if dismissIcon}
           <span class="tag-dismiss-icon">
@@ -174,8 +174,8 @@ Usage:
     "
     role={clickable ? 'button' : undefined}
     tabindex={clickable ? 0 : undefined}
-    on:click={handleClick}
-    on:keydown={(e) => e.key === 'Enter' && clickable && handleClick(e)}
+    onclick={handleClick}
+    onkeydown={(e) => e.key === 'Enter' && clickable && handleClick(e)}
   >
     {#if icon}
       <span class="tag-icon {iconSizeClasses}">
@@ -192,7 +192,7 @@ Usage:
         type="button"
         class="tag-dismiss"
         aria-label={dismissAriaLabel}
-        on:click={handleDismiss}
+        onclick={handleDismiss}
       >
         {#if dismissIcon}
           <span class="tag-dismiss-icon">

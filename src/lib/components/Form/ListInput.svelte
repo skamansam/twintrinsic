@@ -9,7 +9,7 @@ Usage:
   name="tags" 
   placeholder="Add tag..." 
   values={['react', 'svelte']} 
-  on:change={handleTagsChange} 
+  onchange={handleTagsChange} 
 />
 
 <FormField label="Recipients">
@@ -329,15 +329,15 @@ Usage:
 >
   <div
     class="list-input-container"
-    on:click={() => inputEl?.focus()}
+    onclick={() => inputEl?.focus()}
   >
     <!-- Chips -->
     {#each itemValues as value, index}
       <div
         class="list-input-chip {focusedIndex === index ? 'list-input-chip-focused' : ''}"
         tabindex="0"
-        on:click={() => handleChipClick(index)}
-        on:keydown={(e) => {
+        onclick={() => handleChipClick(index)}
+        onkeydown={(e) => {
           if (e.key === 'Backspace' || e.key === 'Delete') {
             removeItem(index);
             inputEl?.focus();
@@ -350,7 +350,7 @@ Usage:
           class="list-input-chip-remove"
           aria-label={`Remove ${value}`}
           tabindex="-1"
-          on:click|stopPropagation={(e) => {
+          onclick|stopPropagation={(e) => {
             e.preventDefault();
             removeItem(index);
             inputEl?.focus();
@@ -375,11 +375,11 @@ Usage:
       aria-label={ariaLabel || name}
       aria-invalid={isInvalid ? 'true' : undefined}
       bind:this={inputEl}
-      on:input={handleInput}
-      on:keydown={handleKeydown}
-      on:focus={handleFocus}
-      on:blur={handleBlur}
-      on:paste={handlePaste}
+      oninput={handleInput}
+      onkeydown={handleKeydown}
+      onfocus={handleFocus}
+      onblur={handleBlur}
+      onpaste={handlePaste}
     />
   </div>
   

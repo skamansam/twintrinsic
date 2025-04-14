@@ -118,7 +118,7 @@ Usage:
       disabled={disabled || (fieldApi && fieldApi.isDisabled())}
       aria-label={ariaLabel || label}
       class="switch-input"
-      on:change={handleChange}
+      onchange={handleChange}
       {...$$restProps}
     />
     

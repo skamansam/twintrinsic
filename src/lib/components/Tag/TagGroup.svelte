@@ -20,7 +20,7 @@ Usage:
 <TagGroup 
   items={['Red', 'Green', 'Blue']} 
   let:item 
-  on:dismiss={(e) => handleDismiss(e.detail)}
+  ondismiss={(e) => handleDismiss(e.detail)}
 >
   <Tag dismissible>{item}</Tag>
 </TagGroup>
@@ -113,7 +113,7 @@ Usage:
           outline={outline}
           pill={pill}
           clickable={clickable}
-          on:dismiss={() => handleDismiss(index)}
+          ondismiss={() => handleDismiss(index)}
         />
       </div>
     {/each}

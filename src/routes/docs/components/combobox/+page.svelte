@@ -49,7 +49,7 @@ const countries = [
   <pre class="language-svelte"><code>{`<Combobox 
   options={['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry']}
   placeholder="Select a fruit"
-  on:change={(e) => console.log(e.detail.value)}
+  onchange={(e) => console.log(e.detail.value)}
 />`}</code></pre>
 
   <h3>With Object Data</h3>
@@ -67,7 +67,7 @@ const countries = [
   optionLabel="name"
   optionValue="code"
   placeholder="Select a country"
-  on:change={(e) => console.log(e.detail.value)}
+  onchange={(e) => console.log(e.detail.value)}
 />`}</code></pre>
 
   <h3>Custom Option Template</h3>

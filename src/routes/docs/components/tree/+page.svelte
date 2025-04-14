@@ -108,7 +108,7 @@ import TreeNode from "$lib/components/Tree/TreeNode.svelte"
     </Tree>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tree selectable on:select={(e) => console.log(e.detail)}>
+  <pre class="language-svelte"><code>{`<Tree selectable onselect={(e) => console.log(e.detail)}>
   <TreeNode label="Root Node">
     <TreeNode label="Child Node 1">
       <TreeNode label="Grandchild 1.1" />
@@ -139,7 +139,7 @@ import TreeNode from "$lib/components/Tree/TreeNode.svelte"
     </Tree>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tree selectable multiSelect on:select={(e) => console.log(e.detail)}>
+  <pre class="language-svelte"><code>{`<Tree selectable multiSelect onselect={(e) => console.log(e.detail)}>
   <TreeNode label="Root Node">
     <!-- Child nodes -->
   </TreeNode>

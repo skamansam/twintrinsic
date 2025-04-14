@@ -14,7 +14,7 @@ Usage:
   step={5}
   showTicks
   showValue
-  on:change={(e) => console.log(e.detail.value)}
+  onchange={(e) => console.log(e.detail.value)}
 />
 
 <Slider
@@ -112,7 +112,7 @@ Usage:
   
   // Generate tick values if not provided
   const ticks = $derived((() => {
-    if (!showTicks) return []);
+    if (!showTicks) return [];
     
     if (tickValues.length > 0) {
       return tickValues;
@@ -126,7 +126,7 @@ Usage:
     return Array.from({ length: Math.ceil(count / stride) }, (_, i) => 
       min + (i * stride * step)
     );
-  })();
+  }));
   
   /**
    * Calculates the percentage position for a value
@@ -391,7 +391,7 @@ Usage:
   
   <div 
     class="slider-container"
-    on:click={handleTrackClick}
+    onclick={handleTrackClick}
   >
     <div 
       class="slider-track"
@@ -444,11 +444,11 @@ Usage:
           aria-orientation={orientation}
           aria-label={ariaLabel || `Slider ${isRange ? i + 1 : ''}`}
           tabindex={disabled ? undefined : 0}
-          on:mousedown={(e) => handlePointerDown(e, i)}
-          on:touchstart={(e) => handlePointerDown(e, i)}
-          on:keydown={(e) => handleKeydown(e, i)}
-          on:mouseenter={() => handleThumbHover(i)}
-          on:mouseleave={handleThumbLeave}
+          onmousedown={(e) => handlePointerDown(e, i)}
+          ontouchstart={(e) => handlePointerDown(e, i)}
+          onkeydown={(e) => handleKeydown(e, i)}
+          onmouseenter={() => handleThumbHover(i)}
+          onmouseleave={handleThumbLeave}
           bind:this={thumbElements[i]}
         >
           {#if showTooltip && (isDragging && dragIndex === i || hoverIndex === i)}

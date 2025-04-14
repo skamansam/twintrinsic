@@ -171,7 +171,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
   }
 </script>
 
-<button on:click={addItem}>Add Item</button>
+<button onclick={addItem}>Add Item</button>
 
 <Masonry columns={3} gap={16}>
   {#each items as item (item.id)}

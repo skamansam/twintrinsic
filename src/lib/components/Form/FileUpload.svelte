@@ -6,7 +6,7 @@ Provides consistent styling, accessibility features, and various display options
 Usage:
 ```svelte
 <FileUpload 
-  on:change={handleFiles} 
+  onchange={handleFiles} 
   accept="image/*"
   multiple
 />
@@ -15,8 +15,8 @@ Usage:
   value={existingFiles}
   maxFiles={5}
   maxSize={5242880}
-  on:change={handleFiles}
-  on:error={handleError}
+  onchange={handleFiles}
+  onerror={handleError}
 >
   <div slot="dropzone">
     <p>Drag files here or click to browse</p>
@@ -301,7 +301,8 @@ Usage:
   /**
    * Opens the file browser
    */
-  function browse() {
+  function browse(evt) {
+    evt.stopPropagation();
     if (disabled) return;
     
     if (inputElement) {
@@ -515,11 +516,11 @@ Usage:
 >
   <div
     class="file-upload-dropzone"
-    on:dragenter={handleDragEnter}
-    on:dragover={handleDragOver}
-    on:dragleave={handleDragLeave}
-    on:drop={handleDrop}
-    on:click={browse}
+    ondragenter={handleDragEnter}
+    ondragover={handleDragOver}
+    ondragleave={handleDragLeave}
+    ondrop={handleDrop}
+    onclick={browse}
     bind:this={dropzoneElement}
     role="button"
     tabindex={disabled ? undefined : 0}
@@ -547,7 +548,7 @@ Usage:
         <button 
           type="button" 
           class="file-upload-browse"
-          on:click|stopPropagation={browse}
+          onclick={browse}
           disabled={disabled}
         >
           {browseLabel}
@@ -564,7 +565,7 @@ Usage:
     {multiple}
     {disabled}
     class="file-upload-input"
-    on:change={handleInputChange}
+    onchange={handleInputChange}
     bind:this={inputElement}
     aria-hidden="true"
     tabindex="-1"
@@ -611,7 +612,7 @@ Usage:
                   type="button"
                   class="file-upload-preview-remove"
                   aria-label={`Remove ${file.name}`}
-                  on:click={() => removeFile(i)}
+                  onclick={() => removeFile(i)}
                   disabled={disabled || uploading}
                 >
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

@@ -13,7 +13,7 @@ Usage:
   precision={0.5}
   size="lg"
   readonly={false}
-  on:change={(e) => console.log(e.detail.value)}
+  onchange={(e) => console.log(e.detail.value)}
 />
 
 <Rating
@@ -281,11 +281,11 @@ Usage:
   aria-readonly={readonly ? true : undefined}
   aria-disabled={disabled ? true : undefined}
   tabindex={isInteractive ? 0 : undefined}
-  on:mousedown={handleStart}
-  on:touchstart={handleStart}
-  on:mouseenter={handleEnter}
-  on:mouseleave={handleLeave}
-  on:keydown={handleKeydown}
+  onmousedown={handleStart}
+  ontouchstart={handleStart}
+  onmouseenter={handleEnter}
+  onmouseleave={handleLeave}
+  onkeydown={handleKeydown}
   bind:this={ratingElement}
 >
   {#if name && isInteractive}
@@ -301,7 +301,7 @@ Usage:
           {variantClasses}
         "
         role={isInteractive ? 'presentation' : undefined}
-        on:click={() => handleItemClick(item)}
+        onclick={() => handleItemClick(item)}
       >
         {#if item <= displayValue}
           {#if icon}

@@ -141,7 +141,7 @@ export const FullFeatured = {
   render: (args) => ({
     Component: AppHeader,
     props: args,
-    on: {
+    on {
       search: (event) => console.log("Search:", event.detail.query),
       signout: () => console.log("Sign out clicked"),
     },

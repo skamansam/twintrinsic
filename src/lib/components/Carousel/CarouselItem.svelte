@@ -83,13 +83,13 @@ Usage:
   const currentIndex = $derived(carouselContext?.currentIndex || 0);
   
   // Calculate transform for slide transition
-  const transform = $derived((() => {
+  const transform = $derived(() => {
     if (transitionType === 'slide' && typeof index === 'number' && typeof currentIndex === 'number') {
-      const offset = (index - currentIndex) * 100);
+      const offset = (index - currentIndex) * 100;
       return `translateX(${offset}%)`;
     }
     return '';
-  })();
+  });
 </script>
 
 <div

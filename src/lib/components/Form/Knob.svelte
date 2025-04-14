@@ -408,14 +408,14 @@ Usage:
   aria-valuemax={max}
   aria-valuenow={currentValue}
   aria-label={ariaLabel || name}
-  on:keydown={handleKeydown}
+  onkeydown={handleKeydown}
   bind:this={knobElement}
 >
   <svg
     viewBox="0 0 100 100"
     class="knob-svg"
-    on:mousedown={startDrag}
-    on:touchstart={startDrag}
+    onmousedown={startDrag}
+    ontouchstart={startDrag}
   >
     <!-- Background circle -->
     <circle

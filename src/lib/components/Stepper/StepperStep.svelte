@@ -90,8 +90,8 @@ Usage:
   });
   
   // Determine step state based on context and props
-  const stepState = $derived((() => {
-    if (error) return 'error');
+  const stepState = $derived(() => {
+    if (error) return 'error';
     if (completed) return 'completed';
     if (active) return 'active';
     
@@ -101,7 +101,7 @@ Usage:
     }
     
     return 'pending';
-  })();
+  });
   
   // Determine if this is the last step
   const isLast = $derived(!stepElement?.nextElementSibling);
@@ -161,8 +161,8 @@ Usage:
 >
   <div 
     class="stepper-step-header"
-    on:click={handleClick}
-    on:keydown={(e) => e.key === 'Enter' && handleClick()}
+    onclick={handleClick}
+    onkeydown={(e) => e.key === 'Enter' && handleClick()}
     tabindex={isClickable ? 0 : undefined}
     role={isClickable ? 'button' : undefined}
   >

@@ -28,7 +28,7 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
   <pre class="language-svelte"><code>{`<FileUpload 
   dropzoneText="Drop files here or click to browse"
   browseText="Select Files"
-  on:change={(e) => console.log(e.detail.files)}
+  onchange={(e) => console.log(e.detail.files)}
 />`}</code></pre>
 
   <h3>Image Upload</h3>
@@ -37,7 +37,8 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
       accept="image/*"
       dropzoneText="Drop images here or click to browse"
       browseText="Select Images"
-      maxFileSize={2097152} // 2MB
+      maxFileSize={2097152}
+      onchange={(e) => console.log(e.detail.files)}
     />
   </div>
 
@@ -46,7 +47,7 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
   dropzoneText="Drop images here or click to browse"
   browseText="Select Images"
   maxFileSize={2097152} // 2MB
-  on:change={(e) => console.log(e.detail.files)}
+  onchange={(e) => console.log(e.detail.files)}
 />`}</code></pre>
 
   <h3>Document Upload</h3>
@@ -62,7 +63,7 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
   accept=".pdf,.doc,.docx,.txt"
   dropzoneText="Drop documents here or click to browse"
   browseText="Select Documents"
-  on:change={(e) => console.log(e.detail.files)}
+  onchange={(e) => console.log(e.detail.files)}
 />`}</code></pre>
 
   <h3>Single File Upload</h3>
@@ -78,7 +79,7 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
   multiple={false}
   dropzoneText="Drop a file here or click to browse"
   browseText="Select File"
-  on:change={(e) => console.log(e.detail.files)}
+  onchange={(e) => console.log(e.detail.files)}
 />`}</code></pre>
 
   <h3>With File Validation</h3>
@@ -86,10 +87,11 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
     <FileUpload 
       accept="image/*"
       maxFiles={3}
-      maxFileSize={1048576} // 1MB
+      maxFileSize={1048576}
       dropzoneText="Drop up to 3 images (max 1MB each)"
       browseText="Select Images"
       validateOnDrop
+      onerror={(e) => console.log(e.detail.error)}
     />
   </div>
 
@@ -100,7 +102,7 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
   dropzoneText="Drop up to 3 images (max 1MB each)"
   browseText="Select Images"
   validateOnDrop
-  on:error={(e) => console.log(e.detail.error)}
+  onerror={(e) => console.log(e.detail.error)}
 />`}</code></pre>
 
   <h3>Disabled State</h3>
@@ -177,7 +179,7 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
   showProgress
   autoUpload
   onUpload={handleUpload}
-  on:upload={(e) => console.log(e.detail)}
+  onupload={(e) => console.log(e.detail)}
 />`}</code></pre>
 
   <h2>Props</h2>

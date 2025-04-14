@@ -203,10 +203,10 @@ Usage:
   <!-- Trigger element -->
   <div
     class="tooltip-trigger"
-    on:mouseenter={handleMouseEnter}
-    on:mouseleave={handleMouseLeave}
-    on:focus={handleFocus}
-    on:blur={handleBlur}
+    onmouseenter={handleMouseEnter}
+    onmouseleave={handleMouseLeave}
+    onfocus={handleFocus}
+    onblur={handleBlur}
     bind:this={triggerElement}
     aria-describedby={isVisible ? `${id}-tooltip` : undefined}
   >

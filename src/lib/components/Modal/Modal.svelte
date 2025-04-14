@@ -5,11 +5,11 @@ Provides accessible focus management, keyboard navigation, and backdrop interact
 
 Usage:
 ```svelte
-<Modal open={showModal} on:close={() => showModal = false}>
+<Modal open={showModal} onclose={() => showModal = false}>
   <svelte:fragment slot="header">Modal Title</svelte:fragment>
   <p>Modal content goes here</p>
   <svelte:fragment slot="footer">
-    <Button on:click={() => showModal = false}>Close</Button>
+    <Button onclick={() => showModal = false}>Close</Button>
     <Button variant="primary">Save</Button>
   </svelte:fragment>
 </Modal>
@@ -221,12 +221,12 @@ Usage:
   }[size] || 'max-w-md');
 </script>
 
-<svelte:window on:keydown={handleKeydown} />
+<svelte:window onkeydown={handleKeydown} />
 
 {#if isOpen}
   <div
     class="modal-backdrop"
-    on:click={handleBackdropClick}
+    onclick={handleBackdropClick}
     transition:fade={{ duration: 200 }}
   >
     <div
@@ -256,7 +256,7 @@ Usage:
               type="button"
               class="modal-close-button"
               aria-label={closeButtonLabel}
-              on:click={() => {
+              onclick={() => {
                 isOpen = false;
                 closeModal();
               }}

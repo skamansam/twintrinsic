@@ -28,7 +28,7 @@ import Slider from "$lib/components/Form/Slider.svelte"
   value={50} 
   min={0} 
   max={100} 
-  on:change={(e) => console.log(e.detail.value)}
+  onchange={(e) => console.log(e.detail.value)}
 />`}</code></pre>
 
   <h3>Range Slider</h3>
@@ -44,7 +44,7 @@ import Slider from "$lib/components/Form/Slider.svelte"
   value={[20, 80]} 
   min={0} 
   max={100} 
-  on:change={(e) => console.log(e.detail.value)}
+  onchange={(e) => console.log(e.detail.value)}
 />`}</code></pre>
 
   <h3>With Ticks and Values</h3>
@@ -66,7 +66,7 @@ import Slider from "$lib/components/Form/Slider.svelte"
   step={10}
   showTicks
   showValue
-  on:change={(e) => console.log(e.detail.value)}
+  onchange={(e) => console.log(e.detail.value)}
 />`}</code></pre>
 
   <h3>Custom Tick Values</h3>
@@ -88,7 +88,7 @@ import Slider from "$lib/components/Form/Slider.svelte"
   tickValues={[0, 25, 50, 75, 100]}
   showTicks
   showValue
-  on:change={(e) => console.log(e.detail.value)}
+  onchange={(e) => console.log(e.detail.value)}
 />`}</code></pre>
 
   <h3>With Tooltip</h3>
@@ -106,7 +106,7 @@ import Slider from "$lib/components/Form/Slider.svelte"
   min={0} 
   max={100} 
   showTooltip
-  on:change={(e) => console.log(e.detail.value)}
+  onchange={(e) => console.log(e.detail.value)}
 />`}</code></pre>
 
   <h3>Custom Variants</h3>
@@ -149,7 +149,7 @@ import Slider from "$lib/components/Form/Slider.svelte"
   min={0} 
   max={100} 
   orientation="vertical"
-  on:change={(e) => console.log(e.detail.value)}
+  onchange={(e) => console.log(e.detail.value)}
 />`}</code></pre>
 
   <h3>Disabled State</h3>
@@ -186,7 +186,7 @@ import Slider from "$lib/components/Form/Slider.svelte"
   max={100} 
   showValue
   valueFormat="\${value}%"
-  on:change={(e) => console.log(e.detail.value)}
+  onchange={(e) => console.log(e.detail.value)}
 />`}</code></pre>
 
   <h2>Props</h2>

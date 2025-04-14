@@ -309,12 +309,12 @@ Usage:
   aria-label={ariaLabel}
   aria-roledescription="carousel"
   tabindex="0"
-  on:mouseenter={handleMouseEnter}
-  on:mouseleave={handleMouseLeave}
-  on:touchstart={handleTouchStart}
-  on:touchmove={handleTouchMove}
-  on:touchend={handleTouchEnd}
-  on:keydown={handleKeyDown}
+  onmouseenter={handleMouseEnter}
+  onmouseleave={handleMouseLeave}
+  ontouchstart={handleTouchStart}
+  ontouchmove={handleTouchMove}
+  ontouchend={handleTouchEnd}
+  onkeydown={handleKeyDown}
   bind:this={carouselElement}
 >
   <div 
@@ -331,7 +331,7 @@ Usage:
         class="carousel-arrow carousel-arrow-prev"
         aria-label={prevAriaLabel}
         disabled={!circular && currentIndex === 0}
-        on:click={goToPrev}
+        onclick={goToPrev}
       >
         {#if prevIcon}
           {@html prevIcon}
@@ -347,7 +347,7 @@ Usage:
         class="carousel-arrow carousel-arrow-next"
         aria-label={nextAriaLabel}
         disabled={!circular && currentIndex === totalSlides - 1}
-        on:click={goToNext}
+        onclick={goToNext}
       >
         {#if nextIcon}
           {@html nextIcon}
@@ -372,7 +372,7 @@ Usage:
           role="tab"
           aria-label={`Slide ${i + 1}`}
           aria-selected={i === currentIndex}
-          on:click={() => goToSlide(i)}
+          onclick={() => goToSlide(i)}
         ></button>
       {/each}
     </div>

@@ -21,7 +21,7 @@ Usage:
   items={['Red', 'Green', 'Blue']} 
   let:item 
   selectable 
-  on:select={handleSelect}
+  onselect={handleSelect}
 >
   <Chip>{item}</Chip>
 </ChipGroup>
@@ -148,8 +148,8 @@ Usage:
           disabled={disabled}
           selected={selectedItems.includes(item)}
           outline={outline}
-          on:click={() => selectable && !disabled && setContext('chipGroup').toggleSelection(item)}
-          on:remove={() => handleRemove(index)}
+          onclick={() => selectable && !disabled && setContext('chipGroup').toggleSelection(item)}
+          onremove={() => handleRemove(index)}
         />
       </div>
     {/each}

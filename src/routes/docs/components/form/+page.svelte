@@ -47,7 +47,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
     </Form>
   </div>
 
-  <pre class="language-svelte"><code>{`<Form on:submit={handleSubmit}>
+  <pre class="language-svelte"><code>{`<Form onsubmit={handleSubmit}>
   <FormField label="Username" name="username" required>
     <Input placeholder="Enter username" />
   </FormField>
@@ -117,7 +117,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
     </Form>
   </div>
 
-  <pre class="language-svelte"><code>{`<Form validate on:invalid={handleInvalid} on:submit={handleSubmit}>
+  <pre class="language-svelte"><code>{`<Form validate oninvalid={handleInvalid} onsubmit={handleSubmit}>
   <FormField label="Username" name="username" required helpText="Username must be at least 3 characters">
     <Input placeholder="Enter username" minlength="3" />
   </FormField>
@@ -413,7 +413,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
   }
 </script>
 
-<Form on:ready={handleFormReady}>
+<Form onready={handleFormReady}>
   <!-- Form fields -->
 </Form>`}</code></pre>
 

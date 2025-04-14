@@ -58,7 +58,9 @@ Usage:
     /** @type {Function} - Custom render function for the label */
     labelRender,
 
-    children
+    children,
+
+    ...restProps
   } = $props();
 
   // Get tree context
@@ -189,8 +191,8 @@ Usage:
     aria-selected={isSelectable ? isSelected : undefined}
     aria-disabled={disabled ? true : undefined}
     tabindex={disabled ? undefined : 0}
-    on:click={handleClick}
-    on:keydown={handleKeyDown}
+    onclick={handleClick}
+    onkeydown={handleKeyDown}
   >
     {#if showLines}
       <div class="tree-node-lines"></div>
@@ -202,7 +204,7 @@ Usage:
           type="button"
           class="tree-node-toggle"
           aria-label={isExpanded ? 'Collapse' : 'Expand'}
-          on:click={toggleExpanded}
+          onclick={toggleExpanded}
           tabindex="-1"
           disabled={disabled}
         >
@@ -247,7 +249,7 @@ Usage:
   
   {#if hasChildren && isExpanded}
     <div class="tree-node-children" role="group">
-      <svelte:self {...$$props} level={level + 1}>
+      <svelte:self {...restProps} level={level + 1}>
         {@render children?.()}
       </svelte:self>
     </div>

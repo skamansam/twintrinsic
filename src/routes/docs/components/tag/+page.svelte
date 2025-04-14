@@ -99,8 +99,8 @@ import TagGroup from "$lib/components/Tag/TagGroup.svelte"
     <Tag variant="primary" dismissible>Primary</Tag>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tag dismissible on:dismiss={() => handleDismiss()}>Dismissible</Tag>
-<Tag variant="primary" dismissible on:dismiss={() => handleDismiss()}>Primary</Tag>`}</code></pre>
+  <pre class="language-svelte"><code>{`<Tag dismissible ondismiss={() => handleDismiss()}>Dismissible</Tag>
+<Tag variant="primary" dismissible ondismiss={() => handleDismiss()}>Primary</Tag>`}</code></pre>
 
   <h3>Clickable Tags</h3>
   <div class="not-prose mb-8 flex flex-wrap gap-2">
@@ -109,8 +109,8 @@ import TagGroup from "$lib/components/Tag/TagGroup.svelte"
     <Tag href="https://example.com" target="_blank">Link</Tag>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tag clickable on:click={handleClick}>Clickable</Tag>
-<Tag variant="primary" clickable on:click={handleClick}>Primary</Tag>
+  <pre class="language-svelte"><code>{`<Tag clickable onclick={handleClick}>Clickable</Tag>
+<Tag variant="primary" clickable onclick={handleClick}>Primary</Tag>
 <Tag href="https://example.com" target="_blank">Link</Tag>`}</code></pre>
 
   <h3>Tag Group</h3>
@@ -147,7 +147,7 @@ import TagGroup from "$lib/components/Tag/TagGroup.svelte"
   variant="primary"
   dismissible
   let:item
-  on:dismiss={(e) => handleDismiss(e.detail)}
+  ondismiss={(e) => handleDismiss(e.detail)}
 >
   <Tag>{item}</Tag>
 </TagGroup>`}</code></pre>

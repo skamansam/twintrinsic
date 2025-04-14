@@ -79,9 +79,9 @@ import Chip from "$lib/components/Chip/Chip.svelte"
     <Chip variant="error" removable>Error</Chip>
   </div>
 
-  <pre class="language-svelte"><code>{`<Chip removable on:remove={() => handleRemove()}>Removable</Chip>
-<Chip variant="primary" removable on:remove={() => handleRemove()}>Primary</Chip>
-<Chip variant="error" removable on:remove={() => handleRemove()}>Error</Chip>`}</code></pre>
+  <pre class="language-svelte"><code>{`<Chip removable onremove={() => handleRemove()}>Removable</Chip>
+<Chip variant="primary" removable onremove={() => handleRemove()}>Primary</Chip>
+<Chip variant="error" removable onremove={() => handleRemove()}>Error</Chip>`}</code></pre>
 
   <h3>Clickable Chips</h3>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -90,9 +90,9 @@ import Chip from "$lib/components/Chip/Chip.svelte"
     <Chip variant="success" clickable selected>Selected</Chip>
   </div>
 
-  <pre class="language-svelte"><code>{`<Chip clickable on:click={() => handleClick()}>Clickable</Chip>
-<Chip variant="primary" clickable on:click={() => handleClick()}>Primary</Chip>
-<Chip variant="success" clickable selected on:click={() => handleClick()}>Selected</Chip>`}</code></pre>
+  <pre class="language-svelte"><code>{`<Chip clickable onclick={() => handleClick()}>Clickable</Chip>
+<Chip variant="primary" clickable onclick={() => handleClick()}>Primary</Chip>
+<Chip variant="success" clickable selected onclick={() => handleClick()}>Selected</Chip>`}</code></pre>
 
   <h3>Chips with Icons</h3>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">

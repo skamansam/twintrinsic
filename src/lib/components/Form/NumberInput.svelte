@@ -324,10 +324,10 @@ Usage:
       aria-valuemax={max !== undefined ? max : undefined}
       aria-valuenow={numericValue}
       bind:this={inputEl}
-      on:input={handleInput}
-      on:blur={handleBlur}
-      on:focus={handleFocus}
-      on:keydown={handleKeydown}
+      oninput={handleInput}
+      onblur={handleBlur}
+      onfocus={handleFocus}
+      onkeydown={handleKeydown}
     />
     
     {#if suffix}
@@ -342,7 +342,7 @@ Usage:
           aria-label="Increase value"
           tabindex="-1"
           disabled={disabled || readonly || (max !== undefined && numericValue >= max)}
-          on:click={increment}
+          onclick={increment}
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
@@ -355,7 +355,7 @@ Usage:
           aria-label="Decrease value"
           tabindex="-1"
           disabled={disabled || readonly || (min !== undefined && numericValue <= min)}
-          on:click={decrement}
+          onclick={decrement}
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>

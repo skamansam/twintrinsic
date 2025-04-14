@@ -186,8 +186,8 @@ Usage:
       src={src}
       alt={alt || name || 'Avatar'}
       class="avatar-image"
-      on:load={handleImageLoad}
-      on:error={handleImageError}
+      onload={handleImageLoad}
+      onerror={handleImageError}
     />
   {:else if showFallback}
     <div 

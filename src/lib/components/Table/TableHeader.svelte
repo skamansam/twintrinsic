@@ -7,7 +7,7 @@ Usage:
 ```svelte
 <TableHeader>Name</TableHeader>
 
-<TableHeader sortable sortDirection="asc" on:sort={handleSort}>
+<TableHeader sortable sortDirection="asc" onsort={handleSort}>
   Age
 </TableHeader>
 
@@ -86,7 +86,7 @@ Usage:
   {scope}
   style={width ? `width: ${width}` : undefined}
   aria-sort={sortable ? (sortDirection === 'asc' ? 'ascending' : sortDirection === 'desc' ? 'descending' : 'none') : undefined}
-  on:click={sortable ? handleSort : undefined}
+  onclick={sortable ? handleSort : undefined}
   {...$$restProps}
 >
   <div class="table-header-content">

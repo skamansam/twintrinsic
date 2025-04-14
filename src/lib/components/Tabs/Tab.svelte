@@ -98,8 +98,8 @@ Usage:
   aria-controls={panelId}
   tabindex={isSelected ? 0 : -1}
   {disabled}
-  on:click={handleClick}
-  on:keydown={handleKeydown}
+  onclick={handleClick}
+  onkeydown={handleKeydown}
   bind:this={tabElement}
 >
   {#if icon && iconPosition === 'left'}

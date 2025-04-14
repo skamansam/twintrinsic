@@ -14,7 +14,7 @@ Usage:
 <Chip 
   variant="success" 
   removable 
-  on:remove={() => console.log('Chip removed')}
+  onremove={() => console.log('Chip removed')}
 >
   Removable Chip
 </Chip>
@@ -23,7 +23,7 @@ Usage:
   variant="warning" 
   avatar="<img src='user.jpg' alt='User'>" 
   clickable
-  on:click={() => console.log('Chip clicked')}
+  onclick={() => console.log('Chip clicked')}
 >
   User Name
 </Chip>
@@ -183,8 +183,8 @@ Usage:
   role={clickable ? 'button' : 'presentation'}
   tabindex={clickable && !disabled ? 0 : undefined}
   aria-disabled={disabled ? true : undefined}
-  on:click={handleClick}
-  on:keydown={handleKeydown}
+  onclick={handleClick}
+  onkeydown={handleKeydown}
 >
   {#if avatar}
     <span class="chip-avatar">
@@ -207,7 +207,7 @@ Usage:
       type="button"
       class="chip-remove"
       aria-label={removeAriaLabel}
-      on:click={handleRemove}
+      onclick={handleRemove}
     >
       {#if removeIcon}
         <span class="chip-remove-icon {iconSizeClasses}">
