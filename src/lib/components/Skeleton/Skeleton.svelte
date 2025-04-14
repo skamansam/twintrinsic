@@ -52,7 +52,7 @@ Usage:
 
   // Determine height based on variant
   const computedHeight = $derived((() => {
-    if (height) return height);
+    if (height) return height;
     if (size) return size;
     
     return {

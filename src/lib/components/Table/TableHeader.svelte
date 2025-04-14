@@ -15,64 +15,68 @@ Usage:
 ```
 -->
 <script>
-  import { createEventDispatcher } from 'svelte';
+import { createEventDispatcher } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - Column alignment (left, center, right) */
-    align = 'left',
+  /** @type {string} - Column alignment (left, center, right) */
+  align = "left",
 
-    /** @type {boolean} - Whether the column is sortable */
-    sortable = false,
+  /** @type {boolean} - Whether the column is sortable */
+  sortable = false,
 
-    /** @type {string} - Sort direction (asc, desc, none) */
-    sortDirection = 'none',
+  /** @type {string} - Sort direction (asc, desc, none) */
+  sortDirection = "none",
 
-    /** @type {string} - Column scope (col, row) */
-    scope = 'col',
+  /** @type {string} - Column scope (col, row) */
+  scope = "col",
 
-    /** @type {string} - Column width (e.g., '200px', '25%') */
-    width,
+  /** @type {string} - Column width (e.g., '200px', '25%') */
+  width,
 
-    /** @type {boolean} - Whether to truncate overflowing text */
-    truncate = false,
+  /** @type {boolean} - Whether to truncate overflowing text */
+  truncate = false,
 
-    children
-  } = $props();
+  children,
+  /** @type {object} - Additional props to pass to the input element */
+  ...restProps
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  /**
-   * Handles sort click
-   */
-  function handleSort() {
-    if (!sortable) return;
-    
-    // Determine next sort direction
-    let nextDirection;
-    
-    switch (sortDirection) {
-      case 'asc':
-        nextDirection = 'desc';
-        break;
-      case 'desc':
-        nextDirection = 'none';
-        break;
-      default:
-        nextDirection = 'asc';
-    }
-    
-    dispatch('sort', { direction: nextDirection });
+const dispatch = createEventDispatcher()
+
+/**
+ * Handles sort click
+ */
+function handleSort() {
+  if (!sortable) return
+
+  // Determine next sort direction
+  let nextDirection
+
+  switch (sortDirection) {
+    case "asc":
+      nextDirection = "desc"
+      break
+    case "desc":
+      nextDirection = "none"
+      break
+    default:
+      nextDirection = "asc"
   }
-  
-  // Determine alignment classes
-  const alignClasses = $derived({
-    left: 'text-left',
-    center: 'text-center',
-    right: 'text-right'
-  }[align] || 'text-left');
+
+  dispatch("sort", { direction: nextDirection })
+}
+
+// Determine alignment classes
+const alignClasses = $derived(
+  {
+    left: "text-left",
+    center: "text-center",
+    right: "text-right",
+  }[align] || "text-left"
+)
 </script>
 
 <th
@@ -87,7 +91,7 @@ Usage:
   style={width ? `width: ${width}` : undefined}
   aria-sort={sortable ? (sortDirection === 'asc' ? 'ascending' : sortDirection === 'desc' ? 'descending' : 'none') : undefined}
   onclick={sortable ? handleSort : undefined}
-  {...$$restProps}
+  {...restProps}
 >
   <div class="table-header-content">
     <span class="table-header-text">
@@ -105,7 +109,7 @@ Usage:
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
           </svg>
         {:else}
-          <svg class="w-4 h-4 opacity-0 group-hover:opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg class="w-4 h-4 opacity-0 hover:opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
           </svg>
         {/if}
@@ -127,7 +131,7 @@ Usage:
   }
   
   .table-header-sortable {
-    @apply cursor-pointer select-none group;
+    @apply cursor-pointer select-none;
     @apply hover:bg-hover dark:hover:bg-hover;
   }
   

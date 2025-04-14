@@ -6,6 +6,7 @@ export let type: TypeLevel = null
 let typeClass = ""
 $: typeClass = type ? `bg-${type}` : "bg-light"
 export { propClasses as class }
+
 </script>
 
 <Container as="section" {...$$restProps} class="twin-hero {typeClass} {propClasses}  ">

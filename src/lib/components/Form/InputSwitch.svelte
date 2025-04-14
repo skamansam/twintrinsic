@@ -45,7 +45,9 @@ Usage:
     size = 'md',
 
     /** @type {string} - ARIA label for accessibility */
-    ariaLabel
+    ariaLabel,
+
+    ...restProps
   } = $props();
 
   const dispatch = createEventDispatcher();
@@ -126,7 +128,7 @@ Usage:
       aria-label={ariaLabel || label}
       class="input-switch-input"
       onchange={handleChange}
-      {...$$restProps}
+      {...restProps}
     />
     
     <span class="input-switch-track {switchSizeClasses}" aria-hidden="true">

@@ -350,7 +350,8 @@ Usage:
           class="list-input-chip-remove"
           aria-label={`Remove ${value}`}
           tabindex="-1"
-          onclick|stopPropagation={(e) => {
+          onclick={(e) => {
+            e.stopPropagation();
             e.preventDefault();
             removeItem(index);
             inputEl?.focus();

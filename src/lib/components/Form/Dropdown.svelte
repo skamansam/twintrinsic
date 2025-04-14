@@ -28,9 +28,9 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, createEventDispatcher, onMount } from 'svelte';
+  import { getContext, createEventDispatcher } from 'svelte';
   import { slide } from 'svelte/transition';
-  import { clickOutside } from '../../utils/clickOutside';
+  import { clickOutside } from '../../actions/clickOutside.js';
 
   const {
     /** @type {string} - Additional CSS classes */
@@ -239,7 +239,8 @@ Usage:
    * Selects an option
    * @param {Object|string} option - Option to select
    */
-  function selectOption(option) {
+  function selectOption(option, evt) {
+    evt.stopPropagation();
     const value = getOptionValue(option);
     
     if (multiple) {
@@ -275,7 +276,8 @@ Usage:
   /**
    * Clears the selection
    */
-  function clearSelection() {
+  function clearSelection(evt) {
+    evt.stopPropagation();
     selectedValues = multiple ? [] : null;
     
     // Update form field if available
@@ -488,7 +490,7 @@ Usage:
           type="button"
           class="dropdown-clear-button"
           aria-label="Clear selection"
-          onclick|stopPropagation={clearSelection}
+          onclick={clearSelection}
           tabindex="-1"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -583,7 +585,7 @@ Usage:
                       "
                       role="option"
                       aria-selected={isChildSelected ? 'true' : 'false'}
-                      onclick|stopPropagation={() => selectOption(childOption)}
+                      onclick={() => selectOption(childOption)}
                     >
                       <div class="dropdown-option-content">
                         {#if multiple}

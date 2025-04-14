@@ -7,14 +7,14 @@ Usage:
 ```svelte
 <Table>
   <TableHead>
-    <!-- Table header content -->
+    <!-- Table header content --\>
   </TableHead>
   <TableBody>
     <TableRow>
       <TableCell>John Doe</TableCell>
       <TableCell>john@example.com</TableCell>
     </TableRow>
-    <!-- More rows -->
+    <!-- More rows --\>
   </TableBody>
 </Table>
 ```

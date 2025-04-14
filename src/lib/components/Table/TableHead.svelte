@@ -13,7 +13,7 @@ Usage:
     </TableRow>
   </TableHead>
   <TableBody>
-    <!-- Table body content -->
+    <!-- Table body content --\>
   </TableBody>
 </Table>
 ```

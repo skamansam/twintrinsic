@@ -32,7 +32,9 @@ Usage:
     /** @type {number} - Number of rows this cell spans */
     rowspan,
 
-    children
+    children,
+
+    ...restProps
   } = $props();
 
   // Determine alignment classes
@@ -53,7 +55,7 @@ Usage:
   "
   colspan={colspan}
   rowspan={rowspan}
-  {...$$restProps}
+  {...restProps}
 >
   {@render children?.()}
 </td>

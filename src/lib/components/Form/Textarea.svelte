@@ -60,7 +60,10 @@ Usage:
     autoResize = false,
 
     /** @type {string} - ARIA label for accessibility */
-    ariaLabel
+    ariaLabel,
+    /** @type {object} - Additional props to pass to the input element */
+    ...restProps
+
   } = $props();
 
   const dispatch = createEventDispatcher();
@@ -169,7 +172,7 @@ Usage:
     onfocus={handleFocus}
     onblur={handleBlur}
     bind:this={textareaEl}
-    {...$$restProps}
+    {...restProps}
   ></textarea>
 </div>
 

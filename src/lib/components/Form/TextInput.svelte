@@ -74,7 +74,10 @@ Usage:
     endIcon,
 
     /** @type {string} - ARIA label for accessibility */
-    ariaLabel
+    ariaLabel,
+
+    /** @type {object} - Additional props to pass to the input element */
+    ...restProps
   } = $props();
 
   const dispatch = createEventDispatcher();
@@ -186,7 +189,7 @@ Usage:
       oninput={handleInput}
       onfocus={handleFocus}
       onblur={handleBlur}
-      {...$$restProps}
+      {...restProps}
     />
     
     {#if clearable && inputValue}

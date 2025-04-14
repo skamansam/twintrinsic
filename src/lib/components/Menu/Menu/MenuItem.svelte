@@ -17,13 +17,19 @@ const {
 
   /** @type {boolean} - Whether the item is disabled */
   disabled = false,
+  
+  /** @type {boolean} - Whether the submenu is initially open */
+  initialOpen = false,
+  
+  /** @type {any} - Value associated with this menu item */
+  value = {}
 } = $props()
 
-export let open = false
-export let value = {}
+// Use $state for values that need to be modified
+let isOpen = $state(initialOpen);
 
 const toggleMenu = () => {
-  open = !open
+  isOpen = !isOpen;
 }
 </script>
 
@@ -41,7 +47,7 @@ const toggleMenu = () => {
 >
   {@render children?.()}
   {#if value?.children}
-    <ul class="menu-item-submenu">
+    <ul class="menu-item-submenu" class:hidden={!isOpen}>
       {#each value.children as child}
         <MenuItem value={child}/>
       {/each}
@@ -69,5 +75,9 @@ const toggleMenu = () => {
 
   .menu-item-submenu {
     @apply pl-4;
+  }
+  
+  .hidden {
+    @apply hidden;
   }
 </style>

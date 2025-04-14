@@ -25,6 +25,7 @@ Usage:
 <script>
   import { onMount, onDestroy } from 'svelte';
   import { toastStore } from './toastStore';
+  import { fly, fade } from 'svelte/transition';
 
   const {
     /** @type {string} - Additional CSS classes */
@@ -119,13 +120,14 @@ Usage:
       class="
         toast
         toast-{toast.variant || 'default'}
-        {toast.closing ? 'toast-closing' : ''}
       "
       role="alert"
       aria-live={toast.variant === 'error' ? 'assertive' : 'polite'}
       onclick={() => dismissible && removeToast(toast.id)}
       onmouseenter={() => pauseToast(toast.id)}
       onmouseleave={() => resumeToast(toast.id)}
+      in:fly={{ y: 20, duration: 200 }}
+      out:fly={{ x: 20, duration: 200 }}
     >
       <div class="toast-content">
         {#if toast.icon}
@@ -166,7 +168,7 @@ Usage:
             type="button"
             class="toast-close"
             aria-label="Close notification"
-            onclick|stopPropagation={() => removeToast(toast.id)}
+            onclick={(e) => { e.stopPropagation(); removeToast(toast.id) }}
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -227,11 +229,6 @@ Usage:
     @apply rounded-lg shadow-lg;
     @apply overflow-hidden;
     @apply pointer-events-auto;
-    @apply animate-toast-enter;
-  }
-  
-  .toast-closing {
-    @apply animate-toast-exit;
   }
   
   .toast-content {
@@ -312,34 +309,5 @@ Usage:
     @apply bg-info-500 dark:bg-info-500;
   }
   
-  /* Animations */
-  @keyframes toast-enter {
-    from {
-      transform: translateY(1rem);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  
-  @keyframes toast-exit {
-    from {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    to {
-      transform: translateX(1rem);
-      opacity: 0;
-    }
-  }
-  
-  .animate-toast-enter {
-    animation: toast-enter 0.2s ease-out;
-  }
-  
-  .animate-toast-exit {
-    animation: toast-exit 0.2s ease-in forwards;
-  }
+  /* No custom animations needed - using Svelte transitions */
 </style>

@@ -53,7 +53,8 @@ Usage:
     size = 'md',
 
     /** @type {string} - ARIA label for accessibility */
-    ariaLabel
+    ariaLabel,
+    ...restProps
   } = $props();
 
   const dispatch = createEventDispatcher();
@@ -120,7 +121,7 @@ Usage:
       aria-label={ariaLabel || label}
       class="radio-input"
       onchange={handleChange}
-      {...$$restProps}
+      {...restProps}
     />
     
     <span class="radio-control {radioSizeClasses}" aria-hidden="true">

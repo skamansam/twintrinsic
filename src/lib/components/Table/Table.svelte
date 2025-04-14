@@ -19,7 +19,7 @@ Usage:
       <TableCell>john@example.com</TableCell>
       <TableCell>Admin</TableCell>
     </TableRow>
-    <!-- More rows -->
+    <!-- More rows --\>
   </TableBody>
 </Table>
 ```

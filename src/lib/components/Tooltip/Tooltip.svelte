@@ -19,6 +19,7 @@ Usage:
 -->
 <script>
   import { onMount, createEventDispatcher } from 'svelte';
+  import { fade } from 'svelte/transition';
 
   const {
     /** @type {string} - Additional CSS classes */
@@ -221,6 +222,7 @@ Usage:
       style="top: {tooltipPosition.top}px; left: {tooltipPosition.left}px;"
       role="tooltip"
       bind:this={tooltipElement}
+      transition:fade={{ duration: 200 }}
     >
       {#if tooltipContent}
         {@render tooltipContent()}
@@ -247,7 +249,6 @@ Usage:
     @apply bg-surface dark:bg-surface text-text dark:text-text;
     @apply border border-border dark:border-border rounded-md shadow-md;
     @apply px-3 py-2 text-sm;
-    @apply animate-in fade-in duration-200;
   }
   
   /* Arrow styles */

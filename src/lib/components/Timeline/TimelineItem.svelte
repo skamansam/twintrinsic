@@ -94,10 +94,10 @@ Usage:
   const animated = $derived(timelineContext?.animated === true);
   
   // Determine effective position based on alternate setting and index
-  const effectivePosition = $derived((() => {
-    if (itemPosition !== 'alternate') return itemPosition);
+  const effectivePosition = $derived(() => {
+    if (itemPosition !== 'alternate') return itemPosition;
     return index % 2 === 0 ? 'left' : 'right';
-  })();
+  });
   
   // Determine variant classes
   const variantClasses = $derived({

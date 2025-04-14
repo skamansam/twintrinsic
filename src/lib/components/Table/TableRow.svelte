@@ -17,44 +17,47 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, createEventDispatcher } from 'svelte';
+import { getContext, createEventDispatcher } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {boolean} - Whether the row is selected */
-    selected = false,
+  /** @type {boolean} - Whether the row is selected */
+  selected = false,
 
-    /** @type {boolean} - Whether the row is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the row is disabled */
+  disabled = false,
 
-    /** @type {boolean} - Whether the row is clickable */
-    clickable = false,
+  /** @type {boolean} - Whether the row is clickable */
+  clickable = false,
 
-    /** @type {any} - Data associated with the row */
-    data,
+  /** @type {any} - Data associated with the row */
+  data,
 
-    children
-  } = $props();
+  children,
 
-  const dispatch = createEventDispatcher();
-  
-  // Get table context if available
-  const tableContext = getContext('table');
-  
-  // Determine if table has hover effect
-  const hoverable = tableContext?.hoverable || false;
-  
-  /**
-   * Handles row click
-   * @param {MouseEvent} event - Click event
-   */
-  function handleClick(event) {
-    if (disabled) return;
-    
-    dispatch('click', { event, row: data });
-  }
+  /** @type {object} - Additional props to pass to the input element */
+  ...restProps
+} = $props()
+
+const dispatch = createEventDispatcher()
+
+// Get table context if available
+const tableContext = getContext("table")
+
+// Determine if table has hover effect
+const hoverable = tableContext?.hoverable || false
+
+/**
+ * Handles row click
+ * @param {MouseEvent} event - Click event
+ */
+function handleClick(event) {
+  if (disabled) return
+
+  dispatch("click", { event, row: data })
+}
 </script>
 
 <tr
@@ -62,14 +65,14 @@ Usage:
     table-row
     {selected ? 'table-row-selected' : ''}
     {disabled ? 'table-row-disabled' : ''}
-    {clickable || $$slots.onclick ? 'table-row-clickable' : ''}
+    {clickable || restProps?.onclick ? 'table-row-clickable' : ''}
     {hoverable ? 'table-row-hoverable' : ''}
     {className}
   "
   aria-selected={selected ? 'true' : undefined}
   aria-disabled={disabled ? 'true' : undefined}
   onclick={handleClick}
-  {...$$restProps}
+  {...restProps}
 >
   {@render children?.()}
 </tr>

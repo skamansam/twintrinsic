@@ -315,11 +315,11 @@ Usage:
   }
   
   .stepper-step-active .stepper-step-icon {
-    @apply bg-current bg-opacity-10 dark:bg-opacity-10;
+    @apply bg-current/10;
   }
   
   .stepper-step-completed .stepper-step-icon {
-    @apply bg-current bg-opacity-10 dark:bg-opacity-10;
+    @apply bg-current/10;
   }
   
   .stepper-step-error .stepper-step-icon {

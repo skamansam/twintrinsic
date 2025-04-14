@@ -225,7 +225,7 @@ Usage:
   
   .tag-clickable {
     @apply cursor-pointer;
-    @apply hover:bg-opacity-80 dark:hover:bg-opacity-80;
+    @apply hover:bg-inherit/80 dark:hover:bg-inherit/80;
     @apply focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 focus:ring-offset-2;
   }
   
