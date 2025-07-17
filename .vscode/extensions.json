@@ -6,6 +6,8 @@
     "bradlc.vscode-tailwindcss",
     "formulahendry.auto-close-tag",
     "formulahendry.auto-rename-tag",
-    "inlang.vs-code-extension"
+    "inlang.vs-code-extension",
+    "svelte.svelte-vscode",
+    "rafaelmartinez.svelte-preview"
   ]
 }

@@ -164,7 +164,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
       ...items,
       { 
         id: items.length + 1, 
-        content: \`Item \${items.length + 1}\`, 
+        content: \`Item \$\{items.length + 1\}\`, 
         height: randomHeight 
       }
     ];

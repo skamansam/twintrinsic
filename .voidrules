@@ -14,7 +14,7 @@
 # Technologies Used
 - we are using playwright for all testing
 - we are using vite and svelte 5 for development
-- we are using tailwind v4.1 for styling
+- we are using tailwind v4 for styling
 
 # Tailwind
 - instead of creating inline colors, add them to the @theme rule in the lib/twintrinsic.css

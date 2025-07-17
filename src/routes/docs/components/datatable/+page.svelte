@@ -291,7 +291,7 @@ const productColumns = [
       header: 'Price', 
       sortable: true, 
       filterable: true,
-      template: (value) => \`$\${value.toFixed(2)}\`
+      template: (value) => \`$\$\{value.toFixed(2)\}\`
     },
     { 
       field: 'stock', 
