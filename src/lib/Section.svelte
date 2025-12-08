@@ -9,6 +9,7 @@
   </script>
 
 <style>
+  @reference "./twintrinsic.css";
 .twin-section {
   @apply m-2 my-4;
 }
