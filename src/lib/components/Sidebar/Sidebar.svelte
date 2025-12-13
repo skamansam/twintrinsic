@@ -16,61 +16,60 @@ Usage:
 </Sidebar>
 ```
 -->
-<script>
+<script lang="ts">
 import { slide } from "svelte/transition"
 import Panel from "../Panel/Panel.svelte"
 
+type SidebarProps = {
+  expanded?: boolean
+  class?: string
+  position?: "left" | "right"
+  width?: string
+  id?: string
+  ariaLabel?: string
+  disabled?: boolean
+  showBackdrop?: boolean
+  floatOnMobile?: boolean
+  docked?: boolean
+  ontoggle?: (payload: { expanded: boolean }) => void
+}
+
 const {
-  /** @type {boolean} - Whether the sidebar is expanded */
   expanded = true,
-  /** @type {string} - Additional CSS classes */
   class: className = "",
-  /** @type {string} - Position of the sidebar */
   position = "left",
-  /** @type {string} - Width of the sidebar when expanded */
   width = "16rem",
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-  /** @type {string} - ARIA label */
   ariaLabel,
-  /** @type {boolean} - Whether to disable the sidebar controls */
   disabled = false,
-  /** @type {boolean} - Whether to show a backdrop when expanded on mobile */
   showBackdrop = true,
-  /** @type {boolean} - Whether to float over content on mobile */
   floatOnMobile = true,
-  /** @type {boolean} - Whether to dock to viewport instead of parent */
   docked = false,
-} = $props()
+  ontoggle,
+} = $props() satisfies SidebarProps
 
 let isExpanded = $state(expanded)
 
 // Handle toggle from Panel
-function handleToggle(event) {
-  isExpanded = event.detail.expanded
-  dispatch("toggle", { expanded: isExpanded })
+function handleToggle(payload: { expanded: boolean }) {
+  isExpanded = payload.expanded
+  ontoggle?.({ expanded: isExpanded })
 }
 
 // Handle backdrop click
 function handleBackdropClick() {
   if (!disabled) {
     isExpanded = false
-    dispatch("toggle", { expanded: isExpanded })
+    ontoggle?.({ expanded: isExpanded })
   }
 }
 
 // Handle escape key
-function handleKeydown(event) {
+function handleKeydown(event: KeyboardEvent) {
   if (!disabled && event.key === "Escape" && isExpanded) {
     isExpanded = false
-    dispatch("toggle", { expanded: isExpanded })
+    ontoggle?.({ expanded: isExpanded })
   }
-}
-
-// Emit events directly
-function dispatch(event, detail) {
-  const customEvent = new CustomEvent(event, { detail })
-  this?.dispatchEvent(customEvent)
 }
 </script>
 
@@ -109,7 +108,7 @@ function dispatch(event, detail) {
       expanded={isExpanded}
       {disabled}
       bordered={false}
-      toggle={handleToggle}
+      ontoggle={handleToggle}
     >
       <svelte:fragment slot="header">
         <slot name="header" />

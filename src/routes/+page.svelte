@@ -1,53 +1,58 @@
 <script>
-import { fade, fly } from "svelte/transition"
-import Container from "$lib/components/Container/Container.svelte"
-import Separator from "$lib/components/Separator/Separator.svelte"
-import Panel from "$lib/components/Panel/Panel.svelte"
-import AppHeader from "$lib/components/AppHeader/AppHeader.svelte"
-import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte"
+import { fade, fly } from "svelte/transition";
+import Container from "$lib/components/Container/Container.svelte";
+import Separator from "$lib/components/Separator/Separator.svelte";
+import Panel from "$lib/components/Panel/Panel.svelte";
+import AppHeader from "$lib/components/AppHeader/AppHeader.svelte";
+import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte";
 
 const features = [
-  {
-    title: "Modern Stack",
-    description:
-      "Built with Svelte 5 and Tailwind CSS for a powerful, modern development experience.",
-    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>`,
-  },
-  {
-    title: "Accessible",
-    description: "ARIA-compliant components with keyboard navigation and screen reader support.",
-    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>`,
-  },
-  {
-    title: "Customizable",
-    description: "Fully customizable with Tailwind CSS and CSS variables for theming.",
-    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>`,
-  },
-  {
-    title: "TypeScript Ready",
-    description: "Full TypeScript support with type definitions and intellisense.",
-    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>`,
-  },
-  {
-    title: "Responsive",
-    description: "Mobile-first design with responsive breakpoints and touch support.",
-    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>`,
-  },
-  {
-    title: "Well Tested",
-    description: "Comprehensive test coverage with Playwright and Storybook integration.",
-    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
-  },
-]
+	{
+		title: "Modern Stack",
+		description:
+			"Built with Svelte 5 and Tailwind CSS for a powerful, modern development experience.",
+		icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>`,
+	},
+	{
+		title: "Accessible",
+		description:
+			"ARIA-compliant components with keyboard navigation and screen reader support.",
+		icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>`,
+	},
+	{
+		title: "Customizable",
+		description:
+			"Fully customizable with Tailwind CSS and CSS variables for theming.",
+		icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>`,
+	},
+	{
+		title: "TypeScript Ready",
+		description:
+			"Full TypeScript support with type definitions and intellisense.",
+		icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>`,
+	},
+	{
+		title: "Responsive",
+		description:
+			"Mobile-first design with responsive breakpoints and touch support.",
+		icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>`,
+	},
+	{
+		title: "Well Tested",
+		description:
+			"Comprehensive test coverage with Playwright and Storybook integration.",
+		icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
+	},
+];
 
 const components = [
-  { name: "AppHeader", description: "Application header with navigation" },
-  { name: "Sidebar", description: "Collapsible side panel" },
-  { name: "BottomBar", description: "Collapsible bottom panel" },
-  { name: "Panel", description: "Content panel with header and footer" },
-  { name: "Container", description: "Responsive container" },
-  { name: "Separator", description: "Visual divider with content" },
-]
+	{ name: "AppHeader", description: "Application header with navigation" },
+	{ name: "Sidebar", description: "Collapsible side panel" },
+	{ name: "BottomBar", description: "Collapsible bottom panel" },
+	{ name: "Panel", description: "Content panel with header and footer" },
+	{ name: "Container", description: "Responsive container" },
+	{ name: "Separator", description: "Visual divider with content" },
+];
 </script>
 
 <style>
@@ -110,11 +115,11 @@ const components = [
           { label: 'Documentation', href: '/docs' }
         ]}
       >
-    <div slot="logo" class="flex items-center gap-2">
-      <TwintrinsicLogo size="2rem" class="text-primary-500" />
-      <span class="font-semibold">Twintrinsic</span>
-    </div>
-  </AppHeader>
+        <div slot="logo" class="flex items-center gap-2">
+          <TwintrinsicLogo size="2rem" class="text-primary-500" />
+          <span class="font-semibold">Twintrinsic</span>
+        </div>
+      </AppHeader>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {#each components.slice(0, 3) as component}

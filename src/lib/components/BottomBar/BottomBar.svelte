@@ -16,49 +16,48 @@ Usage:
 </BottomBar>
 ```
 -->
-<script>
+<script lang="ts">
 import { slide } from "svelte/transition"
 import Panel from "../Panel/Panel.svelte"
 
+type BottomBarProps = {
+  expanded?: boolean
+  class?: string
+  height?: string
+  id?: string
+  ariaLabel?: string
+  disabled?: boolean
+  floatOnMobile?: boolean
+  docked?: boolean
+  ontoggle?: (payload: { expanded: boolean }) => void
+}
+
 const {
-  /** @type {boolean} - Whether the bottom bar is expanded */
   expanded = true,
-  /** @type {string} - Additional CSS classes */
   class: className = "",
-  /** @type {string} - Height of the bottom bar when expanded */
   height = "16rem",
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-  /** @type {string} - ARIA label */
   ariaLabel,
-  /** @type {boolean} - Whether to disable the bottom bar controls */
   disabled = false,
-  /** @type {boolean} - Whether to float over content on mobile */
   floatOnMobile = true,
-  /** @type {boolean} - Whether to dock to viewport instead of parent */
   docked = false,
-} = $props()
+  ontoggle,
+} = $props() satisfies BottomBarProps
 
 let isExpanded = $state(expanded)
 
 // Handle toggle from Panel
-function handleToggle(event) {
-  isExpanded = event.detail.expanded
-  dispatch("toggle", { expanded: isExpanded })
+function handleToggle(payload: { expanded: boolean }) {
+  isExpanded = payload.expanded
+  ontoggle?.({ expanded: isExpanded })
 }
 
 // Handle escape key
-function handleKeydown(event) {
+function handleKeydown(event: KeyboardEvent) {
   if (!disabled && event.key === "Escape" && isExpanded) {
     isExpanded = false
-    dispatch("toggle", { expanded: isExpanded })
+    ontoggle?.({ expanded: isExpanded })
   }
-}
-
-// Emit events directly
-function dispatch(event, detail) {
-  const customEvent = new CustomEvent(event, { detail })
-  this?.dispatchEvent(customEvent)
 }
 </script>
 
@@ -88,7 +87,7 @@ function dispatch(event, detail) {
       expanded={isExpanded}
       {disabled}
       bordered={false}
-      toggle={handleToggle}
+      ontoggle={handleToggle}
     >
       <svelte:fragment slot="header">
         <slot name="header" />

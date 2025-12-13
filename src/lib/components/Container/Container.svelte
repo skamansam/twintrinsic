@@ -26,12 +26,12 @@ const {
   as = "section",
 
   /** @type {string} - ARIA role if needed */
-  role,
+  role = null,
 
   /** @type {string} - ARIA label if needed */
-  ariaLabel,
+  ariaLabel = null,
 
-  children,
+  children = null,
 } = $props()
 </script>
 

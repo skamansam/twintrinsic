@@ -19,9 +19,39 @@ Usage:
 </Panel>
 ```
 -->
-<script>
+<script lang="ts">
 import { slide } from "svelte/transition"
-import { createEventDispatcher } from "svelte"
+import type { Snippet } from "svelte"
+
+/**
+ * @slot header Renders custom header content for the panel button
+ * @slot default Provides the main panel body content
+ * @slot footer Displays supplemental content below the body (e.g., actions)
+ */
+type PanelProps = {
+  /** Whether the panel is expanded */
+  expanded?: boolean
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** ARIA label for the header button */
+  ariaLabel?: string | null
+  /** Whether to disable the panel controls */
+  disabled?: boolean
+  /** Whether to show a border */
+  bordered?: boolean
+  /** Whether to show the expand/collapse icon */
+  showIcon?: boolean
+  /** Slot content for the panel body */
+  children?: Snippet | null
+  /** Slot content for the header */
+  header?: Snippet | null
+  /** Slot content rendered below the body */
+  footer?: Snippet | null
+  /** Callback invoked whenever the panel toggles expanded state */
+  ontoggle?: (payload: { expanded: boolean }) => void
+}
 
 const {
   /** @type {boolean} - Whether the panel is expanded */
@@ -34,7 +64,7 @@ const {
   id = crypto.randomUUID(),
 
   /** @type {string} - ARIA label for the header button */
-  ariaLabel,
+  ariaLabel = null,
 
   /** @type {boolean} - Whether to disable the panel controls */
   disabled = false,
@@ -45,27 +75,27 @@ const {
   /** @type {boolean} - Whether to show the expand/collapse icon */
   showIcon = true,
 
-  children,
-  header,
-} = $props()
+  children = null,
+  header = null,
+  footer = null,
+} = $props() satisfies PanelProps
 
-const dispatch = createEventDispatcher()
 let isExpanded = $state(expanded)
 
 // Internal state
-let headerEl
-let contentEl
+let headerEl: HTMLButtonElement | null = null
+let contentEl: HTMLDivElement | null = null
 
 // Handle toggle
 function handleToggle() {
-  if (!disabled) {
-    isExpanded = !isExpanded
-    dispatch("toggle", { expanded: isExpanded })
-  }
+  if (disabled) return
+
+  isExpanded = !isExpanded
+  ontoggle?.({ expanded: isExpanded })
 }
 
 // Handle keyboard navigation
-function handleKeydown(event) {
+function handleKeydown(event: KeyboardEvent) {
   if (disabled) return
 
   if (event.key === "Enter" || event.key === " ") {
@@ -129,14 +159,26 @@ function handleKeydown(event) {
   {#if isExpanded}
     <div
       id="{id}-content"
-      class="px-4 py-3 bg-background dark:bg-background text-text dark:text-text {bordered ? 'rounded-b-lg' : ''}"
+      class="px-4 py-3 bg-background dark:bg-background text-text dark:text-text"
       role="region"
       aria-labelledby="{id}-header"
       transition:slide={{ duration: 200 }}
       bind:this={contentEl}
+      class:rounded-b-lg={!footer && bordered}
     >
       {@render children?.()}
     </div>
+
+    {#if footer}
+      <div
+        class="px-4 py-3 bg-background dark:bg-background text-muted dark:text-muted"
+        class:border-t={bordered}
+        class:border-border={bordered}
+        class:rounded-b-lg={bordered}
+      >
+        {@render footer()}
+      </div>
+    {/if}
   {/if}
 </div>
 

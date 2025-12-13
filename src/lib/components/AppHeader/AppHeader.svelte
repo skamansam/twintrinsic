@@ -20,17 +20,28 @@ Usage:
 />
 ```
 -->
-<script>
+<script lang="ts">
 import { slide } from "svelte/transition"
 import ThemeToggle from "../ThemeToggle/ThemeToggle.svelte"
 
-/** @type {string | { name: string, logo?: string, href?: string }} - Brand information */
-/** @type {{ name: string, avatar?: string, href?: string } | null} - User information */
-/** @type {boolean} - Whether to show the search input */
-/** @type {boolean} - Whether to show notifications */
-/** @type {string[]} - Navigation items */
-/** @type {string} - Additional CSS classes */
-/** @type {string} - HTML id for accessibility */
+type Brand = string | { name: string; logo?: string; href?: string }
+type User = { name: string; avatar?: string; href?: string } | null
+type NavItem = { label: string; href?: string; current?: boolean }
+type AppHeaderProps = {
+  brand: Brand
+  user?: User
+  showSearch?: boolean
+  showNotifications?: boolean
+  navItems?: NavItem[]
+  class?: string
+  id?: string
+  logo?: () => any
+  notifications?: () => any
+  userMenu?: () => any
+  onsearch?: (payload: { query: string }) => void
+  onsignout?: () => void
+}
+
 const {
   brand,
   user = null,
@@ -41,8 +52,10 @@ const {
   id = crypto.randomUUID(),
   logo,
   notifications,
-  userMenu
-} = $props()
+  userMenu,
+  onsearch,
+  onsignout,
+} = $props() satisfies AppHeaderProps
 
 let mobileMenuOpen = $state(false)
 let searchQuery = $state("")
@@ -50,9 +63,12 @@ let notificationsOpen = $state(false)
 let userMenuOpen = $state(false)
 
 // Handle search input
-function handleSearch(e) {
-  searchQuery = e.target.value
-  dispatch("search", { query: searchQuery })
+function handleSearch(event: Event) {
+  const target = event.target as HTMLInputElement | null
+  if (!target) return
+
+  searchQuery = target.value
+  onsearch?.({ query: searchQuery })
 }
 
 // Handle mobile menu toggle
@@ -81,10 +97,8 @@ function handleKeydown(event) {
   }
 }
 
-// Emit events directly
-function dispatch(event, detail) {
-  const customEvent = new CustomEvent(event, { detail })
-  this?.dispatchEvent(customEvent)
+function handleSignout() {
+  onsignout?.()
 }
 
 const brandName = $derived(typeof brand === "string" ? brand : brand.name)
@@ -124,7 +138,7 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
     <button
       type="button"
       class="app-header-user-menu-item text-error-bold"
-      click={() => dispatch('signout')}
+      onclick={handleSignout}
     >
       Sign out
     </button>
@@ -149,7 +163,7 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
       class="app-header-mobile-menu"
       aria-expanded={mobileMenuOpen}
       aria-controls="{id}-nav"
-      click={toggleMobileMenu}
+      onclick={toggleMobileMenu}
     >
       <span class="sr-only">Open main menu</span>
       <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -195,7 +209,7 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
               class="app-header-search-input"
               placeholder="Search..."
               bind:value={searchQuery}
-              input={handleSearch}
+              oninput={handleSearch}
             />
             <svg class="w-5 h-5 app-header-search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -210,7 +224,7 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
             type="button"
             class="app-header-notifications-button"
             aria-expanded={notificationsOpen}
-            click={toggleNotifications}
+            onclick={toggleNotifications}
           >
             <span class="sr-only">View notifications</span>
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -237,7 +251,7 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
             type="button"
             class="app-header-user-button"
             aria-expanded={userMenuOpen}
-            click={toggleUserMenu}
+            onclick={toggleUserMenu}
           >
             <span class="sr-only">Open user menu</span>
             {#if user.avatar}
