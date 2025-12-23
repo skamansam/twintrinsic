@@ -25,242 +25,246 @@ Usage:
 ```
 -->
 <script>
-  import { createEventDispatcher } from 'svelte';
+import { createEventDispatcher } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {number} - Current rating value */
-    value = 0,
+  /** @type {number} - Current rating value */
+  value = 0,
 
-    /** @type {number} - Maximum rating value */
-    max = 5,
+  /** @type {number} - Maximum rating value */
+  max = 5,
 
-    /** @type {number} - Step size for ratings (0.5 for half stars, 1 for whole stars) */
-    precision = 1,
+  /** @type {number} - Step size for ratings (0.5 for half stars, 1 for whole stars) */
+  precision = 1,
 
-    /** @type {string} - Size of the rating icons (sm, md, lg) */
-    size = 'md',
+  /** @type {string} - Size of the rating icons (sm, md, lg) */
+  size = "md",
 
-    /** @type {string} - Visual style variant */
-    variant = 'warning',
+  /** @type {string} - Visual style variant */
+  variant = "warning",
 
-    /** @type {boolean} - Whether the rating is readonly */
-    readonly = false,
+  /** @type {boolean} - Whether the rating is readonly */
+  readonly = false,
 
-    /** @type {boolean} - Whether the rating is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the rating is disabled */
+  disabled = false,
 
-    /** @type {boolean} - Whether to show the numeric value */
-    showValue = false,
+  /** @type {boolean} - Whether to show the numeric value */
+  showValue = false,
 
-    /** @type {string} - Custom icon for filled state (HTML or SVG string) */
-    icon,
+  /** @type {string} - Custom icon for filled state (HTML or SVG string) */
+  icon,
 
-    /** @type {string} - Custom icon for empty state (HTML or SVG string) */
-    emptyIcon,
+  /** @type {string} - Custom icon for empty state (HTML or SVG string) */
+  emptyIcon,
 
-    /** @type {string} - Name attribute for form submission */
-    name,
+  /** @type {string} - Name attribute for form submission */
+  name,
 
-    /** @type {string} - ARIA label for accessibility */
-    ariaLabel = 'Rating'
-  } = $props();
+  /** @type {string} - ARIA label for accessibility */
+  ariaLabel = "Rating",
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Component state
-  let currentValue = $state(value);
-  let hoverValue = $state(-1);
-  let isDragging = $state(false);
-  let ratingElement;
-  
-  // Update internal value when prop changes
-  $effect(() => {
-    currentValue = value;
-  });
-  
-  // Computed values
-  const displayValue = $derived(hoverValue >= 0 ? hoverValue : currentValue);
-  const isInteractive = $derived(!readonly && !disabled);
-  
-  // Determine size classes
-  const sizeClasses = $derived({
-    sm: 'text-sm gap-0.5',
-    md: 'text-base gap-1',
-    lg: 'text-lg gap-1.5'
-  }[size] || 'text-base gap-1');
-  
-  // Determine icon size classes
-  const iconSizeClasses = $derived({
-    sm: 'w-4 h-4',
-    md: 'w-5 h-5',
-    lg: 'w-6 h-6'
-  }[size] || 'w-5 h-5');
-  
-  // Determine variant classes
-  const variantClasses = $derived({
-    default: 'text-muted dark:text-muted',
-    primary: 'text-primary-500 dark:text-primary-500',
-    secondary: 'text-secondary-500 dark:text-secondary-500',
-    success: 'text-success-500 dark:text-success-500',
-    warning: 'text-warning-500 dark:text-warning-500',
-    error: 'text-error-500 dark:text-error-500',
-    info: 'text-info-500 dark:text-info-500'
-  }[variant] || 'text-warning-500 dark:text-warning-500');
-  
-  // Generate items array based on max and precision
-  const items = $derived(Array.from({ length: max / precision }, (_, i) => (i + 1) * precision));
-  
-  /**
-   * Calculates the value based on mouse position
-   * @param {MouseEvent|TouchEvent} event - Mouse or touch event
-   * @returns {number} - Calculated value
-   */
-  function calculateValue(event) {
-    if (!ratingElement) return 0;
-    
-    const rect = ratingElement.getBoundingClientRect();
-    const clientX = event.type.startsWith('touch')
-      ? event.touches[0].clientX
-      : event.clientX;
-    
-    // Calculate percentage of width
-    const percent = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-    
-    // Calculate value based on percentage, max, and precision
-    const rawValue = percent * max;
-    
-    // Round to nearest precision step
-    return Math.max(precision, Math.round(rawValue / precision) * precision);
+const dispatch = createEventDispatcher()
+
+// Component state
+let currentValue = $state(value)
+let hoverValue = $state(-1)
+let isDragging = $state(false)
+let ratingElement
+
+// Update internal value when prop changes
+$effect(() => {
+  currentValue = value
+})
+
+// Computed values
+const displayValue = $derived(hoverValue >= 0 ? hoverValue : currentValue)
+const isInteractive = $derived(!readonly && !disabled)
+
+// Determine size classes
+const sizeClasses = $derived(
+  {
+    sm: "text-sm gap-0.5",
+    md: "text-base gap-1",
+    lg: "text-lg gap-1.5",
+  }[size] || "text-base gap-1"
+)
+
+// Determine icon size classes
+const iconSizeClasses = $derived(
+  {
+    sm: "w-4 h-4",
+    md: "w-5 h-5",
+    lg: "w-6 h-6",
+  }[size] || "w-5 h-5"
+)
+
+// Determine variant classes
+const variantClasses = $derived(
+  {
+    default: "text-muted dark:text-muted",
+    primary: "text-primary-500 dark:text-primary-500",
+    secondary: "text-secondary-500 dark:text-secondary-500",
+    success: "text-success-500 dark:text-success-500",
+    warning: "text-warning-500 dark:text-warning-500",
+    error: "text-error-500 dark:text-error-500",
+    info: "text-info-500 dark:text-info-500",
+  }[variant] || "text-warning-500 dark:text-warning-500"
+)
+
+// Generate items array based on max and precision
+const items = $derived(Array.from({ length: max / precision }, (_, i) => (i + 1) * precision))
+
+/**
+ * Calculates the value based on mouse position
+ * @param {MouseEvent|TouchEvent} event - Mouse or touch event
+ * @returns {number} - Calculated value
+ */
+function calculateValue(event) {
+  if (!ratingElement) return 0
+
+  const rect = ratingElement.getBoundingClientRect()
+  const clientX = event.type.startsWith("touch") ? event.touches[0].clientX : event.clientX
+
+  // Calculate percentage of width
+  const percent = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width))
+
+  // Calculate value based on percentage, max, and precision
+  const rawValue = percent * max
+
+  // Round to nearest precision step
+  return Math.max(precision, Math.round(rawValue / precision) * precision)
+}
+
+/**
+ * Handles mouse move or touch move events
+ * @param {MouseEvent|TouchEvent} event - Mouse or touch event
+ */
+function handleMove(event) {
+  if (!isInteractive) return
+
+  if (isDragging || event.type === "mousemove") {
+    hoverValue = calculateValue(event)
   }
-  
-  /**
-   * Handles mouse move or touch move events
-   * @param {MouseEvent|TouchEvent} event - Mouse or touch event
-   */
-  function handleMove(event) {
-    if (!isInteractive) return;
-    
-    if (isDragging || event.type === 'mousemove') {
-      hoverValue = calculateValue(event);
-    }
+}
+
+/**
+ * Handles mouse down or touch start events
+ * @param {MouseEvent|TouchEvent} event - Mouse or touch event
+ */
+function handleStart(event) {
+  if (!isInteractive) return
+
+  isDragging = true
+  hoverValue = calculateValue(event)
+
+  // Add document event listeners for drag
+  if (event.type === "mousedown") {
+    document.addEventListener("mousemove", handleMove)
+    document.addEventListener("mouseup", handleEnd)
+  } else if (event.type === "touchstart") {
+    document.addEventListener("touchmove", handleMove, { passive: true })
+    document.addEventListener("touchend", handleEnd)
   }
-  
-  /**
-   * Handles mouse down or touch start events
-   * @param {MouseEvent|TouchEvent} event - Mouse or touch event
-   */
-  function handleStart(event) {
-    if (!isInteractive) return;
-    
-    isDragging = true;
-    hoverValue = calculateValue(event);
-    
-    // Add document event listeners for drag
-    if (event.type === 'mousedown') {
-      document.addEventListener('mousemove', handleMove);
-      document.addEventListener('mouseup', handleEnd);
-    } else if (event.type === 'touchstart') {
-      document.addEventListener('touchmove', handleMove, { passive: true });
-      document.addEventListener('touchend', handleEnd);
-    }
+}
+
+/**
+ * Handles mouse up or touch end events
+ */
+function handleEnd() {
+  if (!isInteractive || !isDragging) return
+
+  // Update value and dispatch change event
+  if (hoverValue >= 0) {
+    currentValue = hoverValue
+    dispatch("change", { value: currentValue })
   }
-  
-  /**
-   * Handles mouse up or touch end events
-   */
-  function handleEnd() {
-    if (!isInteractive || !isDragging) return;
-    
-    // Update value and dispatch change event
-    if (hoverValue >= 0) {
-      currentValue = hoverValue;
-      dispatch('change', { value: currentValue });
-    }
-    
-    isDragging = false;
-    
-    // Remove document event listeners
-    document.removeEventListener('mousemove', handleMove);
-    document.removeEventListener('mouseup', handleEnd);
-    document.removeEventListener('touchmove', handleMove);
-    document.removeEventListener('touchend', handleEnd);
+
+  isDragging = false
+
+  // Remove document event listeners
+  document.removeEventListener("mousemove", handleMove)
+  document.removeEventListener("mouseup", handleEnd)
+  document.removeEventListener("touchmove", handleMove)
+  document.removeEventListener("touchend", handleEnd)
+}
+
+/**
+ * Handles mouse enter events
+ */
+function handleEnter() {
+  if (!isInteractive) return
+  hoverValue = currentValue
+}
+
+/**
+ * Handles mouse leave events
+ */
+function handleLeave() {
+  if (!isInteractive || isDragging) return
+  hoverValue = -1
+}
+
+/**
+ * Handles click events on individual items
+ * @param {number} itemValue - Value of the clicked item
+ */
+function handleItemClick(itemValue) {
+  if (!isInteractive) return
+
+  // Toggle off if clicking the same value
+  if (currentValue === itemValue && precision === 1) {
+    currentValue = 0
+  } else {
+    currentValue = itemValue
   }
-  
-  /**
-   * Handles mouse enter events
-   */
-  function handleEnter() {
-    if (!isInteractive) return;
-    hoverValue = currentValue;
+
+  hoverValue = currentValue
+  dispatch("change", { value: currentValue })
+}
+
+/**
+ * Handles keyboard navigation
+ * @param {KeyboardEvent} event - Keydown event
+ */
+function handleKeydown(event) {
+  if (!isInteractive) return
+
+  let newValue = currentValue
+
+  switch (event.key) {
+    case "ArrowRight":
+    case "ArrowUp":
+      newValue = Math.min(max, currentValue + precision)
+      break
+    case "ArrowLeft":
+    case "ArrowDown":
+      newValue = Math.max(0, currentValue - precision)
+      break
+    case "Home":
+      newValue = precision
+      break
+    case "End":
+      newValue = max
+      break
+    default:
+      return
   }
-  
-  /**
-   * Handles mouse leave events
-   */
-  function handleLeave() {
-    if (!isInteractive || isDragging) return;
-    hoverValue = -1;
+
+  if (newValue !== currentValue) {
+    currentValue = newValue
+    hoverValue = newValue
+    dispatch("change", { value: currentValue })
+    event.preventDefault()
   }
-  
-  /**
-   * Handles click events on individual items
-   * @param {number} itemValue - Value of the clicked item
-   */
-  function handleItemClick(itemValue) {
-    if (!isInteractive) return;
-    
-    // Toggle off if clicking the same value
-    if (currentValue === itemValue && precision === 1) {
-      currentValue = 0;
-    } else {
-      currentValue = itemValue;
-    }
-    
-    hoverValue = currentValue;
-    dispatch('change', { value: currentValue });
-  }
-  
-  /**
-   * Handles keyboard navigation
-   * @param {KeyboardEvent} event - Keydown event
-   */
-  function handleKeydown(event) {
-    if (!isInteractive) return;
-    
-    let newValue = currentValue;
-    
-    switch (event.key) {
-      case 'ArrowRight':
-      case 'ArrowUp':
-        newValue = Math.min(max, currentValue + precision);
-        break;
-      case 'ArrowLeft':
-      case 'ArrowDown':
-        newValue = Math.max(0, currentValue - precision);
-        break;
-      case 'Home':
-        newValue = precision;
-        break;
-      case 'End':
-        newValue = max;
-        break;
-      default:
-        return;
-    }
-    
-    if (newValue !== currentValue) {
-      currentValue = newValue;
-      hoverValue = newValue;
-      dispatch('change', { value: currentValue });
-      event.preventDefault();
-    }
-  }
+}
 </script>
 
 <div

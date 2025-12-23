@@ -23,300 +23,299 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, createEventDispatcher } from 'svelte';
+import { getContext, createEventDispatcher } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Input name */
-    name,
+  /** @type {string} - Input name */
+  name,
 
-    /** @type {string} - Placeholder text */
-    placeholder = 'Add item...',
+  /** @type {string} - Placeholder text */
+  placeholder = "Add item...",
 
-    /** @type {string[]} - Array of values */
-    values = [],
+  /** @type {string[]} - Array of values */
+  values = [],
 
-    /** @type {boolean} - Whether the input is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the input is disabled */
+  disabled = false,
 
-    /** @type {boolean} - Whether the input is required */
-    required = false,
+  /** @type {boolean} - Whether the input is required */
+  required = false,
 
-    /** @type {boolean} - Whether to allow duplicates */
-    allowDuplicates = false,
+  /** @type {boolean} - Whether to allow duplicates */
+  allowDuplicates = false,
 
-    /** @type {string} - Character(s) that trigger adding a new item */
-    addOnKeys = 'Enter,Tab,Comma',
+  /** @type {string} - Character(s) that trigger adding a new item */
+  addOnKeys = "Enter,Tab,Comma",
 
-    /** @type {string} - Separator for pasting multiple values */
-    pasteSeparator = ',',
+  /** @type {string} - Separator for pasting multiple values */
+  pasteSeparator = ",",
 
-    /** @type {number} - Maximum number of items */
-    maxItems,
+  /** @type {number} - Maximum number of items */
+  maxItems,
 
-    /** @type {Function} - Validator function for new values */
-    validator,
+  /** @type {Function} - Validator function for new values */
+  validator,
 
-    /** @type {string} - Error message for invalid values */
-    errorMessage = 'Invalid value',
+  /** @type {string} - Error message for invalid values */
+  errorMessage = "Invalid value",
 
-    /** @type {string} - ARIA label for the input */
-    ariaLabel
-  } = $props();
+  /** @type {string} - ARIA label for the input */
+  ariaLabel,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Get form context if available
-  const formContext = getContext('form');
-  
-  // Input state
-  let inputValue = $state('');
-  let itemValues = $state([...values]);
-  let focusedIndex = $state(-1);
-  let inputEl;
-  let isInvalid = $state(false);
-  let validationMessage = $state('');
-  
-  // Register with form if available
-  let fieldApi;
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, values);
-    
-    // Update values when form field changes
-    $effect(() => {
-      const formValue = fieldApi.getValue();
-      if (formValue !== undefined && JSON.stringify(formValue) !== JSON.stringify(itemValues)) {
-        itemValues = [...formValue];
-      }
-    });
-  }
-  
-  // Update internal values when prop changes
+const dispatch = createEventDispatcher()
+
+// Get form context if available
+const formContext = getContext("form")
+
+// Input state
+let inputValue = $state("")
+let itemValues = $state([...values])
+let focusedIndex = $state(-1)
+let inputEl
+let isInvalid = $state(false)
+let validationMessage = $state("")
+
+// Register with form if available
+let fieldApi
+if (formContext && name) {
+  fieldApi = formContext.registerField(name, values)
+
+  // Update values when form field changes
   $effect(() => {
-    if (JSON.stringify(values) !== JSON.stringify(itemValues)) {
-      itemValues = [...values];
+    const formValue = fieldApi.getValue()
+    if (formValue !== undefined && JSON.stringify(formValue) !== JSON.stringify(itemValues)) {
+      itemValues = [...formValue]
     }
-  });
-  
-  /**
-   * Validates a value
-   * @param {string} value - Value to validate
-   * @returns {boolean} - Whether the value is valid
-   */
-  function validateValue(value) {
-    if (!value.trim()) return false;
-    
-    if (!allowDuplicates && itemValues.includes(value.trim())) {
-      validationMessage = 'Duplicate value';
-      return false;
-    }
-    
-    if (maxItems && itemValues.length >= maxItems) {
-      validationMessage = `Maximum of ${maxItems} items allowed`;
-      return false;
-    }
-    
-    if (validator) {
-      const isValid = validator(value.trim());
-      if (!isValid) {
-        validationMessage = errorMessage;
-      }
-      return isValid;
-    }
-    
-    return true;
+  })
+}
+
+// Update internal values when prop changes
+$effect(() => {
+  if (JSON.stringify(values) !== JSON.stringify(itemValues)) {
+    itemValues = [...values]
   }
-  
-  /**
-   * Adds a new item
-   * @param {string} value - Value to add
-   */
-  function addItem(value) {
-    const trimmedValue = value.trim();
-    
-    if (!validateValue(trimmedValue)) {
-      isInvalid = true;
-      return;
-    }
-    
-    isInvalid = false;
-    validationMessage = '';
-    
-    // Add the item
-    itemValues = [...itemValues, trimmedValue];
-    inputValue = '';
-    
-    // Update form field if available
-    if (fieldApi) {
-      fieldApi.setValue(itemValues);
-    }
-    
-    dispatch('change', { values: itemValues });
-    dispatch('add', { value: trimmedValue });
+})
+
+/**
+ * Validates a value
+ * @param {string} value - Value to validate
+ * @returns {boolean} - Whether the value is valid
+ */
+function validateValue(value) {
+  if (!value.trim()) return false
+
+  if (!allowDuplicates && itemValues.includes(value.trim())) {
+    validationMessage = "Duplicate value"
+    return false
   }
-  
-  /**
-   * Removes an item
-   * @param {number} index - Index of the item to remove
-   */
-  function removeItem(index) {
-    if (index < 0 || index >= itemValues.length) return;
-    
-    const removedValue = itemValues[index];
-    itemValues = itemValues.filter((_, i) => i !== index);
-    
-    // Update form field if available
-    if (fieldApi) {
-      fieldApi.setValue(itemValues);
-    }
-    
-    // Update focused index
-    if (focusedIndex >= itemValues.length) {
-      focusedIndex = itemValues.length - 1;
-    }
-    
-    dispatch('change', { values: itemValues });
-    dispatch('remove', { value: removedValue, index });
+
+  if (maxItems && itemValues.length >= maxItems) {
+    validationMessage = `Maximum of ${maxItems} items allowed`
+    return false
   }
-  
-  /**
-   * Handles input keydown
-   * @param {KeyboardEvent} event - Keydown event
-   */
-  function handleKeydown(event) {
-    // Get add trigger keys
-    const triggerKeys = addOnKeys.split(',').map(k => k.trim().toLowerCase());
-    
-    // Check if key should trigger adding an item
-    const shouldAddItem = (
-      (triggerKeys.includes('enter') && event.key === 'Enter') ||
-      (triggerKeys.includes('tab') && event.key === 'Tab') ||
-      (triggerKeys.includes('comma') && event.key === ',') ||
-      (triggerKeys.includes('space') && event.key === ' ')
-    );
-    
-    if (shouldAddItem && inputValue.trim()) {
-      event.preventDefault();
-      addItem(inputValue);
-      return;
+
+  if (validator) {
+    const isValid = validator(value.trim())
+    if (!isValid) {
+      validationMessage = errorMessage
     }
-    
-    // Handle backspace to remove last item
-    if (event.key === 'Backspace' && !inputValue && itemValues.length > 0) {
-      if (focusedIndex === -1) {
-        // Focus the last item first
-        focusedIndex = itemValues.length - 1;
-      } else {
-        // Remove the focused item
-        removeItem(focusedIndex);
-      }
-    }
-    
-    // Handle arrow keys for navigation
-    if (event.key === 'ArrowLeft' && focusedIndex === -1 && !inputValue && itemValues.length > 0) {
-      focusedIndex = itemValues.length - 1;
-    } else if (event.key === 'ArrowLeft' && focusedIndex > 0) {
-      focusedIndex--;
-    } else if (event.key === 'ArrowRight' && focusedIndex < itemValues.length - 1) {
-      focusedIndex++;
-    } else if (event.key === 'ArrowRight' && focusedIndex === itemValues.length - 1) {
-      focusedIndex = -1;
-      inputEl?.focus();
-    }
-    
-    // Handle Escape to blur
-    if (event.key === 'Escape') {
-      inputEl?.blur();
-      focusedIndex = -1;
+    return isValid
+  }
+
+  return true
+}
+
+/**
+ * Adds a new item
+ * @param {string} value - Value to add
+ */
+function addItem(value) {
+  const trimmedValue = value.trim()
+
+  if (!validateValue(trimmedValue)) {
+    isInvalid = true
+    return
+  }
+
+  isInvalid = false
+  validationMessage = ""
+
+  // Add the item
+  itemValues = [...itemValues, trimmedValue]
+  inputValue = ""
+
+  // Update form field if available
+  if (fieldApi) {
+    fieldApi.setValue(itemValues)
+  }
+
+  dispatch("change", { values: itemValues })
+  dispatch("add", { value: trimmedValue })
+}
+
+/**
+ * Removes an item
+ * @param {number} index - Index of the item to remove
+ */
+function removeItem(index) {
+  if (index < 0 || index >= itemValues.length) return
+
+  const removedValue = itemValues[index]
+  itemValues = itemValues.filter((_, i) => i !== index)
+
+  // Update form field if available
+  if (fieldApi) {
+    fieldApi.setValue(itemValues)
+  }
+
+  // Update focused index
+  if (focusedIndex >= itemValues.length) {
+    focusedIndex = itemValues.length - 1
+  }
+
+  dispatch("change", { values: itemValues })
+  dispatch("remove", { value: removedValue, index })
+}
+
+/**
+ * Handles input keydown
+ * @param {KeyboardEvent} event - Keydown event
+ */
+function handleKeydown(event) {
+  // Get add trigger keys
+  const triggerKeys = addOnKeys.split(",").map((k) => k.trim().toLowerCase())
+
+  // Check if key should trigger adding an item
+  const shouldAddItem =
+    (triggerKeys.includes("enter") && event.key === "Enter") ||
+    (triggerKeys.includes("tab") && event.key === "Tab") ||
+    (triggerKeys.includes("comma") && event.key === ",") ||
+    (triggerKeys.includes("space") && event.key === " ")
+
+  if (shouldAddItem && inputValue.trim()) {
+    event.preventDefault()
+    addItem(inputValue)
+    return
+  }
+
+  // Handle backspace to remove last item
+  if (event.key === "Backspace" && !inputValue && itemValues.length > 0) {
+    if (focusedIndex === -1) {
+      // Focus the last item first
+      focusedIndex = itemValues.length - 1
+    } else {
+      // Remove the focused item
+      removeItem(focusedIndex)
     }
   }
-  
-  /**
-   * Handles input change
-   * @param {Event} event - Input event
-   */
-  function handleInput(event) {
-    inputValue = event.target.value;
-    
-    // Clear validation state when typing
-    if (isInvalid) {
-      isInvalid = false;
-      validationMessage = '';
-    }
-    
-    // If the last character is a comma, add the item
-    if (inputValue.endsWith(',') && addOnKeys.includes('Comma')) {
-      const valueToAdd = inputValue.slice(0, -1);
-      if (valueToAdd.trim()) {
-        addItem(valueToAdd);
-      }
-    }
-    
-    dispatch('input', { value: inputValue });
+
+  // Handle arrow keys for navigation
+  if (event.key === "ArrowLeft" && focusedIndex === -1 && !inputValue && itemValues.length > 0) {
+    focusedIndex = itemValues.length - 1
+  } else if (event.key === "ArrowLeft" && focusedIndex > 0) {
+    focusedIndex--
+  } else if (event.key === "ArrowRight" && focusedIndex < itemValues.length - 1) {
+    focusedIndex++
+  } else if (event.key === "ArrowRight" && focusedIndex === itemValues.length - 1) {
+    focusedIndex = -1
+    inputEl?.focus()
   }
-  
-  /**
-   * Handles paste event
-   * @param {ClipboardEvent} event - Paste event
-   */
-  function handlePaste(event) {
-    if (!pasteSeparator) return;
-    
-    const pastedText = event.clipboardData?.getData('text') || '';
-    if (!pastedText.includes(pasteSeparator)) return;
-    
-    // Prevent default paste
-    event.preventDefault();
-    
-    // Split pasted text and add items
-    const pastedValues = pastedText
-      .split(pasteSeparator)
-      .map(v => v.trim())
-      .filter(v => v);
-    
-    for (const value of pastedValues) {
-      addItem(value);
+
+  // Handle Escape to blur
+  if (event.key === "Escape") {
+    inputEl?.blur()
+    focusedIndex = -1
+  }
+}
+
+/**
+ * Handles input change
+ * @param {Event} event - Input event
+ */
+function handleInput(event) {
+  inputValue = event.target.value
+
+  // Clear validation state when typing
+  if (isInvalid) {
+    isInvalid = false
+    validationMessage = ""
+  }
+
+  // If the last character is a comma, add the item
+  if (inputValue.endsWith(",") && addOnKeys.includes("Comma")) {
+    const valueToAdd = inputValue.slice(0, -1)
+    if (valueToAdd.trim()) {
+      addItem(valueToAdd)
     }
   }
-  
-  /**
-   * Handles chip click
-   * @param {number} index - Chip index
-   */
-  function handleChipClick(index) {
-    focusedIndex = index;
+
+  dispatch("input", { value: inputValue })
+}
+
+/**
+ * Handles paste event
+ * @param {ClipboardEvent} event - Paste event
+ */
+function handlePaste(event) {
+  if (!pasteSeparator) return
+
+  const pastedText = event.clipboardData?.getData("text") || ""
+  if (!pastedText.includes(pasteSeparator)) return
+
+  // Prevent default paste
+  event.preventDefault()
+
+  // Split pasted text and add items
+  const pastedValues = pastedText
+    .split(pasteSeparator)
+    .map((v) => v.trim())
+    .filter((v) => v)
+
+  for (const value of pastedValues) {
+    addItem(value)
   }
-  
-  /**
-   * Handles input focus
-   */
-  function handleFocus() {
-    focusedIndex = -1;
-    dispatch('focus');
+}
+
+/**
+ * Handles chip click
+ * @param {number} index - Chip index
+ */
+function handleChipClick(index) {
+  focusedIndex = index
+}
+
+/**
+ * Handles input focus
+ */
+function handleFocus() {
+  focusedIndex = -1
+  dispatch("focus")
+}
+
+/**
+ * Handles input blur
+ */
+function handleBlur(event) {
+  // Add current value if not empty and not clicking on a chip
+  if (inputValue.trim() && !event.relatedTarget?.classList.contains("list-input-chip")) {
+    addItem(inputValue)
   }
-  
-  /**
-   * Handles input blur
-   */
-  function handleBlur(event) {
-    // Add current value if not empty and not clicking on a chip
-    if (inputValue.trim() && !event.relatedTarget?.classList.contains('list-input-chip')) {
-      addItem(inputValue);
-    }
-    
-    // Reset focused index after a short delay
-    // This allows chip click events to fire first
-    setTimeout(() => {
-      focusedIndex = -1;
-    }, 100);
-    
-    dispatch('blur');
-  }
+
+  // Reset focused index after a short delay
+  // This allows chip click events to fire first
+  setTimeout(() => {
+    focusedIndex = -1
+  }, 100)
+
+  dispatch("blur")
+}
 </script>
 
 <div

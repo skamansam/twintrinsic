@@ -1,78 +1,78 @@
 <script module>
-  import { defineMeta } from "@storybook/addon-svelte-csf";
-  import Tree from "../lib/components/Tree/Tree.svelte";
-  import TreeNode from "../lib/components/Tree/TreeNode.svelte";
-  import { fn } from "@storybook/test";
+import { defineMeta } from "@storybook/addon-svelte-csf"
+import Tree from "../lib/components/Tree/Tree.svelte"
+import TreeNode from "../lib/components/Tree/TreeNode.svelte"
+import { fn } from "@storybook/test"
 
-  const { Story } = defineMeta({
-    title: "Components/Tree",
-    component: Tree,
-    tags: ["autodocs"],
-    argTypes: {
-      selectable: { control: "boolean" },
-      multiSelect: { control: "boolean" },
-      showLines: { control: "boolean" },
-      expandOnSelect: { control: "boolean" },
-      expandAll: { control: "boolean" },
-      iconSize: {
-        control: { type: "select" },
-        options: ["sm", "md", "lg"],
+const { Story } = defineMeta({
+  title: "Components/Tree",
+  component: Tree,
+  tags: ["autodocs"],
+  argTypes: {
+    selectable: { control: "boolean" },
+    multiSelect: { control: "boolean" },
+    showLines: { control: "boolean" },
+    expandOnSelect: { control: "boolean" },
+    expandAll: { control: "boolean" },
+    iconSize: {
+      control: { type: "select" },
+      options: ["sm", "md", "lg"],
+    },
+  },
+  args: {
+    selectable: true,
+    multiSelect: false,
+    showLines: true,
+    expandOnSelect: false,
+    expandAll: false,
+    iconSize: "md",
+    onSelect: fn(),
+    onExpand: fn(),
+  },
+})
+
+// Sample tree data
+const fileSystemData = [
+  {
+    id: "1",
+    label: "Project Root",
+    children: [
+      {
+        id: "2",
+        label: "src",
+        children: [
+          {
+            id: "3",
+            label: "components",
+            children: [
+              { id: "4", label: "Button.svelte" },
+              { id: "5", label: "Input.svelte" },
+              { id: "6", label: "Card.svelte" },
+            ],
+          },
+          {
+            id: "7",
+            label: "routes",
+            children: [
+              { id: "8", label: "index.svelte" },
+              { id: "9", label: "about.svelte" },
+            ],
+          },
+        ],
       },
-    },
-    args: {
-      selectable: true,
-      multiSelect: false,
-      showLines: true,
-      expandOnSelect: false,
-      expandAll: false,
-      iconSize: "md",
-      onSelect: fn(),
-      onExpand: fn(),
-    },
-  });
-
-  // Sample tree data
-  const fileSystemData = [
-    {
-      id: "1",
-      label: "Project Root",
-      children: [
-        {
-          id: "2",
-          label: "src",
-          children: [
-            {
-              id: "3",
-              label: "components",
-              children: [
-                { id: "4", label: "Button.svelte" },
-                { id: "5", label: "Input.svelte" },
-                { id: "6", label: "Card.svelte" }
-              ]
-            },
-            {
-              id: "7",
-              label: "routes",
-              children: [
-                { id: "8", label: "index.svelte" },
-                { id: "9", label: "about.svelte" }
-              ]
-            }
-          ]
-        },
-        {
-          id: "10",
-          label: "public",
-          children: [
-            { id: "11", label: "favicon.ico" },
-            { id: "12", label: "robots.txt" }
-          ]
-        },
-        { id: "13", label: "package.json" },
-        { id: "14", label: "README.md" }
-      ]
-    }
-  ];
+      {
+        id: "10",
+        label: "public",
+        children: [
+          { id: "11", label: "favicon.ico" },
+          { id: "12", label: "robots.txt" },
+        ],
+      },
+      { id: "13", label: "package.json" },
+      { id: "14", label: "README.md" },
+    ],
+  },
+]
 </script>
 
 <Story name="Basic">

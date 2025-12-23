@@ -29,312 +29,310 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, createEventDispatcher, onMount } from 'svelte';
+import { getContext, createEventDispatcher, onMount } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Input name */
-    name,
+  /** @type {string} - Input name */
+  name,
 
-    /** @type {Array} - Options to display */
-    options = [],
+  /** @type {Array} - Options to display */
+  options = [],
 
-    /** @type {any} - Selected value(s) */
-    value,
+  /** @type {any} - Selected value(s) */
+  value,
 
-    /** @type {boolean} - Whether multiple selection is allowed */
-    multiple = false,
+  /** @type {boolean} - Whether multiple selection is allowed */
+  multiple = false,
 
-    /** @type {string} - Property name for option label */
-    optionLabel = 'label',
+  /** @type {string} - Property name for option label */
+  optionLabel = "label",
 
-    /** @type {string} - Property name for option value */
-    optionValue = 'value',
+  /** @type {string} - Property name for option value */
+  optionValue = "value",
 
-    /** @type {string} - Property name for option icon */
-    optionIcon,
+  /** @type {string} - Property name for option icon */
+  optionIcon,
 
-    /** @type {boolean} - Whether the listbox is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the listbox is disabled */
+  disabled = false,
 
-    /** @type {boolean} - Whether the listbox is required */
-    required = false,
+  /** @type {boolean} - Whether the listbox is required */
+  required = false,
 
-    /** @type {boolean} - Whether to filter options by typing */
-    filter = false,
+  /** @type {boolean} - Whether to filter options by typing */
+  filter = false,
 
-    /** @type {string} - Placeholder for filter input */
-    filterPlaceholder = 'Search...',
+  /** @type {string} - Placeholder for filter input */
+  filterPlaceholder = "Search...",
 
-    /** @type {number} - Maximum height of the listbox */
-    maxHeight = 300,
+  /** @type {number} - Maximum height of the listbox */
+  maxHeight = 300,
 
-    /** @type {boolean} - Whether to show a checkbox for multiple selection */
-    showCheckbox = true,
+  /** @type {boolean} - Whether to show a checkbox for multiple selection */
+  showCheckbox = true,
 
-    /** @type {string} - ARIA label for accessibility */
-    ariaLabel
-  } = $props();
+  /** @type {string} - ARIA label for accessibility */
+  ariaLabel,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Get form context if available
-  const formContext = getContext('form');
-  
-  // Component state
-  let selectedValues = $state(multiple ? [] : null);
-  let filterValue = $state('');
-  let highlightedIndex = $state(0);
-  let listboxElement;
-  let filterInputElement;
-  
-  // Register with form if available
-  let fieldApi;
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, value);
-    
-    // Update value when form field changes
-    $effect(() => {
-      const formValue = fieldApi.getValue();
-      if (formValue !== undefined && JSON.stringify(formValue) !== JSON.stringify(selectedValues)) {
-        selectedValues = formValue;
-      }
-    });
-  }
-  
-  // Initialize selected values from prop
+const dispatch = createEventDispatcher()
+
+// Get form context if available
+const formContext = getContext("form")
+
+// Component state
+let selectedValues = $state(multiple ? [] : null)
+let filterValue = $state("")
+let highlightedIndex = $state(0)
+let listboxElement
+let filterInputElement
+
+// Register with form if available
+let fieldApi
+if (formContext && name) {
+  fieldApi = formContext.registerField(name, value)
+
+  // Update value when form field changes
   $effect(() => {
-    if (value !== undefined) {
-      selectedValues = value;
+    const formValue = fieldApi.getValue()
+    if (formValue !== undefined && JSON.stringify(formValue) !== JSON.stringify(selectedValues)) {
+      selectedValues = formValue
     }
-  });
-  
-  /**
-   * Gets the display label for an option
-   * @param {Object|string} option - Option to get label for
-   * @returns {string} - Display label
-   */
-  function getOptionLabel(option) {
-    if (!option) return '';
-    
-    if (typeof option === 'object') {
-      return option[optionLabel] || '';
-    }
-    
-    return option.toString();
+  })
+}
+
+// Initialize selected values from prop
+$effect(() => {
+  if (value !== undefined) {
+    selectedValues = value
   }
-  
-  /**
-   * Gets the value for an option
-   * @param {Object|string} option - Option to get value for
-   * @returns {any} - Option value
-   */
-  function getOptionValue(option) {
-    if (!option) return null;
-    
-    if (typeof option === 'object') {
-      return option[optionValue];
-    }
-    
-    return option;
+})
+
+/**
+ * Gets the display label for an option
+ * @param {Object|string} option - Option to get label for
+ * @returns {string} - Display label
+ */
+function getOptionLabel(option) {
+  if (!option) return ""
+
+  if (typeof option === "object") {
+    return option[optionLabel] || ""
   }
-  
-  /**
-   * Gets the icon for an option
-   * @param {Object} option - Option to get icon for
-   * @returns {string} - Icon HTML
-   */
-  function getOptionIcon(option) {
-    if (!option || !optionIcon || typeof option !== 'object') return null;
-    
-    return option[optionIcon];
+
+  return option.toString()
+}
+
+/**
+ * Gets the value for an option
+ * @param {Object|string} option - Option to get value for
+ * @returns {any} - Option value
+ */
+function getOptionValue(option) {
+  if (!option) return null
+
+  if (typeof option === "object") {
+    return option[optionValue]
   }
-  
-  /**
-   * Checks if an option is selected
-   * @param {Object|string} option - Option to check
-   * @returns {boolean} - Whether the option is selected
-   */
-  function isOptionSelected(option) {
-    const value = getOptionValue(option);
-    
-    if (multiple) {
-      return Array.isArray(selectedValues) && selectedValues.some(v => 
-        typeof v === 'object' 
-          ? v[optionValue] === value 
-          : v === value
-      );
-    }
-    
-    return selectedValues === value || 
-      (typeof selectedValues === 'object' && selectedValues && selectedValues[optionValue] === value);
+
+  return option
+}
+
+/**
+ * Gets the icon for an option
+ * @param {Object} option - Option to get icon for
+ * @returns {string} - Icon HTML
+ */
+function getOptionIcon(option) {
+  if (!option || !optionIcon || typeof option !== "object") return null
+
+  return option[optionIcon]
+}
+
+/**
+ * Checks if an option is selected
+ * @param {Object|string} option - Option to check
+ * @returns {boolean} - Whether the option is selected
+ */
+function isOptionSelected(option) {
+  const value = getOptionValue(option)
+
+  if (multiple) {
+    return (
+      Array.isArray(selectedValues) &&
+      selectedValues.some((v) => (typeof v === "object" ? v[optionValue] === value : v === value))
+    )
   }
-  
-  /**
-   * Filters options based on input value
-   * @returns {Array} - Filtered options
-   */
-  function filterOptions() {
-    if (!filter || !filterValue) return options;
-    
-    return options.filter(option => {
-      const label = getOptionLabel(option).toLowerCase();
-      return label.includes(filterValue.toLowerCase());
-    });
-  }
-  
-  /**
-   * Selects an option
-   * @param {Object|string} option - Option to select
-   */
-  function selectOption(option) {
-    if (disabled) return;
-    
-    const value = getOptionValue(option);
-    
-    if (multiple) {
-      if (isOptionSelected(option)) {
-        // Remove from selection
-        selectedValues = Array.isArray(selectedValues) 
-          ? selectedValues.filter(v => 
-              typeof v === 'object' 
-                ? v[optionValue] !== value 
-                : v !== value
-            )
-          : [];
-      } else {
-        // Add to selection
-        selectedValues = Array.isArray(selectedValues) 
-          ? [...selectedValues, value] 
-          : [value];
-      }
+
+  return (
+    selectedValues === value ||
+    (typeof selectedValues === "object" && selectedValues && selectedValues[optionValue] === value)
+  )
+}
+
+/**
+ * Filters options based on input value
+ * @returns {Array} - Filtered options
+ */
+function filterOptions() {
+  if (!filter || !filterValue) return options
+
+  return options.filter((option) => {
+    const label = getOptionLabel(option).toLowerCase()
+    return label.includes(filterValue.toLowerCase())
+  })
+}
+
+/**
+ * Selects an option
+ * @param {Object|string} option - Option to select
+ */
+function selectOption(option) {
+  if (disabled) return
+
+  const value = getOptionValue(option)
+
+  if (multiple) {
+    if (isOptionSelected(option)) {
+      // Remove from selection
+      selectedValues = Array.isArray(selectedValues)
+        ? selectedValues.filter((v) =>
+            typeof v === "object" ? v[optionValue] !== value : v !== value
+          )
+        : []
     } else {
-      // Single selection
-      selectedValues = value;
+      // Add to selection
+      selectedValues = Array.isArray(selectedValues) ? [...selectedValues, value] : [value]
     }
-    
-    // Update form field if available
-    if (fieldApi) {
-      fieldApi.setValue(selectedValues);
-    }
-    
-    dispatch('change', { value: selectedValues });
+  } else {
+    // Single selection
+    selectedValues = value
   }
-  
-  /**
-   * Handles keydown events
-   * @param {KeyboardEvent} event - Keydown event
-   */
-  function handleKeydown(event) {
-    if (disabled) return;
-    
-    const filteredOptions = filterOptions();
-    
-    switch (event.key) {
-      case 'ArrowDown':
-        event.preventDefault();
-        highlightedIndex = (highlightedIndex + 1) % filteredOptions.length;
-        scrollOptionIntoView();
-        break;
-        
-      case 'ArrowUp':
-        event.preventDefault();
-        highlightedIndex = (highlightedIndex - 1 + filteredOptions.length) % filteredOptions.length;
-        scrollOptionIntoView();
-        break;
-        
-      case 'Enter':
-      case ' ':
-        if (!filter || event.target !== filterInputElement) {
-          event.preventDefault();
-          if (filteredOptions[highlightedIndex]) {
-            selectOption(filteredOptions[highlightedIndex]);
-          }
+
+  // Update form field if available
+  if (fieldApi) {
+    fieldApi.setValue(selectedValues)
+  }
+
+  dispatch("change", { value: selectedValues })
+}
+
+/**
+ * Handles keydown events
+ * @param {KeyboardEvent} event - Keydown event
+ */
+function handleKeydown(event) {
+  if (disabled) return
+
+  const filteredOptions = filterOptions()
+
+  switch (event.key) {
+    case "ArrowDown":
+      event.preventDefault()
+      highlightedIndex = (highlightedIndex + 1) % filteredOptions.length
+      scrollOptionIntoView()
+      break
+
+    case "ArrowUp":
+      event.preventDefault()
+      highlightedIndex = (highlightedIndex - 1 + filteredOptions.length) % filteredOptions.length
+      scrollOptionIntoView()
+      break
+
+    case "Enter":
+    case " ":
+      if (!filter || event.target !== filterInputElement) {
+        event.preventDefault()
+        if (filteredOptions[highlightedIndex]) {
+          selectOption(filteredOptions[highlightedIndex])
         }
-        break;
-        
-      case 'Home':
-        event.preventDefault();
-        highlightedIndex = 0;
-        scrollOptionIntoView();
-        break;
-        
-      case 'End':
-        event.preventDefault();
-        highlightedIndex = filteredOptions.length - 1;
-        scrollOptionIntoView();
-        break;
-        
-      case 'Tab':
-        // Allow normal tab behavior
-        break;
-        
-      default:
-        // If filter is not enabled, use type-ahead
-        if (!filter && event.key.length === 1) {
-          const char = event.key.toLowerCase();
-          const matchingIndex = filteredOptions.findIndex((option, index) => 
+      }
+      break
+
+    case "Home":
+      event.preventDefault()
+      highlightedIndex = 0
+      scrollOptionIntoView()
+      break
+
+    case "End":
+      event.preventDefault()
+      highlightedIndex = filteredOptions.length - 1
+      scrollOptionIntoView()
+      break
+
+    case "Tab":
+      // Allow normal tab behavior
+      break
+
+    default:
+      // If filter is not enabled, use type-ahead
+      if (!filter && event.key.length === 1) {
+        const char = event.key.toLowerCase()
+        const matchingIndex = filteredOptions.findIndex(
+          (option, index) =>
             index > highlightedIndex && getOptionLabel(option).toLowerCase().startsWith(char)
-          );
-          
-          if (matchingIndex !== -1) {
-            highlightedIndex = matchingIndex;
-            scrollOptionIntoView();
-          } else {
-            // Try from the beginning
-            const firstMatchingIndex = filteredOptions.findIndex(option => 
-              getOptionLabel(option).toLowerCase().startsWith(char)
-            );
-            
-            if (firstMatchingIndex !== -1) {
-              highlightedIndex = firstMatchingIndex;
-              scrollOptionIntoView();
-            }
+        )
+
+        if (matchingIndex !== -1) {
+          highlightedIndex = matchingIndex
+          scrollOptionIntoView()
+        } else {
+          // Try from the beginning
+          const firstMatchingIndex = filteredOptions.findIndex((option) =>
+            getOptionLabel(option).toLowerCase().startsWith(char)
+          )
+
+          if (firstMatchingIndex !== -1) {
+            highlightedIndex = firstMatchingIndex
+            scrollOptionIntoView()
           }
         }
-        break;
-    }
+      }
+      break
   }
-  
-  /**
-   * Scrolls the highlighted option into view
-   */
-  function scrollOptionIntoView() {
-    if (!listboxElement) return;
-    
-    const highlightedOption = listboxElement.querySelector(`[data-index="${highlightedIndex}"]`);
-    if (highlightedOption) {
-      highlightedOption.scrollIntoView({ block: 'nearest' });
-    }
+}
+
+/**
+ * Scrolls the highlighted option into view
+ */
+function scrollOptionIntoView() {
+  if (!listboxElement) return
+
+  const highlightedOption = listboxElement.querySelector(`[data-index="${highlightedIndex}"]`)
+  if (highlightedOption) {
+    highlightedOption.scrollIntoView({ block: "nearest" })
   }
-  
-  /**
-   * Handles filter input
-   * @param {Event} event - Input event
-   */
-  function handleFilterInput(event) {
-    filterValue = event.target.value;
-    highlightedIndex = 0;
-    
-    dispatch('filter', { filter: filterValue });
+}
+
+/**
+ * Handles filter input
+ * @param {Event} event - Input event
+ */
+function handleFilterInput(event) {
+  filterValue = event.target.value
+  highlightedIndex = 0
+
+  dispatch("filter", { filter: filterValue })
+}
+
+// Focus the listbox on mount
+onMount(() => {
+  if (filter && filterInputElement) {
+    filterInputElement.focus()
+  } else if (listboxElement) {
+    listboxElement.focus()
   }
-  
-  // Focus the listbox on mount
-  onMount(() => {
-    if (filter && filterInputElement) {
-      filterInputElement.focus();
-    } else if (listboxElement) {
-      listboxElement.focus();
-    }
-  });
-  
-  // Computed filtered options
-  const filteredOptions = $derived(filterOptions());
+})
+
+// Computed filtered options
+const filteredOptions = $derived(filterOptions())
 </script>
 
 <div class="listbox-container {className}">

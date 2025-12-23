@@ -28,347 +28,345 @@ Usage:
 ```
 -->
 <script>
-  import { createEventDispatcher } from 'svelte';
+import { createEventDispatcher } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {number|Array} - Current value or range [min, max] */
-    value = 0,
+  /** @type {number|Array} - Current value or range [min, max] */
+  value = 0,
 
-    /** @type {number} - Minimum value */
-    min = 0,
+  /** @type {number} - Minimum value */
+  min = 0,
 
-    /** @type {number} - Maximum value */
-    max = 100,
+  /** @type {number} - Maximum value */
+  max = 100,
 
-    /** @type {number} - Step size */
-    step = 1,
+  /** @type {number} - Step size */
+  step = 1,
 
-    /** @type {string} - Visual style variant */
-    variant = 'primary',
+  /** @type {string} - Visual style variant */
+  variant = "primary",
 
-    /** @type {string} - Orientation (horizontal, vertical) */
-    orientation = 'horizontal',
+  /** @type {string} - Orientation (horizontal, vertical) */
+  orientation = "horizontal",
 
-    /** @type {boolean} - Whether the slider is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the slider is disabled */
+  disabled = false,
 
-    /** @type {boolean} - Whether to show tick marks */
-    showTicks = false,
+  /** @type {boolean} - Whether to show tick marks */
+  showTicks = false,
 
-    /** @type {Array} - Custom tick values */
-    tickValues = [],
+  /** @type {Array} - Custom tick values */
+  tickValues = [],
 
-    /** @type {boolean} - Whether to show the current value */
-    showValue = false,
+  /** @type {boolean} - Whether to show the current value */
+  showValue = false,
 
-    /** @type {string} - Format for displayed value */
-    valueFormat = '{value}',
+  /** @type {string} - Format for displayed value */
+  valueFormat = "{value}",
 
-    /** @type {boolean} - Whether to show tooltips on hover/drag */
-    showTooltip = false,
+  /** @type {boolean} - Whether to show tooltips on hover/drag */
+  showTooltip = false,
 
-    /** @type {string} - Name attribute for form submission */
-    name,
+  /** @type {string} - Name attribute for form submission */
+  name,
 
-    /** @type {string} - ARIA label for accessibility */
-    ariaLabel
-  } = $props();
+  /** @type {string} - ARIA label for accessibility */
+  ariaLabel,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Component state
-  let sliderValues = $state(Array.isArray(value) ? [...value] : [value]);
-  let isDragging = $state(false);
-  let dragIndex = $state(-1);
-  let hoverIndex = $state(-1);
-  let trackElement;
-  let thumbElements = [];
-  
-  // Update internal value when prop changes
-  $effect(() => {
-    sliderValues = Array.isArray(value) ? [...value] : [value];
-  });
-  
-  // Computed values
-  const isRange = $derived(sliderValues.length > 1);
-  const range = $derived(max - min);
-  
-  // Determine variant classes
-  const variantClasses = $derived({
-    default: 'bg-muted dark:bg-muted',
-    primary: 'bg-primary-500 dark:bg-primary-500',
-    secondary: 'bg-secondary-500 dark:bg-secondary-500',
-    success: 'bg-success-500 dark:bg-success-500',
-    warning: 'bg-warning-500 dark:bg-warning-500',
-    error: 'bg-error-500 dark:bg-error-500',
-    info: 'bg-info-500 dark:bg-info-500'
-  }[variant] || 'bg-primary-500 dark:bg-primary-500');
-  
-  // Generate tick values if not provided
-  const ticks = $derived((() => {
-    if (!showTicks) return [];
-    
-    if (tickValues.length > 0) {
-      return tickValues;
-    }
-    
-    // Generate ticks based on step
-    const count = Math.floor(range / step) + 1;
-    // Limit to a reasonable number of ticks
-    const stride = count > 20 ? Math.ceil(count / 20) : 1;
-    
-    return Array.from({ length: Math.ceil(count / stride) }, (_, i) => 
-      min + (i * stride * step)
-    );
-  }));
-  
-  /**
-   * Calculates the percentage position for a value
-   * @param {number} val - Value to calculate position for
-   * @returns {number} - Percentage (0-100)
-   */
-  function getPercentage(val) {
-    return ((val - min) / range) * 100;
+const dispatch = createEventDispatcher()
+
+// Component state
+let sliderValues = $state(Array.isArray(value) ? [...value] : [value])
+let isDragging = $state(false)
+let dragIndex = $state(-1)
+let hoverIndex = $state(-1)
+let trackElement
+let thumbElements = []
+
+// Update internal value when prop changes
+$effect(() => {
+  sliderValues = Array.isArray(value) ? [...value] : [value]
+})
+
+// Computed values
+const isRange = $derived(sliderValues.length > 1)
+const range = $derived(max - min)
+
+// Determine variant classes
+const variantClasses = $derived(
+  {
+    default: "bg-muted dark:bg-muted",
+    primary: "bg-primary-500 dark:bg-primary-500",
+    secondary: "bg-secondary-500 dark:bg-secondary-500",
+    success: "bg-success-500 dark:bg-success-500",
+    warning: "bg-warning-500 dark:bg-warning-500",
+    error: "bg-error-500 dark:bg-error-500",
+    info: "bg-info-500 dark:bg-info-500",
+  }[variant] || "bg-primary-500 dark:bg-primary-500"
+)
+
+// Generate tick values if not provided
+const ticks = $derived(() => {
+  if (!showTicks) return []
+
+  if (tickValues.length > 0) {
+    return tickValues
   }
-  
-  /**
-   * Calculates the value from a percentage position
-   * @param {number} percentage - Percentage position (0-100)
-   * @returns {number} - Value
-   */
-  function getValueFromPercentage(percentage) {
-    const rawValue = min + (percentage / 100) * range;
-    
-    // Round to nearest step
-    const steppedValue = Math.round(rawValue / step) * step;
-    
-    // Ensure value is within bounds
-    return Math.max(min, Math.min(max, steppedValue));
+
+  // Generate ticks based on step
+  const count = Math.floor(range / step) + 1
+  // Limit to a reasonable number of ticks
+  const stride = count > 20 ? Math.ceil(count / 20) : 1
+
+  return Array.from({ length: Math.ceil(count / stride) }, (_, i) => min + i * stride * step)
+})
+
+/**
+ * Calculates the percentage position for a value
+ * @param {number} val - Value to calculate position for
+ * @returns {number} - Percentage (0-100)
+ */
+function getPercentage(val) {
+  return ((val - min) / range) * 100
+}
+
+/**
+ * Calculates the value from a percentage position
+ * @param {number} percentage - Percentage position (0-100)
+ * @returns {number} - Value
+ */
+function getValueFromPercentage(percentage) {
+  const rawValue = min + (percentage / 100) * range
+
+  // Round to nearest step
+  const steppedValue = Math.round(rawValue / step) * step
+
+  // Ensure value is within bounds
+  return Math.max(min, Math.min(max, steppedValue))
+}
+
+/**
+ * Formats the displayed value
+ * @param {number} val - Value to format
+ * @returns {string} - Formatted value
+ */
+function formatValue(val) {
+  return valueFormat.replace("{value}", val)
+}
+
+/**
+ * Updates the value based on pointer position
+ * @param {MouseEvent|TouchEvent} event - Pointer event
+ */
+function updateValue(event) {
+  if (disabled || !trackElement) return
+
+  const rect = trackElement.getBoundingClientRect()
+  const clientPos = event.type.startsWith("touch") ? event.touches[0].clientX : event.clientX
+
+  // Calculate percentage
+  let percentage
+  if (orientation === "horizontal") {
+    percentage = ((clientPos - rect.left) / rect.width) * 100
+  } else {
+    percentage = ((rect.bottom - clientPos) / rect.height) * 100
   }
-  
-  /**
-   * Formats the displayed value
-   * @param {number} val - Value to format
-   * @returns {string} - Formatted value
-   */
-  function formatValue(val) {
-    return valueFormat.replace('{value}', val);
-  }
-  
-  /**
-   * Updates the value based on pointer position
-   * @param {MouseEvent|TouchEvent} event - Pointer event
-   */
-  function updateValue(event) {
-    if (disabled || !trackElement) return;
-    
-    const rect = trackElement.getBoundingClientRect();
-    const clientPos = event.type.startsWith('touch')
-      ? event.touches[0].clientX
-      : event.clientX;
-    
-    // Calculate percentage
-    let percentage;
-    if (orientation === 'horizontal') {
-      percentage = ((clientPos - rect.left) / rect.width) * 100;
+
+  // Clamp percentage
+  percentage = Math.max(0, Math.min(100, percentage))
+
+  // Get value from percentage
+  const newValue = getValueFromPercentage(percentage)
+
+  // Update the appropriate thumb
+  if (isRange) {
+    if (dragIndex >= 0) {
+      // Update the dragging thumb
+      sliderValues[dragIndex] = newValue
+
+      // Ensure values remain in order
+      if (dragIndex === 0 && newValue > sliderValues[1]) {
+        sliderValues[0] = sliderValues[1]
+      } else if (dragIndex === 1 && newValue < sliderValues[0]) {
+        sliderValues[1] = sliderValues[0]
+      }
     } else {
-      percentage = ((rect.bottom - clientPos) / rect.height) * 100;
-    }
-    
-    // Clamp percentage
-    percentage = Math.max(0, Math.min(100, percentage));
-    
-    // Get value from percentage
-    const newValue = getValueFromPercentage(percentage);
-    
-    // Update the appropriate thumb
-    if (isRange) {
-      if (dragIndex >= 0) {
-        // Update the dragging thumb
-        sliderValues[dragIndex] = newValue;
-        
-        // Ensure values remain in order
-        if (dragIndex === 0 && newValue > sliderValues[1]) {
-          sliderValues[0] = sliderValues[1];
-        } else if (dragIndex === 1 && newValue < sliderValues[0]) {
-          sliderValues[1] = sliderValues[0];
-        }
+      // Determine which thumb to update based on proximity
+      const dist0 = Math.abs(percentage - getPercentage(sliderValues[0]))
+      const dist1 = Math.abs(percentage - getPercentage(sliderValues[1]))
+
+      if (dist0 < dist1) {
+        sliderValues[0] = newValue
+        dragIndex = 0
       } else {
-        // Determine which thumb to update based on proximity
-        const dist0 = Math.abs(percentage - getPercentage(sliderValues[0]));
-        const dist1 = Math.abs(percentage - getPercentage(sliderValues[1]));
-        
-        if (dist0 < dist1) {
-          sliderValues[0] = newValue;
-          dragIndex = 0;
-        } else {
-          sliderValues[1] = newValue;
-          dragIndex = 1;
-        }
-      }
-    } else {
-      sliderValues[0] = newValue;
-    }
-    
-    // Dispatch change event
-    dispatchChange();
-  }
-  
-  /**
-   * Handles pointer down event
-   * @param {MouseEvent|TouchEvent} event - Pointer event
-   * @param {number} index - Thumb index
-   */
-  function handlePointerDown(event, index) {
-    if (disabled) return;
-    
-    isDragging = true;
-    dragIndex = index;
-    
-    // Update value immediately
-    updateValue(event);
-    
-    // Add document event listeners
-    if (event.type === 'mousedown') {
-      document.addEventListener('mousemove', handlePointerMove);
-      document.addEventListener('mouseup', handlePointerUp);
-    } else if (event.type === 'touchstart') {
-      document.addEventListener('touchmove', handlePointerMove, { passive: false });
-      document.addEventListener('touchend', handlePointerUp);
-    }
-    
-    // Prevent default to avoid text selection
-    event.preventDefault();
-  }
-  
-  /**
-   * Handles pointer move event
-   * @param {MouseEvent|TouchEvent} event - Pointer event
-   */
-  function handlePointerMove(event) {
-    if (!isDragging) return;
-    
-    updateValue(event);
-    
-    // Prevent scrolling on touch devices
-    if (event.type === 'touchmove') {
-      event.preventDefault();
-    }
-  }
-  
-  /**
-   * Handles pointer up event
-   */
-  function handlePointerUp() {
-    isDragging = false;
-    dragIndex = -1;
-    
-    // Remove document event listeners
-    document.removeEventListener('mousemove', handlePointerMove);
-    document.removeEventListener('mouseup', handlePointerUp);
-    document.removeEventListener('touchmove', handlePointerMove);
-    document.removeEventListener('touchend', handlePointerUp);
-    
-    // Dispatch final change event
-    dispatchChange();
-  }
-  
-  /**
-   * Handles track click
-   * @param {MouseEvent} event - Click event
-   */
-  function handleTrackClick(event) {
-    if (disabled) return;
-    
-    // Only handle direct track clicks
-    if (event.target === trackElement) {
-      updateValue(event);
-    }
-  }
-  
-  /**
-   * Handles thumb hover
-   * @param {number} index - Thumb index
-   */
-  function handleThumbHover(index) {
-    hoverIndex = index;
-  }
-  
-  /**
-   * Handles thumb leave
-   */
-  function handleThumbLeave() {
-    hoverIndex = -1;
-  }
-  
-  /**
-   * Handles keyboard navigation
-   * @param {KeyboardEvent} event - Keydown event
-   * @param {number} index - Thumb index
-   */
-  function handleKeydown(event, index) {
-    if (disabled) return;
-    
-    let newValue = sliderValues[index];
-    const stepSize = event.shiftKey ? step * 10 : step;
-    
-    switch (event.key) {
-      case 'ArrowRight':
-      case 'ArrowUp':
-        newValue = Math.min(max, newValue + stepSize);
-        break;
-      case 'ArrowLeft':
-      case 'ArrowDown':
-        newValue = Math.max(min, newValue - stepSize);
-        break;
-      case 'Home':
-        newValue = min;
-        break;
-      case 'End':
-        newValue = max;
-        break;
-      default:
-        return;
-    }
-    
-    // Ensure range values remain in order
-    if (isRange) {
-      if (index === 0 && newValue > sliderValues[1]) {
-        newValue = sliderValues[1];
-      } else if (index === 1 && newValue < sliderValues[0]) {
-        newValue = sliderValues[0];
+        sliderValues[1] = newValue
+        dragIndex = 1
       }
     }
-    
-    if (newValue !== sliderValues[index]) {
-      sliderValues[index] = newValue;
-      dispatchChange();
-      event.preventDefault();
+  } else {
+    sliderValues[0] = newValue
+  }
+
+  // Dispatch change event
+  dispatchChange()
+}
+
+/**
+ * Handles pointer down event
+ * @param {MouseEvent|TouchEvent} event - Pointer event
+ * @param {number} index - Thumb index
+ */
+function handlePointerDown(event, index) {
+  if (disabled) return
+
+  isDragging = true
+  dragIndex = index
+
+  // Update value immediately
+  updateValue(event)
+
+  // Add document event listeners
+  if (event.type === "mousedown") {
+    document.addEventListener("mousemove", handlePointerMove)
+    document.addEventListener("mouseup", handlePointerUp)
+  } else if (event.type === "touchstart") {
+    document.addEventListener("touchmove", handlePointerMove, { passive: false })
+    document.addEventListener("touchend", handlePointerUp)
+  }
+
+  // Prevent default to avoid text selection
+  event.preventDefault()
+}
+
+/**
+ * Handles pointer move event
+ * @param {MouseEvent|TouchEvent} event - Pointer event
+ */
+function handlePointerMove(event) {
+  if (!isDragging) return
+
+  updateValue(event)
+
+  // Prevent scrolling on touch devices
+  if (event.type === "touchmove") {
+    event.preventDefault()
+  }
+}
+
+/**
+ * Handles pointer up event
+ */
+function handlePointerUp() {
+  isDragging = false
+  dragIndex = -1
+
+  // Remove document event listeners
+  document.removeEventListener("mousemove", handlePointerMove)
+  document.removeEventListener("mouseup", handlePointerUp)
+  document.removeEventListener("touchmove", handlePointerMove)
+  document.removeEventListener("touchend", handlePointerUp)
+
+  // Dispatch final change event
+  dispatchChange()
+}
+
+/**
+ * Handles track click
+ * @param {MouseEvent} event - Click event
+ */
+function handleTrackClick(event) {
+  if (disabled) return
+
+  // Only handle direct track clicks
+  if (event.target === trackElement) {
+    updateValue(event)
+  }
+}
+
+/**
+ * Handles thumb hover
+ * @param {number} index - Thumb index
+ */
+function handleThumbHover(index) {
+  hoverIndex = index
+}
+
+/**
+ * Handles thumb leave
+ */
+function handleThumbLeave() {
+  hoverIndex = -1
+}
+
+/**
+ * Handles keyboard navigation
+ * @param {KeyboardEvent} event - Keydown event
+ * @param {number} index - Thumb index
+ */
+function handleKeydown(event, index) {
+  if (disabled) return
+
+  let newValue = sliderValues[index]
+  const stepSize = event.shiftKey ? step * 10 : step
+
+  switch (event.key) {
+    case "ArrowRight":
+    case "ArrowUp":
+      newValue = Math.min(max, newValue + stepSize)
+      break
+    case "ArrowLeft":
+    case "ArrowDown":
+      newValue = Math.max(min, newValue - stepSize)
+      break
+    case "Home":
+      newValue = min
+      break
+    case "End":
+      newValue = max
+      break
+    default:
+      return
+  }
+
+  // Ensure range values remain in order
+  if (isRange) {
+    if (index === 0 && newValue > sliderValues[1]) {
+      newValue = sliderValues[1]
+    } else if (index === 1 && newValue < sliderValues[0]) {
+      newValue = sliderValues[0]
     }
   }
-  
-  /**
-   * Dispatches change event
-   */
-  function dispatchChange() {
-    const eventValue = isRange ? [...sliderValues] : sliderValues[0];
-    dispatch('change', { value: eventValue });
-    dispatch('input', { value: eventValue });
+
+  if (newValue !== sliderValues[index]) {
+    sliderValues[index] = newValue
+    dispatchChange()
+    event.preventDefault()
   }
-  
-  // Clean up event listeners on destroy
-  onDestroy(() => {
-    document.removeEventListener('mousemove', handlePointerMove);
-    document.removeEventListener('mouseup', handlePointerUp);
-    document.removeEventListener('touchmove', handlePointerMove);
-    document.removeEventListener('touchend', handlePointerUp);
-  });
+}
+
+/**
+ * Dispatches change event
+ */
+function dispatchChange() {
+  const eventValue = isRange ? [...sliderValues] : sliderValues[0]
+  dispatch("change", { value: eventValue })
+  dispatch("input", { value: eventValue })
+}
+
+// Clean up event listeners on destroy
+onDestroy(() => {
+  document.removeEventListener("mousemove", handlePointerMove)
+  document.removeEventListener("mouseup", handlePointerUp)
+  document.removeEventListener("touchmove", handlePointerMove)
+  document.removeEventListener("touchend", handlePointerUp)
+})
 </script>
 
 <div

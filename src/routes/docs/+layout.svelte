@@ -3,109 +3,109 @@
 Documentation site layout with left navigation, right theme sidebar, and header
 -->
 <script>
-  import App from "$lib/components/App/App.svelte"
-  import AppHeader from "$lib/components/AppHeader/AppHeader.svelte"
-  import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
-  import { page } from "$app/stores"
-  import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte"
-  import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
-  
-  const navItems = [
-    { label: "Getting Started", href: "/docs", current: $page.url.pathname === "/docs" },
-    {
-      label: "Components",
-      href: "/docs/components",
-      current: $page.url.pathname.startsWith("/docs/components"),
-    },
-    { label: "Theming", href: "/docs/theming", current: $page.url.pathname === "/docs/theming" },
-  ]
-  
-  let leftSidebarExpanded = true
-  let rightSidebarExpanded = true
-  
-  // Component links for the left sidebar
-  const componentLinks = [
-    // Core Components
-    { category: "Core", name: "App", href: "/docs/components/app" },
-    
-    // Layout Components
-    { category: "Layout", name: "Container", href: "/docs/components/container" },
-    { name: "Panel", href: "/docs/components/panel" },
-    { name: "Separator", href: "/docs/components/separator" },
-    { name: "Sidebar", href: "/docs/components/sidebar" },
-    
-    // Navigation Components
-    { category: "Navigation", name: "AppHeader", href: "/docs/components/appheader" },
-    { name: "BottomBar", href: "/docs/components/bottombar" },
-    { name: "Breadcrumb", href: "/docs/components/breadcrumb" },
-    { name: "Menu", href: "/docs/components/menu" },
-    { name: "MenuItem", href: "/docs/components/menuitem" },
-    { name: "Tabs", href: "/docs/components/tabs" },
-    
-    // Data Display Components
-    { category: "Data Display", name: "Avatar", href: "/docs/components/avatar" },
-    { name: "Badge", href: "/docs/components/badge" },
-    { name: "Carousel", href: "/docs/components/carousel" },
-    { name: "Chip", href: "/docs/components/chip" },
-    { name: "DataTable", href: "/docs/components/datatable" },
-    { name: "Progress", href: "/docs/components/progress" },
-    { name: "Skeleton", href: "/docs/components/skeleton" },
-    { name: "Table", href: "/docs/components/table" },
-    { name: "Tag", href: "/docs/components/tag" },
-    { name: "Timeline", href: "/docs/components/timeline" },
-    { name: "Tooltip", href: "/docs/components/tooltip" },
-    { name: "Tree", href: "/docs/components/tree" },
-    
-    // Form Components
-    { category: "Form", name: "AutoComplete", href: "/docs/components/autocomplete" },
-    { name: "Button", href: "/docs/components/button" },
-    { name: "Calendar", href: "/docs/components/calendar" },
-    { name: "Checkbox", href: "/docs/components/checkbox" },
-    { name: "ColorPicker", href: "/docs/components/colorpicker" },
-    { name: "Combobox", href: "/docs/components/combobox" },
-    { name: "Dropdown", href: "/docs/components/dropdown" },
-    { name: "FileUpload", href: "/docs/components/fileupload" },
-    { name: "FloatLabel", href: "/docs/components/floatlabel" },
-    { name: "Form", href: "/docs/components/form" },
-    { name: "FormField", href: "/docs/components/formfield" },
-    { name: "InputSwitch", href: "/docs/components/inputswitch" },
-    { name: "InvalidState", href: "/docs/components/invalidstate" },
-    { name: "Knob", href: "/docs/components/knob" },
-    { name: "ListInput", href: "/docs/components/listinput" },
-    { name: "Listbox", href: "/docs/components/listbox" },
-    { name: "NumberInput", href: "/docs/components/numberinput" },
-    { name: "Radio", href: "/docs/components/radio" },
-    { name: "RadioGroup", href: "/docs/components/radiogroup" },
-    { name: "Rating", href: "/docs/components/rating" },
-    { name: "SelectGroup", href: "/docs/components/selectgroup" },
-    { name: "Slider", href: "/docs/components/slider" },
-    { name: "Switch", href: "/docs/components/switch" },
-    { name: "TextInput", href: "/docs/components/textinput" },
-    { name: "Textarea", href: "/docs/components/textarea" },
-    
-    // Feedback Components
-    { category: "Feedback", name: "Modal", href: "/docs/components/modal" },
-    { name: "Stepper", href: "/docs/components/stepper" },
-    { name: "Toast", href: "/docs/components/toast" },
-    
-    // Utility Components
-    { category: "Utility", name: "Icon", href: "/docs/components/icon" },
-    { name: "Masonry", href: "/docs/components/masonry" },
-    { name: "ThemeToggle", href: "/docs/components/themetoggle" },
-  ]
-  
-  // Theme colors for the right sidebar
-  const themeColors = [
-    { name: "Primary", value: "rgb(var(--color-primary-500))" },
-    { name: "Secondary", value: "rgb(var(--color-secondary-500))" },
-    { name: "Background", value: "rgb(var(--color-background))" },
-    { name: "Surface", value: "rgb(var(--color-surface))" },
-    { name: "Border", value: "rgb(var(--color-border))" },
-    { name: "Text", value: "rgb(var(--color-text))" },
-    { name: "Muted", value: "rgb(var(--color-muted))" },
-    { name: "Error", value: "rgb(var(--color-error-bold))" },
-  ]
-  </script>
+import App from "$lib/components/App/App.svelte"
+import AppHeader from "$lib/components/AppHeader/AppHeader.svelte"
+import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
+import { page } from "$app/stores"
+import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte"
+import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
+
+const navItems = [
+  { label: "Getting Started", href: "/docs", current: $page.url.pathname === "/docs" },
+  {
+    label: "Components",
+    href: "/docs/components",
+    current: $page.url.pathname.startsWith("/docs/components"),
+  },
+  { label: "Theming", href: "/docs/theming", current: $page.url.pathname === "/docs/theming" },
+]
+
+let leftSidebarExpanded = true
+let rightSidebarExpanded = true
+
+// Component links for the left sidebar
+const componentLinks = [
+  // Core Components
+  { category: "Core", name: "App", href: "/docs/components/app" },
+
+  // Layout Components
+  { category: "Layout", name: "Container", href: "/docs/components/container" },
+  { name: "Panel", href: "/docs/components/panel" },
+  { name: "Separator", href: "/docs/components/separator" },
+  { name: "Sidebar", href: "/docs/components/sidebar" },
+
+  // Navigation Components
+  { category: "Navigation", name: "AppHeader", href: "/docs/components/appheader" },
+  { name: "BottomBar", href: "/docs/components/bottombar" },
+  { name: "Breadcrumb", href: "/docs/components/breadcrumb" },
+  { name: "Menu", href: "/docs/components/menu" },
+  { name: "MenuItem", href: "/docs/components/menuitem" },
+  { name: "Tabs", href: "/docs/components/tabs" },
+
+  // Data Display Components
+  { category: "Data Display", name: "Avatar", href: "/docs/components/avatar" },
+  { name: "Badge", href: "/docs/components/badge" },
+  { name: "Carousel", href: "/docs/components/carousel" },
+  { name: "Chip", href: "/docs/components/chip" },
+  { name: "DataTable", href: "/docs/components/datatable" },
+  { name: "Progress", href: "/docs/components/progress" },
+  { name: "Skeleton", href: "/docs/components/skeleton" },
+  { name: "Table", href: "/docs/components/table" },
+  { name: "Tag", href: "/docs/components/tag" },
+  { name: "Timeline", href: "/docs/components/timeline" },
+  { name: "Tooltip", href: "/docs/components/tooltip" },
+  { name: "Tree", href: "/docs/components/tree" },
+
+  // Form Components
+  { category: "Form", name: "AutoComplete", href: "/docs/components/autocomplete" },
+  { name: "Button", href: "/docs/components/button" },
+  { name: "Calendar", href: "/docs/components/calendar" },
+  { name: "Checkbox", href: "/docs/components/checkbox" },
+  { name: "ColorPicker", href: "/docs/components/colorpicker" },
+  { name: "Combobox", href: "/docs/components/combobox" },
+  { name: "Dropdown", href: "/docs/components/dropdown" },
+  { name: "FileUpload", href: "/docs/components/fileupload" },
+  { name: "FloatLabel", href: "/docs/components/floatlabel" },
+  { name: "Form", href: "/docs/components/form" },
+  { name: "FormField", href: "/docs/components/formfield" },
+  { name: "InputSwitch", href: "/docs/components/inputswitch" },
+  { name: "InvalidState", href: "/docs/components/invalidstate" },
+  { name: "Knob", href: "/docs/components/knob" },
+  { name: "ListInput", href: "/docs/components/listinput" },
+  { name: "Listbox", href: "/docs/components/listbox" },
+  { name: "NumberInput", href: "/docs/components/numberinput" },
+  { name: "Radio", href: "/docs/components/radio" },
+  { name: "RadioGroup", href: "/docs/components/radiogroup" },
+  { name: "Rating", href: "/docs/components/rating" },
+  { name: "SelectGroup", href: "/docs/components/selectgroup" },
+  { name: "Slider", href: "/docs/components/slider" },
+  { name: "Switch", href: "/docs/components/switch" },
+  { name: "TextInput", href: "/docs/components/textinput" },
+  { name: "Textarea", href: "/docs/components/textarea" },
+
+  // Feedback Components
+  { category: "Feedback", name: "Modal", href: "/docs/components/modal" },
+  { name: "Stepper", href: "/docs/components/stepper" },
+  { name: "Toast", href: "/docs/components/toast" },
+
+  // Utility Components
+  { category: "Utility", name: "Icon", href: "/docs/components/icon" },
+  { name: "Masonry", href: "/docs/components/masonry" },
+  { name: "ThemeToggle", href: "/docs/components/themetoggle" },
+]
+
+// Theme colors for the right sidebar
+const themeColors = [
+  { name: "Primary", value: "rgb(var(--color-primary-500))" },
+  { name: "Secondary", value: "rgb(var(--color-secondary-500))" },
+  { name: "Background", value: "rgb(var(--color-background))" },
+  { name: "Surface", value: "rgb(var(--color-surface))" },
+  { name: "Border", value: "rgb(var(--color-border))" },
+  { name: "Text", value: "rgb(var(--color-text))" },
+  { name: "Muted", value: "rgb(var(--color-muted))" },
+  { name: "Error", value: "rgb(var(--color-error-bold))" },
+]
+</script>
   
   <App appName="Twintrinsic Documentation" leftPanelWidth="14rem">
     <div slot="header">

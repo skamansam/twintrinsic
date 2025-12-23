@@ -1,44 +1,44 @@
 <script module>
-  import { defineMeta } from "@storybook/addon-svelte-csf";
-  import Stepper from "../lib/components/Stepper/Stepper.svelte";
-  import StepperStep from "../lib/components/Stepper/StepperStep.svelte";
-  import { fn } from "@storybook/test";
+import { defineMeta } from "@storybook/addon-svelte-csf"
+import Stepper from "../lib/components/Stepper/Stepper.svelte"
+import StepperStep from "../lib/components/Stepper/StepperStep.svelte"
+import { fn } from "@storybook/test"
 
-  const { Story } = defineMeta({
-    title: "Components/Stepper",
-    component: Stepper,
-    tags: ["autodocs"],
-    argTypes: {
-      activeStep: { control: "number" },
-      orientation: {
-        control: { type: "select" },
-        options: ["horizontal", "vertical"],
-      },
-      size: {
-        control: { type: "select" },
-        options: ["sm", "md", "lg"],
-      },
-      variant: {
-        control: { type: "select" },
-        options: ["default", "primary", "secondary", "success", "warning", "error", "info"],
-      },
-      linear: { control: "boolean" },
-      showLabels: { control: "boolean" },
-      showConnectors: { control: "boolean" },
-      alternativeLabels: { control: "boolean" },
+const { Story } = defineMeta({
+  title: "Components/Stepper",
+  component: Stepper,
+  tags: ["autodocs"],
+  argTypes: {
+    activeStep: { control: "number" },
+    orientation: {
+      control: { type: "select" },
+      options: ["horizontal", "vertical"],
     },
-    args: {
-      activeStep: 0,
-      orientation: "horizontal",
-      size: "md",
-      variant: "primary",
-      linear: true,
-      showLabels: true,
-      showConnectors: true,
-      alternativeLabels: false,
-      onChange: fn(),
+    size: {
+      control: { type: "select" },
+      options: ["sm", "md", "lg"],
     },
-  });
+    variant: {
+      control: { type: "select" },
+      options: ["default", "primary", "secondary", "success", "warning", "error", "info"],
+    },
+    linear: { control: "boolean" },
+    showLabels: { control: "boolean" },
+    showConnectors: { control: "boolean" },
+    alternativeLabels: { control: "boolean" },
+  },
+  args: {
+    activeStep: 0,
+    orientation: "horizontal",
+    size: "md",
+    variant: "primary",
+    linear: true,
+    showLabels: true,
+    showConnectors: true,
+    alternativeLabels: false,
+    onChange: fn(),
+  },
+})
 </script>
 
 <Story name="Basic">

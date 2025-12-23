@@ -1,56 +1,56 @@
 <script module>
-  import { defineMeta } from "@storybook/addon-svelte-csf";
-  import FileUpload from "../lib/components/Form/FileUpload.svelte";
-  import { fn } from "@storybook/test";
+import { defineMeta } from "@storybook/addon-svelte-csf"
+import FileUpload from "../lib/components/Form/FileUpload.svelte"
+import { fn } from "@storybook/test"
 
-  const { Story } = defineMeta({
-    title: "Components/Form/FileUpload",
-    component: FileUpload,
-    tags: ["autodocs"],
-    argTypes: {
-      accept: { control: "text" },
-      multiple: { control: "boolean" },
-      maxFiles: { control: "number" },
-      maxFileSize: { control: "number" },
-      disabled: { control: "boolean" },
-      required: { control: "boolean" },
-      dropzoneText: { control: "text" },
-      browseText: { control: "text" },
-      errorText: { control: "text" },
-      showFileList: { control: "boolean" },
-      showProgress: { control: "boolean" },
-      validateOnDrop: { control: "boolean" },
-      autoUpload: { control: "boolean" },
-    },
-    args: {
-      accept: "",
-      multiple: true,
-      maxFiles: 5,
-      maxFileSize: 5242880, // 5MB
-      disabled: false,
-      required: false,
-      dropzoneText: "Drag and drop files here",
-      browseText: "Browse files",
-      errorText: "Error uploading files",
-      showFileList: true,
-      showProgress: true,
-      validateOnDrop: true,
-      autoUpload: false,
-      onUpload: fn(),
-      onChange: fn(),
-      onError: fn(),
-    },
-  });
+const { Story } = defineMeta({
+  title: "Components/Form/FileUpload",
+  component: FileUpload,
+  tags: ["autodocs"],
+  argTypes: {
+    accept: { control: "text" },
+    multiple: { control: "boolean" },
+    maxFiles: { control: "number" },
+    maxFileSize: { control: "number" },
+    disabled: { control: "boolean" },
+    required: { control: "boolean" },
+    dropzoneText: { control: "text" },
+    browseText: { control: "text" },
+    errorText: { control: "text" },
+    showFileList: { control: "boolean" },
+    showProgress: { control: "boolean" },
+    validateOnDrop: { control: "boolean" },
+    autoUpload: { control: "boolean" },
+  },
+  args: {
+    accept: "",
+    multiple: true,
+    maxFiles: 5,
+    maxFileSize: 5242880, // 5MB
+    disabled: false,
+    required: false,
+    dropzoneText: "Drag and drop files here",
+    browseText: "Browse files",
+    errorText: "Error uploading files",
+    showFileList: true,
+    showProgress: true,
+    validateOnDrop: true,
+    autoUpload: false,
+    onUpload: fn(),
+    onChange: fn(),
+    onError: fn(),
+  },
+})
 
-  // Mock upload function for demo purposes
-  function mockUpload(files) {
-    return new Promise((resolve) => {
-      // Simulate network delay
-      setTimeout(() => {
-        resolve({ success: true, urls: files.map(() => 'https://example.com/file') });
-      }, 2000);
-    });
-  }
+// Mock upload function for demo purposes
+function mockUpload(files) {
+  return new Promise((resolve) => {
+    // Simulate network delay
+    setTimeout(() => {
+      resolve({ success: true, urls: files.map(() => "https://example.com/file") })
+    }, 2000)
+  })
+}
 </script>
 
 <Story name="Basic">

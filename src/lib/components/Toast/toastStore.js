@@ -1,11 +1,11 @@
 /**
  * Toast notification store
  * Manages toast notifications for the application
- * 
+ *
  * @module toastStore
  */
 
-import { writable } from 'svelte/store';
+import { writable } from "svelte/store"
 
 /**
  * @typedef {Object} Toast
@@ -26,11 +26,11 @@ import { writable } from 'svelte/store';
  */
 function createToastStore() {
   // Create writable store
-  const { subscribe, update } = writable(/** @type {Toast[]} */ ([]));
-  
+  const { subscribe, update } = writable(/** @type {Toast[]} */ ([]))
+
   // Timer map to track toast timeouts
-  const timers = new Map();
-  
+  const timers = new Map()
+
   /**
    * Add a new toast
    * @param {Object} toast - Toast configuration
@@ -44,35 +44,35 @@ function createToastStore() {
    * @returns {string} Toast ID
    */
   function add(toast) {
-    const id = crypto.randomUUID();
-    const duration = toast.duration || 5000;
-    
+    const id = crypto.randomUUID()
+    const duration = toast.duration || 5000
+
     // Create toast object
     const newToast = {
       id,
       message: toast.message,
       title: toast.title,
-      variant: toast.variant || 'default',
+      variant: toast.variant || "default",
       duration,
       icon: toast.icon,
       dismissible: toast.dismissible !== false,
       progress: toast.progress !== false ? 100 : false,
       closing: false,
-      createdAt: Date.now()
-    };
-    
+      createdAt: Date.now(),
+    }
+
     // Add toast to store
-    update(toasts => [newToast, ...toasts]);
-    
+    update((toasts) => [newToast, ...toasts])
+
     // Start timer for auto-removal
     if (duration > 0) {
-      const timer = startTimer(id, duration);
-      timers.set(id, timer);
+      const timer = startTimer(id, duration)
+      timers.set(id, timer)
     }
-    
-    return id;
+
+    return id
   }
-  
+
   /**
    * Start a timer for toast removal
    * @param {string} id - Toast ID
@@ -82,41 +82,41 @@ function createToastStore() {
   function startTimer(id, duration) {
     // Progress update interval (update every 100ms)
     const interval = setInterval(() => {
-      update(toasts => {
-        return toasts.map(toast => {
+      update((toasts) => {
+        return toasts.map((toast) => {
           if (toast.id === id && toast.progress !== false) {
-            const elapsed = Date.now() - toast.createdAt;
-            const remaining = Math.max(0, duration - elapsed);
-            const progress = (remaining / duration) * 100;
-            
-            return { ...toast, progress };
+            const elapsed = Date.now() - toast.createdAt
+            const remaining = Math.max(0, duration - elapsed)
+            const progress = (remaining / duration) * 100
+
+            return { ...toast, progress }
           }
-          return toast;
-        });
-      });
-    }, 100);
-    
+          return toast
+        })
+      })
+    }, 100)
+
     // Timeout for removal
     const timeout = setTimeout(() => {
       // Start closing animation
-      update(toasts => {
-        return toasts.map(toast => {
+      update((toasts) => {
+        return toasts.map((toast) => {
           if (toast.id === id) {
-            return { ...toast, closing: true };
+            return { ...toast, closing: true }
           }
-          return toast;
-        });
-      });
-      
+          return toast
+        })
+      })
+
       // Remove after animation completes
       setTimeout(() => {
-        remove(id);
-      }, 200); // Match animation duration
-    }, duration);
-    
-    return { interval, timeout };
+        remove(id)
+      }, 200) // Match animation duration
+    }, duration)
+
+    return { interval, timeout }
   }
-  
+
   /**
    * Remove a toast by ID
    * @param {string} id - Toast ID
@@ -124,94 +124,94 @@ function createToastStore() {
   function remove(id) {
     // Clear timers
     if (timers.has(id)) {
-      const timer = timers.get(id);
-      clearInterval(timer.interval);
-      clearTimeout(timer.timeout);
-      timers.delete(id);
+      const timer = timers.get(id)
+      clearInterval(timer.interval)
+      clearTimeout(timer.timeout)
+      timers.delete(id)
     }
-    
+
     // Remove from store
-    update(toasts => toasts.filter(toast => toast.id !== id));
+    update((toasts) => toasts.filter((toast) => toast.id !== id))
   }
-  
+
   /**
    * Pause a toast's timer
    * @param {string} id - Toast ID
    */
   function pause(id) {
     if (timers.has(id)) {
-      const timer = timers.get(id);
-      clearInterval(timer.interval);
-      clearTimeout(timer.timeout);
-      
+      const timer = timers.get(id)
+      clearInterval(timer.interval)
+      clearTimeout(timer.timeout)
+
       // Store remaining time
-      update(toasts => {
-        return toasts.map(toast => {
+      update((toasts) => {
+        return toasts.map((toast) => {
           if (toast.id === id) {
-            const elapsed = Date.now() - toast.createdAt;
-            const remaining = Math.max(0, toast.duration - elapsed);
-            
-            return { 
-              ...toast, 
+            const elapsed = Date.now() - toast.createdAt
+            const remaining = Math.max(0, toast.duration - elapsed)
+
+            return {
+              ...toast,
               remaining,
-              paused: true
-            };
+              paused: true,
+            }
           }
-          return toast;
-        });
-      });
+          return toast
+        })
+      })
     }
   }
-  
+
   /**
    * Resume a toast's timer
    * @param {string} id - Toast ID
    */
   function resume(id) {
-    update(toasts => {
-      const toastToResume = toasts.find(toast => toast.id === id && toast.paused);
-      
+    update((toasts) => {
+      const toastToResume = toasts.find((toast) => toast.id === id && toast.paused)
+
       if (toastToResume) {
         // Update creation time to account for pause
-        const newCreatedAt = Date.now() - (toastToResume.duration - toastToResume.remaining);
-        
+        const newCreatedAt = Date.now() - (toastToResume.duration - toastToResume.remaining)
+
         // Restart timer
-        const timer = startTimer(id, toastToResume.remaining);
-        timers.set(id, timer);
-        
+        const timer = startTimer(id, toastToResume.remaining)
+        timers.set(id, timer)
+
         // Update toast
-        return toasts.map(toast => {
+        return toasts.map((toast) => {
           if (toast.id === id) {
-            return { 
-              ...toast, 
+            return {
+              ...toast,
               createdAt: newCreatedAt,
               paused: false,
-              remaining: undefined
-            };
+              remaining: undefined,
+            }
           }
-          return toast;
-        });
+          return toast
+        })
       }
-      
-      return toasts;
-    });
+
+      return toasts
+    })
   }
-  
+
   /**
    * Clear all toasts
    */
   function clear() {
     // Clear all timers
-    timers.forEach(timer => {
-      clearInterval(timer.interval);
-      clearTimeout(timer.timeout);
-    });
-    timers.clear();
-    
+    timers.forEach((timer) => {
+      clearInterval(timer.interval)
+      clearTimeout(timer.timeout)
+    })
+    timers.clear()
+
     // Clear store
-    update(() => []);
+    update(() => [])
   }
-  
+
   /**
    * Show a success toast
    * @param {string|Object} message - Message or toast config
@@ -220,13 +220,14 @@ function createToastStore() {
    * @returns {string} Toast ID
    */
   function success(message, title, duration) {
-    const config = typeof message === 'string' 
-      ? { message, title, duration } 
-      : { ...message, variant: 'success' };
-    
-    return add({ ...config, variant: 'success' });
+    const config =
+      typeof message === "string"
+        ? { message, title, duration }
+        : { ...message, variant: "success" }
+
+    return add({ ...config, variant: "success" })
   }
-  
+
   /**
    * Show an error toast
    * @param {string|Object} message - Message or toast config
@@ -235,13 +236,12 @@ function createToastStore() {
    * @returns {string} Toast ID
    */
   function error(message, title, duration) {
-    const config = typeof message === 'string' 
-      ? { message, title, duration } 
-      : { ...message, variant: 'error' };
-    
-    return add({ ...config, variant: 'error' });
+    const config =
+      typeof message === "string" ? { message, title, duration } : { ...message, variant: "error" }
+
+    return add({ ...config, variant: "error" })
   }
-  
+
   /**
    * Show a warning toast
    * @param {string|Object} message - Message or toast config
@@ -250,13 +250,14 @@ function createToastStore() {
    * @returns {string} Toast ID
    */
   function warning(message, title, duration) {
-    const config = typeof message === 'string' 
-      ? { message, title, duration } 
-      : { ...message, variant: 'warning' };
-    
-    return add({ ...config, variant: 'warning' });
+    const config =
+      typeof message === "string"
+        ? { message, title, duration }
+        : { ...message, variant: "warning" }
+
+    return add({ ...config, variant: "warning" })
   }
-  
+
   /**
    * Show an info toast
    * @param {string|Object} message - Message or toast config
@@ -265,11 +266,10 @@ function createToastStore() {
    * @returns {string} Toast ID
    */
   function info(message, title, duration) {
-    const config = typeof message === 'string' 
-      ? { message, title, duration } 
-      : { ...message, variant: 'info' };
-    
-    return add({ ...config, variant: 'info' });
+    const config =
+      typeof message === "string" ? { message, title, duration } : { ...message, variant: "info" }
+
+    return add({ ...config, variant: "info" })
   }
 
   return {
@@ -282,12 +282,12 @@ function createToastStore() {
     success,
     error,
     warning,
-    info
-  };
+    info,
+  }
 }
 
 // Create and export toast store
-export const toastStore = createToastStore();
+export const toastStore = createToastStore()
 
 // Alias for add method
-export const showToast = toastStore.add;
+export const showToast = toastStore.add

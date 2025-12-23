@@ -29,373 +29,371 @@ Usage:
 ```
 -->
 <script>
-  import { createEventDispatcher, setContext } from 'svelte';
+import { createEventDispatcher, setContext } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {Array} - Data to display */
-    data = [],
+  /** @type {Array} - Data to display */
+  data = [],
 
-    /** @type {Array} - Column definitions */
-    columns = [],
+  /** @type {Array} - Column definitions */
+  columns = [],
 
-    /** @type {boolean} - Whether to enable sorting */
-    sortable = false,
+  /** @type {boolean} - Whether to enable sorting */
+  sortable = false,
 
-    /** @type {boolean} - Whether to enable filtering */
-    filterable = false,
+  /** @type {boolean} - Whether to enable filtering */
+  filterable = false,
 
-    /** @type {boolean} - Whether to enable pagination */
-    pageable = false,
+  /** @type {boolean} - Whether to enable pagination */
+  pageable = false,
 
-    /** @type {boolean} - Whether to enable row selection */
-    selectable = false,
+  /** @type {boolean} - Whether to enable row selection */
+  selectable = false,
 
-    /** @type {boolean} - Whether to enable multiple row selection */
-    multiSelect = false,
+  /** @type {boolean} - Whether to enable multiple row selection */
+  multiSelect = false,
 
-    /** @type {Array} - Selected row keys */
-    selected = [],
+  /** @type {Array} - Selected row keys */
+  selected = [],
 
-    /** @type {string} - Key field for row identification */
-    keyField = 'id',
+  /** @type {string} - Key field for row identification */
+  keyField = "id",
 
-    /** @type {number} - Current page (1-based) */
-    page = 1,
+  /** @type {number} - Current page (1-based) */
+  page = 1,
 
-    /** @type {number} - Number of rows per page */
-    pageSize = 10,
+  /** @type {number} - Number of rows per page */
+  pageSize = 10,
 
-    /** @type {Array} - Available page size options */
-    pageSizeOptions = [5, 10, 20, 50, 100],
+  /** @type {Array} - Available page size options */
+  pageSizeOptions = [5, 10, 20, 50, 100],
 
-    /** @type {string} - Field to sort by */
-    sortField,
+  /** @type {string} - Field to sort by */
+  sortField,
 
-    /** @type {string} - Sort order (asc, desc) */
-    sortOrder = 'asc',
+  /** @type {string} - Sort order (asc, desc) */
+  sortOrder = "asc",
 
-    /** @type {Object} - Filter values by field */
-    filters = {},
+  /** @type {Object} - Filter values by field */
+  filters = {},
 
-    /** @type {boolean} - Whether to show a loading indicator */
-    loading = false,
+  /** @type {boolean} - Whether to show a loading indicator */
+  loading = false,
 
-    /** @type {string} - Text to display when there is no data */
-    emptyMessage = 'No data available',
+  /** @type {string} - Text to display when there is no data */
+  emptyMessage = "No data available",
 
-    /** @type {string} - ARIA label for the table */
-    ariaLabel = 'Data table',
+  /** @type {string} - ARIA label for the table */
+  ariaLabel = "Data table",
 
-    /** @type {Function} - Custom row class function */
-    rowClass,
+  /** @type {Function} - Custom row class function */
+  rowClass,
 
-    /** @type {Function} - Custom cell formatter */
-    cellFormatter,
+  /** @type {Function} - Custom cell formatter */
+  cellFormatter,
 
-    /** @type {boolean} - Whether to enable responsive mode */
-    responsive = true,
+  /** @type {boolean} - Whether to enable responsive mode */
+  responsive = true,
 
-    /** @type {boolean} - Whether to enable striped rows */
-    striped = false,
+  /** @type {boolean} - Whether to enable striped rows */
+  striped = false,
 
-    /** @type {boolean} - Whether to enable hoverable rows */
-    hoverable = true,
+  /** @type {boolean} - Whether to enable hoverable rows */
+  hoverable = true,
 
-    /** @type {boolean} - Whether to show a border */
-    bordered = false,
+  /** @type {boolean} - Whether to show a border */
+  bordered = false,
 
-    /** @type {boolean} - Whether to make the header sticky */
-    stickyHeader = false,
+  /** @type {boolean} - Whether to make the header sticky */
+  stickyHeader = false,
 
-    /** @type {boolean} - Whether to enable compact mode */
-    compact = false
-  } = $props();
+  /** @type {boolean} - Whether to enable compact mode */
+  compact = false,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Component state
-  let currentPage = $state(page);
-  let currentPageSize = $state(pageSize);
-  let currentSortField = $state(sortField);
-  let currentSortOrder = $state(sortOrder);
-  let currentFilters = $state(filters || {});
-  let selectedRows = $state(Array.isArray(selected) ? [...selected] : []);
-  let allSelected = $state(false);
-  let tableElement;
-  
-  // Update state when props change
-  $effect(() => {
-    currentPage = page;
-    currentPageSize = pageSize;
-    currentSortField = sortField;
-    currentSortOrder = sortOrder;
-    currentFilters = filters || {};
-    selectedRows = Array.isArray(selected) ? [...selected] : [];
-  });
-  
-  // Provide context for child components
-  setContext('dataTable', {
-    sortable,
-    filterable,
-    selectable,
-    multiSelect,
-    keyField,
-    getSortField: () => currentSortField,
-    getSortOrder: () => currentSortOrder,
-    getFilters: () => currentFilters,
-    getSelected: () => selectedRows,
-    isSelected: (key) => selectedRows.includes(key),
-    toggleSort: (field) => handleSort(field),
-    setFilter: (field, value) => handleFilter(field, value),
-    toggleSelection: (key) => toggleRowSelection(key),
-    selectAll: () => toggleSelectAll(),
-    cellFormatter
-  });
-  
-  // Computed values
-  const totalRecords = $derived(data.length);
-  const totalPages = $derived(Math.max(1, Math.ceil(totalRecords / currentPageSize)));
-  const startIndex = $derived((currentPage - 1) * currentPageSize);
-  const endIndex = $derived(Math.min(startIndex + currentPageSize, totalRecords));
-  
-  // Process data with sorting, filtering, and pagination
-  const processedData = $derived(() => {
-    let result = [...data];
-    
-    // Apply filters
-    if (filterable && Object.keys(currentFilters).length > 0) {
-      result = result.filter(item => {
-        return Object.entries(currentFilters).every(([field, filterValue]) => {
-          if (!filterValue) return true;
-          
-          const value = item[field];
-          if (value === undefined || value === null) return false;
-          
-          return String(value).toLowerCase().includes(String(filterValue).toLowerCase());
-        });
-      });
-    }
-    
-    // Apply sorting
-    if (sortable && currentSortField) {
-      result.sort((a, b) => {
-        const valueA = a[currentSortField];
-        const valueB = b[currentSortField];
-        
-        // Handle null/undefined values
-        if (valueA === undefined || valueA === null) return currentSortOrder === 'asc' ? -1 : 1;
-        if (valueB === undefined || valueB === null) return currentSortOrder === 'asc' ? 1 : -1;
-        
-        // Compare based on type
-        if (typeof valueA === 'string' && typeof valueB === 'string') {
-          return currentSortOrder === 'asc' 
-            ? valueA.localeCompare(valueB) 
-            : valueB.localeCompare(valueA);
-        }
-        
-        return currentSortOrder === 'asc' 
-          ? valueA - valueB 
-          : valueB - valueA;
-      });
-    }
-    
-    // Get total after filtering
-    const filteredTotal = result.length;
-    
-    // Apply pagination
-    if (pageable) {
-      result = result.slice(startIndex, endIndex);
-    }
-    
-    return {
-      rows: result,
-      filteredTotal
-    };
-  });
-  
-  /**
-   * Handles sorting
-   * @param {string} field - Field to sort by
-   */
-  function handleSort(field) {
-    if (!sortable) return;
-    
-    if (currentSortField === field) {
-      // Toggle order if same field
-      currentSortOrder = currentSortOrder === 'asc' ? 'desc' : 'asc';
-    } else {
-      // Set new field and default to ascending
-      currentSortField = field;
-      currentSortOrder = 'asc';
-    }
-    
-    dispatch('sort', { field: currentSortField, order: currentSortOrder });
+const dispatch = createEventDispatcher()
+
+// Component state
+let currentPage = $state(page)
+let currentPageSize = $state(pageSize)
+let currentSortField = $state(sortField)
+let currentSortOrder = $state(sortOrder)
+let currentFilters = $state(filters || {})
+let selectedRows = $state(Array.isArray(selected) ? [...selected] : [])
+let allSelected = $state(false)
+let tableElement
+
+// Update state when props change
+$effect(() => {
+  currentPage = page
+  currentPageSize = pageSize
+  currentSortField = sortField
+  currentSortOrder = sortOrder
+  currentFilters = filters || {}
+  selectedRows = Array.isArray(selected) ? [...selected] : []
+})
+
+// Provide context for child components
+setContext("dataTable", {
+  sortable,
+  filterable,
+  selectable,
+  multiSelect,
+  keyField,
+  getSortField: () => currentSortField,
+  getSortOrder: () => currentSortOrder,
+  getFilters: () => currentFilters,
+  getSelected: () => selectedRows,
+  isSelected: (key) => selectedRows.includes(key),
+  toggleSort: (field) => handleSort(field),
+  setFilter: (field, value) => handleFilter(field, value),
+  toggleSelection: (key) => toggleRowSelection(key),
+  selectAll: () => toggleSelectAll(),
+  cellFormatter,
+})
+
+// Computed values
+const totalRecords = $derived(data.length)
+const totalPages = $derived(Math.max(1, Math.ceil(totalRecords / currentPageSize)))
+const startIndex = $derived((currentPage - 1) * currentPageSize)
+const endIndex = $derived(Math.min(startIndex + currentPageSize, totalRecords))
+
+// Process data with sorting, filtering, and pagination
+const processedData = $derived(() => {
+  let result = [...data]
+
+  // Apply filters
+  if (filterable && Object.keys(currentFilters).length > 0) {
+    result = result.filter((item) => {
+      return Object.entries(currentFilters).every(([field, filterValue]) => {
+        if (!filterValue) return true
+
+        const value = item[field]
+        if (value === undefined || value === null) return false
+
+        return String(value).toLowerCase().includes(String(filterValue).toLowerCase())
+      })
+    })
   }
-  
-  /**
-   * Handles filtering
-   * @param {string} field - Field to filter
-   * @param {string} value - Filter value
-   */
-  function handleFilter(field, value) {
-    if (!filterable) return;
-    
-    if (value) {
-      currentFilters = { ...currentFilters, [field]: value };
-    } else {
-      // Remove filter if value is empty
-      const { [field]: removed, ...rest } = currentFilters;
-      currentFilters = rest;
-    }
-    
-    // Reset to first page when filtering
-    currentPage = 1;
-    
-    dispatch('filter', { filters: currentFilters });
-  }
-  
-  /**
-   * Handles page change
-   * @param {number} newPage - New page number
-   */
-  function handlePageChange(newPage) {
-    if (!pageable) return;
-    
-    if (newPage >= 1 && newPage <= totalPages) {
-      currentPage = newPage;
-      dispatch('page', { page: currentPage, pageSize: currentPageSize });
-    }
-  }
-  
-  /**
-   * Handles page size change
-   * @param {Event} event - Change event
-   */
-  function handlePageSizeChange(event) {
-    if (!pageable) return;
-    
-    const newPageSize = Number(event.target.value);
-    currentPageSize = newPageSize;
-    
-    // Adjust current page to maintain position
-    const newTotalPages = Math.max(1, Math.ceil(totalRecords / newPageSize));
-    if (currentPage > newTotalPages) {
-      currentPage = newTotalPages;
-    }
-    
-    dispatch('page', { page: currentPage, pageSize: currentPageSize });
-  }
-  
-  /**
-   * Toggles selection of a row
-   * @param {string|number} key - Row key
-   */
-  function toggleRowSelection(key) {
-    if (!selectable) return;
-    
-    if (selectedRows.includes(key)) {
-      // Remove if already selected
-      selectedRows = selectedRows.filter(k => k !== key);
-      allSelected = false;
-    } else {
-      // Add if not selected
-      if (multiSelect) {
-        selectedRows = [...selectedRows, key];
-        
-        // Check if all visible rows are now selected
-        const visibleKeys = processedData.rows.map(row => row[keyField]);
-        allSelected = visibleKeys.every(k => selectedRows.includes(k));
-      } else {
-        selectedRows = [key];
-        allSelected = false;
+
+  // Apply sorting
+  if (sortable && currentSortField) {
+    result.sort((a, b) => {
+      const valueA = a[currentSortField]
+      const valueB = b[currentSortField]
+
+      // Handle null/undefined values
+      if (valueA === undefined || valueA === null) return currentSortOrder === "asc" ? -1 : 1
+      if (valueB === undefined || valueB === null) return currentSortOrder === "asc" ? 1 : -1
+
+      // Compare based on type
+      if (typeof valueA === "string" && typeof valueB === "string") {
+        return currentSortOrder === "asc"
+          ? valueA.localeCompare(valueB)
+          : valueB.localeCompare(valueA)
       }
-    }
-    
-    dispatch('select', { selected: selectedRows });
+
+      return currentSortOrder === "asc" ? valueA - valueB : valueB - valueA
+    })
   }
-  
-  /**
-   * Toggles selection of all rows
-   */
-  function toggleSelectAll() {
-    if (!selectable || !multiSelect) return;
-    
-    if (allSelected) {
-      // Deselect all visible rows
-      const visibleKeys = processedData.rows.map(row => row[keyField]);
-      selectedRows = selectedRows.filter(key => !visibleKeys.includes(key));
-      allSelected = false;
+
+  // Get total after filtering
+  const filteredTotal = result.length
+
+  // Apply pagination
+  if (pageable) {
+    result = result.slice(startIndex, endIndex)
+  }
+
+  return {
+    rows: result,
+    filteredTotal,
+  }
+})
+
+/**
+ * Handles sorting
+ * @param {string} field - Field to sort by
+ */
+function handleSort(field) {
+  if (!sortable) return
+
+  if (currentSortField === field) {
+    // Toggle order if same field
+    currentSortOrder = currentSortOrder === "asc" ? "desc" : "asc"
+  } else {
+    // Set new field and default to ascending
+    currentSortField = field
+    currentSortOrder = "asc"
+  }
+
+  dispatch("sort", { field: currentSortField, order: currentSortOrder })
+}
+
+/**
+ * Handles filtering
+ * @param {string} field - Field to filter
+ * @param {string} value - Filter value
+ */
+function handleFilter(field, value) {
+  if (!filterable) return
+
+  if (value) {
+    currentFilters = { ...currentFilters, [field]: value }
+  } else {
+    // Remove filter if value is empty
+    const { [field]: removed, ...rest } = currentFilters
+    currentFilters = rest
+  }
+
+  // Reset to first page when filtering
+  currentPage = 1
+
+  dispatch("filter", { filters: currentFilters })
+}
+
+/**
+ * Handles page change
+ * @param {number} newPage - New page number
+ */
+function handlePageChange(newPage) {
+  if (!pageable) return
+
+  if (newPage >= 1 && newPage <= totalPages) {
+    currentPage = newPage
+    dispatch("page", { page: currentPage, pageSize: currentPageSize })
+  }
+}
+
+/**
+ * Handles page size change
+ * @param {Event} event - Change event
+ */
+function handlePageSizeChange(event) {
+  if (!pageable) return
+
+  const newPageSize = Number(event.target.value)
+  currentPageSize = newPageSize
+
+  // Adjust current page to maintain position
+  const newTotalPages = Math.max(1, Math.ceil(totalRecords / newPageSize))
+  if (currentPage > newTotalPages) {
+    currentPage = newTotalPages
+  }
+
+  dispatch("page", { page: currentPage, pageSize: currentPageSize })
+}
+
+/**
+ * Toggles selection of a row
+ * @param {string|number} key - Row key
+ */
+function toggleRowSelection(key) {
+  if (!selectable) return
+
+  if (selectedRows.includes(key)) {
+    // Remove if already selected
+    selectedRows = selectedRows.filter((k) => k !== key)
+    allSelected = false
+  } else {
+    // Add if not selected
+    if (multiSelect) {
+      selectedRows = [...selectedRows, key]
+
+      // Check if all visible rows are now selected
+      const visibleKeys = processedData.rows.map((row) => row[keyField])
+      allSelected = visibleKeys.every((k) => selectedRows.includes(k))
     } else {
-      // Select all visible rows
-      const visibleKeys = processedData.rows.map(row => row[keyField]);
-      const newSelected = [...selectedRows];
-      
-      visibleKeys.forEach(key => {
-        if (!newSelected.includes(key)) {
-          newSelected.push(key);
-        }
-      });
-      
-      selectedRows = newSelected;
-      allSelected = true;
+      selectedRows = [key]
+      allSelected = false
     }
-    
-    dispatch('select', { selected: selectedRows });
   }
-  
-  /**
-   * Gets CSS classes for a row
-   * @param {Object} row - Row data
-   * @param {number} index - Row index
-   * @returns {string} - CSS classes
-   */
-  function getRowClasses(row, index) {
-    const isSelected = selectedRows.includes(row[keyField]);
-    const classes = [
-      'data-table-row',
-      isSelected ? 'data-table-row-selected' : '',
-      striped && index % 2 === 1 ? 'data-table-row-striped' : '',
-      hoverable ? 'data-table-row-hoverable' : ''
-    ];
-    
-    if (rowClass) {
-      const customClass = rowClass(row, index);
-      if (customClass) {
-        classes.push(customClass);
+
+  dispatch("select", { selected: selectedRows })
+}
+
+/**
+ * Toggles selection of all rows
+ */
+function toggleSelectAll() {
+  if (!selectable || !multiSelect) return
+
+  if (allSelected) {
+    // Deselect all visible rows
+    const visibleKeys = processedData.rows.map((row) => row[keyField])
+    selectedRows = selectedRows.filter((key) => !visibleKeys.includes(key))
+    allSelected = false
+  } else {
+    // Select all visible rows
+    const visibleKeys = processedData.rows.map((row) => row[keyField])
+    const newSelected = [...selectedRows]
+
+    visibleKeys.forEach((key) => {
+      if (!newSelected.includes(key)) {
+        newSelected.push(key)
       }
-    }
-    
-    return classes.filter(Boolean).join(' ');
+    })
+
+    selectedRows = newSelected
+    allSelected = true
   }
-  
-  /**
-   * Formats a cell value
-   * @param {any} value - Cell value
-   * @param {Object} column - Column definition
-   * @param {Object} row - Row data
-   * @returns {string} - Formatted value
-   */
-  function formatCell(value, column, row) {
-    if (column.formatter) {
-      return column.formatter(value, row);
+
+  dispatch("select", { selected: selectedRows })
+}
+
+/**
+ * Gets CSS classes for a row
+ * @param {Object} row - Row data
+ * @param {number} index - Row index
+ * @returns {string} - CSS classes
+ */
+function getRowClasses(row, index) {
+  const isSelected = selectedRows.includes(row[keyField])
+  const classes = [
+    "data-table-row",
+    isSelected ? "data-table-row-selected" : "",
+    striped && index % 2 === 1 ? "data-table-row-striped" : "",
+    hoverable ? "data-table-row-hoverable" : "",
+  ]
+
+  if (rowClass) {
+    const customClass = rowClass(row, index)
+    if (customClass) {
+      classes.push(customClass)
     }
-    
-    if (cellFormatter) {
-      return cellFormatter(value, column, row);
-    }
-    
-    if (value === null || value === undefined) {
-      return '';
-    }
-    
-    return String(value);
   }
+
+  return classes.filter(Boolean).join(" ")
+}
+
+/**
+ * Formats a cell value
+ * @param {any} value - Cell value
+ * @param {Object} column - Column definition
+ * @param {Object} row - Row data
+ * @returns {string} - Formatted value
+ */
+function formatCell(value, column, row) {
+  if (column.formatter) {
+    return column.formatter(value, row)
+  }
+
+  if (cellFormatter) {
+    return cellFormatter(value, column, row)
+  }
+
+  if (value === null || value === undefined) {
+    return ""
+  }
+
+  return String(value)
+}
 </script>
 
 <div

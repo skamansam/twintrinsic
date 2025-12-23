@@ -17,86 +17,86 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, createEventDispatcher, setContext } from 'svelte';
+import { getContext, createEventDispatcher, setContext } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Radio group name */
-    name,
+  /** @type {string} - Radio group name */
+  name,
 
-    /** @type {string} - Currently selected value */
-    value = '',
+  /** @type {string} - Currently selected value */
+  value = "",
 
-    /** @type {string} - Legend text for the fieldset */
-    legend,
+  /** @type {string} - Legend text for the fieldset */
+  legend,
 
-    /** @type {boolean} - Whether the radio group is required */
-    required = false,
+  /** @type {boolean} - Whether the radio group is required */
+  required = false,
 
-    /** @type {boolean} - Whether the radio group is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the radio group is disabled */
+  disabled = false,
 
-    /** @type {string} - Layout direction (horizontal or vertical) */
-    layout = 'vertical',
+  /** @type {string} - Layout direction (horizontal or vertical) */
+  layout = "vertical",
 
-    /** @type {string} - Size of the radio buttons (sm, md, lg) */
-    size = 'md',
+  /** @type {string} - Size of the radio buttons (sm, md, lg) */
+  size = "md",
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Get form context if available
-  const formContext = getContext('form');
-  
-  // Radio group state
-  let selectedValue = $state(value);
-  
-  // Register with form if available
-  let fieldApi;
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, value);
-    
-    // Update value when form field changes
-    $effect(() => {
-      const formValue = fieldApi.getValue();
-      if (formValue !== undefined && formValue !== selectedValue) {
-        selectedValue = formValue;
-      }
-    });
-  }
-  
-  /**
-   * Handles radio selection
-   * @param {CustomEvent} event - Change event from Radio component
-   */
-  function handleRadioChange(event) {
-    const { value: radioValue } = event.detail;
-    selectedValue = radioValue;
-    
-    // Update form field if available
-    if (fieldApi) {
-      fieldApi.setValue(radioValue);
+const dispatch = createEventDispatcher()
+
+// Get form context if available
+const formContext = getContext("form")
+
+// Radio group state
+let selectedValue = $state(value)
+
+// Register with form if available
+let fieldApi
+if (formContext && name) {
+  fieldApi = formContext.registerField(name, value)
+
+  // Update value when form field changes
+  $effect(() => {
+    const formValue = fieldApi.getValue()
+    if (formValue !== undefined && formValue !== selectedValue) {
+      selectedValue = formValue
     }
-    
-    dispatch('change', { value: radioValue });
+  })
+}
+
+/**
+ * Handles radio selection
+ * @param {CustomEvent} event - Change event from Radio component
+ */
+function handleRadioChange(event) {
+  const { value: radioValue } = event.detail
+  selectedValue = radioValue
+
+  // Update form field if available
+  if (fieldApi) {
+    fieldApi.setValue(radioValue)
   }
-  
-  // Provide context for child Radio components
-  setContext('radioGroup', {
-    name,
-    selectedValue: () => selectedValue,
-    required,
-    disabled: () => disabled || (fieldApi && fieldApi.isDisabled()),
-    size,
-    onChange: handleRadioChange
-  });
+
+  dispatch("change", { value: radioValue })
+}
+
+// Provide context for child Radio components
+setContext("radioGroup", {
+  name,
+  selectedValue: () => selectedValue,
+  required,
+  disabled: () => disabled || (fieldApi && fieldApi.isDisabled()),
+  size,
+  onChange: handleRadioChange,
+})
 </script>
 
 <fieldset

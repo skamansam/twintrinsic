@@ -30,142 +30,156 @@ Usage:
 ```
 -->
 <script>
-  import { createEventDispatcher } from 'svelte';
+import { createEventDispatcher } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Visual style variant */
-    variant = 'default',
+  /** @type {string} - Visual style variant */
+  variant = "default",
 
-    /** @type {string} - Size of the chip (sm, md, lg) */
-    size = 'md',
+  /** @type {string} - Size of the chip (sm, md, lg) */
+  size = "md",
 
-    /** @type {string} - Icon to display (HTML or SVG string) */
-    icon,
+  /** @type {string} - Icon to display (HTML or SVG string) */
+  icon,
 
-    /** @type {string} - Avatar to display (HTML or img tag) */
-    avatar,
+  /** @type {string} - Avatar to display (HTML or img tag) */
+  avatar,
 
-    /** @type {boolean} - Whether the chip is removable */
-    removable = false,
+  /** @type {boolean} - Whether the chip is removable */
+  removable = false,
 
-    /** @type {boolean} - Whether the chip is clickable */
-    clickable = false,
+  /** @type {boolean} - Whether the chip is clickable */
+  clickable = false,
 
-    /** @type {boolean} - Whether the chip is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the chip is disabled */
+  disabled = false,
 
-    /** @type {boolean} - Whether the chip is selected */
-    selected = false,
+  /** @type {boolean} - Whether the chip is selected */
+  selected = false,
 
-    /** @type {boolean} - Whether to show an outline style */
-    outline = false,
+  /** @type {boolean} - Whether to show an outline style */
+  outline = false,
 
-    /** @type {string} - ARIA label for the remove button */
-    removeAriaLabel = 'Remove',
+  /** @type {string} - ARIA label for the remove button */
+  removeAriaLabel = "Remove",
 
-    /** @type {string} - Custom remove icon (HTML or SVG string) */
-    removeIcon,
+  /** @type {string} - Custom remove icon (HTML or SVG string) */
+  removeIcon,
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Determine variant classes
-  const variantClasses = $derived(outline 
+const dispatch = createEventDispatcher()
+
+// Determine variant classes
+const variantClasses = $derived(
+  outline
     ? {
-        default: 'bg-transparent border border-muted text-text dark:border-muted dark:text-text',
-        primary: 'bg-transparent border border-primary-500 text-primary-500 dark:border-primary-500 dark:text-primary-500',
-        secondary: 'bg-transparent border border-secondary-500 text-secondary-500 dark:border-secondary-500 dark:text-secondary-500',
-        success: 'bg-transparent border border-success-500 text-success-500 dark:border-success-500 dark:text-success-500',
-        warning: 'bg-transparent border border-warning-500 text-warning-500 dark:border-warning-500 dark:text-warning-500',
-        error: 'bg-transparent border border-error-500 text-error-500 dark:border-error-500 dark:text-error-500',
-        info: 'bg-transparent border border-info-500 text-info-500 dark:border-info-500 dark:text-info-500'
+        default: "bg-transparent border border-muted text-text dark:border-muted dark:text-text",
+        primary:
+          "bg-transparent border border-primary-500 text-primary-500 dark:border-primary-500 dark:text-primary-500",
+        secondary:
+          "bg-transparent border border-secondary-500 text-secondary-500 dark:border-secondary-500 dark:text-secondary-500",
+        success:
+          "bg-transparent border border-success-500 text-success-500 dark:border-success-500 dark:text-success-500",
+        warning:
+          "bg-transparent border border-warning-500 text-warning-500 dark:border-warning-500 dark:text-warning-500",
+        error:
+          "bg-transparent border border-error-500 text-error-500 dark:border-error-500 dark:text-error-500",
+        info: "bg-transparent border border-info-500 text-info-500 dark:border-info-500 dark:text-info-500",
       }[variant]
     : {
-        default: 'bg-muted/10 text-text dark:bg-muted/20 dark:text-text',
-        primary: 'bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200',
-        secondary: 'bg-secondary-100 text-secondary-800 dark:bg-secondary-900 dark:text-secondary-200',
-        success: 'bg-success-100 text-success-800 dark:bg-success-900 dark:text-success-200',
-        warning: 'bg-warning-100 text-warning-800 dark:bg-warning-900 dark:text-warning-200',
-        error: 'bg-error-100 text-error-800 dark:bg-error-900 dark:text-error-200',
-        info: 'bg-info-100 text-info-800 dark:bg-info-900 dark:text-info-200'
-      }[variant]);
-  
-  // Determine selected variant classes
-  const selectedClasses = $derived(selected
-    ? {
-        default: 'bg-muted/20 dark:bg-muted/30',
-        primary: 'bg-primary-200 dark:bg-primary-800',
-        secondary: 'bg-secondary-200 dark:bg-secondary-800',
-        success: 'bg-success-200 dark:bg-success-800',
-        warning: 'bg-warning-200 dark:bg-warning-800',
-        error: 'bg-error-200 dark:bg-error-800',
-        info: 'bg-info-200 dark:bg-info-800'
+        default: "bg-muted/10 text-text dark:bg-muted/20 dark:text-text",
+        primary: "bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200",
+        secondary:
+          "bg-secondary-100 text-secondary-800 dark:bg-secondary-900 dark:text-secondary-200",
+        success: "bg-success-100 text-success-800 dark:bg-success-900 dark:text-success-200",
+        warning: "bg-warning-100 text-warning-800 dark:bg-warning-900 dark:text-warning-200",
+        error: "bg-error-100 text-error-800 dark:bg-error-900 dark:text-error-200",
+        info: "bg-info-100 text-info-800 dark:bg-info-900 dark:text-info-200",
       }[variant]
-    : '');
-  
-  // Determine size classes
-  const sizeClasses = $derived({
-    sm: 'text-xs px-2 py-0.5 h-6',
-    md: 'text-sm px-2.5 py-1 h-8',
-    lg: 'text-base px-3 py-1.5 h-10'
-  }[size] || 'text-sm px-2.5 py-1 h-8');
-  
-  // Determine icon size classes
-  const iconSizeClasses = $derived({
-    sm: 'w-3.5 h-3.5',
-    md: 'w-4 h-4',
-    lg: 'w-5 h-5'
-  }[size] || 'w-4 h-4');
-  
-  /**
-   * Handles click on the chip
-   * @param {MouseEvent} event - Click event
-   */
-  function handleClick(event) {
-    if (disabled) {
-      event.preventDefault();
-      return;
-    }
-    
-    if (clickable) {
-      dispatch('click', event);
-    }
+)
+
+// Determine selected variant classes
+const selectedClasses = $derived(
+  selected
+    ? {
+        default: "bg-muted/20 dark:bg-muted/30",
+        primary: "bg-primary-200 dark:bg-primary-800",
+        secondary: "bg-secondary-200 dark:bg-secondary-800",
+        success: "bg-success-200 dark:bg-success-800",
+        warning: "bg-warning-200 dark:bg-warning-800",
+        error: "bg-error-200 dark:bg-error-800",
+        info: "bg-info-200 dark:bg-info-800",
+      }[variant]
+    : ""
+)
+
+// Determine size classes
+const sizeClasses = $derived(
+  {
+    sm: "text-xs px-2 py-0.5 h-6",
+    md: "text-sm px-2.5 py-1 h-8",
+    lg: "text-base px-3 py-1.5 h-10",
+  }[size] || "text-sm px-2.5 py-1 h-8"
+)
+
+// Determine icon size classes
+const iconSizeClasses = $derived(
+  {
+    sm: "w-3.5 h-3.5",
+    md: "w-4 h-4",
+    lg: "w-5 h-5",
+  }[size] || "w-4 h-4"
+)
+
+/**
+ * Handles click on the chip
+ * @param {MouseEvent} event - Click event
+ */
+function handleClick(event) {
+  if (disabled) {
+    event.preventDefault()
+    return
   }
-  
-  /**
-   * Handles remove button click
-   * @param {MouseEvent} event - Click event
-   */
-  function handleRemove(event) {
-    if (disabled) {
-      event.preventDefault();
-      return;
-    }
-    
-    event.stopPropagation();
-    dispatch('remove');
+
+  if (clickable) {
+    dispatch("click", event)
   }
-  
-  /**
-   * Handles keydown events
-   * @param {KeyboardEvent} event - Keydown event
-   */
-  function handleKeydown(event) {
-    if (disabled) return;
-    
-    if (clickable && event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      dispatch('click', event);
-    }
+}
+
+/**
+ * Handles remove button click
+ * @param {MouseEvent} event - Click event
+ */
+function handleRemove(event) {
+  if (disabled) {
+    event.preventDefault()
+    return
   }
+
+  event.stopPropagation()
+  dispatch("remove")
+}
+
+/**
+ * Handles keydown events
+ * @param {KeyboardEvent} event - Keydown event
+ */
+function handleKeydown(event) {
+  if (disabled) return
+
+  if ((clickable && event.key === "Enter") || event.key === " ") {
+    event.preventDefault()
+    dispatch("click", event)
+  }
+}
 </script>
 
 <div

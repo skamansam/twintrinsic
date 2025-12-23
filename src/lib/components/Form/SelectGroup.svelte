@@ -18,15 +18,15 @@ Usage:
 ```
 -->
 <script>
-  const {
-    /** @type {string} - Group label */
-    label,
+const {
+  /** @type {string} - Group label */
+  label,
 
-    /** @type {boolean} - Whether the group is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the group is disabled */
+  disabled = false,
 
-    children
-  } = $props();
+  children,
+} = $props()
 </script>
 
 <optgroup {label} {disabled}>

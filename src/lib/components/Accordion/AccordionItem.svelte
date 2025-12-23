@@ -12,74 +12,74 @@ Usage:
 ```
 -->
 <script>
-  import { slide } from 'svelte/transition';
-  import { getContext, onMount } from 'svelte';
+import { slide } from "svelte/transition"
+import { getContext, onMount } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - ARIA label for the header button */
-    ariaLabel,
+  /** @type {string} - ARIA label for the header button */
+  ariaLabel,
 
-    /** @type {boolean} - Whether to disable the item controls */
-    disabled = false,
+  /** @type {boolean} - Whether to disable the item controls */
+  disabled = false,
 
-    /** @type {boolean} - Whether to show the expand/collapse icon */
-    showIcon = true,
+  /** @type {boolean} - Whether to show the expand/collapse icon */
+  showIcon = true,
 
-    children,
-    header
-  } = $props();
+  children,
+  header,
+} = $props()
 
-  // Get accordion context
-  const accordion = getContext('accordion');
-  
-  // Track expanded state
-  let isExpanded = $state(false);
-  let index = $state(-1);
-  
-  // Register with parent accordion on mount
-  onMount(() => {
-    // Find our index among siblings
-    const parent = element.parentElement;
-    if (parent) {
-      const items = Array.from(parent.children);
-      index = items.indexOf(element);
-      
-      // Check if we should be expanded initially
-      isExpanded = accordion.registerItem(id, index);
-    }
-    
-    return () => {
-      // Cleanup if needed
-    };
-  });
-  
-  // Handle toggle
-  function handleToggle() {
-    if (disabled) return;
-    
-    isExpanded = !isExpanded;
-    accordion.toggleItem(index, isExpanded);
+// Get accordion context
+const accordion = getContext("accordion")
+
+// Track expanded state
+let isExpanded = $state(false)
+let index = $state(-1)
+
+// Register with parent accordion on mount
+onMount(() => {
+  // Find our index among siblings
+  const parent = element.parentElement
+  if (parent) {
+    const items = Array.from(parent.children)
+    index = items.indexOf(element)
+
+    // Check if we should be expanded initially
+    isExpanded = accordion.registerItem(id, index)
   }
-  
-  // Handle keyboard navigation
-  function handleKeydown(event) {
-    if (disabled) return;
-    
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      handleToggle();
-    }
+
+  return () => {
+    // Cleanup if needed
   }
-  
-  // Reference to the element
-  let element;
-  let contentEl;
+})
+
+// Handle toggle
+function handleToggle() {
+  if (disabled) return
+
+  isExpanded = !isExpanded
+  accordion.toggleItem(index, isExpanded)
+}
+
+// Handle keyboard navigation
+function handleKeydown(event) {
+  if (disabled) return
+
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault()
+    handleToggle()
+  }
+}
+
+// Reference to the element
+let element
+let contentEl
 </script>
 
 <div 

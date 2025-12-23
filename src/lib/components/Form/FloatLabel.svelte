@@ -19,127 +19,127 @@ Usage:
 ```
 -->
 <script>
-  import { onMount } from 'svelte';
+import { onMount } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Label text */
-    label,
+  /** @type {string} - Label text */
+  label,
 
-    /** @type {boolean} - Whether the input is required */
-    required = false,
+  /** @type {boolean} - Whether the input is required */
+  required = false,
 
-    /** @type {boolean} - Whether the input is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the input is disabled */
+  disabled = false,
 
-    /** @type {string} - Error message to display */
-    error,
+  /** @type {string} - Error message to display */
+  error,
 
-    /** @type {string} - Help text to display below the input */
-    helpText,
+  /** @type {string} - Help text to display below the input */
+  helpText,
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  // Component state
-  let inputElement;
-  let isFocused = $state(false);
-  let hasValue = $state(false);
-  let isFloating = $state(false);
+// Component state
+let inputElement
+let isFocused = $state(false)
+let hasValue = $state(false)
+let isFloating = $state(false)
 
-  /**
-   * Checks if the input has a value
-   */
-  function checkValue() {
-    if (!inputElement) return;
-    
-    // Find the actual input element (could be nested)
-    const input = findInputElement(inputElement);
-    
+/**
+ * Checks if the input has a value
+ */
+function checkValue() {
+  if (!inputElement) return
+
+  // Find the actual input element (could be nested)
+  const input = findInputElement(inputElement)
+
+  if (input) {
+    hasValue = !!input.value
+  }
+
+  // Update floating state
+  isFloating = isFocused || hasValue
+}
+
+/**
+ * Recursively finds an input element
+ * @param {HTMLElement} element - Element to search in
+ * @returns {HTMLElement|null} - Found input element or null
+ */
+function findInputElement(element) {
+  // Check if this is an input, textarea, or select
+  if (
+    element.tagName === "INPUT" ||
+    element.tagName === "TEXTAREA" ||
+    element.tagName === "SELECT"
+  ) {
+    return element
+  }
+
+  // Check children
+  const inputs = element.querySelectorAll("input, textarea, select")
+  if (inputs.length > 0) {
+    return inputs[0]
+  }
+
+  return null
+}
+
+/**
+ * Handles focus event
+ */
+function handleFocus() {
+  isFocused = true
+  isFloating = true
+}
+
+/**
+ * Handles blur event
+ */
+function handleBlur() {
+  isFocused = false
+  checkValue()
+}
+
+/**
+ * Handles input event
+ */
+function handleInput() {
+  checkValue()
+}
+
+// Initialize component
+onMount(() => {
+  if (inputElement) {
+    // Find the actual input element
+    const input = findInputElement(inputElement)
+
     if (input) {
-      hasValue = !!input.value;
-    }
-    
-    // Update floating state
-    isFloating = isFocused || hasValue;
-  }
-  
-  /**
-   * Recursively finds an input element
-   * @param {HTMLElement} element - Element to search in
-   * @returns {HTMLElement|null} - Found input element or null
-   */
-  function findInputElement(element) {
-    // Check if this is an input, textarea, or select
-    if (
-      element.tagName === 'INPUT' || 
-      element.tagName === 'TEXTAREA' || 
-      element.tagName === 'SELECT'
-    ) {
-      return element;
-    }
-    
-    // Check children
-    const inputs = element.querySelectorAll('input, textarea, select');
-    if (inputs.length > 0) {
-      return inputs[0];
-    }
-    
-    return null;
-  }
-  
-  /**
-   * Handles focus event
-   */
-  function handleFocus() {
-    isFocused = true;
-    isFloating = true;
-  }
-  
-  /**
-   * Handles blur event
-   */
-  function handleBlur() {
-    isFocused = false;
-    checkValue();
-  }
-  
-  /**
-   * Handles input event
-   */
-  function handleInput() {
-    checkValue();
-  }
-  
-  // Initialize component
-  onMount(() => {
-    if (inputElement) {
-      // Find the actual input element
-      const input = findInputElement(inputElement);
-      
-      if (input) {
-        // Add event listeners
-        input.addEventListener('focus', handleFocus);
-        input.addEventListener('blur', handleBlur);
-        input.addEventListener('input', handleInput);
-        
-        // Initial check
-        checkValue();
-        
-        // Clean up
-        return () => {
-          input.removeEventListener('focus', handleFocus);
-          input.removeEventListener('blur', handleBlur);
-          input.removeEventListener('input', handleInput);
-        };
+      // Add event listeners
+      input.addEventListener("focus", handleFocus)
+      input.addEventListener("blur", handleBlur)
+      input.addEventListener("input", handleInput)
+
+      // Initial check
+      checkValue()
+
+      // Clean up
+      return () => {
+        input.removeEventListener("focus", handleFocus)
+        input.removeEventListener("blur", handleBlur)
+        input.removeEventListener("input", handleInput)
       }
     }
-  });
+  }
+})
 </script>
 
 <div

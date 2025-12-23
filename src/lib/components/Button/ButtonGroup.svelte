@@ -19,39 +19,39 @@ Usage:
 ```
 -->
 <script>
-  import { setContext } from 'svelte';
+import { setContext } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Button variant to apply to all children (default, primary, secondary, outline, ghost) */
-    variant,
+  /** @type {string} - Button variant to apply to all children (default, primary, secondary, outline, ghost) */
+  variant,
 
-    /** @type {string} - Button size to apply to all children (xs, sm, md, lg, xl) */
-    size,
+  /** @type {string} - Button size to apply to all children (xs, sm, md, lg, xl) */
+  size,
 
-    /** @type {boolean} - Whether the buttons should be arranged vertically */
-    vertical = false,
+  /** @type {boolean} - Whether the buttons should be arranged vertically */
+  vertical = false,
 
-    /** @type {boolean} - Whether the button group should take full width */
-    fullWidth = false,
+  /** @type {boolean} - Whether the button group should take full width */
+  fullWidth = false,
 
-    /** @type {string} - ARIA label for the button group */
-    ariaLabel,
+  /** @type {string} - ARIA label for the button group */
+  ariaLabel,
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  // Provide context for child buttons
-  setContext('buttonGroup', {
-    variant,
-    size,
-    inGroup: true
-  });
+// Provide context for child buttons
+setContext("buttonGroup", {
+  variant,
+  size,
+  inGroup: true,
+})
 </script>
 
 <div

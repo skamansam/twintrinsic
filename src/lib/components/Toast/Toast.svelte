@@ -6,15 +6,15 @@ Provides consistent styling, accessibility features, and various display options
 Usage:
 ```svelte
 <script>
-  import { showToast } from './toastStore';
-  
-  function notify() {
-    showToast({
-      message: 'Operation completed successfully',
-      variant: 'success',
-      duration: 3000
-    });
-  }
+import { showToast } from "./toastStore"
+
+function notify() {
+  showToast({
+    message: "Operation completed successfully",
+    variant: "success",
+    duration: 3000,
+  })
+}
 </script>
 
 <button onclick={notify}>Show Toast</button>

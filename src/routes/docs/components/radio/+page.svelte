@@ -7,9 +7,9 @@ import { Radio, FormField, CodeBlock } from "$lib/index.js"
 import { PropsTable, EventsTable } from "$lib/docs/index.js"
 
 // Sample data for examples
-let theme = 'light'
-let size = 'md'
-let fruit = 'apple'
+let theme = "light"
+let size = "md"
+let fruit = "apple"
 </script>
 
 <h1>Radio</h1>

@@ -100,7 +100,7 @@ const productColumns = [
       )
     },
   },
-];
+]
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

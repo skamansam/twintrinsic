@@ -28,16 +28,7 @@ import Icon from "$lib/components/Icon/Icon.svelte"
 
 // Group icons by category
 const iconsByCategory = {
-  Interface: [
-    "check",
-    "close",
-    "plus",
-    "minus",
-    "search",
-    "settings",
-    "menu",
-    "more"
-  ],
+  Interface: ["check", "close", "plus", "minus", "search", "settings", "menu", "more"],
   Navigation: [
     "arrow-left",
     "arrow-right",
@@ -46,41 +37,13 @@ const iconsByCategory = {
     "chevron-left",
     "chevron-right",
     "chevron-up",
-    "chevron-down"
+    "chevron-down",
   ],
-  Actions: [
-    "edit",
-    "delete",
-    "save",
-    "refresh",
-    "download",
-    "upload",
-    "copy"
-  ],
-  Forms: [
-    "calendar",
-    "eye",
-    "eye-off",
-    "lock",
-    "unlock"
-  ],
-  Media: [
-    "play",
-    "pause",
-    "stop",
-    "volume-up",
-    "volume-down",
-    "volume-mute",
-    "volume-off"
-  ],
-  Status: [
-    "info",
-    "warning",
-    "error",
-    "success",
-    "help"
-  ]
-};
+  Actions: ["edit", "delete", "save", "refresh", "download", "upload", "copy"],
+  Forms: ["calendar", "eye", "eye-off", "lock", "unlock"],
+  Media: ["play", "pause", "stop", "volume-up", "volume-down", "volume-mute", "volume-off"],
+  Status: ["info", "warning", "error", "success", "help"],
+}
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

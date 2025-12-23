@@ -18,78 +18,78 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, onMount } from 'svelte';
+import { getContext, onMount } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {boolean} - Whether the item is active */
-    active = false,
+  /** @type {boolean} - Whether the item is active */
+  active = false,
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  // Get carousel context
-  const carouselContext = getContext('carousel');
-  
-  // Component state
-  let index = $state(-1);
-  let isActive = $state(active);
-  let isVisible = $state(false);
-  let wasActive = $state(false);
-  
-  // Register with parent on mount
-  onMount(() => {
-    if (carouselContext) {
-      index = carouselContext.registerItem();
-    }
-    
-    return () => {
-      // Cleanup if needed
-    };
-  });
-  
-  // Update active state based on context
-  $effect(() => {
-    if (carouselContext) {
-      const currentIndex = carouselContext.currentIndex;
-      wasActive = isActive;
-      isActive = index === currentIndex;
-      
-      // For fade transition, we need to keep the item visible for a bit after it becomes inactive
-      if (carouselContext.transition === 'fade') {
-        if (isActive) {
-          isVisible = true;
-        } else if (wasActive) {
-          // Keep visible during transition, then hide
-          isVisible = true;
-          setTimeout(() => {
-            isVisible = false;
-          }, carouselContext.transitionDuration);
-        }
+// Get carousel context
+const carouselContext = getContext("carousel")
+
+// Component state
+let index = $state(-1)
+let isActive = $state(active)
+let isVisible = $state(false)
+let wasActive = $state(false)
+
+// Register with parent on mount
+onMount(() => {
+  if (carouselContext) {
+    index = carouselContext.registerItem()
+  }
+
+  return () => {
+    // Cleanup if needed
+  }
+})
+
+// Update active state based on context
+$effect(() => {
+  if (carouselContext) {
+    const currentIndex = carouselContext.currentIndex
+    wasActive = isActive
+    isActive = index === currentIndex
+
+    // For fade transition, we need to keep the item visible for a bit after it becomes inactive
+    if (carouselContext.transition === "fade") {
+      if (isActive) {
+        isVisible = true
+      } else if (wasActive) {
+        // Keep visible during transition, then hide
+        isVisible = true
+        setTimeout(() => {
+          isVisible = false
+        }, carouselContext.transitionDuration)
       }
-    } else {
-      isActive = active;
     }
-  });
-  
-  // Determine transition styles based on context
-  const transitionType = $derived(carouselContext?.transition || 'slide');
-  const transitionDuration = $derived(carouselContext?.transitionDuration || 300);
-  const currentIndex = $derived(carouselContext?.currentIndex || 0);
-  
-  // Calculate transform for slide transition
-  const transform = $derived(() => {
-    if (transitionType === 'slide' && typeof index === 'number' && typeof currentIndex === 'number') {
-      const offset = (index - currentIndex) * 100;
-      return `translateX(${offset}%)`;
-    }
-    return '';
-  });
+  } else {
+    isActive = active
+  }
+})
+
+// Determine transition styles based on context
+const transitionType = $derived(carouselContext?.transition || "slide")
+const transitionDuration = $derived(carouselContext?.transitionDuration || 300)
+const currentIndex = $derived(carouselContext?.currentIndex || 0)
+
+// Calculate transform for slide transition
+const transform = $derived(() => {
+  if (transitionType === "slide" && typeof index === "number" && typeof currentIndex === "number") {
+    const offset = (index - currentIndex) * 100
+    return `translateX(${offset}%)`
+  }
+  return ""
+})
 </script>
 
 <div

@@ -21,70 +21,78 @@ Usage:
 ```
 -->
 <script>
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Shape variant (text, rectangle, circle, rounded) */
-    variant = 'rectangle',
+  /** @type {string} - Shape variant (text, rectangle, circle, rounded) */
+  variant = "rectangle",
 
-    /** @type {string|number} - Width of the skeleton */
-    width = '100%',
+  /** @type {string|number} - Width of the skeleton */
+  width = "100%",
 
-    /** @type {string|number} - Height of the skeleton */
-    height,
+  /** @type {string|number} - Height of the skeleton */
+  height,
 
-    /** @type {string|number} - Size for circle and square variants (sets both width and height) */
-    size,
+  /** @type {string|number} - Size for circle and square variants (sets both width and height) */
+  size,
 
-    /** @type {number} - Number of lines for text variant */
-    lines = 1,
+  /** @type {number} - Number of lines for text variant */
+  lines = 1,
 
-    /** @type {boolean} - Whether to show the animation */
-    animated = true,
+  /** @type {boolean} - Whether to show the animation */
+  animated = true,
 
-    /** @type {string} - ARIA label for accessibility */
-    ariaLabel = 'Loading content'
-  } = $props();
+  /** @type {string} - ARIA label for accessibility */
+  ariaLabel = "Loading content",
+} = $props()
 
-  // Determine height based on variant
-  const computedHeight = $derived((() => {
-    if (height) return height;
-    if (size) return size;
-    
-    return {
-      text: '1em',
-      rectangle: '100px',
-      circle: '40px',
-      rounded: '40px'
-    }[variant] || '100px';
-  })());
-  
-  // Determine width based on variant
-  const computedWidth = $derived((() => {
-    if (width) return width;
-    if (size) return size;
-    if (variant === 'circle') return computedHeight;
-    
-    return '100%';
-  })());
-  
-  // Determine border radius based on variant
-  const borderRadius = $derived({
-    text: '4px',
-    rectangle: '0',
-    circle: '50%',
-    rounded: '8px'
-  }[variant] || '0');
-  
-  // Generate array for multiple lines
-  const lineArray = $derived(Array.from({ length: lines }));
-  
-  // Determine if we should render multiple lines
-  const isMultiLine = $derived(variant === 'text' && lines > 1);
+// Determine height based on variant
+const computedHeight = $derived(
+  (() => {
+    if (height) return height
+    if (size) return size
+
+    return (
+      {
+        text: "1em",
+        rectangle: "100px",
+        circle: "40px",
+        rounded: "40px",
+      }[variant] || "100px"
+    )
+  })()
+)
+
+// Determine width based on variant
+const computedWidth = $derived(
+  (() => {
+    if (width) return width
+    if (size) return size
+    if (variant === "circle") return computedHeight
+
+    return "100%"
+  })()
+)
+
+// Determine border radius based on variant
+const borderRadius = $derived(
+  {
+    text: "4px",
+    rectangle: "0",
+    circle: "50%",
+    rounded: "8px",
+  }[variant] || "0"
+)
+
+// Generate array for multiple lines
+const lineArray = $derived(Array.from({ length: lines }))
+
+// Determine if we should render multiple lines
+const isMultiLine = $derived(variant === "text" && lines > 1)
 </script>
 
 {#if isMultiLine}

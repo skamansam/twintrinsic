@@ -12,7 +12,8 @@
     "format": "biome format --write .",
     "lint": "biome lint .",
     "test:e2e": "playwright test",
-    "test": "npm run test:e2e",
+    "test:unit": "vitest",
+    "test": "pnpm run test:e2e && pnpm run test:unit",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

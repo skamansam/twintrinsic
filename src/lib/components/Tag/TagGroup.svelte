@@ -27,67 +27,67 @@ Usage:
 ```
 -->
 <script>
-  import { setContext } from 'svelte';
+import { setContext } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Visual style variant passed to all tags */
-    variant = 'default',
+  /** @type {string} - Visual style variant passed to all tags */
+  variant = "default",
 
-    /** @type {string} - Size passed to all tags (sm, md, lg) */
-    size = 'md',
+  /** @type {string} - Size passed to all tags (sm, md, lg) */
+  size = "md",
 
-    /** @type {boolean} - Whether all tags are dismissible */
-    dismissible = false,
+  /** @type {boolean} - Whether all tags are dismissible */
+  dismissible = false,
 
-    /** @type {boolean} - Whether all tags are outlines */
-    outline = false,
+  /** @type {boolean} - Whether all tags are outlines */
+  outline = false,
 
-    /** @type {boolean} - Whether all tags are pills */
-    pill = false,
+  /** @type {boolean} - Whether all tags are pills */
+  pill = false,
 
-    /** @type {boolean} - Whether all tags are clickable */
-    clickable = false,
+  /** @type {boolean} - Whether all tags are clickable */
+  clickable = false,
 
-    /** @type {string} - Direction of the tag group (horizontal, vertical) */
-    direction = 'horizontal',
+  /** @type {string} - Direction of the tag group (horizontal, vertical) */
+  direction = "horizontal",
 
-    /** @type {Array} - Items to render as tags */
-    items = [],
+  /** @type {Array} - Items to render as tags */
+  items = [],
 
-    /** @type {string} - ARIA label for the tag group */
-    ariaLabel = 'Tag group',
+  /** @type {string} - ARIA label for the tag group */
+  ariaLabel = "Tag group",
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Provide context for child tags
-  setContext('tagGroup', {
-    variant,
-    size,
-    dismissible,
-    outline,
-    pill,
-    clickable
-  });
-  
-  /**
-   * Handles removing a tag
-   * @param {number} index - Index of the tag to remove
-   */
-  function handleDismiss(index) {
-    if (items.length > 0) {
-      const removedItem = items[index];
-      dispatch('dismiss', { item: removedItem, index });
-    }
+const dispatch = createEventDispatcher()
+
+// Provide context for child tags
+setContext("tagGroup", {
+  variant,
+  size,
+  dismissible,
+  outline,
+  pill,
+  clickable,
+})
+
+/**
+ * Handles removing a tag
+ * @param {number} index - Index of the tag to remove
+ */
+function handleDismiss(index) {
+  if (items.length > 0) {
+    const removedItem = items[index]
+    dispatch("dismiss", { item: removedItem, index })
   }
+}
 </script>
 
 <div

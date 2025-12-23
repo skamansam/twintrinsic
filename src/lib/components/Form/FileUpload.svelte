@@ -25,485 +25,480 @@ Usage:
 ```
 -->
 <script>
-  import { createEventDispatcher } from 'svelte';
+import { createEventDispatcher } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Name attribute for the input */
-    name,
+  /** @type {string} - Name attribute for the input */
+  name,
 
-    /** @type {Array} - Current value (array of files) */
-    value = [],
+  /** @type {Array} - Current value (array of files) */
+  value = [],
 
-    /** @type {string} - Accepted file types */
-    accept,
+  /** @type {string} - Accepted file types */
+  accept,
 
-    /** @type {boolean} - Whether multiple files can be selected */
-    multiple = false,
+  /** @type {boolean} - Whether multiple files can be selected */
+  multiple = false,
 
-    /** @type {boolean} - Whether the upload is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the upload is disabled */
+  disabled = false,
 
-    /** @type {number} - Maximum number of files allowed */
-    maxFiles,
+  /** @type {number} - Maximum number of files allowed */
+  maxFiles,
 
-    /** @type {number} - Maximum file size in bytes */
-    maxSize,
+  /** @type {number} - Maximum file size in bytes */
+  maxSize,
 
-    /** @type {boolean} - Whether to show file previews */
-    showPreviews = true,
+  /** @type {boolean} - Whether to show file previews */
+  showPreviews = true,
 
-    /** @type {boolean} - Whether to auto upload files */
-    autoUpload = false,
+  /** @type {boolean} - Whether to auto upload files */
+  autoUpload = false,
 
-    /** @type {string} - Upload URL for auto upload */
-    uploadUrl,
+  /** @type {string} - Upload URL for auto upload */
+  uploadUrl,
 
-    /** @type {Object} - Upload headers for auto upload */
-    uploadHeaders,
+  /** @type {Object} - Upload headers for auto upload */
+  uploadHeaders,
 
-    /** @type {string} - Label for the browse button */
-    browseLabel = 'Browse',
+  /** @type {string} - Label for the browse button */
+  browseLabel = "Browse",
 
-    /** @type {string} - Label for the dropzone */
-    dropzoneLabel = 'Drag files here or click to browse',
+  /** @type {string} - Label for the dropzone */
+  dropzoneLabel = "Drag files here or click to browse",
 
-    /** @type {string} - ARIA label for the file input */
-    ariaLabel = 'File upload',
+  /** @type {string} - ARIA label for the file input */
+  ariaLabel = "File upload",
 
-    dropzone,
-    previews
-  } = $props();
+  dropzone,
+  previews,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Component state
-  let files = $state(Array.isArray(value) ? [...value] : []);
-  let inputElement;
-  let dropzoneElement;
-  let isDragging = $state(false);
-  let errors = $state([]);
-  let uploading = $state(false);
-  let uploadProgress = $state({});
-  
-  // Update files when value prop changes
-  $effect(() => {
-    if (value !== files) {
-      files = Array.isArray(value) ? [...value] : [];
-    }
-  });
-  
-  /**
-   * Validates files before adding them
-   * @param {FileList|Array} newFiles - Files to validate
-   * @returns {Array} - Valid files
-   */
-  function validateFiles(newFiles) {
-    const fileArray = Array.from(newFiles);
-    const validFiles = [];
-    const newErrors = [];
-    
-    // Check max files
-    if (maxFiles && files.length + fileArray.length > maxFiles) {
+const dispatch = createEventDispatcher()
+
+// Component state
+let files = $state(Array.isArray(value) ? [...value] : [])
+let inputElement
+let dropzoneElement
+let isDragging = $state(false)
+let errors = $state([])
+let uploading = $state(false)
+let uploadProgress = $state({})
+
+// Update files when value prop changes
+$effect(() => {
+  if (value !== files) {
+    files = Array.isArray(value) ? [...value] : []
+  }
+})
+
+/**
+ * Validates files before adding them
+ * @param {FileList|Array} newFiles - Files to validate
+ * @returns {Array} - Valid files
+ */
+function validateFiles(newFiles) {
+  const fileArray = Array.from(newFiles)
+  const validFiles = []
+  const newErrors = []
+
+  // Check max files
+  if (maxFiles && files.length + fileArray.length > maxFiles) {
+    newErrors.push({
+      type: "maxFiles",
+      message: `Maximum of ${maxFiles} files allowed`,
+    })
+
+    // Only take as many files as we can
+    fileArray.splice(0, maxFiles - files.length)
+  }
+
+  // Validate each file
+  for (const file of fileArray) {
+    // Check file size
+    if (maxSize && file.size > maxSize) {
       newErrors.push({
-        type: 'maxFiles',
-        message: `Maximum of ${maxFiles} files allowed`
-      });
-      
-      // Only take as many files as we can
-      fileArray.splice(0, maxFiles - files.length);
+        type: "maxSize",
+        file,
+        message: `File "${file.name}" exceeds maximum size of ${formatBytes(maxSize)}`,
+      })
+      continue
     }
-    
-    // Validate each file
-    for (const file of fileArray) {
-      // Check file size
-      if (maxSize && file.size > maxSize) {
-        newErrors.push({
-          type: 'maxSize',
-          file,
-          message: `File "${file.name}" exceeds maximum size of ${formatBytes(maxSize)}`
-        });
-        continue;
-      }
-      
-      // Check file type if accept is specified
-      if (accept) {
-        const acceptTypes = accept.split(',').map(type => type.trim());
-        const fileType = file.type;
-        const fileExtension = `.${file.name.split('.').pop()}`;
-        
-        const isAccepted = acceptTypes.some(type => {
-          if (type.startsWith('.')) {
-            // Extension match
-            return type === fileExtension;
-          } else if (type.endsWith('/*')) {
-            // MIME type category match (e.g., image/*)
-            const category = type.replace('/*', '');
-            return fileType.startsWith(`${category}/`);
-          } else {
-            // Exact MIME type match
-            return type === fileType;
-          }
-        });
-        
-        if (!isAccepted) {
-          newErrors.push({
-            type: 'accept',
-            file,
-            message: `File "${file.name}" has an invalid file type`
-          });
-          continue;
-        }
-      }
-      
-      // File is valid
-      validFiles.push(file);
-    }
-    
-    // Dispatch errors if any
-    if (newErrors.length > 0) {
-      errors = [...errors, ...newErrors];
-      dispatch('error', { errors: newErrors });
-    }
-    
-    return validFiles;
-  }
-  
-  /**
-   * Handles file input change
-   * @param {Event} event - Change event
-   */
-  function handleInputChange(event) {
-    if (disabled) return;
-    
-    const inputFiles = event.target.files;
-    if (!inputFiles || inputFiles.length === 0) return;
-    
-    addFiles(inputFiles);
-    
-    // Reset input value so the same file can be selected again
-    if (inputElement) {
-      inputElement.value = '';
-    }
-  }
-  
-  /**
-   * Adds files to the current selection
-   * @param {FileList|Array} newFiles - Files to add
-   */
-  function addFiles(newFiles) {
-    const validFiles = validateFiles(newFiles);
-    
-    if (validFiles.length > 0) {
-      // Add new files
-      const updatedFiles = multiple ? [...files, ...validFiles] : validFiles;
-      files = updatedFiles;
-      
-      // Dispatch change event
-      dispatch('change', { files: updatedFiles });
-      
-      // Auto upload if enabled
-      if (autoUpload && uploadUrl) {
-        uploadFiles(validFiles);
-      }
-    }
-  }
-  
-  /**
-   * Removes a file from the selection
-   * @param {number} index - Index of the file to remove
-   */
-  function removeFile(index) {
-    if (disabled) return;
-    
-    const removedFile = files[index];
-    files = files.filter((_, i) => i !== index);
-    
-    // Dispatch change event
-    dispatch('change', { files });
-    
-    // Dispatch remove event
-    dispatch('remove', { file: removedFile, index });
-  }
-  
-  /**
-   * Handles drag enter event
-   * @param {DragEvent} event - Drag event
-   */
-  function handleDragEnter(event) {
-    if (disabled) return;
-    
-    event.preventDefault();
-    event.stopPropagation();
-    isDragging = true;
-  }
-  
-  /**
-   * Handles drag over event
-   * @param {DragEvent} event - Drag event
-   */
-  function handleDragOver(event) {
-    if (disabled) return;
-    
-    event.preventDefault();
-    event.stopPropagation();
-    isDragging = true;
-  }
-  
-  /**
-   * Handles drag leave event
-   * @param {DragEvent} event - Drag event
-   */
-  function handleDragLeave(event) {
-    if (disabled) return;
-    
-    event.preventDefault();
-    event.stopPropagation();
-    
-    // Only set isDragging to false if we're leaving the dropzone
-    // and not entering a child element
-    const rect = dropzoneElement.getBoundingClientRect();
-    const x = event.clientX;
-    const y = event.clientY;
-    
-    if (
-      x < rect.left ||
-      x >= rect.right ||
-      y < rect.top ||
-      y >= rect.bottom
-    ) {
-      isDragging = false;
-    }
-  }
-  
-  /**
-   * Handles drop event
-   * @param {DragEvent} event - Drop event
-   */
-  function handleDrop(event) {
-    if (disabled) return;
-    
-    event.preventDefault();
-    event.stopPropagation();
-    isDragging = false;
-    
-    const droppedFiles = event.dataTransfer.files;
-    if (!droppedFiles || droppedFiles.length === 0) return;
-    
-    addFiles(droppedFiles);
-  }
-  
-  /**
-   * Opens the file browser
-   */
-  function browse(evt) {
-    evt.stopPropagation();
-    if (disabled) return;
-    
-    if (inputElement) {
-      inputElement.click();
-    }
-  }
-  
-  /**
-   * Uploads files to the server
-   * @param {Array} filesToUpload - Files to upload
-   */
-  async function uploadFiles(filesToUpload) {
-    if (!uploadUrl || !filesToUpload.length) return;
-    
-    uploading = true;
-    
-    // Create FormData
-    const formData = new FormData();
-    
-    // Add files to FormData
-    filesToUpload.forEach((file, index) => {
-      formData.append(name || 'files', file, file.name);
-      uploadProgress[file.name] = 0;
-    });
-    
-    try {
-      // Create upload request
-      const xhr = new XMLHttpRequest();
-      
-      // Track progress
-      xhr.upload.addEventListener('progress', (event) => {
-        if (event.lengthComputable) {
-          const progress = Math.round((event.loaded / event.total) * 100);
-          
-          // Update progress for all files in this batch
-          filesToUpload.forEach(file => {
-            uploadProgress[file.name] = progress;
-          });
-          
-          // Force update
-          uploadProgress = { ...uploadProgress };
-          
-          // Dispatch progress event
-          dispatch('progress', { progress, files: filesToUpload });
-        }
-      });
-      
-      // Set up completion handler
-      xhr.addEventListener('load', () => {
-        if (xhr.status >= 200 && xhr.status < 300) {
-          // Success
-          filesToUpload.forEach(file => {
-            uploadProgress[file.name] = 100;
-          });
-          
-          // Force update
-          uploadProgress = { ...uploadProgress };
-          
-          // Dispatch success event
-          dispatch('success', {
-            response: xhr.response,
-            files: filesToUpload
-          });
+
+    // Check file type if accept is specified
+    if (accept) {
+      const acceptTypes = accept.split(",").map((type) => type.trim())
+      const fileType = file.type
+      const fileExtension = `.${file.name.split(".").pop()}`
+
+      const isAccepted = acceptTypes.some((type) => {
+        if (type.startsWith(".")) {
+          // Extension match
+          return type === fileExtension
+        } else if (type.endsWith("/*")) {
+          // MIME type category match (e.g., image/*)
+          const category = type.replace("/*", "")
+          return fileType.startsWith(`${category}/`)
         } else {
-          // Error
-          const error = {
-            type: 'upload',
-            status: xhr.status,
-            message: `Upload failed with status ${xhr.status}`,
-            response: xhr.response
-          };
-          
-          errors = [...errors, error];
-          
-          // Dispatch error event
-          dispatch('error', { errors: [error] });
+          // Exact MIME type match
+          return type === fileType
         }
-        
-        uploading = false;
-      });
-      
-      // Set up error handler
-      xhr.addEventListener('error', () => {
-        const error = {
-          type: 'upload',
-          message: 'Network error during upload'
-        };
-        
-        errors = [...errors, error];
-        
-        // Dispatch error event
-        dispatch('error', { errors: [error] });
-        
-        uploading = false;
-      });
-      
-      // Open and send request
-      xhr.open('POST', uploadUrl);
-      
-      // Add headers if provided
-      if (uploadHeaders) {
-        Object.entries(uploadHeaders).forEach(([key, value]) => {
-          xhr.setRequestHeader(key, value);
-        });
+      })
+
+      if (!isAccepted) {
+        newErrors.push({
+          type: "accept",
+          file,
+          message: `File "${file.name}" has an invalid file type`,
+        })
+        continue
       }
-      
-      xhr.send(formData);
-    } catch (error) {
-      const errorObj = {
-        type: 'upload',
-        message: error.message || 'Error during upload'
-      };
-      
-      errors = [...errors, errorObj];
-      
-      // Dispatch error event
-      dispatch('error', { errors: [errorObj] });
-      
-      uploading = false;
+    }
+
+    // File is valid
+    validFiles.push(file)
+  }
+
+  // Dispatch errors if any
+  if (newErrors.length > 0) {
+    errors = [...errors, ...newErrors]
+    dispatch("error", { errors: newErrors })
+  }
+
+  return validFiles
+}
+
+/**
+ * Handles file input change
+ * @param {Event} event - Change event
+ */
+function handleInputChange(event) {
+  if (disabled) return
+
+  const inputFiles = event.target.files
+  if (!inputFiles || inputFiles.length === 0) return
+
+  addFiles(inputFiles)
+
+  // Reset input value so the same file can be selected again
+  if (inputElement) {
+    inputElement.value = ""
+  }
+}
+
+/**
+ * Adds files to the current selection
+ * @param {FileList|Array} newFiles - Files to add
+ */
+function addFiles(newFiles) {
+  const validFiles = validateFiles(newFiles)
+
+  if (validFiles.length > 0) {
+    // Add new files
+    const updatedFiles = multiple ? [...files, ...validFiles] : validFiles
+    files = updatedFiles
+
+    // Dispatch change event
+    dispatch("change", { files: updatedFiles })
+
+    // Auto upload if enabled
+    if (autoUpload && uploadUrl) {
+      uploadFiles(validFiles)
     }
   }
-  
-  /**
-   * Formats bytes to human-readable size
-   * @param {number} bytes - Bytes to format
-   * @returns {string} - Formatted size
-   */
-  function formatBytes(bytes) {
-    if (bytes === 0) return '0 Bytes';
-    
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+/**
+ * Removes a file from the selection
+ * @param {number} index - Index of the file to remove
+ */
+function removeFile(index) {
+  if (disabled) return
+
+  const removedFile = files[index]
+  files = files.filter((_, i) => i !== index)
+
+  // Dispatch change event
+  dispatch("change", { files })
+
+  // Dispatch remove event
+  dispatch("remove", { file: removedFile, index })
+}
+
+/**
+ * Handles drag enter event
+ * @param {DragEvent} event - Drag event
+ */
+function handleDragEnter(event) {
+  if (disabled) return
+
+  event.preventDefault()
+  event.stopPropagation()
+  isDragging = true
+}
+
+/**
+ * Handles drag over event
+ * @param {DragEvent} event - Drag event
+ */
+function handleDragOver(event) {
+  if (disabled) return
+
+  event.preventDefault()
+  event.stopPropagation()
+  isDragging = true
+}
+
+/**
+ * Handles drag leave event
+ * @param {DragEvent} event - Drag event
+ */
+function handleDragLeave(event) {
+  if (disabled) return
+
+  event.preventDefault()
+  event.stopPropagation()
+
+  // Only set isDragging to false if we're leaving the dropzone
+  // and not entering a child element
+  const rect = dropzoneElement.getBoundingClientRect()
+  const x = event.clientX
+  const y = event.clientY
+
+  if (x < rect.left || x >= rect.right || y < rect.top || y >= rect.bottom) {
+    isDragging = false
   }
-  
-  /**
-   * Gets file icon based on file type
-   * @param {File} file - File to get icon for
-   * @returns {string} - Icon HTML
-   */
-  function getFileIcon(file) {
-    const type = file.type;
-    
-    if (type.startsWith('image/')) {
-      return `
+}
+
+/**
+ * Handles drop event
+ * @param {DragEvent} event - Drop event
+ */
+function handleDrop(event) {
+  if (disabled) return
+
+  event.preventDefault()
+  event.stopPropagation()
+  isDragging = false
+
+  const droppedFiles = event.dataTransfer.files
+  if (!droppedFiles || droppedFiles.length === 0) return
+
+  addFiles(droppedFiles)
+}
+
+/**
+ * Opens the file browser
+ */
+function browse(evt) {
+  evt.stopPropagation()
+  if (disabled) return
+
+  if (inputElement) {
+    inputElement.click()
+  }
+}
+
+/**
+ * Uploads files to the server
+ * @param {Array} filesToUpload - Files to upload
+ */
+async function uploadFiles(filesToUpload) {
+  if (!uploadUrl || !filesToUpload.length) return
+
+  uploading = true
+
+  // Create FormData
+  const formData = new FormData()
+
+  // Add files to FormData
+  filesToUpload.forEach((file, index) => {
+    formData.append(name || "files", file, file.name)
+    uploadProgress[file.name] = 0
+  })
+
+  try {
+    // Create upload request
+    const xhr = new XMLHttpRequest()
+
+    // Track progress
+    xhr.upload.addEventListener("progress", (event) => {
+      if (event.lengthComputable) {
+        const progress = Math.round((event.loaded / event.total) * 100)
+
+        // Update progress for all files in this batch
+        filesToUpload.forEach((file) => {
+          uploadProgress[file.name] = progress
+        })
+
+        // Force update
+        uploadProgress = { ...uploadProgress }
+
+        // Dispatch progress event
+        dispatch("progress", { progress, files: filesToUpload })
+      }
+    })
+
+    // Set up completion handler
+    xhr.addEventListener("load", () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        // Success
+        filesToUpload.forEach((file) => {
+          uploadProgress[file.name] = 100
+        })
+
+        // Force update
+        uploadProgress = { ...uploadProgress }
+
+        // Dispatch success event
+        dispatch("success", {
+          response: xhr.response,
+          files: filesToUpload,
+        })
+      } else {
+        // Error
+        const error = {
+          type: "upload",
+          status: xhr.status,
+          message: `Upload failed with status ${xhr.status}`,
+          response: xhr.response,
+        }
+
+        errors = [...errors, error]
+
+        // Dispatch error event
+        dispatch("error", { errors: [error] })
+      }
+
+      uploading = false
+    })
+
+    // Set up error handler
+    xhr.addEventListener("error", () => {
+      const error = {
+        type: "upload",
+        message: "Network error during upload",
+      }
+
+      errors = [...errors, error]
+
+      // Dispatch error event
+      dispatch("error", { errors: [error] })
+
+      uploading = false
+    })
+
+    // Open and send request
+    xhr.open("POST", uploadUrl)
+
+    // Add headers if provided
+    if (uploadHeaders) {
+      Object.entries(uploadHeaders).forEach(([key, value]) => {
+        xhr.setRequestHeader(key, value)
+      })
+    }
+
+    xhr.send(formData)
+  } catch (error) {
+    const errorObj = {
+      type: "upload",
+      message: error.message || "Error during upload",
+    }
+
+    errors = [...errors, errorObj]
+
+    // Dispatch error event
+    dispatch("error", { errors: [errorObj] })
+
+    uploading = false
+  }
+}
+
+/**
+ * Formats bytes to human-readable size
+ * @param {number} bytes - Bytes to format
+ * @returns {string} - Formatted size
+ */
+function formatBytes(bytes) {
+  if (bytes === 0) return "0 Bytes"
+
+  const k = 1024
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB"]
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
+}
+
+/**
+ * Gets file icon based on file type
+ * @param {File} file - File to get icon for
+ * @returns {string} - Icon HTML
+ */
+function getFileIcon(file) {
+  const type = file.type
+
+  if (type.startsWith("image/")) {
+    return `
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
         </svg>
-      `;
-    } else if (type.startsWith('video/')) {
-      return `
+      `
+  } else if (type.startsWith("video/")) {
+    return `
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
         </svg>
-      `;
-    } else if (type.startsWith('audio/')) {
-      return `
+      `
+  } else if (type.startsWith("audio/")) {
+    return `
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
         </svg>
-      `;
-    } else if (type === 'application/pdf') {
-      return `
+      `
+  } else if (type === "application/pdf") {
+    return `
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
         </svg>
-      `;
-    } else {
-      return `
+      `
+  } else {
+    return `
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
         </svg>
-      `;
-    }
+      `
   }
-  
-  /**
-   * Creates an image preview URL
-   * @param {File} file - File to preview
-   * @returns {string} - Preview URL
-   */
-  function createPreviewUrl(file) {
-    if (!file) return '';
-    
-    if (file.type.startsWith('image/')) {
-      return URL.createObjectURL(file);
-    }
-    
-    return '';
+}
+
+/**
+ * Creates an image preview URL
+ * @param {File} file - File to preview
+ * @returns {string} - Preview URL
+ */
+function createPreviewUrl(file) {
+  if (!file) return ""
+
+  if (file.type.startsWith("image/")) {
+    return URL.createObjectURL(file)
   }
-  
-  // Clean up object URLs on component destroy
-  onDestroy(() => {
-    files.forEach(file => {
-      if (file.preview) {
-        URL.revokeObjectURL(file.preview);
-      }
-    });
-  });
+
+  return ""
+}
+
+// Clean up object URLs on component destroy
+onDestroy(() => {
+  files.forEach((file) => {
+    if (file.preview) {
+      URL.revokeObjectURL(file.preview)
+    }
+  })
+})
 </script>
 
 <div

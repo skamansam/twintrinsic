@@ -15,98 +15,98 @@ Usage:
 ```
 -->
 <script>
-  import { onMount } from 'svelte';
+import { onMount } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {number} - Threshold for intersection (0-1), where 1 means fully visible */
-    threshold = 0.1,
+  /** @type {number} - Threshold for intersection (0-1), where 1 means fully visible */
+  threshold = 0.1,
 
-    /** @type {string} - Margin around the root element for intersection detection */
-    rootMargin = '0px',
+  /** @type {string} - Margin around the root element for intersection detection */
+  rootMargin = "0px",
 
-    /** @type {boolean} - Whether to keep content rendered after it's been visible once */
-    keepRendered = true,
+  /** @type {boolean} - Whether to keep content rendered after it's been visible once */
+  keepRendered = true,
 
-    /** @type {boolean} - Whether to show a loading indicator while content is loading */
-    showLoading = false,
+  /** @type {boolean} - Whether to show a loading indicator while content is loading */
+  showLoading = false,
 
-    /** @type {number} - Delay in ms before showing content after it becomes visible */
-    delay = 0,
+  /** @type {number} - Delay in ms before showing content after it becomes visible */
+  delay = 0,
 
-    children,
-    placeholder
-  } = $props();
+  children,
+  placeholder,
+} = $props()
 
-  // State
-  let isVisible = $state(false);
-  let hasBeenVisible = $state(false);
-  let shouldRender = $state(false);
-  let element;
+// State
+let isVisible = $state(false)
+let hasBeenVisible = $state(false)
+let shouldRender = $state(false)
+let element
 
-  /**
-   * Handles intersection changes
-   * @param {IntersectionObserverEntry[]} entries - Intersection entries
-   */
-  function handleIntersection(entries) {
-    const [entry] = entries;
-    
-    if (entry.isIntersecting) {
-      isVisible = true;
-      hasBeenVisible = true;
-      
-      if (delay > 0) {
-        setTimeout(() => {
-          shouldRender = true;
-        }, delay);
-      } else {
-        shouldRender = true;
-      }
-      
-      // If we only need to detect visibility once, disconnect the observer
-      if (keepRendered) {
-        observer?.disconnect();
-      }
+/**
+ * Handles intersection changes
+ * @param {IntersectionObserverEntry[]} entries - Intersection entries
+ */
+function handleIntersection(entries) {
+  const [entry] = entries
+
+  if (entry.isIntersecting) {
+    isVisible = true
+    hasBeenVisible = true
+
+    if (delay > 0) {
+      setTimeout(() => {
+        shouldRender = true
+      }, delay)
     } else {
-      isVisible = false;
-      
-      // If we're not keeping rendered content, unrender when not visible
-      if (!keepRendered) {
-        shouldRender = false;
-      }
+      shouldRender = true
+    }
+
+    // If we only need to detect visibility once, disconnect the observer
+    if (keepRendered) {
+      observer?.disconnect()
+    }
+  } else {
+    isVisible = false
+
+    // If we're not keeping rendered content, unrender when not visible
+    if (!keepRendered) {
+      shouldRender = false
     }
   }
+}
 
-  let observer;
+let observer
 
-  onMount(() => {
-    // Check if IntersectionObserver is available
-    if ('IntersectionObserver' in window) {
-      observer = new IntersectionObserver(handleIntersection, {
-        root: null, // viewport
-        rootMargin,
-        threshold
-      });
-      
-      if (element) {
-        observer.observe(element);
-      }
-    } else {
-      // Fallback for browsers that don't support IntersectionObserver
-      shouldRender = true;
-      isVisible = true;
-      hasBeenVisible = true;
+onMount(() => {
+  // Check if IntersectionObserver is available
+  if ("IntersectionObserver" in window) {
+    observer = new IntersectionObserver(handleIntersection, {
+      root: null, // viewport
+      rootMargin,
+      threshold,
+    })
+
+    if (element) {
+      observer.observe(element)
     }
-    
-    return () => {
-      observer?.disconnect();
-    };
-  });
+  } else {
+    // Fallback for browsers that don't support IntersectionObserver
+    shouldRender = true
+    isVisible = true
+    hasBeenVisible = true
+  }
+
+  return () => {
+    observer?.disconnect()
+  }
+})
 </script>
 
 <div 

@@ -29,268 +29,270 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, createEventDispatcher } from 'svelte';
+import { getContext, createEventDispatcher } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Input name */
-    name,
+  /** @type {string} - Input name */
+  name,
 
-    /** @type {number} - Input value */
-    value = 0,
+  /** @type {number} - Input value */
+  value = 0,
 
-    /** @type {string} - Placeholder text */
-    placeholder = '',
+  /** @type {string} - Placeholder text */
+  placeholder = "",
 
-    /** @type {number} - Minimum allowed value */
-    min,
+  /** @type {number} - Minimum allowed value */
+  min,
 
-    /** @type {number} - Maximum allowed value */
-    max,
+  /** @type {number} - Maximum allowed value */
+  max,
 
-    /** @type {number} - Step increment/decrement amount */
-    step = 1,
+  /** @type {number} - Step increment/decrement amount */
+  step = 1,
 
-    /** @type {number} - Number of decimal places to display */
-    decimalPlaces,
+  /** @type {number} - Number of decimal places to display */
+  decimalPlaces,
 
-    /** @type {string} - Text to display before the number */
-    prefix,
+  /** @type {string} - Text to display before the number */
+  prefix,
 
-    /** @type {string} - Text to display after the number */
-    suffix,
+  /** @type {string} - Text to display after the number */
+  suffix,
 
-    /** @type {boolean} - Whether to show increment/decrement buttons */
-    showButtons = true,
+  /** @type {boolean} - Whether to show increment/decrement buttons */
+  showButtons = true,
 
-    /** @type {boolean} - Whether to arrange buttons vertically */
-    verticalButtons = false,
+  /** @type {boolean} - Whether to arrange buttons vertically */
+  verticalButtons = false,
 
-    /** @type {boolean} - Whether the input is required */
-    required = false,
+  /** @type {boolean} - Whether the input is required */
+  required = false,
 
-    /** @type {boolean} - Whether the input is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the input is disabled */
+  disabled = false,
 
-    /** @type {boolean} - Whether the input is readonly */
-    readonly = false,
+  /** @type {boolean} - Whether the input is readonly */
+  readonly = false,
 
-    /** @type {string} - Size of the input (sm, md, lg) */
-    size = 'md',
+  /** @type {string} - Size of the input (sm, md, lg) */
+  size = "md",
 
-    /** @type {string} - ARIA label for accessibility */
-    ariaLabel
-  } = $props();
+  /** @type {string} - ARIA label for accessibility */
+  ariaLabel,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Get form context if available
-  const formContext = getContext('form');
-  
-  // Generate unique ID if not provided
-  const inputId = id || `number-input-${crypto.randomUUID()}`;
-  
-  // Input state
-  let inputValue = $state(formatValue(value));
-  let numericValue = $state(value);
-  let isFocused = $state(false);
-  let inputEl;
-  
-  // Register with form if available
-  let fieldApi;
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, value);
-    
-    // Update value when form field changes
-    $effect(() => {
-      const formValue = fieldApi.getValue();
-      if (formValue !== undefined && formValue !== numericValue) {
-        numericValue = formValue;
-        inputValue = formatValue(formValue);
-      }
-    });
-  }
-  
-  // Update internal value when prop changes
+const dispatch = createEventDispatcher()
+
+// Get form context if available
+const formContext = getContext("form")
+
+// Generate unique ID if not provided
+const inputId = id || `number-input-${crypto.randomUUID()}`
+
+// Input state
+let inputValue = $state(formatValue(value))
+let numericValue = $state(value)
+let isFocused = $state(false)
+let inputEl
+
+// Register with form if available
+let fieldApi
+if (formContext && name) {
+  fieldApi = formContext.registerField(name, value)
+
+  // Update value when form field changes
   $effect(() => {
-    if (value !== numericValue) {
-      numericValue = value;
-      inputValue = formatValue(value);
+    const formValue = fieldApi.getValue()
+    if (formValue !== undefined && formValue !== numericValue) {
+      numericValue = formValue
+      inputValue = formatValue(formValue)
     }
-  });
-  
-  /**
-   * Formats a numeric value for display
-   * @param {number} val - Value to format
-   * @returns {string} - Formatted value
-   */
-  function formatValue(val) {
-    if (val === undefined || val === null) return '';
-    
-    let formatted = decimalPlaces !== undefined
-      ? val.toFixed(decimalPlaces)
-      : val.toString();
-    
-    return formatted;
+  })
+}
+
+// Update internal value when prop changes
+$effect(() => {
+  if (value !== numericValue) {
+    numericValue = value
+    inputValue = formatValue(value)
   }
-  
-  /**
-   * Parses a string value to a number
-   * @param {string} val - Value to parse
-   * @returns {number} - Parsed number
-   */
-  function parseValue(val) {
-    if (!val) return 0;
-    
-    // Remove non-numeric characters except decimal point
-    const numericString = val.replace(/[^\d.-]/g, '');
-    return parseFloat(numericString);
+})
+
+/**
+ * Formats a numeric value for display
+ * @param {number} val - Value to format
+ * @returns {string} - Formatted value
+ */
+function formatValue(val) {
+  if (val === undefined || val === null) return ""
+
+  let formatted = decimalPlaces !== undefined ? val.toFixed(decimalPlaces) : val.toString()
+
+  return formatted
+}
+
+/**
+ * Parses a string value to a number
+ * @param {string} val - Value to parse
+ * @returns {number} - Parsed number
+ */
+function parseValue(val) {
+  if (!val) return 0
+
+  // Remove non-numeric characters except decimal point
+  const numericString = val.replace(/[^\d.-]/g, "")
+  return parseFloat(numericString)
+}
+
+/**
+ * Constrains a value to min/max bounds
+ * @param {number} val - Value to constrain
+ * @returns {number} - Constrained value
+ */
+function constrainValue(val) {
+  let constrained = val
+
+  if (min !== undefined && constrained < min) {
+    constrained = min
   }
-  
-  /**
-   * Constrains a value to min/max bounds
-   * @param {number} val - Value to constrain
-   * @returns {number} - Constrained value
-   */
-  function constrainValue(val) {
-    let constrained = val;
-    
-    if (min !== undefined && constrained < min) {
-      constrained = min;
-    }
-    
-    if (max !== undefined && constrained > max) {
-      constrained = max;
-    }
-    
-    return constrained;
+
+  if (max !== undefined && constrained > max) {
+    constrained = max
   }
-  
-  /**
-   * Increments the current value
-   */
-  function increment() {
-    if (disabled || readonly) return;
-    
-    const currentValue = parseValue(inputValue);
-    const newValue = constrainValue(currentValue + step);
-    
-    numericValue = newValue;
-    inputValue = formatValue(newValue);
-    
+
+  return constrained
+}
+
+/**
+ * Increments the current value
+ */
+function increment() {
+  if (disabled || readonly) return
+
+  const currentValue = parseValue(inputValue)
+  const newValue = constrainValue(currentValue + step)
+
+  numericValue = newValue
+  inputValue = formatValue(newValue)
+
+  // Update form field if available
+  if (fieldApi) {
+    fieldApi.setValue(newValue)
+  }
+
+  dispatch("change", { value: newValue })
+}
+
+/**
+ * Decrements the current value
+ */
+function decrement() {
+  if (disabled || readonly) return
+
+  const currentValue = parseValue(inputValue)
+  const newValue = constrainValue(currentValue - step)
+
+  numericValue = newValue
+  inputValue = formatValue(newValue)
+
+  // Update form field if available
+  if (fieldApi) {
+    fieldApi.setValue(newValue)
+  }
+
+  dispatch("change", { value: newValue })
+}
+
+/**
+ * Handles input change
+ * @param {Event} event - Input event
+ */
+function handleInput(event) {
+  const rawValue = event.target.value
+  inputValue = rawValue
+
+  // Only update numeric value if it's a valid number
+  const parsed = parseValue(rawValue)
+  if (!isNaN(parsed)) {
+    numericValue = parsed
+
     // Update form field if available
     if (fieldApi) {
-      fieldApi.setValue(newValue);
+      fieldApi.setValue(parsed)
     }
-    
-    dispatch('change', { value: newValue });
+
+    dispatch("input", { value: parsed })
   }
-  
-  /**
-   * Decrements the current value
-   */
-  function decrement() {
-    if (disabled || readonly) return;
-    
-    const currentValue = parseValue(inputValue);
-    const newValue = constrainValue(currentValue - step);
-    
-    numericValue = newValue;
-    inputValue = formatValue(newValue);
-    
-    // Update form field if available
-    if (fieldApi) {
-      fieldApi.setValue(newValue);
-    }
-    
-    dispatch('change', { value: newValue });
+}
+
+/**
+ * Handles blur event
+ */
+function handleBlur() {
+  // Format and constrain the value on blur
+  const parsed = parseValue(inputValue)
+  const constrained = constrainValue(parsed)
+
+  numericValue = constrained
+  inputValue = formatValue(constrained)
+
+  // Update form field if available
+  if (fieldApi) {
+    fieldApi.setValue(constrained)
   }
-  
-  /**
-   * Handles input change
-   * @param {Event} event - Input event
-   */
-  function handleInput(event) {
-    const rawValue = event.target.value;
-    inputValue = rawValue;
-    
-    // Only update numeric value if it's a valid number
-    const parsed = parseValue(rawValue);
-    if (!isNaN(parsed)) {
-      numericValue = parsed;
-      
-      // Update form field if available
-      if (fieldApi) {
-        fieldApi.setValue(parsed);
-      }
-      
-      dispatch('input', { value: parsed });
-    }
+
+  isFocused = false
+  dispatch("blur")
+  dispatch("change", { value: constrained })
+}
+
+/**
+ * Handles focus event
+ */
+function handleFocus() {
+  isFocused = true
+  dispatch("focus")
+}
+
+/**
+ * Handles keydown event
+ * @param {KeyboardEvent} event - Keydown event
+ */
+function handleKeydown(event) {
+  if (disabled || readonly) return
+
+  if (event.key === "ArrowUp") {
+    event.preventDefault()
+    increment()
+  } else if (event.key === "ArrowDown") {
+    event.preventDefault()
+    decrement()
   }
-  
-  /**
-   * Handles blur event
-   */
-  function handleBlur() {
-    // Format and constrain the value on blur
-    const parsed = parseValue(inputValue);
-    const constrained = constrainValue(parsed);
-    
-    numericValue = constrained;
-    inputValue = formatValue(constrained);
-    
-    // Update form field if available
-    if (fieldApi) {
-      fieldApi.setValue(constrained);
-    }
-    
-    isFocused = false;
-    dispatch('blur');
-    dispatch('change', { value: constrained });
-  }
-  
-  /**
-   * Handles focus event
-   */
-  function handleFocus() {
-    isFocused = true;
-    dispatch('focus');
-  }
-  
-  /**
-   * Handles keydown event
-   * @param {KeyboardEvent} event - Keydown event
-   */
-  function handleKeydown(event) {
-    if (disabled || readonly) return;
-    
-    if (event.key === 'ArrowUp') {
-      event.preventDefault();
-      increment();
-    } else if (event.key === 'ArrowDown') {
-      event.preventDefault();
-      decrement();
-    }
-  }
-  
-  // Determine size classes
-  const sizeClasses = $derived({
-    sm: 'h-8 text-sm',
-    md: 'h-10 text-base',
-    lg: 'h-12 text-lg'
-  }[size] || 'h-10 text-base');
-  
-  // Determine button size classes
-  const buttonSizeClasses = $derived({
-    sm: 'w-6 h-6',
-    md: 'w-8 h-8',
-    lg: 'w-10 h-10'
-  }[size] || 'w-8 h-8');
+}
+
+// Determine size classes
+const sizeClasses = $derived(
+  {
+    sm: "h-8 text-sm",
+    md: "h-10 text-base",
+    lg: "h-12 text-lg",
+  }[size] || "h-10 text-base"
+)
+
+// Determine button size classes
+const buttonSizeClasses = $derived(
+  {
+    sm: "w-6 h-6",
+    md: "w-8 h-8",
+    lg: "w-10 h-10",
+  }[size] || "w-8 h-8"
+)
 </script>
 
 <div

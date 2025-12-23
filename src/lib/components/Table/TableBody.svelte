@@ -20,12 +20,12 @@ Usage:
 ```
 -->
 <script>
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    children
-  } = $props();
+  children,
+} = $props()
 </script>
 
 <tbody class="table-body {className}">

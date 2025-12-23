@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography';
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
 
 /* Ensure light mode colors are applied by default */
 :root {
@@ -16,7 +16,7 @@
   --color-primary-700: #6d28d9;
   --color-primary-800: #5b21b6;
   --color-primary-900: #4c1d95;
-  
+
   /* Secondary (Indigo) */
   --color-secondary-50: #eef2ff;
   --color-secondary-100: #e0e7ff;
@@ -28,7 +28,7 @@
   --color-secondary-700: #4338ca;
   --color-secondary-800: #3730a3;
   --color-secondary-900: #312e81;
-  
+
   /* Success (Green) */
   --color-success-50: #f0fdf4;
   --color-success-100: #dcfce7;
@@ -40,7 +40,7 @@
   --color-success-700: #15803d;
   --color-success-800: #166534;
   --color-success-900: #14532d;
-  
+
   /* Warning (Amber) */
   --color-warning-50: #fffbeb;
   --color-warning-100: #fef3c7;
@@ -52,7 +52,7 @@
   --color-warning-700: #b45309;
   --color-warning-800: #92400e;
   --color-warning-900: #78350f;
-  
+
   /* Error (Red) */
   --color-error-50: #fef2f2;
   --color-error-100: #fee2e2;
@@ -64,7 +64,7 @@
   --color-error-700: #b91c1c;
   --color-error-800: #991b1b;
   --color-error-900: #7f1d1d;
-  
+
   /* Info (Blue) */
   --color-info-50: #eff6ff;
   --color-info-100: #dbeafe;
@@ -139,7 +139,7 @@
   --color-primary-700: #6d28d9;
   --color-primary-800: #5b21b6;
   --color-primary-900: #4c1d95;
-  
+
   /* Secondary (Indigo) */
   --color-secondary-50: #eef2ff;
   --color-secondary-100: #e0e7ff;
@@ -151,7 +151,7 @@
   --color-secondary-700: #4338ca;
   --color-secondary-800: #3730a3;
   --color-secondary-900: #312e81;
-  
+
   /* Success (Green) */
   --color-success-50: #f0fdf4;
   --color-success-100: #dcfce7;
@@ -163,7 +163,7 @@
   --color-success-700: #15803d;
   --color-success-800: #166534;
   --color-success-900: #14532d;
-  
+
   /* Warning (Amber) */
   --color-warning-50: #fffbeb;
   --color-warning-100: #fef3c7;
@@ -175,7 +175,7 @@
   --color-warning-700: #b45309;
   --color-warning-800: #92400e;
   --color-warning-900: #78350f;
-  
+
   /* Error (Red) */
   --color-error-50: #fef2f2;
   --color-error-100: #fee2e2;
@@ -187,7 +187,7 @@
   --color-error-700: #b91c1c;
   --color-error-800: #991b1b;
   --color-error-900: #7f1d1d;
-  
+
   /* Info (Blue) */
   --color-info-50: #eff6ff;
   --color-info-100: #dbeafe;
@@ -217,7 +217,7 @@
   --color-secondary: var(--color-secondary-500);
   --color-secondary-bg: var(--color-secondary-50);
   --color-secondary-hover: var(--color-secondary-600);
-  --color-secondary-text: #ffffff;  /* #166534 */
+  --color-secondary-text: #ffffff; /* #166534 */
   --color-secondary-bold: var(--color-secondary-700);
 
   --color-success: var(--color-success-500);
@@ -250,14 +250,7 @@
 }
 
 /* Dark mode overrides using Tailwind's class-based approach */
-:where(
-  .dark,
-  .dark *,
-  [dark],
-  [dark] *,
-  [data-themed]:has(.tw-theme-toggle .tw-theme:checked),
-  [data-themed]:has(.tw-theme-toggle .tw-theme:checked) *,
-) {
+:where(.dark, .dark *, [dark], [dark] *, [data-themed]:has(.tw-theme-toggle .tw-theme:checked)) {
   /* Primary (Purple) - Dark Mode */
   --color-primary-50: #2d2b55;
   --color-primary-100: #393679;
@@ -269,7 +262,7 @@
   --color-primary-700: #b18aff;
   --color-primary-800: #c3a0ff;
   --color-primary-900: #d4b6ff;
-  
+
   /* Secondary (Indigo) - Dark Mode */
   --color-secondary-50: #2a2954;
   --color-secondary-100: #343275;
@@ -281,7 +274,7 @@
   --color-secondary-700: #9895f6;
   --color-secondary-800: #b2b0f8;
   --color-secondary-900: #cdccfa;
-  
+
   /* Success (Green) - Dark Mode */
   --color-success-50: #052e16;
   --color-success-100: #073f21;
@@ -293,7 +286,7 @@
   --color-success-700: #34d399;
   --color-success-800: #6ee7b7;
   --color-success-900: #a7f3d0;
-  
+
   /* Warning (Amber) - Dark Mode */
   --color-warning-50: #422006;
   --color-warning-100: #583004;
@@ -305,7 +298,7 @@
   --color-warning-700: #fbbf24;
   --color-warning-800: #fcd34d;
   --color-warning-900: #fde68a;
-  
+
   /* Error (Red) - Dark Mode */
   --color-error-50: #450a0a;
   --color-error-100: #5f0f0f;
@@ -317,7 +310,7 @@
   --color-error-700: #f87171;
   --color-error-800: #fca5a5;
   --color-error-900: #fee2e2;
-  
+
   /* Info (Blue) - Dark Mode */
   --color-info-50: #0c2447;
   --color-info-100: #0f2e5e;
@@ -347,15 +340,14 @@
   --color-error-text: var(--color-error-200);
   --color-info-text: var(--color-info-200);
 
-
   /* Interactive States */
   --color-hover: #1e1b4b;
   --color-focus-ring: var(--color-primary-400);
 }
 
 /* Dark mode for nested data-themed elements with a checked checkbox - must come after light mode rule to override it */
-[data-themed]:has(.tw-theme-toggle .tw-theme:checked) [data-themed]:has(.tw-theme-toggle .tw-theme:checked),
-[data-themed]:has(.tw-theme-toggle .tw-theme:checked) [data-themed]:has(.tw-theme-toggle .tw-theme:checked) * {
+[data-themed]:has(.tw-theme-toggle .tw-theme:checked)
+  [data-themed]:has(.tw-theme-toggle .tw-theme:checked) {
   /* Primary (Purple) - Dark Mode */
   --color-primary-50: #2d2b55;
   --color-primary-100: #393679;
@@ -367,7 +359,7 @@
   --color-primary-700: #b18aff;
   --color-primary-800: #c3a0ff;
   --color-primary-900: #d4b6ff;
-  
+
   /* Secondary (Indigo) - Dark Mode */
   --color-secondary-50: #2a2954;
   --color-secondary-100: #343275;
@@ -379,7 +371,7 @@
   --color-secondary-700: #9895f6;
   --color-secondary-800: #b2b0f8;
   --color-secondary-900: #cdccfa;
-  
+
   /* Success (Green) - Dark Mode */
   --color-success-50: #052e16;
   --color-success-100: #073f21;
@@ -391,7 +383,7 @@
   --color-success-700: #34d399;
   --color-success-800: #6ee7b7;
   --color-success-900: #a7f3d0;
-  
+
   /* Warning (Amber) - Dark Mode */
   --color-warning-50: #422006;
   --color-warning-100: #583004;
@@ -403,7 +395,7 @@
   --color-warning-700: #fbbf24;
   --color-warning-800: #fcd34d;
   --color-warning-900: #fde68a;
-  
+
   /* Error (Red) - Dark Mode */
   --color-error-50: #450a0a;
   --color-error-100: #5f0f0f;
@@ -415,7 +407,7 @@
   --color-error-700: #f87171;
   --color-error-800: #fca5a5;
   --color-error-900: #fee2e2;
-  
+
   /* Info (Blue) - Dark Mode */
   --color-info-50: #0c2447;
   --color-info-100: #0f2e5e;
@@ -462,7 +454,7 @@
   --color-primary-700: #6d28d9;
   --color-primary-800: #5b21b6;
   --color-primary-900: #4c1d95;
-  
+
   /* Secondary (Indigo) */
   --color-secondary-50: #eef2ff;
   --color-secondary-100: #e0e7ff;
@@ -474,7 +466,7 @@
   --color-secondary-700: #4338ca;
   --color-secondary-800: #3730a3;
   --color-secondary-900: #312e81;
-  
+
   /* Success (Green) */
   --color-success-50: #f0fdf4;
   --color-success-100: #dcfce7;
@@ -486,7 +478,7 @@
   --color-success-700: #15803d;
   --color-success-800: #166534;
   --color-success-900: #14532d;
-  
+
   /* Warning (Amber) */
   --color-warning-50: #fffbeb;
   --color-warning-100: #fef3c7;
@@ -498,7 +490,7 @@
   --color-warning-700: #b45309;
   --color-warning-800: #92400e;
   --color-warning-900: #78350f;
-  
+
   /* Error (Red) */
   --color-error-50: #fef2f2;
   --color-error-100: #fee2e2;
@@ -510,7 +502,7 @@
   --color-error-700: #b91c1c;
   --color-error-800: #991b1b;
   --color-error-900: #7f1d1d;
-  
+
   /* Info (Blue) */
   --color-info-50: #eff6ff;
   --color-info-100: #dbeafe;
@@ -556,7 +548,7 @@
   --color-primary-700: #6d28d9;
   --color-primary-800: #5b21b6;
   --color-primary-900: #4c1d95;
-  
+
   /* Secondary (Indigo) */
   --color-secondary-50: #eef2ff;
   --color-secondary-100: #e0e7ff;
@@ -568,7 +560,7 @@
   --color-secondary-700: #4338ca;
   --color-secondary-800: #3730a3;
   --color-secondary-900: #312e81;
-  
+
   /* Success (Green) */
   --color-success-50: #f0fdf4;
   --color-success-100: #dcfce7;
@@ -580,7 +572,7 @@
   --color-success-700: #15803d;
   --color-success-800: #166534;
   --color-success-900: #14532d;
-  
+
   /* Warning (Amber) */
   --color-warning-50: #fffbeb;
   --color-warning-100: #fef3c7;
@@ -592,7 +584,7 @@
   --color-warning-700: #b45309;
   --color-warning-800: #92400e;
   --color-warning-900: #78350f;
-  
+
   /* Error (Red) */
   --color-error-50: #fef2f2;
   --color-error-100: #fee2e2;
@@ -604,7 +596,7 @@
   --color-error-700: #b91c1c;
   --color-error-800: #991b1b;
   --color-error-900: #7f1d1d;
-  
+
   /* Info (Blue) */
   --color-info-50: #eff6ff;
   --color-info-100: #dbeafe;
@@ -672,6 +664,11 @@ pre code {
 }
 
 /* Override heading colors to respect theme toggle */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--color-text);
 }

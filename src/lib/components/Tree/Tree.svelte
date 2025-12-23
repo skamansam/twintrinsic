@@ -32,75 +32,75 @@ Usage:
 ```
 -->
 <script>
-  import { setContext } from 'svelte';
+import { setContext } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {boolean} - Whether nodes can be selected */
-    selectable = false,
+  /** @type {boolean} - Whether nodes can be selected */
+  selectable = false,
 
-    /** @type {boolean} - Whether multiple nodes can be selected */
-    multiSelect = false,
+  /** @type {boolean} - Whether multiple nodes can be selected */
+  multiSelect = false,
 
-    /** @type {Array} - Selected node keys */
-    selected = [],
+  /** @type {Array} - Selected node keys */
+  selected = [],
 
-    /** @type {boolean} - Whether to show icons */
-    showIcons = true,
+  /** @type {boolean} - Whether to show icons */
+  showIcons = true,
 
-    /** @type {boolean} - Whether to show lines connecting nodes */
-    showLines = true,
+  /** @type {boolean} - Whether to show lines connecting nodes */
+  showLines = true,
 
-    /** @type {string} - ARIA label for the tree */
-    ariaLabel = 'Tree',
+  /** @type {string} - ARIA label for the tree */
+  ariaLabel = "Tree",
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  // Component state
-  let selectedNodes = $state(Array.isArray(selected) ? [...selected] : []);
-  
-  // Provide context for child components
-  setContext('tree', {
-    selectable,
-    multiSelect,
-    showIcons,
-    showLines,
-    isSelected: (key) => selectedNodes.includes(key),
-    toggleSelection: (key) => {
-      if (selectable) {
-        if (selectedNodes.includes(key)) {
-          // Remove if already selected
-          if (multiSelect) {
-            selectedNodes = selectedNodes.filter(k => k !== key);
-          } else {
-            // For single select, clicking the selected item again doesn't deselect it
-          }
+// Component state
+let selectedNodes = $state(Array.isArray(selected) ? [...selected] : [])
+
+// Provide context for child components
+setContext("tree", {
+  selectable,
+  multiSelect,
+  showIcons,
+  showLines,
+  isSelected: (key) => selectedNodes.includes(key),
+  toggleSelection: (key) => {
+    if (selectable) {
+      if (selectedNodes.includes(key)) {
+        // Remove if already selected
+        if (multiSelect) {
+          selectedNodes = selectedNodes.filter((k) => k !== key)
         } else {
-          // Add if not selected
-          if (multiSelect) {
-            selectedNodes = [...selectedNodes, key];
-          } else {
-            selectedNodes = [key];
-          }
+          // For single select, clicking the selected item again doesn't deselect it
         }
-        
-        dispatch('select', { selected: selectedNodes });
+      } else {
+        // Add if not selected
+        if (multiSelect) {
+          selectedNodes = [...selectedNodes, key]
+        } else {
+          selectedNodes = [key]
+        }
       }
+
+      dispatch("select", { selected: selectedNodes })
     }
-  });
-  
-  // Update selected state when prop changes
-  $effect(() => {
-    if (selected !== selectedNodes) {
-      selectedNodes = Array.isArray(selected) ? [...selected] : [];
-    }
-  });
+  },
+})
+
+// Update selected state when prop changes
+$effect(() => {
+  if (selected !== selectedNodes) {
+    selectedNodes = Array.isArray(selected) ? [...selected] : []
+  }
+})
 </script>
 
 <div

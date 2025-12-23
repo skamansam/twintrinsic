@@ -28,119 +28,123 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, onMount } from 'svelte';
+import { getContext, onMount } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Step title */
-    title,
+  /** @type {string} - Step title */
+  title,
 
-    /** @type {string} - Step subtitle or description */
-    subtitle,
+  /** @type {string} - Step subtitle or description */
+  subtitle,
 
-    /** @type {string} - Custom icon (HTML or SVG string) */
-    icon,
+  /** @type {string} - Custom icon (HTML or SVG string) */
+  icon,
 
-    /** @type {boolean} - Whether the step is optional */
-    optional = false,
+  /** @type {boolean} - Whether the step is optional */
+  optional = false,
 
-    /** @type {boolean} - Whether the step is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the step is disabled */
+  disabled = false,
 
-    /** @type {boolean} - Whether the step is completed */
-    completed = false,
+  /** @type {boolean} - Whether the step is completed */
+  completed = false,
 
-    /** @type {boolean} - Whether the step is active */
-    active = false,
+  /** @type {boolean} - Whether the step is active */
+  active = false,
 
-    /** @type {boolean} - Whether the step has an error */
-    error = false,
+  /** @type {boolean} - Whether the step has an error */
+  error = false,
 
-    /** @type {boolean} - Whether to expand the step content (for vertical orientation) */
-    expanded = false,
+  /** @type {boolean} - Whether to expand the step content (for vertical orientation) */
+  expanded = false,
 
-    /** @type {Function} - Click handler for the step */
-    onClick,
+  /** @type {Function} - Click handler for the step */
+  onClick,
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  // Get stepper context
-  const stepperContext = getContext('stepper');
-  
-  // Component state
-  let stepElement;
-  let index = $state(-1);
-  
-  // Register with parent on mount
-  onMount(() => {
-    if (stepElement) {
-      // Find our index among siblings
-      const parent = stepElement.parentElement;
-      if (parent) {
-        const steps = Array.from(parent.children);
-        index = steps.indexOf(stepElement);
-      }
-    }
-  });
-  
-  // Determine step state based on context and props
-  const stepState = $derived(() => {
-    if (error) return 'error';
-    if (completed) return 'completed';
-    if (active) return 'active';
-    
-    // If not explicitly set, use context
-    if (stepperContext && index >= 0) {
-      return stepperContext.getStepState(index);
-    }
-    
-    return 'pending';
-  });
-  
-  // Determine if this is the last step
-  const isLast = $derived(!stepElement?.nextElementSibling);
-  
-  // Determine if step is clickable
-  const isClickable = $derived(!!onClick && !disabled);
-  
-  // Determine if content should be shown
-  const showContent = $derived((stepperContext?.orientation === 'vertical' && (expanded || stepState === 'active')) && !!children);
-  
-  // Determine variant from context
-  const variant = $derived(stepperContext?.variant || 'primary');
-  
-  // Determine orientation from context
-  const orientation = $derived(stepperContext?.orientation || 'horizontal');
-  
-  // Determine if using alternative labels
-  const alternativeLabels = $derived(stepperContext?.alternativeLabels || false);
-  
-  // Determine if showing connector
-  const showConnector = $derived(stepperContext?.connector !== false && !isLast);
-  
-  // Determine variant classes
-  const variantClasses = $derived({
-    default: 'text-muted dark:text-muted',
-    primary: 'text-primary-500 dark:text-primary-500',
-    secondary: 'text-secondary-500 dark:text-secondary-500',
-    success: 'text-success-500 dark:text-success-500',
-    warning: 'text-warning-500 dark:text-warning-500',
-    error: 'text-error-500 dark:text-error-500',
-    info: 'text-info-500 dark:text-info-500'
-  }[variant] || 'text-primary-500 dark:text-primary-500');
-  
-  // Handle click on step
-  function handleClick() {
-    if (isClickable) {
-      onClick(index);
+// Get stepper context
+const stepperContext = getContext("stepper")
+
+// Component state
+let stepElement
+let index = $state(-1)
+
+// Register with parent on mount
+onMount(() => {
+  if (stepElement) {
+    // Find our index among siblings
+    const parent = stepElement.parentElement
+    if (parent) {
+      const steps = Array.from(parent.children)
+      index = steps.indexOf(stepElement)
     }
   }
+})
+
+// Determine step state based on context and props
+const stepState = $derived(() => {
+  if (error) return "error"
+  if (completed) return "completed"
+  if (active) return "active"
+
+  // If not explicitly set, use context
+  if (stepperContext && index >= 0) {
+    return stepperContext.getStepState(index)
+  }
+
+  return "pending"
+})
+
+// Determine if this is the last step
+const isLast = $derived(!stepElement?.nextElementSibling)
+
+// Determine if step is clickable
+const isClickable = $derived(!!onClick && !disabled)
+
+// Determine if content should be shown
+const showContent = $derived(
+  stepperContext?.orientation === "vertical" && (expanded || stepState === "active") && !!children
+)
+
+// Determine variant from context
+const variant = $derived(stepperContext?.variant || "primary")
+
+// Determine orientation from context
+const orientation = $derived(stepperContext?.orientation || "horizontal")
+
+// Determine if using alternative labels
+const alternativeLabels = $derived(stepperContext?.alternativeLabels || false)
+
+// Determine if showing connector
+const showConnector = $derived(stepperContext?.connector !== false && !isLast)
+
+// Determine variant classes
+const variantClasses = $derived(
+  {
+    default: "text-muted dark:text-muted",
+    primary: "text-primary-500 dark:text-primary-500",
+    secondary: "text-secondary-500 dark:text-secondary-500",
+    success: "text-success-500 dark:text-success-500",
+    warning: "text-warning-500 dark:text-warning-500",
+    error: "text-error-500 dark:text-error-500",
+    info: "text-info-500 dark:text-info-500",
+  }[variant] || "text-primary-500 dark:text-primary-500"
+)
+
+// Handle click on step
+function handleClick() {
+  if (isClickable) {
+    onClick(index)
+  }
+}
 </script>
 
 <div

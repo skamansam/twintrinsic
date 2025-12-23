@@ -32,269 +32,269 @@ Usage:
 ```
 -->
 <script>
-  import { onMount, onDestroy, setContext } from 'svelte';
+import { onMount, onDestroy, setContext } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {number} - Index of the active slide (0-based) */
-    activeIndex = 0,
+  /** @type {number} - Index of the active slide (0-based) */
+  activeIndex = 0,
 
-    /** @type {boolean} - Whether to show navigation arrows */
-    showArrows = true,
+  /** @type {boolean} - Whether to show navigation arrows */
+  showArrows = true,
 
-    /** @type {boolean} - Whether to show slide indicators */
-    showIndicators = true,
+  /** @type {boolean} - Whether to show slide indicators */
+  showIndicators = true,
 
-    /** @type {boolean} - Whether to enable autoplay */
-    autoplay = false,
+  /** @type {boolean} - Whether to enable autoplay */
+  autoplay = false,
 
-    /** @type {number} - Autoplay interval in milliseconds */
-    interval = 3000,
+  /** @type {number} - Autoplay interval in milliseconds */
+  interval = 3000,
 
-    /** @type {boolean} - Whether to pause autoplay on hover */
-    pauseOnHover = true,
+  /** @type {boolean} - Whether to pause autoplay on hover */
+  pauseOnHover = true,
 
-    /** @type {boolean} - Whether to enable circular navigation */
-    circular = true,
+  /** @type {boolean} - Whether to enable circular navigation */
+  circular = true,
 
-    /** @type {boolean} - Whether to enable swipe gestures on touch devices */
-    swipeable = true,
+  /** @type {boolean} - Whether to enable swipe gestures on touch devices */
+  swipeable = true,
 
-    /** @type {string} - Transition effect (slide, fade) */
-    transition = 'slide',
+  /** @type {string} - Transition effect (slide, fade) */
+  transition = "slide",
 
-    /** @type {number} - Transition duration in milliseconds */
-    transitionDuration = 300,
+  /** @type {number} - Transition duration in milliseconds */
+  transitionDuration = 300,
 
-    /** @type {string} - ARIA label for the carousel */
-    ariaLabel = 'Carousel',
+  /** @type {string} - ARIA label for the carousel */
+  ariaLabel = "Carousel",
 
-    /** @type {string} - ARIA label for the previous button */
-    prevAriaLabel = 'Previous slide',
+  /** @type {string} - ARIA label for the previous button */
+  prevAriaLabel = "Previous slide",
 
-    /** @type {string} - ARIA label for the next button */
-    nextAriaLabel = 'Next slide',
+  /** @type {string} - ARIA label for the next button */
+  nextAriaLabel = "Next slide",
 
-    /** @type {string} - Custom previous arrow icon */
-    prevIcon,
+  /** @type {string} - Custom previous arrow icon */
+  prevIcon,
 
-    /** @type {string} - Custom next arrow icon */
-    nextIcon,
+  /** @type {string} - Custom next arrow icon */
+  nextIcon,
 
-    items
-  } = $props();
+  items,
+} = $props()
 
-  // Component state
-  let currentIndex = $state(activeIndex);
-  let totalSlides = $state(0);
-  let isPlaying = $state(autoplay);
-  let isHovering = $state(false);
-  let isDragging = $state(false);
-  let startX = 0;
-  let currentX = 0;
-  let carouselElement;
-  let itemsElement;
-  let autoplayInterval;
-  let slideWidth = 0;
-  let touchStartTime = 0;
-  
-  // Update current index when activeIndex prop changes
-  $effect(() => {
-    currentIndex = activeIndex;
-  });
-  
-  // Provide context for child components
-  setContext('carousel', {
-    registerItem: () => {
-      totalSlides++;
-      return totalSlides - 1;
-    },
-    currentIndex,
-    transition,
-    transitionDuration
-  });
-  
-  // Set up autoplay
-  $effect(() => {
-    clearInterval(autoplayInterval);
-    
-    if (isPlaying && !isHovering && !isDragging && totalSlides > 1) {
-      autoplayInterval = setInterval(() => {
-        goToNext();
-      }, interval);
-    }
-    
-    return () => clearInterval(autoplayInterval);
-  });
-  
-  /**
-   * Goes to the previous slide
-   */
-  function goToPrev() {
-    if (currentIndex > 0) {
-      currentIndex--;
-    } else if (circular) {
-      currentIndex = totalSlides - 1;
-    }
-    
-    dispatchChange();
+// Component state
+let currentIndex = $state(activeIndex)
+let totalSlides = $state(0)
+let isPlaying = $state(autoplay)
+let isHovering = $state(false)
+let isDragging = $state(false)
+let startX = 0
+let currentX = 0
+let carouselElement
+let itemsElement
+let autoplayInterval
+let slideWidth = 0
+let touchStartTime = 0
+
+// Update current index when activeIndex prop changes
+$effect(() => {
+  currentIndex = activeIndex
+})
+
+// Provide context for child components
+setContext("carousel", {
+  registerItem: () => {
+    totalSlides++
+    return totalSlides - 1
+  },
+  currentIndex,
+  transition,
+  transitionDuration,
+})
+
+// Set up autoplay
+$effect(() => {
+  clearInterval(autoplayInterval)
+
+  if (isPlaying && !isHovering && !isDragging && totalSlides > 1) {
+    autoplayInterval = setInterval(() => {
+      goToNext()
+    }, interval)
   }
-  
-  /**
-   * Goes to the next slide
-   */
-  function goToNext() {
-    if (currentIndex < totalSlides - 1) {
-      currentIndex++;
-    } else if (circular) {
-      currentIndex = 0;
-    }
-    
-    dispatchChange();
+
+  return () => clearInterval(autoplayInterval)
+})
+
+/**
+ * Goes to the previous slide
+ */
+function goToPrev() {
+  if (currentIndex > 0) {
+    currentIndex--
+  } else if (circular) {
+    currentIndex = totalSlides - 1
   }
-  
-  /**
-   * Goes to a specific slide
-   * @param {number} index - Slide index
-   */
-  function goToSlide(index) {
-    if (index >= 0 && index < totalSlides) {
-      currentIndex = index;
-      dispatchChange();
-    }
+
+  dispatchChange()
+}
+
+/**
+ * Goes to the next slide
+ */
+function goToNext() {
+  if (currentIndex < totalSlides - 1) {
+    currentIndex++
+  } else if (circular) {
+    currentIndex = 0
   }
-  
-  /**
-   * Dispatches change event
-   */
-  function dispatchChange() {
-    dispatch('change', { index: currentIndex });
+
+  dispatchChange()
+}
+
+/**
+ * Goes to a specific slide
+ * @param {number} index - Slide index
+ */
+function goToSlide(index) {
+  if (index >= 0 && index < totalSlides) {
+    currentIndex = index
+    dispatchChange()
   }
-  
-  /**
-   * Handles mouse enter event
-   */
-  function handleMouseEnter() {
-    if (pauseOnHover) {
-      isHovering = true;
-    }
+}
+
+/**
+ * Dispatches change event
+ */
+function dispatchChange() {
+  dispatch("change", { index: currentIndex })
+}
+
+/**
+ * Handles mouse enter event
+ */
+function handleMouseEnter() {
+  if (pauseOnHover) {
+    isHovering = true
   }
-  
-  /**
-   * Handles mouse leave event
-   */
-  function handleMouseLeave() {
-    isHovering = false;
-  }
-  
-  /**
-   * Handles touch start event
-   * @param {TouchEvent} event - Touch event
-   */
-  function handleTouchStart(event) {
-    if (!swipeable) return;
-    
-    isDragging = true;
-    startX = event.touches[0].clientX;
-    currentX = startX;
-    touchStartTime = Date.now();
-  }
-  
-  /**
-   * Handles touch move event
-   * @param {TouchEvent} event - Touch event
-   */
-  function handleTouchMove(event) {
-    if (!swipeable || !isDragging) return;
-    
-    currentX = event.touches[0].clientX;
-    
-    // Prevent default to avoid scrolling
-    event.preventDefault();
-  }
-  
-  /**
-   * Handles touch end event
-   */
-  function handleTouchEnd() {
-    if (!swipeable || !isDragging) return;
-    
-    const deltaX = currentX - startX;
-    const deltaTime = Date.now() - touchStartTime;
-    
-    // Determine if it was a swipe (fast movement)
-    const isSwipe = Math.abs(deltaX) > 50 && deltaTime < 300;
-    
-    // Determine if it was a drag (slow movement but significant distance)
-    const isDrag = Math.abs(deltaX) > slideWidth / 3;
-    
-    if (isSwipe || isDrag) {
-      if (deltaX > 0) {
-        goToPrev();
-      } else {
-        goToNext();
-      }
-    }
-    
-    isDragging = false;
-  }
-  
-  /**
-   * Handles key down event
-   * @param {KeyboardEvent} event - Key event
-   */
-  function handleKeyDown(event) {
-    switch (event.key) {
-      case 'ArrowLeft':
-        goToPrev();
-        event.preventDefault();
-        break;
-      case 'ArrowRight':
-        goToNext();
-        event.preventDefault();
-        break;
-      case 'Home':
-        goToSlide(0);
-        event.preventDefault();
-        break;
-      case 'End':
-        goToSlide(totalSlides - 1);
-        event.preventDefault();
-        break;
+}
+
+/**
+ * Handles mouse leave event
+ */
+function handleMouseLeave() {
+  isHovering = false
+}
+
+/**
+ * Handles touch start event
+ * @param {TouchEvent} event - Touch event
+ */
+function handleTouchStart(event) {
+  if (!swipeable) return
+
+  isDragging = true
+  startX = event.touches[0].clientX
+  currentX = startX
+  touchStartTime = Date.now()
+}
+
+/**
+ * Handles touch move event
+ * @param {TouchEvent} event - Touch event
+ */
+function handleTouchMove(event) {
+  if (!swipeable || !isDragging) return
+
+  currentX = event.touches[0].clientX
+
+  // Prevent default to avoid scrolling
+  event.preventDefault()
+}
+
+/**
+ * Handles touch end event
+ */
+function handleTouchEnd() {
+  if (!swipeable || !isDragging) return
+
+  const deltaX = currentX - startX
+  const deltaTime = Date.now() - touchStartTime
+
+  // Determine if it was a swipe (fast movement)
+  const isSwipe = Math.abs(deltaX) > 50 && deltaTime < 300
+
+  // Determine if it was a drag (slow movement but significant distance)
+  const isDrag = Math.abs(deltaX) > slideWidth / 3
+
+  if (isSwipe || isDrag) {
+    if (deltaX > 0) {
+      goToPrev()
+    } else {
+      goToNext()
     }
   }
-  
-  // Update slide width on mount and resize
-  function updateDimensions() {
-    if (carouselElement) {
-      slideWidth = carouselElement.offsetWidth;
-    }
+
+  isDragging = false
+}
+
+/**
+ * Handles key down event
+ * @param {KeyboardEvent} event - Key event
+ */
+function handleKeyDown(event) {
+  switch (event.key) {
+    case "ArrowLeft":
+      goToPrev()
+      event.preventDefault()
+      break
+    case "ArrowRight":
+      goToNext()
+      event.preventDefault()
+      break
+    case "Home":
+      goToSlide(0)
+      event.preventDefault()
+      break
+    case "End":
+      goToSlide(totalSlides - 1)
+      event.preventDefault()
+      break
   }
-  
-  // Set up resize observer
-  onMount(() => {
-    updateDimensions();
-    
-    const resizeObserver = new ResizeObserver(updateDimensions);
-    
-    if (carouselElement) {
-      resizeObserver.observe(carouselElement);
-    }
-    
-    return () => {
-      resizeObserver.disconnect();
-    };
-  });
-  
-  // Clean up on destroy
-  onDestroy(() => {
-    clearInterval(autoplayInterval);
-  });
+}
+
+// Update slide width on mount and resize
+function updateDimensions() {
+  if (carouselElement) {
+    slideWidth = carouselElement.offsetWidth
+  }
+}
+
+// Set up resize observer
+onMount(() => {
+  updateDimensions()
+
+  const resizeObserver = new ResizeObserver(updateDimensions)
+
+  if (carouselElement) {
+    resizeObserver.observe(carouselElement)
+  }
+
+  return () => {
+    resizeObserver.disconnect()
+  }
+})
+
+// Clean up on destroy
+onDestroy(() => {
+  clearInterval(autoplayInterval)
+})
 </script>
 
 <div

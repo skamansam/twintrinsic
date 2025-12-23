@@ -19,148 +19,150 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, createEventDispatcher } from 'svelte';
+import { getContext, createEventDispatcher } from "svelte"
 
-  const {
-    /** @type {string} - Input type (text, email, password, etc.) */
-    type = 'text',
+const {
+  /** @type {string} - Input type (text, email, password, etc.) */
+  type = "text",
 
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id,
+  /** @type {string} - HTML id for accessibility */
+  id,
 
-    /** @type {string} - Input name */
-    name,
+  /** @type {string} - Input name */
+  name,
 
-    /** @type {string} - Input placeholder */
-    placeholder = '',
+  /** @type {string} - Input placeholder */
+  placeholder = "",
 
-    /** @type {string} - Input value */
-    value = '',
+  /** @type {string} - Input value */
+  value = "",
 
-    /** @type {boolean} - Whether the input is required */
-    required = false,
+  /** @type {boolean} - Whether the input is required */
+  required = false,
 
-    /** @type {boolean} - Whether the input is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the input is disabled */
+  disabled = false,
 
-    /** @type {boolean} - Whether the input is readonly */
-    readonly = false,
+  /** @type {boolean} - Whether the input is readonly */
+  readonly = false,
 
-    /** @type {string} - Minimum length */
-    minlength,
+  /** @type {string} - Minimum length */
+  minlength,
 
-    /** @type {string} - Maximum length */
-    maxlength,
+  /** @type {string} - Maximum length */
+  maxlength,
 
-    /** @type {string} - Pattern for validation */
-    pattern,
+  /** @type {string} - Pattern for validation */
+  pattern,
 
-    /** @type {string} - Autocomplete attribute */
-    autocomplete,
+  /** @type {string} - Autocomplete attribute */
+  autocomplete,
 
-    /** @type {string} - Input size (sm, md, lg) */
-    size = 'md',
+  /** @type {string} - Input size (sm, md, lg) */
+  size = "md",
 
-    /** @type {boolean} - Whether to show a clear button */
-    clearable = false,
+  /** @type {boolean} - Whether to show a clear button */
+  clearable = false,
 
-    /** @type {string} - Icon to show at the start of the input */
-    startIcon,
+  /** @type {string} - Icon to show at the start of the input */
+  startIcon,
 
-    /** @type {string} - Icon to show at the end of the input */
-    endIcon,
+  /** @type {string} - Icon to show at the end of the input */
+  endIcon,
 
-    /** @type {string} - ARIA label for accessibility */
-    ariaLabel,
+  /** @type {string} - ARIA label for accessibility */
+  ariaLabel,
 
-    /** @type {object} - Additional props to pass to the input element */
-    ...restProps
-  } = $props();
+  /** @type {object} - Additional props to pass to the input element */
+  ...restProps
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Get form context if available
-  const formContext = getContext('form');
-  
-  // Generate unique ID if not provided
-  const inputId = id || `input-${crypto.randomUUID()}`;
-  
-  // Input state
-  let inputValue = $state(value);
-  let isFocused = $state(false);
-  
-  // Register with form if available
-  let fieldApi;
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, value);
-    
-    // Update value when form field changes
-    $effect(() => {
-      const formValue = fieldApi.getValue();
-      if (formValue !== undefined && formValue !== inputValue) {
-        inputValue = formValue;
-      }
-    });
-  }
-  
-  /**
-   * Handles input changes
-   * @param {Event} event - Input event
-   */
-  function handleInput(event) {
-    const newValue = event.target.value;
-    inputValue = newValue;
-    
-    // Update form field if available
-    if (fieldApi) {
-      fieldApi.setValue(newValue);
+const dispatch = createEventDispatcher()
+
+// Get form context if available
+const formContext = getContext("form")
+
+// Generate unique ID if not provided
+const inputId = id || `input-${crypto.randomUUID()}`
+
+// Input state
+let inputValue = $state(value)
+let isFocused = $state(false)
+
+// Register with form if available
+let fieldApi
+if (formContext && name) {
+  fieldApi = formContext.registerField(name, value)
+
+  // Update value when form field changes
+  $effect(() => {
+    const formValue = fieldApi.getValue()
+    if (formValue !== undefined && formValue !== inputValue) {
+      inputValue = formValue
     }
-    
-    dispatch('input', { value: newValue });
-    dispatch('change', { value: newValue });
+  })
+}
+
+/**
+ * Handles input changes
+ * @param {Event} event - Input event
+ */
+function handleInput(event) {
+  const newValue = event.target.value
+  inputValue = newValue
+
+  // Update form field if available
+  if (fieldApi) {
+    fieldApi.setValue(newValue)
   }
-  
-  /**
-   * Handles focus events
-   */
-  function handleFocus() {
-    isFocused = true;
-    dispatch('focus');
+
+  dispatch("input", { value: newValue })
+  dispatch("change", { value: newValue })
+}
+
+/**
+ * Handles focus events
+ */
+function handleFocus() {
+  isFocused = true
+  dispatch("focus")
+}
+
+/**
+ * Handles blur events
+ */
+function handleBlur() {
+  isFocused = false
+  dispatch("blur")
+}
+
+/**
+ * Clears the input value
+ */
+function clearInput() {
+  inputValue = ""
+
+  // Update form field if available
+  if (fieldApi) {
+    fieldApi.setValue("")
   }
-  
-  /**
-   * Handles blur events
-   */
-  function handleBlur() {
-    isFocused = false;
-    dispatch('blur');
-  }
-  
-  /**
-   * Clears the input value
-   */
-  function clearInput() {
-    inputValue = '';
-    
-    // Update form field if available
-    if (fieldApi) {
-      fieldApi.setValue('');
-    }
-    
-    dispatch('input', { value: '' });
-    dispatch('change', { value: '' });
-    dispatch('clear');
-  }
-  
-  // Determine input size classes
-  const sizeClasses = $derived({
-    sm: 'h-8 text-sm px-2',
-    md: 'h-10 text-base px-3',
-    lg: 'h-12 text-lg px-4'
-  }[size] || 'h-10 text-base px-3');
+
+  dispatch("input", { value: "" })
+  dispatch("change", { value: "" })
+  dispatch("clear")
+}
+
+// Determine input size classes
+const sizeClasses = $derived(
+  {
+    sm: "h-8 text-sm px-2",
+    md: "h-10 text-base px-3",
+    lg: "h-12 text-lg px-4",
+  }[size] || "h-10 text-base px-3"
+)
 </script>
 
 <div class="input-wrapper {className}">

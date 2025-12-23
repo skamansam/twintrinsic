@@ -17,24 +17,24 @@ Usage:
 ```
 -->
 <script>
-  import { getContext } from 'svelte';
+import { getContext } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - ARIA label for the tablist */
-    ariaLabel,
+  /** @type {string} - ARIA label for the tablist */
+  ariaLabel,
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  // Get tabs context
-  const tabsContext = getContext('tabs');
-  
-  // Get context values with defaults
-  const centered = tabsContext?.centered || false;
-  const fullWidth = tabsContext?.fullWidth || false;
+// Get tabs context
+const tabsContext = getContext("tabs")
+
+// Get context values with defaults
+const centered = tabsContext?.centered || false
+const fullWidth = tabsContext?.fullWidth || false
 </script>
 
 <div

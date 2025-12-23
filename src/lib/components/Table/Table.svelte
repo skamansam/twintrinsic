@@ -25,51 +25,51 @@ Usage:
 ```
 -->
 <script>
-  import { createEventDispatcher, setContext } from 'svelte';
+import { createEventDispatcher, setContext } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {boolean} - Whether the table has borders */
-    bordered = false,
+  /** @type {boolean} - Whether the table has borders */
+  bordered = false,
 
-    /** @type {boolean} - Whether the table has striped rows */
-    striped = false,
+  /** @type {boolean} - Whether the table has striped rows */
+  striped = false,
 
-    /** @type {boolean} - Whether the table has hover effects on rows */
-    hoverable = false,
+  /** @type {boolean} - Whether the table has hover effects on rows */
+  hoverable = false,
 
-    /** @type {boolean} - Whether the table is compact (less padding) */
-    compact = false,
+  /** @type {boolean} - Whether the table is compact (less padding) */
+  compact = false,
 
-    /** @type {boolean} - Whether the table has a fixed layout */
-    fixed = false,
+  /** @type {boolean} - Whether the table has a fixed layout */
+  fixed = false,
 
-    /** @type {boolean} - Whether the table is responsive (horizontal scrolling) */
-    responsive = true,
+  /** @type {boolean} - Whether the table is responsive (horizontal scrolling) */
+  responsive = true,
 
-    /** @type {string} - Caption for the table (for accessibility) */
-    caption,
+  /** @type {string} - Caption for the table (for accessibility) */
+  caption,
 
-    /** @type {string} - ARIA description for the table */
-    ariaDescription,
+  /** @type {string} - ARIA description for the table */
+  ariaDescription,
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Provide context for child components
-  setContext('table', {
-    bordered,
-    striped,
-    hoverable,
-    compact
-  });
+const dispatch = createEventDispatcher()
+
+// Provide context for child components
+setContext("table", {
+  bordered,
+  striped,
+  hoverable,
+  compact,
+})
 </script>
 
 {#if responsive}

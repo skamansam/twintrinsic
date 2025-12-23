@@ -36,377 +36,379 @@ Usage:
 ```
 -->
 <script>
-  import { createEventDispatcher, tick } from 'svelte';
+import { createEventDispatcher, tick } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Name attribute for the input */
-    name,
+  /** @type {string} - Name attribute for the input */
+  name,
 
-    /** @type {Array} - Options to display in the dropdown */
-    options = [],
+  /** @type {Array} - Options to display in the dropdown */
+  options = [],
 
-    /** @type {any} - Current value */
-    value = null,
+  /** @type {any} - Current value */
+  value = null,
 
-    /** @type {string} - Placeholder text */
-    placeholder = 'Select an option',
+  /** @type {string} - Placeholder text */
+  placeholder = "Select an option",
 
-    /** @type {string} - Property name for option labels */
-    optionLabel = 'label',
+  /** @type {string} - Property name for option labels */
+  optionLabel = "label",
 
-    /** @type {string} - Property name for option values */
-    optionValue = 'value',
+  /** @type {string} - Property name for option values */
+  optionValue = "value",
 
-    /** @type {boolean} - Whether the combobox is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the combobox is disabled */
+  disabled = false,
 
-    /** @type {boolean} - Whether the combobox is readonly */
-    readonly = false,
+  /** @type {boolean} - Whether the combobox is readonly */
+  readonly = false,
 
-    /** @type {boolean} - Whether the combobox is required */
-    required = false,
+  /** @type {boolean} - Whether the combobox is required */
+  required = false,
 
-    /** @type {boolean} - Whether to allow searching */
-    searchable = true,
+  /** @type {boolean} - Whether to allow searching */
+  searchable = true,
 
-    /** @type {boolean} - Whether to allow clearing the selection */
-    clearable = true,
+  /** @type {boolean} - Whether to allow clearing the selection */
+  clearable = true,
 
-    /** @type {boolean} - Whether to show a loading indicator */
-    loading = false,
+  /** @type {boolean} - Whether to show a loading indicator */
+  loading = false,
 
-    /** @type {boolean} - Whether to automatically select the first option */
-    autoSelect = false,
+  /** @type {boolean} - Whether to automatically select the first option */
+  autoSelect = false,
 
-    /** @type {boolean} - Whether to open the dropdown on focus */
-    openOnFocus = true,
+  /** @type {boolean} - Whether to open the dropdown on focus */
+  openOnFocus = true,
 
-    /** @type {number} - Maximum height of the dropdown in pixels */
-    maxHeight = 250,
+  /** @type {number} - Maximum height of the dropdown in pixels */
+  maxHeight = 250,
 
-    /** @type {string} - ARIA label for the combobox */
-    ariaLabel,
+  /** @type {string} - ARIA label for the combobox */
+  ariaLabel,
 
-    /** @type {Function} - Custom filter function */
-    filter,
+  /** @type {Function} - Custom filter function */
+  filter,
 
-    /** @type {Function} - Custom template for options */
-    optionTemplate,
+  /** @type {Function} - Custom template for options */
+  optionTemplate,
 
-    /** @type {Function} - Custom template for selected value */
-    valueTemplate,
+  /** @type {Function} - Custom template for selected value */
+  valueTemplate,
 
-    option
-  } = $props();
+  option,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Component state
-  let inputElement;
-  let dropdownElement;
-  let isOpen = $state(false);
-  let inputValue = $state('');
-  let selectedOption = $state(null);
-  let highlightedIndex = $state(-1);
-  let filteredOptions = $state([]);
-  let inputWidth = $state(0);
-  
-  // Update selected option when value prop changes
-  $effect(() => {
-    if (value !== undefined && value !== null) {
-      const option = findOptionByValue(value);
-      selectedOption = option;
-      inputValue = option ? getOptionLabel(option) : '';
-    } else {
-      selectedOption = null;
-      if (!isOpen) {
-        inputValue = '';
-      }
-    }
-  });
-  
-  // Update filtered options when input value changes
-  $effect(() => {
-    if (searchable && isOpen) {
-      filteredOptions = filterOptions(inputValue);
-      highlightedIndex = autoSelect && filteredOptions.length > 0 ? 0 : -1;
-    } else {
-      filteredOptions = [...options];
-    }
-  });
-  
-  // Update input width when element is mounted
-  $effect(() => {
-    if (inputElement) {
-      inputWidth = inputElement.offsetWidth;
-    }
-  });
-  
-  /**
-   * Finds an option by its value
-   * @param {any} value - Value to find
-   * @returns {Object|null} - Found option or null
-   */
-  function findOptionByValue(value) {
-    if (value === null || value === undefined) return null;
-    
-    return options.find(option => {
-      const optionValue = getOptionValue(option);
-      return optionValue === value;
-    });
-  }
-  
-  /**
-   * Gets the label for an option
-   * @param {Object|string} option - Option to get label for
-   * @returns {string} - Option label
-   */
-  function getOptionLabel(option) {
-    if (!option) return '';
-    
-    if (typeof option === 'string' || typeof option === 'number') {
-      return String(option);
-    }
-    
-    return option[optionLabel] || '';
-  }
-  
-  /**
-   * Gets the value for an option
-   * @param {Object|string} option - Option to get value for
-   * @returns {any} - Option value
-   */
-  function getOptionValue(option) {
-    if (!option) return null;
-    
-    if (typeof option === 'string' || typeof option === 'number') {
-      return option;
-    }
-    
-    return option[optionValue];
-  }
-  
-  /**
-   * Filters options based on input value
-   * @param {string} query - Query to filter by
-   * @returns {Array} - Filtered options
-   */
-  function filterOptions(query) {
-    if (!query) return [...options];
-    
-    if (filter) {
-      return filter(options, query);
-    }
-    
-    return options.filter(option => {
-      const label = getOptionLabel(option).toLowerCase();
-      return label.includes(query.toLowerCase());
-    });
-  }
-  
-  /**
-   * Handles input focus
-   */
-  function handleFocus() {
-    if (disabled || readonly) return;
-    
-    if (openOnFocus) {
-      openDropdown();
-    }
-  }
-  
-  /**
-   * Handles input blur
-   */
-  function handleBlur(event) {
-    // Close dropdown after a short delay to allow for click events
-    setTimeout(() => {
-      if (document.activeElement !== inputElement && 
-          !dropdownElement?.contains(document.activeElement)) {
-        closeDropdown();
-        
-        // Reset input value if no option is selected
-        if (!selectedOption) {
-          inputValue = '';
-        } else {
-          inputValue = getOptionLabel(selectedOption);
-        }
-      }
-    }, 100);
-  }
-  
-  /**
-   * Handles input change
-   * @param {Event} event - Input event
-   */
-  function handleInput(event) {
-    if (disabled || readonly) return;
-    
-    inputValue = event.target.value;
-    
+const dispatch = createEventDispatcher()
+
+// Component state
+let inputElement
+let dropdownElement
+let isOpen = $state(false)
+let inputValue = $state("")
+let selectedOption = $state(null)
+let highlightedIndex = $state(-1)
+let filteredOptions = $state([])
+let inputWidth = $state(0)
+
+// Update selected option when value prop changes
+$effect(() => {
+  if (value !== undefined && value !== null) {
+    const option = findOptionByValue(value)
+    selectedOption = option
+    inputValue = option ? getOptionLabel(option) : ""
+  } else {
+    selectedOption = null
     if (!isOpen) {
-      openDropdown();
-    }
-    
-    // If input is cleared, clear selection
-    if (!inputValue && selectedOption) {
-      selectedOption = null;
-      dispatch('change', { value: null });
+      inputValue = ""
     }
   }
-  
-  /**
-   * Handles keydown events
-   * @param {KeyboardEvent} event - Keydown event
-   */
-  async function handleKeydown(event) {
-    if (disabled || readonly) return;
-    
-    switch (event.key) {
-      case 'ArrowDown':
-        event.preventDefault();
-        if (!isOpen) {
-          openDropdown();
-        } else {
-          highlightedIndex = Math.min(highlightedIndex + 1, filteredOptions.length - 1);
-          await scrollToHighlighted();
-        }
-        break;
-        
-      case 'ArrowUp':
-        event.preventDefault();
-        if (!isOpen) {
-          openDropdown();
-        } else {
-          highlightedIndex = Math.max(highlightedIndex - 1, 0);
-          await scrollToHighlighted();
-        }
-        break;
-        
-      case 'Enter':
-        event.preventDefault();
-        if (isOpen && highlightedIndex >= 0) {
-          selectOption(filteredOptions[highlightedIndex]);
-        } else if (!isOpen) {
-          openDropdown();
-        }
-        break;
-        
-      case 'Escape':
-        event.preventDefault();
-        if (isOpen) {
-          closeDropdown();
-          // Reset input value to selected option
-          inputValue = selectedOption ? getOptionLabel(selectedOption) : '';
-        }
-        break;
-        
-      case 'Tab':
-        if (isOpen) {
-          closeDropdown();
-          // Reset input value to selected option
-          inputValue = selectedOption ? getOptionLabel(selectedOption) : '';
-        }
-        break;
-    }
+})
+
+// Update filtered options when input value changes
+$effect(() => {
+  if (searchable && isOpen) {
+    filteredOptions = filterOptions(inputValue)
+    highlightedIndex = autoSelect && filteredOptions.length > 0 ? 0 : -1
+  } else {
+    filteredOptions = [...options]
   }
-  
-  /**
-   * Scrolls to the highlighted option
-   */
-  async function scrollToHighlighted() {
-    await tick();
-    
-    if (dropdownElement && highlightedIndex >= 0) {
-      const highlightedEl = dropdownElement.querySelector(`[data-index="${highlightedIndex}"]`);
-      if (highlightedEl) {
-        const containerRect = dropdownElement.getBoundingClientRect();
-        const optionRect = highlightedEl.getBoundingClientRect();
-        
-        if (optionRect.bottom > containerRect.bottom) {
-          dropdownElement.scrollTop += optionRect.bottom - containerRect.bottom;
-        } else if (optionRect.top < containerRect.top) {
-          dropdownElement.scrollTop -= containerRect.top - optionRect.top;
-        }
+})
+
+// Update input width when element is mounted
+$effect(() => {
+  if (inputElement) {
+    inputWidth = inputElement.offsetWidth
+  }
+})
+
+/**
+ * Finds an option by its value
+ * @param {any} value - Value to find
+ * @returns {Object|null} - Found option or null
+ */
+function findOptionByValue(value) {
+  if (value === null || value === undefined) return null
+
+  return options.find((option) => {
+    const optionValue = getOptionValue(option)
+    return optionValue === value
+  })
+}
+
+/**
+ * Gets the label for an option
+ * @param {Object|string} option - Option to get label for
+ * @returns {string} - Option label
+ */
+function getOptionLabel(option) {
+  if (!option) return ""
+
+  if (typeof option === "string" || typeof option === "number") {
+    return String(option)
+  }
+
+  return option[optionLabel] || ""
+}
+
+/**
+ * Gets the value for an option
+ * @param {Object|string} option - Option to get value for
+ * @returns {any} - Option value
+ */
+function getOptionValue(option) {
+  if (!option) return null
+
+  if (typeof option === "string" || typeof option === "number") {
+    return option
+  }
+
+  return option[optionValue]
+}
+
+/**
+ * Filters options based on input value
+ * @param {string} query - Query to filter by
+ * @returns {Array} - Filtered options
+ */
+function filterOptions(query) {
+  if (!query) return [...options]
+
+  if (filter) {
+    return filter(options, query)
+  }
+
+  return options.filter((option) => {
+    const label = getOptionLabel(option).toLowerCase()
+    return label.includes(query.toLowerCase())
+  })
+}
+
+/**
+ * Handles input focus
+ */
+function handleFocus() {
+  if (disabled || readonly) return
+
+  if (openOnFocus) {
+    openDropdown()
+  }
+}
+
+/**
+ * Handles input blur
+ */
+function handleBlur(event) {
+  // Close dropdown after a short delay to allow for click events
+  setTimeout(() => {
+    if (
+      document.activeElement !== inputElement &&
+      !dropdownElement?.contains(document.activeElement)
+    ) {
+      closeDropdown()
+
+      // Reset input value if no option is selected
+      if (!selectedOption) {
+        inputValue = ""
+      } else {
+        inputValue = getOptionLabel(selectedOption)
+      }
+    }
+  }, 100)
+}
+
+/**
+ * Handles input change
+ * @param {Event} event - Input event
+ */
+function handleInput(event) {
+  if (disabled || readonly) return
+
+  inputValue = event.target.value
+
+  if (!isOpen) {
+    openDropdown()
+  }
+
+  // If input is cleared, clear selection
+  if (!inputValue && selectedOption) {
+    selectedOption = null
+    dispatch("change", { value: null })
+  }
+}
+
+/**
+ * Handles keydown events
+ * @param {KeyboardEvent} event - Keydown event
+ */
+async function handleKeydown(event) {
+  if (disabled || readonly) return
+
+  switch (event.key) {
+    case "ArrowDown":
+      event.preventDefault()
+      if (!isOpen) {
+        openDropdown()
+      } else {
+        highlightedIndex = Math.min(highlightedIndex + 1, filteredOptions.length - 1)
+        await scrollToHighlighted()
+      }
+      break
+
+    case "ArrowUp":
+      event.preventDefault()
+      if (!isOpen) {
+        openDropdown()
+      } else {
+        highlightedIndex = Math.max(highlightedIndex - 1, 0)
+        await scrollToHighlighted()
+      }
+      break
+
+    case "Enter":
+      event.preventDefault()
+      if (isOpen && highlightedIndex >= 0) {
+        selectOption(filteredOptions[highlightedIndex])
+      } else if (!isOpen) {
+        openDropdown()
+      }
+      break
+
+    case "Escape":
+      event.preventDefault()
+      if (isOpen) {
+        closeDropdown()
+        // Reset input value to selected option
+        inputValue = selectedOption ? getOptionLabel(selectedOption) : ""
+      }
+      break
+
+    case "Tab":
+      if (isOpen) {
+        closeDropdown()
+        // Reset input value to selected option
+        inputValue = selectedOption ? getOptionLabel(selectedOption) : ""
+      }
+      break
+  }
+}
+
+/**
+ * Scrolls to the highlighted option
+ */
+async function scrollToHighlighted() {
+  await tick()
+
+  if (dropdownElement && highlightedIndex >= 0) {
+    const highlightedEl = dropdownElement.querySelector(`[data-index="${highlightedIndex}"]`)
+    if (highlightedEl) {
+      const containerRect = dropdownElement.getBoundingClientRect()
+      const optionRect = highlightedEl.getBoundingClientRect()
+
+      if (optionRect.bottom > containerRect.bottom) {
+        dropdownElement.scrollTop += optionRect.bottom - containerRect.bottom
+      } else if (optionRect.top < containerRect.top) {
+        dropdownElement.scrollTop -= containerRect.top - optionRect.top
       }
     }
   }
-  
-  /**
-   * Opens the dropdown
-   */
-  function openDropdown() {
-    if (disabled || readonly) return;
-    
-    isOpen = true;
-    filteredOptions = filterOptions(inputValue);
-    highlightedIndex = autoSelect && filteredOptions.length > 0 ? 0 : -1;
-    
-    // Focus input if not already focused
-    if (document.activeElement !== inputElement) {
-      inputElement.focus();
-    }
+}
+
+/**
+ * Opens the dropdown
+ */
+function openDropdown() {
+  if (disabled || readonly) return
+
+  isOpen = true
+  filteredOptions = filterOptions(inputValue)
+  highlightedIndex = autoSelect && filteredOptions.length > 0 ? 0 : -1
+
+  // Focus input if not already focused
+  if (document.activeElement !== inputElement) {
+    inputElement.focus()
   }
-  
-  /**
-   * Closes the dropdown
-   */
-  function closeDropdown() {
-    isOpen = false;
-    highlightedIndex = -1;
+}
+
+/**
+ * Closes the dropdown
+ */
+function closeDropdown() {
+  isOpen = false
+  highlightedIndex = -1
+}
+
+/**
+ * Selects an option
+ * @param {Object|string} option - Option to select
+ */
+function selectOption(option) {
+  selectedOption = option
+  inputValue = getOptionLabel(option)
+  closeDropdown()
+
+  const value = getOptionValue(option)
+  dispatch("change", { value, option })
+  dispatch("input", { value, option })
+}
+
+/**
+ * Clears the selection
+ * @param {Event} event - Click event
+ */
+function clearSelection(event) {
+  event.stopPropagation()
+
+  if (disabled || readonly) return
+
+  selectedOption = null
+  inputValue = ""
+
+  dispatch("change", { value: null })
+  dispatch("input", { value: null })
+
+  // Focus input after clearing
+  inputElement.focus()
+}
+
+/**
+ * Toggles the dropdown
+ */
+function toggleDropdown() {
+  if (disabled || readonly) return
+
+  if (isOpen) {
+    closeDropdown()
+  } else {
+    openDropdown()
   }
-  
-  /**
-   * Selects an option
-   * @param {Object|string} option - Option to select
-   */
-  function selectOption(option) {
-    selectedOption = option;
-    inputValue = getOptionLabel(option);
-    closeDropdown();
-    
-    const value = getOptionValue(option);
-    dispatch('change', { value, option });
-    dispatch('input', { value, option });
-  }
-  
-  /**
-   * Clears the selection
-   * @param {Event} event - Click event
-   */
-  function clearSelection(event) {
-    event.stopPropagation();
-    
-    if (disabled || readonly) return;
-    
-    selectedOption = null;
-    inputValue = '';
-    
-    dispatch('change', { value: null });
-    dispatch('input', { value: null });
-    
-    // Focus input after clearing
-    inputElement.focus();
-  }
-  
-  /**
-   * Toggles the dropdown
-   */
-  function toggleDropdown() {
-    if (disabled || readonly) return;
-    
-    if (isOpen) {
-      closeDropdown();
-    } else {
-      openDropdown();
-    }
-  }
+}
 </script>
 
 <div

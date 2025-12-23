@@ -17,202 +17,212 @@ Usage:
 ```
 -->
 <script>
-  import { onMount, createEventDispatcher } from 'svelte';
+import { onMount, createEventDispatcher } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Split direction (horizontal or vertical) */
-    direction = 'horizontal',
+  /** @type {string} - Split direction (horizontal or vertical) */
+  direction = "horizontal",
 
-    /** @type {number} - Initial size of the first panel in percentage (0-100) */
-    initialSize = 50,
+  /** @type {number} - Initial size of the first panel in percentage (0-100) */
+  initialSize = 50,
 
-    /** @type {number} - Minimum size of the first panel in percentage */
-    minSize = 10,
+  /** @type {number} - Minimum size of the first panel in percentage */
+  minSize = 10,
 
-    /** @type {number} - Maximum size of the first panel in percentage */
-    maxSize = 90,
+  /** @type {number} - Maximum size of the first panel in percentage */
+  maxSize = 90,
 
-    /** @type {boolean} - Whether the split is resizable */
-    resizable = true,
+  /** @type {boolean} - Whether the split is resizable */
+  resizable = true,
 
-    /** @type {boolean} - Whether to collapse the first panel */
-    collapseFirst = false,
+  /** @type {boolean} - Whether to collapse the first panel */
+  collapseFirst = false,
 
-    /** @type {boolean} - Whether to collapse the second panel */
-    collapseSecond = false,
+  /** @type {boolean} - Whether to collapse the second panel */
+  collapseSecond = false,
 
-    /** @type {number} - Size of the divider in pixels */
-    dividerSize = 4,
+  /** @type {number} - Size of the divider in pixels */
+  dividerSize = 4,
 
-    /** @type {string} - ARIA label for the divider */
-    dividerAriaLabel,
+  /** @type {string} - ARIA label for the divider */
+  dividerAriaLabel,
 
-    first,
-    second
-  } = $props();
+  first,
+  second,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Component state
-  let size = $state(initialSize);
-  let isDragging = $state(false);
-  let containerElement;
-  let firstPanelElement;
-  let secondPanelElement;
-  let dividerElement;
-  let startPosition = 0;
-  let startSize = 0;
-  let containerSize = 0;
-  
-  // Computed values
-  const isHorizontal = $derived(direction === 'horizontal');
-  const isVertical = $derived(direction === 'vertical');
-  const effectiveSize = $derived(collapseFirst ? 0 : collapseSecond ? 100 : size);
-  
-  // Divider aria label
-  const dividerLabel = $derived(dividerAriaLabel || 
-    `${isHorizontal ? 'Horizontal' : 'Vertical'} resizer. Use arrow keys to resize.`);
-  
-  /**
-   * Starts dragging the divider
-   * @param {MouseEvent|TouchEvent} event - Mouse or touch event
-   */
-  function startDrag(event) {
-    if (!resizable || collapseFirst || collapseSecond) return;
-    
-    isDragging = true;
-    
-    // Get starting position
-    startPosition = isHorizontal
-      ? (event.type === 'touchstart' ? event.touches[0].clientX : event.clientX)
-      : (event.type === 'touchstart' ? event.touches[0].clientY : event.clientY);
-    
-    startSize = size;
-    
-    // Get container size
-    const rect = containerElement.getBoundingClientRect();
-    containerSize = isHorizontal ? rect.width : rect.height;
-    
-    // Add event listeners for drag
-    if (event.type === 'mousedown') {
-      document.addEventListener('mousemove', handleDrag);
-      document.addEventListener('mouseup', stopDrag);
-    } else if (event.type === 'touchstart') {
-      document.addEventListener('touchmove', handleDrag, { passive: false });
-      document.addEventListener('touchend', stopDrag);
-    }
-    
-    // Prevent default to avoid text selection
-    event.preventDefault();
+const dispatch = createEventDispatcher()
+
+// Component state
+let size = $state(initialSize)
+let isDragging = $state(false)
+let containerElement
+let firstPanelElement
+let secondPanelElement
+let dividerElement
+let startPosition = 0
+let startSize = 0
+let containerSize = 0
+
+// Computed values
+const isHorizontal = $derived(direction === "horizontal")
+const isVertical = $derived(direction === "vertical")
+const effectiveSize = $derived(collapseFirst ? 0 : collapseSecond ? 100 : size)
+
+// Divider aria label
+const dividerLabel = $derived(
+  dividerAriaLabel ||
+    `${isHorizontal ? "Horizontal" : "Vertical"} resizer. Use arrow keys to resize.`
+)
+
+/**
+ * Starts dragging the divider
+ * @param {MouseEvent|TouchEvent} event - Mouse or touch event
+ */
+function startDrag(event) {
+  if (!resizable || collapseFirst || collapseSecond) return
+
+  isDragging = true
+
+  // Get starting position
+  startPosition = isHorizontal
+    ? event.type === "touchstart"
+      ? event.touches[0].clientX
+      : event.clientX
+    : event.type === "touchstart"
+      ? event.touches[0].clientY
+      : event.clientY
+
+  startSize = size
+
+  // Get container size
+  const rect = containerElement.getBoundingClientRect()
+  containerSize = isHorizontal ? rect.width : rect.height
+
+  // Add event listeners for drag
+  if (event.type === "mousedown") {
+    document.addEventListener("mousemove", handleDrag)
+    document.addEventListener("mouseup", stopDrag)
+  } else if (event.type === "touchstart") {
+    document.addEventListener("touchmove", handleDrag, { passive: false })
+    document.addEventListener("touchend", stopDrag)
   }
-  
-  /**
-   * Handles dragging the divider
-   * @param {MouseEvent|TouchEvent} event - Mouse or touch event
-   */
-  function handleDrag(event) {
-    if (!isDragging) return;
-    
-    // Get current position
-    const currentPosition = isHorizontal
-      ? (event.type === 'touchmove' ? event.touches[0].clientX : event.clientX)
-      : (event.type === 'touchmove' ? event.touches[0].clientY : event.clientY);
-    
-    // Calculate delta and new size
-    const delta = currentPosition - startPosition;
-    const deltaPercent = (delta / containerSize) * 100;
-    let newSize = startSize + deltaPercent;
-    
-    // Constrain to min/max
-    newSize = Math.max(minSize, Math.min(maxSize, newSize));
-    
-    // Update size
-    size = newSize;
-    
-    // Dispatch resize event
-    dispatch('resize', { size });
-    
-    // Prevent default to avoid scrolling on touch devices
-    event.preventDefault();
+
+  // Prevent default to avoid text selection
+  event.preventDefault()
+}
+
+/**
+ * Handles dragging the divider
+ * @param {MouseEvent|TouchEvent} event - Mouse or touch event
+ */
+function handleDrag(event) {
+  if (!isDragging) return
+
+  // Get current position
+  const currentPosition = isHorizontal
+    ? event.type === "touchmove"
+      ? event.touches[0].clientX
+      : event.clientX
+    : event.type === "touchmove"
+      ? event.touches[0].clientY
+      : event.clientY
+
+  // Calculate delta and new size
+  const delta = currentPosition - startPosition
+  const deltaPercent = (delta / containerSize) * 100
+  let newSize = startSize + deltaPercent
+
+  // Constrain to min/max
+  newSize = Math.max(minSize, Math.min(maxSize, newSize))
+
+  // Update size
+  size = newSize
+
+  // Dispatch resize event
+  dispatch("resize", { size })
+
+  // Prevent default to avoid scrolling on touch devices
+  event.preventDefault()
+}
+
+/**
+ * Stops dragging the divider
+ */
+function stopDrag() {
+  if (!isDragging) return
+
+  isDragging = false
+
+  // Remove event listeners
+  document.removeEventListener("mousemove", handleDrag)
+  document.removeEventListener("mouseup", stopDrag)
+  document.removeEventListener("touchmove", handleDrag)
+  document.removeEventListener("touchend", stopDrag)
+
+  // Dispatch resize end event
+  dispatch("resizeend", { size })
+}
+
+/**
+ * Handles keyboard navigation for resizing
+ * @param {KeyboardEvent} event - Keydown event
+ */
+function handleKeydown(event) {
+  if (!resizable || collapseFirst || collapseSecond) return
+
+  let newSize = size
+  const step = event.shiftKey ? 10 : 1
+
+  switch (event.key) {
+    case "ArrowLeft":
+      if (isHorizontal) newSize -= step
+      break
+    case "ArrowRight":
+      if (isHorizontal) newSize += step
+      break
+    case "ArrowUp":
+      if (isVertical) newSize -= step
+      break
+    case "ArrowDown":
+      if (isVertical) newSize += step
+      break
+    case "Home":
+      newSize = minSize
+      break
+    case "End":
+      newSize = maxSize
+      break
+    default:
+      return
   }
-  
-  /**
-   * Stops dragging the divider
-   */
-  function stopDrag() {
-    if (!isDragging) return;
-    
-    isDragging = false;
-    
-    // Remove event listeners
-    document.removeEventListener('mousemove', handleDrag);
-    document.removeEventListener('mouseup', stopDrag);
-    document.removeEventListener('touchmove', handleDrag);
-    document.removeEventListener('touchend', stopDrag);
-    
-    // Dispatch resize end event
-    dispatch('resizeend', { size });
+
+  // Constrain to min/max
+  newSize = Math.max(minSize, Math.min(maxSize, newSize))
+
+  // Update size if changed
+  if (newSize !== size) {
+    size = newSize
+    dispatch("resize", { size })
+    event.preventDefault()
   }
-  
-  /**
-   * Handles keyboard navigation for resizing
-   * @param {KeyboardEvent} event - Keydown event
-   */
-  function handleKeydown(event) {
-    if (!resizable || collapseFirst || collapseSecond) return;
-    
-    let newSize = size;
-    const step = event.shiftKey ? 10 : 1;
-    
-    switch (event.key) {
-      case 'ArrowLeft':
-        if (isHorizontal) newSize -= step;
-        break;
-      case 'ArrowRight':
-        if (isHorizontal) newSize += step;
-        break;
-      case 'ArrowUp':
-        if (isVertical) newSize -= step;
-        break;
-      case 'ArrowDown':
-        if (isVertical) newSize += step;
-        break;
-      case 'Home':
-        newSize = minSize;
-        break;
-      case 'End':
-        newSize = maxSize;
-        break;
-      default:
-        return;
-    }
-    
-    // Constrain to min/max
-    newSize = Math.max(minSize, Math.min(maxSize, newSize));
-    
-    // Update size if changed
-    if (newSize !== size) {
-      size = newSize;
-      dispatch('resize', { size });
-      event.preventDefault();
-    }
+}
+
+// Clean up event listeners on unmount
+onMount(() => {
+  return () => {
+    document.removeEventListener("mousemove", handleDrag)
+    document.removeEventListener("mouseup", stopDrag)
+    document.removeEventListener("touchmove", handleDrag)
+    document.removeEventListener("touchend", stopDrag)
   }
-  
-  // Clean up event listeners on unmount
-  onMount(() => {
-    return () => {
-      document.removeEventListener('mousemove', handleDrag);
-      document.removeEventListener('mouseup', stopDrag);
-      document.removeEventListener('touchmove', handleDrag);
-      document.removeEventListener('touchend', stopDrag);
-    };
-  });
+})
 </script>
 
 <div

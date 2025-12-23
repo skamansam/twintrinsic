@@ -15,80 +15,80 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, onMount } from 'svelte';
+import { getContext, onMount } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - Link URL (if item is a link) */
-    href,
+  /** @type {string} - Link URL (if item is a link) */
+  href,
 
-    /** @type {string} - Link target (_blank, _self, etc.) */
-    target,
+  /** @type {string} - Link target (_blank, _self, etc.) */
+  target,
 
-    /** @type {string} - Icon to display (HTML or SVG string) */
-    icon,
+  /** @type {string} - Icon to display (HTML or SVG string) */
+  icon,
 
-    /** @type {boolean} - Whether this is the current/active page */
-    current = false,
+  /** @type {boolean} - Whether this is the current/active page */
+  current = false,
 
-    /** @type {boolean} - Whether this item should be hidden when collapsed */
-    collapsible = true,
+  /** @type {boolean} - Whether this item should be hidden when collapsed */
+  collapsible = true,
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  // Get breadcrumb context
-  const breadcrumbContext = getContext('breadcrumb');
-  
-  // Get separator from context
-  const separator = breadcrumbContext?.separator || '/';
-  
-  // Component state
-  let itemElement;
-  let index = $state(-1);
-  let isVisible = $state(true);
-  
-  // Register with parent on mount
-  onMount(() => {
-    if (itemElement) {
-      // Find our index among siblings
-      const parent = itemElement.parentElement;
-      if (parent) {
-        const items = Array.from(parent.children);
-        index = items.indexOf(itemElement);
-        
-        // Check if we should be visible based on collapsible settings
-        if (breadcrumbContext?.collapsible && collapsible) {
-          const maxVisible = breadcrumbContext.maxVisibleItems || 1;
-          const totalItems = items.length;
-          
-          // Always show first and last items
-          if (index === 0 || index === totalItems - 1) {
-            isVisible = true;
+// Get breadcrumb context
+const breadcrumbContext = getContext("breadcrumb")
+
+// Get separator from context
+const separator = breadcrumbContext?.separator || "/"
+
+// Component state
+let itemElement
+let index = $state(-1)
+let isVisible = $state(true)
+
+// Register with parent on mount
+onMount(() => {
+  if (itemElement) {
+    // Find our index among siblings
+    const parent = itemElement.parentElement
+    if (parent) {
+      const items = Array.from(parent.children)
+      index = items.indexOf(itemElement)
+
+      // Check if we should be visible based on collapsible settings
+      if (breadcrumbContext?.collapsible && collapsible) {
+        const maxVisible = breadcrumbContext.maxVisibleItems || 1
+        const totalItems = items.length
+
+        // Always show first and last items
+        if (index === 0 || index === totalItems - 1) {
+          isVisible = true
+        } else {
+          // For middle items, only show up to maxVisible
+          const middleItems = totalItems - 2 // excluding first and last
+
+          if (middleItems <= maxVisible) {
+            // If we have fewer middle items than max, show all
+            isVisible = true
           } else {
-            // For middle items, only show up to maxVisible
-            const middleItems = totalItems - 2; // excluding first and last
-            
-            if (middleItems <= maxVisible) {
-              // If we have fewer middle items than max, show all
-              isVisible = true;
-            } else {
-              // Otherwise, only show the first maxVisible middle items
-              isVisible = index <= maxVisible;
-            }
+            // Otherwise, only show the first maxVisible middle items
+            isVisible = index <= maxVisible
           }
         }
       }
     }
-  });
-  
-  // Determine if this is the last item
-  const isLast = $derived(index === -1 || !itemElement?.nextElementSibling);
-  
-  // Determine if this is the current page
-  const isCurrent = $derived(current || isLast);
+  }
+})
+
+// Determine if this is the last item
+const isLast = $derived(index === -1 || !itemElement?.nextElementSibling)
+
+// Determine if this is the current page
+const isCurrent = $derived(current || isLast)
 </script>
 
 <li 

@@ -8,29 +8,29 @@ import { PropsTable, EventsTable } from "$lib/docs/index.js"
 
 // Sample data for examples
 const europeanCountries = [
-  { value: 'fr', label: 'France' },
-  { value: 'de', label: 'Germany' },
-  { value: 'it', label: 'Italy' },
-  { value: 'es', label: 'Spain' },
-  { value: 'uk', label: 'United Kingdom' }
+  { value: "fr", label: "France" },
+  { value: "de", label: "Germany" },
+  { value: "it", label: "Italy" },
+  { value: "es", label: "Spain" },
+  { value: "uk", label: "United Kingdom" },
 ]
 
 const northAmericanCountries = [
-  { value: 'us', label: 'United States' },
-  { value: 'ca', label: 'Canada' },
-  { value: 'mx', label: 'Mexico' }
+  { value: "us", label: "United States" },
+  { value: "ca", label: "Canada" },
+  { value: "mx", label: "Mexico" },
 ]
 
 const asianCountries = [
-  { value: 'jp', label: 'Japan' },
-  { value: 'cn', label: 'China' },
-  { value: 'in', label: 'India' },
-  { value: 'kr', label: 'South Korea' },
-  { value: 'sg', label: 'Singapore' }
+  { value: "jp", label: "Japan" },
+  { value: "cn", label: "China" },
+  { value: "in", label: "India" },
+  { value: "kr", label: "South Korea" },
+  { value: "sg", label: "Singapore" },
 ]
 
 // Selected values for examples
-let selectedCountry = ''
+let selectedCountry = ""
 </script>
 
 <h1>SelectGroup</h1>

@@ -1,22 +1,23 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
   "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
   "files": {
     "ignoreUnknown": false,
-    "ignore": [
-      "**/node_modules",
-      "**/dist",
-      "**/build",
-      "**/.DS_Store",
-      "**/Thumbs.db",
-      "**/.env",
-      "**/.env.*",
-      "**/vite.config.js.timestamp-*",
-      "**/vite.config.ts.timestamp-*",
-      "**/.vercel",
-      "**/.netlify",
-      "**/.wrangler",
-      ".svelte-kit"
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/build",
+      "!**/.DS_Store",
+      "!**/Thumbs.db",
+      "!**/.env",
+      "!**/.env.*",
+      "!**/vite.config.js.timestamp-*",
+      "!**/vite.config.ts.timestamp-*",
+      "!**/.vercel",
+      "!**/.netlify",
+      "!**/.wrangler",
+      "!**/.svelte-kit"
     ]
   },
   "formatter": {
@@ -29,25 +30,25 @@
     "lineWidth": 100,
     "attributePosition": "auto",
     "bracketSpacing": true,
-    "ignore": [
-      "**/package-lock.json",
-      "**/pnpm-lock.yaml",
-      "**/yarn.lock",
-      "**/bun.lock",
-      "**/bun.lockb"
+    "includes": [
+      "**",
+      "!**/package-lock.json",
+      "!**/pnpm-lock.yaml",
+      "!**/yarn.lock",
+      "!**/bun.lock",
+      "!**/bun.lockb"
     ]
   },
-  "organizeImports": { "enabled": true },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": false,
       "complexity": {
         "noExtraBooleanCast": "error",
-        "noMultipleSpacesInRegularExpressionLiterals": "error",
         "noUselessCatch": "error",
         "noUselessTypeConstraint": "error",
-        "noWith": "error"
+        "noAdjacentSpacesInRegex": "error"
       },
       "correctness": {
         "noConstAssign": "error",
@@ -70,15 +71,16 @@
         "noUnusedLabels": "error",
         "noUnusedPrivateClassMembers": "error",
         "noUnusedVariables": "error",
-        "useArrayLiterals": "off",
         "useIsNan": "error",
         "useValidForDirection": "error",
-        "useYield": "error"
+        "useYield": "error",
+        "useValidTypeof": "error"
       },
       "style": {
         "noNamespace": "error",
         "useAsConstAssertion": "error",
-        "useBlockStatements": "off"
+        "useBlockStatements": "off",
+        "useArrayLiterals": "off"
       },
       "suspicious": {
         "noAsyncPromiseExecutor": "error",
@@ -108,28 +110,37 @@
         "noUnsafeNegation": "error",
         "useGetterReturn": "error",
         "useNamespaceKeyword": "error",
-        "useValidTypeof": "error"
+        "noWith": "error"
       }
     },
-    "ignore": [
-      "**/test-results",
-      "**/node_modules",
-      "**/.output",
-      "**/.vercel",
-      "**/.netlify",
-      "**/.wrangler",
-      ".svelte-kit",
-      "build",
-      "dist",
-      "**/.DS_Store",
-      "**/Thumbs.db",
-      "**/.env",
-      "**/.env.*",
-      "**/vite.config.js.timestamp-*",
-      "**/vite.config.ts.timestamp-*",
-      "src/lib/paraglide",
-      "**/*storybook.log"
+    "includes": [
+      "**",
+      "!**/test-results",
+      "!**/node_modules",
+      "!**/.output",
+      "!**/.vercel",
+      "!**/.netlify",
+      "!**/.wrangler",
+      "!**/.svelte-kit",
+      "!**/build",
+      "!**/dist",
+      "!**/.DS_Store",
+      "!**/Thumbs.db",
+      "!**/.env",
+      "!**/.env.*",
+      "!**/vite.config.js.timestamp-*",
+      "!**/vite.config.ts.timestamp-*",
+      "!**/src/lib/paraglide",
+      "!**/*storybook.log"
     ]
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    },
+    "formatter": {
+      "enabled": true
+    }
   },
   "javascript": {
     "formatter": {
@@ -273,16 +284,17 @@
   },
   "overrides": [
     {
-      "include": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
+      "includes": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
       "linter": {
         "rules": {
-          "complexity": { "noWith": "off" },
+          "complexity": {
+            "noArguments": "error"
+          },
           "correctness": {
             "noConstAssign": "off",
             "noGlobalObjectCalls": "off",
             "noInvalidBuiltinInstantiation": "off",
             "noInvalidConstructorSuper": "off",
-            "noNewSymbol": "off",
             "noSetterReturn": "off",
             "noUndeclaredVariables": "off",
             "noUnreachable": "off",
@@ -292,8 +304,6 @@
             "useSortedClasses": "error"
           },
           "style": {
-            "noArguments": "error",
-            "noVar": "error",
             "useConst": "off",
             "useImportType": "off"
           },
@@ -306,13 +316,15 @@
             "noImportAssign": "off",
             "noRedeclare": "off",
             "noUnsafeNegation": "off",
-            "useGetterReturn": "off"
+            "useGetterReturn": "off",
+            "noWith": "off",
+            "noVar": "error"
           }
         }
       }
     },
     {
-      "include": ["*.svelte", "**/*.svelte"],
+      "includes": ["**/*.svelte", "**/*.svelte"],
       "javascript": { "globals": [] },
       "linter": {
         "rules": {
@@ -321,11 +333,11 @@
       }
     },
     {
-      "include": ["*.svelte.js", "*.svelte.ts", "**/*.svelte.js", "**/*.svelte.ts"],
+      "includes": ["**/*.svelte.js", "**/*.svelte.ts", "**/*.svelte.js", "**/*.svelte.ts"],
       "javascript": { "globals": [] }
     },
     {
-      "include": ["*.svelte", "**/*.svelte"],
+      "includes": ["**/*.svelte", "**/*.svelte"],
       "javascript": { "globals": [] },
       "linter": {
         "rules": {
@@ -334,14 +346,19 @@
       }
     },
     {
-      "include": ["*.svelte.js", "*.svelte.ts", "**/*.svelte.js", "**/*.svelte.ts"],
+      "includes": ["**/*.svelte.js", "**/*.svelte.ts", "**/*.svelte.js", "**/*.svelte.ts"],
       "javascript": { "globals": [] }
     },
     {
-      "ignore": ["eslint.config.js", "svelte.config.js"],
-      "include": ["**/*.svelte", "**/*.svelte.ts", "**/*.svelte.js"],
+      "includes": [
+        "**/*.svelte",
+        "**/*.svelte.ts",
+        "**/*.svelte.js",
+        "!**/eslint.config.js",
+        "!**/svelte.config.js"
+      ],
       "javascript": { "globals": [] }
     },
-    { "include": ["*.svelte"] }
+    { "includes": ["**/*.svelte"] }
   ]
 }

@@ -1,94 +1,94 @@
 <script module>
-  import { defineMeta } from "@storybook/addon-svelte-csf";
-  import Combobox from "../lib/components/Form/Combobox.svelte";
-  import { fn } from "@storybook/test";
+import { defineMeta } from "@storybook/addon-svelte-csf"
+import Combobox from "../lib/components/Form/Combobox.svelte"
+import { fn } from "@storybook/test"
 
-  const { Story } = defineMeta({
-    title: "Components/Form/Combobox",
-    component: Combobox,
-    tags: ["autodocs"],
-    argTypes: {
-      value: { control: "text" },
-      placeholder: { control: "text" },
-      disabled: { control: "boolean" },
-      readonly: { control: "boolean" },
-      required: { control: "boolean" },
-      searchable: { control: "boolean" },
-      clearable: { control: "boolean" },
-      loading: { control: "boolean" },
-      autoSelect: { control: "boolean" },
-      openOnFocus: { control: "boolean" },
-      maxHeight: { control: "number" },
-      optionLabel: { control: "text" },
-      optionValue: { control: "text" },
-    },
-    args: {
-      value: null,
-      placeholder: "Select an option",
-      disabled: false,
-      readonly: false,
-      required: false,
-      searchable: true,
-      clearable: true,
-      loading: false,
-      autoSelect: false,
-      openOnFocus: true,
-      maxHeight: 250,
-      optionLabel: "label",
-      optionValue: "value",
-      onChange: fn(),
-      onInput: fn(),
-    },
-  });
+const { Story } = defineMeta({
+  title: "Components/Form/Combobox",
+  component: Combobox,
+  tags: ["autodocs"],
+  argTypes: {
+    value: { control: "text" },
+    placeholder: { control: "text" },
+    disabled: { control: "boolean" },
+    readonly: { control: "boolean" },
+    required: { control: "boolean" },
+    searchable: { control: "boolean" },
+    clearable: { control: "boolean" },
+    loading: { control: "boolean" },
+    autoSelect: { control: "boolean" },
+    openOnFocus: { control: "boolean" },
+    maxHeight: { control: "number" },
+    optionLabel: { control: "text" },
+    optionValue: { control: "text" },
+  },
+  args: {
+    value: null,
+    placeholder: "Select an option",
+    disabled: false,
+    readonly: false,
+    required: false,
+    searchable: true,
+    clearable: true,
+    loading: false,
+    autoSelect: false,
+    openOnFocus: true,
+    maxHeight: 250,
+    optionLabel: "label",
+    optionValue: "value",
+    onChange: fn(),
+    onInput: fn(),
+  },
+})
 
-  // Sample data for the combobox
-  const fruits = [
-    "Apple", 
-    "Banana", 
-    "Cherry", 
-    "Date", 
-    "Elderberry", 
-    "Fig", 
-    "Grape", 
-    "Honeydew", 
-    "Kiwi", 
-    "Lemon", 
-    "Mango", 
-    "Orange", 
-    "Papaya", 
-    "Quince", 
-    "Raspberry", 
-    "Strawberry", 
-    "Tangerine", 
-    "Watermelon"
-  ];
+// Sample data for the combobox
+const fruits = [
+  "Apple",
+  "Banana",
+  "Cherry",
+  "Date",
+  "Elderberry",
+  "Fig",
+  "Grape",
+  "Honeydew",
+  "Kiwi",
+  "Lemon",
+  "Mango",
+  "Orange",
+  "Papaya",
+  "Quince",
+  "Raspberry",
+  "Strawberry",
+  "Tangerine",
+  "Watermelon",
+]
 
-  const countries = [
-    { name: "United States", code: "US", flag: "🇺🇸" },
-    { name: "Canada", code: "CA", flag: "🇨🇦" },
-    { name: "United Kingdom", code: "GB", flag: "🇬🇧" },
-    { name: "Germany", code: "DE", flag: "🇩🇪" },
-    { name: "France", code: "FR", flag: "🇫🇷" },
-    { name: "Japan", code: "JP", flag: "🇯🇵" },
-    { name: "Australia", code: "AU", flag: "🇦🇺" },
-    { name: "Brazil", code: "BR", flag: "🇧🇷" },
-    { name: "China", code: "CN", flag: "🇨🇳" },
-    { name: "India", code: "IN", flag: "🇮🇳" },
-    { name: "South Africa", code: "ZA", flag: "🇿🇦" },
-    { name: "Mexico", code: "MX", flag: "🇲🇽" },
-    { name: "Italy", code: "IT", flag: "🇮🇹" },
-    { name: "Spain", code: "ES", flag: "🇪🇸" },
-    { name: "Russia", code: "RU", flag: "🇷🇺" }
-  ];
+const countries = [
+  { name: "United States", code: "US", flag: "🇺🇸" },
+  { name: "Canada", code: "CA", flag: "🇨🇦" },
+  { name: "United Kingdom", code: "GB", flag: "🇬🇧" },
+  { name: "Germany", code: "DE", flag: "🇩🇪" },
+  { name: "France", code: "FR", flag: "🇫🇷" },
+  { name: "Japan", code: "JP", flag: "🇯🇵" },
+  { name: "Australia", code: "AU", flag: "🇦🇺" },
+  { name: "Brazil", code: "BR", flag: "🇧🇷" },
+  { name: "China", code: "CN", flag: "🇨🇳" },
+  { name: "India", code: "IN", flag: "🇮🇳" },
+  { name: "South Africa", code: "ZA", flag: "🇿🇦" },
+  { name: "Mexico", code: "MX", flag: "🇲🇽" },
+  { name: "Italy", code: "IT", flag: "🇮🇹" },
+  { name: "Spain", code: "ES", flag: "🇪🇸" },
+  { name: "Russia", code: "RU", flag: "🇷🇺" },
+]
 
-  const users = [
-    { id: 1, name: "John Doe", email: "john.doe@example.com", role: "Admin" },
-    { id: 2, name: "Jane Smith", email: "jane.smith@example.com", role: "Editor" },
-    { id: 3, name: "Bob Johnson", email: "bob.johnson@example.com", role: "Viewer" },
-    { id: 4, name: "Alice Williams", email: "alice.williams@example.com", role: "Editor" },
-    { id: 5, name: "Charlie Brown", email: "charlie.brown@example.com", role: "Viewer" },
-    { id: 6, name: "Diana Miller", email: "diana.miller@example.com", role: "Admin" }
-  ];
+const users = [
+  { id: 1, name: "John Doe", email: "john.doe@example.com", role: "Admin" },
+  { id: 2, name: "Jane Smith", email: "jane.smith@example.com", role: "Editor" },
+  { id: 3, name: "Bob Johnson", email: "bob.johnson@example.com", role: "Viewer" },
+  { id: 4, name: "Alice Williams", email: "alice.williams@example.com", role: "Editor" },
+  { id: 5, name: "Charlie Brown", email: "charlie.brown@example.com", role: "Viewer" },
+  { id: 6, name: "Diana Miller", email: "diana.miller@example.com", role: "Admin" },
+]
 </script>
 
 <Story name="Basic">

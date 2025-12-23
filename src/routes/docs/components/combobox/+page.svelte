@@ -7,24 +7,15 @@ import Container from "$lib/components/Container/Container.svelte"
 import Combobox from "$lib/components/Form/Combobox.svelte"
 
 // Sample data for examples
-const fruits = [
-  "Apple", 
-  "Banana", 
-  "Cherry", 
-  "Date", 
-  "Elderberry", 
-  "Fig", 
-  "Grape", 
-  "Honeydew"
-];
+const fruits = ["Apple", "Banana", "Cherry", "Date", "Elderberry", "Fig", "Grape", "Honeydew"]
 
 const countries = [
   { name: "United States", code: "US", flag: "🇺🇸" },
   { name: "Canada", code: "CA", flag: "🇨🇦" },
   { name: "United Kingdom", code: "GB", flag: "🇬🇧" },
   { name: "Germany", code: "DE", flag: "🇩🇪" },
-  { name: "France", code: "FR", flag: "🇫🇷" }
-];
+  { name: "France", code: "FR", flag: "🇫🇷" },
+]
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

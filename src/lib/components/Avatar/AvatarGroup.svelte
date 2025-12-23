@@ -19,50 +19,50 @@ Usage:
 ```
 -->
 <script>
-  import { setContext } from 'svelte';
+import { setContext } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Size of the avatars (xs, sm, md, lg, xl) */
-    size = 'md',
+  /** @type {string} - Size of the avatars (xs, sm, md, lg, xl) */
+  size = "md",
 
-    /** @type {number} - Maximum number of avatars to display */
-    max,
+  /** @type {number} - Maximum number of avatars to display */
+  max,
 
-    /** @type {number} - Total number of avatars (for overflow count) */
-    total,
+  /** @type {number} - Total number of avatars (for overflow count) */
+  total,
 
-    /** @type {number} - Spacing between avatars (-8 to 8) */
-    spacing = -4,
+  /** @type {number} - Spacing between avatars (-8 to 8) */
+  spacing = -4,
 
-    /** @type {boolean} - Whether to show a border around avatars */
-    bordered = true,
+  /** @type {boolean} - Whether to show a border around avatars */
+  bordered = true,
 
-    /** @type {string} - ARIA label for the group */
-    ariaLabel = 'Avatar group',
+  /** @type {string} - ARIA label for the group */
+  ariaLabel = "Avatar group",
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  // Provide context for child avatars
-  setContext('avatarGroup', {
-    size,
-    bordered
-  });
-  
-  // Determine spacing class based on the spacing prop
-  const spacingClass = $derived(`avatar-group-spacing-${spacing}`);
-  
-  // Determine if we need to show overflow
-  const showOverflow = $derived(max !== undefined && total !== undefined && total > max);
-  
-  // Calculate overflow count
-  const overflowCount = $derived(showOverflow ? total - max : 0);
+// Provide context for child avatars
+setContext("avatarGroup", {
+  size,
+  bordered,
+})
+
+// Determine spacing class based on the spacing prop
+const spacingClass = $derived(`avatar-group-spacing-${spacing}`)
+
+// Determine if we need to show overflow
+const showOverflow = $derived(max !== undefined && total !== undefined && total > max)
+
+// Calculate overflow count
+const overflowCount = $derived(showOverflow ? total - max : 0)
 </script>
 
 <div

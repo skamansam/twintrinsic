@@ -8,27 +8,58 @@ import { PropsTable, EventsTable } from "$lib/docs/index.js"
 
 // Sample data for examples
 const colors = [
-  { label: 'Red', value: 'red' },
-  { label: 'Green', value: 'green' },
-  { label: 'Blue', value: 'blue' },
-  { label: 'Yellow', value: 'yellow' },
-  { label: 'Purple', value: 'purple' }
+  { label: "Red", value: "red" },
+  { label: "Green", value: "green" },
+  { label: "Blue", value: "blue" },
+  { label: "Yellow", value: "yellow" },
+  { label: "Purple", value: "purple" },
 ]
 
 const users = [
-  { name: 'Alice Johnson', id: 1, icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>' },
-  { name: 'Bob Smith', id: 2, icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>' },
-  { name: 'Carol Williams', id: 3, icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>' },
-  { name: 'Dave Brown', id: 4, icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>' },
-  { name: 'Eve Davis', id: 5, icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>' }
+  {
+    name: "Alice Johnson",
+    id: 1,
+    icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>',
+  },
+  {
+    name: "Bob Smith",
+    id: 2,
+    icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>',
+  },
+  {
+    name: "Carol Williams",
+    id: 3,
+    icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>',
+  },
+  {
+    name: "Dave Brown",
+    id: 4,
+    icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>',
+  },
+  {
+    name: "Eve Davis",
+    id: 5,
+    icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>',
+  },
 ]
 
-const fruits = ['Apple', 'Banana', 'Cherry', 'Date', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange']
+const fruits = [
+  "Apple",
+  "Banana",
+  "Cherry",
+  "Date",
+  "Fig",
+  "Grape",
+  "Kiwi",
+  "Lemon",
+  "Mango",
+  "Orange",
+]
 
 // Selected values for examples
-let selectedColor = 'blue'
+let selectedColor = "blue"
 let selectedUsers = [1, 3]
-let selectedFruits = ['Apple', 'Grape']
+let selectedFruits = ["Apple", "Grape"]
 </script>
 
 <h1>Listbox</h1>

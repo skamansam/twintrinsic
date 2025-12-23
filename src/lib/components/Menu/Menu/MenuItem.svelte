@@ -17,19 +17,19 @@ const {
 
   /** @type {boolean} - Whether the item is disabled */
   disabled = false,
-  
+
   /** @type {boolean} - Whether the submenu is initially open */
   initialOpen = false,
-  
+
   /** @type {any} - Value associated with this menu item */
-  value = {}
+  value = {},
 } = $props()
 
 // Use $state for values that need to be modified
-let isOpen = $state(initialOpen);
+let isOpen = $state(initialOpen)
 
 const toggleMenu = () => {
-  isOpen = !isOpen;
+  isOpen = !isOpen
 }
 </script>
 

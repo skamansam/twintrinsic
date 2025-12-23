@@ -24,148 +24,158 @@ Usage:
 ```
 -->
 <script>
-  import { onMount } from 'svelte';
+import { onMount } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Image source URL */
-    src,
+  /** @type {string} - Image source URL */
+  src,
 
-    /** @type {string} - Alt text for the image */
-    alt,
+  /** @type {string} - Alt text for the image */
+  alt,
 
-    /** @type {string} - User name for generating initials */
-    name,
+  /** @type {string} - User name for generating initials */
+  name,
 
-    /** @type {string} - Fallback text when image fails to load or no src provided */
-    fallback,
+  /** @type {string} - Fallback text when image fails to load or no src provided */
+  fallback,
 
-    /** @type {string} - Size of the avatar (xs, sm, md, lg, xl) */
-    size = 'md',
+  /** @type {string} - Size of the avatar (xs, sm, md, lg, xl) */
+  size = "md",
 
-    /** @type {string} - Shape of the avatar (circle, square, rounded) */
-    shape = 'circle',
+  /** @type {string} - Shape of the avatar (circle, square, rounded) */
+  shape = "circle",
 
-    /** @type {string} - Status indicator (online, offline, away, busy) */
-    status,
+  /** @type {string} - Status indicator (online, offline, away, busy) */
+  status,
 
-    /** @type {string} - Background color for text avatars (CSS color value) */
-    bgColor,
+  /** @type {string} - Background color for text avatars (CSS color value) */
+  bgColor,
 
-    /** @type {boolean} - Whether to show a border */
-    bordered = false,
+  /** @type {boolean} - Whether to show a border */
+  bordered = false,
 
-    /** @type {boolean} - Whether to add a shadow effect */
-    shadowed = false,
+  /** @type {boolean} - Whether to add a shadow effect */
+  shadowed = false,
 
-    /** @type {Function} - Custom function to generate initials */
-    initialsGenerator
-  } = $props();
+  /** @type {Function} - Custom function to generate initials */
+  initialsGenerator,
+} = $props()
 
-  // Component state
-  let imageLoaded = $state(false);
-  let imageError = $state(false);
-  let avatarElement;
-  
-  /**
-   * Generates initials from a name
-   * @param {string} name - Full name
-   * @returns {string} - Initials (1-2 characters)
-   */
-  function generateInitials(name) {
-    if (!name) return '';
-    
-    if (initialsGenerator) {
-      return initialsGenerator(name);
-    }
-    
-    // Default implementation: first letter of first and last name
-    const parts = name.trim().split(/\s+/);
-    
-    if (parts.length === 1) {
-      return parts[0].charAt(0).toUpperCase();
-    }
-    
-    return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+// Component state
+let imageLoaded = $state(false)
+let imageError = $state(false)
+let avatarElement
+
+/**
+ * Generates initials from a name
+ * @param {string} name - Full name
+ * @returns {string} - Initials (1-2 characters)
+ */
+function generateInitials(name) {
+  if (!name) return ""
+
+  if (initialsGenerator) {
+    return initialsGenerator(name)
   }
-  
-  /**
-   * Handles image load event
-   */
-  function handleImageLoad() {
-    imageLoaded = true;
-    imageError = false;
+
+  // Default implementation: first letter of first and last name
+  const parts = name.trim().split(/\s+/)
+
+  if (parts.length === 1) {
+    return parts[0].charAt(0).toUpperCase()
   }
-  
-  /**
-   * Handles image error event
-   */
-  function handleImageError() {
-    imageLoaded = false;
-    imageError = true;
+
+  return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase()
+}
+
+/**
+ * Handles image load event
+ */
+function handleImageLoad() {
+  imageLoaded = true
+  imageError = false
+}
+
+/**
+ * Handles image error event
+ */
+function handleImageError() {
+  imageLoaded = false
+  imageError = true
+}
+
+// Determine what to display as fallback
+const displayFallback = $derived(fallback || (name ? generateInitials(name) : ""))
+
+// Determine if we should show the image
+const showImage = $derived(src && !imageError)
+
+// Determine if we should show the fallback
+const showFallback = $derived(!showImage && !!displayFallback)
+
+// Determine size classes
+const sizeClasses = $derived(
+  {
+    xs: "w-6 h-6 text-xs",
+    sm: "w-8 h-8 text-sm",
+    md: "w-10 h-10 text-base",
+    lg: "w-12 h-12 text-lg",
+    xl: "w-16 h-16 text-xl",
+  }[size] || "w-10 h-10 text-base"
+)
+
+// Determine shape classes
+const shapeClasses = $derived(
+  {
+    circle: "rounded-full",
+    square: "rounded-none",
+    rounded: "rounded-md",
+  }[shape] || "rounded-full"
+)
+
+// Determine status classes
+const statusClasses = $derived(
+  {
+    online: "bg-success-500",
+    offline: "bg-muted",
+    away: "bg-warning-500",
+    busy: "bg-error-500",
+  }[status] || "bg-muted"
+)
+
+// Generate a random color based on the name or fallback
+const randomBgColor = $derived(generateRandomColor())
+
+// Function to generate a random color based on the name or fallback
+function generateRandomColor() {
+  if (bgColor) return bgColor
+
+  const seed = name || fallback || id
+  const colors = [
+    "bg-primary-500",
+    "bg-secondary-500",
+    "bg-success-500",
+    "bg-warning-500",
+    "bg-error-500",
+    "bg-info-500",
+  ]
+
+  // Simple hash function to get consistent color
+  let hash = 0
+  for (let i = 0; i < seed.length; i++) {
+    hash = (hash << 5) - hash + seed.charCodeAt(i)
+    hash = hash & hash // Convert to 32bit integer
   }
-  
-  // Determine what to display as fallback
-  const displayFallback = $derived(fallback || (name ? generateInitials(name) : ''));
-  
-  // Determine if we should show the image
-  const showImage = $derived(src && !imageError);
-  
-  // Determine if we should show the fallback
-  const showFallback = $derived(!showImage && !!displayFallback);
-  
-  // Determine size classes
-  const sizeClasses = $derived({
-    xs: 'w-6 h-6 text-xs',
-    sm: 'w-8 h-8 text-sm',
-    md: 'w-10 h-10 text-base',
-    lg: 'w-12 h-12 text-lg',
-    xl: 'w-16 h-16 text-xl'
-  }[size] || 'w-10 h-10 text-base');
-  
-  // Determine shape classes
-  const shapeClasses = $derived({
-    circle: 'rounded-full',
-    square: 'rounded-none',
-    rounded: 'rounded-md'
-  }[shape] || 'rounded-full');
-  
-  // Determine status classes
-  const statusClasses = $derived({
-    online: 'bg-success-500',
-    offline: 'bg-muted',
-    away: 'bg-warning-500',
-    busy: 'bg-error-500'
-  }[status] || 'bg-muted');
-  
-  // Generate a random color based on the name or fallback
-  const randomBgColor = $derived(generateRandomColor());
-  
-  // Function to generate a random color based on the name or fallback
-  function generateRandomColor() {
-    if (bgColor) return bgColor;
-    
-    const seed = name || fallback || id;
-    const colors = [
-      'bg-primary-500', 'bg-secondary-500', 'bg-success-500', 
-      'bg-warning-500', 'bg-error-500', 'bg-info-500'
-    ];
-    
-    // Simple hash function to get consistent color
-    let hash = 0;
-    for (let i = 0; i < seed.length; i++) {
-      hash = ((hash << 5) - hash) + seed.charCodeAt(i);
-      hash = hash & hash; // Convert to 32bit integer
-    }
-    
-    const index = Math.abs(hash) % colors.length;
-    return colors[index];
-  }
+
+  const index = Math.abs(hash) % colors.length
+  return colors[index]
+}
 </script>
 
 <div

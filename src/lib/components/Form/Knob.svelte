@@ -33,369 +33,369 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, createEventDispatcher, onMount } from 'svelte';
+import { getContext, createEventDispatcher, onMount } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Input name */
-    name,
+  /** @type {string} - Input name */
+  name,
 
-    /** @type {number} - Current value */
-    value = 0,
+  /** @type {number} - Current value */
+  value = 0,
 
-    /** @type {number} - Minimum value */
-    min = 0,
+  /** @type {number} - Minimum value */
+  min = 0,
 
-    /** @type {number} - Maximum value */
-    max = 100,
+  /** @type {number} - Maximum value */
+  max = 100,
 
-    /** @type {number} - Step increment */
-    step = 1,
+  /** @type {number} - Step increment */
+  step = 1,
 
-    /** @type {string} - Size of the knob (sm, md, lg, xl) */
-    size = 'md',
+  /** @type {string} - Size of the knob (sm, md, lg, xl) */
+  size = "md",
 
-    /** @type {boolean} - Whether the knob is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the knob is disabled */
+  disabled = false,
 
-    /** @type {boolean} - Whether to show the current value */
-    showValue = false,
+  /** @type {boolean} - Whether to show the current value */
+  showValue = false,
 
-    /** @type {string} - Template for displaying the value, use {value} as placeholder */
-    valueTemplate = '{value}',
+  /** @type {string} - Template for displaying the value, use {value} as placeholder */
+  valueTemplate = "{value}",
 
-    /** @type {string} - Color of the progress arc */
-    color,
+  /** @type {string} - Color of the progress arc */
+  color,
 
-    /** @type {number} - Thickness of the progress arc (1-10) */
-    thickness = 4,
+  /** @type {number} - Thickness of the progress arc (1-10) */
+  thickness = 4,
 
-    /** @type {boolean} - Whether to show tick marks */
-    showTicks = false,
+  /** @type {boolean} - Whether to show tick marks */
+  showTicks = false,
 
-    /** @type {number} - Number of tick marks to display */
-    tickCount = 10,
+  /** @type {number} - Number of tick marks to display */
+  tickCount = 10,
 
-    /** @type {string} - ARIA label for accessibility */
-    ariaLabel
-  } = $props();
+  /** @type {string} - ARIA label for accessibility */
+  ariaLabel,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Get form context if available
-  const formContext = getContext('form');
-  
-  // Component state
-  let currentValue = $state(value);
-  let isDragging = $state(false);
-  let knobElement;
-  let radius = $state(0);
-  let center = $state({ x: 0, y: 0 });
-  
-  // Register with form if available
-  let fieldApi;
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, value);
-    
-    // Update value when form field changes
-    $effect(() => {
-      const formValue = fieldApi.getValue();
-      if (formValue !== undefined && formValue !== currentValue) {
-        currentValue = formValue;
-      }
-    });
-  }
-  
-  // Update internal value when prop changes
+const dispatch = createEventDispatcher()
+
+// Get form context if available
+const formContext = getContext("form")
+
+// Component state
+let currentValue = $state(value)
+let isDragging = $state(false)
+let knobElement
+let radius = $state(0)
+let center = $state({ x: 0, y: 0 })
+
+// Register with form if available
+let fieldApi
+if (formContext && name) {
+  fieldApi = formContext.registerField(name, value)
+
+  // Update value when form field changes
   $effect(() => {
-    if (value !== currentValue) {
-      currentValue = value;
+    const formValue = fieldApi.getValue()
+    if (formValue !== undefined && formValue !== currentValue) {
+      currentValue = formValue
     }
-  });
-  
-  /**
-   * Constrains a value to min/max bounds and applies step
-   * @param {number} val - Value to constrain
-   * @returns {number} - Constrained value
-   */
-  function constrainValue(val) {
-    // Apply min/max constraints
-    let constrained = Math.max(min, Math.min(max, val));
-    
-    // Apply step
-    if (step !== 0) {
-      constrained = Math.round((constrained - min) / step) * step + min;
-    }
-    
-    return constrained;
+  })
+}
+
+// Update internal value when prop changes
+$effect(() => {
+  if (value !== currentValue) {
+    currentValue = value
   }
-  
-  /**
-   * Converts a value to a percentage (0-100)
-   * @param {number} val - Value to convert
-   * @returns {number} - Percentage
-   */
-  function valueToPercentage(val) {
-    return ((val - min) / (max - min)) * 100;
+})
+
+/**
+ * Constrains a value to min/max bounds and applies step
+ * @param {number} val - Value to constrain
+ * @returns {number} - Constrained value
+ */
+function constrainValue(val) {
+  // Apply min/max constraints
+  let constrained = Math.max(min, Math.min(max, val))
+
+  // Apply step
+  if (step !== 0) {
+    constrained = Math.round((constrained - min) / step) * step + min
   }
-  
-  /**
-   * Converts a percentage to a value
-   * @param {number} percentage - Percentage (0-100)
-   * @returns {number} - Value
-   */
-  function percentageToValue(percentage) {
-    return ((percentage / 100) * (max - min)) + min;
+
+  return constrained
+}
+
+/**
+ * Converts a value to a percentage (0-100)
+ * @param {number} val - Value to convert
+ * @returns {number} - Percentage
+ */
+function valueToPercentage(val) {
+  return ((val - min) / (max - min)) * 100
+}
+
+/**
+ * Converts a percentage to a value
+ * @param {number} percentage - Percentage (0-100)
+ * @returns {number} - Value
+ */
+function percentageToValue(percentage) {
+  return (percentage / 100) * (max - min) + min
+}
+
+/**
+ * Formats the current value using the template
+ * @returns {string} - Formatted value
+ */
+function formatValue() {
+  return valueTemplate.replace("{value}", currentValue.toString())
+}
+
+/**
+ * Calculates the SVG path for the progress arc
+ * @param {number} percentage - Percentage (0-100)
+ * @returns {string} - SVG path
+ */
+function calculateArc(percentage) {
+  const r = 50 - thickness / 2 // Adjust radius for thickness
+  const circumference = 2 * Math.PI * r
+  const arcLength = (percentage / 100) * circumference
+  const dashArray = `${arcLength} ${circumference}`
+
+  return dashArray
+}
+
+/**
+ * Calculates tick positions
+ * @returns {Array} - Array of tick positions
+ */
+function calculateTicks() {
+  const ticks = []
+  const r = 50 - thickness / 2 // Adjust radius for thickness
+
+  for (let i = 0; i < tickCount; i++) {
+    const percentage = (i / (tickCount - 1)) * 100
+    const angle = (percentage / 100) * 360 - 90 // -90 to start at top
+    const angleRad = (angle * Math.PI) / 180
+
+    const x1 = 50 + (r - 2) * Math.cos(angleRad)
+    const y1 = 50 + (r - 2) * Math.sin(angleRad)
+    const x2 = 50 + (r + 2) * Math.cos(angleRad)
+    const y2 = 50 + (r + 2) * Math.sin(angleRad)
+
+    ticks.push({ x1, y1, x2, y2 })
   }
-  
-  /**
-   * Formats the current value using the template
-   * @returns {string} - Formatted value
-   */
-  function formatValue() {
-    return valueTemplate.replace('{value}', currentValue.toString());
+
+  return ticks
+}
+
+/**
+ * Calculates the angle from center to a point
+ * @param {number} x - X coordinate
+ * @param {number} y - Y coordinate
+ * @returns {number} - Angle in degrees (0-360)
+ */
+function calculateAngle(x, y) {
+  const dx = x - center.x
+  const dy = y - center.y
+
+  // Calculate angle in radians
+  let angle = Math.atan2(dy, dx)
+
+  // Convert to degrees and adjust to start from top (0 degrees)
+  angle = (angle * 180) / Math.PI + 90
+
+  // Ensure angle is between 0-360
+  if (angle < 0) angle += 360
+
+  return angle
+}
+
+/**
+ * Converts an angle to a percentage
+ * @param {number} angle - Angle in degrees (0-360)
+ * @returns {number} - Percentage (0-100)
+ */
+function angleToPercentage(angle) {
+  return (angle / 360) * 100
+}
+
+/**
+ * Updates the value based on mouse/touch position
+ * @param {MouseEvent|TouchEvent} event - Mouse or touch event
+ */
+function updateValueFromEvent(event) {
+  if (disabled) return
+
+  // Get coordinates
+  const clientX = event.type.includes("touch") ? event.touches[0].clientX : event.clientX
+  const clientY = event.type.includes("touch") ? event.touches[0].clientY : event.clientY
+
+  // Get element position
+  const rect = knobElement.getBoundingClientRect()
+  const x = clientX - rect.left
+  const y = clientY - rect.top
+
+  // Calculate angle and percentage
+  const angle = calculateAngle(x, y)
+  const percentage = angleToPercentage(angle)
+
+  // Update value
+  const newValue = constrainValue(percentageToValue(percentage))
+  currentValue = newValue
+
+  // Update form field if available
+  if (fieldApi) {
+    fieldApi.setValue(newValue)
   }
-  
-  /**
-   * Calculates the SVG path for the progress arc
-   * @param {number} percentage - Percentage (0-100)
-   * @returns {string} - SVG path
-   */
-  function calculateArc(percentage) {
-    const r = 50 - thickness / 2; // Adjust radius for thickness
-    const circumference = 2 * Math.PI * r;
-    const arcLength = (percentage / 100) * circumference;
-    const dashArray = `${arcLength} ${circumference}`;
-    
-    return dashArray;
+
+  dispatch("input", { value: newValue })
+}
+
+/**
+ * Starts dragging
+ * @param {MouseEvent|TouchEvent} event - Mouse or touch event
+ */
+function startDrag(event) {
+  if (disabled) return
+
+  isDragging = true
+  updateValueFromEvent(event)
+
+  // Add event listeners for drag
+  if (event.type === "mousedown") {
+    document.addEventListener("mousemove", updateValueFromEvent)
+    document.addEventListener("mouseup", stopDrag)
+  } else if (event.type === "touchstart") {
+    document.addEventListener("touchmove", updateValueFromEvent)
+    document.addEventListener("touchend", stopDrag)
   }
-  
-  /**
-   * Calculates tick positions
-   * @returns {Array} - Array of tick positions
-   */
-  function calculateTicks() {
-    const ticks = [];
-    const r = 50 - thickness / 2; // Adjust radius for thickness
-    
-    for (let i = 0; i < tickCount; i++) {
-      const percentage = (i / (tickCount - 1)) * 100;
-      const angle = (percentage / 100) * 360 - 90; // -90 to start at top
-      const angleRad = (angle * Math.PI) / 180;
-      
-      const x1 = 50 + (r - 2) * Math.cos(angleRad);
-      const y1 = 50 + (r - 2) * Math.sin(angleRad);
-      const x2 = 50 + (r + 2) * Math.cos(angleRad);
-      const y2 = 50 + (r + 2) * Math.sin(angleRad);
-      
-      ticks.push({ x1, y1, x2, y2 });
-    }
-    
-    return ticks;
+}
+
+/**
+ * Stops dragging
+ */
+function stopDrag() {
+  if (!isDragging) return
+
+  isDragging = false
+
+  // Remove event listeners
+  document.removeEventListener("mousemove", updateValueFromEvent)
+  document.removeEventListener("mouseup", stopDrag)
+  document.removeEventListener("touchmove", updateValueFromEvent)
+  document.removeEventListener("touchend", stopDrag)
+
+  dispatch("change", { value: currentValue })
+}
+
+/**
+ * Handles keyboard navigation
+ * @param {KeyboardEvent} event - Keydown event
+ */
+function handleKeydown(event) {
+  if (disabled) return
+
+  let newValue = currentValue
+
+  switch (event.key) {
+    case "ArrowUp":
+    case "ArrowRight":
+      event.preventDefault()
+      newValue = constrainValue(currentValue + step)
+      break
+
+    case "ArrowDown":
+    case "ArrowLeft":
+      event.preventDefault()
+      newValue = constrainValue(currentValue - step)
+      break
+
+    case "Home":
+      event.preventDefault()
+      newValue = min
+      break
+
+    case "End":
+      event.preventDefault()
+      newValue = max
+      break
+
+    case "PageUp":
+      event.preventDefault()
+      newValue = constrainValue(currentValue + step * 10)
+      break
+
+    case "PageDown":
+      event.preventDefault()
+      newValue = constrainValue(currentValue - step * 10)
+      break
   }
-  
-  /**
-   * Calculates the angle from center to a point
-   * @param {number} x - X coordinate
-   * @param {number} y - Y coordinate
-   * @returns {number} - Angle in degrees (0-360)
-   */
-  function calculateAngle(x, y) {
-    const dx = x - center.x;
-    const dy = y - center.y;
-    
-    // Calculate angle in radians
-    let angle = Math.atan2(dy, dx);
-    
-    // Convert to degrees and adjust to start from top (0 degrees)
-    angle = (angle * 180 / Math.PI) + 90;
-    
-    // Ensure angle is between 0-360
-    if (angle < 0) angle += 360;
-    
-    return angle;
-  }
-  
-  /**
-   * Converts an angle to a percentage
-   * @param {number} angle - Angle in degrees (0-360)
-   * @returns {number} - Percentage (0-100)
-   */
-  function angleToPercentage(angle) {
-    return (angle / 360) * 100;
-  }
-  
-  /**
-   * Updates the value based on mouse/touch position
-   * @param {MouseEvent|TouchEvent} event - Mouse or touch event
-   */
-  function updateValueFromEvent(event) {
-    if (disabled) return;
-    
-    // Get coordinates
-    const clientX = event.type.includes('touch')
-      ? event.touches[0].clientX
-      : event.clientX;
-    const clientY = event.type.includes('touch')
-      ? event.touches[0].clientY
-      : event.clientY;
-    
-    // Get element position
-    const rect = knobElement.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
-    
-    // Calculate angle and percentage
-    const angle = calculateAngle(x, y);
-    const percentage = angleToPercentage(angle);
-    
-    // Update value
-    const newValue = constrainValue(percentageToValue(percentage));
-    currentValue = newValue;
-    
+
+  if (newValue !== currentValue) {
+    currentValue = newValue
+
     // Update form field if available
     if (fieldApi) {
-      fieldApi.setValue(newValue);
+      fieldApi.setValue(newValue)
     }
-    
-    dispatch('input', { value: newValue });
+
+    dispatch("input", { value: newValue })
+    dispatch("change", { value: newValue })
   }
-  
-  /**
-   * Starts dragging
-   * @param {MouseEvent|TouchEvent} event - Mouse or touch event
-   */
-  function startDrag(event) {
-    if (disabled) return;
-    
-    isDragging = true;
-    updateValueFromEvent(event);
-    
-    // Add event listeners for drag
-    if (event.type === 'mousedown') {
-      document.addEventListener('mousemove', updateValueFromEvent);
-      document.addEventListener('mouseup', stopDrag);
-    } else if (event.type === 'touchstart') {
-      document.addEventListener('touchmove', updateValueFromEvent);
-      document.addEventListener('touchend', stopDrag);
-    }
+}
+
+// Initialize component
+onMount(() => {
+  if (knobElement) {
+    const rect = knobElement.getBoundingClientRect()
+    radius = rect.width / 2
+    center = { x: radius, y: radius }
   }
-  
-  /**
-   * Stops dragging
-   */
-  function stopDrag() {
-    if (!isDragging) return;
-    
-    isDragging = false;
-    
-    // Remove event listeners
-    document.removeEventListener('mousemove', updateValueFromEvent);
-    document.removeEventListener('mouseup', stopDrag);
-    document.removeEventListener('touchmove', updateValueFromEvent);
-    document.removeEventListener('touchend', stopDrag);
-    
-    dispatch('change', { value: currentValue });
+
+  return () => {
+    // Clean up event listeners
+    document.removeEventListener("mousemove", updateValueFromEvent)
+    document.removeEventListener("mouseup", stopDrag)
+    document.removeEventListener("touchmove", updateValueFromEvent)
+    document.removeEventListener("touchend", stopDrag)
   }
-  
-  /**
-   * Handles keyboard navigation
-   * @param {KeyboardEvent} event - Keydown event
-   */
-  function handleKeydown(event) {
-    if (disabled) return;
-    
-    let newValue = currentValue;
-    
-    switch (event.key) {
-      case 'ArrowUp':
-      case 'ArrowRight':
-        event.preventDefault();
-        newValue = constrainValue(currentValue + step);
-        break;
-        
-      case 'ArrowDown':
-      case 'ArrowLeft':
-        event.preventDefault();
-        newValue = constrainValue(currentValue - step);
-        break;
-        
-      case 'Home':
-        event.preventDefault();
-        newValue = min;
-        break;
-        
-      case 'End':
-        event.preventDefault();
-        newValue = max;
-        break;
-        
-      case 'PageUp':
-        event.preventDefault();
-        newValue = constrainValue(currentValue + (step * 10));
-        break;
-        
-      case 'PageDown':
-        event.preventDefault();
-        newValue = constrainValue(currentValue - (step * 10));
-        break;
-    }
-    
-    if (newValue !== currentValue) {
-      currentValue = newValue;
-      
-      // Update form field if available
-      if (fieldApi) {
-        fieldApi.setValue(newValue);
-      }
-      
-      dispatch('input', { value: newValue });
-      dispatch('change', { value: newValue });
-    }
-  }
-  
-  // Initialize component
-  onMount(() => {
-    if (knobElement) {
-      const rect = knobElement.getBoundingClientRect();
-      radius = rect.width / 2;
-      center = { x: radius, y: radius };
-    }
-    
-    return () => {
-      // Clean up event listeners
-      document.removeEventListener('mousemove', updateValueFromEvent);
-      document.removeEventListener('mouseup', stopDrag);
-      document.removeEventListener('touchmove', updateValueFromEvent);
-      document.removeEventListener('touchend', stopDrag);
-    };
-  });
-  
-  // Computed values
-  const percentage = $derived(valueToPercentage(currentValue));
-  const arcDashArray = $derived(calculateArc(percentage));
-  const ticks = $derived(showTicks ? calculateTicks() : []);
-  
-  // Determine size classes
-  const sizeClasses = $derived({
-    sm: 'w-16 h-16',
-    md: 'w-24 h-24',
-    lg: 'w-32 h-32',
-    xl: 'w-40 h-40'
-  }[size] || 'w-24 h-24');
-  
-  // Determine font size classes
-  const fontSizeClasses = $derived({
-    sm: 'text-xs',
-    md: 'text-sm',
-    lg: 'text-base',
-    xl: 'text-lg'
-  }[size] || 'text-sm');
+})
+
+// Computed values
+const percentage = $derived(valueToPercentage(currentValue))
+const arcDashArray = $derived(calculateArc(percentage))
+const ticks = $derived(showTicks ? calculateTicks() : [])
+
+// Determine size classes
+const sizeClasses = $derived(
+  {
+    sm: "w-16 h-16",
+    md: "w-24 h-24",
+    lg: "w-32 h-32",
+    xl: "w-40 h-40",
+  }[size] || "w-24 h-24"
+)
+
+// Determine font size classes
+const fontSizeClasses = $derived(
+  {
+    sm: "text-xs",
+    md: "text-sm",
+    lg: "text-base",
+    xl: "text-lg",
+  }[size] || "text-sm"
+)
 </script>
 
 <div

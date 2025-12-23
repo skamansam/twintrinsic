@@ -22,88 +22,92 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, createEventDispatcher } from 'svelte';
+import { getContext, createEventDispatcher } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Radio name (for grouping) */
-    name,
+  /** @type {string} - Radio name (for grouping) */
+  name,
 
-    /** @type {string} - Radio value */
-    value,
+  /** @type {string} - Radio value */
+  value,
 
-    /** @type {string} - Label text */
-    label,
+  /** @type {string} - Label text */
+  label,
 
-    /** @type {boolean} - Whether the radio is checked */
-    checked = false,
+  /** @type {boolean} - Whether the radio is checked */
+  checked = false,
 
-    /** @type {boolean} - Whether the radio is required */
-    required = false,
+  /** @type {boolean} - Whether the radio is required */
+  required = false,
 
-    /** @type {boolean} - Whether the radio is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the radio is disabled */
+  disabled = false,
 
-    /** @type {string} - Size of the radio (sm, md, lg) */
-    size = 'md',
+  /** @type {string} - Size of the radio (sm, md, lg) */
+  size = "md",
 
-    /** @type {string} - ARIA label for accessibility */
-    ariaLabel,
-    ...restProps
-  } = $props();
+  /** @type {string} - ARIA label for accessibility */
+  ariaLabel,
+  ...restProps
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Get form context if available
-  const formContext = getContext('form');
-  
-  // Radio state
-  let isChecked = $state(checked);
-  
-  // Register with form if available
-  let fieldApi;
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, checked ? value : undefined);
-    
-    // Update checked state when form field changes
-    $effect(() => {
-      const formValue = fieldApi.getValue();
-      isChecked = formValue === value;
-    });
+const dispatch = createEventDispatcher()
+
+// Get form context if available
+const formContext = getContext("form")
+
+// Radio state
+let isChecked = $state(checked)
+
+// Register with form if available
+let fieldApi
+if (formContext && name) {
+  fieldApi = formContext.registerField(name, checked ? value : undefined)
+
+  // Update checked state when form field changes
+  $effect(() => {
+    const formValue = fieldApi.getValue()
+    isChecked = formValue === value
+  })
+}
+
+/**
+ * Handles radio change
+ * @param {Event} event - Change event
+ */
+function handleChange(event) {
+  isChecked = event.target.checked
+
+  // Update form field if available
+  if (fieldApi && isChecked) {
+    fieldApi.setValue(value)
   }
-  
-  /**
-   * Handles radio change
-   * @param {Event} event - Change event
-   */
-  function handleChange(event) {
-    isChecked = event.target.checked;
-    
-    // Update form field if available
-    if (fieldApi && isChecked) {
-      fieldApi.setValue(value);
-    }
-    
-    dispatch('change', { checked: isChecked, value });
-  }
-  
-  // Determine radio size classes
-  const radioSizeClasses = $derived({
-    sm: 'w-3.5 h-3.5',
-    md: 'w-4 h-4',
-    lg: 'w-5 h-5'
-  }[size] || 'w-4 h-4');
-  
-  const labelSizeClasses = $derived({
-    sm: 'text-xs',
-    md: 'text-sm',
-    lg: 'text-base'
-  }[size] || 'text-sm');
+
+  dispatch("change", { checked: isChecked, value })
+}
+
+// Determine radio size classes
+const radioSizeClasses = $derived(
+  {
+    sm: "w-3.5 h-3.5",
+    md: "w-4 h-4",
+    lg: "w-5 h-5",
+  }[size] || "w-4 h-4"
+)
+
+const labelSizeClasses = $derived(
+  {
+    sm: "text-xs",
+    md: "text-sm",
+    lg: "text-base",
+  }[size] || "text-sm"
+)
 </script>
 
 <label 

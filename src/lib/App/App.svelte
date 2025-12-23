@@ -1,13 +1,13 @@
 <script>
-  import { onDestroy, setContext } from 'svelte';
-  export let darkMode = false;
+import { onDestroy, setContext } from "svelte"
+export let darkMode = false
 
-  setContext('appDarkMode', {
-	  getDarkMode: () => darkMode,
-  });
-  export let appName = 'Twintrinsic App';
-  export let leftPanelWidth = '300px';
-  export let rightPanelWidth = '300px';
+setContext("appDarkMode", {
+  getDarkMode: () => darkMode,
+})
+export let appName = "Twintrinsic App"
+export let leftPanelWidth = "300px"
+export let rightPanelWidth = "300px"
 </script>
 
 <svelte:head>

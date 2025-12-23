@@ -22,151 +22,151 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, onMount } from 'svelte';
+import { getContext, onMount } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Node key for selection (defaults to id) */
-    key = id,
+  /** @type {string} - Node key for selection (defaults to id) */
+  key = id,
 
-    /** @type {string} - Node label */
-    label,
+  /** @type {string} - Node label */
+  label,
 
-    /** @type {string} - Custom icon (HTML or SVG string) */
-    icon,
+  /** @type {string} - Custom icon (HTML or SVG string) */
+  icon,
 
-    /** @type {boolean} - Whether the node is expanded */
-    expanded = false,
+  /** @type {boolean} - Whether the node is expanded */
+  expanded = false,
 
-    /** @type {boolean} - Whether the node is selected */
-    selected = false,
+  /** @type {boolean} - Whether the node is selected */
+  selected = false,
 
-    /** @type {boolean} - Whether the node is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the node is disabled */
+  disabled = false,
 
-    /** @type {boolean} - Whether the node is a leaf (no children) */
-    leaf = false,
+  /** @type {boolean} - Whether the node is a leaf (no children) */
+  leaf = false,
 
-    /** @type {number} - Indentation level (managed internally) */
-    level = 0,
+  /** @type {number} - Indentation level (managed internally) */
+  level = 0,
 
-    /** @type {Function} - Custom render function for the label */
-    labelRender,
+  /** @type {Function} - Custom render function for the label */
+  labelRender,
 
-    children,
+  children,
 
-    ...restProps
-  } = $props();
+  ...restProps
+} = $props()
 
-  // Get tree context
-  const treeContext = getContext('tree');
-  
-  // Component state
-  let isExpanded = $state(expanded);
-  let isSelected = $state(selected);
-  let hasChildren = $state(false);
-  let nodeElement;
-  
-  // Update expanded state when prop changes
-  $effect(() => {
-    isExpanded = expanded;
-  });
-  
-  // Update selected state from context or prop
-  $effect(() => {
-    if (treeContext?.selectable) {
-      isSelected = treeContext.isSelected(key);
-    } else {
-      isSelected = selected;
-    }
-  });
-  
-  // Check if node has children
-  onMount(() => {
-    hasChildren = !!children && children().length > 0;
-    
-    return () => {
-      // Cleanup if needed
-    };
-  });
-  
-  // Determine if node is selectable
-  const isSelectable = $derived(treeContext?.selectable && !disabled);
-  
-  // Determine if node should show icons
-  const showIcons = $derived(treeContext?.showIcons !== false);
-  
-  // Determine if tree should show lines
-  const showLines = $derived(treeContext?.showLines !== false);
-  
-  /**
-   * Toggles the expanded state
-   * @param {Event} event - Click event
-   */
-  function toggleExpanded(event) {
-    if (disabled || !hasChildren) return;
-    
-    isExpanded = !isExpanded;
-    dispatch('toggle', { expanded: isExpanded, key });
-    
-    // Prevent event from triggering selection
-    event.stopPropagation();
+// Get tree context
+const treeContext = getContext("tree")
+
+// Component state
+let isExpanded = $state(expanded)
+let isSelected = $state(selected)
+let hasChildren = $state(false)
+let nodeElement
+
+// Update expanded state when prop changes
+$effect(() => {
+  isExpanded = expanded
+})
+
+// Update selected state from context or prop
+$effect(() => {
+  if (treeContext?.selectable) {
+    isSelected = treeContext.isSelected(key)
+  } else {
+    isSelected = selected
   }
-  
-  /**
-   * Handles click on the node
-   */
-  function handleClick() {
-    if (disabled) return;
-    
-    if (isSelectable) {
-      treeContext.toggleSelection(key);
-      dispatch('select', { selected: isSelected, key });
-    }
+})
+
+// Check if node has children
+onMount(() => {
+  hasChildren = !!children && children().length > 0
+
+  return () => {
+    // Cleanup if needed
   }
-  
-  /**
-   * Handles keydown events for accessibility
-   * @param {KeyboardEvent} event - Keydown event
-   */
-  function handleKeyDown(event) {
-    if (disabled) return;
-    
-    switch (event.key) {
-      case 'Enter':
-      case ' ':
-        // Select node
-        if (isSelectable) {
-          treeContext.toggleSelection(key);
-          dispatch('select', { selected: isSelected, key });
-          event.preventDefault();
-        }
-        break;
-        
-      case 'ArrowRight':
-        // Expand node if collapsed
-        if (hasChildren && !isExpanded) {
-          isExpanded = true;
-          dispatch('toggle', { expanded: true, key });
-          event.preventDefault();
-        }
-        break;
-        
-      case 'ArrowLeft':
-        // Collapse node if expanded
-        if (hasChildren && isExpanded) {
-          isExpanded = false;
-          dispatch('toggle', { expanded: false, key });
-          event.preventDefault();
-        }
-        break;
-    }
+})
+
+// Determine if node is selectable
+const isSelectable = $derived(treeContext?.selectable && !disabled)
+
+// Determine if node should show icons
+const showIcons = $derived(treeContext?.showIcons !== false)
+
+// Determine if tree should show lines
+const showLines = $derived(treeContext?.showLines !== false)
+
+/**
+ * Toggles the expanded state
+ * @param {Event} event - Click event
+ */
+function toggleExpanded(event) {
+  if (disabled || !hasChildren) return
+
+  isExpanded = !isExpanded
+  dispatch("toggle", { expanded: isExpanded, key })
+
+  // Prevent event from triggering selection
+  event.stopPropagation()
+}
+
+/**
+ * Handles click on the node
+ */
+function handleClick() {
+  if (disabled) return
+
+  if (isSelectable) {
+    treeContext.toggleSelection(key)
+    dispatch("select", { selected: isSelected, key })
   }
+}
+
+/**
+ * Handles keydown events for accessibility
+ * @param {KeyboardEvent} event - Keydown event
+ */
+function handleKeyDown(event) {
+  if (disabled) return
+
+  switch (event.key) {
+    case "Enter":
+    case " ":
+      // Select node
+      if (isSelectable) {
+        treeContext.toggleSelection(key)
+        dispatch("select", { selected: isSelected, key })
+        event.preventDefault()
+      }
+      break
+
+    case "ArrowRight":
+      // Expand node if collapsed
+      if (hasChildren && !isExpanded) {
+        isExpanded = true
+        dispatch("toggle", { expanded: true, key })
+        event.preventDefault()
+      }
+      break
+
+    case "ArrowLeft":
+      // Collapse node if expanded
+      if (hasChildren && isExpanded) {
+        isExpanded = false
+        dispatch("toggle", { expanded: false, key })
+        event.preventDefault()
+      }
+      break
+  }
+}
 </script>
 
 <div

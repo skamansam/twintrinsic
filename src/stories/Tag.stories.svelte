@@ -1,55 +1,59 @@
 <script module>
-  import { defineMeta } from "@storybook/addon-svelte-csf";
-  import Tag from "../lib/components/Tag/Tag.svelte";
-  import TagGroup from "../lib/components/Tag/TagGroup.svelte";
-  import { fn } from "@storybook/test";
+import { defineMeta } from "@storybook/addon-svelte-csf"
+import Tag from "../lib/components/Tag/Tag.svelte"
+import TagGroup from "../lib/components/Tag/TagGroup.svelte"
+import { fn } from "@storybook/test"
 
-  const { Story } = defineMeta({
-    title: "Components/Tag",
-    component: Tag,
-    tags: ["autodocs"],
-    argTypes: {
-      variant: {
-        control: { type: "select" },
-        options: ["default", "primary", "secondary", "success", "warning", "error", "info"],
-      },
-      size: {
-        control: { type: "select" },
-        options: ["sm", "md", "lg"],
-      },
-      dismissible: { control: "boolean" },
-      outline: { control: "boolean" },
-      pill: { control: "boolean" },
-      clickable: { control: "boolean" },
-      href: { control: "text" },
-      target: {
-        control: { type: "select" },
-        options: ["_blank", "_self", "_parent", "_top"],
-      },
-      icon: { control: "text" },
-      dismissAriaLabel: { control: "text" },
+const { Story } = defineMeta({
+  title: "Components/Tag",
+  component: Tag,
+  tags: ["autodocs"],
+  argTypes: {
+    variant: {
+      control: { type: "select" },
+      options: ["default", "primary", "secondary", "success", "warning", "error", "info"],
     },
-    args: {
-      variant: "default",
-      size: "md",
-      dismissible: false,
-      outline: false,
-      pill: false,
-      clickable: false,
-      href: "",
-      target: "_blank",
-      icon: "",
-      dismissAriaLabel: "Dismiss",
-      onDismiss: fn(),
-      onClick: fn(),
+    size: {
+      control: { type: "select" },
+      options: ["sm", "md", "lg"],
     },
-  });
+    dismissible: { control: "boolean" },
+    outline: { control: "boolean" },
+    pill: { control: "boolean" },
+    clickable: { control: "boolean" },
+    href: { control: "text" },
+    target: {
+      control: { type: "select" },
+      options: ["_blank", "_self", "_parent", "_top"],
+    },
+    icon: { control: "text" },
+    dismissAriaLabel: { control: "text" },
+  },
+  args: {
+    variant: "default",
+    size: "md",
+    dismissible: false,
+    outline: false,
+    pill: false,
+    clickable: false,
+    href: "",
+    target: "_blank",
+    icon: "",
+    dismissAriaLabel: "Dismiss",
+    onDismiss: fn(),
+    onClick: fn(),
+  },
+})
 
-  // Sample icons
-  const checkIcon = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
-  const alertIcon = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>';
-  const infoIcon = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
-  const codeIcon = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>';
+// Sample icons
+const checkIcon =
+  '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
+const alertIcon =
+  '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>'
+const infoIcon =
+  '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
+const codeIcon =
+  '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>'
 </script>
 
 <Story name="Basic">

@@ -19,36 +19,36 @@ Usage:
 ```
 -->
 <script>
-  import { setContext } from 'svelte';
+import { setContext } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Separator character or HTML between items */
-    separator = '/',
+  /** @type {string} - Separator character or HTML between items */
+  separator = "/",
 
-    /** @type {string} - ARIA label for the breadcrumb */
-    ariaLabel = 'Breadcrumb',
+  /** @type {string} - ARIA label for the breadcrumb */
+  ariaLabel = "Breadcrumb",
 
-    /** @type {boolean} - Whether to collapse long breadcrumbs with ellipsis */
-    collapsible = false,
+  /** @type {boolean} - Whether to collapse long breadcrumbs with ellipsis */
+  collapsible = false,
 
-    /** @type {number} - Maximum visible items when collapsed (excluding first and last) */
-    maxVisibleItems = 1,
+  /** @type {number} - Maximum visible items when collapsed (excluding first and last) */
+  maxVisibleItems = 1,
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  // Provide context for child components
-  setContext('breadcrumb', {
-    separator,
-    collapsible,
-    maxVisibleItems
-  });
+// Provide context for child components
+setContext("breadcrumb", {
+  separator,
+  collapsible,
+  maxVisibleItems,
+})
 </script>
 
 <nav

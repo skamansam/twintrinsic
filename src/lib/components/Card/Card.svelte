@@ -22,44 +22,44 @@ Usage:
 ```
 -->
 <script>
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Link URL if the card is clickable */
-    href,
+  /** @type {string} - Link URL if the card is clickable */
+  href,
 
-    /** @type {string} - Image URL for card media */
-    image,
+  /** @type {string} - Image URL for card media */
+  image,
 
-    /** @type {string} - Alt text for the image */
-    imageAlt = '',
+  /** @type {string} - Alt text for the image */
+  imageAlt = "",
 
-    /** @type {boolean} - Whether to show a border */
-    bordered = true,
+  /** @type {boolean} - Whether to show a border */
+  bordered = true,
 
-    /** @type {boolean} - Whether to add a shadow */
-    shadowed = false,
+  /** @type {boolean} - Whether to add a shadow */
+  shadowed = false,
 
-    /** @type {boolean} - Whether to make the card compact (less padding) */
-    compact = false,
+  /** @type {boolean} - Whether to make the card compact (less padding) */
+  compact = false,
 
-    /** @type {boolean} - Whether to add hover effects */
-    hoverable = false,
+  /** @type {boolean} - Whether to add hover effects */
+  hoverable = false,
 
-    children,
-    header,
-    footer
-  } = $props();
+  children,
+  header,
+  footer,
+} = $props()
 
-  // Determine if card has clickable behavior
-  const isClickable = !!href;
-  
-  // Determine element type based on href
-  const elementType = href ? 'a' : 'div';
+// Determine if card has clickable behavior
+const isClickable = !!href
+
+// Determine element type based on href
+const elementType = href ? "a" : "div"
 </script>
 
 <svelte:element

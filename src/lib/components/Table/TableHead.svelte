@@ -19,12 +19,12 @@ Usage:
 ```
 -->
 <script>
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    children
-  } = $props();
+  children,
+} = $props()
 </script>
 
 <thead class="table-head {className}">

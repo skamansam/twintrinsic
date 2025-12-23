@@ -17,95 +17,101 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, createEventDispatcher } from 'svelte';
+import { getContext, createEventDispatcher } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Input name */
-    name,
+  /** @type {string} - Input name */
+  name,
 
-    /** @type {string} - Label text */
-    label,
+  /** @type {string} - Label text */
+  label,
 
-    /** @type {boolean} - Whether the switch is checked */
-    checked = false,
+  /** @type {boolean} - Whether the switch is checked */
+  checked = false,
 
-    /** @type {boolean} - Whether the switch is required */
-    required = false,
+  /** @type {boolean} - Whether the switch is required */
+  required = false,
 
-    /** @type {boolean} - Whether the switch is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the switch is disabled */
+  disabled = false,
 
-    /** @type {string} - Size of the switch (sm, md, lg) */
-    size = 'md',
+  /** @type {string} - Size of the switch (sm, md, lg) */
+  size = "md",
 
-    /** @type {string} - ARIA label for accessibility */
-    ariaLabel,
+  /** @type {string} - ARIA label for accessibility */
+  ariaLabel,
 
-    /** @type {object} - Additional props to pass to the input element */
-    ...restProps
-  } = $props();
+  /** @type {object} - Additional props to pass to the input element */
+  ...restProps
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Get form context if available
-  const formContext = getContext('form');
-  
-  // Switch state
-  let isChecked = $state(checked);
-  
-  // Register with form if available
-  let fieldApi;
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, checked);
-    
-    // Update value when form field changes
-    $effect(() => {
-      const formValue = fieldApi.getValue();
-      if (formValue !== undefined && formValue !== isChecked) {
-        isChecked = !!formValue;
-      }
-    });
-  }
-  
-  /**
-   * Handles switch toggle
-   * @param {Event} event - Change event
-   */
-  function handleChange(event) {
-    isChecked = event.target.checked;
-    
-    // Update form field if available
-    if (fieldApi) {
-      fieldApi.setValue(isChecked);
+const dispatch = createEventDispatcher()
+
+// Get form context if available
+const formContext = getContext("form")
+
+// Switch state
+let isChecked = $state(checked)
+
+// Register with form if available
+let fieldApi
+if (formContext && name) {
+  fieldApi = formContext.registerField(name, checked)
+
+  // Update value when form field changes
+  $effect(() => {
+    const formValue = fieldApi.getValue()
+    if (formValue !== undefined && formValue !== isChecked) {
+      isChecked = !!formValue
     }
-    
-    dispatch('change', { checked: isChecked });
+  })
+}
+
+/**
+ * Handles switch toggle
+ * @param {Event} event - Change event
+ */
+function handleChange(event) {
+  isChecked = event.target.checked
+
+  // Update form field if available
+  if (fieldApi) {
+    fieldApi.setValue(isChecked)
   }
-  
-  // Determine switch size classes
-  const switchSizeClasses = $derived({
-    sm: 'w-8 h-4',
-    md: 'w-10 h-5',
-    lg: 'w-12 h-6'
-  }[size] || 'w-10 h-5');
-  
-  const thumbSizeClasses = $derived({
-    sm: 'w-3 h-3',
-    md: 'w-4 h-4',
-    lg: 'w-5 h-5'
-  }[size] || 'w-4 h-4');
-  
-  const labelSizeClasses = $derived({
-    sm: 'text-xs',
-    md: 'text-sm',
-    lg: 'text-base'
-  }[size] || 'text-sm');
+
+  dispatch("change", { checked: isChecked })
+}
+
+// Determine switch size classes
+const switchSizeClasses = $derived(
+  {
+    sm: "w-8 h-4",
+    md: "w-10 h-5",
+    lg: "w-12 h-6",
+  }[size] || "w-10 h-5"
+)
+
+const thumbSizeClasses = $derived(
+  {
+    sm: "w-3 h-3",
+    md: "w-4 h-4",
+    lg: "w-5 h-5",
+  }[size] || "w-4 h-4"
+)
+
+const labelSizeClasses = $derived(
+  {
+    sm: "text-xs",
+    md: "text-sm",
+    lg: "text-base",
+  }[size] || "text-sm"
+)
 </script>
 
 <label 

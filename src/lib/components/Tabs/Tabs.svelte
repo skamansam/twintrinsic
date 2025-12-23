@@ -19,151 +19,155 @@ Usage:
 ```
 -->
 <script>
-  import { createEventDispatcher, setContext } from 'svelte';
+import { createEventDispatcher, setContext } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {number} - Index of the initially selected tab */
-    defaultIndex = 0,
+  /** @type {number} - Index of the initially selected tab */
+  defaultIndex = 0,
 
-    /** @type {string} - Tab variant (default, underline, pills, enclosed) */
-    variant = 'default',
+  /** @type {string} - Tab variant (default, underline, pills, enclosed) */
+  variant = "default",
 
-    /** @type {string} - Tab size (sm, md, lg) */
-    size = 'md',
+  /** @type {string} - Tab size (sm, md, lg) */
+  size = "md",
 
-    /** @type {boolean} - Whether to make tabs take full width */
-    fullWidth = false,
+  /** @type {boolean} - Whether to make tabs take full width */
+  fullWidth = false,
 
-    /** @type {boolean} - Whether to center the tabs */
-    centered = false,
+  /** @type {boolean} - Whether to center the tabs */
+  centered = false,
 
-    /** @type {boolean} - Whether tabs are disabled */
-    disabled = false,
+  /** @type {boolean} - Whether tabs are disabled */
+  disabled = false,
 
-    /** @type {string} - ARIA label for the tablist */
-    ariaLabel = 'Tabs',
+  /** @type {string} - ARIA label for the tablist */
+  ariaLabel = "Tabs",
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Tabs state
-  let selectedIndex = $state(defaultIndex);
-  let tabsCount = $state(0);
-  let tabsRefs = $state([]);
-  let panelsRefs = $state([]);
-  
-  /**
-   * Selects a tab by index
-   * @param {number} index - Tab index to select
-   */
-  function selectTab(index) {
-    if (index < 0 || index >= tabsCount || disabled) return;
-    
-    selectedIndex = index;
-    dispatch('change', { index, tab: tabsRefs[index], panel: panelsRefs[index] });
+const dispatch = createEventDispatcher()
+
+// Tabs state
+let selectedIndex = $state(defaultIndex)
+let tabsCount = $state(0)
+let tabsRefs = $state([])
+let panelsRefs = $state([])
+
+/**
+ * Selects a tab by index
+ * @param {number} index - Tab index to select
+ */
+function selectTab(index) {
+  if (index < 0 || index >= tabsCount || disabled) return
+
+  selectedIndex = index
+  dispatch("change", { index, tab: tabsRefs[index], panel: panelsRefs[index] })
+}
+
+/**
+ * Handles keyboard navigation
+ * @param {KeyboardEvent} event - Keydown event
+ * @param {number} index - Current tab index
+ */
+function handleKeydown(event, index) {
+  if (disabled) return
+
+  let newIndex
+
+  switch (event.key) {
+    case "ArrowLeft":
+      event.preventDefault()
+      newIndex = index - 1
+      if (newIndex < 0) newIndex = tabsCount - 1 // Wrap to last tab
+      selectTab(newIndex)
+      tabsRefs[newIndex]?.focus()
+      break
+
+    case "ArrowRight":
+      event.preventDefault()
+      newIndex = index + 1
+      if (newIndex >= tabsCount) newIndex = 0 // Wrap to first tab
+      selectTab(newIndex)
+      tabsRefs[newIndex]?.focus()
+      break
+
+    case "Home":
+      event.preventDefault()
+      selectTab(0)
+      tabsRefs[0]?.focus()
+      break
+
+    case "End":
+      event.preventDefault()
+      newIndex = tabsCount - 1
+      selectTab(newIndex)
+      tabsRefs[newIndex]?.focus()
+      break
   }
-  
-  /**
-   * Handles keyboard navigation
-   * @param {KeyboardEvent} event - Keydown event
-   * @param {number} index - Current tab index
-   */
-  function handleKeydown(event, index) {
-    if (disabled) return;
-    
-    let newIndex;
-    
-    switch (event.key) {
-      case 'ArrowLeft':
-        event.preventDefault();
-        newIndex = index - 1;
-        if (newIndex < 0) newIndex = tabsCount - 1; // Wrap to last tab
-        selectTab(newIndex);
-        tabsRefs[newIndex]?.focus();
-        break;
-        
-      case 'ArrowRight':
-        event.preventDefault();
-        newIndex = index + 1;
-        if (newIndex >= tabsCount) newIndex = 0; // Wrap to first tab
-        selectTab(newIndex);
-        tabsRefs[newIndex]?.focus();
-        break;
-        
-      case 'Home':
-        event.preventDefault();
-        selectTab(0);
-        tabsRefs[0]?.focus();
-        break;
-        
-      case 'End':
-        event.preventDefault();
-        newIndex = tabsCount - 1;
-        selectTab(newIndex);
-        tabsRefs[newIndex]?.focus();
-        break;
-    }
-  }
-  
-  /**
-   * Registers a tab
-   * @param {HTMLElement} tabElement - Tab element reference
-   * @returns {number} - Tab index
-   */
-  function registerTab(tabElement) {
-    const index = tabsRefs.length;
-    tabsRefs = [...tabsRefs, tabElement];
-    tabsCount = tabsRefs.length;
-    return index;
-  }
-  
-  /**
-   * Registers a panel
-   * @param {HTMLElement} panelElement - Panel element reference
-   * @returns {number} - Panel index
-   */
-  function registerPanel(panelElement) {
-    const index = panelsRefs.length;
-    panelsRefs = [...panelsRefs, panelElement];
-    return index;
-  }
-  
-  // Provide context for child components
-  setContext('tabs', {
-    selectedIndex: () => selectedIndex,
-    registerTab,
-    registerPanel,
-    selectTab,
-    handleKeydown,
-    disabled: () => disabled,
-    variant,
-    size,
-    fullWidth,
-    centered
-  });
-  
-  // Determine variant classes
-  const variantClasses = $derived({
-    default: 'tabs-default',
-    underline: 'tabs-underline',
-    pills: 'tabs-pills',
-    enclosed: 'tabs-enclosed'
-  }[variant] || 'tabs-default');
-  
-  // Determine size classes
-  const sizeClasses = $derived({
-    sm: 'tabs-sm',
-    md: 'tabs-md',
-    lg: 'tabs-lg'
-  }[size] || 'tabs-md');
+}
+
+/**
+ * Registers a tab
+ * @param {HTMLElement} tabElement - Tab element reference
+ * @returns {number} - Tab index
+ */
+function registerTab(tabElement) {
+  const index = tabsRefs.length
+  tabsRefs = [...tabsRefs, tabElement]
+  tabsCount = tabsRefs.length
+  return index
+}
+
+/**
+ * Registers a panel
+ * @param {HTMLElement} panelElement - Panel element reference
+ * @returns {number} - Panel index
+ */
+function registerPanel(panelElement) {
+  const index = panelsRefs.length
+  panelsRefs = [...panelsRefs, panelElement]
+  return index
+}
+
+// Provide context for child components
+setContext("tabs", {
+  selectedIndex: () => selectedIndex,
+  registerTab,
+  registerPanel,
+  selectTab,
+  handleKeydown,
+  disabled: () => disabled,
+  variant,
+  size,
+  fullWidth,
+  centered,
+})
+
+// Determine variant classes
+const variantClasses = $derived(
+  {
+    default: "tabs-default",
+    underline: "tabs-underline",
+    pills: "tabs-pills",
+    enclosed: "tabs-enclosed",
+  }[variant] || "tabs-default"
+)
+
+// Determine size classes
+const sizeClasses = $derived(
+  {
+    sm: "tabs-sm",
+    md: "tabs-md",
+    lg: "tabs-lg",
+  }[size] || "tabs-md"
+)
 </script>
 
 <div 

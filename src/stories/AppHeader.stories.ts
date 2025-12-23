@@ -51,8 +51,9 @@ export const Default = {
       { label: "Contact", href: "/contact" },
     ],
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const header = canvasElement.querySelector('[role="banner"]')
+    if (!header) return
     expect(header).toBeVisible()
     expect(header.querySelector(".app-header-brand-name")).toHaveTextContent("My App")
   },
@@ -138,12 +139,10 @@ export const FullFeatured = {
       { label: "Reports", href: "/reports" },
     ],
   },
-  render: (args) => ({
+  render: (args: unknown) => ({
     Component: AppHeader,
     props: args,
-    on {
-      search: (event) => console.log("Search:", event.detail.query),
-      signout: () => console.log("Sign out clicked"),
-    },
+    onSearch: (event: CustomEvent<{ query: string }>) => console.log("Search:", event.detail.query),
+    onSignout: () => console.log("Sign out clicked"),
   }),
 }

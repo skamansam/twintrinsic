@@ -16,91 +16,90 @@ Usage:
 ```
 -->
 <script>
-  import { getContext } from 'svelte';
+import { getContext } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Field name (used for form data) */
-    name,
+  /** @type {string} - Field name (used for form data) */
+  name,
 
-    /** @type {string} - Field label */
-    label,
+  /** @type {string} - Field label */
+  label,
 
-    /** @type {string} - Help text displayed below the field */
-    helpText,
+  /** @type {string} - Help text displayed below the field */
+  helpText,
 
-    /** @type {string} - Error message to display */
-    error,
+  /** @type {string} - Error message to display */
+  error,
 
-    /** @type {boolean} - Whether the field is required */
-    required = false,
+  /** @type {boolean} - Whether the field is required */
+  required = false,
 
-    /** @type {boolean} - Whether the field is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the field is disabled */
+  disabled = false,
 
-    /** @type {boolean} - Whether to hide the label visually (still accessible to screen readers) */
-    hideLabel = false,
+  /** @type {boolean} - Whether to hide the label visually (still accessible to screen readers) */
+  hideLabel = false,
 
-    /** @type {string} - Layout direction (vertical or horizontal) */
-    layout,
+  /** @type {string} - Layout direction (vertical or horizontal) */
+  layout,
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  // Get form context if available
-  const formContext = getContext('form');
-  
-  // Use layout from form context if not specified
-  const fieldLayout = layout || (formContext ? formContext.layout : 'vertical');
-  
-  // Generate unique ID for the field
-  const fieldId = `${id}-field`;
-  const errorId = `${id}-error`;
-  const helpId = `${id}-help`;
-  
-  // Track field state
-  let fieldError = $state(error || '');
-  let touched = $state(false);
-  let fieldDisabled = $state(disabled);
-  
-  // Register with form if available
-  let fieldApi;
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name);
-    
-    // Update field error when form validation runs
-    $effect(() => {
-      const formError = fieldApi.getError();
-      if (formError) {
-        fieldError = formError;
-      }
-    });
-    
-    // Update touched state
-    $effect(() => {
-      touched = fieldApi.isTouched();
-    });
-    
-    // Update disabled state
-    $effect(() => {
-      const formDisabled = formContext.disabled();
-      fieldDisabled = disabled || formDisabled;
-    });
-  }
-  
-  // Determine if we should show an error
-  const showError = $derived(!!fieldError && touched);
-  
-  // Determine the aria-describedby attribute value
-  const describedBy = $derived([
-    helpText ? helpId : null,
-    showError ? errorId : null
-  ].filter(Boolean).join(' '));
+// Get form context if available
+const formContext = getContext("form")
+
+// Use layout from form context if not specified
+const fieldLayout = layout || (formContext ? formContext.layout : "vertical")
+
+// Generate unique ID for the field
+const fieldId = `${id}-field`
+const errorId = `${id}-error`
+const helpId = `${id}-help`
+
+// Track field state
+let fieldError = $state(error || "")
+let touched = $state(false)
+let fieldDisabled = $state(disabled)
+
+// Register with form if available
+let fieldApi
+if (formContext && name) {
+  fieldApi = formContext.registerField(name)
+
+  // Update field error when form validation runs
+  $effect(() => {
+    const formError = fieldApi.getError()
+    if (formError) {
+      fieldError = formError
+    }
+  })
+
+  // Update touched state
+  $effect(() => {
+    touched = fieldApi.isTouched()
+  })
+
+  // Update disabled state
+  $effect(() => {
+    const formDisabled = formContext.disabled()
+    fieldDisabled = disabled || formDisabled
+  })
+}
+
+// Determine if we should show an error
+const showError = $derived(!!fieldError && touched)
+
+// Determine the aria-describedby attribute value
+const describedBy = $derived(
+  [helpText ? helpId : null, showError ? errorId : null].filter(Boolean).join(" ")
+)
 </script>
 
 <div 

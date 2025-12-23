@@ -15,25 +15,75 @@ const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
 // Helper function to determine if text should be light or dark based on background
 function getTextColor(colorName, shade) {
   // Generally, shades 500+ need light text
-  return shade >= 500 ? 'text-white' : 'text-text';
+  return shade >= 500 ? "text-white" : "text-text"
 }
 
 // Sample text for color examples
-const sampleText = "Aa";
+const sampleText = "Aa"
 
 // Text/background combinations to showcase
 const textBgCombinations = [
-  { name: "Default", textClass: "text-text", bgClass: "bg-background", description: "Default text on background" },
-  { name: "Primary", textClass: "text-primary-700", bgClass: "bg-primary-50", description: "Primary text on light primary background" },
-  { name: "Primary Inverse", textClass: "text-white", bgClass: "bg-primary-700", description: "White text on dark primary background" },
-  { name: "Secondary", textClass: "text-secondary-700", bgClass: "bg-secondary-50", description: "Secondary text on light secondary background" },
-  { name: "Secondary Inverse", textClass: "text-white", bgClass: "bg-secondary-700", description: "White text on dark secondary background" },
-  { name: "Success", textClass: "text-success-700", bgClass: "bg-success-50", description: "Success text on light success background" },
-  { name: "Warning", textClass: "text-warning-700", bgClass: "bg-warning-50", description: "Warning text on light warning background" },
-  { name: "Error", textClass: "text-error-700", bgClass: "bg-error-50", description: "Error text on light error background" },
-  { name: "Info", textClass: "text-info-700", bgClass: "bg-info-50", description: "Info text on light info background" },
-  { name: "Muted", textClass: "text-muted", bgClass: "bg-surface", description: "Muted text on surface background" }
-];
+  {
+    name: "Default",
+    textClass: "text-text",
+    bgClass: "bg-background",
+    description: "Default text on background",
+  },
+  {
+    name: "Primary",
+    textClass: "text-primary-700",
+    bgClass: "bg-primary-50",
+    description: "Primary text on light primary background",
+  },
+  {
+    name: "Primary Inverse",
+    textClass: "text-white",
+    bgClass: "bg-primary-700",
+    description: "White text on dark primary background",
+  },
+  {
+    name: "Secondary",
+    textClass: "text-secondary-700",
+    bgClass: "bg-secondary-50",
+    description: "Secondary text on light secondary background",
+  },
+  {
+    name: "Secondary Inverse",
+    textClass: "text-white",
+    bgClass: "bg-secondary-700",
+    description: "White text on dark secondary background",
+  },
+  {
+    name: "Success",
+    textClass: "text-success-700",
+    bgClass: "bg-success-50",
+    description: "Success text on light success background",
+  },
+  {
+    name: "Warning",
+    textClass: "text-warning-700",
+    bgClass: "bg-warning-50",
+    description: "Warning text on light warning background",
+  },
+  {
+    name: "Error",
+    textClass: "text-error-700",
+    bgClass: "bg-error-50",
+    description: "Error text on light error background",
+  },
+  {
+    name: "Info",
+    textClass: "text-info-700",
+    bgClass: "bg-info-50",
+    description: "Info text on light info background",
+  },
+  {
+    name: "Muted",
+    textClass: "text-muted",
+    bgClass: "bg-surface",
+    description: "Muted text on surface background",
+  },
+]
 
 // Button examples with different colors
 const buttonExamples = [
@@ -42,8 +92,8 @@ const buttonExamples = [
   { color: "success", label: "Success" },
   { color: "warning", label: "Warning" },
   { color: "error", label: "Error" },
-  { color: "info", label: "Info" }
-];
+  { color: "info", label: "Info" },
+]
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

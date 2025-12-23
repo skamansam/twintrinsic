@@ -1,42 +1,42 @@
 <script module>
-  import { defineMeta } from "@storybook/addon-svelte-csf";
-  import Carousel from "../lib/components/Carousel/Carousel.svelte";
-  import CarouselItem from "../lib/components/Carousel/CarouselItem.svelte";
-  import { fn } from "@storybook/test";
+import { defineMeta } from "@storybook/addon-svelte-csf"
+import Carousel from "../lib/components/Carousel/Carousel.svelte"
+import CarouselItem from "../lib/components/Carousel/CarouselItem.svelte"
+import { fn } from "@storybook/test"
 
-  const { Story } = defineMeta({
-    title: "Components/Carousel",
-    component: Carousel,
-    tags: ["autodocs"],
-    argTypes: {
-      activeIndex: { control: "number" },
-      showArrows: { control: "boolean" },
-      showIndicators: { control: "boolean" },
-      autoplay: { control: "boolean" },
-      interval: { control: "number" },
-      pauseOnHover: { control: "boolean" },
-      circular: { control: "boolean" },
-      swipeable: { control: "boolean" },
-      transition: {
-        control: { type: "select" },
-        options: ["slide", "fade"],
-      },
-      transitionDuration: { control: "number" },
+const { Story } = defineMeta({
+  title: "Components/Carousel",
+  component: Carousel,
+  tags: ["autodocs"],
+  argTypes: {
+    activeIndex: { control: "number" },
+    showArrows: { control: "boolean" },
+    showIndicators: { control: "boolean" },
+    autoplay: { control: "boolean" },
+    interval: { control: "number" },
+    pauseOnHover: { control: "boolean" },
+    circular: { control: "boolean" },
+    swipeable: { control: "boolean" },
+    transition: {
+      control: { type: "select" },
+      options: ["slide", "fade"],
     },
-    args: {
-      activeIndex: 0,
-      showArrows: true,
-      showIndicators: true,
-      autoplay: false,
-      interval: 3000,
-      pauseOnHover: true,
-      circular: true,
-      swipeable: true,
-      transition: "slide",
-      transitionDuration: 300,
-      onChange: fn(),
-    },
-  });
+    transitionDuration: { control: "number" },
+  },
+  args: {
+    activeIndex: 0,
+    showArrows: true,
+    showIndicators: true,
+    autoplay: false,
+    interval: 3000,
+    pauseOnHover: true,
+    circular: true,
+    swipeable: true,
+    transition: "slide",
+    transitionDuration: 300,
+    onChange: fn(),
+  },
+})
 </script>
 
 <Story name="Basic">

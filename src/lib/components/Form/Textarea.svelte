@@ -17,140 +17,139 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, createEventDispatcher } from 'svelte';
+import { getContext, createEventDispatcher } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id,
+  /** @type {string} - HTML id for accessibility */
+  id,
 
-    /** @type {string} - Textarea name */
-    name,
+  /** @type {string} - Textarea name */
+  name,
 
-    /** @type {string} - Textarea placeholder */
-    placeholder = '',
+  /** @type {string} - Textarea placeholder */
+  placeholder = "",
 
-    /** @type {string} - Textarea value */
-    value = '',
+  /** @type {string} - Textarea value */
+  value = "",
 
-    /** @type {number} - Number of rows */
-    rows = 3,
+  /** @type {number} - Number of rows */
+  rows = 3,
 
-    /** @type {boolean} - Whether the textarea is required */
-    required = false,
+  /** @type {boolean} - Whether the textarea is required */
+  required = false,
 
-    /** @type {boolean} - Whether the textarea is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the textarea is disabled */
+  disabled = false,
 
-    /** @type {boolean} - Whether the textarea is readonly */
-    readonly = false,
+  /** @type {boolean} - Whether the textarea is readonly */
+  readonly = false,
 
-    /** @type {string} - Minimum length */
-    minlength,
+  /** @type {string} - Minimum length */
+  minlength,
 
-    /** @type {string} - Maximum length */
-    maxlength,
+  /** @type {string} - Maximum length */
+  maxlength,
 
-    /** @type {string} - Autocomplete attribute */
-    autocomplete,
+  /** @type {string} - Autocomplete attribute */
+  autocomplete,
 
-    /** @type {boolean} - Whether to auto-resize based on content */
-    autoResize = false,
+  /** @type {boolean} - Whether to auto-resize based on content */
+  autoResize = false,
 
-    /** @type {string} - ARIA label for accessibility */
-    ariaLabel,
-    /** @type {object} - Additional props to pass to the input element */
-    ...restProps
+  /** @type {string} - ARIA label for accessibility */
+  ariaLabel,
+  /** @type {object} - Additional props to pass to the input element */
+  ...restProps
+} = $props()
 
-  } = $props();
+const dispatch = createEventDispatcher()
 
-  const dispatch = createEventDispatcher();
-  
-  // Get form context if available
-  const formContext = getContext('form');
-  
-  // Generate unique ID if not provided
-  const textareaId = id || `textarea-${crypto.randomUUID()}`;
-  
-  // Textarea state
-  let textareaValue = $state(value);
-  let isFocused = $state(false);
-  let textareaEl;
-  
-  // Register with form if available
-  let fieldApi;
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, value);
-    
-    // Update value when form field changes
-    $effect(() => {
-      const formValue = fieldApi.getValue();
-      if (formValue !== undefined && formValue !== textareaValue) {
-        textareaValue = formValue;
-      }
-    });
-  }
-  
-  /**
-   * Handles textarea input
-   * @param {Event} event - Input event
-   */
-  function handleInput(event) {
-    const newValue = event.target.value;
-    textareaValue = newValue;
-    
-    // Update form field if available
-    if (fieldApi) {
-      fieldApi.setValue(newValue);
-    }
-    
-    // Auto-resize if enabled
-    if (autoResize && textareaEl) {
-      resizeTextarea();
-    }
-    
-    dispatch('input', { value: newValue });
-    dispatch('change', { value: newValue });
-  }
-  
-  /**
-   * Handles focus events
-   */
-  function handleFocus() {
-    isFocused = true;
-    dispatch('focus');
-  }
-  
-  /**
-   * Handles blur events
-   */
-  function handleBlur() {
-    isFocused = false;
-    dispatch('blur');
-  }
-  
-  /**
-   * Resizes the textarea based on content
-   */
-  function resizeTextarea() {
-    if (!textareaEl) return;
-    
-    // Reset height to calculate scroll height
-    textareaEl.style.height = 'auto';
-    
-    // Set height to scroll height
-    textareaEl.style.height = `${textareaEl.scrollHeight}px`;
-  }
-  
-  // Initialize auto-resize
+// Get form context if available
+const formContext = getContext("form")
+
+// Generate unique ID if not provided
+const textareaId = id || `textarea-${crypto.randomUUID()}`
+
+// Textarea state
+let textareaValue = $state(value)
+let isFocused = $state(false)
+let textareaEl
+
+// Register with form if available
+let fieldApi
+if (formContext && name) {
+  fieldApi = formContext.registerField(name, value)
+
+  // Update value when form field changes
   $effect(() => {
-    if (autoResize && textareaEl) {
-      // Use setTimeout to ensure content is rendered
-      setTimeout(resizeTextarea, 0);
+    const formValue = fieldApi.getValue()
+    if (formValue !== undefined && formValue !== textareaValue) {
+      textareaValue = formValue
     }
-  });
+  })
+}
+
+/**
+ * Handles textarea input
+ * @param {Event} event - Input event
+ */
+function handleInput(event) {
+  const newValue = event.target.value
+  textareaValue = newValue
+
+  // Update form field if available
+  if (fieldApi) {
+    fieldApi.setValue(newValue)
+  }
+
+  // Auto-resize if enabled
+  if (autoResize && textareaEl) {
+    resizeTextarea()
+  }
+
+  dispatch("input", { value: newValue })
+  dispatch("change", { value: newValue })
+}
+
+/**
+ * Handles focus events
+ */
+function handleFocus() {
+  isFocused = true
+  dispatch("focus")
+}
+
+/**
+ * Handles blur events
+ */
+function handleBlur() {
+  isFocused = false
+  dispatch("blur")
+}
+
+/**
+ * Resizes the textarea based on content
+ */
+function resizeTextarea() {
+  if (!textareaEl) return
+
+  // Reset height to calculate scroll height
+  textareaEl.style.height = "auto"
+
+  // Set height to scroll height
+  textareaEl.style.height = `${textareaEl.scrollHeight}px`
+}
+
+// Initialize auto-resize
+$effect(() => {
+  if (autoResize && textareaEl) {
+    // Use setTimeout to ensure content is rendered
+    setTimeout(resizeTextarea, 0)
+  }
+})
 </script>
 
 <div class="textarea-wrapper {className}">

@@ -25,53 +25,53 @@ Usage:
 ```
 -->
 <script>
-  import { setContext } from 'svelte';
+import { setContext } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {number} - Index of the active step (0-based) */
-    activeStep = 0,
+  /** @type {number} - Index of the active step (0-based) */
+  activeStep = 0,
 
-    /** @type {string} - Visual style variant */
-    variant = 'primary',
+  /** @type {string} - Visual style variant */
+  variant = "primary",
 
-    /** @type {string} - Orientation of the stepper (horizontal, vertical) */
-    orientation = 'horizontal',
+  /** @type {string} - Orientation of the stepper (horizontal, vertical) */
+  orientation = "horizontal",
 
-    /** @type {boolean} - Whether to place labels below the step icons */
-    alternativeLabels = false,
+  /** @type {boolean} - Whether to place labels below the step icons */
+  alternativeLabels = false,
 
-    /** @type {boolean} - Whether to show linear progression only */
-    linear = true,
+  /** @type {boolean} - Whether to show linear progression only */
+  linear = true,
 
-    /** @type {boolean} - Whether to show the connector between steps */
-    connector = true,
+  /** @type {boolean} - Whether to show the connector between steps */
+  connector = true,
 
-    /** @type {string} - ARIA label for the stepper */
-    ariaLabel = 'Step progress',
+  /** @type {string} - ARIA label for the stepper */
+  ariaLabel = "Step progress",
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  // Provide context for child components
-  setContext('stepper', {
-    activeStep,
-    variant,
-    orientation,
-    alternativeLabels,
-    linear,
-    connector,
-    getStepState: (index) => {
-      if (index < activeStep) return 'completed';
-      if (index === activeStep) return 'active';
-      return 'pending';
-    }
-  });
+// Provide context for child components
+setContext("stepper", {
+  activeStep,
+  variant,
+  orientation,
+  alternativeLabels,
+  linear,
+  connector,
+  getStepState: (index) => {
+    if (index < activeStep) return "completed"
+    if (index === activeStep) return "active"
+    return "pending"
+  },
+})
 </script>
 
 <div

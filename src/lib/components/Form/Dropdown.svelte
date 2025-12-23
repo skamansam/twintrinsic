@@ -28,417 +28,418 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, createEventDispatcher } from 'svelte';
-  import { slide } from 'svelte/transition';
-  import { clickOutside } from '../../actions/clickOutside.js';
+import { getContext, createEventDispatcher } from "svelte"
+import { slide } from "svelte/transition"
+import { clickOutside } from "../../actions/clickOutside.js"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Input name */
-    name,
+  /** @type {string} - Input name */
+  name,
 
-    /** @type {Array} - Options to display */
-    options = [],
+  /** @type {Array} - Options to display */
+  options = [],
 
-    /** @type {any} - Selected value(s) */
-    value,
+  /** @type {any} - Selected value(s) */
+  value,
 
-    /** @type {string} - Placeholder text */
-    placeholder = 'Select an option',
+  /** @type {string} - Placeholder text */
+  placeholder = "Select an option",
 
-    /** @type {boolean} - Whether multiple selection is allowed */
-    multiple = false,
+  /** @type {boolean} - Whether multiple selection is allowed */
+  multiple = false,
 
-    /** @type {string} - Property name for option label */
-    optionLabel = 'label',
+  /** @type {string} - Property name for option label */
+  optionLabel = "label",
 
-    /** @type {string} - Property name for option value */
-    optionValue = 'value',
+  /** @type {string} - Property name for option value */
+  optionValue = "value",
 
-    /** @type {string} - Property name for option icon */
-    optionIcon,
+  /** @type {string} - Property name for option icon */
+  optionIcon,
 
-    /** @type {string} - Property name for option children (for cascading) */
-    optionChildren = 'items',
+  /** @type {string} - Property name for option children (for cascading) */
+  optionChildren = "items",
 
-    /** @type {boolean} - Whether the dropdown is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the dropdown is disabled */
+  disabled = false,
 
-    /** @type {boolean} - Whether the dropdown is required */
-    required = false,
+  /** @type {boolean} - Whether the dropdown is required */
+  required = false,
 
-    /** @type {boolean} - Whether to filter options by typing */
-    filter = false,
+  /** @type {boolean} - Whether to filter options by typing */
+  filter = false,
 
-    /** @type {string} - Size of the dropdown (sm, md, lg) */
-    size = 'md',
+  /** @type {string} - Size of the dropdown (sm, md, lg) */
+  size = "md",
 
-    /** @type {boolean} - Whether to show a clear button */
-    clearable = false,
+  /** @type {boolean} - Whether to show a clear button */
+  clearable = false,
 
-    /** @type {string} - ARIA label for accessibility */
-    ariaLabel
-  } = $props();
+  /** @type {string} - ARIA label for accessibility */
+  ariaLabel,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Get form context if available
-  const formContext = getContext('form');
-  
-  // Component state
-  let isOpen = $state(false);
-  let selectedValues = $state(multiple ? [] : null);
-  let filterValue = $state('');
-  let highlightedIndex = $state(0);
-  let dropdownElement;
-  let inputElement;
-  let menuElement;
-  let activeSubmenu = $state(null);
-  
-  // Register with form if available
-  let fieldApi;
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, value);
-    
-    // Update value when form field changes
-    $effect(() => {
-      const formValue = fieldApi.getValue();
-      if (formValue !== undefined && JSON.stringify(formValue) !== JSON.stringify(selectedValues)) {
-        selectedValues = formValue;
-      }
-    });
-  }
-  
-  // Initialize selected values from prop
+const dispatch = createEventDispatcher()
+
+// Get form context if available
+const formContext = getContext("form")
+
+// Component state
+let isOpen = $state(false)
+let selectedValues = $state(multiple ? [] : null)
+let filterValue = $state("")
+let highlightedIndex = $state(0)
+let dropdownElement
+let inputElement
+let menuElement
+let activeSubmenu = $state(null)
+
+// Register with form if available
+let fieldApi
+if (formContext && name) {
+  fieldApi = formContext.registerField(name, value)
+
+  // Update value when form field changes
   $effect(() => {
-    if (value !== undefined) {
-      selectedValues = value;
+    const formValue = fieldApi.getValue()
+    if (formValue !== undefined && JSON.stringify(formValue) !== JSON.stringify(selectedValues)) {
+      selectedValues = formValue
     }
-  });
-  
-  /**
-   * Gets the display label for an option
-   * @param {Object|string} option - Option to get label for
-   * @returns {string} - Display label
-   */
-  function getOptionLabel(option) {
-    if (!option) return '';
-    
-    if (typeof option === 'object') {
-      return option[optionLabel] || '';
+  })
+}
+
+// Initialize selected values from prop
+$effect(() => {
+  if (value !== undefined) {
+    selectedValues = value
+  }
+})
+
+/**
+ * Gets the display label for an option
+ * @param {Object|string} option - Option to get label for
+ * @returns {string} - Display label
+ */
+function getOptionLabel(option) {
+  if (!option) return ""
+
+  if (typeof option === "object") {
+    return option[optionLabel] || ""
+  }
+
+  return option.toString()
+}
+
+/**
+ * Gets the value for an option
+ * @param {Object|string} option - Option to get value for
+ * @returns {any} - Option value
+ */
+function getOptionValue(option) {
+  if (!option) return null
+
+  if (typeof option === "object") {
+    return option[optionValue]
+  }
+
+  return option
+}
+
+/**
+ * Gets the icon for an option
+ * @param {Object} option - Option to get icon for
+ * @returns {string} - Icon HTML
+ */
+function getOptionIcon(option) {
+  if (!option || !optionIcon || typeof option !== "object") return null
+
+  return option[optionIcon]
+}
+
+/**
+ * Gets the children for an option (for cascading)
+ * @param {Object} option - Option to get children for
+ * @returns {Array} - Child options
+ */
+function getOptionChildren(option) {
+  if (!option || typeof option !== "object") return null
+
+  return option[optionChildren] || null
+}
+
+/**
+ * Checks if an option is selected
+ * @param {Object|string} option - Option to check
+ * @returns {boolean} - Whether the option is selected
+ */
+function isOptionSelected(option) {
+  const value = getOptionValue(option)
+
+  if (multiple) {
+    return (
+      Array.isArray(selectedValues) &&
+      selectedValues.some((v) => (typeof v === "object" ? v[optionValue] === value : v === value))
+    )
+  }
+
+  return (
+    selectedValues === value ||
+    (typeof selectedValues === "object" && selectedValues && selectedValues[optionValue] === value)
+  )
+}
+
+/**
+ * Filters options based on input value
+ * @param {Array} opts - Options to filter
+ * @returns {Array} - Filtered options
+ */
+function filterOptions(opts) {
+  if (!filter || !filterValue) return opts
+
+  return opts.filter((option) => {
+    const label = getOptionLabel(option).toLowerCase()
+    return label.includes(filterValue.toLowerCase())
+  })
+}
+
+/**
+ * Gets the display value for the input
+ * @returns {string} - Display value
+ */
+function getDisplayValue() {
+  if (!selectedValues || (Array.isArray(selectedValues) && selectedValues.length === 0)) {
+    return ""
+  }
+
+  if (multiple) {
+    if (Array.isArray(selectedValues)) {
+      return selectedValues
+        .map((v) =>
+          typeof v === "object"
+            ? getOptionLabel(v)
+            : getOptionLabel(options.find((o) => getOptionValue(o) === v))
+        )
+        .join(", ")
     }
-    
-    return option.toString();
+    return ""
   }
-  
-  /**
-   * Gets the value for an option
-   * @param {Object|string} option - Option to get value for
-   * @returns {any} - Option value
-   */
-  function getOptionValue(option) {
-    if (!option) return null;
-    
-    if (typeof option === 'object') {
-      return option[optionValue];
-    }
-    
-    return option;
+
+  if (typeof selectedValues === "object") {
+    return getOptionLabel(selectedValues)
   }
-  
-  /**
-   * Gets the icon for an option
-   * @param {Object} option - Option to get icon for
-   * @returns {string} - Icon HTML
-   */
-  function getOptionIcon(option) {
-    if (!option || !optionIcon || typeof option !== 'object') return null;
-    
-    return option[optionIcon];
-  }
-  
-  /**
-   * Gets the children for an option (for cascading)
-   * @param {Object} option - Option to get children for
-   * @returns {Array} - Child options
-   */
-  function getOptionChildren(option) {
-    if (!option || typeof option !== 'object') return null;
-    
-    return option[optionChildren] || null;
-  }
-  
-  /**
-   * Checks if an option is selected
-   * @param {Object|string} option - Option to check
-   * @returns {boolean} - Whether the option is selected
-   */
-  function isOptionSelected(option) {
-    const value = getOptionValue(option);
-    
-    if (multiple) {
-      return Array.isArray(selectedValues) && selectedValues.some(v => 
-        typeof v === 'object' 
-          ? v[optionValue] === value 
-          : v === value
-      );
-    }
-    
-    return selectedValues === value || 
-      (typeof selectedValues === 'object' && selectedValues && selectedValues[optionValue] === value);
-  }
-  
-  /**
-   * Filters options based on input value
-   * @param {Array} opts - Options to filter
-   * @returns {Array} - Filtered options
-   */
-  function filterOptions(opts) {
-    if (!filter || !filterValue) return opts;
-    
-    return opts.filter(option => {
-      const label = getOptionLabel(option).toLowerCase();
-      return label.includes(filterValue.toLowerCase());
-    });
-  }
-  
-  /**
-   * Gets the display value for the input
-   * @returns {string} - Display value
-   */
-  function getDisplayValue() {
-    if (!selectedValues || (Array.isArray(selectedValues) && selectedValues.length === 0)) {
-      return '';
-    }
-    
-    if (multiple) {
-      if (Array.isArray(selectedValues)) {
-        return selectedValues.map(v => 
-          typeof v === 'object' ? getOptionLabel(v) : getOptionLabel(
-            options.find(o => getOptionValue(o) === v)
+
+  const selectedOption = options.find((o) => getOptionValue(o) === selectedValues)
+  return selectedOption ? getOptionLabel(selectedOption) : ""
+}
+
+/**
+ * Selects an option
+ * @param {Object|string} option - Option to select
+ */
+function selectOption(option, evt) {
+  evt.stopPropagation()
+  const value = getOptionValue(option)
+
+  if (multiple) {
+    if (isOptionSelected(option)) {
+      // Remove from selection
+      selectedValues = Array.isArray(selectedValues)
+        ? selectedValues.filter((v) =>
+            typeof v === "object" ? v[optionValue] !== value : v !== value
           )
-        ).join(', ');
-      }
-      return '';
+        : []
+    } else {
+      // Add to selection
+      selectedValues = Array.isArray(selectedValues) ? [...selectedValues, value] : [value]
     }
-    
-    if (typeof selectedValues === 'object') {
-      return getOptionLabel(selectedValues);
-    }
-    
-    const selectedOption = options.find(o => getOptionValue(o) === selectedValues);
-    return selectedOption ? getOptionLabel(selectedOption) : '';
+  } else {
+    // Single selection
+    selectedValues = value
+    closeDropdown()
   }
-  
-  /**
-   * Selects an option
-   * @param {Object|string} option - Option to select
-   */
-  function selectOption(option, evt) {
-    evt.stopPropagation();
-    const value = getOptionValue(option);
-    
-    if (multiple) {
-      if (isOptionSelected(option)) {
-        // Remove from selection
-        selectedValues = Array.isArray(selectedValues) 
-          ? selectedValues.filter(v => 
-              typeof v === 'object' 
-                ? v[optionValue] !== value 
-                : v !== value
-            )
-          : [];
+
+  // Update form field if available
+  if (fieldApi) {
+    fieldApi.setValue(selectedValues)
+  }
+
+  dispatch("change", { value: selectedValues })
+}
+
+/**
+ * Clears the selection
+ */
+function clearSelection(evt) {
+  evt.stopPropagation()
+  selectedValues = multiple ? [] : null
+
+  // Update form field if available
+  if (fieldApi) {
+    fieldApi.setValue(selectedValues)
+  }
+
+  dispatch("change", { value: selectedValues })
+  dispatch("clear")
+}
+
+/**
+ * Opens the dropdown
+ */
+function openDropdown() {
+  if (disabled) return
+
+  isOpen = true
+  highlightedIndex = 0
+  activeSubmenu = null
+
+  // Focus the filter input if filtering is enabled
+  if (filter) {
+    setTimeout(() => {
+      inputElement?.focus()
+    }, 0)
+  }
+
+  dispatch("open")
+}
+
+/**
+ * Closes the dropdown
+ */
+function closeDropdown() {
+  isOpen = false
+  filterValue = ""
+  activeSubmenu = null
+
+  dispatch("close")
+}
+
+/**
+ * Toggles the dropdown
+ */
+function toggleDropdown() {
+  if (isOpen) {
+    closeDropdown()
+  } else {
+    openDropdown()
+  }
+}
+
+/**
+ * Opens a submenu
+ * @param {Object} option - Parent option
+ * @param {Event} event - Mouse event
+ */
+function openSubmenu(option, event) {
+  if (event) {
+    event.stopPropagation()
+  }
+
+  activeSubmenu = option
+}
+
+/**
+ * Handles keydown events
+ * @param {KeyboardEvent} event - Keydown event
+ */
+function handleKeydown(event) {
+  if (disabled) return
+
+  const filteredOptions = filterOptions(options)
+
+  switch (event.key) {
+    case "ArrowDown":
+      event.preventDefault()
+      if (!isOpen) {
+        openDropdown()
       } else {
-        // Add to selection
-        selectedValues = Array.isArray(selectedValues) 
-          ? [...selectedValues, value] 
-          : [value];
+        highlightedIndex = (highlightedIndex + 1) % filteredOptions.length
+        scrollOptionIntoView()
       }
-    } else {
-      // Single selection
-      selectedValues = value;
-      closeDropdown();
-    }
-    
-    // Update form field if available
-    if (fieldApi) {
-      fieldApi.setValue(selectedValues);
-    }
-    
-    dispatch('change', { value: selectedValues });
-  }
-  
-  /**
-   * Clears the selection
-   */
-  function clearSelection(evt) {
-    evt.stopPropagation();
-    selectedValues = multiple ? [] : null;
-    
-    // Update form field if available
-    if (fieldApi) {
-      fieldApi.setValue(selectedValues);
-    }
-    
-    dispatch('change', { value: selectedValues });
-    dispatch('clear');
-  }
-  
-  /**
-   * Opens the dropdown
-   */
-  function openDropdown() {
-    if (disabled) return;
-    
-    isOpen = true;
-    highlightedIndex = 0;
-    activeSubmenu = null;
-    
-    // Focus the filter input if filtering is enabled
-    if (filter) {
-      setTimeout(() => {
-        inputElement?.focus();
-      }, 0);
-    }
-    
-    dispatch('open');
-  }
-  
-  /**
-   * Closes the dropdown
-   */
-  function closeDropdown() {
-    isOpen = false;
-    filterValue = '';
-    activeSubmenu = null;
-    
-    dispatch('close');
-  }
-  
-  /**
-   * Toggles the dropdown
-   */
-  function toggleDropdown() {
-    if (isOpen) {
-      closeDropdown();
-    } else {
-      openDropdown();
-    }
-  }
-  
-  /**
-   * Opens a submenu
-   * @param {Object} option - Parent option
-   * @param {Event} event - Mouse event
-   */
-  function openSubmenu(option, event) {
-    if (event) {
-      event.stopPropagation();
-    }
-    
-    activeSubmenu = option;
-  }
-  
-  /**
-   * Handles keydown events
-   * @param {KeyboardEvent} event - Keydown event
-   */
-  function handleKeydown(event) {
-    if (disabled) return;
-    
-    const filteredOptions = filterOptions(options);
-    
-    switch (event.key) {
-      case 'ArrowDown':
-        event.preventDefault();
+      break
+
+    case "ArrowUp":
+      event.preventDefault()
+      if (!isOpen) {
+        openDropdown()
+      } else {
+        highlightedIndex = (highlightedIndex - 1 + filteredOptions.length) % filteredOptions.length
+        scrollOptionIntoView()
+      }
+      break
+
+    case "Enter":
+      event.preventDefault()
+      if (isOpen) {
+        if (filteredOptions[highlightedIndex]) {
+          selectOption(filteredOptions[highlightedIndex])
+        }
+      } else {
+        openDropdown()
+      }
+      break
+
+    case "Escape":
+      event.preventDefault()
+      closeDropdown()
+      break
+
+    case "Tab":
+      if (isOpen) {
+        closeDropdown()
+      }
+      break
+
+    case " ":
+      if (!filter) {
+        event.preventDefault()
         if (!isOpen) {
-          openDropdown();
-        } else {
-          highlightedIndex = (highlightedIndex + 1) % filteredOptions.length;
-          scrollOptionIntoView();
+          openDropdown()
         }
-        break;
-        
-      case 'ArrowUp':
-        event.preventDefault();
-        if (!isOpen) {
-          openDropdown();
-        } else {
-          highlightedIndex = (highlightedIndex - 1 + filteredOptions.length) % filteredOptions.length;
-          scrollOptionIntoView();
-        }
-        break;
-        
-      case 'Enter':
-        event.preventDefault();
-        if (isOpen) {
-          if (filteredOptions[highlightedIndex]) {
-            selectOption(filteredOptions[highlightedIndex]);
-          }
-        } else {
-          openDropdown();
-        }
-        break;
-        
-      case 'Escape':
-        event.preventDefault();
-        closeDropdown();
-        break;
-        
-      case 'Tab':
-        if (isOpen) {
-          closeDropdown();
-        }
-        break;
-        
-      case ' ':
-        if (!filter) {
-          event.preventDefault();
-          if (!isOpen) {
-            openDropdown();
-          }
-        }
-        break;
-    }
+      }
+      break
   }
-  
-  /**
-   * Scrolls the highlighted option into view
-   */
-  function scrollOptionIntoView() {
-    if (!menuElement) return;
-    
-    const highlightedOption = menuElement.querySelector(`[data-index="${highlightedIndex}"]`);
-    if (highlightedOption) {
-      highlightedOption.scrollIntoView({ block: 'nearest' });
-    }
+}
+
+/**
+ * Scrolls the highlighted option into view
+ */
+function scrollOptionIntoView() {
+  if (!menuElement) return
+
+  const highlightedOption = menuElement.querySelector(`[data-index="${highlightedIndex}"]`)
+  if (highlightedOption) {
+    highlightedOption.scrollIntoView({ block: "nearest" })
   }
-  
-  /**
-   * Handles filter input
-   * @param {Event} event - Input event
-   */
-  function handleFilterInput(event) {
-    filterValue = event.target.value;
-    highlightedIndex = 0;
-    
-    dispatch('filter', { filter: filterValue });
-  }
-  
-  // Determine size classes
-  const sizeClasses = $derived({
-    sm: 'h-8 text-sm',
-    md: 'h-10 text-base',
-    lg: 'h-12 text-lg'
-  }[size] || 'h-10 text-base');
-  
-  // Computed display value
-  const displayValue = $derived(getDisplayValue());
+}
+
+/**
+ * Handles filter input
+ * @param {Event} event - Input event
+ */
+function handleFilterInput(event) {
+  filterValue = event.target.value
+  highlightedIndex = 0
+
+  dispatch("filter", { filter: filterValue })
+}
+
+// Determine size classes
+const sizeClasses = $derived(
+  {
+    sm: "h-8 text-sm",
+    md: "h-10 text-base",
+    lg: "h-12 text-lg",
+  }[size] || "h-10 text-base"
+)
+
+// Computed display value
+const displayValue = $derived(getDisplayValue())
 </script>
 
 <div

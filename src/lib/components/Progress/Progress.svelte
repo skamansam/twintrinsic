@@ -24,88 +24,92 @@ Usage:
 ```
 -->
 <script>
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {number} - Current value */
-    value = 0,
+  /** @type {number} - Current value */
+  value = 0,
 
-    /** @type {number} - Maximum value */
-    max = 100,
+  /** @type {number} - Maximum value */
+  max = 100,
 
-    /** @type {number} - Minimum value */
-    min = 0,
+  /** @type {number} - Minimum value */
+  min = 0,
 
-    /** @type {string} - Visual style variant */
-    variant = 'primary',
+  /** @type {string} - Visual style variant */
+  variant = "primary",
 
-    /** @type {string} - Size of the progress bar (sm, md, lg) */
-    size = 'md',
+  /** @type {string} - Size of the progress bar (sm, md, lg) */
+  size = "md",
 
-    /** @type {boolean} - Whether to show the value as text */
-    showValue = false,
+  /** @type {boolean} - Whether to show the value as text */
+  showValue = false,
 
-    /** @type {boolean} - Whether to show the value inside the progress bar */
-    valueInside = false,
+  /** @type {boolean} - Whether to show the value inside the progress bar */
+  valueInside = false,
 
-    /** @type {boolean} - Whether to show a striped pattern */
-    striped = false,
+  /** @type {boolean} - Whether to show a striped pattern */
+  striped = false,
 
-    /** @type {boolean} - Whether to animate the striped pattern */
-    animated = false,
+  /** @type {boolean} - Whether to animate the striped pattern */
+  animated = false,
 
-    /** @type {boolean} - Whether to show an indeterminate loading animation */
-    indeterminate = false,
+  /** @type {boolean} - Whether to show an indeterminate loading animation */
+  indeterminate = false,
 
-    /** @type {Function} - Custom function to format the displayed value */
-    format,
+  /** @type {Function} - Custom function to format the displayed value */
+  format,
 
-    /** @type {string} - ARIA label for accessibility */
-    ariaLabel
-  } = $props();
+  /** @type {string} - ARIA label for accessibility */
+  ariaLabel,
+} = $props()
 
-  // Calculate percentage for width
-  const percentage = $derived(Math.min(100, Math.max(0, ((value - min) / (max - min)) * 100)));
-  
-  // Format value for display
-  const formattedValue = $derived(format 
-    ? format(value, min, max) 
-    : `${Math.round(percentage)}%`);
-  
-  // Determine size classes
-  const sizeClasses = $derived({
-    sm: 'h-1.5',
-    md: 'h-2.5',
-    lg: 'h-4'
-  }[size] || 'h-2.5');
-  
-  // Determine text size classes
-  const textSizeClasses = $derived({
-    sm: 'text-xs',
-    md: 'text-sm',
-    lg: 'text-base'
-  }[size] || 'text-sm');
-  
-  // Determine variant classes
-  const variantClasses = $derived({
-    default: 'bg-muted/20 dark:bg-muted/20',
-    primary: 'bg-primary-500 dark:bg-primary-500',
-    secondary: 'bg-secondary-500 dark:bg-secondary-500',
-    success: 'bg-success-500 dark:bg-success-500',
-    warning: 'bg-warning-500 dark:bg-warning-500',
-    error: 'bg-error-500 dark:bg-error-500',
-    info: 'bg-info-500 dark:bg-info-500'
-  }[variant] || 'bg-primary-500 dark:bg-primary-500');
-  
-  // Determine track classes
-  const trackClasses = $derived('bg-muted/10 dark:bg-muted/10');
-  
-  // Generate ARIA label
-  const progressAriaLabel = $derived(ariaLabel || `Progress: ${formattedValue}`);
+// Calculate percentage for width
+const percentage = $derived(Math.min(100, Math.max(0, ((value - min) / (max - min)) * 100)))
+
+// Format value for display
+const formattedValue = $derived(format ? format(value, min, max) : `${Math.round(percentage)}%`)
+
+// Determine size classes
+const sizeClasses = $derived(
+  {
+    sm: "h-1.5",
+    md: "h-2.5",
+    lg: "h-4",
+  }[size] || "h-2.5"
+)
+
+// Determine text size classes
+const textSizeClasses = $derived(
+  {
+    sm: "text-xs",
+    md: "text-sm",
+    lg: "text-base",
+  }[size] || "text-sm"
+)
+
+// Determine variant classes
+const variantClasses = $derived(
+  {
+    default: "bg-muted/20 dark:bg-muted/20",
+    primary: "bg-primary-500 dark:bg-primary-500",
+    secondary: "bg-secondary-500 dark:bg-secondary-500",
+    success: "bg-success-500 dark:bg-success-500",
+    warning: "bg-warning-500 dark:bg-warning-500",
+    error: "bg-error-500 dark:bg-error-500",
+    info: "bg-info-500 dark:bg-info-500",
+  }[variant] || "bg-primary-500 dark:bg-primary-500"
+)
+
+// Determine track classes
+const trackClasses = $derived("bg-muted/10 dark:bg-muted/10")
+
+// Generate ARIA label
+const progressAriaLabel = $derived(ariaLabel || `Progress: ${formattedValue}`)
 </script>
 
 <div 

@@ -16,24 +16,24 @@ Usage:
 ```
 -->
 <script>
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - Error message to display */
-    message,
+  /** @type {string} - Error message to display */
+  message,
 
-    /** @type {string} - Icon to display (HTML or SVG string) */
-    icon,
+  /** @type {string} - Icon to display (HTML or SVG string) */
+  icon,
 
-    /** @type {boolean} - Whether to show the default icon */
-    showIcon = true,
+  /** @type {boolean} - Whether to show the default icon */
+  showIcon = true,
 
-    /** @type {boolean} - Whether to animate the message */
-    animated = true,
+  /** @type {boolean} - Whether to animate the message */
+  animated = true,
 
-    children
-  } = $props();
+  children,
+} = $props()
 </script>
 
 <div 

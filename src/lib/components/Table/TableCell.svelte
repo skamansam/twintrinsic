@@ -13,36 +13,38 @@ Usage:
 ```
 -->
 <script>
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - Cell alignment (left, center, right) */
-    align = 'left',
+  /** @type {string} - Cell alignment (left, center, right) */
+  align = "left",
 
-    /** @type {boolean} - Whether to truncate overflowing text */
-    truncate = false,
+  /** @type {boolean} - Whether to truncate overflowing text */
+  truncate = false,
 
-    /** @type {boolean} - Whether the cell contains numeric data */
-    numeric = false,
+  /** @type {boolean} - Whether the cell contains numeric data */
+  numeric = false,
 
-    /** @type {number} - Number of columns this cell spans */
-    colspan,
+  /** @type {number} - Number of columns this cell spans */
+  colspan,
 
-    /** @type {number} - Number of rows this cell spans */
-    rowspan,
+  /** @type {number} - Number of rows this cell spans */
+  rowspan,
 
-    children,
+  children,
 
-    ...restProps
-  } = $props();
+  ...restProps
+} = $props()
 
-  // Determine alignment classes
-  const alignClasses = $derived({
-    left: 'text-left',
-    center: 'text-center',
-    right: 'text-right'
-  }[align] || 'text-left');
+// Determine alignment classes
+const alignClasses = $derived(
+  {
+    left: "text-left",
+    center: "text-center",
+    right: "text-right",
+  }[align] || "text-left"
+)
 </script>
 
 <td

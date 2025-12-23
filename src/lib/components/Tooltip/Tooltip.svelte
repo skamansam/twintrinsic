@@ -18,186 +18,186 @@ Usage:
 ```
 -->
 <script>
-  import { onMount, createEventDispatcher } from 'svelte';
-  import { fade } from 'svelte/transition';
+import { onMount, createEventDispatcher } from "svelte"
+import { fade } from "svelte/transition"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Tooltip content (simple string version) */
-    content = '',
+  /** @type {string} - Tooltip content (simple string version) */
+  content = "",
 
-    /** @type {string} - Tooltip position (top, right, bottom, left) */
-    position = 'top',
+  /** @type {string} - Tooltip position (top, right, bottom, left) */
+  position = "top",
 
-    /** @type {number} - Delay before showing tooltip (ms) */
-    delay = 0,
+  /** @type {number} - Delay before showing tooltip (ms) */
+  delay = 0,
 
-    /** @type {number} - Duration to show tooltip (ms, 0 for indefinite) */
-    duration = 0,
+  /** @type {number} - Duration to show tooltip (ms, 0 for indefinite) */
+  duration = 0,
 
-    /** @type {boolean} - Whether to show an arrow pointing to the target */
-    arrow = true,
+  /** @type {boolean} - Whether to show an arrow pointing to the target */
+  arrow = true,
 
-    /** @type {number} - Distance from target element (px) */
-    offset = 8,
+  /** @type {number} - Distance from target element (px) */
+  offset = 8,
 
-    /** @type {boolean} - Whether to show on focus (for keyboard users) */
-    showOnFocus = true,
+  /** @type {boolean} - Whether to show on focus (for keyboard users) */
+  showOnFocus = true,
 
-    /** @type {string} - ARIA description for accessibility */
-    ariaDescription,
+  /** @type {string} - ARIA description for accessibility */
+  ariaDescription,
 
-    children,
-    tooltipContent
-  } = $props();
+  children,
+  tooltipContent,
+} = $props()
 
-  const dispatch = createEventDispatcher();
-  
-  // Tooltip state
-  let isVisible = $state(false);
-  let triggerElement;
-  let tooltipElement;
-  let showTimeout;
-  let hideTimeout;
-  
-  // Position state
-  let tooltipPosition = $state({
-    top: 0,
-    left: 0
-  });
-  
-  /**
-   * Shows the tooltip
-   */
-  function showTooltip() {
-    clearTimeout(hideTimeout);
-    
-    if (delay > 0) {
-      showTimeout = setTimeout(() => {
-        isVisible = true;
-        updatePosition();
-        dispatch('show');
-        
-        // Auto-hide after duration if specified
-        if (duration > 0) {
-          hideTimeout = setTimeout(hideTooltip, duration);
-        }
-      }, delay);
-    } else {
-      isVisible = true;
-      updatePosition();
-      dispatch('show');
-      
+const dispatch = createEventDispatcher()
+
+// Tooltip state
+let isVisible = $state(false)
+let triggerElement
+let tooltipElement
+let showTimeout
+let hideTimeout
+
+// Position state
+let tooltipPosition = $state({
+  top: 0,
+  left: 0,
+})
+
+/**
+ * Shows the tooltip
+ */
+function showTooltip() {
+  clearTimeout(hideTimeout)
+
+  if (delay > 0) {
+    showTimeout = setTimeout(() => {
+      isVisible = true
+      updatePosition()
+      dispatch("show")
+
       // Auto-hide after duration if specified
       if (duration > 0) {
-        hideTimeout = setTimeout(hideTooltip, duration);
+        hideTimeout = setTimeout(hideTooltip, duration)
       }
+    }, delay)
+  } else {
+    isVisible = true
+    updatePosition()
+    dispatch("show")
+
+    // Auto-hide after duration if specified
+    if (duration > 0) {
+      hideTimeout = setTimeout(hideTooltip, duration)
     }
   }
-  
-  /**
-   * Hides the tooltip
-   */
-  function hideTooltip() {
-    clearTimeout(showTimeout);
-    isVisible = false;
-    dispatch('hide');
+}
+
+/**
+ * Hides the tooltip
+ */
+function hideTooltip() {
+  clearTimeout(showTimeout)
+  isVisible = false
+  dispatch("hide")
+}
+
+/**
+ * Updates the tooltip position based on trigger element
+ */
+function updatePosition() {
+  if (!triggerElement || !tooltipElement) return
+
+  // Get element dimensions and positions
+  const triggerRect = triggerElement.getBoundingClientRect()
+  const tooltipRect = tooltipElement.getBoundingClientRect()
+
+  // Calculate position based on specified position
+  let top = 0
+  let left = 0
+
+  switch (position) {
+    case "top":
+      top = triggerRect.top - tooltipRect.height - offset
+      left = triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2
+      break
+    case "right":
+      top = triggerRect.top + triggerRect.height / 2 - tooltipRect.height / 2
+      left = triggerRect.right + offset
+      break
+    case "bottom":
+      top = triggerRect.bottom + offset
+      left = triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2
+      break
+    case "left":
+      top = triggerRect.top + triggerRect.height / 2 - tooltipRect.height / 2
+      left = triggerRect.left - tooltipRect.width - offset
+      break
+    default:
+      // Default to top
+      top = triggerRect.top - tooltipRect.height - offset
+      left = triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2
   }
-  
-  /**
-   * Updates the tooltip position based on trigger element
-   */
-  function updatePosition() {
-    if (!triggerElement || !tooltipElement) return;
-    
-    // Get element dimensions and positions
-    const triggerRect = triggerElement.getBoundingClientRect();
-    const tooltipRect = tooltipElement.getBoundingClientRect();
-    
-    // Calculate position based on specified position
-    let top = 0;
-    let left = 0;
-    
-    switch (position) {
-      case 'top':
-        top = triggerRect.top - tooltipRect.height - offset;
-        left = triggerRect.left + (triggerRect.width / 2) - (tooltipRect.width / 2);
-        break;
-      case 'right':
-        top = triggerRect.top + (triggerRect.height / 2) - (tooltipRect.height / 2);
-        left = triggerRect.right + offset;
-        break;
-      case 'bottom':
-        top = triggerRect.bottom + offset;
-        left = triggerRect.left + (triggerRect.width / 2) - (tooltipRect.width / 2);
-        break;
-      case 'left':
-        top = triggerRect.top + (triggerRect.height / 2) - (tooltipRect.height / 2);
-        left = triggerRect.left - tooltipRect.width - offset;
-        break;
-      default:
-        // Default to top
-        top = triggerRect.top - tooltipRect.height - offset;
-        left = triggerRect.left + (triggerRect.width / 2) - (tooltipRect.width / 2);
-    }
-    
-    // Adjust for scroll position
-    top += window.scrollY;
-    left += window.scrollX;
-    
-    // Ensure tooltip stays within viewport
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-    
-    // Adjust horizontal position if needed
-    if (left < 10) {
-      left = 10;
-    } else if (left + tooltipRect.width > viewportWidth - 10) {
-      left = viewportWidth - tooltipRect.width - 10;
-    }
-    
-    // Adjust vertical position if needed
-    if (top < 10) {
-      top = 10;
-    } else if (top + tooltipRect.height > viewportHeight - 10) {
-      top = viewportHeight - tooltipRect.height - 10;
-    }
-    
-    // Update position state
-    tooltipPosition = { top, left };
+
+  // Adjust for scroll position
+  top += window.scrollY
+  left += window.scrollX
+
+  // Ensure tooltip stays within viewport
+  const viewportWidth = window.innerWidth
+  const viewportHeight = window.innerHeight
+
+  // Adjust horizontal position if needed
+  if (left < 10) {
+    left = 10
+  } else if (left + tooltipRect.width > viewportWidth - 10) {
+    left = viewportWidth - tooltipRect.width - 10
   }
-  
-  // Event handlers
-  function handleMouseEnter() {
-    showTooltip();
+
+  // Adjust vertical position if needed
+  if (top < 10) {
+    top = 10
+  } else if (top + tooltipRect.height > viewportHeight - 10) {
+    top = viewportHeight - tooltipRect.height - 10
   }
-  
-  function handleMouseLeave() {
-    hideTooltip();
+
+  // Update position state
+  tooltipPosition = { top, left }
+}
+
+// Event handlers
+function handleMouseEnter() {
+  showTooltip()
+}
+
+function handleMouseLeave() {
+  hideTooltip()
+}
+
+function handleFocus() {
+  if (showOnFocus) {
+    showTooltip()
   }
-  
-  function handleFocus() {
-    if (showOnFocus) {
-      showTooltip();
-    }
+}
+
+function handleBlur() {
+  hideTooltip()
+}
+
+// Clean up timers on unmount
+onMount(() => {
+  return () => {
+    clearTimeout(showTimeout)
+    clearTimeout(hideTimeout)
   }
-  
-  function handleBlur() {
-    hideTooltip();
-  }
-  
-  // Clean up timers on unmount
-  onMount(() => {
-    return () => {
-      clearTimeout(showTimeout);
-      clearTimeout(hideTimeout);
-    };
-  });
+})
 </script>
 
 <div class="tooltip-wrapper {className}">

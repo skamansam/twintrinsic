@@ -28,138 +28,144 @@ Usage:
 ```
 -->
 <script>
-  import { getContext, onMount } from 'svelte';
+import { getContext, onMount } from "svelte"
 
-  const {
-    /** @type {string} - Additional CSS classes */
-    class: className = '',
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
 
-    /** @type {string} - HTML id for accessibility */
-    id = crypto.randomUUID(),
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
 
-    /** @type {string} - Title of the timeline item */
-    title,
+  /** @type {string} - Title of the timeline item */
+  title,
 
-    /** @type {string} - Subtitle or date of the timeline item */
-    date,
+  /** @type {string} - Subtitle or date of the timeline item */
+  date,
 
-    /** @type {string} - Visual style variant */
-    variant,
+  /** @type {string} - Visual style variant */
+  variant,
 
-    /** @type {string} - Custom icon (HTML or SVG string) */
-    icon,
+  /** @type {string} - Custom icon (HTML or SVG string) */
+  icon,
 
-    /** @type {string} - Background color for the icon */
-    iconBackground,
+  /** @type {string} - Background color for the icon */
+  iconBackground,
 
-    /** @type {boolean} - Whether the item is the last in the timeline */
-    last = false,
+  /** @type {boolean} - Whether the item is the last in the timeline */
+  last = false,
 
-    /** @type {boolean} - Whether the item is completed */
-    completed = false,
+  /** @type {boolean} - Whether the item is completed */
+  completed = false,
 
-    /** @type {boolean} - Whether the item is currently active */
-    active = false,
+  /** @type {boolean} - Whether the item is currently active */
+  active = false,
 
-    /** @type {boolean} - Whether the item is disabled */
-    disabled = false,
+  /** @type {boolean} - Whether the item is disabled */
+  disabled = false,
 
-    /** @type {string} - Position override for this specific item */
-    position,
+  /** @type {string} - Position override for this specific item */
+  position,
 
-    children
-  } = $props();
+  children,
+} = $props()
 
-  // Get timeline context
-  const timelineContext = getContext('timeline');
-  
-  // Component state
-  let itemElement;
-  let isVisible = $state(false);
-  let index = $state(0);
-  
-  // Determine variant
-  const itemVariant = $derived(variant || timelineContext?.variant || 'primary');
-  
-  // Determine position
-  const itemPosition = $derived(position || timelineContext?.position || 'left');
-  
-  // Determine orientation
-  const orientation = $derived(timelineContext?.orientation || 'vertical');
-  
-  // Determine if connected
-  const connected = $derived(timelineContext?.connected !== false);
-  
-  // Determine if animated
-  const animated = $derived(timelineContext?.animated === true);
-  
-  // Determine effective position based on alternate setting and index
-  const effectivePosition = $derived(() => {
-    if (itemPosition !== 'alternate') return itemPosition;
-    return index % 2 === 0 ? 'left' : 'right';
-  });
-  
-  // Determine variant classes
-  const variantClasses = $derived({
-    default: 'text-text dark:text-text',
-    primary: 'text-primary-500 dark:text-primary-500',
-    secondary: 'text-secondary-500 dark:text-secondary-500',
-    success: 'text-success-500 dark:text-success-500',
-    warning: 'text-warning-500 dark:text-warning-500',
-    error: 'text-error-500 dark:text-error-500',
-    info: 'text-info-500 dark:text-info-500'
-  }[itemVariant] || 'text-primary-500 dark:text-primary-500');
-  
-  // Determine icon background classes
-  const iconBgClasses = $derived(iconBackground || {
-    default: 'bg-surface dark:bg-surface',
-    primary: 'bg-primary-100 dark:bg-primary-900',
-    secondary: 'bg-secondary-100 dark:bg-secondary-900',
-    success: 'bg-success-100 dark:bg-success-900',
-    warning: 'bg-warning-100 dark:bg-warning-900',
-    error: 'bg-error-100 dark:bg-error-900',
-    info: 'bg-info-100 dark:bg-info-900'
-  }[itemVariant] || 'bg-primary-100 dark:bg-primary-900');
-  
-  // Determine state classes
-  const stateClasses = $derived({
-    completed: 'timeline-item-completed',
-    active: 'timeline-item-active',
-    disabled: 'timeline-item-disabled'
-  });
-  
-  // Register with parent on mount and set up intersection observer
-  onMount(() => {
-    if (itemElement) {
-      // Find our index among siblings
-      const parent = itemElement.parentElement;
-      if (parent) {
-        const items = Array.from(parent.children);
-        index = items.indexOf(itemElement);
-      }
-      
-      // Set up intersection observer for animations
-      if (animated) {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                isVisible = true;
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          { threshold: 0.2 }
-        );
-        
-        observer.observe(itemElement);
-        
-        return () => {
-          observer.disconnect();
-        };
+// Get timeline context
+const timelineContext = getContext("timeline")
+
+// Component state
+let itemElement
+let isVisible = $state(false)
+let index = $state(0)
+
+// Determine variant
+const itemVariant = $derived(variant || timelineContext?.variant || "primary")
+
+// Determine position
+const itemPosition = $derived(position || timelineContext?.position || "left")
+
+// Determine orientation
+const orientation = $derived(timelineContext?.orientation || "vertical")
+
+// Determine if connected
+const connected = $derived(timelineContext?.connected !== false)
+
+// Determine if animated
+const animated = $derived(timelineContext?.animated === true)
+
+// Determine effective position based on alternate setting and index
+const effectivePosition = $derived(() => {
+  if (itemPosition !== "alternate") return itemPosition
+  return index % 2 === 0 ? "left" : "right"
+})
+
+// Determine variant classes
+const variantClasses = $derived(
+  {
+    default: "text-text dark:text-text",
+    primary: "text-primary-500 dark:text-primary-500",
+    secondary: "text-secondary-500 dark:text-secondary-500",
+    success: "text-success-500 dark:text-success-500",
+    warning: "text-warning-500 dark:text-warning-500",
+    error: "text-error-500 dark:text-error-500",
+    info: "text-info-500 dark:text-info-500",
+  }[itemVariant] || "text-primary-500 dark:text-primary-500"
+)
+
+// Determine icon background classes
+const iconBgClasses = $derived(
+  iconBackground ||
+    {
+      default: "bg-surface dark:bg-surface",
+      primary: "bg-primary-100 dark:bg-primary-900",
+      secondary: "bg-secondary-100 dark:bg-secondary-900",
+      success: "bg-success-100 dark:bg-success-900",
+      warning: "bg-warning-100 dark:bg-warning-900",
+      error: "bg-error-100 dark:bg-error-900",
+      info: "bg-info-100 dark:bg-info-900",
+    }[itemVariant] ||
+    "bg-primary-100 dark:bg-primary-900"
+)
+
+// Determine state classes
+const stateClasses = $derived({
+  completed: "timeline-item-completed",
+  active: "timeline-item-active",
+  disabled: "timeline-item-disabled",
+})
+
+// Register with parent on mount and set up intersection observer
+onMount(() => {
+  if (itemElement) {
+    // Find our index among siblings
+    const parent = itemElement.parentElement
+    if (parent) {
+      const items = Array.from(parent.children)
+      index = items.indexOf(itemElement)
+    }
+
+    // Set up intersection observer for animations
+    if (animated) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              isVisible = true
+              observer.unobserve(entry.target)
+            }
+          })
+        },
+        { threshold: 0.2 }
+      )
+
+      observer.observe(itemElement)
+
+      return () => {
+        observer.disconnect()
       }
     }
-  });
+  }
+})
 </script>
 
 <div
