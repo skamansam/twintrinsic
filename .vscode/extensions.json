@@ -2,12 +2,16 @@
   "recommendations": [
     "eamodio.gitlens",
     "github.vscode-pull-request-github",
-    "esbenp.prettier-vscode",
     "bradlc.vscode-tailwindcss",
-    "formulahendry.auto-close-tag",
-    "formulahendry.auto-rename-tag",
     "inlang.vs-code-extension",
     "svelte.svelte-vscode",
-    "rafaelmartinez.svelte-preview"
+    "rafaelmartinez.svelte-preview",
+    "aaron-bond.better-comments",
+    "streetsidesoftware.code-spell-checker",
+    "biomejs.biome",
+    "github.vscode-github-actions",
+    "ms-playwright.playwright",
+    "joshbolduc.story-explorer",
+    "vitest.explorer"
   ]
 }

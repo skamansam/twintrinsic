@@ -37,7 +37,7 @@ const {
 
 <svelte:element 
   this={as}
-  class="container {fluid ? 'w-full' : 'container mx-auto px-4 sm:px-6 lg:px-8'} {className}"
+  class="{fluid ? 'w-full' : 'container mx-auto px-4 sm:px-6 lg:px-8'} {className}"
   {role}
   aria-label={ariaLabel}
 >

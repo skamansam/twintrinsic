@@ -5,6 +5,7 @@ import Separator from "$lib/components/Separator/Separator.svelte";
 import Panel from "$lib/components/Panel/Panel.svelte";
 import AppHeader from "$lib/components/AppHeader/AppHeader.svelte";
 import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte";
+import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte";
 
 const features = [
 	{
@@ -60,7 +61,11 @@ const components = [
 </style>
 
 <!-- Hero Section -->
-<Container fluid class="py-16 sm:py-24 relative overflow-hidden bg-gradient-to-b from-primary-500/10 to-transparent">
+<Container fluid class="py-16 sm:py-24 relative overflow-hidden bg-gradient-to-b from-primary-500/10 to-transparent" >
+  <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="flex justify-end" aria-label="Theme toggle">
+    <ThemeToggle />
+  </div>
   <div class="text-center" transition:fade={{ duration: 500 }}>
     <div class="flex flex-col items-center justify-center gap-6">
       <TwintrinsicLogo size="8rem" class="text-primary-500 hover:text-primary-600" />
@@ -96,8 +101,8 @@ const components = [
   </div>
 
   <!-- Example Components -->
-  <div class="mt-16 grid grid-cols-1 gap-8" transition:fade={{ duration: 500, delay: 200 }}>
-    <div class="-mx-4 sm:-mx-6 bg-surface/50 backdrop-blur-sm border-y border-border">
+  <div class="mt-16 grid grid-cols-1 gap-8" transition:fade={{ duration: 500, delay: 200 }} data-themed>
+    <div class="bg-surface/50 backdrop-blur-sm border-y border-border">
       <AppHeader
         brand={{
           name: 'Twintrinsic',
@@ -120,6 +125,7 @@ const components = [
           <span class="font-semibold">Twintrinsic</span>
         </div>
       </AppHeader>
+    </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {#each components.slice(0, 3) as component}
@@ -139,11 +145,25 @@ const components = [
         </Panel>
       {/each}
     </div>
+
+    <!-- Nested Theme Test Section -->
+    <div class="mt-8 p-6 rounded-lg bg-surface border border-border" data-themed>
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-medium">Nested Theme Test</h3>
+        <ThemeToggle />
+      </div>
+      <p class="text-muted mb-4">Toggle this section's theme independently from the parent</p>
+      <div class="p-4 rounded-lg bg-background border border-border">
+        <p class="text-text">This nested section inherits the parent's theme unless toggled separately</p>
+      </div>
+    </div>
+  </div>
   </div>
 </Container>
 
 <!-- Features Section -->
 <Container fluid class="py-16 sm:py-24">
+  <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
   <div class="text-center mb-16" transition:fade={{ duration: 500 }}>
     <h2 class="text-3xl sm:text-4xl font-bold">
       Everything you need to build modern web apps
@@ -174,10 +194,12 @@ const components = [
       </div>
     {/each}
   </div>
+  </div>
 </Container>
 
 <!-- Components Overview -->
 <Container fluid class="py-16 sm:py-24">
+  <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
   <div class="text-center mb-16" transition:fade={{ duration: 500 }}>
     <h2 class="text-3xl sm:text-4xl font-bold">
       Powerful components for every need
@@ -202,14 +224,13 @@ const components = [
       </a>
     {/each}
   </div>
+  </div>
 </Container>
 
 <!-- CTA Section -->
 <Container fluid class="py-16 sm:py-24 bg-gradient-to-b from-transparent to-primary-500/10">
-  <div
-    class="text-center max-w-3xl mx-auto"
-    transition:fade={{ duration: 500 }}
-  >
+  <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="text-center max-w-3xl mx-auto" transition:fade={{ duration: 500 }}>
     <h2 class="text-3xl sm:text-4xl font-bold">
       Ready to get started?
     </h2>
@@ -230,5 +251,6 @@ const components = [
         Browse components
       </a>
     </div>
+  </div>
   </div>
 </Container>

@@ -14,7 +14,7 @@ export let rightPanelWidth = "300px"
   <title>{appName}</title>
 </svelte:head>
 <!-- <svelte:body class="{darkMode ? "dark" : "light"}"/> -->
-<div class='app bg-element-100 dark:bg-dark dark:text-light min-h-screen' style="--left-panel-width: {leftPanelWidth}; --right-panel-width: {rightPanelWidth};">
+<div class='app bg-element-100 dark:bg-dark dark:text-light min-h-screen' data-themed style="--left-panel-width: {leftPanelWidth}; --right-panel-width: {rightPanelWidth};">
   {#if $$slots.menu}
     <div class="appMenu">
       <slot name="menu"/>
