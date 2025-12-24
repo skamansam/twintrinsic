@@ -2,7 +2,7 @@
 @component
 FileUpload documentation page
 -->
-<script>
+<script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import FileUpload from "$lib/components/Form/FileUpload.svelte"
 </script>

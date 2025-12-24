@@ -2,7 +2,7 @@
 @component
 Documentation page for the FloatLabel component.
 -->
-<script>
+<script lang="ts">
 import { FloatLabel, TextInput, Textarea, Select, CodeBlock } from "$lib/index.js"
 import { PropsTable, EventsTable } from "$lib/docs/index.js"
 </script>

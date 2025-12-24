@@ -2,7 +2,7 @@
 @component
 Documentation page for the RadioGroup component.
 -->
-<script>
+<script lang="ts">
 import { RadioGroup, Radio, CodeBlock } from "$lib/index.js"
 import { PropsTable, EventsTable } from "$lib/docs/index.js"
 </script>

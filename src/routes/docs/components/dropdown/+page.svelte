@@ -2,7 +2,7 @@
 @component
 Documentation page for the Dropdown component.
 -->
-<script>
+<script lang="ts">
 import { Dropdown, CodeBlock } from "$lib/index.js"
 import { PropsTable, EventsTable } from "$lib/docs/index.js"
 

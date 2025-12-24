@@ -2,15 +2,15 @@
 @component
 Documentation page for the NumberInput component.
 -->
-<script>
+<script lang="ts">
 import { NumberInput, FormField, CodeBlock } from "$lib/index.js"
 import { PropsTable, EventsTable } from "$lib/docs/index.js"
 
 // Sample values for examples
-let quantity = 1
-let price = 29.99
-let percentage = 75
-let temperature = 22.5
+let quantity = $state(1)
+let price = $state(29.99)
+let percentage = $state(75)
+let temperature = $state(22.5)
 </script>
 
 <h1>NumberInput</h1>

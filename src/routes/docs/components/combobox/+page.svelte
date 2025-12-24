@@ -2,7 +2,7 @@
 @component
 Combobox documentation page
 -->
-<script>
+<script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import Combobox from "$lib/components/Form/Combobox.svelte"
 

@@ -6,7 +6,7 @@ Breadcrumb documentation page
 <style>
   @reference '$lib/twintrinsic.css';
 </style>
-<script>
+<script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import Breadcrumb from "$lib/components/Breadcrumb/Breadcrumb.svelte"
 import BreadcrumbItem from "$lib/components/Breadcrumb/BreadcrumbItem.svelte"

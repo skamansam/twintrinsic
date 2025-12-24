@@ -2,7 +2,7 @@
 @component
 Components overview page
 -->
-<script>
+<script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import Separator from "$lib/components/Separator/Separator.svelte"
 import Panel from "$lib/components/Panel/Panel.svelte"

@@ -2,7 +2,7 @@
 @component
 Documentation page for the Rating component.
 -->
-<script>
+<script lang="ts">
 import { Rating, CodeBlock } from "$lib/index.js"
 import { PropsTable, EventsTable } from "$lib/docs/index.js"
 </script>

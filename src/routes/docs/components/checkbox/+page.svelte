@@ -2,7 +2,7 @@
 @component
 Documentation page for the Checkbox component.
 -->
-<script>
+<script lang="ts">
 import { Checkbox, CodeBlock } from "$lib/index.js"
 import { PropsTable, EventsTable } from "$lib/docs/index.js"
 </script>

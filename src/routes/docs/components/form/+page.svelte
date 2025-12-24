@@ -6,7 +6,7 @@ Form documentation page
 <style>
   @reference '$lib/twintrinsic.css';
 </style>
-<script>
+<script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import Form from "$lib/components/Form/Form.svelte"
 import FormField from "$lib/components/Form/FormField.svelte"

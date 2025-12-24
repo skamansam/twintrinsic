@@ -2,7 +2,7 @@
 @component
 Documentation page for the Knob component.
 -->
-<script>
+<script lang="ts">
 import { Knob, FormField, CodeBlock } from "$lib/index.js"
 import { PropsTable, EventsTable } from "$lib/docs/index.js"
 </script>

@@ -2,7 +2,7 @@
 @component
 Documentation page for the AutoComplete component.
 -->
-<script>
+<script lang="ts">
 import { AutoComplete, CodeBlock } from "$lib/index.js"
 import { PropsTable, EventsTable } from "$lib/docs/index.js"
 

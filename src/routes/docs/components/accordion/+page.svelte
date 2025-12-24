@@ -6,10 +6,10 @@ Documentation page for the Accordion component
 <style>
   @reference '$lib/twintrinsic.css';
 </style>
-<script>
+<script lang="ts">
 import Accordion from "$lib/components/Panel/Accordion.svelte"
 import Panel from "$lib/components/Panel/Panel.svelte"
-import { CodeBlock } from "$lib/components/CodeBlock"
+import { CodeBlock } from "$lib/components/CodeBlock/index.js"
 </script>
 
 <article class="prose dark:prose-invert max-w-none">

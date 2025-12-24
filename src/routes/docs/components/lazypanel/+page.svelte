@@ -2,7 +2,7 @@
 @component
 Documentation page for the LazyPanel component
 -->
-<script>
+<script lang="ts">
 import LazyPanel from "$lib/components/Panel/LazyPanel.svelte"
 import { CodeBlock } from "$lib/components/CodeBlock"
 </script>

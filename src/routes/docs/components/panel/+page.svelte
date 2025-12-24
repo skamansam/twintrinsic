@@ -2,7 +2,7 @@
 @component
 Panel documentation page
 -->
-<script>
+<script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import Panel from "$lib/components/Panel/Panel.svelte"
 </script>

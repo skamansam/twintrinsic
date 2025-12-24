@@ -2,7 +2,7 @@
 @component
 Documentation page for the CodeBlock component.
 -->
-<script>
+<script lang="ts">
 import { CodeBlock } from "$lib/index.js"
 import { PropsTable } from "$lib/docs/index.js"
 </script>

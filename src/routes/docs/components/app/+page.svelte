@@ -6,7 +6,7 @@ App documentation page
 <style>
   @reference '$lib/twintrinsic.css';
 </style>
-<script>
+<script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import App from "$lib/components/App/App.svelte"
 </script>

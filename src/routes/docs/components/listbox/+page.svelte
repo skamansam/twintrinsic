@@ -2,7 +2,7 @@
 @component
 Documentation page for the Listbox component.
 -->
-<script>
+<script lang="ts">
 import { Listbox, FormField, CodeBlock } from "$lib/index.js"
 import { PropsTable, EventsTable } from "$lib/docs/index.js"
 

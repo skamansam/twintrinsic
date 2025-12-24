@@ -6,13 +6,13 @@ BottomBar documentation page
 <style>
   @reference '$lib/twintrinsic.css';
 </style>
-<script>
+<script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import BottomBar from "$lib/components/BottomBar/BottomBar.svelte"
 import Panel from "$lib/components/Panel/Panel.svelte"
 import { onMount } from "svelte"
 
-let showExamples = false
+let showExamples = $state(false)
 
 onMount(() => {
   // Delay showing examples to prevent transition glitch on page load

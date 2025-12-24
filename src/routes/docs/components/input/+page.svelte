@@ -2,7 +2,7 @@
 @component
 Documentation page for the Input component.
 -->
-<script>
+<script lang="ts">
 import { Input, CodeBlock } from "$lib/index.js"
 import { PropsTable, EventsTable } from "$lib/docs/index.js"
 </script>

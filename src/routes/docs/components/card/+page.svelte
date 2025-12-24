@@ -6,7 +6,7 @@ Documentation page for the Card component
 <style>
   @reference '$lib/twintrinsic.css';
 </style>
-<script>
+<script lang="ts">
 import Card from "$lib/components/Panel/Card.svelte"
 import { CodeBlock } from "$lib/components/CodeBlock"
 </script>

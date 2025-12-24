@@ -3,7 +3,24 @@
 Sidebar - A collapsible side panel that attaches to its parent container.
 Built on top of the Panel component with additional positioning and animation features.
 
-Usage:
+## Props
+- `expanded` - Initial expanded state (default: true)
+- `position` - Sidebar position: "left" or "right" (default: "left")
+- `width` - Width of the sidebar when expanded (default: "16rem")
+- `floatOnMobile` - Float above content on mobile instead of taking full width (default: false)
+- `disabled` - Disable toggle functionality (default: false)
+- `hideBackdrop` - Hide the backdrop overlay when expanded (default: false)
+- `id` - Custom element ID (default: random UUID)
+- `ariaLabel` - Accessibility label for the sidebar
+- `docked` - Reserved for future use
+- `class` - Additional CSS classes
+- `ontoggle` - Callback when sidebar is toggled
+
+## Slots
+- `header` - Header content for the Panel
+- `default` - Main sidebar content
+
+## Usage
 ```svelte
 <Sidebar>
   <svelte:fragment slot="header">Navigation</svelte:fragment>
@@ -14,23 +31,40 @@ Usage:
   <svelte:fragment slot="header">Settings</svelte:fragment>
   Settings content
 </Sidebar>
+
+<Sidebar floatOnMobile>
+  <svelte:fragment slot="header">Mobile Menu</svelte:fragment>
+  Content that floats on mobile
+</Sidebar>
 ```
 -->
 <script lang="ts">
 import { slide } from "svelte/transition"
 import Panel from "../Panel/Panel.svelte"
 
+/** Sidebar component props configuration */
 type SidebarProps = {
+  /** Initial expanded state */
   expanded?: boolean
+  /** Additional CSS classes */
   class?: string
+  /** Sidebar position: left or right */
   position?: "left" | "right"
+  /** Width of the sidebar when expanded */
   width?: string
+  /** Custom element ID (auto-generated if not provided) */
   id?: string
+  /** Accessibility label for the sidebar */
   ariaLabel?: string
+  /** Disable toggle functionality */
   disabled?: boolean
-  showBackdrop?: boolean
+  /** Hide the backdrop overlay when expanded */
+  hideBackdrop?: boolean
+  /** Float above content on mobile instead of taking full width */
   floatOnMobile?: boolean
+  /** Reserved for future use */
   docked?: boolean
+  /** Callback when sidebar is toggled */
   ontoggle?: (payload: { expanded: boolean }) => void
 }
 
@@ -42,30 +76,30 @@ const {
   id = crypto.randomUUID(),
   ariaLabel,
   disabled = false,
-  showBackdrop = true,
-  floatOnMobile = true,
+  hideBackdrop = false,
+  floatOnMobile = false,
   docked = false,
   ontoggle,
 } = $props() satisfies SidebarProps
 
 let isExpanded = $state(expanded)
 
-// Handle toggle from Panel
-function handleToggle(payload: { expanded: boolean }) {
+/** Handle toggle events from the Panel component */
+function handleToggle(payload: { expanded: boolean }): void {
   isExpanded = payload.expanded
   ontoggle?.({ expanded: isExpanded })
 }
 
-// Handle backdrop click
-function handleBackdropClick() {
+/** Handle backdrop click to collapse the sidebar */
+function handleBackdropClick(): void {
   if (!disabled) {
     isExpanded = false
     ontoggle?.({ expanded: isExpanded })
   }
 }
 
-// Handle escape key
-function handleKeydown(event: KeyboardEvent) {
+/** Handle Escape key to collapse the sidebar */
+function handleKeydown(event: KeyboardEvent): void {
   if (!disabled && event.key === "Escape" && isExpanded) {
     isExpanded = false
     ontoggle?.({ expanded: isExpanded })
@@ -87,13 +121,13 @@ function handleKeydown(event: KeyboardEvent) {
   role="complementary"
   aria-label={ariaLabel}
 >
-  {#if showBackdrop && isExpanded}
+  {#if !hideBackdrop && isExpanded}
     <div
       class="sidebar-backdrop"
       onclick={handleBackdropClick}
       transition:slide={{ duration: 200 }}
       aria-hidden="true"
-    />
+    ></div>
   {/if}
 
   <div

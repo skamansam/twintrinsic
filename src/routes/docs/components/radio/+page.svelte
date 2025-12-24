@@ -2,14 +2,14 @@
 @component
 Documentation page for the Radio component.
 -->
-<script>
+<script lang="ts">
 import { Radio, FormField, CodeBlock } from "$lib/index.js"
 import { PropsTable, EventsTable } from "$lib/docs/index.js"
 
 // Sample data for examples
-let theme = "light"
-let size = "md"
-let fruit = "apple"
+let theme = $state("light")
+let size = $state("md")
+let fruit = $state("apple")
 </script>
 
 <h1>Radio</h1>

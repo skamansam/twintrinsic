@@ -2,7 +2,7 @@
 @component
 Documentation page for the Select component.
 -->
-<script>
+<script lang="ts">
 import { Select, CodeBlock } from "$lib/index.js"
 import { PropsTable, EventsTable } from "$lib/docs/index.js"
 

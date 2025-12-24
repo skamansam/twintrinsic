@@ -165,7 +165,7 @@ const startIndex = $derived((currentPage - 1) * currentPageSize)
 const endIndex = $derived(Math.min(startIndex + currentPageSize, totalRecords))
 
 // Process data with sorting, filtering, and pagination
-const processedData = $derived(() => {
+const processedData = $derived.by(() => {
   let result = [...data]
 
   // Apply filters
@@ -362,7 +362,7 @@ function getRowClasses(row, index) {
     hoverable ? "data-table-row-hoverable" : "",
   ]
 
-  if (rowClass) {
+  if (rowClass && typeof rowClass === "function") {
     const customClass = rowClass(row, index)
     if (customClass) {
       classes.push(customClass)
@@ -542,7 +542,7 @@ function formatCell(value, column, row) {
                   data-label={responsive ? (column.header || column.field) : undefined}
                 >
                   {#if column.template}
-                    {@render column.template(row)}
+                    {@html column.template(row[column.field])}
                   {:else}
                     {formatCell(row[column.field], column, row)}
                   {/if}

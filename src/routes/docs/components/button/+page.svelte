@@ -6,7 +6,7 @@ Button documentation page
 <style>
   @reference '$lib/twintrinsic.css';
 </style>
-<script>
+<script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import Button from "$lib/components/Button/Button.svelte"
 </script>

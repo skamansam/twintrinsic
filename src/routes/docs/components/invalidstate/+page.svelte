@@ -2,7 +2,7 @@
 @component
 Documentation page for the InvalidState component.
 -->
-<script>
+<script lang="ts">
 import { InvalidState, TextInput, FormField, CodeBlock } from "$lib/index.js"
 import { PropsTable, EventsTable } from "$lib/docs/index.js"
 </script>

@@ -2,7 +2,7 @@
 @component
 Documentation page for the FormField component.
 -->
-<script>
+<script lang="ts">
 import { FormField, TextInput, Textarea, Select, CodeBlock } from "$lib/index.js"
 import { PropsTable, EventsTable } from "$lib/docs/index.js"
 </script>
