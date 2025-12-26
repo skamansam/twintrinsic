@@ -39,7 +39,7 @@ const componentLinks = [
   { name: "BottomBar", href: "/docs/components/bottombar" },
   { name: "Breadcrumb", href: "/docs/components/breadcrumb" },
   { name: "Menu", href: "/docs/components/menu" },
-  { name: "MenuItem", href: "/docs/components/menuitem" },
+  // { name: "MenuItem", href: "/docs/components/menuitem" },
   { name: "Tabs", href: "/docs/components/tabs" },
 
   // Data Display Components

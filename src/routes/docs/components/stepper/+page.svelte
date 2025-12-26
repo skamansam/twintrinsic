@@ -2,10 +2,11 @@
 @component
 Stepper documentation page
 -->
-<script>
+<script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import Stepper from "$lib/components/Stepper/Stepper.svelte"
 import StepperStep from "$lib/components/Stepper/StepperStep.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

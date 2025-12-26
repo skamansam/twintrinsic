@@ -9,6 +9,7 @@ Badge documentation page
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import Badge from "$lib/components/Badge/Badge.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

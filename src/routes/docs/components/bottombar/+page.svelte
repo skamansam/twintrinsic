@@ -9,6 +9,7 @@ BottomBar documentation page
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import BottomBar from "$lib/components/BottomBar/BottomBar.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Panel from "$lib/components/Panel/Panel.svelte"
 import { onMount } from "svelte"
 

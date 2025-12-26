@@ -9,6 +9,7 @@ Button documentation page
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import Button from "$lib/components/Button/Button.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -83,7 +84,7 @@ import Button from "$lib/components/Button/Button.svelte"
     </Button>
   </div>
 
-  <pre class="language-svelte"><code>{`<Button 
+  <CodeBlock language="svelte">{`<Button 
   icon='<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
       d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -113,7 +114,7 @@ import Button from "$lib/components/Button/Button.svelte"
   </svg>'
 >
   Settings
-</Button>`}</code></pre>
+</Button>`}</CodeBlock>
 
   <h3>Button States</h3>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">

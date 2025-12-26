@@ -2,9 +2,10 @@
   @reference '$lib/twintrinsic.css';
 </style>
 
-<script>
+<script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Panel from "$lib/components/Panel/Panel.svelte"
 import Button from "$lib/components/Button/Button.svelte"
 </script>

@@ -6,6 +6,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import Button from "$lib/components/Button/Button.svelte"
 import Toast from "$lib/components/Toast/Toast.svelte"
 import { toastStore } from "$lib/components/Toast/toastStore"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -71,16 +72,16 @@ toastStore.add({ message: "Info message", variant: "info" })`}</code></pre>
 
   <h3>Toast Positions</h3>
   <div class="flex flex-wrap gap-4 p-4 bg-surface rounded-md mb-4">
-    <Button onclick={() => toastStore.add({ message: "Top Right", position: "top-right" })}>
+    <Button on:click={() => toastStore.add({ message: "Top Right", position: "top-right" })}>
       Top Right
     </Button>
-    <Button onclick={() => toastStore.add({ message: "Top Left", position: "top-left" })}>
+    <Button on:click={() => toastStore.add({ message: "Top Left", position: "top-left" })}>
       Top Left
     </Button>
-    <Button onclick={() => toastStore.add({ message: "Bottom Right", position: "bottom-right" })}>
+    <Button on:click={() => toastStore.add({ message: "Bottom Right", position: "bottom-right" })}>
       Bottom Right
     </Button>
-    <Button onclick={() => toastStore.add({ message: "Bottom Left", position: "bottom-left" })}>
+    <Button on:click={() => toastStore.add({ message: "Bottom Left", position: "bottom-left" })}>
       Bottom Left
     </Button>
   </div>
@@ -152,7 +153,7 @@ toastStore.add({ message: "Info message", variant: "info" })`}</code></pre>
     <tbody>
       <tr>
         <td><code>add()</code></td>
-        <td><code>{ message, title?, variant?, duration?, icon?, progress? }</code></td>
+        <td><code>{`{ message, title?, variant?, duration?, icon?, progress? }`}</code></td>
         <td>Add a new toast notification</td>
       </tr>
       <tr>

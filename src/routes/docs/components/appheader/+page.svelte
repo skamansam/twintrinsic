@@ -9,6 +9,7 @@ AppHeader documentation page
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import AppHeader from "$lib/components/AppHeader/AppHeader.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

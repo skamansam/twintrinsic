@@ -5,6 +5,7 @@ Sidebar documentation page
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Panel from "$lib/components/Panel/Panel.svelte"
 import { onMount } from "svelte"
 

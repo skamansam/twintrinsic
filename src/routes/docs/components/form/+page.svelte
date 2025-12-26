@@ -47,7 +47,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
     </Form>
   </div>
 
-  <pre class="language-svelte"><code>{`<Form onsubmit={handleSubmit}>
+  <CodeBlock language="svelte">{`<Form onsubmit={handleSubmit}>
   <FormField label="Username" name="username" required>
     <Input placeholder="Enter username" />
   </FormField>
@@ -63,7 +63,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
   <div class="mt-4">
     <Button variant="primary" type="submit">Submit</Button>
   </div>
-</Form>`}</code></pre>
+</Form>`}</CodeBlock>
 
   <h3>Horizontal Layout</h3>
   <div class="p-4 bg-surface rounded-md mb-4">

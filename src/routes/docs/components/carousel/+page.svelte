@@ -6,6 +6,7 @@ Carousel documentation page
 import Container from "$lib/components/Container/Container.svelte"
 import Carousel from "$lib/components/Carousel/Carousel.svelte"
 import CarouselItem from "$lib/components/Carousel/CarouselItem.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

@@ -48,9 +48,10 @@ Masonry documentation page
     height: 160px;
   }
 </style>
-<script>
+<script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import Masonry from "$lib/components/Masonry/Masonry.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

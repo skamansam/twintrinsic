@@ -8,6 +8,7 @@ const {
 
   /** @type {string} - ARIA label */
   ariaLabel = "Menu",
+  children,
 } = $props()
 
 let isOpen = $state(false)

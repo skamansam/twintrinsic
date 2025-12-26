@@ -154,5 +154,85 @@ test.describe("ThemeToggle Component", () => {
 
       expect(level2aNewBg).toBe(level2aInitialBg)
     })
+
+    test("should toggle only immediate parent data-themed element", async ({ page }) => {
+      const sections = page.locator("[data-themed]")
+      const level1 = sections.nth(0)
+      const level2a = sections.nth(1)
+      const level2b = sections.nth(3)
+
+      const level2aToggle = level2a.locator("[data-twintrinsic-theme-toggle]").first()
+      const level2aButton = level2aToggle.locator(".tw-theme-toggle-button")
+
+      const level1InitialVars = await level1.evaluate((el) => {
+        const style = window.getComputedStyle(el)
+        return style.getPropertyValue("--color-background")
+      })
+      const level2aInitialVars = await level2a.evaluate((el) => {
+        const style = window.getComputedStyle(el)
+        return style.getPropertyValue("--color-background")
+      })
+      const level2bInitialVars = await level2b.evaluate((el) => {
+        const style = window.getComputedStyle(el)
+        return style.getPropertyValue("--color-background")
+      })
+
+      // Toggle Level 2a
+      await level2aButton.click()
+
+      const level1NewVars = await level1.evaluate((el) => {
+        const style = window.getComputedStyle(el)
+        return style.getPropertyValue("--color-background")
+      })
+      const level2aNewVars = await level2a.evaluate((el) => {
+        const style = window.getComputedStyle(el)
+        return style.getPropertyValue("--color-background")
+      })
+      const level2bNewVars = await level2b.evaluate((el) => {
+        const style = window.getComputedStyle(el)
+        return style.getPropertyValue("--color-background")
+      })
+
+      // Level 2a should change (toggled)
+      expect(level2aNewVars.trim()).not.toBe(level2aInitialVars.trim())
+
+      // Level 1 should NOT change (parent not toggled)
+      expect(level1NewVars.trim()).toBe(level1InitialVars.trim())
+
+      // Level 2b should NOT change (sibling not toggled)
+      expect(level2bNewVars.trim()).toBe(level2bInitialVars.trim())
+    })
+  })
+
+  test.describe("Page Header Toggle", () => {
+    test("should toggle page theme from header", async ({ page }) => {
+      // Find the first toggle (in the basic usage example)
+      const firstToggle = page.locator("[data-twintrinsic-theme-toggle]").first()
+      const firstCheckbox = firstToggle.locator("input[type='checkbox']")
+      const firstButton = firstToggle.locator(".tw-theme-toggle-button")
+
+      // Verify initial state
+      await expect(firstCheckbox).not.toBeChecked()
+
+      // Toggle the theme
+      await firstButton.click()
+
+      // Verify the checkbox is now checked
+      await expect(firstCheckbox).toBeChecked()
+    })
+
+    test("should maintain theme toggle state across page sections", async ({ page }) => {
+      const firstToggle = page.locator("[data-twintrinsic-theme-toggle]").first()
+      const firstCheckbox = firstToggle.locator("input[type='checkbox']")
+      const firstButton = firstToggle.locator(".tw-theme-toggle-button")
+
+      // Toggle the first toggle
+      await firstButton.click()
+      await expect(firstCheckbox).toBeChecked()
+
+      // Verify the toggle remains checked
+      await page.waitForTimeout(100)
+      await expect(firstCheckbox).toBeChecked()
+    })
   })
 })

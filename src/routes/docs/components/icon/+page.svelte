@@ -22,9 +22,10 @@ Icon documentation page
     @apply text-xs text-center truncate w-full;
   }
 </style>
-<script>
+<script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import Icon from "$lib/components/Icon/Icon.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 
 // Group icons by category
 const iconsByCategory = {

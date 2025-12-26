@@ -9,6 +9,7 @@ Tabs documentation page
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import Tabs from "$lib/components/Tabs/Tabs.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import TabList from "$lib/components/Tabs/TabList.svelte"
 import Tab from "$lib/components/Tabs/Tab.svelte"
 import TabPanel from "$lib/components/Tabs/TabPanel.svelte"

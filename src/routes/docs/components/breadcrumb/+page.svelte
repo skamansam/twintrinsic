@@ -10,6 +10,7 @@ Breadcrumb documentation page
 import Container from "$lib/components/Container/Container.svelte"
 import Breadcrumb from "$lib/components/Breadcrumb/Breadcrumb.svelte"
 import BreadcrumbItem from "$lib/components/Breadcrumb/BreadcrumbItem.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

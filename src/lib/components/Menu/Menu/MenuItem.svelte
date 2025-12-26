@@ -23,6 +23,8 @@ const {
 
   /** @type {any} - Value associated with this menu item */
   value = {},
+
+  children,
 } = $props()
 
 // Use $state for values that need to be modified
