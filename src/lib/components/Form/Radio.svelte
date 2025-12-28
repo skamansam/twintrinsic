@@ -65,17 +65,27 @@ const formContext = getContext("form")
 // Radio state
 let isChecked = $state(checked)
 
-// Register with form if available
-let fieldApi
-if (formContext && name) {
-  fieldApi = formContext.registerField(name, checked ? value : undefined)
+// Update checked state when prop changes
+$effect(() => {
+  isChecked = checked
+})
 
-  // Update checked state when form field changes
-  $effect(() => {
+// Register with form if available
+let fieldApi = $state()
+
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, checked ? value : undefined)
+  }
+})
+
+// Update checked state when form field changes
+$effect(() => {
+  if (fieldApi) {
     const formValue = fieldApi.getValue()
     isChecked = formValue === value
-  })
-}
+  }
+})
 
 /**
  * Handles radio change

@@ -69,13 +69,15 @@ const {
 const dispatch = createEventDispatcher()
 
 // Provide context for child tags
-setContext("tagGroup", {
-  variant,
-  size,
-  dismissible,
-  outline,
-  pill,
-  clickable,
+$effect(() => {
+  setContext("tagGroup", {
+    variant,
+    size,
+    dismissible,
+    outline,
+    pill,
+    clickable,
+  })
 })
 
 /**

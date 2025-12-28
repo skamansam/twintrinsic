@@ -76,21 +76,30 @@ const textareaId = id || `textarea-${crypto.randomUUID()}`
 // Textarea state
 let textareaValue = $state(value)
 let isFocused = $state(false)
-let textareaEl
+let textareaEl = $state()
+let fieldApi = $state()
 
 // Register with form if available
-let fieldApi
-if (formContext && name) {
-  fieldApi = formContext.registerField(name, value)
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, value)
+  }
+})
 
-  // Update value when form field changes
-  $effect(() => {
+// Update value when form field changes
+$effect(() => {
+  if (fieldApi) {
     const formValue = fieldApi.getValue()
     if (formValue !== undefined && formValue !== textareaValue) {
       textareaValue = formValue
     }
-  })
-}
+  }
+})
+
+// Update textarea value when prop changes
+$effect(() => {
+  textareaValue = value
+})
 
 /**
  * Handles textarea input

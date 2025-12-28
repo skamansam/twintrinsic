@@ -59,18 +59,20 @@ const {
 } = $props()
 
 // Provide context for child components
-setContext("stepper", {
-  activeStep,
-  variant,
-  orientation,
-  alternativeLabels,
-  linear,
-  connector,
-  getStepState: (index) => {
-    if (index < activeStep) return "completed"
-    if (index === activeStep) return "active"
-    return "pending"
-  },
+$effect(() => {
+  setContext("stepper", {
+    activeStep,
+    variant,
+    orientation,
+    alternativeLabels,
+    linear,
+    connector,
+    getStepState: (index) => {
+      if (index < activeStep) return "completed"
+      if (index === activeStep) return "active"
+      return "pending"
+    },
+  })
 })
 </script>
 

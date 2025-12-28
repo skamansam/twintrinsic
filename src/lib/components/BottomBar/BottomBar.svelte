@@ -44,7 +44,12 @@ const {
   ontoggle,
 } = $props() satisfies BottomBarProps
 
-let isExpanded = $state(expanded)
+let isExpanded = $state(true)
+
+// Update expanded state when prop changes
+$effect(() => {
+  isExpanded = expanded
+})
 
 // Handle toggle from Panel
 function handleToggle(payload: { expanded: boolean }) {

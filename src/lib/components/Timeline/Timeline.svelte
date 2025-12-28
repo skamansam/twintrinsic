@@ -53,12 +53,14 @@ const {
 } = $props()
 
 // Provide context for child components
-setContext("timeline", {
-  variant,
-  position,
-  orientation,
-  connected,
-  animated,
+$effect(() => {
+  setContext("timeline", {
+    variant,
+    position,
+    orientation,
+    connected,
+    animated,
+  })
 })
 </script>
 

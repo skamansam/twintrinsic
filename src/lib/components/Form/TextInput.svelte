@@ -91,20 +91,29 @@ const inputId = id || `input-${crypto.randomUUID()}`
 // Input state
 let inputValue = $state(value)
 let isFocused = $state(false)
+let fieldApi = $state()
 
 // Register with form if available
-let fieldApi
-if (formContext && name) {
-  fieldApi = formContext.registerField(name, value)
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, value)
+  }
+})
 
-  // Update value when form field changes
-  $effect(() => {
+// Update value when form field changes
+$effect(() => {
+  if (fieldApi) {
     const formValue = fieldApi.getValue()
     if (formValue !== undefined && formValue !== inputValue) {
       inputValue = formValue
     }
-  })
-}
+  }
+})
+
+// Update input value when prop changes
+$effect(() => {
+  inputValue = value
+})
 
 /**
  * Handles input changes

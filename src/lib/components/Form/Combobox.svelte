@@ -108,8 +108,8 @@ const {
 const dispatch = createEventDispatcher()
 
 // Component state
-let inputElement
-let dropdownElement
+let inputElement = $state()
+let dropdownElement = $state()
 let isOpen = $state(false)
 let inputValue = $state("")
 let selectedOption = $state(null)

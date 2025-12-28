@@ -83,18 +83,23 @@ let isInvalid = $state(false)
 let validationMessage = $state("")
 
 // Register with form if available
-let fieldApi
-if (formContext && name) {
-  fieldApi = formContext.registerField(name, values)
+let fieldApi = $state()
 
-  // Update values when form field changes
-  $effect(() => {
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, values)
+  }
+})
+
+// Update values when form field changes
+$effect(() => {
+  if (fieldApi) {
     const formValue = fieldApi.getValue()
     if (formValue !== undefined && JSON.stringify(formValue) !== JSON.stringify(itemValues)) {
       itemValues = [...formValue]
     }
-  })
-}
+  }
+})
 
 // Update internal values when prop changes
 $effect(() => {

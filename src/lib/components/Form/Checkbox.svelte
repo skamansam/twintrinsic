@@ -46,7 +46,7 @@ const {
   class: className = "",
 } = $props()
 
-let checkboxEl
+let checkboxEl = $state()
 
 // Update indeterminate state
 $effect(() => {

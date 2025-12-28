@@ -81,33 +81,40 @@ const dispatch = createEventDispatcher()
 // Component state
 let selectedItems = $state(Array.isArray(selected) ? [...selected] : [])
 
+// Update selected items when prop changes
+$effect(() => {
+  selectedItems = Array.isArray(selected) ? [...selected] : []
+})
+
 // Provide context for child chips
-setContext("chipGroup", {
-  variant,
-  size,
-  removable,
-  clickable,
-  selectable,
-  multiple,
-  disabled,
-  outline,
-  isSelected: (item) => selectedItems.includes(item),
-  toggleSelection: (item) => {
-    if (selectable) {
-      if (selectedItems.includes(item)) {
-        // Remove item if already selected
-        selectedItems = selectedItems.filter((i) => i !== item)
-      } else {
-        // Add item if not selected
-        if (multiple) {
-          selectedItems = [...selectedItems, item]
+$effect(() => {
+  setContext("chipGroup", {
+    variant,
+    size,
+    removable,
+    clickable,
+    selectable,
+    multiple,
+    disabled,
+    outline,
+    isSelected: (item) => selectedItems.includes(item),
+    toggleSelection: (item) => {
+      if (selectable) {
+        if (selectedItems.includes(item)) {
+          // Remove item if already selected
+          selectedItems = selectedItems.filter((i) => i !== item)
         } else {
-          selectedItems = [item]
+          // Add item if not selected
+          if (multiple) {
+            selectedItems = [...selectedItems, item]
+          } else {
+            selectedItems = [item]
+          }
         }
+        dispatch("select", { selected: selectedItems })
       }
-      dispatch("select", { selected: selectedItems })
-    }
-  },
+    },
+  })
 })
 
 /**

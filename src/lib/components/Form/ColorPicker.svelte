@@ -48,7 +48,7 @@ let saturation = $state(100)
 let lightness = $state(50)
 let alpha = $state(100)
 let inputValue = $state("")
-let pickerRef
+let pickerRef = $state()
 
 // Initialize color from value
 $effect(() => {

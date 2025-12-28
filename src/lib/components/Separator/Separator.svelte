@@ -43,8 +43,8 @@ const colorClasses = {
 }
 
 // Determine if we have content and element type
-const hasContent = children !== undefined
-const element = as ?? (hasContent ? "div" : "hr")
+const hasContent = $derived(children !== undefined)
+const element = $derived(as ?? (hasContent ? "div" : "hr"))
 </script>
 
 <svelte:element

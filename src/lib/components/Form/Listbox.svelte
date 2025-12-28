@@ -90,22 +90,27 @@ const formContext = getContext("form")
 let selectedValues = $state(multiple ? [] : null)
 let filterValue = $state("")
 let highlightedIndex = $state(0)
-let listboxElement
-let filterInputElement
+let listboxElement = $state()
+let filterInputElement = $state()
 
 // Register with form if available
-let fieldApi
-if (formContext && name) {
-  fieldApi = formContext.registerField(name, value)
+let fieldApi = $state()
 
-  // Update value when form field changes
-  $effect(() => {
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, value)
+  }
+})
+
+// Update value when form field changes
+$effect(() => {
+  if (fieldApi) {
     const formValue = fieldApi.getValue()
     if (formValue !== undefined && JSON.stringify(formValue) !== JSON.stringify(selectedValues)) {
       selectedValues = formValue
     }
-  })
-}
+  }
+})
 
 // Initialize selected values from prop
 $effect(() => {

@@ -137,17 +137,19 @@ function registerPanel(panelElement) {
 }
 
 // Provide context for child components
-setContext("tabs", {
-  selectedIndex: () => selectedIndex,
-  registerTab,
-  registerPanel,
-  selectTab,
-  handleKeydown,
-  disabled: () => disabled,
-  variant,
-  size,
-  fullWidth,
-  centered,
+$effect(() => {
+  setContext("tabs", {
+    selectedIndex: () => selectedIndex,
+    registerTab,
+    registerPanel,
+    selectTab,
+    handleKeydown,
+    disabled: () => disabled,
+    variant,
+    size,
+    fullWidth,
+    centered,
+  })
 })
 
 // Determine variant classes

@@ -22,7 +22,7 @@ const dispatch = createEventDispatcher()
 let isOpen = $state(false)
 let searchValue = $state("")
 let highlightedIndex = $state(-1)
-let selectedValue = $state(value)
+let selectedValue = $state(null)
 let inputElement
 
 $effect(() => {

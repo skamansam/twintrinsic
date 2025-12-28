@@ -44,10 +44,13 @@ const {
 } = $props()
 
 // Provide context for child components
-setContext("breadcrumb", {
-  separator,
-  collapsible,
-  maxVisibleItems,
+$effect(() => {
+  const breadcrumbContext = {
+    separator,
+    collapsible,
+    maxVisibleItems,
+  }
+  setContext("breadcrumb", breadcrumbContext)
 })
 </script>
 

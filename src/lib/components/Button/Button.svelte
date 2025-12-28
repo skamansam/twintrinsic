@@ -112,10 +112,10 @@ function handleClick(event) {
 }
 
 // Determine if button should render as a link
-const isLink = !!href && !disabled && !loading
+const isLink = $derived(!!href && !disabled && !loading)
 
 // Determine element type
-const elementType = isLink ? "a" : "button"
+const elementType = $derived(isLink ? "a" : "button")
 
 // Determine variant classes
 const variantClasses = $derived(

@@ -102,19 +102,24 @@ let isFocused = $state(false)
 let inputEl
 
 // Register with form if available
-let fieldApi
-if (formContext && name) {
-  fieldApi = formContext.registerField(name, value)
+let fieldApi = $state()
 
-  // Update value when form field changes
-  $effect(() => {
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, value)
+  }
+})
+
+// Update value when form field changes
+$effect(() => {
+  if (fieldApi) {
     const formValue = fieldApi.getValue()
     if (formValue !== undefined && formValue !== numericValue) {
       numericValue = formValue
       inputValue = formatValue(formValue)
     }
-  })
-}
+  }
+})
 
 // Update internal value when prop changes
 $effect(() => {

@@ -93,29 +93,32 @@ const formContext = getContext("form")
 // Component state
 let currentValue = $state(value)
 let isDragging = $state(false)
-let knobElement
+let knobElement = $state()
 let radius = $state(0)
 let center = $state({ x: 0, y: 0 })
 
 // Register with form if available
-let fieldApi
-if (formContext && name) {
-  fieldApi = formContext.registerField(name, value)
+let fieldApi = $state()
 
-  // Update value when form field changes
-  $effect(() => {
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, value)
+  }
+})
+
+// Update value when form field changes
+$effect(() => {
+  if (fieldApi) {
     const formValue = fieldApi.getValue()
     if (formValue !== undefined && formValue !== currentValue) {
       currentValue = formValue
     }
-  })
-}
+  }
+})
 
 // Update internal value when prop changes
 $effect(() => {
-  if (value !== currentValue) {
-    currentValue = value
-  }
+  currentValue = value
 })
 
 /**

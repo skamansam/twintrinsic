@@ -64,34 +64,46 @@ const errorId = `${id}-error`
 const helpId = `${id}-help`
 
 // Track field state
-let fieldError = $state(error || "")
+let fieldError = $state("")
 let touched = $state(false)
-let fieldDisabled = $state(disabled)
+let fieldDisabled = $state(false)
+let fieldApi = $state()
 
 // Register with form if available
-let fieldApi
-if (formContext && name) {
-  fieldApi = formContext.registerField(name)
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name)
+  }
+})
 
-  // Update field error when form validation runs
-  $effect(() => {
+// Update field error when form validation runs
+$effect(() => {
+  if (fieldApi) {
     const formError = fieldApi.getError()
     if (formError) {
       fieldError = formError
     }
-  })
+  } else {
+    fieldError = error || ""
+  }
+})
 
-  // Update touched state
-  $effect(() => {
+// Update touched state
+$effect(() => {
+  if (fieldApi) {
     touched = fieldApi.isTouched()
-  })
+  }
+})
 
-  // Update disabled state
-  $effect(() => {
+// Update disabled state
+$effect(() => {
+  if (fieldApi) {
     const formDisabled = formContext.disabled()
     fieldDisabled = disabled || formDisabled
-  })
-}
+  } else {
+    fieldDisabled = disabled
+  }
+})
 
 // Determine if we should show an error
 const showError = $derived(!!fieldError && touched)

@@ -59,7 +59,7 @@ const formContext = getContext("form")
 let isChecked = $state(checked)
 
 // Register with form if available
-let fieldApi
+let fieldApi = $state()
 if (formContext && name) {
   fieldApi = formContext.registerField(name, checked)
 

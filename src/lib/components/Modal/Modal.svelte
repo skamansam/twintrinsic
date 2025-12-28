@@ -62,8 +62,8 @@ const dispatch = createEventDispatcher()
 
 // Modal state
 let isOpen = $state(open)
-let modalElement
-let previouslyFocusedElement
+let modalElement = $state()
+let previouslyFocusedElement = $state()
 
 // Track when open prop changes
 $effect(() => {

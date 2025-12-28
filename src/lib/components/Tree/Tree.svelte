@@ -65,41 +65,43 @@ const {
 // Component state
 let selectedNodes = $state(Array.isArray(selected) ? [...selected] : [])
 
-// Provide context for child components
-setContext("tree", {
-  selectable,
-  multiSelect,
-  showIcons,
-  showLines,
-  isSelected: (key) => selectedNodes.includes(key),
-  toggleSelection: (key) => {
-    if (selectable) {
-      if (selectedNodes.includes(key)) {
-        // Remove if already selected
-        if (multiSelect) {
-          selectedNodes = selectedNodes.filter((k) => k !== key)
-        } else {
-          // For single select, clicking the selected item again doesn't deselect it
-        }
-      } else {
-        // Add if not selected
-        if (multiSelect) {
-          selectedNodes = [...selectedNodes, key]
-        } else {
-          selectedNodes = [key]
-        }
-      }
+const dispatch = createEventDispatcher()
 
-      dispatch("select", { selected: selectedNodes })
-    }
-  },
+// Provide context for child components
+$effect(() => {
+  setContext("tree", {
+    selectable,
+    multiSelect,
+    showIcons,
+    showLines,
+    isSelected: (key) => selectedNodes.includes(key),
+    toggleSelection: (key) => {
+      if (selectable) {
+        if (selectedNodes.includes(key)) {
+          // Remove if already selected
+          if (multiSelect) {
+            selectedNodes = selectedNodes.filter((k) => k !== key)
+          } else {
+            // For single select, clicking the selected item again doesn't deselect it
+          }
+        } else {
+          // Add if not selected
+          if (multiSelect) {
+            selectedNodes = [...selectedNodes, key]
+          } else {
+            selectedNodes = [key]
+          }
+        }
+
+        dispatch("select", { selected: selectedNodes })
+      }
+    },
+  })
 })
 
 // Update selected state when prop changes
 $effect(() => {
-  if (selected !== selectedNodes) {
-    selectedNodes = Array.isArray(selected) ? [...selected] : []
-  }
+  selectedNodes = Array.isArray(selected) ? [...selected] : []
 })
 </script>
 

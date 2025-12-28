@@ -78,8 +78,8 @@ function handleKeydown(event) {
 }
 
 // Reference to the element
-let element
-let contentEl
+let element = $state()
+let contentEl = $state()
 </script>
 
 <div 

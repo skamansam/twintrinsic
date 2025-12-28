@@ -60,10 +60,10 @@ const dispatch = createEventDispatcher()
 
 // Tooltip state
 let isVisible = $state(false)
-let triggerElement
-let tooltipElement
-let showTimeout
-let hideTimeout
+let triggerElement = $state()
+let tooltipElement = $state()
+let showTimeout = $state()
+let hideTimeout = $state()
 
 // Position state
 let tooltipPosition = $state({

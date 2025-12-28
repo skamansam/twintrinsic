@@ -17,7 +17,7 @@ const dispatch = createEventDispatcher()
 
 let isDragActive = $state(false)
 let uploadedFiles = $state([])
-let inputElement
+let inputElement = $state()
 
 const handleDragEnter = (e) => {
   e.preventDefault()

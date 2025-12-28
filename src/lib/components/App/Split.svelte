@@ -62,13 +62,13 @@ const dispatch = createEventDispatcher()
 // Component state
 let size = $state(initialSize)
 let isDragging = $state(false)
-let containerElement
-let firstPanelElement
-let secondPanelElement
-let dividerElement
-let startPosition = 0
-let startSize = 0
-let containerSize = 0
+let containerElement = $state()
+let firstPanelElement = $state()
+let secondPanelElement = $state()
+let dividerElement = $state()
+let startPosition = $state(0)
+let startSize = $state(0)
+let containerSize = $state(0)
 
 // Computed values
 const isHorizontal = $derived(direction === "horizontal")

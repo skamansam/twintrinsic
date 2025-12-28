@@ -58,20 +58,29 @@ const formContext = getContext("form")
 
 // Switch state
 let isChecked = $state(checked)
+let fieldApi = $state()
 
 // Register with form if available
-let fieldApi
-if (formContext && name) {
-  fieldApi = formContext.registerField(name, checked)
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, checked)
+  }
+})
 
-  // Update value when form field changes
-  $effect(() => {
+// Update value when form field changes
+$effect(() => {
+  if (fieldApi) {
     const formValue = fieldApi.getValue()
     if (formValue !== undefined && formValue !== isChecked) {
       isChecked = !!formValue
     }
-  })
-}
+  }
+})
+
+// Update checked state when prop changes
+$effect(() => {
+  isChecked = checked
+})
 
 /**
  * Handles switch toggle

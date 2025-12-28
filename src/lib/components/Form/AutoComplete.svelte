@@ -76,7 +76,7 @@ let selectedItems = $state(multiple ? [] : null)
 let focused = $state(false)
 let showSuggestions = $state(false)
 let highlightedIndex = $state(-1)
-let searchTimeout
+let searchTimeout = $state()
 
 // Initialize selected items
 $effect(() => {

@@ -80,11 +80,16 @@ const {
   footer = null,
 } = $props() satisfies PanelProps
 
-let isExpanded = $state(expanded)
+let isExpanded = $state(true)
 
 // Internal state
-let headerEl: HTMLButtonElement | null = null
-let contentEl: HTMLDivElement | null = null
+let headerEl = $state<HTMLButtonElement | null>(null)
+let contentEl = $state<HTMLDivElement | null>(null)
+
+// Update expanded state when prop changes
+$effect(() => {
+  isExpanded = expanded
+})
 
 // Handle toggle
 function handleToggle() {

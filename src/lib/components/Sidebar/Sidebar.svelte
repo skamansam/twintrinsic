@@ -82,7 +82,12 @@ const {
   ontoggle,
 } = $props() satisfies SidebarProps
 
-let isExpanded = $state(expanded)
+let isExpanded = $state(true)
+
+// Update expanded state when prop changes
+$effect(() => {
+  isExpanded = expanded
+})
 
 /** Handle toggle events from the Panel component */
 function handleToggle(payload: { expanded: boolean }): void {

@@ -90,9 +90,9 @@ const {
 } = $props()
 
 // Component state
-let currentIndex = $state(activeIndex)
+let currentIndex = $state(0)
 let totalSlides = $state(0)
-let isPlaying = $state(autoplay)
+let isPlaying = $state(false)
 let isHovering = $state(false)
 let isDragging = $state(false)
 let startX = 0
@@ -106,6 +106,11 @@ let touchStartTime = 0
 // Update current index when activeIndex prop changes
 $effect(() => {
   currentIndex = activeIndex
+})
+
+// Update autoplay state when prop changes
+$effect(() => {
+  isPlaying = autoplay
 })
 
 // Provide context for child components

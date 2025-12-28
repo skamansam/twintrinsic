@@ -51,7 +51,7 @@ let showDropdown = $state(false)
 let searchValue = $state("")
 let selectedValues = $state([])
 let focusedIndex = $state(-1)
-let dropdownRef = $state(null)
+let dropdownRef = $state()
 
 // Initialize selected values
 $effect(() => {

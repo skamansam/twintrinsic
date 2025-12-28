@@ -45,30 +45,36 @@ const dispatch = createEventDispatcher()
 let expandedItems = $state(new Set())
 
 // Initialize with default expanded item if provided
-if (defaultExpanded !== null) {
-  expandedItems.add(defaultExpanded)
-}
+$effect(() => {
+  if (defaultExpanded !== null) {
+    expandedItems.clear()
+    expandedItems.add(defaultExpanded)
+  }
+})
 
 // Set up context for accordion items
-setContext("accordion", {
-  registerItem: (itemId, index) => {
-    // Return whether this item should be expanded initially
-    return expandedItems.has(index)
-  },
-  toggleItem: (index, expanded) => {
-    if (expanded) {
-      if (!allowMultiple) {
-        // Close all other items
-        expandedItems.clear()
+$effect(() => {
+  const accordionContext = {
+    registerItem: (itemId, index) => {
+      // Return whether this item should be expanded initially
+      return expandedItems.has(index)
+    },
+    toggleItem: (index, expanded) => {
+      if (expanded) {
+        if (!allowMultiple) {
+          // Close all other items
+          expandedItems.clear()
+        }
+        expandedItems.add(index)
+      } else {
+        expandedItems.delete(index)
       }
-      expandedItems.add(index)
-    } else {
-      expandedItems.delete(index)
-    }
 
-    dispatch("change", { expandedItems: Array.from(expandedItems) })
-  },
-  allowMultiple,
+      dispatch("change", { expandedItems: Array.from(expandedItems) })
+    },
+    allowMultiple,
+  }
+  setContext("accordion", accordionContext)
 })
 </script>
 

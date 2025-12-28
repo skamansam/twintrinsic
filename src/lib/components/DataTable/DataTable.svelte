@@ -140,22 +140,24 @@ $effect(() => {
 })
 
 // Provide context for child components
-setContext("dataTable", {
-  sortable,
-  filterable,
-  selectable,
-  multiSelect,
-  keyField,
-  getSortField: () => currentSortField,
-  getSortOrder: () => currentSortOrder,
-  getFilters: () => currentFilters,
-  getSelected: () => selectedRows,
-  isSelected: (key) => selectedRows.includes(key),
-  toggleSort: (field) => handleSort(field),
-  setFilter: (field, value) => handleFilter(field, value),
-  toggleSelection: (key) => toggleRowSelection(key),
-  selectAll: () => toggleSelectAll(),
-  cellFormatter,
+$effect(() => {
+  setContext("dataTable", {
+    sortable,
+    filterable,
+    selectable,
+    multiSelect,
+    keyField,
+    getSortField: () => currentSortField,
+    getSortOrder: () => currentSortOrder,
+    getFilters: () => currentFilters,
+    getSelected: () => selectedRows,
+    isSelected: (key) => selectedRows.includes(key),
+    toggleSort: (field) => handleSort(field),
+    setFilter: (field, value) => handleFilter(field, value),
+    toggleSelection: (key) => toggleRowSelection(key),
+    selectAll: () => toggleSelectAll(),
+    cellFormatter,
+  })
 })
 
 // Computed values

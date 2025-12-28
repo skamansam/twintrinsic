@@ -38,7 +38,7 @@ const carouselContext = getContext("carousel")
 
 // Component state
 let index = $state(-1)
-let isActive = $state(active)
+let isActive = $state(false)
 let isVisible = $state(false)
 let wasActive = $state(false)
 
@@ -50,6 +50,13 @@ onMount(() => {
 
   return () => {
     // Cleanup if needed
+  }
+})
+
+// Update active state when prop changes
+$effect(() => {
+  if (!carouselContext) {
+    isActive = active
   }
 })
 
@@ -72,8 +79,6 @@ $effect(() => {
         }, carouselContext.transitionDuration)
       }
     }
-  } else {
-    isActive = active
   }
 })
 

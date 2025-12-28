@@ -87,8 +87,8 @@ let sliderValues = $state(Array.isArray(value) ? [...value] : [value])
 let isDragging = $state(false)
 let dragIndex = $state(-1)
 let hoverIndex = $state(-1)
-let trackElement
-let thumbElements = []
+let trackElement = $state()
+let thumbElements = $state([])
 
 // Update internal value when prop changes
 $effect(() => {

@@ -64,11 +64,13 @@ const {
 const dispatch = createEventDispatcher()
 
 // Provide context for child components
-setContext("table", {
-  bordered,
-  striped,
-  hoverable,
-  compact,
+$effect(() => {
+  setContext("table", {
+    bordered,
+    striped,
+    hoverable,
+    compact,
+  })
 })
 </script>
 

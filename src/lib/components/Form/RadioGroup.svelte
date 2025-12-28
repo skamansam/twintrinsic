@@ -58,19 +58,29 @@ const formContext = getContext("form")
 // Radio group state
 let selectedValue = $state(value)
 
-// Register with form if available
-let fieldApi
-if (formContext && name) {
-  fieldApi = formContext.registerField(name, value)
+// Update selected value when prop changes
+$effect(() => {
+  selectedValue = value
+})
 
-  // Update value when form field changes
-  $effect(() => {
+// Register with form if available
+let fieldApi = $state()
+
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, value)
+  }
+})
+
+// Update value when form field changes
+$effect(() => {
+  if (fieldApi) {
     const formValue = fieldApi.getValue()
     if (formValue !== undefined && formValue !== selectedValue) {
       selectedValue = formValue
     }
-  })
-}
+  }
+})
 
 /**
  * Handles radio selection
@@ -89,13 +99,15 @@ function handleRadioChange(event) {
 }
 
 // Provide context for child Radio components
-setContext("radioGroup", {
-  name,
-  selectedValue: () => selectedValue,
-  required,
-  disabled: () => disabled || (fieldApi && fieldApi.isDisabled()),
-  size,
-  onChange: handleRadioChange,
+$effect(() => {
+  setContext("radioGroup", {
+    name,
+    selectedValue: () => selectedValue,
+    required,
+    disabled: () => disabled || (fieldApi && fieldApi.isDisabled()),
+    size,
+    onChange: handleRadioChange,
+  })
 })
 </script>
 
