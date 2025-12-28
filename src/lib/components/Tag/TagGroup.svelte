@@ -124,7 +124,7 @@ function handleDismiss(index) {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .tag-group {

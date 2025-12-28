@@ -95,8 +95,8 @@ const icons = {
 }
 
 // Get icon path
-const path = icons[name] || ""
-const pixelSize = sizes[size] || sizes.md
+const path = $derived(icons[name] || "")
+const pixelSize = $derived(sizes[size] || sizes.md)
 </script>
 
 <svg
@@ -114,7 +114,7 @@ const pixelSize = sizes[size] || sizes.md
   <path d={path} />
 </svg>
 
-<style>
+<style lang="postcss">
   @reference '../../twintrinsic.css';
 
   .icon {

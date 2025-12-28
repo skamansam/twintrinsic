@@ -90,7 +90,7 @@ const clearAll = () => {
 }
 </script>
 
-<style>
+<style lang="postcss">
   @reference '$lib/twintrinsic.css';
 
   .file-upload-wrapper {

@@ -17,7 +17,7 @@ Usage:
 ```
 -->
 <script>
-import { onMount, createEventDispatcher } from "svelte"
+import { createEventDispatcher, onMount } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -69,6 +69,7 @@ let dividerElement = $state()
 let startPosition = $state(0)
 let startSize = $state(0)
 let containerSize = $state(0)
+let resizeObserver = $state()
 
 // Computed values
 const isHorizontal = $derived(direction === "horizontal")
@@ -284,7 +285,7 @@ onMount(() => {
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .split {

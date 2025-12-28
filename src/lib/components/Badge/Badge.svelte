@@ -146,7 +146,7 @@ const positionClasses = $derived(
   </span>
 {/if}
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .badge {

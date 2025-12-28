@@ -256,7 +256,7 @@ function handleKeyDown(event) {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .tree-node {

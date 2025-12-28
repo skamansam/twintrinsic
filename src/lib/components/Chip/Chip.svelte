@@ -236,7 +236,7 @@ function handleKeydown(event) {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .chip {

@@ -165,7 +165,7 @@ function handleRemove(index) {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .chip-group {

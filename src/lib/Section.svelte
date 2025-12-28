@@ -1,13 +1,14 @@
 <script lang="ts">
-export let heading = ""
-let propClasses = ""
-export { propClasses as class }
-export let type: string | null = null
+const {
+  heading = "",
+  class: propClasses = "",
+  type = null,
+} = $props<{ heading?: string; class?: string; type?: string | null }>()
 
-$: typeCSS = type ? `bg-${type}` : ""
+const typeCSS = $derived(type ? `bg-${type}` : "")
 </script>
 
-<style>
+<style lang="postcss">
   @reference "./twintrinsic.css";
 .twin-section {
   @apply m-2 my-4;

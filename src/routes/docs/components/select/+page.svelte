@@ -272,7 +272,7 @@ const languages = [
   <li><code>Type</code> - Search through options (when dropdown is open)</li>
 </ul>
 
-<style>
+<style lang="postcss">
   @reference '$lib/twintrinsic.css';
   .example {
     @apply my-4 p-4 border border-border rounded-md;

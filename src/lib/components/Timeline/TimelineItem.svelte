@@ -224,7 +224,7 @@ onMount(() => {
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .timeline-item {

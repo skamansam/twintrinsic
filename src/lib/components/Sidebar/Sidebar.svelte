@@ -82,9 +82,10 @@ const {
   ontoggle,
 } = $props() satisfies SidebarProps
 
-let isExpanded = $state(true)
+let isExpanded = $state(false)
+let sidebarElement = $state()
 
-// Update expanded state when prop changes
+// Initialize and sync expanded state when prop changes
 $effect(() => {
   isExpanded = expanded
 })
@@ -157,7 +158,7 @@ function handleKeydown(event: KeyboardEvent): void {
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   .sidebar-container {
     @apply relative;

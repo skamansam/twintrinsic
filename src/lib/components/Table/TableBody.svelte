@@ -32,7 +32,7 @@ const {
   {@render children?.()}
 </tbody>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .table-body {

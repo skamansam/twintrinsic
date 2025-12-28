@@ -153,7 +153,7 @@ const progressAriaLabel = $derived(ariaLabel || `Progress: ${formattedValue}`)
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .progress-container {

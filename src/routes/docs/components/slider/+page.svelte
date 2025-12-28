@@ -381,7 +381,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   </table>
 </Container>
 
-<style>
+<style lang="postcss">
   @reference '$lib/twintrinsic.css';
   
   .not-prose {

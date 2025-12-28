@@ -187,7 +187,7 @@ function handleKeydown(event: KeyboardEvent) {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   /* Base styles that work with Tailwind */
   .panel {

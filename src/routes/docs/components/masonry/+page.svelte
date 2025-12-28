@@ -3,7 +3,7 @@
 Masonry documentation page
 -->
 
-<style>
+<style lang="postcss">
   @reference '$lib/twintrinsic.css';
   
   .masonry-demo {

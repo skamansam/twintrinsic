@@ -635,7 +635,7 @@ onDestroy(() => {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .file-upload {

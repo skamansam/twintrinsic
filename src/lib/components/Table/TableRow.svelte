@@ -77,7 +77,7 @@ function handleClick(event) {
   {@render children?.()}
 </tr>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .table-row-selected {

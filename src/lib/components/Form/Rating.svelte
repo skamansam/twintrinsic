@@ -77,7 +77,7 @@ const dispatch = createEventDispatcher()
 let currentValue = $state(value)
 let hoverValue = $state(-1)
 let isDragging = $state(false)
-let ratingElement
+let ratingElement = $state()
 
 // Update internal value when prop changes
 $effect(() => {
@@ -339,7 +339,7 @@ function handleKeydown(event) {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .rating {

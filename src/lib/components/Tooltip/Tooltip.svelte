@@ -18,7 +18,7 @@ Usage:
 ```
 -->
 <script>
-import { onMount, createEventDispatcher } from "svelte"
+import { createEventDispatcher, onMount } from "svelte"
 import { fade } from "svelte/transition"
 
 const {
@@ -62,8 +62,8 @@ const dispatch = createEventDispatcher()
 let isVisible = $state(false)
 let triggerElement = $state()
 let tooltipElement = $state()
-let showTimeout = $state()
-let hideTimeout = $state()
+let showTimeout = $state(null)
+let hideTimeout = $state(null)
 
 // Position state
 let tooltipPosition = $state({
@@ -233,7 +233,7 @@ onMount(() => {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .tooltip-wrapper {

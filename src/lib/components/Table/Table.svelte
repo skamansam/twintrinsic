@@ -126,7 +126,7 @@ $effect(() => {
   {/if}
 {/if}
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .table-responsive {

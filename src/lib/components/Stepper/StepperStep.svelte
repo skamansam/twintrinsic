@@ -225,7 +225,7 @@ function handleClick() {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .stepper-step {

@@ -220,7 +220,7 @@ function handleClick(event) {
   </span>
 {/if}
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .tag {

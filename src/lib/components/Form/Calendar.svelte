@@ -71,6 +71,7 @@ let hoverDate = $state(null)
 let inputValue = $state("")
 let startDate = $state(null)
 let endDate = $state(null)
+let calendarElement = $state()
 
 // Initialize dates from value prop
 $effect(() => {
@@ -364,7 +365,7 @@ function handleKeydown(event) {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
 
   .calendar-container {

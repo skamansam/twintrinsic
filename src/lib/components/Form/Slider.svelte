@@ -83,7 +83,7 @@ const {
 const dispatch = createEventDispatcher()
 
 // Component state
-let sliderValues = $state(Array.isArray(value) ? [...value] : [value])
+let sliderValues = $state([])
 let isDragging = $state(false)
 let dragIndex = $state(-1)
 let hoverIndex = $state(-1)
@@ -113,7 +113,7 @@ const variantClasses = $derived(
 )
 
 // Generate tick values if not provided
-const ticks = $derived(() => {
+const ticks = $derived.by(() => {
   if (!showTicks) return []
 
   if (tickValues.length > 0) {
@@ -471,7 +471,7 @@ onDestroy(() => {
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .slider {

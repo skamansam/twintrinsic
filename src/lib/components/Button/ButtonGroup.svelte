@@ -68,7 +68,7 @@ setContext("buttonGroup", {
   {@render children?.()}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .button-group {

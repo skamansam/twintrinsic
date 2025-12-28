@@ -99,7 +99,7 @@ const elementType = href ? "a" : "div"
   {/if}
 </svelte:element>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .card {

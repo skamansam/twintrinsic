@@ -3,7 +3,7 @@
 Breadcrumb documentation page
 -->
 
-<style>
+<style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">

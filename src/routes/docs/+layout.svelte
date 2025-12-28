@@ -157,7 +157,7 @@ const themeColors = [
     <slot />
   </App>
   
-  <style>
+  <style lang="postcss">
     @reference '$lib/twintrinsic.css';
     .docs-nav {
       @apply flex flex-col gap-2 p-4;

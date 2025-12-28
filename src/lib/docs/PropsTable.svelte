@@ -58,7 +58,7 @@ const {
   </table>
 </div>
 
-<style>
+<style lang="postcss">
   @reference '../twintrinsic.css';
 
   .props-table {

@@ -62,7 +62,7 @@ const alignClasses = $derived(
   {@render children?.()}
 </td>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .table-cell {

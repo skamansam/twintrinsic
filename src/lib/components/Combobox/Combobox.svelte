@@ -124,7 +124,7 @@ const selectedLabel = $derived.by(() => {
 })
 </script>
 
-<style>
+<style lang="postcss">
   @reference '$lib/twintrinsic.css';
 
   .combobox-wrapper {

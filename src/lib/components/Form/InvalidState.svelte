@@ -64,7 +64,7 @@ const {
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .invalid-state {

@@ -72,7 +72,7 @@ import { PropsTable } from "$lib/docs/index.js"
     Count: {count}
   </button>
 
-  <style>
+  <style lang="postcss">
     button {
       @apply px-4 py-2 bg-primary text-white rounded;
     }
@@ -188,6 +188,6 @@ import { PropsTable } from "$lib/docs/index.js"
   <li>Responsive design</li>
 </ul>
 
-<style>
+<style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>

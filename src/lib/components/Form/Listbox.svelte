@@ -427,7 +427,7 @@ const filteredOptions = $derived(filterOptions())
   />
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .listbox-container {

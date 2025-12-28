@@ -213,7 +213,7 @@ const iconSize = $derived(
   {/if}
 </svelte:element>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .button {

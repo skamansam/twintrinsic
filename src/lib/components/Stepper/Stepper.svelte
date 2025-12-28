@@ -90,7 +90,7 @@ $effect(() => {
   {@render children?.()}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .stepper {

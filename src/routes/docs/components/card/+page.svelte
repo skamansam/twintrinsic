@@ -3,7 +3,7 @@
 Documentation page for the Card component
 -->
 
-<style>
+<style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">

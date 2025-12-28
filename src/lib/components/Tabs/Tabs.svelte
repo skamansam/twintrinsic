@@ -60,6 +60,11 @@ let tabsCount = $state(0)
 let tabsRefs = $state([])
 let panelsRefs = $state([])
 
+// Sync selectedIndex when defaultIndex changes
+$effect(() => {
+  selectedIndex = defaultIndex
+})
+
 /**
  * Selects a tab by index
  * @param {number} index - Tab index to select
@@ -187,7 +192,7 @@ const sizeClasses = $derived(
   {@render children?.()}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .tabs {

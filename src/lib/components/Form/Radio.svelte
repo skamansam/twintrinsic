@@ -148,7 +148,7 @@ const labelSizeClasses = $derived(
   {/if}
 </label>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .radio-wrapper {

@@ -258,7 +258,7 @@ import { PropsTable, EventsTable } from "$lib/docs/index.js"
   <li><code>End</code> - Set to maximum value</li>
 </ul>
 
-<style>
+<style lang="postcss">
   @reference '$lib/twintrinsic.css';
   .example {
     @apply my-4 p-4 border border-border rounded-md;

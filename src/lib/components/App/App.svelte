@@ -1,13 +1,18 @@
 <script>
-import { onDestroy, setContext } from "svelte"
-export let darkMode = false
+import { setContext } from "svelte"
 
-setContext("appDarkMode", {
-  getDarkMode: () => darkMode,
+const {
+  darkMode = false,
+  appName = "Twintrinsic App",
+  leftPanelWidth = "300px",
+  rightPanelWidth = "300px",
+} = $props()
+
+$effect(() => {
+  setContext("appDarkMode", {
+    getDarkMode: () => darkMode,
+  })
 })
-export let appName = "Twintrinsic App"
-export let leftPanelWidth = "300px"
-export let rightPanelWidth = "300px"
 </script>
 
 <svelte:head>
@@ -52,8 +57,8 @@ export let rightPanelWidth = "300px"
   {/if}
 </div>
 
-<style>
-  @reference '$lib/twintrinsic.css';
+<style lang="postcss">
+  @reference '../../twintrinsic.css';
   
   .appLeftPanel {
     width: var(--left-panel-width);

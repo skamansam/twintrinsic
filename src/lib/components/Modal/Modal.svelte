@@ -65,16 +65,14 @@ let isOpen = $state(open)
 let modalElement = $state()
 let previouslyFocusedElement = $state()
 
-// Track when open prop changes
+// Sync open state when prop changes
 $effect(() => {
-  if (open !== isOpen) {
-    isOpen = open
+  isOpen = open
 
-    if (isOpen) {
-      openModal()
-    } else {
-      closeModal()
-    }
+  if (isOpen) {
+    openModal()
+  } else {
+    closeModal()
   }
 })
 
@@ -284,7 +282,7 @@ const sizeClasses = $derived(
   </div>
 {/if}
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   /* Add global style to prevent body scrolling when modal is open */

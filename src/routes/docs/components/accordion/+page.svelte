@@ -3,7 +3,7 @@
 Documentation page for the Accordion component
 -->
 
-<style>
+<style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">

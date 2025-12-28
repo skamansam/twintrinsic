@@ -116,7 +116,7 @@ function handleChange(event) {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
 
   .checkbox-container {

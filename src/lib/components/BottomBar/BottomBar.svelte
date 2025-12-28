@@ -44,9 +44,10 @@ const {
   ontoggle,
 } = $props() satisfies BottomBarProps
 
-let isExpanded = $state(true)
+let isExpanded = $state(false)
+let bottomBarElement = $state()
 
-// Update expanded state when prop changes
+// Initialize and sync expanded state when prop changes
 $effect(() => {
   isExpanded = expanded
 })
@@ -102,7 +103,7 @@ function handleKeydown(event: KeyboardEvent) {
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   .bottombar-container {
     @apply relative w-full;

@@ -16,8 +16,8 @@ Usage:
 ```
 -->
 <script>
-import { onMount, onDestroy } from "svelte"
 import Prism from "prismjs"
+import { onDestroy, onMount } from "svelte"
 import "prismjs/components/prism-javascript"
 import "prismjs/components/prism-typescript"
 import "prismjs/components/prism-jsx"
@@ -40,8 +40,8 @@ const {
 
 let code = $state("")
 let copied = $state(false)
-let copyTimeout
-let codeElement
+let copyTimeout = $state()
+let codeElement = $state()
 
 // Get code from slot content
 onMount(() => {
@@ -189,7 +189,7 @@ async function copyCode() {
   </pre>
 </div>
 
-<style>
+<style lang="postcss">
   @reference '../../twintrinsic.css';
 
   .code-block {

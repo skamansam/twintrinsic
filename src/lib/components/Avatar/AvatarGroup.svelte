@@ -50,9 +50,11 @@ const {
 } = $props()
 
 // Provide context for child avatars
-setContext("avatarGroup", {
-  size,
-  bordered,
+$effect(() => {
+  setContext("avatarGroup", {
+    size,
+    bordered,
+  })
 })
 
 // Determine spacing class based on the spacing prop
@@ -86,7 +88,7 @@ const overflowCount = $derived(showOverflow ? total - max : 0)
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .avatar-group {

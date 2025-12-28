@@ -224,7 +224,7 @@ import { PropsTable, EventsTable } from "$lib/docs/index.js"
   <li><code>Escape</code> - Close color picker</li>
 </ul>
 
-<style>
+<style lang="postcss">
   @reference '$lib/twintrinsic.css';
   .example {
     @apply my-4 p-4 border border-border rounded-md;

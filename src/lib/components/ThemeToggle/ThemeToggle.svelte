@@ -20,7 +20,7 @@ Usage:
   </span>
 </label>
 
-<style>
+<style lang="postcss">
   @reference '../../twintrinsic.css';
 
   .tw-theme-toggle {

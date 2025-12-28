@@ -125,7 +125,7 @@ $effect(() => {
   </div>
 </fieldset>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .radio-group {

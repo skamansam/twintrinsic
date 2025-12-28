@@ -118,7 +118,7 @@ const alignClasses = $derived(
   </div>
 </th>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .table-header {

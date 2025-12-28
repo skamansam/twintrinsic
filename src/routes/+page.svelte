@@ -51,7 +51,7 @@ const components = [
 ]
 </script>
 
-<style>
+<style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
 

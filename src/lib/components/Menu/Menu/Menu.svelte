@@ -43,7 +43,7 @@ function toggleMenu() {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../../twintrinsic.css";
   
   .menu {

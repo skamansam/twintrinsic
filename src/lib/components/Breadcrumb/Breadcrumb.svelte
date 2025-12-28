@@ -64,7 +64,7 @@ $effect(() => {
   </ol>
 </nav>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .breadcrumb {

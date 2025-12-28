@@ -119,7 +119,7 @@ const panelId = $derived(`panel-${tabId}`)
   {/if}
 </button>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .tab {

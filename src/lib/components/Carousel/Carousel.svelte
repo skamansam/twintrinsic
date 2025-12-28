@@ -32,7 +32,9 @@ Usage:
 ```
 -->
 <script>
-import { onMount, onDestroy, setContext } from "svelte"
+import { onDestroy, onMount, setContext, createEventDispatcher } from "svelte"
+
+const dispatch = createEventDispatcher()
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -95,13 +97,13 @@ let totalSlides = $state(0)
 let isPlaying = $state(false)
 let isHovering = $state(false)
 let isDragging = $state(false)
-let startX = 0
-let currentX = 0
-let carouselElement
-let itemsElement
-let autoplayInterval
-let slideWidth = 0
-let touchStartTime = 0
+let startX = $state(0)
+let currentX = $state(0)
+let carouselElement = $state()
+let itemsElement = $state()
+let autoplayInterval = $state()
+let slideWidth = $state(0)
+let touchStartTime = $state(0)
 
 // Update current index when activeIndex prop changes
 $effect(() => {
@@ -114,14 +116,16 @@ $effect(() => {
 })
 
 // Provide context for child components
-setContext("carousel", {
-  registerItem: () => {
-    totalSlides++
-    return totalSlides - 1
-  },
-  currentIndex,
-  transition,
-  transitionDuration,
+$effect(() => {
+  setContext("carousel", {
+    registerItem: () => {
+      totalSlides++
+      return totalSlides - 1
+    },
+    currentIndex,
+    transition,
+    transitionDuration,
+  })
 })
 
 // Set up autoplay
@@ -384,7 +388,7 @@ onDestroy(() => {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .carousel {

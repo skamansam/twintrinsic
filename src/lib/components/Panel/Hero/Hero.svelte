@@ -13,7 +13,7 @@ export { propClasses as class }
 	<slot></slot>
 </Container>
 
-<style>
+<style lang="postcss">
 	@reference "../../../twintrinsic.css";
 	:global(.twin-hero) {
 		@apply p-4;

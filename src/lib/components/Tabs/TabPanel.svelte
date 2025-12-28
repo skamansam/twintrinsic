@@ -105,7 +105,7 @@ const tabId = $derived(`tab-${panelId.replace("panel-", "")}`)
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .tab-panel {

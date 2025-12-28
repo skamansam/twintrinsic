@@ -488,7 +488,7 @@ const fontSizeClasses = $derived(
   />
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .knob {

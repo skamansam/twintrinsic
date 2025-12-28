@@ -185,7 +185,7 @@ onMount(() => {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .float-label-wrapper {

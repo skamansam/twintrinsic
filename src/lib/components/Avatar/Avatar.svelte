@@ -222,7 +222,7 @@ function generateRandomColor() {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .avatar {

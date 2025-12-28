@@ -319,7 +319,7 @@ const displayValue = $derived(() => {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference '../../twintrinsic.css';
 
   .select {

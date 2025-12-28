@@ -61,13 +61,18 @@ const {
 } = $props()
 
 // Component state
-let containerElement
+let containerElement = $state()
 let items = $state([])
-let columnCount = $state(typeof columns === "number" ? columns : 3)
+let columnCount = $state(3)
 let columnHeights = $state([])
-let resizeObserver
-let mutationObserver
-let itemObservers = []
+let resizeObserver = $state()
+let mutationObserver = $state()
+let itemObservers = $state([])
+
+// Initialize column count based on columns prop
+$effect(() => {
+  columnCount = typeof columns === "number" ? columns : 3
+})
 
 /**
  * Initializes the masonry layout
@@ -275,7 +280,7 @@ onMount(() => {
   {@render children?.()}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .masonry {

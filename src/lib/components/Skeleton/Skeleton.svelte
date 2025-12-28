@@ -141,7 +141,7 @@ const isMultiLine = $derived(variant === "text" && lines > 1)
   </div>
 {/if}
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .skeleton {

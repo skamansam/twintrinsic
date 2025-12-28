@@ -73,6 +73,11 @@ let inputValue = $state(value)
 let focused = $state(false)
 let touched = $state(false)
 
+// Sync input value when prop changes
+$effect(() => {
+  inputValue = value
+})
+
 // Handle input focus
 function handleFocus() {
   focused = true
@@ -231,7 +236,7 @@ const inputClasses = $derived(`
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
 
   /* Container */

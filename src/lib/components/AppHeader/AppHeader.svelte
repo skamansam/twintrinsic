@@ -61,6 +61,7 @@ let mobileMenuOpen = $state(false)
 let searchQuery = $state("")
 let notificationsOpen = $state(false)
 let userMenuOpen = $state(false)
+let headerElement = $state()
 
 // Handle search input
 function handleSearch(event: Event) {
@@ -285,7 +286,7 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
   </div>
 </header>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   /* Base header styles */
   .app-header {

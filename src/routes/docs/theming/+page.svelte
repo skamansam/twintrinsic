@@ -442,7 +442,7 @@ module.exports = {
   <slot />
 </button>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   /* You can also use CSS variables directly in your styles */

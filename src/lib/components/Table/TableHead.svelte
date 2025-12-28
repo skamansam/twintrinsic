@@ -31,7 +31,7 @@ const {
   {@render children?.()}
 </thead>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .table-head {

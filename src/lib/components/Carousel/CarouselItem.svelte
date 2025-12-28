@@ -117,7 +117,7 @@ const transform = $derived(() => {
   {@render children?.()}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .carousel-item {

@@ -404,7 +404,7 @@ function handleBlur(event) {
   />
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .list-input {

@@ -120,21 +120,21 @@ const {
 const dispatch = createEventDispatcher()
 
 // Component state
-let currentPage = $state(page)
-let currentPageSize = $state(pageSize)
-let currentSortField = $state(sortField)
-let currentSortOrder = $state(sortOrder)
-let currentFilters = $state(filters || {})
-let selectedRows = $state(Array.isArray(selected) ? [...selected] : [])
+let currentPage = $state(1)
+let currentPageSize = $state(10)
+let currentSortField = $state("")
+let currentSortOrder = $state("asc")
+let currentFilters = $state({})
+let selectedRows = $state([])
 let allSelected = $state(false)
-let tableElement
+let tableElement = $state()
 
 // Update state when props change
 $effect(() => {
   currentPage = page
   currentPageSize = pageSize
-  currentSortField = sortField
-  currentSortOrder = sortOrder
+  currentSortField = sortField || ""
+  currentSortOrder = sortOrder || "asc"
   currentFilters = filters || {}
   selectedRows = Array.isArray(selected) ? [...selected] : []
 })
@@ -637,7 +637,7 @@ function formatCell(value, column, row) {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .data-table-wrapper {

@@ -50,7 +50,7 @@ const fullWidth = tabsContext?.fullWidth || false
   {@render children?.()}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .tab-list {

@@ -108,7 +108,7 @@ function handleClick(event) {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
 
   .card {

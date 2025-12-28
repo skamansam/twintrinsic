@@ -134,7 +134,7 @@ const isCurrent = $derived(current || isLast)
   {/if}
 </li>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .breadcrumb-item {

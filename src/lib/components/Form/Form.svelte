@@ -195,22 +195,24 @@ function resetForm() {
 }
 
 // Provide form context to child components
-setContext("form", {
-  registerField: (name, initialValue) => {
-    if (initialValue !== undefined && formData[name] === undefined) {
-      formData[name] = initialValue
-    }
+$effect(() => {
+  setContext("form", {
+    registerField: (name, initialValue) => {
+      if (initialValue !== undefined && formData[name] === undefined) {
+        formData[name] = initialValue
+      }
 
-    return {
-      getValue: () => formData[name],
-      setValue: (value) => updateField(name, value),
-      getError: () => errors[name],
-      isTouched: () => !!touched[name],
-      isDisabled: () => disabled || loading || isSubmitting,
-    }
-  },
-  layout,
-  disabled: () => disabled || loading || isSubmitting,
+      return {
+        getValue: () => formData[name],
+        setValue: (value) => updateField(name, value),
+        getError: () => errors[name],
+        isTouched: () => !!touched[name],
+        isDisabled: () => disabled || loading || isSubmitting,
+      }
+    },
+    layout,
+    disabled: () => disabled || loading || isSubmitting,
+  })
 })
 
 // Expose form API to parent components
@@ -249,7 +251,7 @@ dispatch("ready", { form: formApi })
   {@render children?.()}
 </form>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .form {

@@ -523,7 +523,7 @@ function toggleDropdown() {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .combobox {

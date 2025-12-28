@@ -61,7 +61,7 @@ const element = $derived(as ?? (hasContent ? "div" : "hr"))
   {/if}
 </svelte:element>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   /* Base separator styles */
   .separator {

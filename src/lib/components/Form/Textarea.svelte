@@ -184,7 +184,7 @@ $effect(() => {
   ></textarea>
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .textarea-wrapper {

@@ -189,7 +189,7 @@ function notify() {
   {/each}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .toast-container {

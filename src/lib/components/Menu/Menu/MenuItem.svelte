@@ -28,7 +28,12 @@ const {
 } = $props()
 
 // Use $state for values that need to be modified
-let isOpen = $state(initialOpen)
+let isOpen = $state(false)
+
+// Sync isOpen when initialOpen changes
+$effect(() => {
+  isOpen = initialOpen
+})
 
 const toggleMenu = () => {
   isOpen = !isOpen
@@ -57,7 +62,7 @@ const toggleMenu = () => {
   {/if}
 </svelte:element>
 
-<style>
+<style lang="postcss">
   @reference "../../../twintrinsic.css";
   
   .menu-item {

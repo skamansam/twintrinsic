@@ -56,12 +56,12 @@ const {
 const formContext = getContext("form")
 
 // Use layout from form context if not specified
-const fieldLayout = layout || (formContext ? formContext.layout : "vertical")
+const fieldLayout = $derived(layout || (formContext ? formContext.layout : "vertical"))
 
 // Generate unique ID for the field
-const fieldId = `${id}-field`
-const errorId = `${id}-error`
-const helpId = `${id}-help`
+const fieldId = $derived(`${id}-field`)
+const errorId = $derived(`${id}-error`)
+const helpId = $derived(`${id}-help`)
 
 // Track field state
 let fieldError = $state("")
@@ -163,7 +163,7 @@ const describedBy = $derived(
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
   
   .form-field {

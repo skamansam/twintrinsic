@@ -213,7 +213,7 @@ import { PropsTable, EventsTable } from "$lib/docs/index.js"
   <li><code>Arrow Down/Right</code> - Move to next radio button in the group</li>
 </ul>
 
-<style>
+<style lang="postcss">
   @reference '$lib/twintrinsic.css';
   .example {
     @apply my-4 p-4 border border-border rounded-md;

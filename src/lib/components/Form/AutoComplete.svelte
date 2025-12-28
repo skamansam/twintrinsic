@@ -303,7 +303,7 @@ function highlightText(text, query) {
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   @reference "../../twintrinsic.css";
 
   .autocomplete {

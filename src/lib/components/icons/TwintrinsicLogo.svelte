@@ -39,7 +39,7 @@ const { class: className = "", size = "3rem" } = $props()
     y="145.79205">Tw</tspan></text>
 </svg>
 
-<style>
+<style lang="postcss">
   @reference '../../twintrinsic.css';
   svg {
     @apply transition-colors duration-300;

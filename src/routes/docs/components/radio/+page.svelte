@@ -284,7 +284,7 @@ let fruit = $state("apple")
 </Form>`}
 </CodeBlock>
 
-<style>
+<style lang="postcss">
   @reference '$lib/twintrinsic.css';
   .example {
     @apply my-4 p-4 border border-border rounded-md;
