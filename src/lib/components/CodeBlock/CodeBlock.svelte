@@ -119,7 +119,7 @@ function detectLanguage(content) {
   }
 
   // Svelte
-  if (trimmed.includes("<script>") || trimmed.includes("$:")) {
+  if (trimmed.includes("<script>") || trimmed.includes("$:") || trimmed.includes("$derived")) {
     return "svelte"
   }
 
