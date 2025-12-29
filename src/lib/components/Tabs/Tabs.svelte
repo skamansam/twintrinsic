@@ -19,7 +19,7 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher, setContext } from "svelte"
+import { setContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -49,10 +49,11 @@ const {
   /** @type {string} - ARIA label for the tablist */
   ariaLabel = "Tabs",
 
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
+
   children,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Tabs state
 let selectedIndex = $state(defaultIndex)
@@ -73,7 +74,7 @@ function selectTab(index) {
   if (index < 0 || index >= tabsCount || disabled) return
 
   selectedIndex = index
-  dispatch("change", { index, tab: tabsRefs[index], panel: panelsRefs[index] })
+  onchange?.(new CustomEvent("change", { detail: { index, tab: tabsRefs[index], panel: panelsRefs[index] } }))
 }
 
 /**

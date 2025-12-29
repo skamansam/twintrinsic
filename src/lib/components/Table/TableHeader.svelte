@@ -15,8 +15,6 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher } from "svelte"
-
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",
@@ -39,12 +37,13 @@ const {
   /** @type {boolean} - Whether to truncate overflowing text */
   truncate = false,
 
+  /** @type {(event: CustomEvent) => void} - Sort event handler */
+  onsort,
+
   children,
   /** @type {object} - Additional props to pass to the input element */
   ...restProps
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 /**
  * Handles sort click
@@ -66,7 +65,7 @@ function handleSort() {
       nextDirection = "asc"
   }
 
-  dispatch("sort", { direction: nextDirection })
+  onsort?.(new CustomEvent("sort", { detail: { direction: nextDirection } }))
 }
 
 // Determine alignment classes

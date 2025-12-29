@@ -23,7 +23,7 @@ Usage:
 ```
 -->
 <script>
-import { getContext, createEventDispatcher } from "svelte"
+import { getContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -67,9 +67,18 @@ const {
 
   /** @type {string} - ARIA label for the input */
   ariaLabel,
-} = $props()
 
-const dispatch = createEventDispatcher()
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
+  /** @type {(event: CustomEvent) => void} - Add event handler */
+  onadd,
+  /** @type {(event: CustomEvent) => void} - Remove event handler */
+  onremove,
+  /** @type {(event: CustomEvent) => void} - Focus event handler */
+  onfocus,
+  /** @type {(event: CustomEvent) => void} - Blur event handler */
+  onblur,
+} = $props()
 
 // Get form context if available
 const formContext = getContext("form")
@@ -161,8 +170,8 @@ function addItem(value) {
     fieldApi.setValue(itemValues)
   }
 
-  dispatch("change", { values: itemValues })
-  dispatch("add", { value: trimmedValue })
+  onchange?.(new CustomEvent("change", { detail: { values: itemValues } }))
+  onadd?.(new CustomEvent("add", { detail: { value: trimmedValue } }))
 }
 
 /**
@@ -185,8 +194,8 @@ function removeItem(index) {
     focusedIndex = itemValues.length - 1
   }
 
-  dispatch("change", { values: itemValues })
-  dispatch("remove", { value: removedValue, index })
+  onchange?.(new CustomEvent("change", { detail: { values: itemValues } }))
+  onremove?.(new CustomEvent("remove", { detail: { value: removedValue, index } }))
 }
 
 /**

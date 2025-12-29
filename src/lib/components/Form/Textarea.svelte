@@ -17,7 +17,7 @@ Usage:
 ```
 -->
 <script>
-import { getContext, createEventDispatcher } from "svelte"
+import { getContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -61,11 +61,17 @@ const {
 
   /** @type {string} - ARIA label for accessibility */
   ariaLabel,
+  /** @type {(event: CustomEvent) => void} - Input event handler */
+  oninput,
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
+  /** @type {(event: Event) => void} - Focus event handler */
+  onfocus,
+  /** @type {(event: Event) => void} - Blur event handler */
+  onblur,
   /** @type {object} - Additional props to pass to the input element */
   ...restProps
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Get form context if available
 const formContext = getContext("form")
@@ -119,24 +125,24 @@ function handleInput(event) {
     resizeTextarea()
   }
 
-  dispatch("input", { value: newValue })
-  dispatch("change", { value: newValue })
+  oninput?.(new CustomEvent("input", { detail: { value: newValue } }))
+  onchange?.(new CustomEvent("change", { detail: { value: newValue } }))
 }
 
 /**
  * Handles focus events
  */
-function handleFocus() {
+function handleFocus(event) {
   isFocused = true
-  dispatch("focus")
+  onfocus?.(event)
 }
 
 /**
  * Handles blur events
  */
-function handleBlur() {
+function handleBlur(event) {
   isFocused = false
-  dispatch("blur")
+  onblur?.(event)
 }
 
 /**

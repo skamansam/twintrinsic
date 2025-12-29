@@ -15,8 +15,6 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher } from "svelte"
-
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",
@@ -57,10 +55,11 @@ const {
   /** @type {string} - Custom dismiss icon (HTML or SVG string) */
   dismissIcon,
 
+  /** @type {(event: CustomEvent) => void} - Dismiss event handler */
+  ondismiss,
+
   children,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Determine variant classes
 const variantClasses = $derived(
@@ -115,7 +114,7 @@ const iconSizeClasses = $derived(
  */
 function handleDismiss(event) {
   event.stopPropagation()
-  dispatch("dismiss")
+  ondismiss?.(new CustomEvent("dismiss"))
 }
 
 /**
@@ -124,7 +123,7 @@ function handleDismiss(event) {
  */
 function handleClick(event) {
   if (clickable && !href) {
-    dispatch("click", event)
+    // Click events are handled by native browser behavior for links
   }
 }
 </script>

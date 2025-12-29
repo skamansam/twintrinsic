@@ -28,7 +28,7 @@ Usage:
 ```
 -->
 <script>
-import { setContext, createEventDispatcher } from "svelte"
+import { setContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -73,10 +73,13 @@ const {
   /** @type {string} - ARIA label for the chip group */
   ariaLabel = "Chip group",
 
+  /** @type {(event: CustomEvent) => void} - Select event handler */
+  onselect,
+  /** @type {(event: CustomEvent) => void} - Remove event handler */
+  onremove,
+
   children,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Component state
 let selectedItems = $state(Array.isArray(selected) ? [...selected] : [])
@@ -111,7 +114,7 @@ $effect(() => {
             selectedItems = [item]
           }
         }
-        dispatch("select", { selected: selectedItems })
+        onselect?.(new CustomEvent("select", { detail: { selected: selectedItems } }))
       }
     },
   })
@@ -125,7 +128,7 @@ function handleRemove(index) {
   if (items.length > 0) {
     const newItems = [...items]
     const removedItem = newItems.splice(index, 1)[0]
-    dispatch("remove", { item: removedItem, index })
+    onremove?.(new CustomEvent("remove", { detail: { item: removedItem, index } }))
   }
 }
 </script>

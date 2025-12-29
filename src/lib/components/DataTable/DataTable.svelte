@@ -29,7 +29,7 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher, setContext } from "svelte"
+import { setContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -115,9 +115,16 @@ const {
 
   /** @type {boolean} - Whether to enable compact mode */
   compact = false,
-} = $props()
 
-const dispatch = createEventDispatcher()
+  /** @type {(event: CustomEvent) => void} - Sort event handler */
+  onsort,
+  /** @type {(event: CustomEvent) => void} - Filter event handler */
+  onfilter,
+  /** @type {(event: CustomEvent) => void} - Page event handler */
+  onpage,
+  /** @type {(event: CustomEvent) => void} - Select event handler */
+  onselect,
+} = $props()
 
 // Component state
 let currentPage = $state(1)
@@ -235,7 +242,7 @@ function handleSort(field) {
     currentSortOrder = "asc"
   }
 
-  dispatch("sort", { field: currentSortField, order: currentSortOrder })
+  onsort?.(new CustomEvent("sort", { detail: { field: currentSortField, order: currentSortOrder } }))
 }
 
 /**
@@ -257,7 +264,7 @@ function handleFilter(field, value) {
   // Reset to first page when filtering
   currentPage = 1
 
-  dispatch("filter", { filters: currentFilters })
+  onfilter?.(new CustomEvent("filter", { detail: { filters: currentFilters } }))
 }
 
 /**
@@ -269,7 +276,7 @@ function handlePageChange(newPage) {
 
   if (newPage >= 1 && newPage <= totalPages) {
     currentPage = newPage
-    dispatch("page", { page: currentPage, pageSize: currentPageSize })
+    onpage?.(new CustomEvent("page", { detail: { page: currentPage, pageSize: currentPageSize } }))
   }
 }
 
@@ -289,7 +296,7 @@ function handlePageSizeChange(event) {
     currentPage = newTotalPages
   }
 
-  dispatch("page", { page: currentPage, pageSize: currentPageSize })
+  onpage?.(new CustomEvent("page", { detail: { page: currentPage, pageSize: currentPageSize } }))
 }
 
 /**
@@ -317,7 +324,7 @@ function toggleRowSelection(key) {
     }
   }
 
-  dispatch("select", { selected: selectedRows })
+  onselect?.(new CustomEvent("select", { detail: { selected: selectedRows } }))
 }
 
 /**
@@ -346,7 +353,7 @@ function toggleSelectAll() {
     allSelected = true
   }
 
-  dispatch("select", { selected: selectedRows })
+  onselect?.(new CustomEvent("select", { detail: { selected: selectedRows } }))
 }
 
 /**

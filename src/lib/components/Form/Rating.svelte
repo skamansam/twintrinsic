@@ -25,8 +25,6 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher } from "svelte"
-
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",
@@ -69,9 +67,10 @@ const {
 
   /** @type {string} - ARIA label for accessibility */
   ariaLabel = "Rating",
-} = $props()
 
-const dispatch = createEventDispatcher()
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
+} = $props()
 
 // Component state
 let currentValue = $state(value)
@@ -184,7 +183,7 @@ function handleEnd() {
   // Update value and dispatch change event
   if (hoverValue >= 0) {
     currentValue = hoverValue
-    dispatch("change", { value: currentValue })
+    onchange?.(new CustomEvent("change", { detail: { value: currentValue } }))
   }
 
   isDragging = false
@@ -227,7 +226,7 @@ function handleItemClick(itemValue) {
   }
 
   hoverValue = currentValue
-  dispatch("change", { value: currentValue })
+  onchange?.(new CustomEvent("change", { detail: { value: currentValue } }))
 }
 
 /**

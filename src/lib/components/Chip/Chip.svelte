@@ -30,8 +30,6 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher } from "svelte"
-
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",
@@ -72,10 +70,13 @@ const {
   /** @type {string} - Custom remove icon (HTML or SVG string) */
   removeIcon,
 
+  /** @type {(event: CustomEvent) => void} - Remove event handler */
+  onremove,
+  /** @type {(event: CustomEvent) => void} - Click event handler */
+  onclick,
+
   children,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Determine variant classes
 const variantClasses = $derived(
@@ -150,7 +151,7 @@ function handleClick(event) {
   }
 
   if (clickable) {
-    dispatch("click", event)
+    onclick?.(new CustomEvent("click", { detail: event }))
   }
 }
 
@@ -165,7 +166,7 @@ function handleRemove(event) {
   }
 
   event.stopPropagation()
-  dispatch("remove")
+  onremove?.(new CustomEvent("remove"))
 }
 
 /**
@@ -177,7 +178,7 @@ function handleKeydown(event) {
 
   if ((clickable && event.key === "Enter") || event.key === " ") {
     event.preventDefault()
-    dispatch("click", event)
+    onclick?.(new CustomEvent("click", { detail: event }))
   }
 }
 </script>

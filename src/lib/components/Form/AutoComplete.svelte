@@ -22,12 +22,9 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher } from "svelte"
 import { slide } from "svelte/transition"
 import { clickOutside } from "$lib/actions"
 import Input from "./Input.svelte"
-
-const dispatch = createEventDispatcher()
 
 const {
   /** @type {string} - Input label */
@@ -68,6 +65,10 @@ const {
   placeholder = "",
   /** @type {boolean} - Whether the input is disabled */
   disabled = false,
+  /** @type {(event: CustomEvent) => void} - Select event handler */
+  onselect,
+  /** @type {(event: CustomEvent) => void} - Remove event handler */
+  onremove,
 } = $props()
 
 let inputValue = $state("")
@@ -141,14 +142,14 @@ function selectItem(item) {
 
     if (!exists) {
       selectedItems = [...selectedItems, item]
-      dispatch("select", { items: selectedItems })
+      onselect?.(new CustomEvent("select", { detail: { items: selectedItems } }))
     }
 
     inputValue = ""
   } else {
     selectedItems = item
     inputValue = getItemLabel(item)
-    dispatch("select", { item })
+    onselect?.(new CustomEvent("select", { detail: { item } }))
   }
 
   showSuggestions = false
@@ -160,8 +161,8 @@ function removeItem(item) {
 
   const value = getItemValue(item)
   selectedItems = selectedItems.filter((i) => getItemValue(i) !== value)
-  dispatch("remove", { item })
-  dispatch("select", { items: selectedItems })
+  onremove?.(new CustomEvent("remove", { detail: { item } }))
+  onselect?.(new CustomEvent("select", { detail: { items: selectedItems } }))
 }
 
 // Handle keyboard navigation

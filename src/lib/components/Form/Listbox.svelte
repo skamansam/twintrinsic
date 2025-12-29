@@ -29,7 +29,7 @@ Usage:
 ```
 -->
 <script>
-import { getContext, createEventDispatcher, onMount } from "svelte"
+import { getContext, onMount } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -79,9 +79,12 @@ const {
 
   /** @type {string} - ARIA label for accessibility */
   ariaLabel,
-} = $props()
 
-const dispatch = createEventDispatcher()
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
+  /** @type {(event: CustomEvent) => void} - Filter event handler */
+  onfilter,
+} = $props()
 
 // Get form context if available
 const formContext = getContext("form")
@@ -225,7 +228,7 @@ function selectOption(option) {
     fieldApi.setValue(selectedValues)
   }
 
-  dispatch("change", { value: selectedValues })
+  onchange?.(new CustomEvent("change", { detail: { value: selectedValues } }))
 }
 
 /**
@@ -324,7 +327,7 @@ function handleFilterInput(event) {
   filterValue = event.target.value
   highlightedIndex = 0
 
-  dispatch("filter", { filter: filterValue })
+  onfilter?.(new CustomEvent("filter", { detail: { filter: filterValue } }))
 }
 
 // Focus the listbox on mount

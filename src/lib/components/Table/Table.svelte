@@ -25,7 +25,7 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher, setContext } from "svelte"
+import { setContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -60,8 +60,6 @@ const {
 
   children,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Provide context for child components
 $effect(() => {

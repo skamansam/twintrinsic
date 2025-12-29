@@ -22,7 +22,7 @@ Usage:
 ```
 -->
 <script>
-import { getContext, createEventDispatcher } from "svelte"
+import { getContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -54,10 +54,10 @@ const {
 
   /** @type {string} - ARIA label for accessibility */
   ariaLabel,
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
   ...restProps
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Get form context if available
 const formContext = getContext("form")
@@ -99,7 +99,7 @@ function handleChange(event) {
     fieldApi.setValue(value)
   }
 
-  dispatch("change", { checked: isChecked, value })
+  onchange?.(new CustomEvent("change", { detail: { checked: isChecked, value } }))
 }
 
 // Determine radio size classes

@@ -32,9 +32,7 @@ Usage:
 ```
 -->
 <script>
-import { onDestroy, onMount, setContext, createEventDispatcher } from "svelte"
-
-const dispatch = createEventDispatcher()
+import { onDestroy, onMount, setContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -87,6 +85,9 @@ const {
 
   /** @type {string} - Custom next arrow icon */
   nextIcon,
+
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
 
   items,
 } = $props()
@@ -182,7 +183,7 @@ function goToSlide(index) {
  * Dispatches change event
  */
 function dispatchChange() {
-  dispatch("change", { index: currentIndex })
+  onchange?.(new CustomEvent("change", { detail: { index: currentIndex } }))
 }
 
 /**

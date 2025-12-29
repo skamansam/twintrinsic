@@ -25,8 +25,6 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher } from "svelte"
-
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",
@@ -76,11 +74,18 @@ const {
   /** @type {string} - ARIA label for the file input */
   ariaLabel = "File upload",
 
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
+  /** @type {(event: CustomEvent) => void} - Error event handler */
+  onerror,
+  /** @type {(event: CustomEvent) => void} - Progress event handler */
+  onprogress,
+  /** @type {(event: CustomEvent) => void} - Success event handler */
+  onsuccess,
+
   dropzone,
   previews,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Component state
 let files = $state(Array.isArray(value) ? [...value] : [])
@@ -168,7 +173,7 @@ function validateFiles(newFiles) {
   // Dispatch errors if any
   if (newErrors.length > 0) {
     errors = [...errors, ...newErrors]
-    dispatch("error", { errors: newErrors })
+    onerror?.(new CustomEvent("error", { detail: { errors: newErrors } }))
   }
 
   return validFiles
@@ -205,7 +210,7 @@ function addFiles(newFiles) {
     files = updatedFiles
 
     // Dispatch change event
-    dispatch("change", { files: updatedFiles })
+    onchange?.(new CustomEvent("change", { detail: { files: updatedFiles } }))
 
     // Auto upload if enabled
     if (autoUpload && uploadUrl) {
@@ -225,10 +230,10 @@ function removeFile(index) {
   files = files.filter((_, i) => i !== index)
 
   // Dispatch change event
-  dispatch("change", { files })
+  onchange?.(new CustomEvent("change", { detail: { files } }))
 
   // Dispatch remove event
-  dispatch("remove", { file: removedFile, index })
+  onremove?.(new CustomEvent("remove", { detail: { file: removedFile, index } }))
 }
 
 /**
@@ -341,7 +346,7 @@ async function uploadFiles(filesToUpload) {
         uploadProgress = { ...uploadProgress }
 
         // Dispatch progress event
-        dispatch("progress", { progress, files: filesToUpload })
+        onprogress?.(new CustomEvent("progress", { detail: { progress, files: filesToUpload } }))
       }
     })
 
@@ -357,10 +362,12 @@ async function uploadFiles(filesToUpload) {
         uploadProgress = { ...uploadProgress }
 
         // Dispatch success event
-        dispatch("success", {
-          response: xhr.response,
-          files: filesToUpload,
-        })
+        onsuccess?.(new CustomEvent("success", {
+          detail: {
+            response: xhr.response,
+            files: filesToUpload,
+          }
+        }))
       } else {
         // Error
         const error = {
@@ -373,7 +380,7 @@ async function uploadFiles(filesToUpload) {
         errors = [...errors, error]
 
         // Dispatch error event
-        dispatch("error", { errors: [error] })
+        onerror?.(new CustomEvent("error", { detail: { errors: [error] } }))
       }
 
       uploading = false

@@ -20,11 +20,8 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher } from "svelte"
 import { slide } from "svelte/transition"
 import { clickOutside } from "$lib/actions/index.js"
-
-const dispatch = createEventDispatcher()
 
 const {
   /** @type {string} - Input label */
@@ -45,6 +42,8 @@ const {
   required = false,
   /** @type {string} - Additional CSS classes */
   class: className = "",
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
 } = $props()
 
 let showDropdown = $state(false)
@@ -96,9 +95,11 @@ function selectOption(option) {
   }
 
   selectedValues = newValues
-  dispatch("change", {
-    value: multiple ? newValues : newValues[0],
-  })
+  onchange?.(new CustomEvent("change", {
+    detail: {
+      value: multiple ? newValues : newValues[0],
+    }
+  }))
 }
 
 // Handle keyboard navigation

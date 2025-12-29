@@ -29,7 +29,7 @@ Usage:
 ```
 -->
 <script>
-import { getContext, createEventDispatcher } from "svelte"
+import { getContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -85,9 +85,16 @@ const {
 
   /** @type {string} - ARIA label for accessibility */
   ariaLabel,
-} = $props()
 
-const dispatch = createEventDispatcher()
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
+  /** @type {(event: CustomEvent) => void} - Input event handler */
+  oninput,
+  /** @type {(event: Event) => void} - Focus event handler */
+  onfocus,
+  /** @type {(event: Event) => void} - Blur event handler */
+  onblur,
+} = $props()
 
 // Get form context if available
 const formContext = getContext("form")
@@ -191,7 +198,7 @@ function increment() {
     fieldApi.setValue(newValue)
   }
 
-  dispatch("change", { value: newValue })
+  onchange?.(new CustomEvent("change", { detail: { value: newValue } }))
 }
 
 /**
@@ -211,7 +218,7 @@ function decrement() {
     fieldApi.setValue(newValue)
   }
 
-  dispatch("change", { value: newValue })
+  onchange?.(new CustomEvent("change", { detail: { value: newValue } }))
 }
 
 /**
@@ -232,14 +239,14 @@ function handleInput(event) {
       fieldApi.setValue(parsed)
     }
 
-    dispatch("input", { value: parsed })
+    oninput?.(new CustomEvent("input", { detail: { value: parsed } }))
   }
 }
 
 /**
  * Handles blur event
  */
-function handleBlur() {
+function handleBlur(event) {
   // Format and constrain the value on blur
   const parsed = parseValue(inputValue)
   const constrained = constrainValue(parsed)
@@ -253,16 +260,16 @@ function handleBlur() {
   }
 
   isFocused = false
-  dispatch("blur")
-  dispatch("change", { value: constrained })
+  onblur?.(event)
+  onchange?.(new CustomEvent("change", { detail: { value: constrained } }))
 }
 
 /**
  * Handles focus event
  */
-function handleFocus() {
+function handleFocus(event) {
   isFocused = true
-  dispatch("focus")
+  onfocus?.(event)
 }
 
 /**

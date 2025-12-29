@@ -59,13 +59,14 @@ const {
   /** @type {string} - ARIA label for the tree */
   ariaLabel = "Tree",
 
+  /** @type {(event: CustomEvent) => void} - Select event handler */
+  onselect,
+
   children,
 } = $props()
 
 // Component state
 let selectedNodes = $state(Array.isArray(selected) ? [...selected] : [])
-
-const dispatch = createEventDispatcher()
 
 // Provide context for child components
 $effect(() => {
@@ -93,7 +94,7 @@ $effect(() => {
           }
         }
 
-        dispatch("select", { selected: selectedNodes })
+        onselect?.(new CustomEvent("select", { detail: { selected: selectedNodes } }))
       }
     },
   })

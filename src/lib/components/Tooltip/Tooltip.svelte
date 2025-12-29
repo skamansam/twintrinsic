@@ -18,7 +18,7 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher, onMount } from "svelte"
+import { onMount } from "svelte"
 import { fade } from "svelte/transition"
 
 const {
@@ -52,11 +52,14 @@ const {
   /** @type {string} - ARIA description for accessibility */
   ariaDescription,
 
+  /** @type {(event: CustomEvent) => void} - Show event handler */
+  onshow,
+  /** @type {(event: CustomEvent) => void} - Hide event handler */
+  onhide,
+
   children,
   tooltipContent,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Tooltip state
 let isVisible = $state(false)
@@ -81,7 +84,7 @@ function showTooltip() {
     showTimeout = setTimeout(() => {
       isVisible = true
       updatePosition()
-      dispatch("show")
+      onshow?.(new CustomEvent("show"))
 
       // Auto-hide after duration if specified
       if (duration > 0) {
@@ -91,7 +94,7 @@ function showTooltip() {
   } else {
     isVisible = true
     updatePosition()
-    dispatch("show")
+    onshow?.(new CustomEvent("show"))
 
     // Auto-hide after duration if specified
     if (duration > 0) {
@@ -106,7 +109,7 @@ function showTooltip() {
 function hideTooltip() {
   clearTimeout(showTimeout)
   isVisible = false
-  dispatch("hide")
+  onhide?.(new CustomEvent("hide"))
 }
 
 /**

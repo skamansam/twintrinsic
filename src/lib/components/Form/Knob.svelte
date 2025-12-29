@@ -33,7 +33,7 @@ Usage:
 ```
 -->
 <script>
-import { getContext, createEventDispatcher, onMount } from "svelte"
+import { getContext, onMount } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -78,14 +78,17 @@ const {
   /** @type {boolean} - Whether to show tick marks */
   showTicks = false,
 
+  /** @type {(event: CustomEvent) => void} - Input event handler */
+  oninput,
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
+
   /** @type {number} - Number of tick marks to display */
   tickCount = 10,
 
   /** @type {string} - ARIA label for accessibility */
   ariaLabel,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Get form context if available
 const formContext = getContext("form")
@@ -262,7 +265,7 @@ function updateValueFromEvent(event) {
     fieldApi.setValue(newValue)
   }
 
-  dispatch("input", { value: newValue })
+  oninput?.(new CustomEvent("input", { detail: { value: newValue } }))
 }
 
 /**
@@ -299,7 +302,7 @@ function stopDrag() {
   document.removeEventListener("touchmove", updateValueFromEvent)
   document.removeEventListener("touchend", stopDrag)
 
-  dispatch("change", { value: currentValue })
+  onchange?.(new CustomEvent("change", { detail: { value: currentValue } }))
 }
 
 /**

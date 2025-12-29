@@ -16,7 +16,7 @@ Usage:
 ```
 -->
 <script>
-import { onMount, createEventDispatcher } from "svelte"
+import { onMount } from "svelte"
 import { fade, scale } from "svelte/transition"
 
 const {
@@ -53,12 +53,13 @@ const {
   /** @type {string} - ARIA description for the modal */
   ariaDescription,
 
+  /** @type {(event: CustomEvent) => void} - Close event handler */
+  onclose,
+
   children,
   header,
   footer,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Modal state
 let isOpen = $state(open)
@@ -106,7 +107,7 @@ function closeModal() {
     previouslyFocusedElement.focus()
   }
 
-  dispatch("close")
+  onclose?.(new CustomEvent("close"))
 }
 
 /**

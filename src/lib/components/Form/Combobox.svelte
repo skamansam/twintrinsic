@@ -36,7 +36,7 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher, tick } from "svelte"
+import { tick } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -102,10 +102,13 @@ const {
   /** @type {Function} - Custom template for selected value */
   valueTemplate,
 
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
+  /** @type {(event: CustomEvent) => void} - Input event handler */
+  oninput,
+
   option,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Component state
 let inputElement = $state()
@@ -259,7 +262,7 @@ function handleInput(event) {
   // If input is cleared, clear selection
   if (!inputValue && selectedOption) {
     selectedOption = null
-    dispatch("change", { value: null })
+    onchange?.(new CustomEvent("change", { detail: { value: null } }))
   }
 }
 
@@ -374,8 +377,8 @@ function selectOption(option) {
   closeDropdown()
 
   const value = getOptionValue(option)
-  dispatch("change", { value, option })
-  dispatch("input", { value, option })
+  onchange?.(new CustomEvent("change", { detail: { value, option } }))
+  oninput?.(new CustomEvent("input", { detail: { value, option } }))
 }
 
 /**
@@ -390,8 +393,8 @@ function clearSelection(event) {
   selectedOption = null
   inputValue = ""
 
-  dispatch("change", { value: null })
-  dispatch("input", { value: null })
+  onchange?.(new CustomEvent("change", { detail: { value: null } }))
+  oninput?.(new CustomEvent("input", { detail: { value: null } }))
 
   // Focus input after clearing
   inputElement.focus()

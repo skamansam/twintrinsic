@@ -63,10 +63,11 @@ const {
   /** @type {string} - ARIA label for the tag group */
   ariaLabel = "Tag group",
 
+  /** @type {(event: CustomEvent) => void} - Dismiss event handler */
+  ondismiss,
+
   children,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Provide context for child tags
 $effect(() => {
@@ -87,7 +88,7 @@ $effect(() => {
 function handleDismiss(index) {
   if (items.length > 0) {
     const removedItem = items[index]
-    dispatch("dismiss", { item: removedItem, index })
+    ondismiss?.(new CustomEvent("dismiss", { detail: { item: removedItem, index } }))
   }
 }
 </script>

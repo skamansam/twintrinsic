@@ -21,8 +21,6 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher } from "svelte"
-
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",
@@ -93,10 +91,11 @@ const {
   /** @type {string} - Download attribute for links */
   download,
 
+  /** @type {(event: CustomEvent) => void} - Click event handler */
+  onclick,
+
   children,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 /**
  * Handles button click
@@ -108,7 +107,7 @@ function handleClick(event) {
     return
   }
 
-  dispatch("click", event)
+  onclick?.(new CustomEvent("click", { detail: event }))
 }
 
 // Determine if button should render as a link

@@ -28,7 +28,7 @@ Usage:
 ```
 -->
 <script>
-import { getContext, createEventDispatcher } from "svelte"
+import { getContext } from "svelte"
 import { slide } from "svelte/transition"
 import { clickOutside } from "../../actions/clickOutside.js"
 
@@ -83,9 +83,18 @@ const {
 
   /** @type {string} - ARIA label for accessibility */
   ariaLabel,
-} = $props()
 
-const dispatch = createEventDispatcher()
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
+  /** @type {(event: CustomEvent) => void} - Clear event handler */
+  onclear,
+  /** @type {(event: CustomEvent) => void} - Open event handler */
+  onopen,
+  /** @type {(event: CustomEvent) => void} - Close event handler */
+  onclose,
+  /** @type {(event: CustomEvent) => void} - Filter event handler */
+  onfilter,
+} = $props()
 
 // Get form context if available
 const formContext = getContext("form")
@@ -274,7 +283,7 @@ function selectOption(option, evt) {
     fieldApi.setValue(selectedValues)
   }
 
-  dispatch("change", { value: selectedValues })
+  onchange?.(new CustomEvent("change", { detail: { value: selectedValues } }))
 }
 
 /**
@@ -289,8 +298,8 @@ function clearSelection(evt) {
     fieldApi.setValue(selectedValues)
   }
 
-  dispatch("change", { value: selectedValues })
-  dispatch("clear")
+  onchange?.(new CustomEvent("change", { detail: { value: selectedValues } }))
+  onclear?.(new CustomEvent("clear"))
 }
 
 /**
@@ -310,7 +319,7 @@ function openDropdown() {
     }, 0)
   }
 
-  dispatch("open")
+  onopen?.(new CustomEvent("open"))
 }
 
 /**
@@ -321,7 +330,7 @@ function closeDropdown() {
   filterValue = ""
   activeSubmenu = null
 
-  dispatch("close")
+  onclose?.(new CustomEvent("close"))
 }
 
 /**
@@ -431,7 +440,7 @@ function handleFilterInput(event) {
   filterValue = event.target.value
   highlightedIndex = 0
 
-  dispatch("filter", { filter: filterValue })
+  onfilter?.(new CustomEvent("filter", { detail: { filter: filterValue } }))
 }
 
 // Determine size classes

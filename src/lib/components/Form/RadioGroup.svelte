@@ -17,7 +17,7 @@ Usage:
 ```
 -->
 <script>
-import { getContext, createEventDispatcher, setContext } from "svelte"
+import { getContext, setContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -47,10 +47,11 @@ const {
   /** @type {string} - Size of the radio buttons (sm, md, lg) */
   size = "md",
 
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
+
   children,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Get form context if available
 const formContext = getContext("form")
@@ -95,7 +96,7 @@ function handleRadioChange(event) {
     fieldApi.setValue(radioValue)
   }
 
-  dispatch("change", { value: radioValue })
+  onchange?.(new CustomEvent("change", { detail: { value: radioValue } }))
 }
 
 // Provide context for child Radio components

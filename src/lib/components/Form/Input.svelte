@@ -26,11 +26,8 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher } from "svelte"
 import { slide } from "svelte/transition"
 import Icon from "../Icon/Icon.svelte"
-
-const dispatch = createEventDispatcher()
 
 const {
   /** @type {string} - Input label text */
@@ -67,6 +64,16 @@ const {
   mask = "",
   /** @type {string} - ARIA description */
   ariaDescription = "",
+  /** @type {(event: Event) => void} - Focus event handler */
+  onfocus,
+  /** @type {(event: Event) => void} - Blur event handler */
+  onblur,
+  /** @type {(event: CustomEvent) => void} - Input event handler */
+  oninput,
+  /** @type {() => void} - Left icon click handler */
+  onleftIconClick,
+  /** @type {() => void} - Right icon click handler */
+  onrightIconClick,
 } = $props()
 
 let inputValue = $state(value)
@@ -79,16 +86,16 @@ $effect(() => {
 })
 
 // Handle input focus
-function handleFocus() {
+function handleFocus(event) {
   focused = true
-  dispatch("focus")
+  onfocus?.(event)
 }
 
 // Handle input blur
-function handleBlur() {
+function handleBlur(event) {
   focused = false
   touched = true
-  dispatch("blur")
+  onblur?.(event)
 }
 
 // Handle input change
@@ -102,16 +109,16 @@ function handleInput(event) {
     inputValue = newValue
   }
 
-  dispatch("input", { value: inputValue })
+  oninput?.(new CustomEvent("input", { detail: { value: inputValue } }))
 }
 
 // Handle icon clicks
 function handleLeftIconClick() {
-  dispatch("leftIconClick")
+  onleftIconClick?.()
 }
 
 function handleRightIconClick() {
-  dispatch("rightIconClick")
+  onrightIconClick?.()
 }
 
 // Apply input mask

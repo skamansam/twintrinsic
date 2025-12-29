@@ -19,7 +19,7 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher, setContext } from "svelte"
+import { setContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -49,10 +49,15 @@ const {
   /** @type {boolean} - Whether the form is in a loading state */
   loading = false,
 
+  /** @type {(event: CustomEvent) => void} - Submit event handler */
+  onsubmit,
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
+  /** @type {(event: CustomEvent) => void} - Error event handler */
+  onerror,
+
   children,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Form state
 let formElement
@@ -152,7 +157,7 @@ function handleSubmit(event) {
   if (validate) {
     if (!validateForm()) {
       // If validation fails, don't submit
-      dispatch("invalid", { errors })
+      onerror?.(new CustomEvent("invalid", { detail: { errors } }))
       return
     }
   }
@@ -169,11 +174,11 @@ function handleSubmit(event) {
   }
 
   // Dispatch submit event with form data
-  dispatch("submit", {
+  onsubmit?.(new CustomEvent("submit", { detail: {
     data: dataObj,
     formData: formDataObj,
     form: formElement,
-  })
+  } }))
 
   // Reset submitting state after a short delay
   setTimeout(() => {

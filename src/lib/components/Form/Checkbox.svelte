@@ -19,10 +19,6 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher } from "svelte"
-
-const dispatch = createEventDispatcher()
-
 const {
   /** @type {string} - Label text */
   label,
@@ -44,6 +40,8 @@ const {
   value = "",
   /** @type {string} - Additional CSS classes */
   class: className = "",
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
 } = $props()
 
 let checkboxEl = $state()
@@ -58,7 +56,7 @@ $effect(() => {
 // Handle change event
 function handleChange(event) {
   const isChecked = event.target.checked
-  dispatch("change", { checked: isChecked })
+  onchange?.(new CustomEvent("change", { detail: { checked: isChecked } }))
 }
 </script>
 

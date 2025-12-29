@@ -28,8 +28,6 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher } from "svelte"
-
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",
@@ -78,9 +76,12 @@ const {
 
   /** @type {string} - ARIA label for accessibility */
   ariaLabel,
-} = $props()
 
-const dispatch = createEventDispatcher()
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
+  /** @type {(event: CustomEvent) => void} - Input event handler */
+  oninput,
+} = $props()
 
 // Component state
 let sliderValues = $state([])
@@ -356,8 +357,8 @@ function handleKeydown(event, index) {
  */
 function dispatchChange() {
   const eventValue = isRange ? [...sliderValues] : sliderValues[0]
-  dispatch("change", { value: eventValue })
-  dispatch("input", { value: eventValue })
+  onchange?.(new CustomEvent("change", { detail: { value: eventValue } }))
+  oninput?.(new CustomEvent("input", { detail: { value: eventValue } }))
 }
 
 // Clean up event listeners on destroy

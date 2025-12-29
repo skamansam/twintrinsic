@@ -20,12 +20,9 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher } from "svelte"
 import { slide } from "svelte/transition"
 import { clickOutside } from "$lib/actions"
 import Input from "./Input.svelte"
-
-const dispatch = createEventDispatcher()
 
 const {
   /** @type {Date | [Date, Date] | null} - Selected date or date range */
@@ -63,6 +60,8 @@ const {
   disabled = false,
   /** @type {string} - Additional CSS classes */
   class: className = "",
+  /** @type {(event: CustomEvent) => void} - Select event handler */
+  onselect,
 } = $props()
 
 let showCalendar = $state(false)
@@ -164,11 +163,11 @@ function handleDateSelect(date) {
       showCalendar = false
     }
 
-    dispatch("select", { start: startDate, end: endDate })
+    onselect?.(new CustomEvent("select", { detail: { start: startDate, end: endDate } }))
   } else {
     startDate = date
     showCalendar = false
-    dispatch("select", { date })
+    onselect?.(new CustomEvent("select", { detail: { date } }))
   }
 
   updateInputValue()

@@ -18,7 +18,7 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher, setContext } from "svelte"
+import { setContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -36,10 +36,11 @@ const {
   /** @type {boolean} - Whether to add a border around the accordion */
   bordered = true,
 
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
+
   children,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Track expanded items
 let expandedItems = $state(new Set())
@@ -70,7 +71,7 @@ $effect(() => {
         expandedItems.delete(index)
       }
 
-      dispatch("change", { expandedItems: Array.from(expandedItems) })
+      onchange?.(new CustomEvent("change", { detail: { expandedItems: Array.from(expandedItems) } }))
     },
     allowMultiple,
   }

@@ -18,12 +18,9 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher } from "svelte"
 import { slide } from "svelte/transition"
 import { clickOutside } from "$lib/actions"
 import Input from "./Input.svelte"
-
-const dispatch = createEventDispatcher()
 
 const {
   /** @type {string} - Color value in current format */
@@ -40,6 +37,8 @@ const {
   error = "",
   /** @type {string} - Additional CSS classes */
   class: className = "",
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
 } = $props()
 
 let showPicker = $state(false)
@@ -172,7 +171,7 @@ function updateColor(h, s, l, a) {
   alpha = a
 
   updateInputValue()
-  dispatch("change", { value: inputValue })
+  onchange?.(new CustomEvent("change", { detail: { value: inputValue } }))
 }
 
 // Update input value based on current color

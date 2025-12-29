@@ -17,7 +17,7 @@ Usage:
 ```
 -->
 <script>
-import { getContext, createEventDispatcher } from "svelte"
+import { getContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -35,13 +35,14 @@ const {
   /** @type {any} - Data associated with the row */
   data,
 
+  /** @type {(event: CustomEvent) => void} - Click event handler */
+  onclick,
+
   children,
 
   /** @type {object} - Additional props to pass to the input element */
   ...restProps
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Get table context if available
 const tableContext = getContext("table")
@@ -56,7 +57,7 @@ const hoverable = tableContext?.hoverable || false
 function handleClick(event) {
   if (disabled) return
 
-  dispatch("click", { event, row: data })
+  onclick?.(new CustomEvent("click", { detail: { event, row: data } }))
 }
 </script>
 

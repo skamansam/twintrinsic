@@ -17,7 +17,7 @@ Usage:
 ```
 -->
 <script>
-import { getContext, createEventDispatcher } from "svelte"
+import { getContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -47,11 +47,12 @@ const {
   /** @type {string} - ARIA label for accessibility */
   ariaLabel,
 
+  /** @type {(event: CustomEvent) => void} - Change event handler */
+  onchange,
+
   /** @type {object} - Additional props to pass to the input element */
   ...restProps
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Get form context if available
 const formContext = getContext("form")
@@ -94,7 +95,7 @@ function handleChange(event) {
     fieldApi.setValue(isChecked)
   }
 
-  dispatch("change", { checked: isChecked })
+  onchange?.(new CustomEvent("change", { detail: { checked: isChecked } }))
 }
 
 // Determine switch size classes

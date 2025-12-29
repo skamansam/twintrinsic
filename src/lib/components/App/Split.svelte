@@ -17,7 +17,7 @@ Usage:
 ```
 -->
 <script>
-import { createEventDispatcher, onMount } from "svelte"
+import { onMount } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -53,11 +53,12 @@ const {
   /** @type {string} - ARIA label for the divider */
   dividerAriaLabel,
 
+  /** @type {(event: CustomEvent) => void} - Resize event handler */
+  onresize,
+
   first,
   second,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 // Component state
 let size = $state(initialSize)
@@ -147,7 +148,7 @@ function handleDrag(event) {
   size = newSize
 
   // Dispatch resize event
-  dispatch("resize", { size })
+  onresize?.(new CustomEvent("resize", { detail: { size } }))
 
   // Prevent default to avoid scrolling on touch devices
   event.preventDefault()
@@ -168,7 +169,7 @@ function stopDrag() {
   document.removeEventListener("touchend", stopDrag)
 
   // Dispatch resize end event
-  dispatch("resizeend", { size })
+  onresize?.(new CustomEvent("resizeend", { detail: { size } }))
 }
 
 /**
@@ -210,7 +211,7 @@ function handleKeydown(event) {
   // Update size if changed
   if (newSize !== size) {
     size = newSize
-    dispatch("resize", { size })
+    onresize?.(new CustomEvent("resize", { detail: { size } }))
     event.preventDefault()
   }
 }
