@@ -3,11 +3,11 @@
 </style>
 
 <script lang="ts">
-import Container from "$lib/components/Container/Container.svelte"
-import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Panel from "$lib/components/Panel/Panel.svelte"
 import Button from "$lib/components/Button/Button.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import Panel from "$lib/components/Panel/Panel.svelte"
+import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
 </script>
 
 <Container class="prose dark:prose-invert max-w-4xl">
@@ -38,7 +38,7 @@ import Button from "$lib/components/Button/Button.svelte"
   <h2>Nested Theming</h2>
   <p>
     The ThemeToggle component supports nested theming, allowing you to create sections with
-    independent theme states. Each nested <code>data-themed</code> element can have its own
+    independent theme states. Each nested <code>data-theme</code> element can have its own
     theme toggle that overrides the parent's theme.
   </p>
 
@@ -50,7 +50,7 @@ import Button from "$lib/components/Button/Button.svelte"
 
   <div class="not-prose mb-8">
     <!-- Level 1: Main Section -->
-    <div class="p-6 rounded-lg border-2 border-primary-500 bg-background text-text" data-themed>
+    <div class="p-6 rounded-lg border-2 border-primary-500 bg-background text-text" data-theme>
       <div class="flex items-center justify-between mb-4">
         <h4 class="text-lg font-bold">Level 1: Main Section</h4>
         <ThemeToggle />
@@ -58,7 +58,7 @@ import Button from "$lib/components/Button/Button.svelte"
       <p class="text-sm text-muted mb-4">Toggle this section's theme independently</p>
       
       <!-- Level 2: First Nested Section -->
-      <div class="p-4 rounded-lg border border-secondary-500 bg-surface mt-4" data-themed>
+      <div class="p-4 rounded-lg border border-secondary-500 bg-surface mt-4" data-theme>
         <div class="flex items-center justify-between mb-3">
           <h5 class="font-semibold">Level 2a: First Nested Section</h5>
           <ThemeToggle />
@@ -66,7 +66,7 @@ import Button from "$lib/components/Button/Button.svelte"
         <p class="text-sm text-muted mb-3">This section can have a different theme than its parent</p>
         
         <!-- Level 3: Deeply Nested Section -->
-        <div class="p-3 rounded border border-success-500 bg-background mt-3" data-themed>
+        <div class="p-3 rounded border border-success-500 bg-background mt-3" data-theme>
           <div class="flex items-center justify-between mb-2">
             <h6 class="font-medium">Level 3a: Deeply Nested</h6>
             <ThemeToggle />
@@ -76,7 +76,7 @@ import Button from "$lib/components/Button/Button.svelte"
       </div>
 
       <!-- Level 2: Second Nested Section -->
-      <div class="p-4 rounded-lg border border-warning-500 bg-surface mt-4" data-themed>
+      <div class="p-4 rounded-lg border border-warning-500 bg-surface mt-4" data-theme>
         <div class="flex items-center justify-between mb-3">
           <h5 class="font-semibold">Level 2b: Second Nested Section</h5>
           <ThemeToggle />
@@ -84,7 +84,7 @@ import Button from "$lib/components/Button/Button.svelte"
         <p class="text-sm text-muted mb-3">Another independent nested section</p>
         
         <!-- Level 3: Another Deeply Nested Section -->
-        <div class="p-3 rounded border border-error-500 bg-background mt-3" data-themed>
+        <div class="p-3 rounded border border-error-500 bg-background mt-3" data-theme>
           <div class="flex items-center justify-between mb-2">
             <h6 class="font-medium">Level 3b: Another Nested</h6>
             <ThemeToggle />
@@ -94,12 +94,12 @@ import Button from "$lib/components/Button/Button.svelte"
       </div>
 
       <!-- Level 2: Third Nested Section (No Toggle) -->
-      <div class="p-4 rounded-lg border border-info-500 bg-surface mt-4" data-themed>
+      <div class="p-4 rounded-lg border border-info-500 bg-surface mt-4" data-theme>
         <h5 class="font-semibold mb-3">Level 2c: Nested Without Toggle</h5>
         <p class="text-sm text-muted mb-3">This section inherits its parent's theme (no toggle)</p>
         
         <!-- Level 3: Nested Under No-Toggle Section -->
-        <div class="p-3 rounded border border-primary-400 bg-background mt-3" data-themed>
+        <div class="p-3 rounded border border-primary-400 bg-background mt-3" data-theme>
           <div class="flex items-center justify-between mb-2">
             <h6 class="font-medium">Level 3c: Under No-Toggle Parent</h6>
             <ThemeToggle />
@@ -112,7 +112,7 @@ import Button from "$lib/components/Button/Button.svelte"
 
   <h3>How Nested Theming Works</h3>
   <ul>
-    <li><strong>Independent Control:</strong> Each <code>data-themed</code> section with a toggle can switch themes independently</li>
+    <li><strong>Independent Control:</strong> Each <code>data-theme</code> section with a toggle can switch themes independently</li>
     <li><strong>Theme Inheritance:</strong> Sections without toggles inherit their parent's theme</li>
     <li><strong>Override Capability:</strong> A nested section's theme overrides its parent's theme when toggled</li>
     <li><strong>Unlimited Nesting:</strong> You can nest themed sections as deeply as needed</li>

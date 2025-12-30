@@ -104,7 +104,7 @@ test.describe("ThemeToggle Component", () => {
 
   test.describe("Nested Theming - Independent Control", () => {
     test("should apply dark mode only to toggled section", async ({ page }) => {
-      const sections = page.locator("[data-themed]")
+      const sections = page.locator("[data-theme]")
       const level1 = sections.nth(0)
 
       const level1Button = level1
@@ -134,7 +134,7 @@ test.describe("ThemeToggle Component", () => {
     })
 
     test("should not apply dark mode to children when parent is toggled", async ({ page }) => {
-      const sections = page.locator("[data-themed]")
+      const sections = page.locator("[data-theme]")
       const level1 = sections.nth(0)
       const level2a = sections.nth(1)
 
@@ -155,8 +155,8 @@ test.describe("ThemeToggle Component", () => {
       expect(level2aNewBg).toBe(level2aInitialBg)
     })
 
-    test("should toggle only immediate parent data-themed element", async ({ page }) => {
-      const sections = page.locator("[data-themed]")
+    test("should toggle only immediate parent data-theme element", async ({ page }) => {
+      const sections = page.locator("[data-theme]")
       const level1 = sections.nth(0)
       const level2a = sections.nth(1)
       const level2b = sections.nth(3)

@@ -1,10 +1,10 @@
 <script lang="ts">
 import { fade, fly } from "svelte/transition"
-import Container from "$lib/components/Container/Container.svelte"
-import Separator from "$lib/components/Separator/Separator.svelte"
-import Panel from "$lib/components/Panel/Panel.svelte"
 import AppHeader from "$lib/components/AppHeader/AppHeader.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte"
+import Panel from "$lib/components/Panel/Panel.svelte"
+import Separator from "$lib/components/Separator/Separator.svelte"
 import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
 
 const features = [
@@ -63,8 +63,8 @@ const components = [
   </div>
   <div class="text-center" transition:fade={{ duration: 500 }}>
     <div class="flex flex-col items-center justify-center gap-6">
-      <TwintrinsicLogo size="8rem" class="text-primary-500 hover:text-primary-600" />
-      <h1 class="text-5xl sm:text-6xl font-bold bg-gradient-to-b from-primary-600 to-secondary-600 via-primary-500 bg-clip-text text-transparent">
+      <TwintrinsicLogo size="8rem" class="text-primary-500 hover:text-primary-600 dark:text-pink-500" />
+      <h1 class="text-5xl sm:text-6xl font-bold bg-gradient-to-b from-primary-600 to-secondary-600 via-primary-500 bg-clip-text text-transparent dark:text-pink-500">
         Twintrinsic
       </h1>
     </div>
@@ -96,7 +96,7 @@ const components = [
   </div>
 
   <!-- Example Components -->
-  <div class="mt-16 grid grid-cols-1 gap-8" transition:fade={{ duration: 500, delay: 200 }} data-themed>
+  <div class="mt-16 grid grid-cols-1 gap-8" transition:fade={{ duration: 500, delay: 200 }} data-theme>
     <div class="bg-surface/50 backdrop-blur-sm border-y border-border">
       <AppHeader
         brand={{
@@ -142,7 +142,7 @@ const components = [
     </div>
 
     <!-- Nested Theme Test Section -->
-    <div class="mt-8 p-6 rounded-lg bg-surface border border-border" data-themed>
+    <div class="mt-8 p-6 rounded-lg bg-surface border border-border" data-theme>
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-medium">Nested Theme Test</h3>
         <ThemeToggle />
