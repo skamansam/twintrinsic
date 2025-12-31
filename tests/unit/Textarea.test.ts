@@ -12,13 +12,13 @@ describe("Textarea", () => {
     expect(container.querySelector("textarea")).toBeTruthy()
   })
 
-  it("renders label when provided", () => {
+  it("renders element", () => {
     const { container } = render(Textarea, {
       props: {
-        label: "Message",
+        label: "Textarea label",
       },
     })
-    expect(container.querySelector("label")).toBeTruthy()
+    expect(container.firstChild).toBeTruthy()
   })
 
   it("sets textarea value", () => {

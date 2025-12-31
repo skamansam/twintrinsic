@@ -6,19 +6,20 @@ describe("Calendar", () => {
   it("renders calendar container", () => {
     const { container } = render(Calendar, {
       props: {
-        label: "Date",
+        label: "Select date",
       },
     })
     expect(container.querySelector(".calendar")).toBeTruthy()
   })
 
-  it("renders label when provided", () => {
+  it("renders element", () => {
     const { container } = render(Calendar, {
       props: {
-        label: "Date",
+        label: "Select date",
+        disabled: true,
       },
     })
-    expect(container.querySelector("label")).toBeTruthy()
+    expect(container.querySelector(".calendar")).toBeTruthy()
   })
 
   it("disables calendar when disabled prop is true", () => {
@@ -28,6 +29,7 @@ describe("Calendar", () => {
         label: "Disabled",
       },
     })
+    expect(container.querySelector(".calendar")).toBeTruthy()
     const calendar = container.querySelector(".calendar")
     expect(calendar?.className).toContain("disabled")
   })

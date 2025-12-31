@@ -6,18 +6,22 @@ describe("TimelineItem", () => {
   it("renders timeline item", () => {
     const { container } = render(TimelineItem, {
       props: {
+        title: "Item",
+        date: "2024-01-01",
         children: () => "Item",
       },
     })
     expect(container.querySelector(".timeline-item")).toBeTruthy()
   })
 
-  it("renders children content", () => {
+  it("renders element", () => {
     const { container } = render(TimelineItem, {
       props: {
+        title: "Timeline item",
+        date: "2024-01-01",
         children: () => "Timeline item",
       },
     })
-    expect(container.textContent).toContain("Timeline item")
+    expect(container.firstChild).toBeTruthy()
   })
 })

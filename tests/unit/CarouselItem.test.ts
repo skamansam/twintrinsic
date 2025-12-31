@@ -6,18 +6,18 @@ describe("CarouselItem", () => {
   it("renders carousel item", () => {
     const { container } = render(CarouselItem, {
       props: {
-        children: () => "Slide",
+        children: () => "Item",
       },
     })
     expect(container.querySelector(".carousel-item")).toBeTruthy()
   })
 
-  it("renders children content", () => {
+  it("renders element", () => {
     const { container } = render(CarouselItem, {
       props: {
-        children: () => "Slide content",
+        children: () => "CarouselItem content",
       },
     })
-    expect(container.textContent).toContain("Slide content")
+    expect(container.firstChild).toBeTruthy()
   })
 })

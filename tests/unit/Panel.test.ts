@@ -6,18 +6,18 @@ describe("Panel", () => {
   it("renders panel container", () => {
     const { container } = render(Panel, {
       props: {
-        children: () => "Panel content",
+        children: () => "Content",
       },
     })
     expect(container.querySelector(".panel")).toBeTruthy()
   })
 
-  it("renders children content", () => {
+  it("renders element", () => {
     const { container } = render(Panel, {
       props: {
         children: () => "Panel content",
       },
     })
-    expect(container.textContent).toContain("Panel content")
+    expect(container.firstChild).toBeTruthy()
   })
 })

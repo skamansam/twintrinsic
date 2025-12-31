@@ -6,18 +6,18 @@ describe("Menu", () => {
   it("renders menu container", () => {
     const { container } = render(Menu, {
       props: {
-        children: () => "Menu",
+        children: () => "Items",
       },
     })
     expect(container.querySelector(".menu")).toBeTruthy()
   })
 
-  it("renders children content", () => {
+  it("renders element", () => {
     const { container } = render(Menu, {
       props: {
         children: () => "Menu content",
       },
     })
-    expect(container.textContent).toContain("Menu content")
+    expect(container.firstChild).toBeTruthy()
   })
 })

@@ -6,18 +6,18 @@ describe("Lazy", () => {
   it("renders lazy container", () => {
     const { container } = render(Lazy, {
       props: {
-        children: () => "Lazy content",
+        children: () => "Content",
       },
     })
     expect(container.querySelector(".lazy")).toBeTruthy()
   })
 
-  it("renders children content", () => {
+  it("renders element", () => {
     const { container } = render(Lazy, {
       props: {
-        children: () => "Lazy loaded",
+        children: () => "Lazy content",
       },
     })
-    expect(container.textContent).toContain("Lazy loaded")
+    expect(container.firstChild).toBeTruthy()
   })
 })

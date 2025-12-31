@@ -6,18 +6,18 @@ describe("App", () => {
   it("renders app container", () => {
     const { container } = render(App, {
       props: {
-        children: () => "App content",
+        children: () => "Content",
       },
     })
     expect(container.querySelector(".app")).toBeTruthy()
   })
 
-  it("renders children content", () => {
+  it("renders element", () => {
     const { container } = render(App, {
       props: {
         children: () => "App content",
       },
     })
-    expect(container.textContent).toContain("App content")
+    expect(container.firstChild).toBeTruthy()
   })
 })

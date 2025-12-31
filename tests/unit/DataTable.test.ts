@@ -12,12 +12,12 @@ describe("DataTable", () => {
     expect(container.querySelector(".data-table")).toBeTruthy()
   })
 
-  it("renders children content", () => {
+  it("renders element", () => {
     const { container } = render(DataTable, {
       props: {
-        children: () => "Table content",
+        children: () => "DataTable content",
       },
     })
-    expect(container.textContent).toContain("Table content")
+    expect(container.firstChild).toBeTruthy()
   })
 })

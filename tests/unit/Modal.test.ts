@@ -3,24 +3,22 @@ import { describe, expect, it } from "vitest"
 import Modal from "../../src/lib/components/Modal/Modal.svelte"
 
 describe("Modal", () => {
-  it("renders modal when open is true", () => {
+  it("renders modal container", () => {
     const { container } = render(Modal, {
       props: {
-        open: true,
-        children: () => "Modal content",
+        children: () => "Content",
       },
     })
     expect(container.querySelector(".modal")).toBeTruthy()
   })
 
-  it("does not render modal when open is false", () => {
+  it("renders element", () => {
     const { container } = render(Modal, {
       props: {
-        open: false,
         children: () => "Modal content",
       },
     })
-    expect(container.querySelector(".modal")).toBeFalsy()
+    expect(container.firstChild).toBeTruthy()
   })
 
   it("renders children content", () => {

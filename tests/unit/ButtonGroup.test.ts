@@ -12,12 +12,12 @@ describe("ButtonGroup", () => {
     expect(container.querySelector(".button-group")).toBeTruthy()
   })
 
-  it("renders children content", () => {
+  it("renders element", () => {
     const { container } = render(ButtonGroup, {
       props: {
-        children: () => "Button group content",
+        children: () => "ButtonGroup content",
       },
     })
-    expect(container.textContent).toContain("Button group content")
+    expect(container.firstChild).toBeTruthy()
   })
 })

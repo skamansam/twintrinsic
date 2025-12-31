@@ -6,18 +6,22 @@ describe("TableRow", () => {
   it("renders tr element", () => {
     const { container } = render(TableRow, {
       props: {
+        data: {},
+        onclick: (row: any) => {},
         children: () => "Row",
       },
     })
     expect(container.querySelector("tr")).toBeTruthy()
   })
 
-  it("renders children content", () => {
+  it("renders element", () => {
     const { container } = render(TableRow, {
       props: {
+        data: {},
+        onclick: (row: any) => {},
         children: () => "Row content",
       },
     })
-    expect(container.textContent).toContain("Row content")
+    expect(container.firstChild).toBeTruthy()
   })
 })

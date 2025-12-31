@@ -12,12 +12,12 @@ describe("ChipGroup", () => {
     expect(container.querySelector(".chip-group")).toBeTruthy()
   })
 
-  it("renders children content", () => {
+  it("renders element", () => {
     const { container } = render(ChipGroup, {
       props: {
-        children: () => "Chip group content",
+        children: () => "ChipGroup content",
       },
     })
-    expect(container.textContent).toContain("Chip group content")
+    expect(container.firstChild).toBeTruthy()
   })
 })

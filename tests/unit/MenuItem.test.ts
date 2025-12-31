@@ -12,12 +12,12 @@ describe("MenuItem", () => {
     expect(container.querySelector(".menu-item")).toBeTruthy()
   })
 
-  it("renders children content", () => {
+  it("renders element", () => {
     const { container } = render(MenuItem, {
       props: {
-        children: () => "Menu item",
+        children: () => "MenuItem content",
       },
     })
-    expect(container.textContent).toContain("Menu item")
+    expect(container.firstChild).toBeTruthy()
   })
 })

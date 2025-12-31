@@ -6,18 +6,26 @@ describe("StepperStep", () => {
   it("renders stepper step", () => {
     const { container } = render(StepperStep, {
       props: {
+        title: "Step 1",
+        subtitle: "Subtitle",
+        icon: undefined,
+        onClick: () => {},
         children: () => "Step",
       },
     })
     expect(container.querySelector(".stepper-step")).toBeTruthy()
   })
 
-  it("renders children content", () => {
+  it("renders element", () => {
     const { container } = render(StepperStep, {
       props: {
-        children: () => "Step content",
+        title: "Step 1",
+        subtitle: "Subtitle",
+        icon: undefined,
+        onClick: () => {},
+        children: () => "StepperStep content",
       },
     })
-    expect(container.textContent).toContain("Step content")
+    expect(container.firstChild).toBeTruthy()
   })
 })

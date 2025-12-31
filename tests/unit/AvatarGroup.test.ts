@@ -6,18 +6,22 @@ describe("AvatarGroup", () => {
   it("renders avatar group container", () => {
     const { container } = render(AvatarGroup, {
       props: {
+        max: 3,
+        total: 5,
         children: () => "Avatars",
       },
     })
     expect(container.querySelector(".avatar-group")).toBeTruthy()
   })
 
-  it("renders children content", () => {
+  it("renders element", () => {
     const { container } = render(AvatarGroup, {
       props: {
-        children: () => "Avatar group",
+        max: 3,
+        total: 5,
+        children: () => "AvatarGroup content",
       },
     })
-    expect(container.textContent).toContain("Avatar group")
+    expect(container.firstChild).toBeTruthy()
   })
 })

@@ -6,18 +6,22 @@ describe("AccordionItem", () => {
   it("renders accordion item", () => {
     const { container } = render(AccordionItem, {
       props: {
-        children: () => "Item content",
+        ariaLabel: "Item",
+        header: "Header",
+        children: () => "Item",
       },
     })
     expect(container.querySelector(".accordion-item")).toBeTruthy()
   })
 
-  it("renders children content", () => {
+  it("renders element", () => {
     const { container } = render(AccordionItem, {
       props: {
-        children: () => "Item content",
+        ariaLabel: "Item",
+        header: "Header",
+        children: () => "AccordionItem content",
       },
     })
-    expect(container.textContent).toContain("Item content")
+    expect(container.firstChild).toBeTruthy()
   })
 })

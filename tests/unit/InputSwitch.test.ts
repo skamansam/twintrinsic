@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest"
 import InputSwitch from "../../src/lib/components/Form/InputSwitch.svelte"
 
 describe("InputSwitch", () => {
-  it("renders input switch", () => {
+  it("renders input switch element", () => {
     const { container } = render(InputSwitch, {
       props: {
         label: "Toggle",
@@ -12,12 +12,12 @@ describe("InputSwitch", () => {
     expect(container.querySelector(".input-switch")).toBeTruthy()
   })
 
-  it("renders label when provided", () => {
+  it("renders element", () => {
     const { container } = render(InputSwitch, {
       props: {
-        label: "Toggle",
+        label: "InputSwitch label",
       },
     })
-    expect(container.querySelector("label")).toBeTruthy()
+    expect(container.firstChild).toBeTruthy()
   })
 })

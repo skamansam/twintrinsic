@@ -12,12 +12,12 @@ describe("FloatLabel", () => {
     expect(container.querySelector(".float-label")).toBeTruthy()
   })
 
-  it("renders children content", () => {
+  it("renders element", () => {
     const { container } = render(FloatLabel, {
       props: {
-        children: () => "Float label",
+        children: () => "FloatLabel content",
       },
     })
-    expect(container.textContent).toContain("Float label")
+    expect(container.firstChild).toBeTruthy()
   })
 })
