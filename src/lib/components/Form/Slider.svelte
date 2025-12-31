@@ -28,6 +28,8 @@ Usage:
 ```
 -->
 <script>
+import { onDestroy } from "svelte"
+
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",
