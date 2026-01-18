@@ -7,9 +7,9 @@ Avatar documentation page
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import Container from "$lib/components/Container/Container.svelte"
 import Avatar from "$lib/components/Avatar/Avatar.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -49,6 +49,21 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   </div>
 
   <pre class="language-svelte"><code>{`<Avatar fallback="JD" bgColor="bg-primary-600" />`}</code></pre>
+
+  <h3>Gravatar Email</h3>
+  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
+    <Avatar 
+      gravatarEmail="user@example.com"
+      name="John Doe"
+      alt="John's Avatar"
+    />
+  </div>
+
+  <pre class="language-svelte"><code>{`<Avatar 
+  gravatarEmail="user@example.com"
+  name="John Doe"
+  alt="John's Avatar"
+/>`}</code></pre>
 
   <h3>Sizes</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -136,6 +151,12 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
         <td>Fallback text when image fails to load or no src provided</td>
       </tr>
       <tr>
+        <td><code>gravatarEmail</code></td>
+        <td><code>string</code></td>
+        <td><code>undefined</code></td>
+        <td>Gravatar email address to generate avatar URL from. Uses SHA-256 hashing with identicon fallback</td>
+      </tr>
+      <tr>
         <td><code>size</code></td>
         <td><code>"xs" | "sm" | "md" | "lg" | "xl"</code></td>
         <td><code>"md"</code></td>
@@ -203,14 +224,22 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <li>Color contrast meets WCAG standards</li>
   </ul>
 
+  <h2>Gravatar Integration</h2>
+  <p>
+    The Avatar component supports Gravatar integration through the <code>gravatarEmail</code> prop.
+    When provided, it automatically generates a Gravatar URL using SHA-256 hashing with an identicon fallback.
+    The explicit <code>src</code> prop takes priority over the gravatar email if both are provided.
+  </p>
+
   <h2>Fallback Behavior</h2>
   <p>
     The Avatar component has intelligent fallback behavior:
   </p>
   <ol>
-    <li>If an image URL is provided and loads successfully, the image is displayed</li>
+    <li>If an explicit image URL is provided via <code>src</code> and loads successfully, the image is displayed</li>
+    <li>If no explicit <code>src</code> but a <code>gravatarEmail</code> is provided, the Gravatar URL is used</li>
     <li>If the image fails to load or no URL is provided, but a fallback is specified, the fallback text is shown</li>
     <li>If a name is provided but no fallback, initials are automatically generated from the name</li>
-    <li>If no image, fallback, or name is provided, a generic user icon is displayed</li>
+    <li>If no image, gravatar email, fallback, or name is provided, a generic user icon is displayed</li>
   </ol>
 </Container>

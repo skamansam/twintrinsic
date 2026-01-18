@@ -17,13 +17,19 @@ Usage:
 />
 
 <Avatar 
+  gravatarEmail="user@example.com"
+  name="John Doe"
+  status="online" 
+/>
+
+<Avatar 
   src="/path/to/image.jpg" 
   fallback="JD" 
   status="online" 
 />
 ```
 -->
-<script>
+<script lang="ts">
 import { onMount } from "svelte"
 
 const {
@@ -45,13 +51,16 @@ const {
   /** @type {string} - Fallback text when image fails to load or no src provided */
   fallback,
 
+  /** @type {string} - Gravatar email address */
+  gravatarEmail,
+
   /** @type {string} - Size of the avatar (xs, sm, md, lg, xl) */
   size = "md",
 
   /** @type {string} - Shape of the avatar (circle, square, rounded) */
   shape = "circle",
 
-  /** @type {string} - Status indicator (online, offline, away, busy) */
+  /** @type {"online" | "offline" | "away" | "busy" | undefined} - Status indicator (online, offline, away, busy) */
   status,
 
   /** @type {string} - Background color for text avatars (CSS color value) */
@@ -71,13 +80,40 @@ const {
 let imageLoaded = $state(false)
 let imageError = $state(false)
 let avatarElement
+let gravatarUrl = $state("")
+
+// Generate gravatar URL if email is provided
+$effect(() => {
+  if (gravatarEmail) {
+    generateGravatarUrl(gravatarEmail).then(url => {
+      gravatarUrl = url
+    })
+  }
+})
+
+/**
+ * Generates a Gravatar URL from an email address using MD5 hash
+ * @param {string} email - Email address
+ * @returns {Promise<string>} - Gravatar URL
+ */
+async function generateGravatarUrl(email: string): Promise<string> {
+  if (!email) return ""
+  
+  const trimmedEmail = email.trim().toLowerCase()
+  const msgBuffer = new TextEncoder().encode(trimmedEmail)
+  const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("")
+  
+  return `https://www.gravatar.com/avatar/${hashHex}?d=identicon`
+}
 
 /**
  * Generates initials from a name
  * @param {string} name - Full name
  * @returns {string} - Initials (1-2 characters)
  */
-function generateInitials(name) {
+function generateInitials(name: string): string {
   if (!name) return ""
 
   if (initialsGenerator) {
@@ -113,8 +149,11 @@ function handleImageError() {
 // Determine what to display as fallback
 const displayFallback = $derived(fallback || (name ? generateInitials(name) : ""))
 
+// Determine the image source (prefer explicit src over gravatar)
+const imageSrc = $derived(src || gravatarUrl)
+
 // Determine if we should show the image
-const showImage = $derived(src && !imageError)
+const showImage = $derived(imageSrc && !imageError)
 
 // Determine if we should show the fallback
 const showFallback = $derived(!showImage && !!displayFallback)
@@ -140,14 +179,13 @@ const shapeClasses = $derived(
 )
 
 // Determine status classes
-const statusClasses = $derived(
-  {
-    online: "bg-success-500",
-    offline: "bg-muted",
-    away: "bg-warning-500",
-    busy: "bg-error-500",
-  }[status] || "bg-muted"
-)
+const statusClasses = $derived.by(() => {
+  if (status === "online") return "bg-success-500"
+  if (status === "offline") return "bg-muted"
+  if (status === "away") return "bg-warning-500"
+  if (status === "busy") return "bg-error-500"
+  return "bg-muted"
+})
 
 // Generate a random color based on the name or fallback
 const randomBgColor = $derived(generateRandomColor())
@@ -193,7 +231,7 @@ function generateRandomColor() {
 >
   {#if showImage}
     <img
-      src={src}
+      src={imageSrc}
       alt={alt || name || 'Avatar'}
       class="avatar-image"
       onload={handleImageLoad}
