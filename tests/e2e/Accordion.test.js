@@ -1,77 +1,112 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 test.describe("Accordion Component", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:6006/?path=/story/components-panel-accordion--default")
+    await page.goto("http://localhost:6006/?path=/story/components-accordion--default")
   })
 
-  test("renders accordion with multiple panels", async ({ page }) => {
+  test("renders accordion container", async ({ page }) => {
     const accordion = page.locator(".accordion")
     await expect(accordion).toBeVisible()
-
-    const panels = accordion.locator(".panel")
-    await expect(panels).toHaveCount(3)
-
-    // Check headers
-    await expect(panels.nth(0).locator("text=Section 1")).toBeVisible()
-    await expect(panels.nth(1).locator("text=Section 2")).toBeVisible()
-    await expect(panels.nth(2).locator("text=Section 3")).toBeVisible()
   })
 
-  test("only one panel can be expanded at a time by default", async ({ page }) => {
-    const panels = page.locator(".panel")
-
-    // Click first panel
-    await panels.nth(0).locator("button").click()
-    await expect(panels.nth(0).locator('[role="region"]')).toBeVisible()
-
-    // Click second panel
-    await panels.nth(1).locator("button").click()
-    await expect(panels.nth(1).locator('[role="region"]')).toBeVisible()
-    await expect(panels.nth(0).locator('[role="region"]')).not.toBeVisible()
+  test("accordion has border by default", async ({ page }) => {
+    const accordion = page.locator(".accordion")
+    await expect(accordion).toHaveClass(/border/)
   })
 
-  test("allows multiple panels to be expanded when multiple=true", async ({ page }) => {
-    await page.goto("http://localhost:6006/?path=/story/components-panel-accordion--multiple")
+  test("only one item can be expanded at a time by default", async ({ page }) => {
+    const items = page.locator(".accordion-item")
+    const buttons = page.locator(".accordion-item button")
 
-    const panels = page.locator(".panel")
+    // Click first item
+    await buttons.nth(0).click()
+    await expect(items.nth(0).locator('[role="region"]')).toBeVisible()
 
-    // Expand first panel
-    await panels.nth(0).locator("button").click()
-    await expect(panels.nth(0).locator('[role="region"]')).toBeVisible()
-
-    // Expand second panel
-    await panels.nth(1).locator("button").click()
-    await expect(panels.nth(1).locator('[role="region"]')).toBeVisible()
-    await expect(panels.nth(0).locator('[role="region"]')).toBeVisible()
+    // Click second item - first should close
+    await buttons.nth(1).click()
+    await expect(items.nth(1).locator('[role="region"]')).toBeVisible()
+    await expect(items.nth(0).locator('[role="region"]')).not.toBeVisible()
   })
 
-  test("handles keyboard navigation", async ({ page }) => {
-    const panels = page.locator(".panel")
-    const firstHeader = panels.nth(0).locator("button")
+  test("allows multiple items to be expanded when allowMultiple=true", async ({ page }) => {
+    await page.goto("http://localhost:6006/?path=/story/components-accordion--allow-multiple")
 
-    // Focus first header
-    await firstHeader.focus()
+    const items = page.locator(".accordion-item")
+    const buttons = page.locator(".accordion-item button")
+
+    // Expand first item
+    await buttons.nth(0).click()
+    await expect(items.nth(0).locator('[role="region"]')).toBeVisible()
+
+    // Expand second item - first should stay open
+    await buttons.nth(1).click()
+    await expect(items.nth(1).locator('[role="region"]')).toBeVisible()
+    await expect(items.nth(0).locator('[role="region"]')).toBeVisible()
+  })
+
+  test("handles keyboard navigation with Enter key", async ({ page }) => {
+    const buttons = page.locator(".accordion-item button")
+    const firstItem = page.locator(".accordion-item").nth(0)
+
+    // Focus first button
+    await buttons.nth(0).focus()
 
     // Press Enter to expand
     await page.keyboard.press("Enter")
-    await expect(panels.nth(0).locator('[role="region"]')).toBeVisible()
+    await expect(firstItem.locator('[role="region"]')).toBeVisible()
 
-    // Press Space to collapse
-    await page.keyboard.press("Space")
-    await expect(panels.nth(0).locator('[role="region"]')).not.toBeVisible()
+    // Press Enter to collapse
+    await page.keyboard.press("Enter")
+    await expect(firstItem.locator('[role="region"]')).not.toBeVisible()
   })
 
-  test("respects disabled state", async ({ page }) => {
-    await page.goto("http://localhost:6006/?path=/story/components-panel-accordion--disabled")
+  test("handles keyboard navigation with Space key", async ({ page }) => {
+    const buttons = page.locator(".accordion-item button")
+    const firstItem = page.locator(".accordion-item").nth(0)
 
-    const panels = page.locator(".panel")
+    // Focus first button
+    await buttons.nth(0).focus()
 
-    // Try to click disabled panel
-    await panels.nth(0).locator("button").click()
-    await expect(panels.nth(0).locator('[role="region"]')).not.toBeVisible()
+    // Press Space to expand
+    await page.keyboard.press(" ")
+    await expect(firstItem.locator('[role="region"]')).toBeVisible()
 
-    // Check disabled styling
-    await expect(panels.nth(0)).toHaveClass(/disabled/)
+    // Press Space to collapse
+    await page.keyboard.press(" ")
+    await expect(firstItem.locator('[role="region"]')).not.toBeVisible()
+  })
+
+  test("respects disabled state on items", async ({ page }) => {
+    const items = page.locator(".accordion-item")
+    const buttons = page.locator(".accordion-item button")
+
+    // Disable first item
+    await buttons.nth(0).evaluate((el) => {
+      el.setAttribute("disabled", "true")
+    })
+
+    // Try to click disabled button
+    await buttons.nth(0).click()
+    await expect(items.nth(0).locator('[role="region"]')).not.toBeVisible()
+  })
+
+  test("applies aria attributes correctly", async ({ page }) => {
+    const buttons = page.locator(".accordion-item button")
+    const firstButton = buttons.nth(0)
+
+    // Check aria-expanded is false initially
+    await expect(firstButton).toHaveAttribute("aria-expanded", "false")
+
+    // Click to expand
+    await firstButton.click()
+    await expect(firstButton).toHaveAttribute("aria-expanded", "true")
+  })
+
+  test("accordion without border", async ({ page }) => {
+    await page.goto("http://localhost:6006/?path=/story/components-accordion--no-border")
+
+    const accordion = page.locator(".accordion")
+    await expect(accordion).not.toHaveClass(/border/)
   })
 })

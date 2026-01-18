@@ -17,66 +17,76 @@ Usage:
 </Accordion>
 ```
 -->
-<script>
-import { setContext } from "svelte"
+<script lang="ts">
+  import "@/lib/twintrinsic.css";
+  import type { Snippet } from "svelte";
+  import { setContext } from "svelte";
 
-const {
-  /** @type {string} - Additional CSS classes */
-  class: className = "",
+  interface Props {
+    /** Additional CSS classes */
+    class?: string;
+    /** HTML id for accessibility */
+    id?: string;
+    /** Whether to allow multiple panels to be open simultaneously */
+    allowMultiple?: boolean;
+    /** Index of the initially expanded item (null for all collapsed) */
+    defaultExpanded?: number | null;
+    /** Whether to add a border around the accordion */
+    bordered?: boolean;
+    /** Change event handler */
+    onchange?: (event: CustomEvent<{ expandedItems: number[] }>) => void;
+    children?: Snippet;
+  }
 
-  /** @type {string} - HTML id for accessibility */
-  id = crypto.randomUUID(),
-
-  /** @type {boolean} - Whether to allow multiple panels to be open simultaneously */
-  allowMultiple = false,
-
-  /** @type {number|null} - Index of the initially expanded item (null for all collapsed) */
-  defaultExpanded = 0,
-
-  /** @type {boolean} - Whether to add a border around the accordion */
-  bordered = true,
-
-  /** @type {(event: CustomEvent) => void} - Change event handler */
-  onchange,
-
-  children,
-} = $props()
+  let {
+    class: className = "",
+    id = crypto.randomUUID(),
+    allowMultiple = false,
+    defaultExpanded = 0,
+    bordered = true,
+    onchange,
+    children,
+  }: Props = $props();
 
 // Track expanded items
-let expandedItems = $state(new Set())
+let expandedItems = $state<Set<number>>(new Set());
 
 // Initialize with default expanded item if provided
 $effect(() => {
   if (defaultExpanded !== null) {
-    expandedItems.clear()
-    expandedItems.add(defaultExpanded)
+    expandedItems.clear();
+    expandedItems.add(defaultExpanded);
   }
-})
+});
 
 // Set up context for accordion items
 $effect(() => {
   const accordionContext = {
-    registerItem: (itemId, index) => {
+    registerItem: (itemId: string, index: number): boolean => {
       // Return whether this item should be expanded initially
-      return expandedItems.has(index)
+      return expandedItems.has(index);
     },
-    toggleItem: (index, expanded) => {
+    toggleItem: (index: number, expanded: boolean): void => {
       if (expanded) {
         if (!allowMultiple) {
           // Close all other items
-          expandedItems.clear()
+          expandedItems.clear();
         }
-        expandedItems.add(index)
+        expandedItems.add(index);
       } else {
-        expandedItems.delete(index)
+        expandedItems.delete(index);
       }
 
-      onchange?.(new CustomEvent("change", { detail: { expandedItems: Array.from(expandedItems) } }))
+      onchange?.(
+        new CustomEvent("change", {
+          detail: { expandedItems: Array.from(expandedItems) },
+        })
+      );
     },
     allowMultiple,
-  }
-  setContext("accordion", accordionContext)
-})
+  };
+  setContext("accordion", accordionContext);
+});
 </script>
 
 <div 

@@ -11,75 +11,85 @@ Usage:
 </AccordionItem>
 ```
 -->
-<script>
-import { slide } from "svelte/transition"
-import { getContext, onMount } from "svelte"
+<script lang="ts">
+  import "@/lib/twintrinsic.css";
+  import type { Snippet } from "svelte";
+  import { getContext, onMount } from "svelte";
+  import { slide } from "svelte/transition";
 
-const {
-  /** @type {string} - Additional CSS classes */
-  class: className = "",
+  interface AccordionContext {
+    registerItem: (itemId: string, index: number) => boolean;
+    toggleItem: (index: number, expanded: boolean) => void;
+    allowMultiple: boolean;
+  }
 
-  /** @type {string} - HTML id for accessibility */
-  id = crypto.randomUUID(),
+  interface Props {
+    /** Additional CSS classes */
+    class?: string;
+    /** HTML id for accessibility */
+    id?: string;
+    /** ARIA label for the header button */
+    ariaLabel?: string;
+    /** Whether to disable the item controls */
+    disabled?: boolean;
+    /** Whether to show the expand/collapse icon */
+    showIcon?: boolean;
+    children?: Snippet;
+    header?: Snippet;
+  }
 
-  /** @type {string} - ARIA label for the header button */
-  ariaLabel,
-
-  /** @type {boolean} - Whether to disable the item controls */
-  disabled = false,
-
-  /** @type {boolean} - Whether to show the expand/collapse icon */
-  showIcon = true,
-
-  children,
-  header,
-} = $props()
+  let {
+    class: className = "",
+    id = crypto.randomUUID(),
+    ariaLabel,
+    disabled = false,
+    showIcon = true,
+    children,
+    header,
+  }: Props = $props();
 
 // Get accordion context
-const accordion = getContext("accordion")
+const accordion = getContext<AccordionContext | undefined>("accordion");
 
 // Track expanded state
-let isExpanded = $state(false)
-let index = $state(-1)
+let isExpanded = $state(false);
+let index = $state(-1);
+let element: HTMLDivElement | undefined = $state();
 
 // Register with parent accordion on mount
 onMount(() => {
   // Find our index among siblings
-  const parent = element.parentElement
-  if (parent) {
-    const items = Array.from(parent.children)
-    index = items.indexOf(element)
+  const parent = element?.parentElement;
+  if (parent && accordion) {
+    const items = Array.from(parent.children);
+    index = items.indexOf(element!);
 
     // Check if we should be expanded initially
-    isExpanded = accordion.registerItem(id, index)
+    isExpanded = accordion.registerItem(id, index);
   }
 
   return () => {
     // Cleanup if needed
-  }
-})
+  };
+});
 
 // Handle toggle
-function handleToggle() {
-  if (disabled) return
+function handleToggle(): void {
+  if (disabled || !accordion) return;
 
-  isExpanded = !isExpanded
-  accordion.toggleItem(index, isExpanded)
+  isExpanded = !isExpanded;
+  accordion.toggleItem(index, isExpanded);
 }
 
 // Handle keyboard navigation
-function handleKeydown(event) {
-  if (disabled) return
+function handleKeydown(event: KeyboardEvent): void {
+  if (disabled) return;
 
   if (event.key === "Enter" || event.key === " ") {
-    event.preventDefault()
-    handleToggle()
+    event.preventDefault();
+    handleToggle();
   }
 }
-
-// Reference to the element
-let element = $state()
-let contentEl = $state()
 </script>
 
 <div 
@@ -141,7 +151,6 @@ let contentEl = $state()
       role="region"
       aria-labelledby="{id}-header"
       transition:slide={{ duration: 200 }}
-      bind:this={contentEl}
     >
       {@render children?.()}
     </div>

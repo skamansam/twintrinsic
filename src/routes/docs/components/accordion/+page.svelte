@@ -7,18 +7,16 @@ Documentation page for the Accordion component
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import Container from "$lib/components/Container/Container.svelte"
 import Accordion from "$lib/components/Accordion/Accordion.svelte"
 import AccordionItem from "$lib/components/Accordion/AccordionItem.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Panel from "$lib/components/Panel/Panel.svelte"
 </script>
 
 <article class="prose dark:prose-invert max-w-none">
   <h1>Accordion</h1>
   <p>
-    A group of collapsible panels where only one can be expanded at a time by default.
-    Built on top of the Panel component with coordinated expansion behavior.
+    A group of collapsible items where only one can be expanded at a time by default.
+    Provides keyboard navigation and full accessibility support with ARIA attributes.
   </p>
 
   <h2>Usage</h2>
@@ -31,20 +29,26 @@ import Panel from "$lib/components/Panel/Panel.svelte"
     title="Basic Usage"
     code={`
 <Accordion>
-  <Panel>
+  <AccordionItem>
     <svelte:fragment slot="header">Section 1</svelte:fragment>
     Content 1
-  </Panel>
-  <Panel>
+  </AccordionItem>
+  <AccordionItem>
     <svelte:fragment slot="header">Section 2</svelte:fragment>
     Content 2
-  </Panel>
+  </AccordionItem>
 </Accordion>
 
-<Accordion multiple>
-  <!-- Allows multiple panels to be expanded -->
-  <Panel>Section 1</Panel>
-  <Panel>Section 2</Panel>
+<Accordion allowMultiple>
+  <!-- Allows multiple items to be expanded -->
+  <AccordionItem>
+    <svelte:fragment slot="header">Section 1</svelte:fragment>
+    Content 1
+  </AccordionItem>
+  <AccordionItem>
+    <svelte:fragment slot="header">Section 2</svelte:fragment>
+    Content 2
+  </AccordionItem>
 </Accordion>
     `}
   />
@@ -54,64 +58,84 @@ import Panel from "$lib/components/Panel/Panel.svelte"
   <h3>Basic Accordion</h3>
   <div class="not-prose mb-8">
     <Accordion>
-      <Panel>
+      <AccordionItem>
         <svelte:fragment slot="header">Section 1</svelte:fragment>
         <div class="p-4">
           <p>Content for section 1. Only one section can be open at a time.</p>
         </div>
-      </Panel>
-      <Panel>
+      </AccordionItem>
+      <AccordionItem>
         <svelte:fragment slot="header">Section 2</svelte:fragment>
         <div class="p-4">
           <p>Content for section 2. Opening this will close other sections.</p>
         </div>
-      </Panel>
-      <Panel>
+      </AccordionItem>
+      <AccordionItem>
         <svelte:fragment slot="header">Section 3</svelte:fragment>
         <div class="p-4">
           <p>Content for section 3.</p>
         </div>
-      </Panel>
+      </AccordionItem>
     </Accordion>
   </div>
 
   <h3>Multiple Sections</h3>
   <div class="not-prose mb-8">
-    <Accordion multiple>
-      <Panel>
+    <Accordion allowMultiple>
+      <AccordionItem>
         <svelte:fragment slot="header">Multiple 1</svelte:fragment>
         <div class="p-4">
           <p>Multiple sections can be expanded at once.</p>
         </div>
-      </Panel>
-      <Panel>
+      </AccordionItem>
+      <AccordionItem>
         <svelte:fragment slot="header">Multiple 2</svelte:fragment>
         <div class="p-4">
           <p>Try expanding this while the other is open.</p>
         </div>
-      </Panel>
+      </AccordionItem>
     </Accordion>
   </div>
 
-  <h3>Without Dividers</h3>
+  <h3>Without Border</h3>
   <div class="not-prose mb-8">
-    <Accordion dividers={false}>
-      <Panel>
-        <svelte:fragment slot="header">No Dividers 1</svelte:fragment>
+    <Accordion bordered={false}>
+      <AccordionItem>
+        <svelte:fragment slot="header">No Border 1</svelte:fragment>
         <div class="p-4">
-          <p>This accordion has no dividers between panels.</p>
+          <p>This accordion has no border around it.</p>
         </div>
-      </Panel>
-      <Panel>
-        <svelte:fragment slot="header">No Dividers 2</svelte:fragment>
+      </AccordionItem>
+      <AccordionItem>
+        <svelte:fragment slot="header">No Border 2</svelte:fragment>
         <div class="p-4">
-          <p>Notice the clean look without separators.</p>
+          <p>Notice the clean look without a border.</p>
         </div>
-      </Panel>
+      </AccordionItem>
+    </Accordion>
+  </div>
+
+  <h3>All Collapsed</h3>
+  <div class="not-prose mb-8">
+    <Accordion defaultExpanded={null}>
+      <AccordionItem>
+        <svelte:fragment slot="header">Collapsed 1</svelte:fragment>
+        <div class="p-4">
+          <p>All items start in a collapsed state.</p>
+        </div>
+      </AccordionItem>
+      <AccordionItem>
+        <svelte:fragment slot="header">Collapsed 2</svelte:fragment>
+        <div class="p-4">
+          <p>Users must click to expand any section.</p>
+        </div>
+      </AccordionItem>
     </Accordion>
   </div>
 
   <h2>Props</h2>
+
+  <h3>Accordion</h3>
   <div class="overflow-x-auto">
     <table>
       <thead>
@@ -124,22 +148,86 @@ import Panel from "$lib/components/Panel/Panel.svelte"
       </thead>
       <tbody>
         <tr>
-          <td><code>multiple</code></td>
+          <td><code>allowMultiple</code></td>
           <td><code>boolean</code></td>
           <td><code>false</code></td>
-          <td>Allow multiple panels to be expanded</td>
+          <td>Allow multiple items to be expanded simultaneously</td>
         </tr>
         <tr>
-          <td><code>dividers</code></td>
+          <td><code>bordered</code></td>
           <td><code>boolean</code></td>
           <td><code>true</code></td>
-          <td>Show dividers between panels</td>
+          <td>Add a border around the accordion</td>
         </tr>
+        <tr>
+          <td><code>defaultExpanded</code></td>
+          <td><code>number | null</code></td>
+          <td><code>0</code></td>
+          <td>Index of initially expanded item (null for all collapsed)</td>
+        </tr>
+        <tr>
+          <td><code>id</code></td>
+          <td><code>string</code></td>
+          <td><code>random UUID</code></td>
+          <td>HTML id for accessibility</td>
+        </tr>
+        <tr>
+          <td><code>class</code></td>
+          <td><code>string</code></td>
+          <td><code>""</code></td>
+          <td>Additional CSS classes</td>
+        </tr>
+        <tr>
+          <td><code>onchange</code></td>
+          <td><code>function</code></td>
+          <td><code>undefined</code></td>
+          <td>Callback fired when expanded items change</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>AccordionItem</h3>
+  <div class="overflow-x-auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Prop</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
         <tr>
           <td><code>disabled</code></td>
           <td><code>boolean</code></td>
           <td><code>false</code></td>
-          <td>Disable all panels</td>
+          <td>Disable the item from being toggled</td>
+        </tr>
+        <tr>
+          <td><code>showIcon</code></td>
+          <td><code>boolean</code></td>
+          <td><code>true</code></td>
+          <td>Show the expand/collapse icon</td>
+        </tr>
+        <tr>
+          <td><code>ariaLabel</code></td>
+          <td><code>string</code></td>
+          <td><code>undefined</code></td>
+          <td>ARIA label for the header button</td>
+        </tr>
+        <tr>
+          <td><code>id</code></td>
+          <td><code>string</code></td>
+          <td><code>random UUID</code></td>
+          <td>HTML id for accessibility</td>
+        </tr>
+        <tr>
+          <td><code>class</code></td>
+          <td><code>string</code></td>
+          <td><code>""</code></td>
+          <td>Additional CSS classes</td>
         </tr>
       </tbody>
     </table>
@@ -158,8 +246,8 @@ import Panel from "$lib/components/Panel/Panel.svelte"
       <tbody>
         <tr>
           <td><code>change</code></td>
-          <td><code>{ panel, expanded, activePanels }</code></td>
-          <td>Fired when a panel's expanded state changes</td>
+          <td><code>expandedItems: number[]</code></td>
+          <td>Fired when the expanded items change</td>
         </tr>
       </tbody>
     </table>

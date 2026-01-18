@@ -153,7 +153,7 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
   <div class="app-header-container">
     <!-- Brand -->
     <div class="app-header-brand">
-      <a {brandHref} class="app-header-brand-link" aria-label={brandName}>
+      <a href={brandHref} class="app-header-brand-link" aria-label={brandName}>
         {@render (logo ?? defaultLogo)()}
       </a>
     </div>
