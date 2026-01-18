@@ -18,7 +18,6 @@ Usage:
 ```
 -->
 <script lang="ts">
-  import "@/lib/twintrinsic.css";
   import type { Snippet } from "svelte";
   import { setContext } from "svelte";
 

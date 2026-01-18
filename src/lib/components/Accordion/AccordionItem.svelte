@@ -12,7 +12,6 @@ Usage:
 ```
 -->
 <script lang="ts">
-  import "@/lib/twintrinsic.css";
   import type { Snippet } from "svelte";
   import { getContext, onMount } from "svelte";
   import { slide } from "svelte/transition";
