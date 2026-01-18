@@ -2,6 +2,21 @@
 
 This document provides instructions for LLM agents working on the Twintrinsic component library.
 
+## Coding Guidelines
+
+- Use early returns when possible
+- Avoid using else statements, in lieu of early returns
+- Always add documentation when creating new functions and classes
+- Use modern web technologies as much as possible, favoring CSS over JS where possible
+- Make everything accessible and add the proper ARIA labels where necessary
+- All CSS should use Tailwind classes and `@reference` the Tailwind CSS file where possible
+
+## Documentation Guidelines
+
+- Use JSDoc comments where necessary
+- Add JSDoc types where necessary
+- Reference TypeScript types in `*.d.ts` files where possible
+
 ## Project Overview
 
 **Twintrinsic** is a Tailwind-based Svelte 5 component library emphasizing accessibility, extensibility, and performance through semantic HTML and CSS-first approaches.
@@ -202,7 +217,8 @@ onchange?.(new CustomEvent("change", { detail: value }));
 ### Tailwind CSS
 
 - Use Tailwind utility classes in markup
-- Add custom colors/themes to `lib/twintrinsic.css` @theme rule
+- Instead of creating inline colors, add them to the `@theme` rule in `lib/twintrinsic.css`
+- Colors should have semantic names, such as `primary`, `secondary`, `success`, `danger`, etc.
 - Reference `@/lib/twintrinsic.css` in all components
 - Avoid inline styles; use Tailwind classes
 
