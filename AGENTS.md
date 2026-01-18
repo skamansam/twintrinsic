@@ -343,6 +343,7 @@ pnpm format           # Format with Biome
 - [ ] Type checking passes (`pnpm check`)
 - [ ] Code formatted (`pnpm format`)
 - [ ] Accessibility verified (keyboard nav, ARIA labels, semantic HTML)
+- [ ] **Completion checklist updated** (`src/routes/docs/completion/+page.svelte`) - Mark component as updated and check off implemented web APIs/technologies
 
 ## Important Notes
 

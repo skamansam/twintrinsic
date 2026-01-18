@@ -3,11 +3,11 @@
 Documentation site layout with left navigation, right theme sidebar, and header
 -->
 <script>
+import { page } from "$app/stores"
 import App from "$lib/components/App/App.svelte"
 import AppHeader from "$lib/components/AppHeader/AppHeader.svelte"
-import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
-import { page } from "$app/stores"
 import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte"
+import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
 import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
 
 const navItems = [
@@ -18,6 +18,7 @@ const navItems = [
     current: $page.url.pathname.startsWith("/docs/components"),
   },
   { label: "Theming", href: "/docs/theming", current: $page.url.pathname === "/docs/theming" },
+  { label: "Completion", href: "/docs/completion", current: $page.url.pathname === "/docs/completion" },
 ]
 
 let leftSidebarExpanded = true
@@ -29,17 +30,18 @@ const componentLinks = [
   { category: "Core", name: "App", href: "/docs/components/app" },
 
   // Layout Components
-  { category: "Layout", name: "Container", href: "/docs/components/container" },
+  { category: "Layout", name: "Card", href: "/docs/components/card" },
+  { name: "Container", href: "/docs/components/container" },
   { name: "Panel", href: "/docs/components/panel" },
   { name: "Separator", href: "/docs/components/separator" },
   { name: "Sidebar", href: "/docs/components/sidebar" },
 
   // Navigation Components
-  { category: "Navigation", name: "AppHeader", href: "/docs/components/appheader" },
+  { category: "Navigation", name: "Accordion", href: "/docs/components/accordion" },
+  { name: "AppHeader", href: "/docs/components/appheader" },
   { name: "BottomBar", href: "/docs/components/bottombar" },
   { name: "Breadcrumb", href: "/docs/components/breadcrumb" },
   { name: "Menu", href: "/docs/components/menu" },
-  // { name: "MenuItem", href: "/docs/components/menuitem" },
   { name: "Tabs", href: "/docs/components/tabs" },
 
   // Data Display Components
@@ -47,6 +49,7 @@ const componentLinks = [
   { name: "Badge", href: "/docs/components/badge" },
   { name: "Carousel", href: "/docs/components/carousel" },
   { name: "Chip", href: "/docs/components/chip" },
+  { name: "CodeBlock", href: "/docs/components/codeblock" },
   { name: "DataTable", href: "/docs/components/datatable" },
   { name: "Progress", href: "/docs/components/progress" },
   { name: "Skeleton", href: "/docs/components/skeleton" },
@@ -57,8 +60,7 @@ const componentLinks = [
   { name: "Tree", href: "/docs/components/tree" },
 
   // Form Components
-  { category: "Form", name: "AutoComplete", href: "/docs/components/autocomplete" },
-  { name: "Button", href: "/docs/components/button" },
+  { category: "Form", name: "Button", href: "/docs/components/button" },
   { name: "Calendar", href: "/docs/components/calendar" },
   { name: "Checkbox", href: "/docs/components/checkbox" },
   { name: "ColorPicker", href: "/docs/components/colorpicker" },
@@ -68,19 +70,19 @@ const componentLinks = [
   { name: "FloatLabel", href: "/docs/components/floatlabel" },
   { name: "Form", href: "/docs/components/form" },
   { name: "FormField", href: "/docs/components/formfield" },
+  { name: "Input", href: "/docs/components/input" },
   { name: "InputSwitch", href: "/docs/components/inputswitch" },
   { name: "InvalidState", href: "/docs/components/invalidstate" },
   { name: "Knob", href: "/docs/components/knob" },
-  { name: "ListInput", href: "/docs/components/listinput" },
   { name: "Listbox", href: "/docs/components/listbox" },
   { name: "NumberInput", href: "/docs/components/numberinput" },
   { name: "Radio", href: "/docs/components/radio" },
   { name: "RadioGroup", href: "/docs/components/radiogroup" },
   { name: "Rating", href: "/docs/components/rating" },
+  { name: "Select", href: "/docs/components/select" },
   { name: "SelectGroup", href: "/docs/components/selectgroup" },
   { name: "Slider", href: "/docs/components/slider" },
   { name: "Switch", href: "/docs/components/switch" },
-  { name: "TextInput", href: "/docs/components/textinput" },
   { name: "Textarea", href: "/docs/components/textarea" },
 
   // Feedback Components
@@ -90,6 +92,7 @@ const componentLinks = [
 
   // Utility Components
   { category: "Utility", name: "Icon", href: "/docs/components/icon" },
+  { name: "LazyPanel", href: "/docs/components/lazypanel" },
   { name: "Masonry", href: "/docs/components/masonry" },
   { name: "ThemeToggle", href: "/docs/components/themetoggle" },
 ]
