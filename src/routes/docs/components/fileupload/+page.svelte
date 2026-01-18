@@ -3,9 +3,9 @@
 FileUpload documentation page
 -->
 <script lang="ts">
-import Container from "$lib/components/Container/Container.svelte"
-import FileUpload from "$lib/components/FileUpload/FileUpload.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import FileUpload from "$lib/components/Form/FileUpload.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -21,14 +21,14 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   <h3>Basic File Upload</h3>
   <div class="not-prose mb-8 max-w-xl">
     <FileUpload 
-      dropzoneText="Drop files here or click to browse"
-      browseText="Select Files"
+      dropzoneLabel="Drop files here or click to browse"
+      browseLabel="Select Files"
     />
   </div>
 
   <pre class="language-svelte"><code>{`<FileUpload 
-  dropzoneText="Drop files here or click to browse"
-  browseText="Select Files"
+  dropzoneLabel="Drop files here or click to browse"
+  browseLabel="Select Files"
   onchange={(e) => console.log(e.detail.files)}
 />`}</code></pre>
 
@@ -36,18 +36,18 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   <div class="not-prose mb-8 max-w-xl">
     <FileUpload 
       accept="image/*"
-      dropzoneText="Drop images here or click to browse"
-      browseText="Select Images"
-      maxFileSize={2097152}
+      dropzoneLabel="Drop images here or click to browse"
+      browseLabel="Select Images"
+      maxSize={2097152}
       onchange={(e) => console.log(e.detail.files)}
     />
   </div>
 
   <pre class="language-svelte"><code>{`<FileUpload 
   accept="image/*"
-  dropzoneText="Drop images here or click to browse"
-  browseText="Select Images"
-  maxFileSize={2097152} // 2MB
+  dropzoneLabel="Drop images here or click to browse"
+  browseLabel="Select Images"
+  maxSize={2097152} // 2MB
   onchange={(e) => console.log(e.detail.files)}
 />`}</code></pre>
 
@@ -55,15 +55,15 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   <div class="not-prose mb-8 max-w-xl">
     <FileUpload 
       accept=".pdf,.doc,.docx,.txt"
-      dropzoneText="Drop documents here or click to browse"
-      browseText="Select Documents"
+      dropzoneLabel="Drop documents here or click to browse"
+      browseLabel="Select Documents"
     />
   </div>
 
   <pre class="language-svelte"><code>{`<FileUpload 
   accept=".pdf,.doc,.docx,.txt"
-  dropzoneText="Drop documents here or click to browse"
-  browseText="Select Documents"
+  dropzoneLabel="Drop documents here or click to browse"
+  browseLabel="Select Documents"
   onchange={(e) => console.log(e.detail.files)}
 />`}</code></pre>
 
@@ -71,15 +71,15 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   <div class="not-prose mb-8 max-w-xl">
     <FileUpload 
       multiple={false}
-      dropzoneText="Drop a file here or click to browse"
-      browseText="Select File"
+      dropzoneLabel="Drop a file here or click to browse"
+      browseLabel="Select File"
     />
   </div>
 
   <pre class="language-svelte"><code>{`<FileUpload 
   multiple={false}
-  dropzoneText="Drop a file here or click to browse"
-  browseText="Select File"
+  dropzoneLabel="Drop a file here or click to browse"
+  browseLabel="Select File"
   onchange={(e) => console.log(e.detail.files)}
 />`}</code></pre>
 
@@ -88,99 +88,70 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <FileUpload 
       accept="image/*"
       maxFiles={3}
-      maxFileSize={1048576}
-      dropzoneText="Drop up to 3 images (max 1MB each)"
-      browseText="Select Images"
-      validateOnDrop
-      onerror={(e) => console.log(e.detail.error)}
+      maxSize={1048576}
+      dropzoneLabel="Drop up to 3 images (max 1MB each)"
+      browseLabel="Select Images"
+      onerror={(e) => console.log(e.detail.errors)}
     />
   </div>
 
   <pre class="language-svelte"><code>{`<FileUpload 
   accept="image/*"
   maxFiles={3}
-  maxFileSize={1048576} // 1MB
-  dropzoneText="Drop up to 3 images (max 1MB each)"
-  browseText="Select Images"
-  validateOnDrop
-  onerror={(e) => console.log(e.detail.error)}
+  maxSize={1048576} // 1MB
+  dropzoneLabel="Drop up to 3 images (max 1MB each)"
+  browseLabel="Select Images"
+  onerror={(e) => console.log(e.detail.errors)}
 />`}</code></pre>
 
   <h3>Disabled State</h3>
   <div class="not-prose mb-8 max-w-xl">
     <FileUpload 
       disabled
-      dropzoneText="Upload disabled"
-      browseText="Cannot select files"
+      dropzoneLabel="Upload disabled"
+      browseLabel="Cannot select files"
     />
   </div>
 
   <pre class="language-svelte"><code>{`<FileUpload 
   disabled
-  dropzoneText="Upload disabled"
-  browseText="Cannot select files"
+  dropzoneLabel="Upload disabled"
+  browseLabel="Cannot select files"
 />`}</code></pre>
 
   <h3>Custom Styling</h3>
   <div class="not-prose mb-8 max-w-xl">
     <FileUpload 
       class="border-2 border-dashed border-primary-500 dark:border-primary-400 rounded-xl p-8"
-      dropzoneText="Drop files here or click to browse"
-      browseText="Select Files"
+      dropzoneLabel="Drop files here or click to browse"
+      browseLabel="Select Files"
     />
   </div>
 
   <pre class="language-svelte"><code>{`<FileUpload 
   class="border-2 border-dashed border-primary-500 dark:border-primary-400 rounded-xl p-8"
-  dropzoneText="Drop files here or click to browse"
-  browseText="Select Files"
+  dropzoneLabel="Drop files here or click to browse"
+  browseLabel="Select Files"
 />`}</code></pre>
 
-  <h3>With Upload Handler</h3>
+  <h3>With Auto Upload</h3>
   <div class="not-prose mb-8 max-w-xl">
     <FileUpload 
-      dropzoneText="Drop files here or click to browse"
-      browseText="Select Files"
-      showProgress
+      dropzoneLabel="Drop files here or click to browse"
+      browseLabel="Select Files"
       autoUpload
+      uploadUrl="/api/upload"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<script>
-  // Example upload function
-  async function handleUpload(files) {
-    // Create FormData
-    const formData = new FormData();
-    files.forEach(file => {
-      formData.append('files', file);
-    });
-    
-    try {
-      // Make API request
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData
-      });
-      
-      if (!response.ok) {
-        throw new Error('Upload failed');
-      }
-      
-      const result = await response.json();
-      return { success: true, urls: result.urls };
-    } catch (error) {
-      return { success: false, error: error.message };
-    }
-  }
-</script>
-
-<FileUpload 
-  dropzoneText="Drop files here or click to browse"
-  browseText="Select Files"
-  showProgress
+  <pre class="language-svelte"><code>{`<FileUpload 
+  dropzoneLabel="Drop files here or click to browse"
+  browseLabel="Select Files"
   autoUpload
-  onUpload={handleUpload}
-  onupload={(e) => console.log(e.detail)}
+  uploadUrl="/api/upload"
+  onsuccess={(e) => console.log('Upload successful', e.detail)}
+  onerror={(e) => console.log('Upload failed', e.detail.errors)}
+  onprogress={(e) => console.log('Progress:', e.detail.progress)}
 />`}</code></pre>
 
   <h2>Props</h2>
@@ -213,9 +184,9 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
         <td>Maximum number of files allowed</td>
       </tr>
       <tr>
-        <td><code>maxFileSize</code></td>
+        <td><code>maxSize</code></td>
         <td><code>number</code></td>
-        <td><code>5242880</code> (5MB)</td>
+        <td><code>undefined</code></td>
         <td>Maximum file size in bytes</td>
       </tr>
       <tr>
@@ -225,46 +196,10 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
         <td>Whether the upload is disabled</td>
       </tr>
       <tr>
-        <td><code>required</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether file upload is required</td>
-      </tr>
-      <tr>
-        <td><code>dropzoneText</code></td>
-        <td><code>string</code></td>
-        <td><code>"Drag and drop files here"</code></td>
-        <td>Text displayed in the dropzone</td>
-      </tr>
-      <tr>
-        <td><code>browseText</code></td>
-        <td><code>string</code></td>
-        <td><code>"Browse files"</code></td>
-        <td>Text for the browse button</td>
-      </tr>
-      <tr>
-        <td><code>errorText</code></td>
-        <td><code>string</code></td>
-        <td><code>"Error uploading files"</code></td>
-        <td>Default error message</td>
-      </tr>
-      <tr>
-        <td><code>showFileList</code></td>
+        <td><code>showPreviews</code></td>
         <td><code>boolean</code></td>
         <td><code>true</code></td>
-        <td>Whether to show the list of selected files</td>
-      </tr>
-      <tr>
-        <td><code>showProgress</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to show upload progress</td>
-      </tr>
-      <tr>
-        <td><code>validateOnDrop</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to validate files on drop</td>
+        <td>Whether to show file previews</td>
       </tr>
       <tr>
         <td><code>autoUpload</code></td>
@@ -273,10 +208,34 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
         <td>Whether to automatically upload files after selection</td>
       </tr>
       <tr>
-        <td><code>onUpload</code></td>
-        <td><code>Function</code></td>
+        <td><code>uploadUrl</code></td>
+        <td><code>string</code></td>
         <td><code>undefined</code></td>
-        <td>Function to handle file uploads</td>
+        <td>URL for auto upload functionality</td>
+      </tr>
+      <tr>
+        <td><code>uploadHeaders</code></td>
+        <td><code>Object</code></td>
+        <td><code>undefined</code></td>
+        <td>Custom headers for upload requests</td>
+      </tr>
+      <tr>
+        <td><code>dropzoneLabel</code></td>
+        <td><code>string</code></td>
+        <td><code>"Drag files here or click to browse"</code></td>
+        <td>Text displayed in the dropzone</td>
+      </tr>
+      <tr>
+        <td><code>browseLabel</code></td>
+        <td><code>string</code></td>
+        <td><code>"Browse"</code></td>
+        <td>Text for the browse button</td>
+      </tr>
+      <tr>
+        <td><code>ariaLabel</code></td>
+        <td><code>string</code></td>
+        <td><code>"File upload"</code></td>
+        <td>ARIA label for accessibility</td>
       </tr>
       <tr>
         <td><code>name</code></td>
@@ -315,28 +274,28 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
         <td>Fired when selected files change</td>
       </tr>
       <tr>
-        <td><code>upload</code></td>
-        <td><code>{`{ success: boolean, urls?: string[], error?: string }`}</code></td>
-        <td>Fired when upload completes or fails</td>
-      </tr>
-      <tr>
         <td><code>error</code></td>
-        <td><code>{`{ error: string }`}</code></td>
-        <td>Fired when a validation or upload error occurs</td>
+        <td><code>{`{ errors: Array }`}</code></td>
+        <td>Fired when validation or upload errors occur</td>
       </tr>
       <tr>
         <td><code>progress</code></td>
-        <td><code>{`{ progress: number }`}</code></td>
+        <td><code>{`{ progress: number, files: File[] }`}</code></td>
         <td>Fired during upload to indicate progress (0-100)</td>
+      </tr>
+      <tr>
+        <td><code>success</code></td>
+        <td><code>{`{ response: any, files: File[] }`}</code></td>
+        <td>Fired when upload completes successfully</td>
       </tr>
     </tbody>
   </table>
 
-  <h2>Slots</h2>
+  <h2>Snippets</h2>
   <table>
     <thead>
       <tr>
-        <th>Slot</th>
+        <th>Snippet</th>
         <th>Props</th>
         <th>Description</th>
       </tr>
@@ -344,18 +303,13 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <tbody>
       <tr>
         <td><code>dropzone</code></td>
-        <td><code>{`{ dragging: boolean }`}</code></td>
+        <td>None</td>
         <td>Custom dropzone content</td>
       </tr>
       <tr>
-        <td><code>file-item</code></td>
-        <td><code>{`{ file: File, index: number, progress: number }`}</code></td>
-        <td>Custom file item template</td>
-      </tr>
-      <tr>
-        <td><code>error</code></td>
-        <td><code>{`{ error: string }`}</code></td>
-        <td>Custom error message</td>
+        <td><code>previews</code></td>
+        <td><code>{`{ files: File[], removeFile: (index: number) => void }`}</code></td>
+        <td>Custom file previews template</td>
       </tr>
     </tbody>
   </table>
