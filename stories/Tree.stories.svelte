@@ -1,8 +1,7 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
-import Tree from "../lib/components/Tree/Tree.svelte"
-import TreeNode from "../lib/components/Tree/TreeNode.svelte"
-import { fn } from "@storybook/test"
+import Tree from "$lib/components/Tree/Tree.svelte"
+import TreeNode from "$lib/components/Tree/TreeNode.svelte"
 
 const { Story } = defineMeta({
   title: "Components/Tree",
@@ -26,8 +25,6 @@ const { Story } = defineMeta({
     expandOnSelect: false,
     expandAll: false,
     iconSize: "md",
-    onSelect: fn(),
-    onExpand: fn(),
   },
 })
 

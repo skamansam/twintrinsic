@@ -1,4 +1,4 @@
-import ColorPicker from "../lib/components/Form/ColorPicker.svelte"
+import ColorPicker from "$lib/components/Form/ColorPicker.svelte"
 
 export default {
   title: "Components/Form/ColorPicker",

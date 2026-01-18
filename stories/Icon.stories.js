@@ -1,4 +1,4 @@
-import { Icon } from "../lib/components/Icon"
+import { Icon } from "$lib/components/Icon"
 
 export default {
   title: "Components/Icon",

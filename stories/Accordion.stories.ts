@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/svelte";
+import type { Meta, StoryObj } from "@storybook/sveltekit";
 
 import Accordion from "../src/lib/components/Accordion/Accordion.svelte"
 import AccordionItem from "../src/lib/components/Accordion/AccordionItem.svelte"

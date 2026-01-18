@@ -1,8 +1,7 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
-import Stepper from "../lib/components/Stepper/Stepper.svelte"
-import StepperStep from "../lib/components/Stepper/StepperStep.svelte"
-import { fn } from "@storybook/test"
+import Stepper from "$lib/components/Stepper/Stepper.svelte"
+import StepperStep from "$lib/components/Stepper/StepperStep.svelte"
 
 const { Story } = defineMeta({
   title: "Components/Stepper",
@@ -36,7 +35,6 @@ const { Story } = defineMeta({
     showLabels: true,
     showConnectors: true,
     alternativeLabels: false,
-    onChange: fn(),
   },
 })
 </script>

@@ -1,4 +1,4 @@
-import LazyPanel from "../lib/components/Panel/LazyPanel.svelte"
+import LazyPanel from "$lib/components/Panel/LazyPanel.svelte"
 
 export default {
   title: "Components/Panel/LazyPanel",

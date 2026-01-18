@@ -1,4 +1,4 @@
-import Card from "../lib/components/Panel/Card.svelte"
+import Card from "$lib/components/Panel/Card.svelte"
 
 export default {
   title: "Components/Panel/Card",

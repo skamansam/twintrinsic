@@ -1,4 +1,4 @@
-import Input from "../lib/components/Form/Input.svelte"
+import Input from "$lib/components/Form/Input.svelte"
 
 export default {
   title: "Components/Form/Input",

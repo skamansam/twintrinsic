@@ -1,4 +1,4 @@
-import Checkbox from "../lib/components/Form/Checkbox.svelte"
+import Checkbox from "$lib/components/Form/Checkbox.svelte"
 
 export default {
   title: "Components/Form/Checkbox",

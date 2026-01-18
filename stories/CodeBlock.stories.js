@@ -1,4 +1,4 @@
-import { CodeBlock } from "../lib/components/CodeBlock"
+import { CodeBlock } from "$lib/components/CodeBlock"
 
 export default {
   title: "Components/CodeBlock",

@@ -1,4 +1,4 @@
-import Calendar from "../lib/components/Form/Calendar.svelte"
+import Calendar from "$lib/components/Form/Calendar.svelte"
 
 export default {
   title: "Components/Form/Calendar",

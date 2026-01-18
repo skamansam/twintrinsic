@@ -1,7 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
-import DataTable from "../lib/components/DataTable/DataTable.svelte"
-import { fn } from "@storybook/test"
+import DataTable from "$lib/components/DataTable/DataTable.svelte"
 
 const { Story } = defineMeta({
   title: "Components/DataTable",
@@ -46,12 +45,6 @@ const { Story } = defineMeta({
     loading: false,
     emptyText: "No data available",
     loadingText: "Loading data...",
-    onRowClick: fn(),
-    onSort: fn(),
-    onFilter: fn(),
-    onPageChange: fn(),
-    onRowsPerPageChange: fn(),
-    onSelectionChange: fn(),
   },
 })
 

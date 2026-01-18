@@ -1,4 +1,4 @@
-import type { Preview } from "@storybook/svelte"
+import type { Preview } from "@storybook/sveltekit"
 import "../src/lib/twintrinsic.css"
 
 const preview: Preview = {
@@ -10,6 +10,8 @@ const preview: Preview = {
       },
     },
   },
+
+  tags: ["autodocs"]
 }
 
 export default preview

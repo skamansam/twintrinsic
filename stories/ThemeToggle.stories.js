@@ -1,4 +1,4 @@
-import ThemeToggle from "../lib/components/ThemeToggle/ThemeToggle.svelte"
+import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
 
 export default {
   title: "Components/ThemeToggle",

@@ -1,7 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
-import Combobox from "../lib/components/Form/Combobox.svelte"
-import { fn } from "@storybook/test"
+import Combobox from "$lib/components/Form/Combobox.svelte"
 
 const { Story } = defineMeta({
   title: "Components/Form/Combobox",
@@ -36,8 +35,6 @@ const { Story } = defineMeta({
     maxHeight: 250,
     optionLabel: "label",
     optionValue: "value",
-    onChange: fn(),
-    onInput: fn(),
   },
 })
 

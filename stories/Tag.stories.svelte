@@ -1,8 +1,7 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
-import Tag from "../lib/components/Tag/Tag.svelte"
-import TagGroup from "../lib/components/Tag/TagGroup.svelte"
-import { fn } from "@storybook/test"
+import Tag from "$lib/components/Tag/Tag.svelte"
+import TagGroup from "$lib/components/Tag/TagGroup.svelte"
 
 const { Story } = defineMeta({
   title: "Components/Tag",
@@ -40,8 +39,6 @@ const { Story } = defineMeta({
     target: "_blank",
     icon: "",
     dismissAriaLabel: "Dismiss",
-    onDismiss: fn(),
-    onClick: fn(),
   },
 })
 

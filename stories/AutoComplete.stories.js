@@ -1,4 +1,4 @@
-import AutoComplete from "../lib/components/Form/AutoComplete.svelte"
+import AutoComplete from "$lib/components/Form/AutoComplete.svelte"
 
 const countries = [
   { label: "United States", value: "US" },

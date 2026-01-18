@@ -1,8 +1,7 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
-import Carousel from "../lib/components/Carousel/Carousel.svelte"
-import CarouselItem from "../lib/components/Carousel/CarouselItem.svelte"
-import { fn } from "@storybook/test"
+import Carousel from "$lib/components/Carousel/Carousel.svelte"
+import CarouselItem from "$lib/components/Carousel/CarouselItem.svelte"
 
 const { Story } = defineMeta({
   title: "Components/Carousel",
@@ -34,7 +33,6 @@ const { Story } = defineMeta({
     swipeable: true,
     transition: "slide",
     transitionDuration: 300,
-    onChange: fn(),
   },
 })
 </script>
