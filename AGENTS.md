@@ -57,8 +57,6 @@ Create component in `src/lib/components/{ComponentName}/` with TypeScript:
 
 ```svelte
 <script lang="ts">
-  import "@/lib/twintrinsic.css";
-
   interface Props {
     // Define all props with JSDoc
     /** Description of prop */
@@ -73,7 +71,9 @@ Create component in `src/lib/components/{ComponentName}/` with TypeScript:
   <!-- Component markup -->
 </div>
 
-<style>
+<style lang="postcss">
+  @reference "../../twintrinsic.css";
+  
   /* Use Tailwind classes in markup, not here */
 </style>
 ```
