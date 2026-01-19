@@ -30,18 +30,19 @@ const componentLinks = [
   { category: "Core", name: "App", href: "/docs/components/app" },
 
   // Layout Components
-  { category: "Layout", name: "Card", href: "/docs/components/card" },
+  { category: "Layout", name: "Accordion", href: "/docs/components/accordion" },
+  { name: "Card", href: "/docs/components/card" },
   { name: "Container", href: "/docs/components/container" },
   { name: "Panel", href: "/docs/components/panel" },
   { name: "Separator", href: "/docs/components/separator" },
   { name: "Sidebar", href: "/docs/components/sidebar" },
 
   // Navigation Components
-  { category: "Navigation", name: "Accordion", href: "/docs/components/accordion" },
-  { name: "AppHeader", href: "/docs/components/appheader" },
+  { category: "Navigation", name: "AppHeader", href: "/docs/components/appheader" },
   { name: "BottomBar", href: "/docs/components/bottombar" },
   { name: "Breadcrumb", href: "/docs/components/breadcrumb" },
   { name: "Menu", href: "/docs/components/menu" },
+  { name: "MenuItem", href: "/docs/components/menuitem" },
   { name: "Tabs", href: "/docs/components/tabs" },
 
   // Data Display Components
@@ -60,7 +61,8 @@ const componentLinks = [
   { name: "Tree", href: "/docs/components/tree" },
 
   // Form Components
-  { category: "Form", name: "Button", href: "/docs/components/button" },
+  { category: "Form", name: "AutoComplete", href: "/docs/components/autocomplete" },
+  { name: "Button", href: "/docs/components/button" },
   { name: "Calendar", href: "/docs/components/calendar" },
   { name: "Checkbox", href: "/docs/components/checkbox" },
   { name: "ColorPicker", href: "/docs/components/colorpicker" },
