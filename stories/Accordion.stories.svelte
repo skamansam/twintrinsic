@@ -15,9 +15,10 @@
   });
 </script>
 
-<Story name="Default">
-   {#snippet children(args)}
-    <Accordion defaultExpanded={0} bordered={true} {...args}>
+<Story name="Default" args={{ defaultExpanded: 0, bordered: true }}>
+    safdadfsdf
+  <Accordion defaultExpanded={0} bordered={true}>
+    asdfasdf
     <AccordionItem>
       <svelte:fragment slot="header">What is Twintrinsic?</svelte:fragment>
       <p>
@@ -42,10 +43,9 @@
       </p>
     </AccordionItem>
   </Accordion>
-  {/snippet}
 </Story>
 
-<Story name="Allow Multiple Expanded" args={{ allowMultiple: true, bordered: true }} asChild>
+<Story name="Allow Multiple Expanded" args={{ allowMultiple: true, bordered: true }}>
   <Accordion allowMultiple={true} bordered={true}>
     <AccordionItem>
       <svelte:fragment slot="header">Feature One</svelte:fragment>
@@ -62,7 +62,7 @@
   </Accordion>
 </Story>
 
-<Story name="No Border" args={{ bordered: false, defaultExpanded: 0 }} asChild>
+<Story name="No Border" args={{ bordered: false, defaultExpanded: 0 }}>
   <Accordion bordered={false} defaultExpanded={0}>
     <AccordionItem>
       <svelte:fragment slot="header">Borderless Style</svelte:fragment>
@@ -79,7 +79,7 @@
   </Accordion>
 </Story>
 
-<Story name="All Items Collapsed" args={{ defaultExpanded: null, bordered: true }} asChild>
+<Story name="All Items Collapsed" args={{ defaultExpanded: null, bordered: true }}>
   <Accordion defaultExpanded={null} bordered={true}>
     <AccordionItem>
       <svelte:fragment slot="header">First Item</svelte:fragment>

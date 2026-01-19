@@ -100,7 +100,7 @@ Create `tests/unit/{ComponentName}.test.ts` using Vitest:
 ```typescript
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/svelte";
-import Component from "@/lib/components/{ComponentName}/{ComponentName}.svelte";
+import Component from "$lib/components/{ComponentName}/{ComponentName}.svelte";
 
 describe("{ComponentName}", () => {
   it("should render with default props", () => {
@@ -141,7 +141,7 @@ Create `stories/{ComponentName}.stories.ts`:
 
 ```typescript
 import type { Meta, StoryObj } from "@storybook/svelte";
-import Component from "@/lib/components/{ComponentName}/{ComponentName}.svelte";
+import Component from "$lib/components/{ComponentName}/{ComponentName}.svelte";
 
 const meta = {
   title: "Components/{ComponentName}",
@@ -219,7 +219,7 @@ onchange?.(new CustomEvent("change", { detail: value }));
 - Use Tailwind utility classes in markup
 - Instead of creating inline colors, add them to the `@theme` rule in `lib/twintrinsic.css`
 - Colors should have semantic names, such as `primary`, `secondary`, `success`, `danger`, etc.
-- Reference `@/lib/twintrinsic.css` in all components
+- Reference `$lib/twintrinsic.css` in all components
 - Avoid inline styles; use Tailwind classes
 
 Example custom theme:
@@ -367,7 +367,7 @@ pnpm format           # Format with Biome
 - Check that imports use correct paths with `@/` alias
 
 ### Styling Issues
-- Verify `@/lib/twintrinsic.css` is imported in component
+- Verify `$lib/twintrinsic.css` is imported in component
 - Check that custom colors are defined in `@theme` rule
 - Use Tailwind classes, not inline styles
 

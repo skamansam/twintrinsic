@@ -30,7 +30,7 @@ const componentLinks = [
   { category: "Core", name: "App", href: "/docs/components/app" },
 
   // Layout Components
-  { category: "Layout", name: "Accordion", href: "/docs/components/accordion" },
+  { category: "Layout", name: "Accordion", href: "/docs/components/Accordion" },
   { name: "Card", href: "/docs/components/card" },
   { name: "Container", href: "/docs/components/container" },
   { name: "Panel", href: "/docs/components/panel" },
@@ -51,6 +51,8 @@ const componentLinks = [
   { name: "Carousel", href: "/docs/components/carousel" },
   { name: "Chip", href: "/docs/components/chip" },
   { name: "CodeBlock", href: "/docs/components/codeblock" },
+  { name: "CodeBlockSpeed", href: "/docs/code-block-speed" },
+  { name: "CodeEditor", href: "/docs/code-editor" },
   { name: "DataTable", href: "/docs/components/datatable" },
   { name: "Progress", href: "/docs/components/progress" },
   { name: "Skeleton", href: "/docs/components/skeleton" },

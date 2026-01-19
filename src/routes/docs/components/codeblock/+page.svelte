@@ -3,8 +3,8 @@
 Documentation page for the CodeBlock component.
 -->
 <script lang="ts">
-import { CodeBlock } from "$lib/index.js"
 import { PropsTable } from "$lib/docs/index.js"
+import { CodeBlock } from "$lib/index.js"
 </script>
 
 <h1>CodeBlock</h1>
@@ -19,7 +19,7 @@ import { PropsTable } from "$lib/docs/index.js"
 <h3>Basic Usage</h3>
 <CodeBlock>{`
   function greet(name) {
-    return \`Hello, ${name}!\`;
+    return \`Hello, \${name}!\`;
   }
 
   const result = greet('world');
@@ -44,7 +44,7 @@ import { PropsTable } from "$lib/docs/index.js"
   }
 
   function greet(person: Person): string {
-    return \`Hello, ${person.name}! You are ${person.age} years old.\`;
+    return \`Hello, \${person.name}! You are \${person.age} years old.\`;
   }
 
   const person: Person = {
