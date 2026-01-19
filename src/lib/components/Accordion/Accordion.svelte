@@ -1,7 +1,7 @@
 <!--
 @component
-Accordion - A group of collapsible panels where only one can be open at a time.
-Provides keyboard navigation and accessibility features.
+Accordion - A group of collapsible panels using native HTML details/summary elements.
+By default, only one panel can be open at a time using the native `name` attribute.
 
 Usage:
 ```svelte
@@ -47,45 +47,16 @@ Usage:
     children,
   }: Props = $props();
 
-// Track expanded items
-let expandedItems = $state<Set<number>>(new Set());
+  const groupName = crypto.randomUUID();
 
-// Initialize with default expanded item if provided
-$effect(() => {
-  if (defaultExpanded !== null) {
-    expandedItems.clear();
-    expandedItems.add(defaultExpanded);
-  }
-});
-
-// Set up context for accordion items
-$effect(() => {
   const accordionContext = {
-    registerItem: (itemId: string, index: number): boolean => {
-      // Return whether this item should be expanded initially
-      return expandedItems.has(index);
-    },
-    toggleItem: (index: number, expanded: boolean): void => {
-      if (expanded) {
-        if (!allowMultiple) {
-          // Close all other items
-          expandedItems.clear();
-        }
-        expandedItems.add(index);
-      } else {
-        expandedItems.delete(index);
-      }
-
-      onchange?.(
-        new CustomEvent("change", {
-          detail: { expandedItems: Array.from(expandedItems) },
-        })
-      );
-    },
+    groupName,
     allowMultiple,
+    defaultExpanded,
+    onchange,
   };
+
   setContext("accordion", accordionContext);
-});
 </script>
 
 <div 

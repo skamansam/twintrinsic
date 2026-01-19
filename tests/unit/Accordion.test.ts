@@ -68,6 +68,16 @@ describe("Accordion", () => {
     expect(onchange).not.toHaveBeenCalled();
   });
 
+  it("expands first item by default", () => {
+    const { container } = render(Accordion, {
+      props: {
+        children: () => "Content",
+      },
+    });
+    const firstDetails = container.querySelector("details");
+    expect(firstDetails?.hasAttribute("open")).toBe(true);
+  });
+
   it("respects defaultExpanded prop", () => {
     const { container } = render(Accordion, {
       props: {

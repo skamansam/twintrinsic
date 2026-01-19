@@ -15,92 +15,83 @@ test.describe("Accordion Component", () => {
     await expect(accordion).toHaveClass(/border/)
   })
 
-  test("only one item can be expanded at a time by default", async ({ page }) => {
-    const items = page.locator(".accordion-item")
-    const buttons = page.locator(".accordion-item button")
+  test("first item is expanded by default", async ({ page }) => {
+    const details = page.locator("details.accordion-item")
+    await expect(details.nth(0)).toHaveAttribute("open", "")
+  })
 
-    // Click first item
-    await buttons.nth(0).click()
-    await expect(items.nth(0).locator('[role="region"]')).toBeVisible()
+  test("only one item can be expanded at a time by default", async ({ page }) => {
+    const details = page.locator("details.accordion-item")
+    const summaries = page.locator("details.accordion-item > summary")
+
+    // First item should already be open
+    await expect(details.nth(0)).toHaveAttribute("open", "")
 
     // Click second item - first should close
-    await buttons.nth(1).click()
-    await expect(items.nth(1).locator('[role="region"]')).toBeVisible()
-    await expect(items.nth(0).locator('[role="region"]')).not.toBeVisible()
+    await summaries.nth(1).click()
+    await expect(details.nth(1)).toHaveAttribute("open", "")
+    await expect(details.nth(0)).not.toHaveAttribute("open", "")
   })
 
   test("allows multiple items to be expanded when allowMultiple=true", async ({ page }) => {
     await page.goto("http://localhost:6006/?path=/story/components-accordion--allow-multiple")
 
-    const items = page.locator(".accordion-item")
-    const buttons = page.locator(".accordion-item button")
+    const details = page.locator("details.accordion-item")
+    const summaries = page.locator("details.accordion-item > summary")
 
     // Expand first item
-    await buttons.nth(0).click()
-    await expect(items.nth(0).locator('[role="region"]')).toBeVisible()
+    await summaries.nth(0).click()
+    await expect(details.nth(0)).toHaveAttribute("open", "")
 
     // Expand second item - first should stay open
-    await buttons.nth(1).click()
-    await expect(items.nth(1).locator('[role="region"]')).toBeVisible()
-    await expect(items.nth(0).locator('[role="region"]')).toBeVisible()
+    await summaries.nth(1).click()
+    await expect(details.nth(1)).toHaveAttribute("open", "")
+    await expect(details.nth(0)).toHaveAttribute("open", "")
   })
 
   test("handles keyboard navigation with Enter key", async ({ page }) => {
-    const buttons = page.locator(".accordion-item button")
-    const firstItem = page.locator(".accordion-item").nth(0)
+    const summaries = page.locator("details.accordion-item > summary")
+    const firstDetails = page.locator("details.accordion-item").nth(0)
 
-    // Focus first button
-    await buttons.nth(0).focus()
+    // Focus first summary
+    await summaries.nth(0).focus()
 
     // Press Enter to expand
     await page.keyboard.press("Enter")
-    await expect(firstItem.locator('[role="region"]')).toBeVisible()
+    await expect(firstDetails).toHaveAttribute("open", "")
 
     // Press Enter to collapse
     await page.keyboard.press("Enter")
-    await expect(firstItem.locator('[role="region"]')).not.toBeVisible()
+    await expect(firstDetails).not.toHaveAttribute("open", "")
   })
 
   test("handles keyboard navigation with Space key", async ({ page }) => {
-    const buttons = page.locator(".accordion-item button")
-    const firstItem = page.locator(".accordion-item").nth(0)
+    const summaries = page.locator("details.accordion-item > summary")
+    const firstDetails = page.locator("details.accordion-item").nth(0)
 
-    // Focus first button
-    await buttons.nth(0).focus()
+    // Focus first summary
+    await summaries.nth(0).focus()
 
     // Press Space to expand
     await page.keyboard.press(" ")
-    await expect(firstItem.locator('[role="region"]')).toBeVisible()
+    await expect(firstDetails).toHaveAttribute("open", "")
 
     // Press Space to collapse
     await page.keyboard.press(" ")
-    await expect(firstItem.locator('[role="region"]')).not.toBeVisible()
+    await expect(firstDetails).not.toHaveAttribute("open", "")
   })
 
   test("respects disabled state on items", async ({ page }) => {
-    const items = page.locator(".accordion-item")
-    const buttons = page.locator(".accordion-item button")
+    const details = page.locator("details.accordion-item")
 
     // Disable first item
-    await buttons.nth(0).evaluate((el) => {
-      el.setAttribute("disabled", "true")
+    await details.nth(0).evaluate((el) => {
+      el.setAttribute("class", el.getAttribute("class") + " disabled")
     })
 
-    // Try to click disabled button
-    await buttons.nth(0).click()
-    await expect(items.nth(0).locator('[role="region"]')).not.toBeVisible()
-  })
-
-  test("applies aria attributes correctly", async ({ page }) => {
-    const buttons = page.locator(".accordion-item button")
-    const firstButton = buttons.nth(0)
-
-    // Check aria-expanded is false initially
-    await expect(firstButton).toHaveAttribute("aria-expanded", "false")
-
-    // Click to expand
-    await firstButton.click()
-    await expect(firstButton).toHaveAttribute("aria-expanded", "true")
+    // Try to click disabled item
+    await details.nth(0).locator("summary").click()
+    await expect(details.nth(0)).not.toHaveAttribute("open", "")
   })
 
   test("accordion without border", async ({ page }) => {

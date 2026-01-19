@@ -1,7 +1,7 @@
 <!--
 @component
 AccordionItem - Individual item within an Accordion component.
-Provides collapsible content with header and smooth animations.
+Uses native HTML details/summary elements for semantic disclosure.
 
 Usage:
 ```svelte
@@ -14,12 +14,12 @@ Usage:
 <script lang="ts">
   import type { Snippet } from "svelte";
   import { getContext, onMount } from "svelte";
-  import { slide } from "svelte/transition";
 
   interface AccordionContext {
-    registerItem: (itemId: string, index: number) => boolean;
-    toggleItem: (index: number, expanded: boolean) => void;
+    groupName: string;
     allowMultiple: boolean;
+    defaultExpanded: number | null;
+    onchange?: (event: CustomEvent<{ expandedItems: number[] }>) => void;
   }
 
   interface Props {
@@ -27,7 +27,7 @@ Usage:
     class?: string;
     /** HTML id for accessibility */
     id?: string;
-    /** ARIA label for the header button */
+    /** ARIA label for the header */
     ariaLabel?: string;
     /** Whether to disable the item controls */
     disabled?: boolean;
@@ -47,114 +47,91 @@ Usage:
     header,
   }: Props = $props();
 
-// Get accordion context
-const accordion = getContext<AccordionContext | undefined>("accordion");
+  const accordion = getContext<AccordionContext | undefined>("accordion");
 
-// Track expanded state
-let isExpanded = $state(false);
-let index = $state(-1);
-let element: HTMLDivElement | undefined = $state();
+  let index = $state(-1);
+  let detailsElement: HTMLDetailsElement | undefined = $state();
 
-// Register with parent accordion on mount
-onMount(() => {
-  // Find our index among siblings
-  const parent = element?.parentElement;
-  if (parent && accordion) {
-    const items = Array.from(parent.children);
-    index = items.indexOf(element!);
+  onMount(() => {
+    const parent = detailsElement?.parentElement;
+    if (parent) {
+      const items = Array.from(parent.children);
+      index = items.indexOf(detailsElement!);
+    }
+  });
 
-    // Check if we should be expanded initially
-    isExpanded = accordion.registerItem(id, index);
+  const shouldBeOpen = $derived(
+    accordion?.defaultExpanded === index && accordion?.defaultExpanded !== null
+  );
+
+  function handleToggle(event: Event): void {
+    if (disabled) {
+      event.preventDefault();
+      return;
+    }
+
+    const target = event.target as HTMLDetailsElement;
+    accordion?.onchange?.(
+      new CustomEvent("change", {
+        detail: { expandedItems: [index] },
+      })
+    );
   }
-
-  return () => {
-    // Cleanup if needed
-  };
-});
-
-// Handle toggle
-function handleToggle(): void {
-  if (disabled || !accordion) return;
-
-  isExpanded = !isExpanded;
-  accordion.toggleItem(index, isExpanded);
-}
-
-// Handle keyboard navigation
-function handleKeydown(event: KeyboardEvent): void {
-  if (disabled) return;
-
-  if (event.key === "Enter" || event.key === " ") {
-    event.preventDefault();
-    handleToggle();
-  }
-}
 </script>
 
-<div 
+<details
   class="accordion-item {className}"
   class:disabled
-  bind:this={element}
+  bind:this={detailsElement}
+  {id}
+  name={accordion?.allowMultiple ? undefined : accordion?.groupName}
+  ontoggle={handleToggle}
+  open={shouldBeOpen}
 >
-  <h3>
-    <button
-      type="button"
-      id="{id}-header"
-      class="
-        w-full flex items-center justify-between
-        px-4 py-3
-        text-left
-        bg-surface dark:bg-surface
-        hover:bg-hover dark:hover:bg-hover
-        focus:outline-none focus:ring-2 focus:ring-focus-ring dark:focus:ring-focus-ring
-        disabled:opacity-50 disabled:cursor-not-allowed
-        text-text dark:text-text
-      "
-      aria-expanded={isExpanded}
-      aria-controls="{id}-content"
-      aria-label={ariaLabel}
-      {disabled}
-      onclick={handleToggle}
-      onkeydown={handleKeydown}
-    >
-      <div class="flex items-center gap-2">
-        {#if header}
-          {@render header()}
-        {:else}
-          Item
-        {/if}
-      </div>
-
-      {#if showIcon}
-        <svg
-          class="w-5 h-5 transform transition-transform duration-200 text-muted dark:text-muted {isExpanded ? 'rotate-180' : ''}"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-            clip-rule="evenodd"
-          />
-        </svg>
+  <summary
+    class="
+      w-full flex items-center justify-between
+      px-4 py-3
+      text-left
+      bg-surface dark:bg-surface
+      hover:bg-hover dark:hover:bg-hover
+      focus:outline-none focus:ring-2 focus:ring-focus-ring dark:focus:ring-focus-ring
+      cursor-pointer
+      text-text dark:text-text
+    "
+    aria-label={ariaLabel}
+  >
+    <div class="flex items-center gap-2">
+      {#if header}
+        {@render header()}
+      {:else}
+        Item
       {/if}
-    </button>
-  </h3>
-
-  {#if isExpanded}
-    <div
-      id="{id}-content"
-      class="px-4 py-3 bg-background dark:bg-background text-text dark:text-text"
-      role="region"
-      aria-labelledby="{id}-header"
-      transition:slide={{ duration: 200 }}
-    >
-      {@render children?.()}
     </div>
-  {/if}
-</div>
+
+    {#if showIcon}
+      <svg
+        class="w-5 h-5 transform transition-transform duration-200 text-muted dark:text-muted"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    {/if}
+  </summary>
+
+  <div
+    class="px-4 py-3 bg-background dark:bg-background text-text dark:text-text"
+  >
+    {@render children?.()}
+  </div>
+</details>
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";
@@ -164,6 +141,10 @@ function handleKeydown(event: KeyboardEvent): void {
   }
 
   .accordion-item.disabled {
-    @apply opacity-50 cursor-not-allowed;
+    @apply opacity-50 cursor-not-allowed pointer-events-none;
+  }
+
+  :is(details[open]) :is(summary) :is(svg) {
+    @apply rotate-180;
   }
 </style>
