@@ -168,13 +168,17 @@ export const WithCustomProps: Story = {
 
 ### 5. Create Documentation Page
 
-Create `src/routes/docs/{component-name}/+page.svelte`:
+Create documentation at `src/routes/docs/components/{ComponentName}/{ComponentName}/+page.svelte` (matching the component path structure):
 
 - Include component description
 - Show usage examples
 - Document all props and events
 - Highlight accessibility features
 - Provide interactive examples
+
+**Important**: Documentation paths must match component directory structure with proper capitalization. For example:
+- Component: `src/lib/components/Avatar/Avatar.svelte` → Docs: `src/routes/docs/components/Avatar/Avatar/+page.svelte`
+- Component: `src/lib/components/Form/Input.svelte` → Docs: `src/routes/docs/components/Form/Input/+page.svelte`
 
 ## Code Standards
 
