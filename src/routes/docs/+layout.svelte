@@ -9,6 +9,7 @@ import AppHeader from "$lib/components/AppHeader/AppHeader.svelte"
 import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte"
 import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
 import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
+	import { Separator } from "$lib/index.js";
 
 const navItems = [
   { label: "Getting Started", href: "/docs", current: $page.url.pathname === "/docs" },
@@ -28,9 +29,11 @@ let rightSidebarExpanded = true
 const componentLinks = [
   // Core Components
   { category: "Core", name: "App", href: "/docs/components/App/App" },
+  { name: "Split", href: "/docs/components/App/Split" },
 
   // Layout Components
   { category: "Layout", name: "Accordion", href: "/docs/components/Accordion/Accordion" },
+  { name: "AccordionItem", href: "/docs/components/Accordion/AccordionItem" },
   { name: "Card", href: "/docs/components/Card/Card" },
   { name: "Container", href: "/docs/components/Container/Container" },
   { name: "Panel", href: "/docs/components/Panel/Panel" },
@@ -41,14 +44,22 @@ const componentLinks = [
   { category: "Navigation", name: "AppHeader", href: "/docs/components/AppHeader/AppHeader" },
   { name: "BottomBar", href: "/docs/components/BottomBar/BottomBar" },
   { name: "Breadcrumb", href: "/docs/components/Breadcrumb/Breadcrumb" },
+  { name: "BreadcrumbItem", href: "/docs/components/Breadcrumb/BreadcrumbItem" },
   { name: "Menu", href: "/docs/components/Menu/Menu" },
+  { name: "MenuItem", href: "/docs/components/Menu/MenuItem" },
   { name: "Tabs", href: "/docs/components/Tabs/Tabs" },
+  { name: "Tab", href: "/docs/components/Tabs/Tab" },
+  { name: "TabList", href: "/docs/components/Tabs/TabList" },
+  { name: "TabPanel", href: "/docs/components/Tabs/TabPanel" },
 
   // Data Display Components
   { category: "Data Display", name: "Avatar", href: "/docs/components/Avatar/Avatar" },
+  { name: "AvatarGroup", href: "/docs/components/Avatar/AvatarGroup" },
   { name: "Badge", href: "/docs/components/Badge/Badge" },
   { name: "Carousel", href: "/docs/components/Carousel/Carousel" },
+  { name: "CarouselItem", href: "/docs/components/Carousel/CarouselItem" },
   { name: "Chip", href: "/docs/components/Chip/Chip" },
+  { name: "ChipGroup", href: "/docs/components/Chip/ChipGroup" },
   { name: "CodeBlock", href: "/docs/components/CodeBlock/CodeBlock" },
   { name: "CodeBlockSpeed", href: "/docs/components/CodeBlockSpeed/CodeBlockSpeed" },
   { name: "CodeEditor", href: "/docs/components/CodeEditor/CodeEditor" },
@@ -56,14 +67,23 @@ const componentLinks = [
   { name: "Progress", href: "/docs/components/Progress/Progress" },
   { name: "Skeleton", href: "/docs/components/Skeleton/Skeleton" },
   { name: "Table", href: "/docs/components/Table/Table" },
+  { name: "TableBody", href: "/docs/components/Table/TableBody" },
+  { name: "TableCell", href: "/docs/components/Table/TableCell" },
+  { name: "TableHead", href: "/docs/components/Table/TableHead" },
+  { name: "TableHeader", href: "/docs/components/Table/TableHeader" },
+  { name: "TableRow", href: "/docs/components/Table/TableRow" },
   { name: "Tag", href: "/docs/components/Tag/Tag" },
+  { name: "TagGroup", href: "/docs/components/Tag/TagGroup" },
   { name: "Timeline", href: "/docs/components/Timeline/Timeline" },
+  { name: "TimelineItem", href: "/docs/components/Timeline/TimelineItem" },
   { name: "Tooltip", href: "/docs/components/Tooltip/Tooltip" },
   { name: "Tree", href: "/docs/components/Tree/Tree" },
+  { name: "TreeNode", href: "/docs/components/Tree/TreeNode" },
 
   // Form Components
   { category: "Form", name: "AutoComplete", href: "/docs/components/Form/AutoComplete" },
   { name: "Button", href: "/docs/components/Button/Button" },
+  { name: "ButtonGroup", href: "/docs/components/Button/ButtonGroup" },
   { name: "Calendar", href: "/docs/components/Form/Calendar" },
   { name: "Checkbox", href: "/docs/components/Form/Checkbox" },
   { name: "ColorPicker", href: "/docs/components/Form/ColorPicker" },
@@ -77,6 +97,7 @@ const componentLinks = [
   { name: "InputSwitch", href: "/docs/components/Form/InputSwitch" },
   { name: "InvalidState", href: "/docs/components/Form/InvalidState" },
   { name: "Knob", href: "/docs/components/Form/Knob" },
+  { name: "ListInput", href: "/docs/components/Form/ListInput" },
   { name: "Listbox", href: "/docs/components/Form/Listbox" },
   { name: "NumberInput", href: "/docs/components/Form/NumberInput" },
   { name: "Radio", href: "/docs/components/Form/Radio" },
@@ -86,15 +107,18 @@ const componentLinks = [
   { name: "SelectGroup", href: "/docs/components/Form/SelectGroup" },
   { name: "Slider", href: "/docs/components/Form/Slider" },
   { name: "Switch", href: "/docs/components/Form/Switch" },
+  { name: "TextInput", href: "/docs/components/Form/TextInput" },
   { name: "Textarea", href: "/docs/components/Form/Textarea" },
 
   // Feedback Components
   { category: "Feedback", name: "Modal", href: "/docs/components/Modal/Modal" },
   { name: "Stepper", href: "/docs/components/Stepper/Stepper" },
+  { name: "StepperStep", href: "/docs/components/Stepper/StepperStep" },
   { name: "Toast", href: "/docs/components/Toast/Toast" },
 
   // Utility Components
   { category: "Utility", name: "Icon", href: "/docs/components/Icon/Icon" },
+  { name: "Lazy", href: "/docs/components/Lazy/Lazy" },
   { name: "LazyPanel", href: "/docs/components/Lazy/LazyPanel" },
   { name: "Masonry", href: "/docs/components/Masonry/Masonry" },
   { name: "ThemeToggle", href: "/docs/components/ThemeToggle/ThemeToggle" },
@@ -147,7 +171,7 @@ const themeColors = [
       <nav class="docs-nav">
         {#each componentLinks as link, i}
           {#if link.category && (i === 0 || componentLinks[i-1].category !== link.category)}
-            <div class="docs-nav-category">{link.category}</div>
+            <Separator aria-label={link.category} class="docs-nav-category" disabled>{link.category}</Separator>
           {/if}
           <a
             href={link.href}
@@ -170,6 +194,7 @@ const themeColors = [
     }
   
     .docs-nav-category {
+      color: red;
       @apply text-xs font-semibold uppercase tracking-wider text-muted;
       @apply mt-4 mb-1 px-4;
     }

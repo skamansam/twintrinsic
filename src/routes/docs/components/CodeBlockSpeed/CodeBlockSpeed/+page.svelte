@@ -1,4 +1,8 @@
-<script>
+<!--
+@component
+CodeBlockSpeed documentation page
+-->
+<script lang="ts">
 	import CodeBlock from '$lib/components/CodeBlock/CodeBlock.svelte';
 	import CodeBlockSpeed from '$lib/components/CodeBlockSpeed/CodeBlockSpeed.svelte';
 </script>
@@ -38,9 +42,8 @@
 
 	<section>
 		<h2 class="text-2xl font-bold mb-4">Basic Usage</h2>
-		<CodeBlock
-			language="svelte"
-			code={`<script>
+		<CodeBlock language="svelte">
+			{`<script>
   import { CodeBlockSpeed } from 'twintrinsic';
 </script>
 
@@ -48,7 +51,7 @@
   const greeting = 'Hello, Speed Highlight!';
   console.log(greeting);
 </CodeBlockSpeed>`}
-		/>
+		</CodeBlock>
 	</section>
 
 	<section>
