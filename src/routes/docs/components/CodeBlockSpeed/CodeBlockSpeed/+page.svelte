@@ -43,14 +43,16 @@ CodeBlockSpeed documentation page
 	<section>
 		<h2 class="text-2xl font-bold mb-4">Basic Usage</h2>
 		<CodeBlock language="svelte">
-			{`<script>
-  import { CodeBlockSpeed } from 'twintrinsic';
+			{`
+<script>
+	import { CodeBlockSpeed } from 'twintrinsic';
 </script>
 
 <CodeBlockSpeed language="javascript">
-  const greeting = 'Hello, Speed Highlight!';
-  console.log(greeting);
-</CodeBlockSpeed>`}
+	const greeting = 'Hello, Speed Highlight!';
+	console.log(greeting);
+</CodeBlockSpeed>
+		`}
 		</CodeBlock>
 	</section>
 

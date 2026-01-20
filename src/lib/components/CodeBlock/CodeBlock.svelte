@@ -2,6 +2,15 @@
 @component
 CodeBlock - A component for displaying code snippets with syntax highlighting and copy functionality.
 
+Features:
+- Syntax highlighting with Prism.js
+- Automatic language detection
+- Dynamic language loading via Prism.js autoloader plugin
+- Copy to clipboard functionality
+- Support for multiple CDNs (unpkg, esm.sh, jsdelivr)
+
+> NOTE: The slot needs to be outdented as far as possible so the child contents' first line isn't indented.
+
 Usage:
 ```svelte
 <CodeBlock language="javascript">
@@ -13,29 +22,33 @@ Usage:
   &lt;!-- Auto-detects language --&gt;
   const hello = 'world';
 </CodeBlock>
+
+<CodeBlock language="python" cdn="jsdelivr">
+  print('hello world')
+</CodeBlock>
+
+<CodeBlock cdn="esm.sh" languagesPath="https://custom.cdn/prismjs/components/">
+  &lt;!-- Custom CDN and language path --&gt;
+  const code = 'example';
+</CodeBlock>
 ```
 -->
-<script>
-import Prism from "prismjs"
-import { onDestroy, onMount } from "svelte"
-import "prismjs/components/prism-javascript"
-import "prismjs/components/prism-typescript"
-import "prismjs/components/prism-jsx"
-import "prismjs/components/prism-tsx"
-import "prismjs/components/prism-css"
-import "prismjs/components/prism-scss"
-import "prismjs/components/prism-markup"
-import "prismjs/components/prism-bash"
-import "prismjs/components/prism-json"
-import "prismjs/components/prism-yaml"
-import "prismjs/components/prism-markdown"
-import "prism-svelte"
+<script lang="ts">
+import Prism from "prismjs";
+import { onDestroy, onMount } from "svelte";
+import { detectLanguage } from "$lib/helpers";
+// import "prism-svelte";
+import "prismjs/plugins/autoloader/prism-autoloader";
 
 const {
   /** @type {string} - The language for syntax highlighting */
   language = "",
   /** @type {string} - Additional CSS classes */
   class: className = "",
+  /** @type { "unpkg" | "esm.sh" | "jsdelivr" | string } - CDN to use for autoloader, or custom path to prism components folder*/
+  pluginSource = "unpkg",
+  /** @type {import('svelte').Snippet} - The code to display */
+  children = ""
 } = $props()
 
 let code = $state("")
@@ -43,14 +56,86 @@ let copied = $state(false)
 let copyTimeout = $state()
 let codeElement = $state()
 
-// Get code from slot content
-onMount(() => {
+
+/**
+ * Get languages path for autoloader
+ * @param {string} pluginSource - CDN name or path to a custom cdn
+ * @returns {string} Path to language grammars
+ */
+function getLanguagesPath(pluginSource) {
+
+  switch (pluginSource) {
+    case "esm.sh":
+      return "https://esm.sh/prismjs@1/components/"
+    case "jsdelivr":
+      return "https://cdn.jsdelivr.net/npm/prismjs@1/components/"
+    case "unpkg":
+      return "https://unpkg.com/prismjs@1/components/"
+    default:
+      return pluginSource;
+  }
+}
+
+// Initialize autoloader plugin and highlight code
+onMount(async () => {
+  highlightCode()
+})
+
+/**
+ * determine the path to the language components based on the plugin source.
+ * @param {string} language - The language to determine the path for
+ * @returns {[string, boolean]} The path to the language components and whether to use minified files
+ */
+function determineComponentsDirectory(language) {
+  if(language === "svelte") {
+    switch (pluginSource) {
+      case "esm.sh":
+        return ["https://esm.sh/prism-svelte", true]
+      case "jsdelivr":
+        return ["https://cdn.jsdelivr.net/npm/prism-svelte", true]
+      case "unpkg":
+        return ["https://unpkg.com/prism-svelte", true]
+      default:
+        return [getLanguagesPath(pluginSource), false];
+    }
+  }
+  return [getLanguagesPath(pluginSource), false];
+}
+
+/**
+ * Highlight code with language detection
+ */
+async function highlightCode() {
   if (!codeElement) return
 
   code = codeElement.textContent || ""
 
   // Auto-detect language if not specified
-  const detectedLang = language || detectLanguage(code)
+  const detectedLang = language || detectLanguage(code);
+
+  const [languagesPath, isFullPath] = determineComponentsDirectory(detectedLang);
+
+  // If language not already loaded, load it
+  if (detectedLang && !Prism.languages[detectedLang]) {
+    if (isFullPath) {
+      // For full paths (like prism-svelte), load the script directly
+      await new Promise<void>((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = languagesPath;
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error(`Failed to load ${languagesPath}`));
+        document.head.appendChild(script);
+      });
+    } else if (Prism.plugins?.autoloader) {
+      // For standard paths, use autoloader with custom languages_path
+      Prism.plugins.autoloader.languages_path = languagesPath;
+      await new Promise<void>((resolve) => {
+        Prism.plugins.autoloader.loadLanguages(detectedLang, () => {
+          resolve()
+        })
+      })
+    }
+  }
 
   // Highlight code
   if (detectedLang) {
@@ -60,7 +145,7 @@ onMount(() => {
       codeElement.innerHTML = highlighted
     }
   }
-})
+}
 
 // Clean up copy timeout
 onDestroy(() => {
@@ -68,68 +153,6 @@ onDestroy(() => {
     clearTimeout(copyTimeout)
   }
 })
-
-/**
- * Detect code language based on content
- * @param {string} content - Code content
- * @returns {string} Detected language
- */
-function detectLanguage(content) {
-  const trimmed = content.trim()
-
-  // HTML/SVG
-  if (trimmed.startsWith("<") && trimmed.endsWith(">")) {
-    if (trimmed.includes("</svg>")) return "markup"
-    if (trimmed.includes("/>") || trimmed.includes("</")) return "markup"
-  }
-
-  // CSS
-  if (trimmed.includes("{") && trimmed.includes("}") && trimmed.includes(":")) {
-    if (trimmed.includes("@import") || trimmed.includes("@media")) return "css"
-    if (trimmed.includes("$") || trimmed.includes("@mixin")) return "scss"
-  }
-
-  // JavaScript/TypeScript
-  if (trimmed.includes("function") || trimmed.includes("=>")) {
-    if (trimmed.includes(":") && trimmed.includes("interface")) return "typescript"
-    if (trimmed.includes("React.") || trimmed.includes("jsx")) return "jsx"
-    if (trimmed.includes("<") && trimmed.includes("/>")) return "jsx"
-    return "javascript"
-  }
-
-  // JSON
-  if (
-    (trimmed.startsWith("{") && trimmed.endsWith("}")) ||
-    (trimmed.startsWith("[") && trimmed.endsWith("]"))
-  ) {
-    try {
-      JSON.parse(trimmed)
-      return "json"
-    } catch {}
-  }
-
-  // YAML
-  if (trimmed.includes(":") && !trimmed.includes("{")) {
-    return "yaml"
-  }
-
-  // Markdown
-  if (trimmed.includes("#") || trimmed.includes("```")) {
-    return "markdown"
-  }
-
-  // Svelte
-  if (trimmed.includes("<script>") || trimmed.includes("$:") || trimmed.includes("$derived")) {
-    return "svelte"
-  }
-
-  // Shell
-  if (trimmed.startsWith("$") || trimmed.startsWith("#!")) {
-    return "bash"
-  }
-
-  return "javascript"
-}
 
 /**
  * Copy code to clipboard
@@ -181,12 +204,10 @@ async function copyCode() {
     </button>
   </div>
   
-  <pre class="code-pre">
-    <code
-      bind:this={codeElement}
-      class="language-{language || 'javascript'}"
-    ><slot /></code>
-  </pre>
+  <pre class="code-pre"><code
+  bind:this={codeElement}
+  class="language-{language || 'javascript'}"
+>{@render children?.()}</code></pre>
 </div>
 
 <style lang="postcss">

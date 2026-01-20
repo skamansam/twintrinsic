@@ -17,15 +17,15 @@ import { CodeBlock } from "$lib/index.js"
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<CodeBlock>{`
-  function greet(name) {
-    return \`Hello, \${name}!\`;
-  }
+<CodeBlock>{`\
+function greet(name) {
+  return \`Hello, \${name}!\`;
+}
 
-  const result = greet('world');
-  console.log(result); // Hello, world!
+const result = greet('world');
+console.log(result); // Hello, world!
 `}</CodeBlock>
-<CodeBlock>
+<CodeBlock language="svelte">
   {`<CodeBlock>
   function greet(name) {
     return \`Hello, \${name}!\`;
@@ -37,7 +37,7 @@ import { CodeBlock } from "$lib/index.js"
 </CodeBlock>
 
 <h3>TypeScript</h3>
-<CodeBlock language="typescript">{`
+<CodeBlock language="ts">{`
   interface Person {
     name: string;
     age: number;
