@@ -333,9 +333,6 @@
   },
   "overrides": [
     {
-      "includes": ["*.svelte"]
-    },
-    {
       "includes": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
       "linter": {
         "rules": {
@@ -380,21 +377,8 @@
       "javascript": { "globals": [] },
       "linter": {
         "rules": {
-          "correctness": { "noInnerDeclarations": "off", "noSelfAssign": "off" }
-        }
-      }
-    },
-    {
-      "includes": ["**/*.svelte.js", "**/*.svelte.ts", "**/*.svelte.js", "**/*.svelte.ts"],
-      "javascript": { "globals": [] }
-    },
-    {
-      "includes": ["**/*.svelte", "**/*.svelte"],
-      "javascript": { "globals": [] },
-      "linter": {
-        "rules": {
-          "correctness": { 
-            "noInnerDeclarations": "off", 
+          "correctness": {
+            "noInnerDeclarations": "off",
             "noSelfAssign": "off"
           }
         }
@@ -402,14 +386,6 @@
     },
     {
       "includes": ["*.svelte.js", "*.svelte.ts", "**/*.svelte.js", "**/*.svelte.ts"],
-      "javascript": { "globals": [] }
-    },
-    {
-      "includes": [
-        "**/*.svelte",
-        "**/*.svelte.ts",
-        "**/*.svelte.js"
-      ],
       "javascript": { "globals": [] }
     }
   ]
