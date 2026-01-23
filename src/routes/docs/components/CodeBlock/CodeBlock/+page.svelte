@@ -143,6 +143,27 @@ console.log(result); // Hello, world!
   npm test
 </CodeBlock>
 
+<h3>Custom CDN</h3>
+<CodeBlock language="javascript" pluginSource="esm.sh">{`
+const message = 'Using esm.sh CDN for language components';
+console.log(message);
+`}</CodeBlock>
+
+<h3>With Plugins</h3>
+<CodeBlock language="javascript" plugins={["line-numbers"]}>{`
+function example() {
+  console.log('Line numbers plugin loaded');
+  return true;
+}
+`}</CodeBlock>
+
+<CodeBlock language="javascript" plugins={["line-numbers", "toolbar", "show-language"]}>{`
+function example() {
+  console.log('Line numbers and language plugins loaded');
+  return true;
+}
+`}</CodeBlock>
+
 <h2>Props</h2>
 <PropsTable
   props={[
@@ -157,6 +178,18 @@ console.log(result); // Hello, world!
       type: 'string',
       default: "''",
       description: 'Additional CSS classes'
+    },
+    {
+      name: 'pluginSource',
+      type: '"unpkg" | "esm.sh" | "jsdelivr" | string',
+      default: '"unpkg"',
+      description: 'CDN to use for loading language components and plugins. Can also be a custom path to a Prism.js components directory.'
+    },
+    {
+      name: 'plugins',
+      type: 'string[]',
+      default: '[]',
+      description: 'List of Prism.js plugins to load. Can be plugin names (e.g., "autoloader", "line-numbers") or full URLs to custom plugins.'
     }
   ]}
 />

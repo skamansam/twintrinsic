@@ -47,6 +47,8 @@ const {
   class: className = "",
   /** @type { "unpkg" | "esm.sh" | "jsdelivr" | string } - CDN to use for autoloader, or custom path to prism components folder*/
   pluginSource = "unpkg",
+  /** @type {string[]} - List of plugin names (e.g., "autoloader") or full paths to load */
+  plugins = [],
   /** @type {import('svelte').Snippet} - The code to display */
   children = ""
 } = $props()
@@ -56,6 +58,49 @@ let copied = $state(false)
 let copyTimeout = $state()
 let codeElement = $state()
 
+
+/**
+ * Get CDN URL for a plugin
+ * @param {string} plugin - Plugin name or full path
+ * @param {string} pluginSource - CDN name
+ * @returns {string} Full URL to plugin
+ */
+function getPluginUrl(plugin, pluginSource) {
+  // If it's a full path (contains :// or starts with /), return as-is
+  if (plugin.includes("://") || plugin.startsWith("/")) {
+    return plugin;
+  }
+
+  // Otherwise, it's a plugin name - construct URL based on CDN
+  const pluginName = plugin.startsWith("prism-") ? plugin : `prism-${plugin}`;
+  
+  switch (pluginSource) {
+    case "esm.sh":
+      return `https://esm.sh/prismjs@1/plugins/${plugin}/${pluginName}.min.js`;
+    case "jsdelivr":
+      return `https://cdn.jsdelivr.net/npm/prismjs@1/plugins/${plugin}/${pluginName}.min.js`;
+    case "unpkg":
+    default:
+      return `https://unpkg.com/prismjs@1/plugins/${plugin}/${pluginName}.min.js`;
+  }
+}
+
+/**
+ * Load plugins via script tags
+ * @param {string[]} pluginList - List of plugin names or paths
+ */
+async function loadPlugins(pluginList) {
+  for (const plugin of pluginList) {
+    const url = getPluginUrl(plugin, pluginSource);
+    await new Promise<void>((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = url;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error(`Failed to load plugin: ${url}`));
+      document.head.appendChild(script);
+    });
+  }
+}
 
 /**
  * Get languages path for autoloader
@@ -76,8 +121,11 @@ function getLanguagesPath(pluginSource) {
   }
 }
 
-// Initialize autoloader plugin and highlight code
+// Initialize plugins and highlight code
 onMount(async () => {
+  if (plugins.length > 0) {
+    await loadPlugins(plugins);
+  }
   highlightCode()
 })
 
@@ -204,7 +252,7 @@ async function copyCode() {
     </button>
   </div>
   
-  <pre class="code-pre"><code
+  <pre class="code-pre {plugins.join(' ')}"><code
   bind:this={codeElement}
   class="language-{language || 'javascript'}"
 >{@render children?.()}</code></pre>
