@@ -8,143 +8,143 @@ I got this idea during the christmas break of 2022 when I was looking for a new 
 I am not going to worry about performance for now. I am going to use available HTML and CSS as much as possible, without using Javascript for interactivity unless absolutely necessary. This should keep the compiled bundle pretty performant. My main focus is going to be on code readability, accessibility, and extensibility.
 
 ## Components:
-This is in order of heirarchy.
-- [ ] Container
-  - [ ] Panel (collapsible content and header)
-    - [ ] Sidebar (attaches to side of parent)
-    - [ ] BottomBar
-    - [ ] Accordion
-    - [ ] Card
-    - [ ] Lazy (content loads when card is visible)
-    - [ ] 
-  - [ ] AppHeader
-  - [ ] App
-    - [ ] `split` is IDE-style (resizable panels)
-- [ ] Separator (visual HR/VR with text, icon, etc)
-- [ ]Form
-  - [ ] General (all inputs)
-    - [ ] Input Validation
-    - [ ] floating labels (optional)
-    - [ ] compact view ("input group" with icons on left/right)
-    - [ ] Placeholder
-    - [ ] input masking (formatting display)
-  - [ ] AutoComplete
-  - [ ] Calendar
-  - [ ] Checkbox
-    - [ ] configurable states / icons
-  - [ ] ListInput (multiple value with "chips")
-  - [ ] ColorPicker
-  - [ ] Dropdown 
-    - [ ] Cascading Menu
-    - [ ] Multiple selection
-    - [ ] icons
-  - [ ] FloatLabel
-  - [ ] NumberInput
-    - [ ] unit display (with masking)
-    - [ ] vertical 
-  - [ ] InputSwitch
-  - [ ] InputText
-  - [ ] InvalidState
-  - [ ] Knob (circle progress "slider")
-  - [ ] Listbox
-  - [ ] MultiSelect
-  - [ ] Password
-  - [ ] RadioButton
-  - [ ] Rating
-  - [ ] SelectButton
-  - [ ] Slider
-  - [ ] Textarea
-  - [ ] ToggleButton
-  - [ ] TreeSelect
-  - [ ] Validation on all inputs
-  - [ ] 
-- [ ] Advanced
-  - [ ] Editor
-  - [ ] Terminal
+This is in order of hierarchy.
 
-- [ ]General
-  - [ ] Localization
-  - [ ] Theming
-    - [ ] Colors
-  - [ ] Specifying Iconsets
-- [ ] Button
-  - [ ] Button
-  - [ ] Speed Dial
-  - [ ] SplitButton
+### Layout & Containers
+- [x] **Container** - Responsive layout wrapper for organizing page content
+  - [x] **Panel** - Flexible container with optional header and collapsible content
+    - [x] **Sidebar** - Fixed or sliding panel that attaches to the side of parent
+    - [x] **BottomBar** - Navigation bar anchored to the bottom of the viewport
+    - [x] **Accordion** - Expandable/collapsible sections with one active at a time
+    - [x] **Card** - Elevated container for grouping related content
+    - [x] **Lazy** - Deferred content loading when card becomes visible
+    - [x] **Hero** - Large banner section for prominent messaging
+  - [x] **AppHeader** - Top navigation bar for application header
+  - [x] **App** - Root application wrapper with layout management
+    - [x] **Split** - IDE-style resizable panels with drag-to-resize dividers
+
+- [x] **Separator** - Visual divider (horizontal/vertical) with optional text or icon
+
+### Form Components
+- [x] **Input** - Base text input with validation and floating labels
+- [x] **TextInput** - Extended text input with masking support
+- [x] **Textarea** - Multi-line text input with auto-resize
+- [x] **Checkbox** - Accessible checkbox with configurable states and icons
+- [x] **Radio** - Single-select radio button
+- [x] **RadioGroup** - Group of radio buttons with unified state
+- [x] **Switch** - Toggle switch component
+- [x] **Select** - Dropdown select with option groups
+- [x] **Combobox** - Searchable select with filtering
+- [x] **AutoComplete** - Input with autocomplete suggestions
+- [x] **Dropdown** - Dropdown menu with cascading support
+- [x] **Listbox** - Scrollable list of selectable items
+- [x] **ListInput** - Multiple value input with removable chips
+- [x] **NumberInput** - Numeric input with increment/decrement controls
+- [x] **Slider** - Range slider with min/max values
+- [x] **Knob** - Circular progress slider for rotational input
+- [x] **Rating** - Star or icon-based rating input
+- [x] **ColorPicker** - Color selection with hex/RGB input
+- [x] **Calendar** - Date picker with month/year navigation
+- [x] **FileUpload** - File input with drag-and-drop support
+- [x] **FloatLabel** - Label that floats above input on focus
+- [x] **Form** - Form wrapper with validation handling
+- [x] **FormField** - Form field wrapper with label and error display
+- [x] **InputSwitch** - Toggle switch variant
+- [x] **InvalidState** - Error state display for form fields
+
+### Data Display
+- [x] **DataTable** - Sortable, filterable table with pagination
+- [x] **Table** - Semantic HTML table with styling
+- [x] **TableHeader** - Table header row
+- [x] **TableBody** - Table body wrapper
+- [x] **TableRow** - Table row
+- [x] **TableCell** - Table cell
+- [x] **Carousel** - Image/content carousel with navigation
+- [x] **CarouselItem** - Individual carousel slide
+- [x] **Timeline** - Vertical or horizontal timeline display
+- [x] **TimelineItem** - Individual timeline event
+- [x] **Tree** - Hierarchical tree view with expand/collapse
+- [x] **TreeNode** - Individual tree node
+
+### Navigation & Menus
+- [x] **Button** - Primary action button with variants
+- [x] **ButtonGroup** - Grouped buttons with unified styling
+- [x] **Breadcrumb** - Navigation breadcrumb trail
+- [x] **BreadcrumbItem** - Individual breadcrumb item
+- [x] **Menu** - Dropdown menu with items
+- [x] **MenuItem** - Individual menu item
+- [x] **Tabs** - Tab navigation with panels
+- [x] **Tab** - Individual tab
+- [x] **TabList** - Tab list container
+- [x] **TabPanel** - Tab panel content
+
+### Feedback & Overlays
+- [x] **Modal** - Dialog modal with backdrop
+- [x] **Tooltip** - Hover tooltip with positioning
+- [x] **Toast** - Notification toast messages
+- [x] **Progress** - Linear progress bar
+- [x] **Skeleton** - Loading skeleton placeholder
+- [x] **Stepper** - Step indicator for multi-step processes
+- [x] **StepperStep** - Individual stepper step
+
+### Misc & Utilities
+- [x] **Avatar** - User avatar with initials or image
+- [x] **AvatarGroup** - Group of avatars with overlap
+- [x] **Badge** - Small label/badge component
+- [x] **Chip** - Small removable tag/chip
+- [x] **ChipGroup** - Group of chips
+- [x] **Tag** - Label tag component
+- [x] **TagGroup** - Group of tags
+- [x] **Icon** - Icon component with customizable size/color
+- [x] **Masonry** - Masonry grid layout
+- [x] **ThemeToggle** - Dark/light mode toggle
+- [x] **CodeBlock** - Syntax-highlighted code display
+- [x] **CodeBlockSpeed** - High-performance code block
+- [x] **CodeEditor** - Interactive code editor
+
+### Not Yet Implemented
+- [ ] Advanced
+  - [ ] Editor - Full-featured text editor
+  - [ ] Terminal - Terminal emulator component
+- [ ] General
+  - [ ] Localization - Multi-language support
+  - [ ] Theming - Advanced theming system
+  - [ ] Specifying Iconsets - Custom icon set configuration using iconify
 - [ ] Data
-  - [ ] DataTable
-  - [ ] DataView
-  - [ ] VirtualScroller
-  - [ ] FilterService
-  - [ ] FullCalendar
-  - [ ] OrderList
-  - [ ] OrganizationChart
-  - [ ] Paginator
-  - [ ] PickList
-  - [ ] Timeline
-  - [ ] Tree
-  - [ ] TreeTable
-- [ ] Panel
-  - [ ] Accordion
-  - [ ] Card
-  - [ ] Deferred
-  - [ ] Divider
-  - [ ] Fieldset
-  - [ ] Panel
-  - [ ] Splitter
-  - [ ] ScrollPanel
-  - [ ] TabView
-  - [ ] Toolbar
+  - [ ] DataView - Alternative data display format
+  - [ ] VirtualScroller - Virtual scrolling for large lists
+  - [ ] FilterService - Data filtering utilities
+  - [ ] FullCalendar - Full calendar view
+  - [ ] OrderList - Draggable ordered list
+  - [ ] OrganizationChart - Organizational hierarchy chart
+  - [ ] Paginator - Pagination controls
+  - [ ] PickList - Dual-list picker
+  - [ ] TreeTable - Tree with table structure
 - [ ] Overlay
-  - [ ] ConfirmDialog
-  - [ ] ConfirmPopup
-  - [ ] Dialog
-  - [ ] DynamicDialog
-  - [ ] OverlayPanel
-  - [ ] Sidebar
-  - [ ] Tooltip
+  - [ ] ConfirmDialog - Confirmation dialog
+  - [ ] ConfirmPopup - Confirmation popup
+  - [ ] Dialog - Generic dialog
+  - [ ] DynamicDialog - Dynamically created dialogs
+  - [ ] OverlayPanel - Overlay panel
 - [ ] File
-  - [ ] Upload
+  - [ ] Upload - Advanced file upload
 - [ ] Menu
-  - [ ] MenuModel
-  - [ ] BreadCrumb
-  - [ ] ContextMenu
-  - [ ] MegaMenu
-  - [ ] Menu
-  - [ ] Menubar
-  - [ ] PanelMenu
-  - [ ] Steps
-  - [ ] TabMenu
-  - [ ] TieredMenu
-  - [ ] Dock
+  - [ ] ContextMenu - Right-click context menu
+  - [ ] MegaMenu - Large dropdown menu
+  - [ ] Menubar - Top menu bar
+  - [ ] PanelMenu - Side panel menu
+  - [ ] Steps - Step indicator menu
+  - [ ] TabMenu - Tab-based menu
+  - [ ] TieredMenu - Multi-level menu
+  - [ ] Dock - Dock menu
 - [ ] Chart
-  - [ ] ChartModel
-  - [ ] Pie
-  - [ ] Doughnut
-  - [ ] Bar
-  - [ ] Line
-  - [ ] PolarArea
-  - [ ] Radar
-  - [ ] Combo
-- [ ] Messages
-  - [ ] Message
-  - [ ] Toast
-  - [ ] Media
-  - [ ] Carousel
-  - [ ] Galleria
-  - [ ] Image
-- [ ] Misc
-  - [ ] Avatar
-  - [ ] Badge
-  - [ ] BlockUI
-  - [ ] Chip
-  - [ ] FocusTrap
-  - [ ] Inplace
-  - [ ] ProgressBar
-  - [ ] ProgressSpinner
-  - [ ] Ripple
-  - [ ] ScrollTop
-  - [ ] Skeleton
-  - [ ] StyleClass
-  - [ ] Tag
-  - [ ] Terminal
+  - [ ] Pie - Pie chart
+  - [ ] Doughnut - Doughnut chart
+  - [ ] Bar - Bar chart
+  - [ ] Line - Line chart
+  - [ ] PolarArea - Polar area chart
+  - [ ] Radar - Radar chart
+  - [ ] Combo - Combination chart
+- [ ] Media
+  - [ ] Image - Image component with lazy loading
+  - [ ] Galleria - Image gallery
