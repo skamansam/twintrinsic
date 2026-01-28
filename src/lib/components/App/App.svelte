@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import { setContext } from "svelte"
 
 const {
@@ -6,6 +6,12 @@ const {
   appName = "Twintrinsic App",
   leftPanelWidth = "300px",
   rightPanelWidth = "300px",
+  menu,
+  header,
+  footer,
+  leftPanel,
+  rightPanel,
+  children,
 } = $props()
 
 $effect(() => {
@@ -20,39 +26,39 @@ $effect(() => {
 </svelte:head>
 <!-- <svelte:body class="{darkMode ? "dark" : "light"}"/> -->
 <div class='app bg-element-100 dark:bg-dark dark:text-light min-h-screen' data-theme style="--left-panel-width: {leftPanelWidth}; --right-panel-width: {rightPanelWidth};">
-  {#if $$slots.menu}
+  {#if menu}
     <div class="appMenu">
-      <slot name="menu"/>
+      {@render menu()}
     </div>
   {/if}
-  {#if $$slots.header}
+  {#if header}
     <div class="appHeader">
-      <slot name="header"/>
+      {@render header()}
     </div>
   {/if}
   <div class="appWrapper w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 grow">
-    {#if $$slots.leftPanel}
+    {#if leftPanel}
       <div class="appLeftPanel shrink-0 px-4">
           <div class="sticky top-0 p-4 w-full h-full">
-              <slot name="leftPanel"/>
+              {@render leftPanel()}
           </div>
       </div>
     {/if}
     <main role="main" class="appMain w-full grow pt-1 px-3">
-      <slot/>
+      {@render children?.()}
     </main>
-    {#if $$slots.rightPanel}
+    {#if rightPanel}
       <div class="appRightPanel shrink-0 px-2">
           <!-- fixed-width -->
           <div class="flex sm:flex-col px-2">
-            <slot name="rightPanel"/>
+            {@render rightPanel()}
           </div>
       </div>
     {/if}
   </div>
-  {#if $$slots.footer}
+  {#if footer}
     <footer class="bg-black mt-auto">
-      <slot name="footer"/>
+      {@render footer()}
     </footer>
   {/if}
 </div>

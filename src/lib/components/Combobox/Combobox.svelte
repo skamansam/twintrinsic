@@ -125,7 +125,7 @@ const selectedLabel = $derived.by(() => {
 </script>
 
 <style lang="postcss">
-  @reference '$lib/twintrinsic.css';
+  @reference '../../twintrinsic.css';
 
   .combobox-wrapper {
     position: relative;

@@ -80,6 +80,8 @@ const {
   floatOnMobile = false,
   docked = false,
   ontoggle,
+  header,
+  children,
 } = $props() satisfies SidebarProps
 
 let isExpanded = $state(false)
@@ -150,10 +152,12 @@ function handleKeydown(event: KeyboardEvent): void {
       bordered={false}
       ontoggle={handleToggle}
     >
-      <svelte:fragment slot="header">
-        <slot name="header" />
-      </svelte:fragment>
-      <slot />
+      {#if header}
+        <div class="sidebar-header">
+          {@render header()}
+        </div>
+      {/if}
+      {@render children?.()}
     </Panel>
   </div>
 </div>

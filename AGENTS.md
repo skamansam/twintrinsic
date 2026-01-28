@@ -242,6 +242,11 @@ Example custom theme:
 - Test with screen readers
 - Use `role` attributes only when semantic HTML isn't available
 - Maintain color contrast ratios (WCAG AA minimum)
+- **Follow W3C WAI-ARIA Authoring Practices Guide (APG)**: When creating new widgets, reference the correct ARIA patterns from https://www.w3.org/WAI/ARIA/apg/patterns/ to ensure proper:
+  - ARIA roles, states, and properties
+  - Keyboard interaction patterns (focus management, arrow keys, etc.)
+  - Labeling and descriptions
+  - Assistive technology compatibility
 
 ## Testing Requirements
 

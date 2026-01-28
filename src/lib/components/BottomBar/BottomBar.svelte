@@ -42,6 +42,8 @@ const {
   floatOnMobile = true,
   docked = false,
   ontoggle,
+  header,
+  children,
 } = $props() satisfies BottomBarProps
 
 let isExpanded = $state(false)
@@ -95,10 +97,12 @@ function handleKeydown(event: KeyboardEvent) {
       bordered={false}
       ontoggle={handleToggle}
     >
-      <svelte:fragment slot="header">
-        <slot name="header" />
-      </svelte:fragment>
-      <slot />
+      {#if header}
+        <div class="bottombar-header">
+            {@render header()}
+        </div>
+      {/if}
+      {@render children?.()}
     </Panel>
   </div>
 </div>

@@ -136,24 +136,40 @@ let selectedRows = $state([])
 let allSelected = $state(false)
 let tableElement = $state()
 
+// Derived values for reactive prop access
+const derivedStriped = $derived(striped)
+const derivedHoverable = $derived(hoverable)
+const derivedBordered = $derived(bordered)
+const derivedSelectable = $derived(selectable)
+const derivedSortable = $derived(sortable)
+const derivedFilterable = $derived(filterable)
+const derivedPageable = $derived(pageable)
+const derivedPageSize = $derived(pageSize)
+const derivedColumns = $derived(columns)
+const derivedData = $derived(data)
+const derivedKeyField = $derived(keyField)
+const derivedRowClass = $derived(rowClass)
+const derivedOnrowclick = $derived(onrowclick)
+const derivedSelectedRows = $derived(selected)
+
 // Update state when props change
 $effect(() => {
   currentPage = page
-  currentPageSize = pageSize
+  currentPageSize = derivedPageSize
   currentSortField = sortField || ""
   currentSortOrder = sortOrder || "asc"
   currentFilters = filters || {}
-  selectedRows = Array.isArray(selected) ? [...selected] : []
+  selectedRows = Array.isArray(derivedSelectedRows) ? [...derivedSelectedRows] : []
 })
 
 // Provide context for child components
 $effect(() => {
   setContext("dataTable", {
-    sortable,
-    filterable,
-    selectable,
-    multiSelect,
-    keyField,
+    get sortable() { return derivedSortable },
+    get filterable() { return derivedFilterable },
+    get selectable() { return derivedSelectable },
+    get multiSelect() { return multiSelect },
+    get keyField() { return derivedKeyField },
     getSortField: () => currentSortField,
     getSortOrder: () => currentSortOrder,
     getFilters: () => currentFilters,

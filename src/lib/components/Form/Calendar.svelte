@@ -21,7 +21,7 @@ Usage:
 -->
 <script>
 import { slide } from "svelte/transition"
-import { clickOutside } from "$lib/actions"
+import { clickOutside } from "../../actions"
 import Input from "./Input.svelte"
 
 const {

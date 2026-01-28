@@ -3,6 +3,7 @@ const {
   heading = "",
   class: propClasses = "",
   type = null,
+  children
 } = $props<{ heading?: string; class?: string; type?: string | null }>()
 
 const typeCSS = $derived(type ? `bg-${type}` : "")
@@ -16,10 +17,6 @@ const typeCSS = $derived(type ? `bg-${type}` : "")
 </style>
 
 <section class="twin-section {propClasses} {typeCSS}">
-  {#if $$slots.heading}
-  <slot name="heading">
-    <h2>{heading}</h2>
-  </slot>
-  {/if}
-  <slot></slot>
+      <h2>{@render heading?.()}</h2>
+      {@render children?.()}
 </section>

@@ -10,6 +10,7 @@
 		class: className = '',
 		/** @type {boolean} - Whether to show rendering time */
 		showRenderTime = false,
+		children,
 	} = $props();
 
 	// className is used in the template below
@@ -100,7 +101,7 @@
 		</button>
 	</div>
 
-	<pre class="code-pre"><code bind:this={codeElement}><slot /></code></pre>
+	<pre class="code-pre"><code bind:this={codeElement}>{@render children?.()}</code></pre>
 </div>
 
 <style lang="postcss">

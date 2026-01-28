@@ -1,54 +1,61 @@
-<script>
-import { onDestroy, setContext } from "svelte"
-export let darkMode = false
+<script lang="ts">
+import { setContext } from "svelte"
+
+const {
+  darkMode = false,
+  appName = "Twintrinsic App",
+  leftPanelWidth = "150px",
+  rightPanelWidth = "150px",
+  menu,
+  header,
+  leftPanel,
+  children,
+  rightPanel,
+  footer
+} = $props()
 
 setContext("appDarkMode", {
-  getDarkMode: () => darkMode,
+  getDarkMode: () => darkMode
 })
-export let appName = "Twintrinsic App"
-export let leftPanelWidth = "300px"
-export let rightPanelWidth = "300px"
 </script>
 
 <svelte:head>
   <title>{appName}</title>
 </svelte:head>
-<!-- <svelte:body class="{darkMode ? "dark" : "light"}"/> -->
-<div class='app bg-element-100 dark:bg-dark dark:text-light min-h-screen' style="--left-panel-width: {leftPanelWidth}; --right-panel-width: {rightPanelWidth};">
-  {#if $$slots.menu}
+
+<div class='app bg-element-100 dark:bg-dark dark:text-light min-h-screen grid grid-rows-[auto_1fr_auto]' style="--left-panel-width: {leftPanelWidth}; --right-panel-width: {rightPanelWidth};">
+  {#if menu}
     <div class="appMenu">
-      <slot name="menu"/>
+      {@render menu()}
     </div>
   {/if}
-  {#if $$slots.header}
+  {#if header}
     <div class="appHeader">
-      <slot name="header"/>
+      {@render header()}
     </div>
   {/if}
-  <div class="appWrapper w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 grow">
-    {#if $$slots.leftPanel}
-      <div class="appLeftPanel w-fixed w-full shrink grow-0 px-4">
-          <div class="sticky top-0 p-4 w-full h-full">
-              <slot name="leftPanel"/>
-          </div>
+  <div class="appWrapper w-full grid grid-cols-[auto_1fr_auto] sm:grid-cols-[auto_1fr_auto] py-4 gap-4">
+    {#if leftPanel}
+      <div class="appLeftPanel px-4 h-full">
+        <div class="sticky top-0 p-4 h-full overflow-y-auto">
+          {@render leftPanel()}
+        </div>
       </div>
     {/if}
-    <main class="appMain w-full grow pt-1 px-3">
-      <slot/>
+    <main class="appMain w-full pt-1 px-3">
+      {@render children?.()}
     </main>
-    {#if $$slots.rightPanel}
-      <div class="appRightPanel w-fixed w-full shrink grow-0 px-2">
-          <!-- fixed-width -->
-          <div class="flex sm:flex-col px-2">
-            <slot name="rightPanel"/>
-          </div>
+    {#if rightPanel}
+      <div class="appRightPanel px-2">
+        <div class="flex sm:flex-col px-2">
+          {@render rightPanel()}
+        </div>
       </div>
     {/if}
   </div>
-  {#if $$slots.footer}
-    <footer class="bg-black mt-auto">
-      <slot name="footer"/>
+  {#if footer}
+    <footer class="bg-black">
+      {@render footer()}
     </footer>
   {/if}
 </div>
-

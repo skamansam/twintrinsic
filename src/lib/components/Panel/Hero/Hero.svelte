@@ -1,16 +1,24 @@
 <script lang="ts">
 import Container from "../../Container/Container.svelte"
-let propClasses = ""
-export let heading: string | null = ""
-export let type: TypeLevel = null
-let typeClass = ""
-$: typeClass = type ? `bg-${type}` : "bg-light"
-export { propClasses as class }
+
+const {
+	class: propClasses,
+	type,
+	heading,
+	children,
+	...rest
+} = $props()
+
+const typeClass = $derived(type ? `bg-${type}` : "bg-light")
 </script>
 
-<Container as="section" {...$$restProps} class="twin-hero {typeClass} {propClasses}  ">
-	<h1 slot="heading">{heading}</h1>
-	<slot></slot>
+<Container as="section" {...rest} class="twin-hero {typeClass} {propClasses}  ">
+	{#if heading}
+		<div class="hero-heading">
+			{@render heading()}
+		</div>
+	{/if}
+	{@render children?.()}
 </Container>
 
 <style lang="postcss">

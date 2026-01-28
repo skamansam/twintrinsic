@@ -138,7 +138,7 @@ const themeColors = [
 </script>
   
   <App appName="Twintrinsic Documentation" leftPanelWidth="14rem">
-    <div slot="header">
+    {#snippet header()}
       <AppHeader
         brand={{
           name: 'Twintrinsic',
@@ -147,27 +147,29 @@ const themeColors = [
         {navItems}
         class="relative"
       >
-        <div slot="logo" class="flex items-center gap-2">
-          <button
-            type="button"
-            class="lg:hidden -ml-2 p-2 rounded-md text-muted hover:text-text focus:outline-none focus:ring-2 focus:ring-primary-500"
-            onclick={() => leftSidebarExpanded = !leftSidebarExpanded}
-            aria-label="Toggle navigation menu"
-          >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-          <TwintrinsicLogo size="2rem" class="text-primary-500" />
-          <span class="font-semibold">Twintrinsic</span>
-        </div>
-        <div slot="actions">
+        {#snippet logo()}
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              class="lg:hidden -ml-2 p-2 rounded-md text-muted hover:text-text focus:outline-none focus:ring-2 focus:ring-primary-500"
+              onclick={() => leftSidebarExpanded = !leftSidebarExpanded}
+              aria-label="Toggle navigation menu"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <TwintrinsicLogo size="2rem" class="text-primary-500" />
+            <span class="font-semibold">Twintrinsic</span>
+          </div>
+        {/snippet}
+        {#snippet actions()}
           <ThemeToggle />
-        </div>
+        {/snippet}
       </AppHeader>
-    </div>
+    {/snippet}
   
-    <div slot="leftPanel">
+    {#snippet leftPanel()}
       <nav class="docs-nav">
         {#each componentLinks as link, i}
           {#if link.category && (i === 0 || componentLinks[i-1].category !== link.category)}
@@ -182,9 +184,9 @@ const themeColors = [
           </a>
         {/each}
       </nav>
-    </div>
+    {/snippet}
   
-    <slot />
+    {@render children?.()}
   </App>
   
   <style lang="postcss">

@@ -21,7 +21,7 @@ Usage:
 -->
 <script>
 import { slide } from "svelte/transition"
-import { clickOutside } from "$lib/actions/index.js"
+import { clickOutside } from "../../actions/index.js"
 
 const {
   /** @type {string} - Input label */

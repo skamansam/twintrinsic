@@ -3,11 +3,11 @@
 Theming documentation page
 -->
 <script>
-import Container from "$lib/components/Container/Container.svelte"
-import Separator from "$lib/components/Separator/Separator.svelte"
-import Panel from "$lib/components/Panel/Panel.svelte"
 import Button from "$lib/components/Button/Button.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import Panel from "$lib/components/Panel/Panel.svelte"
+import Separator from "$lib/components/Separator/Separator.svelte"
 
 const colorScales = ["primary", "secondary", "success", "warning", "error", "info"]
 const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
@@ -157,9 +157,9 @@ const buttonExamples = [
   <div class="space-y-6 not-prose">
     {#each colorScales as color}
       <Panel>
-        <svelte:fragment slot="header">
+        {#snippet header()}
           {color.charAt(0).toUpperCase() + color.slice(1)}
-        </svelte:fragment>
+        {/snippet}
         <div class="grid grid-cols-10 gap-2">
           {#each shades as shade}
             <div
@@ -439,7 +439,7 @@ module.exports = {
 
 <!-- Using color variants in a component -->
 <button class="bg-{color}-500 hover:bg-{color}-600 text-white px-4 py-2 rounded-md">
-  <slot />
+  {@render children?.()}
 </button>
 
 <style lang="postcss">

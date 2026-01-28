@@ -36,7 +36,7 @@ Usage:
 <script lang="ts">
 import Prism from "prismjs";
 import { onDestroy, onMount } from "svelte";
-import { detectLanguage } from "$lib/helpers";
+import { detectLanguage } from "../../helpers/index.js";
 // import "prism-svelte";
 import "prismjs/plugins/autoloader/prism-autoloader";
 
