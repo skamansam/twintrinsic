@@ -1,24 +1,24 @@
-<!--
-@component
-TextInput - A styled text input component with support for various input types.
-Provides consistent styling, accessibility features, and integration with the Form component.
-
-Usage:
-```svelte
-<TextInput 
-  name="username"
-  placeholder="Enter username"
-  value="initialValue"
-/>
-
-<TextInput 
-  type="email"
-  name="email"
-  required
-/>
-```
--->
-<script>
+<script lang="ts">
+/**
+ * @component
+ * TextInput - A styled text input component with support for various input types.
+ * Provides consistent styling, accessibility features, and integration with the Form component.
+ *
+ * Usage:
+ * ```svelte
+ * <TextInput 
+ *   name="username"
+ *   placeholder="Enter username"
+ *   value="initialValue"
+ * />
+ *
+ * <TextInput 
+ *   type="email"
+ *   name="email"
+ *   required
+ * />
+ * ```
+ */
 import { getContext } from "svelte"
 
 const {
@@ -94,11 +94,15 @@ const {
 // Get form context if available
 const formContext = getContext("form")
 
+// Derived values for reactive prop access in closures
+const derivedValue = $derived(value)
+const derivedName = $derived(name)
+
 // Generate unique ID if not provided
 const inputId = id || `input-${crypto.randomUUID()}`
 
 // Input state
-let inputValue = $state(value)
+let inputValue = $state(derivedValue)
 let isFocused = $state(false)
 let fieldApi = $state()
 
@@ -168,9 +172,9 @@ function clearInput() {
     fieldApi.setValue("")
   }
 
-  dispatch("input", { value: "" })
-  dispatch("change", { value: "" })
-  dispatch("clear")
+  oninput?.(new CustomEvent("input", { detail: { value: "" } }))
+  onchange?.(new CustomEvent("change", { detail: { value: "" } }))
+  onclear?.()
 }
 
 // Determine input size classes

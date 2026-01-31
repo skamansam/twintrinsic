@@ -1,18 +1,18 @@
-<!--
-@component
-TableCell - A component for data cells within a Table.
-Provides consistent styling for table cells with alignment and truncation options.
-
-Usage:
-```svelte
-<TableCell>John Doe</TableCell>
-
-<TableCell align="right">$25.00</TableCell>
-
-<TableCell truncate>This is a very long text that will be truncated</TableCell>
-```
--->
-<script>
+<script lang="ts">
+/**
+ * @component
+ * TableCell - A component for data cells within a Table.
+ * Provides consistent styling for table cells with alignment and truncation options.
+ *
+ * Usage:
+ * ```svelte
+ * <TableCell>John Doe</TableCell>
+ *
+ * <TableCell align="right">$25.00</TableCell>
+ *
+ * <TableCell truncate>This is a very long text that will be truncated</TableCell>
+ * ```
+ */
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",

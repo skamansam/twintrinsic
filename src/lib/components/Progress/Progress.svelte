@@ -23,7 +23,7 @@ Usage:
 />
 ```
 -->
-<script>
+<script lang="ts">
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",

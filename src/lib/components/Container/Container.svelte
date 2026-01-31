@@ -14,7 +14,7 @@ Usage:
 </Container>
 ```
 -->
-<script>
+<script lang="ts">
 const {
   /** @type {boolean} - If true, container will be full-width */
   fluid = false,

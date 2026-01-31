@@ -9,7 +9,7 @@ Usage:
 <Icon name="close" class="text-error" />
 ```
 -->
-<script>
+<script lang="ts">
 const {
   /** @type {string} - Name of the icon to display */
   name = "",

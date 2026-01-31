@@ -1,20 +1,20 @@
-<!--
-@component
-Tag - A component for displaying tags, labels, or status indicators.
-Provides consistent styling, accessibility features, and various display options.
-
-Usage:
-```svelte
-<Tag>Default Tag</Tag>
-
-<Tag variant="primary" size="lg">Primary Tag</Tag>
-
-<Tag variant="success" icon="<svg>...</svg>">Success</Tag>
-
-<Tag variant="warning" dismissible ondismiss={() => handleDismiss()}>Warning</Tag>
-```
--->
-<script>
+<script lang="ts">
+/**
+ * @component
+ * Tag - A component for displaying tags, labels, or status indicators.
+ * Provides consistent styling, accessibility features, and various display options.
+ *
+ * Usage:
+ * ```svelte
+ * <Tag>Default Tag</Tag>
+ *
+ * <Tag variant="primary" size="lg">Primary Tag</Tag>
+ *
+ * <Tag variant="success" icon="<svg>...</svg>">Success</Tag>
+ *
+ * <Tag variant="warning" dismissible ondismiss={() => handleDismiss()}>Warning</Tag>
+ * ```
+ */
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",

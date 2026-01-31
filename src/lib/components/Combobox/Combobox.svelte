@@ -1,6 +1,4 @@
 <script lang="ts">
-import { createEventDispatcher } from "svelte"
-
 const {
   class: className = "",
   id = crypto.randomUUID(),
@@ -14,10 +12,9 @@ const {
   searchable = false,
   clearable = false,
   ariaLabel,
+  onchange,
   children,
 } = $props()
-
-const dispatch = createEventDispatcher()
 
 let isOpen = $state(false)
 let searchValue = $state("")
@@ -73,14 +70,14 @@ const handleOptionClick = (option) => {
   selectedValue = newValue
   isOpen = false
   searchValue = ""
-  dispatch("change", { value: newValue, option })
+  onchange?.(new CustomEvent("change", { detail: { value: newValue, option } }))
 }
 
 const handleClear = (e) => {
   e.stopPropagation()
   selectedValue = null
   searchValue = ""
-  dispatch("change", { value: null, option: null })
+  onchange?.(new CustomEvent("change", { detail: { value: null, option: null } }))
   inputElement?.focus()
 }
 

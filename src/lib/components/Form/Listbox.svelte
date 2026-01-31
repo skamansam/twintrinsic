@@ -28,7 +28,7 @@ Usage:
 </FormField>
 ```
 -->
-<script>
+<script lang="ts">
 import { getContext, onMount } from "svelte"
 
 const {

@@ -25,7 +25,7 @@ Usage:
 />
 ```
 -->
-<script>
+<script lang="ts">
 import { slide } from "svelte/transition"
 import Icon from "../Icon/Icon.svelte"
 

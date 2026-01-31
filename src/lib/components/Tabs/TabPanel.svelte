@@ -14,8 +14,8 @@ Usage:
 </TabPanel>
 ```
 -->
-<script>
-import { getContext, onMount } from "svelte"
+<script lang="ts">
+import { getContext } from "svelte"
 import { fade } from "svelte/transition"
 
 const {
@@ -76,8 +76,11 @@ $effect(() => {
 // Determine if content should be rendered
 const shouldRenderContent = $derived(isSelected || (keepAlive && hasBeenSelected) || !lazy)
 
+// Derived values for reactive prop access in closures
+const derivedId = $derived(id)
+
 // Generate unique ID if not provided
-const panelId = id || `panel-${crypto.randomUUID()}`
+const panelId = derivedId || `panel-${crypto.randomUUID()}`
 
 // Tab ID for aria-labelledby
 const tabId = $derived(`tab-${panelId.replace("panel-", "")}`)

@@ -1,23 +1,23 @@
-<!--
-@component
-Tooltip - A component for displaying additional information when hovering or focusing on an element.
-Provides accessible, configurable tooltips with various positions and styles.
-
-Usage:
-```svelte
-<Tooltip content="This is a tooltip">
-  <Button>Hover me</Button>
-</Tooltip>
-
-<Tooltip position="bottom" delay={300}>
-  <svelte:fragment slot="content">
-    <strong>Custom tooltip</strong> with HTML content
-  </svelte:fragment>
-  <span>Hover for more info</span>
-</Tooltip>
-```
--->
-<script>
+<script lang="ts">
+/**
+ * @component
+ * Tooltip - A component for displaying additional information when hovering or focusing on an element.
+ * Provides accessible, configurable tooltips with various positions and styles.
+ *
+ * Usage:
+ * ```svelte
+ * <Tooltip content="This is a tooltip">
+ *   <Button>Hover me</Button>
+ * </Tooltip>
+ *
+ * <Tooltip position="bottom" delay={300}>
+ *   <svelte:fragment slot="content">
+ *     <strong>Custom tooltip</strong> with HTML content
+ *   </svelte:fragment>
+ *   <span>Hover for more info</span>
+ * </Tooltip>
+ * ```
+ */
 import { onMount } from "svelte"
 import { fade } from "svelte/transition"
 
@@ -207,6 +207,8 @@ onMount(() => {
   <!-- Trigger element -->
   <div
     class="tooltip-trigger"
+    role="button"
+    tabindex="0"
     onmouseenter={handleMouseEnter}
     onmouseleave={handleMouseLeave}
     onfocus={handleFocus}

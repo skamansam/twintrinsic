@@ -15,7 +15,7 @@ Usage:
 </Modal>
 ```
 -->
-<script>
+<script lang="ts">
 import { onMount } from "svelte"
 import { fade, scale } from "svelte/transition"
 
@@ -53,6 +53,8 @@ const {
   /** @type {string} - ARIA description for the modal */
   ariaDescription,
 
+  /** @type {(event: CustomEvent) => void} - Open event handler */
+  onopen,
   /** @type {(event: CustomEvent) => void} - Close event handler */
   onclose,
 
@@ -87,18 +89,20 @@ function openModal() {
   // Add body class to prevent scrolling
   document.body.classList.add("modal-open")
 
+  // Dispatch open event
+  onopen?.(new CustomEvent("open"))
+
   // Focus the modal after it's visible
   setTimeout(() => {
     focusFirstElement()
   }, 50)
-
-  dispatch("open")
 }
 
 /**
  * Closes the modal
+ * @param {string} reason - Reason for closing (backdrop, escape, or programmatic)
  */
-function closeModal() {
+function closeModal(reason = "programmatic") {
   // Remove body class
   document.body.classList.remove("modal-open")
 
@@ -107,7 +111,7 @@ function closeModal() {
     previouslyFocusedElement.focus()
   }
 
-  onclose?.(new CustomEvent("close"))
+  onclose?.(new CustomEvent("close", { detail: { reason } }))
 }
 
 /**
@@ -118,7 +122,7 @@ function handleBackdropClick(event) {
   // Only close if clicking directly on the backdrop, not on the modal content
   if (closeOnOutsideClick && event.target === event.currentTarget) {
     isOpen = false
-    closeModal()
+    closeModal("backdrop")
   }
 }
 
@@ -133,7 +137,7 @@ function handleKeydown(event) {
   if (closeOnEscape && event.key === "Escape") {
     event.preventDefault()
     isOpen = false
-    closeModal()
+    closeModal("escape")
     return
   }
 

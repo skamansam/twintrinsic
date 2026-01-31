@@ -1,35 +1,35 @@
-<!--
-@component
-Chip - A compact element for representing an input, attribute, or action.
-Provides consistent styling, accessibility features, and interactive options.
-
-Usage:
-```svelte
-<Chip>Basic Chip</Chip>
-
-<Chip variant="primary" icon="<svg>...</svg>">
-  Primary Chip
-</Chip>
-
-<Chip 
-  variant="success" 
-  removable 
-  onremove={() => console.log('Chip removed')}
->
-  Removable Chip
-</Chip>
-
-<Chip 
-  variant="warning" 
-  avatar="<img src='user.jpg' alt='User'>" 
-  clickable
-  onclick={() => console.log('Chip clicked')}
->
-  User Name
-</Chip>
-```
--->
-<script>
+<script lang="ts">
+/**
+ * @component
+ * Chip - A compact element for representing an input, attribute, or action.
+ * Provides consistent styling, accessibility features, and interactive options.
+ *
+ * Usage:
+ * ```svelte
+ * <Chip>Basic Chip</Chip>
+ *
+ * <Chip variant="primary" icon="<svg>...</svg>">
+ *   Primary Chip
+ * </Chip>
+ *
+ * <Chip 
+ *   variant="success" 
+ *   removable 
+ *   onremove={() => console.log('Chip removed')}
+ * >
+ *   Removable Chip
+ * </Chip>
+ *
+ * <Chip 
+ *   variant="warning" 
+ *   avatar="<img src='user.jpg' alt='User'>" 
+ *   clickable
+ *   onclick={() => console.log('Chip clicked')}
+ * >
+ *   User Name
+ * </Chip>
+ * ```
+ */
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",

@@ -1,20 +1,20 @@
-<!--
-@component
-TableHeader - A component for header cells within a Table.
-Provides consistent styling for table headers with sorting capabilities.
-
-Usage:
-```svelte
-<TableHeader>Name</TableHeader>
-
-<TableHeader sortable sortDirection="asc" onsort={handleSort}>
-  Age
-</TableHeader>
-
-<TableHeader align="right">Actions</TableHeader>
-```
--->
-<script>
+<script lang="ts">
+/**
+ * @component
+ * TableHeader - A component for header cells within a Table.
+ * Provides consistent styling for table headers with sorting capabilities.
+ *
+ * Usage:
+ * ```svelte
+ * <TableHeader>Name</TableHeader>
+ *
+ * <TableHeader sortable sortDirection="asc" onsort={handleSort}>
+ *   Age
+ * </TableHeader>
+ *
+ * <TableHeader align="right">Actions</TableHeader>
+ * ```
+ */
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",

@@ -14,7 +14,7 @@ Usage:
 <BreadcrumbItem>Current Page</BreadcrumbItem>
 ```
 -->
-<script>
+<script lang="ts">
 import { getContext, onMount } from "svelte"
 
 const {

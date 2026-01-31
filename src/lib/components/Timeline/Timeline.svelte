@@ -1,24 +1,24 @@
-<!--
-@component
-Timeline - A component for displaying chronological events or steps.
-Provides consistent styling, accessibility features, and various display options.
-
-Usage:
-```svelte
-<Timeline>
-  <TimelineItem title="Step 1">Content for step 1</TimelineItem>
-  <TimelineItem title="Step 2">Content for step 2</TimelineItem>
-  <TimelineItem title="Step 3">Content for step 3</TimelineItem>
-</Timeline>
-
-<Timeline variant="primary" position="alternate">
-  <TimelineItem title="Event 1" date="Jan 2023">Event details</TimelineItem>
-  <TimelineItem title="Event 2" date="Feb 2023" variant="success">Event details</TimelineItem>
-  <TimelineItem title="Event 3" date="Mar 2023" variant="error">Event details</TimelineItem>
-</Timeline>
-```
--->
-<script>
+<script lang="ts">
+/**
+ * @component
+ * Timeline - A component for displaying chronological events or steps.
+ * Provides consistent styling, accessibility features, and various display options.
+ *
+ * Usage:
+ * ```svelte
+ * <Timeline>
+ *   <TimelineItem title="Step 1">Content for step 1</TimelineItem>
+ *   <TimelineItem title="Step 2">Content for step 2</TimelineItem>
+ *   <TimelineItem title="Step 3">Content for step 3</TimelineItem>
+ * </Timeline>
+ *
+ * <Timeline variant="primary" position="alternate">
+ *   <TimelineItem title="Event 1" date="Jan 2023">Event details</TimelineItem>
+ *   <TimelineItem title="Event 2" date="Feb 2023" variant="success">Event details</TimelineItem>
+ *   <TimelineItem title="Event 3" date="Mar 2023" variant="error">Event details</TimelineItem>
+ * </Timeline>
+ * ```
+ */
 import { setContext } from "svelte"
 
 const {

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { highlightElement } from '@speed-highlight/core';
 	import { detectLanguage } from '@speed-highlight/core/detect';
 	import { onDestroy, onMount } from 'svelte';

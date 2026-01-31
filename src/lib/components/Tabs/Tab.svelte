@@ -14,7 +14,7 @@ Usage:
 </Tab>
 ```
 -->
-<script>
+<script lang="ts">
 import { getContext, onMount } from "svelte"
 
 const {
@@ -83,8 +83,11 @@ function handleKeydown(event) {
   tabsContext.handleKeydown(event, index)
 }
 
+// Derived values for reactive prop access in closures
+const derivedId = $derived(id)
+
 // Generate unique ID if not provided
-const tabId = id || `tab-${crypto.randomUUID()}`
+const tabId = derivedId || `tab-${crypto.randomUUID()}`
 
 // Panel ID for aria-controls
 const panelId = $derived(`panel-${tabId}`)

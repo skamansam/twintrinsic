@@ -1,24 +1,24 @@
-<!--
-@component
-Tabs - A component for organizing content into tabbed sections.
-Provides accessible tab navigation with keyboard support and various styling options.
-
-Usage:
-```svelte
-<Tabs>
-  <TabList>
-    <Tab>First Tab</Tab>
-    <Tab>Second Tab</Tab>
-    <Tab>Third Tab</Tab>
-  </TabList>
-  
-  <TabPanel>First tab content</TabPanel>
-  <TabPanel>Second tab content</TabPanel>
-  <TabPanel>Third tab content</TabPanel>
-</Tabs>
-```
--->
-<script>
+<script lang="ts">
+/**
+ * @component
+ * Tabs - A component for organizing content into tabbed sections.
+ * Provides accessible tab navigation with keyboard support and various styling options.
+ *
+ * Usage:
+ * ```svelte
+ * <Tabs>
+ *   <TabList>
+ *     <Tab>First Tab</Tab>
+ *     <Tab>Second Tab</Tab>
+ *     <Tab>Third Tab</Tab>
+ *   </TabList>
+ *   
+ *   <TabPanel>First tab content</TabPanel>
+ *   <TabPanel>Second tab content</TabPanel>
+ *   <TabPanel>Third tab content</TabPanel>
+ * </Tabs>
+ * ```
+ */
 import { setContext } from "svelte"
 
 const {
@@ -55,15 +55,18 @@ const {
   children,
 } = $props()
 
+// Derived values for reactive prop access in closures
+const derivedDefaultIndex = $derived(defaultIndex)
+
 // Tabs state
-let selectedIndex = $state(defaultIndex)
+let selectedIndex = $state(derivedDefaultIndex)
 let tabsCount = $state(0)
 let tabsRefs = $state([])
 let panelsRefs = $state([])
 
 // Sync selectedIndex when defaultIndex changes
 $effect(() => {
-  selectedIndex = defaultIndex
+  selectedIndex = derivedDefaultIndex
 })
 
 /**

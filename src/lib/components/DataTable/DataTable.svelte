@@ -28,7 +28,7 @@ Usage:
 />
 ```
 -->
-<script>
+<script lang="ts">
 import { setContext } from "svelte"
 
 const {

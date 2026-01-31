@@ -24,7 +24,9 @@ Usage:
 </FileUpload>
 ```
 -->
-<script>
+<script lang="ts">
+import { getContext } from "svelte"
+
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",
@@ -396,7 +398,7 @@ async function uploadFiles(filesToUpload) {
       errors = [...errors, error]
 
       // Dispatch error event
-      dispatch("error", { errors: [error] })
+      onerror?.(new CustomEvent("error", { detail: { errors: [error] } }))
 
       uploading = false
     })
@@ -421,7 +423,7 @@ async function uploadFiles(filesToUpload) {
     errors = [...errors, errorObj]
 
     // Dispatch error event
-    dispatch("error", { errors: [errorObj] })
+    onerror?.(new CustomEvent("error", { detail: { errors: [errorObj] } }))
 
     uploading = false
   }

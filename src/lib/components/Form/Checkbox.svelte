@@ -18,7 +18,9 @@ Usage:
 />
 ```
 -->
-<script>
+<script lang="ts">
+import { getContext } from "svelte"
+
 const {
   /** @type {string} - Label text */
   label,

@@ -24,7 +24,9 @@ Usage:
 />
 ```
 -->
-<script>
+<script lang="ts">
+import { getContext } from "svelte"
+
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",
@@ -72,15 +74,18 @@ const {
   onchange,
 } = $props()
 
+// Derived values for reactive prop access in closures
+const derivedValue = $derived(value)
+
 // Component state
-let currentValue = $state(value)
+let currentValue = $state(derivedValue)
 let hoverValue = $state(-1)
 let isDragging = $state(false)
 let ratingElement = $state()
 
 // Update internal value when prop changes
 $effect(() => {
-  currentValue = value
+  currentValue = derivedValue
 })
 
 // Computed values
@@ -260,7 +265,7 @@ function handleKeydown(event) {
   if (newValue !== currentValue) {
     currentValue = newValue
     hoverValue = newValue
-    dispatch("change", { value: currentValue })
+    onchange?.(new CustomEvent("change", { detail: { value: currentValue } }))
     event.preventDefault()
   }
 }

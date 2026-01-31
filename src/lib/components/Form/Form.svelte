@@ -18,7 +18,7 @@ Usage:
 </Form>
 ```
 -->
-<script>
+<script lang="ts">
 import { setContext } from "svelte"
 
 const {
@@ -239,7 +239,7 @@ const formApi = {
 }
 
 // Expose form API to parent
-dispatch("ready", { form: formApi })
+// Note: Form component exposes API through context, not events
 </script>
 
 <form

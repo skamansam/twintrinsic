@@ -27,8 +27,8 @@ Usage:
 />
 ```
 -->
-<script>
-import { onDestroy } from "svelte"
+<script lang="ts">
+import { getContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -85,6 +85,9 @@ const {
   oninput,
 } = $props()
 
+// Derived values for reactive prop access in closures
+const derivedValue = $derived(value)
+
 // Component state
 let sliderValues = $state([])
 let isDragging = $state(false)
@@ -95,7 +98,7 @@ let thumbElements = $state([])
 
 // Update internal value when prop changes
 $effect(() => {
-  sliderValues = Array.isArray(value) ? [...value] : [value]
+  sliderValues = Array.isArray(derivedValue) ? [...derivedValue] : [derivedValue]
 })
 
 // Computed values

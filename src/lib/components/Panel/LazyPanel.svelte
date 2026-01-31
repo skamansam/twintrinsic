@@ -12,7 +12,7 @@ Usage:
 </LazyPanel>
 ```
 -->
-<script>
+<script lang="ts">
 import { onMount } from "svelte"
 import Panel from "./Panel.svelte"
 

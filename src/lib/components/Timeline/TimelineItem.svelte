@@ -1,33 +1,33 @@
-<!--
-@component
-TimelineItem - An individual item within a Timeline component.
-Provides consistent styling, accessibility features, and various display options.
-
-Usage:
-```svelte
-<TimelineItem title="Event Title">
-  Content for the event
-</TimelineItem>
-
-<TimelineItem 
-  title="Important Milestone" 
-  date="January 15, 2023"
-  icon="<svg>...</svg>"
-  variant="success"
->
-  Detailed description of the milestone
-</TimelineItem>
-
-<TimelineItem 
-  title="Error Occurred" 
-  variant="error"
-  iconBackground="bg-error-500"
->
-  Details about the error
-</TimelineItem>
-```
--->
-<script>
+<script lang="ts">
+/**
+ * @component
+ * TimelineItem - An individual item within a Timeline component.
+ * Provides consistent styling, accessibility features, and various display options.
+ *
+ * Usage:
+ * ```svelte
+ * <TimelineItem title="Event Title">
+ *   Content for the event
+ * </TimelineItem>
+ *
+ * <TimelineItem 
+ *   title="Important Milestone" 
+ *   date="January 15, 2023"
+ *   icon="<svg>...</svg>"
+ *   variant="success"
+ * >
+ *   Detailed description of the milestone
+ * </TimelineItem>
+ *
+ * <TimelineItem 
+ *   title="Error Occurred" 
+ *   variant="error"
+ *   iconBackground="bg-error-500"
+ * >
+ *   Details about the error
+ * </TimelineItem>
+ * ```
+ */
 import { getContext, onMount } from "svelte"
 
 const {

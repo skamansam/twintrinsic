@@ -19,8 +19,8 @@ Usage:
 />
 ```
 -->
-<script>
-import { slide } from "svelte/transition"
+<script lang="ts">
+import { getContext } from "svelte"
 import { clickOutside } from "../../actions/index.js"
 
 const {
@@ -163,7 +163,7 @@ function clearSelection(event) {
   event.stopPropagation()
   if (disabled) return
   selectedValues = []
-  dispatch("change", { value: multiple ? [] : "" })
+  onchange?.(new CustomEvent("change", { detail: { value: multiple ? [] : "" } }))
 }
 
 // Get display value

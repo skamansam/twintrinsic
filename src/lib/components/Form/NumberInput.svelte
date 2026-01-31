@@ -28,7 +28,7 @@ Usage:
 />
 ```
 -->
-<script>
+<script lang="ts">
 import { getContext } from "svelte"
 
 const {
@@ -102,9 +102,13 @@ const formContext = getContext("form")
 // Generate unique ID if not provided
 const inputId = id || `number-input-${crypto.randomUUID()}`
 
+// Derived values for reactive prop access in closures
+const derivedValue = $derived(value)
+const derivedName = $derived(name)
+
 // Input state
-let inputValue = $state(formatValue(value))
-let numericValue = $state(value)
+let inputValue = $state(formatValue(derivedValue))
+let numericValue = $state(derivedValue)
 let isFocused = $state(false)
 let inputEl
 
@@ -112,8 +116,8 @@ let inputEl
 let fieldApi = $state()
 
 $effect(() => {
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, value)
+  if (formContext && derivedName) {
+    fieldApi = formContext.registerField(derivedName, derivedValue)
   }
 })
 

@@ -32,8 +32,8 @@ Usage:
 </FormField>
 ```
 -->
-<script>
-import { getContext, onMount } from "svelte"
+<script lang="ts">
+import { getContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -93,8 +93,12 @@ const {
 // Get form context if available
 const formContext = getContext("form")
 
+// Derived values for reactive prop access in closures
+const derivedValue = $derived(value)
+const derivedName = $derived(name)
+
 // Component state
-let currentValue = $state(value)
+let currentValue = $state(derivedValue)
 let isDragging = $state(false)
 let knobElement = $state()
 let radius = $state(0)
@@ -104,8 +108,8 @@ let center = $state({ x: 0, y: 0 })
 let fieldApi = $state()
 
 $effect(() => {
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, value)
+  if (formContext && derivedName) {
+    fieldApi = formContext.registerField(derivedName, derivedValue)
   }
 })
 
@@ -356,8 +360,8 @@ function handleKeydown(event) {
       fieldApi.setValue(newValue)
     }
 
-    dispatch("input", { value: newValue })
-    dispatch("change", { value: newValue })
+    oninput?.(new CustomEvent("input", { detail: { value: newValue } }))
+    onchange?.(new CustomEvent("change", { detail: { value: newValue } }))
   }
 }
 

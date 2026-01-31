@@ -21,7 +21,7 @@ Usage:
 </TreeNode>
 ```
 -->
-<script>
+<script lang="ts">
 import { getContext, onMount } from "svelte"
 
 const {
@@ -58,6 +58,11 @@ const {
   /** @type {Function} - Custom render function for the label */
   labelRender,
 
+  /** @type {(event: CustomEvent) => void} - Toggle event handler */
+  ontoggle,
+  /** @type {(event: CustomEvent) => void} - Select event handler */
+  onselect,
+
   children,
 
   ...restProps
@@ -66,15 +71,19 @@ const {
 // Get tree context
 const treeContext = getContext("tree")
 
+// Derived values for reactive prop access in closures
+const derivedExpanded = $derived(expanded)
+const derivedSelected = $derived(selected)
+
 // Component state
-let isExpanded = $state(expanded)
-let isSelected = $state(selected)
+let isExpanded = $state(derivedExpanded)
+let isSelected = $state(derivedSelected)
 let hasChildren = $state(false)
 let nodeElement
 
 // Update expanded state when prop changes
 $effect(() => {
-  isExpanded = expanded
+  isExpanded = derivedExpanded
 })
 
 // Update selected state from context or prop
@@ -82,7 +91,7 @@ $effect(() => {
   if (treeContext?.selectable) {
     isSelected = treeContext.isSelected(key)
   } else {
-    isSelected = selected
+    isSelected = derivedSelected
   }
 })
 
@@ -112,7 +121,7 @@ function toggleExpanded(event) {
   if (disabled || !hasChildren) return
 
   isExpanded = !isExpanded
-  dispatch("toggle", { expanded: isExpanded, key })
+  ontoggle?.(new CustomEvent("toggle", { detail: { expanded: isExpanded, key } }))
 
   // Prevent event from triggering selection
   event.stopPropagation()
@@ -126,7 +135,7 @@ function handleClick() {
 
   if (isSelectable) {
     treeContext.toggleSelection(key)
-    dispatch("select", { selected: isSelected, key })
+    onselect?.(new CustomEvent("select", { detail: { selected: !isSelected, key } }))
   }
 }
 
@@ -143,7 +152,7 @@ function handleKeyDown(event) {
       // Select node
       if (isSelectable) {
         treeContext.toggleSelection(key)
-        dispatch("select", { selected: isSelected, key })
+        onselect?.(new CustomEvent("select", { detail: { selected: !isSelected, key } }))
         event.preventDefault()
       }
       break
@@ -152,7 +161,7 @@ function handleKeyDown(event) {
       // Expand node if collapsed
       if (hasChildren && !isExpanded) {
         isExpanded = true
-        dispatch("toggle", { expanded: true, key })
+        ontoggle?.(new CustomEvent("toggle", { detail: { expanded: true, key } }))
         event.preventDefault()
       }
       break
@@ -161,7 +170,7 @@ function handleKeyDown(event) {
       // Collapse node if expanded
       if (hasChildren && isExpanded) {
         isExpanded = false
-        dispatch("toggle", { expanded: false, key })
+        ontoggle?.(new CustomEvent("toggle", { detail: { expanded: false, key } }))
         event.preventDefault()
       }
       break

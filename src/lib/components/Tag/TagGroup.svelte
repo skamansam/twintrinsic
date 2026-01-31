@@ -1,32 +1,32 @@
-<!--
-@component
-TagGroup - A component for managing multiple Tag components.
-Provides consistent spacing, layout options, and accessibility features.
-
-Usage:
-```svelte
-<TagGroup>
-  <Tag>Tag 1</Tag>
-  <Tag>Tag 2</Tag>
-  <Tag>Tag 3</Tag>
-</TagGroup>
-
-<TagGroup variant="primary" size="lg">
-  <Tag>JavaScript</Tag>
-  <Tag>TypeScript</Tag>
-  <Tag>Svelte</Tag>
-</TagGroup>
-
-<TagGroup 
-  items={['Red', 'Green', 'Blue']} 
-  let:item 
-  ondismiss={(e) => handleDismiss(e.detail)}
->
-  <Tag dismissible>{item}</Tag>
-</TagGroup>
-```
--->
-<script>
+<script lang="ts">
+/**
+ * @component
+ * TagGroup - A component for managing multiple Tag components.
+ * Provides consistent spacing, layout options, and accessibility features.
+ *
+ * Usage:
+ * ```svelte
+ * <TagGroup>
+ *   <Tag>Tag 1</Tag>
+ *   <Tag>Tag 2</Tag>
+ *   <Tag>Tag 3</Tag>
+ * </TagGroup>
+ *
+ * <TagGroup variant="primary" size="lg">
+ *   <Tag>JavaScript</Tag>
+ *   <Tag>TypeScript</Tag>
+ *   <Tag>Svelte</Tag>
+ * </TagGroup>
+ *
+ * <TagGroup 
+ *   items={['Red', 'Green', 'Blue']} 
+ *   let:item 
+ *   ondismiss={(e) => handleDismiss(e.detail)}
+ * >
+ *   <Tag dismissible>{item}</Tag>
+ * </TagGroup>
+ * ```
+ */
 import { setContext } from "svelte"
 
 const {

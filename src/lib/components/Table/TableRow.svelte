@@ -1,22 +1,22 @@
-<!--
-@component
-TableRow - A component for a row within a Table.
-Provides consistent styling for table rows with selection and hover states.
-
-Usage:
-```svelte
-<TableRow>
-  <TableCell>John Doe</TableCell>
-  <TableCell>john@example.com</TableCell>
-</TableRow>
-
-<TableRow selected>
-  <TableCell>Selected Row</TableCell>
-  <TableCell>Data</TableCell>
-</TableRow>
-```
--->
-<script>
+<script lang="ts">
+/**
+ * @component
+ * TableRow - A component for a row within a Table.
+ * Provides consistent styling for table rows with selection and hover states.
+ *
+ * Usage:
+ * ```svelte
+ * <TableRow>
+ *   <TableCell>John Doe</TableCell>
+ *   <TableCell>john@example.com</TableCell>
+ * </TableRow>
+ *
+ * <TableRow selected>
+ *   <TableCell>Selected Row</TableCell>
+ *   <TableCell>Data</TableCell>
+ * </TableRow>
+ * ```
+ */
 import { getContext } from "svelte"
 
 const {

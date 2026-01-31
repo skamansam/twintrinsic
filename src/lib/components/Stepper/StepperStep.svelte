@@ -25,10 +25,9 @@ Usage:
 >
   Payment step content
 </StepperStep>
-```
 -->
-<script>
-import { getContext, onMount } from "svelte"
+<script lang="ts">
+import { getContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */

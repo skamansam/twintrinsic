@@ -13,7 +13,7 @@ Usage:
 </Separator>
 ```
 -->
-<script>
+<script lang="ts">
 const {
   /** @type {boolean} - Whether the separator should be vertical */
   vertical = false,

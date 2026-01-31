@@ -14,7 +14,7 @@ Usage:
 </Lazy>
 ```
 -->
-<script>
+<script lang="ts">
 import { onMount } from "svelte"
 
 const {

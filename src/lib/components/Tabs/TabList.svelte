@@ -1,22 +1,22 @@
-<!--
-@component
-TabList - A container for Tab components within a Tabs component.
-Provides the navigation interface for tab panels.
-
-Usage:
-```svelte
-<Tabs>
-  <TabList>
-    <Tab>First Tab</Tab>
-    <Tab>Second Tab</Tab>
-  </TabList>
-  
-  <TabPanel>First tab content</TabPanel>
-  <TabPanel>Second tab content</TabPanel>
-</Tabs>
-```
--->
-<script>
+<script lang="ts">
+/**
+ * @component
+ * TabList - A container for Tab components within a Tabs component.
+ * Provides the navigation interface for tab panels.
+ *
+ * Usage:
+ * ```svelte
+ * <Tabs>
+ *   <TabList>
+ *     <Tab>First Tab</Tab>
+ *     <Tab>Second Tab</Tab>
+ *   </TabList>
+ *   
+ *   <TabPanel>First tab content</TabPanel>
+ *   <TabPanel>Second tab content</TabPanel>
+ * </Tabs>
+ * ```
+ */
 import { getContext } from "svelte"
 
 const {

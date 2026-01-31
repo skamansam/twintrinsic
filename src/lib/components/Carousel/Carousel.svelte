@@ -31,7 +31,7 @@ Usage:
 </Carousel>
 ```
 -->
-<script>
+<script lang="ts">
 import { onDestroy, onMount, setContext } from "svelte"
 
 const {

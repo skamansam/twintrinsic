@@ -3,7 +3,7 @@
 A modern, dynamic logo for Twintrinsic that represents Tailwind's utility-first approach
 and the intrinsic nature of web design.
 -->
-<script>
+<script lang="ts">
 const { class: className = "", size = "3rem" } = $props()
 </script>
 

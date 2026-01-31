@@ -1,31 +1,31 @@
-<!--
-@component
-Toast - A component for displaying temporary notifications.
-Provides consistent styling, accessibility features, and various display options.
-
-Usage:
-```svelte
-<script>
-import { showToast } from "./toastStore"
-
-function notify() {
-  showToast({
-    message: "Operation completed successfully",
-    variant: "success",
-    duration: 3000,
-  })
-}
-</script>
-
-<button onclick={notify}>Show Toast</button>
-
-<Toast />
-```
--->
-<script>
-  import { onMount, onDestroy } from 'svelte';
+<script lang="ts">
+/**
+ * @component
+ * Toast - A component for displaying temporary notifications.
+ * Provides consistent styling, accessibility features, and various display options.
+ *
+ * Usage:
+ * ```svelte
+ * <script lang="ts">
+ * import { subscribe } from "svelte/store"
+ *
+ * function notify() {
+ *   showToast({
+ *     message: "Operation completed successfully",
+ *     variant: "success",
+ *     duration: 3000
+ *   })
+ * }
+ * <\/script>
+ *
+ * <button onclick={notify}>Show Toast</button>
+ *
+ * <Toast />
+ * ```
+ */
+  import { onDestroy, onMount } from 'svelte';
+  import { fade, fly } from 'svelte/transition';
   import { toastStore } from './toastStore';
-  import { fly, fade } from 'svelte/transition';
 
   const {
     /** @type {string} - Additional CSS classes */
@@ -124,8 +124,14 @@ function notify() {
       role="alert"
       aria-live={toast.variant === 'error' ? 'assertive' : 'polite'}
       onclick={() => dismissible && removeToast(toast.id)}
+      onkeydown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          dismissible && removeToast(toast.id)
+        }
+      }}
       onmouseenter={() => pauseToast(toast.id)}
       onmouseleave={() => resumeToast(toast.id)}
+      tabindex={dismissible ? 0 : -1}
       in:fly={{ y: 20, duration: 200 }}
       out:fly={{ x: 20, duration: 200 }}
     >

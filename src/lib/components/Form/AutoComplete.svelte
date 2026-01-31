@@ -21,8 +21,8 @@ Usage:
 />
 ```
 -->
-<script>
-import { slide } from "svelte/transition"
+<script lang="ts">
+import { getContext } from "svelte"
 import { clickOutside } from "../../actions"
 import Input from "./Input.svelte"
 

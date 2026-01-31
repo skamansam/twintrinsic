@@ -17,6 +17,8 @@ const typeCSS = $derived(type ? `bg-${type}` : "")
 </style>
 
 <section class="twin-section {propClasses} {typeCSS}">
-      <h2>{@render heading?.()}</h2>
-      {@render children?.()}
+  {#if heading}
+    <h2>{@render heading?.()}</h2>
+  {/if}
+  {@render children?.()}
 </section>

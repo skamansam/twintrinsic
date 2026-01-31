@@ -33,10 +33,9 @@ Usage:
     {option.name}
   </div>
 </Combobox>
-```
 -->
-<script>
-import { tick } from "svelte"
+<script lang="ts">
+import { getContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */

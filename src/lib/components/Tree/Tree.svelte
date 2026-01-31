@@ -1,37 +1,37 @@
-<!--
-@component
-Tree - A component for displaying hierarchical data with expandable nodes.
-Provides consistent styling, accessibility features, and keyboard navigation.
-
-Usage:
-```svelte
-<Tree>
-  <TreeNode label="Root">
-    <TreeNode label="Child 1" />
-    <TreeNode label="Child 2">
-      <TreeNode label="Grandchild 1" />
-      <TreeNode label="Grandchild 2" />
-    </TreeNode>
-  </TreeNode>
-</Tree>
-
-<Tree
-  selectable
-  multiSelect
-  onselect={handleSelect}
->
-  <TreeNode 
-    label="Documents" 
-    icon="<svg>...</svg>"
-    expanded
-  >
-    <TreeNode label="Work" />
-    <TreeNode label="Personal" />
-  </TreeNode>
-</Tree>
-```
--->
-<script>
+<script lang="ts">
+/**
+ * @component
+ * Tree - A component for displaying hierarchical data with expandable nodes.
+ * Provides consistent styling, accessibility features, and keyboard navigation.
+ *
+ * Usage:
+ * ```svelte
+ * <Tree>
+ *   <TreeNode label="Root">
+ *     <TreeNode label="Child 1" />
+ *     <TreeNode label="Child 2">
+ *       <TreeNode label="Grandchild 1" />
+ *       <TreeNode label="Grandchild 2" />
+ *     </TreeNode>
+ *   </TreeNode>
+ * </Tree>
+ *
+ * <Tree
+ *   selectable
+ *   multiSelect
+ *   onselect={handleSelect}
+ * >
+ *   <TreeNode 
+ *     label="Documents" 
+ *     icon="<svg>...</svg>"
+ *     expanded
+ *   >
+ *     <TreeNode label="Work" />
+ *     <TreeNode label="Personal" />
+ *   </TreeNode>
+ * </Tree>
+ * ```
+ */
 import { setContext } from "svelte"
 
 const {
@@ -65,22 +65,27 @@ const {
   children,
 } = $props()
 
+// Derived values for reactive prop access in closures
+const derivedSelected = $derived(selected)
+const derivedSelectable = $derived(selectable)
+const derivedMultiSelect = $derived(multiSelect)
+
 // Component state
-let selectedNodes = $state(Array.isArray(selected) ? [...selected] : [])
+let selectedNodes = $state(Array.isArray(derivedSelected) ? [...derivedSelected] : [])
 
 // Provide context for child components
 $effect(() => {
   setContext("tree", {
-    selectable,
-    multiSelect,
+    get selectable() { return derivedSelectable },
+    get multiSelect() { return derivedMultiSelect },
     showIcons,
     showLines,
     isSelected: (key) => selectedNodes.includes(key),
     toggleSelection: (key) => {
-      if (selectable) {
+      if (derivedSelectable) {
         if (selectedNodes.includes(key)) {
           // Remove if already selected
-          if (multiSelect) {
+          if (derivedMultiSelect) {
             selectedNodes = selectedNodes.filter((k) => k !== key)
           } else {
             // For single select, clicking the selected item again doesn't deselect it

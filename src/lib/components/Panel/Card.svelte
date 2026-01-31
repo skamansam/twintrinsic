@@ -18,9 +18,8 @@ Usage:
   <h3>Title</h3>
   <p>Content with hover effect</p>
 </Card>
-```
 -->
-<script>
+<script lang="ts">
 import Panel from "./Panel.svelte"
 
 const {

@@ -22,7 +22,7 @@ Usage:
 </FormField>
 ```
 -->
-<script>
+<script lang="ts">
 import { getContext } from "svelte"
 
 const {
@@ -83,9 +83,13 @@ const {
 // Get form context if available
 const formContext = getContext("form")
 
+// Derived values for reactive prop access in closures
+const derivedValues = $derived(values)
+const derivedName = $derived(name)
+
 // Input state
 let inputValue = $state("")
-let itemValues = $state([...values])
+let itemValues = $state([...derivedValues])
 let focusedIndex = $state(-1)
 let inputEl
 let isInvalid = $state(false)
@@ -95,8 +99,8 @@ let validationMessage = $state("")
 let fieldApi = $state()
 
 $effect(() => {
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, values)
+  if (formContext && derivedName) {
+    fieldApi = formContext.registerField(derivedName, derivedValues)
   }
 })
 
@@ -270,7 +274,7 @@ function handleInput(event) {
     }
   }
 
-  dispatch("input", { value: inputValue })
+  oninput?.(new CustomEvent("input", { detail: { value: inputValue } }))
 }
 
 /**
@@ -310,7 +314,7 @@ function handleChipClick(index) {
  */
 function handleFocus() {
   focusedIndex = -1
-  dispatch("focus")
+  onfocus?.(new CustomEvent("focus"))
 }
 
 /**
@@ -328,7 +332,7 @@ function handleBlur(event) {
     focusedIndex = -1
   }, 100)
 
-  dispatch("blur")
+  onblur?.(new CustomEvent("blur"))
 }
 </script>
 

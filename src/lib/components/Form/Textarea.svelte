@@ -1,22 +1,22 @@
-<!--
-@component
-Textarea - A styled textarea component for multi-line text input.
-Provides consistent styling, accessibility features, and integration with the Form component.
-
-Usage:
-```svelte
-<Textarea 
-  name="description"
-  placeholder="Enter description"
-  rows={4}
-/>
-
-<FormField label="Message">
-  <Textarea name="message" required />
-</FormField>
-```
--->
-<script>
+<script lang="ts">
+/**
+ * @component
+ * Textarea - A styled textarea component for multi-line text input.
+ * Provides consistent styling, accessibility features, and integration with the Form component.
+ *
+ * Usage:
+ * ```svelte
+ * <Textarea 
+ *   name="description"
+ *   placeholder="Enter description"
+ *   rows={4}
+ * />
+ *
+ * <FormField label="Message">
+ *   <Textarea name="message" required />
+ * </FormField>
+ * ```
+ */
 import { getContext } from "svelte"
 
 const {
@@ -76,19 +76,23 @@ const {
 // Get form context if available
 const formContext = getContext("form")
 
+// Derived values for reactive prop access in closures
+const derivedValue = $derived(value)
+const derivedName = $derived(name)
+
 // Generate unique ID if not provided
 const textareaId = id || `textarea-${crypto.randomUUID()}`
 
 // Textarea state
-let textareaValue = $state(value)
+let textareaValue = $state(derivedValue)
 let isFocused = $state(false)
 let textareaEl = $state()
 let fieldApi = $state()
 
 // Register with form if available
 $effect(() => {
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, value)
+  if (formContext && derivedName) {
+    fieldApi = formContext.registerField(derivedName, derivedValue)
   }
 })
 

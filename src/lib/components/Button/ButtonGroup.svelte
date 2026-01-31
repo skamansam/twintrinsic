@@ -18,7 +18,7 @@ Usage:
 </ButtonGroup>
 ```
 -->
-<script>
+<script lang="ts">
 import { setContext } from "svelte"
 
 const {

@@ -27,7 +27,7 @@ Usage:
 />
 ```
 -->
-<script>
+<script lang="ts">
 import { getContext } from "svelte"
 import { slide } from "svelte/transition"
 import { clickOutside } from "../../actions/clickOutside.js"
@@ -99,9 +99,14 @@ const {
 // Get form context if available
 const formContext = getContext("form")
 
+// Derived values for reactive prop access in closures
+const derivedValue = $derived(value)
+const derivedName = $derived(name)
+const derivedMultiple = $derived(multiple)
+
 // Component state
 let isOpen = $state(false)
-let selectedValues = $state(multiple ? [] : null)
+let selectedValues = $state(derivedMultiple ? [] : null)
 let filterValue = $state("")
 let highlightedIndex = $state(0)
 let dropdownElement = $state()
@@ -113,8 +118,8 @@ let activeSubmenu = $state(null)
 let fieldApi = $state()
 
 $effect(() => {
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, value)
+  if (formContext && derivedName) {
+    fieldApi = formContext.registerField(derivedName, derivedValue)
   }
 })
 

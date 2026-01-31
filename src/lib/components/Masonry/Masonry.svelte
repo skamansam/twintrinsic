@@ -21,10 +21,9 @@ Usage:
     <div>{item.content}</div>
   {/each}
 </Masonry>
-```
 -->
-<script>
-import { onMount, onDestroy } from "svelte"
+<script lang="ts">
+const { onMount, onDestroy } = "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */

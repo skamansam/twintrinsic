@@ -16,7 +16,7 @@ Usage:
 </RadioGroup>
 ```
 -->
-<script>
+<script lang="ts">
 import { getContext, setContext } from "svelte"
 
 const {
@@ -56,20 +56,24 @@ const {
 // Get form context if available
 const formContext = getContext("form")
 
+// Derived values for reactive prop access in closures
+const derivedValue = $derived(value)
+const derivedName = $derived(name)
+
 // Radio group state
-let selectedValue = $state(value)
+let selectedValue = $state(derivedValue)
 
 // Update selected value when prop changes
 $effect(() => {
-  selectedValue = value
+  selectedValue = derivedValue
 })
 
 // Register with form if available
 let fieldApi = $state()
 
 $effect(() => {
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, value)
+  if (formContext && derivedName) {
+    fieldApi = formContext.registerField(derivedName, derivedValue)
   }
 })
 

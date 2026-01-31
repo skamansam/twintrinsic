@@ -1,33 +1,33 @@
-<!--
-@component
-ChipGroup - A container for managing multiple Chip components.
-Provides consistent spacing, layout options, and keyboard navigation.
-
-Usage:
-```svelte
-<ChipGroup>
-  <Chip>Chip 1</Chip>
-  <Chip>Chip 2</Chip>
-  <Chip>Chip 3</Chip>
-</ChipGroup>
-
-<ChipGroup variant="primary" removable>
-  <Chip>JavaScript</Chip>
-  <Chip>TypeScript</Chip>
-  <Chip>Svelte</Chip>
-</ChipGroup>
-
-<ChipGroup 
-  items={['Red', 'Green', 'Blue']} 
-  let:item 
-  selectable 
-  onselect={handleSelect}
->
-  <Chip>{item}</Chip>
-</ChipGroup>
-```
--->
-<script>
+<script lang="ts">
+/**
+ * @component
+ * ChipGroup - A container for managing multiple Chip components.
+ * Provides consistent spacing, layout options, and keyboard navigation.
+ *
+ * Usage:
+ * ```svelte
+ * <ChipGroup>
+ *   <Chip>Chip 1</Chip>
+ *   <Chip>Chip 2</Chip>
+ *   <Chip>Chip 3</Chip>
+ * </ChipGroup>
+ *
+ * <ChipGroup variant="primary" removable>
+ *   <Chip>JavaScript</Chip>
+ *   <Chip>TypeScript</Chip>
+ *   <Chip>Svelte</Chip>
+ * </ChipGroup>
+ *
+ * <ChipGroup 
+ *   items={['Red', 'Green', 'Blue']} 
+ *   let:item 
+ *   selectable 
+ *   onselect={handleSelect}
+ * >
+ *   <Chip>{item}</Chip>
+ * </ChipGroup>
+ * ```
+ */
 import { setContext } from "svelte"
 
 const {
@@ -84,6 +84,16 @@ const {
 // Component state
 let selectedItems = $state(Array.isArray(selected) ? [...selected] : [])
 
+// Derived values for reactive prop access in closures
+const derivedVariant = $derived(variant)
+const derivedSize = $derived(size)
+const derivedRemovable = $derived(removable)
+const derivedClickable = $derived(clickable)
+const derivedSelectable = $derived(selectable)
+const derivedMultiple = $derived(multiple)
+const derivedDisabled = $derived(disabled)
+const derivedOutline = $derived(outline)
+
 // Update selected items when prop changes
 $effect(() => {
   selectedItems = Array.isArray(selected) ? [...selected] : []
@@ -92,23 +102,23 @@ $effect(() => {
 // Provide context for child chips
 $effect(() => {
   setContext("chipGroup", {
-    variant,
-    size,
-    removable,
-    clickable,
-    selectable,
-    multiple,
-    disabled,
-    outline,
+    get variant() { return derivedVariant },
+    get size() { return derivedSize },
+    get removable() { return derivedRemovable },
+    get clickable() { return derivedClickable },
+    get selectable() { return derivedSelectable },
+    get multiple() { return derivedMultiple },
+    get disabled() { return derivedDisabled },
+    get outline() { return derivedOutline },
     isSelected: (item) => selectedItems.includes(item),
     toggleSelection: (item) => {
-      if (selectable) {
+      if (derivedSelectable) {
         if (selectedItems.includes(item)) {
           // Remove item if already selected
           selectedItems = selectedItems.filter((i) => i !== item)
         } else {
           // Add item if not selected
-          if (multiple) {
+          if (derivedMultiple) {
             selectedItems = [...selectedItems, item]
           } else {
             selectedItems = [item]

@@ -17,7 +17,7 @@ Usage:
 </Select>
 ```
 -->
-<script>
+<script lang="ts">
 const {
   /** @type {string} - Group label */
   label,
