@@ -32,46 +32,27 @@
  * </Tree>
  * ```
  */
-import { setContext } from "svelte"
+import { setContext } from "svelte";
 
 const {
-  /** @type {string} - Additional CSS classes */
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {boolean} - Whether nodes can be selected */
   selectable = false,
-
-  /** @type {boolean} - Whether multiple nodes can be selected */
   multiSelect = false,
-
-  /** @type {Array} - Selected node keys */
   selected = [],
-
-  /** @type {boolean} - Whether to show icons */
   showIcons = true,
-
-  /** @type {boolean} - Whether to show lines connecting nodes */
   showLines = true,
-
-  /** @type {string} - ARIA label for the tree */
   ariaLabel = "Tree",
-
-  /** @type {(event: CustomEvent) => void} - Select event handler */
   onselect,
-
   children,
 } = $props()
 
 // Derived values for reactive prop access in closures
-const derivedSelected = $derived(selected)
 const derivedSelectable = $derived(selectable)
 const derivedMultiSelect = $derived(multiSelect)
 
 // Component state
-let selectedNodes = $state(Array.isArray(derivedSelected) ? [...derivedSelected] : [])
+let selectedNodes = $state(/** @type {any[]} */ ([]))
 
 // Provide context for child components
 $effect(() => {

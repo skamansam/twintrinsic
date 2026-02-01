@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { EditorState } from '@codemirror/state';
-	import { EditorView } from '@codemirror/view';
+	import { EditorView, highlightActiveLineGutter, lineNumbers } from '@codemirror/view';
 	import { onMount } from 'svelte';
 
 	const {
@@ -24,6 +24,8 @@
 	let container;
 	/** @type {any} */
 	let view;
+
+	const isSsr = import.meta.env.SSR;
 
 	/**
 	 * Constructs the CDN URL for loading a package
@@ -49,6 +51,7 @@
 	 * @returns {Promise<any|null>} Loaded extension or null
 	 */
 	async function loadExtension(extensionUrl) {
+		if (isSsr) return null;
 		try {
 			const module = await import(/* @vite-ignore */ extensionUrl);
 			const ext = module.default || Object.values(module)[0];
@@ -65,6 +68,7 @@
 	 * @returns {Promise<any|null>} Language extension or null
 	 */
 	async function loadLanguageSupport(lang) {
+		if (isSsr) return null;
 		/** @type {Record<string, string>} */
 		const languageMap = {
 			javascript: '@codemirror/lang-javascript',
@@ -108,6 +112,7 @@
 	 * @returns {Promise<any|null>} Theme extension or null
 	 */
 	async function loadTheme(themeName) {
+		if (isSsr) return null;
 		/** @type {Record<string, string>} */
 		const themeMap = {
 			'one-dark': '@codemirror/theme-one-dark',
@@ -157,9 +162,8 @@
 			if (ext) exts.push(ext);
 		}
 
-		exts.push(EditorView.lineNumbers());
-		exts.push(EditorView.highlightActiveLineGutter());
-		exts.push(EditorView.foldGutter());
+		exts.push(lineNumbers());
+		exts.push(highlightActiveLineGutter());
 
 		const state = EditorState.create({
 			doc: code,
@@ -183,7 +187,7 @@
 	 * Updates the code content
 	 * @param {string} newCode - New code to set
 	 */
-	function setCode(newCode) {
+	function setCode(newCode: string) {
 		if (view) {
 			const changes = {
 				from: 0,
@@ -203,6 +207,12 @@
 	}
 
 	onMount(() => {
+		if (container) {
+			container.style.height = height;
+			container.style.overflow = 'hidden';
+			container.style.border = '1px solid var(--color-border, #e5e7eb)';
+		}
+
 		initializeEditor();
 
 		return () => {
@@ -216,7 +226,7 @@
 <div
 	bind:this={container}
 	class="code-editor-wrapper"
-	style="height: {height}; overflow: hidden; border: 1px solid var(--color-border, #e5e7eb);"
+	style={`height: ${height}; overflow: hidden; border: 1px solid var(--color-border, #e5e7eb);`}
 ></div>
 
 <style lang="postcss">

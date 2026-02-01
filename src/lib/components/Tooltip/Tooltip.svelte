@@ -22,41 +22,18 @@ import { onMount } from "svelte"
 import { fade } from "svelte/transition"
 
 const {
-  /** @type {string} - Additional CSS classes */
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - Tooltip content (simple string version) */
   content = "",
-
-  /** @type {string} - Tooltip position (top, right, bottom, left) */
   position = "top",
-
-  /** @type {number} - Delay before showing tooltip (ms) */
   delay = 0,
-
-  /** @type {number} - Duration to show tooltip (ms, 0 for indefinite) */
   duration = 0,
-
-  /** @type {boolean} - Whether to show an arrow pointing to the target */
   arrow = true,
-
-  /** @type {number} - Distance from target element (px) */
   offset = 8,
-
-  /** @type {boolean} - Whether to show on focus (for keyboard users) */
   showOnFocus = true,
-
-  /** @type {string} - ARIA description for accessibility */
   ariaDescription,
-
-  /** @type {(event: CustomEvent) => void} - Show event handler */
   onshow,
-  /** @type {(event: CustomEvent) => void} - Hide event handler */
   onhide,
-
   children,
   tooltipContent,
 } = $props()

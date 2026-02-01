@@ -82,7 +82,13 @@ const {
 } = $props()
 
 // Component state
-let selectedItems = $state(Array.isArray(selected) ? [...selected] : [])
+let selectedItems = $state([])
+
+/** @type {any} */
+let ItemTemplate = $state(null)
+$effect(() => {
+	ItemTemplate = children?.item
+})
 
 // Derived values for reactive prop access in closures
 const derivedVariant = $derived(variant)
@@ -157,20 +163,23 @@ function handleRemove(index) {
   {#if items.length > 0}
     {#each items as item, index}
       <div class="chip-group-item">
-        <svelte:component
-          this={children?.item}
-          {item}
-          {index}
-          variant={variant}
-          size={size}
-          removable={removable}
-          clickable={clickable || selectable}
-          disabled={disabled}
-          selected={selectedItems.includes(item)}
-          outline={outline}
-          onclick={() => selectable && !disabled && setContext('chipGroup').toggleSelection(item)}
-          onremove={() => handleRemove(index)}
-        />
+        {#if ItemTemplate}
+          <ItemTemplate
+            {item}
+            {index}
+            variant={variant}
+            size={size}
+            removable={removable}
+            clickable={clickable || selectable}
+            disabled={disabled}
+            selected={selectedItems.includes(item)}
+            outline={outline}
+            onclick={() => selectable && !disabled && setContext('chipGroup').toggleSelection(item)}
+            onremove={() => handleRemove(index)}
+          />
+        {:else}
+          {@render children?.()}
+        {/if}
       </div>
     {/each}
   {:else}

@@ -33,7 +33,7 @@ Usage:
 ```
 -->
 <script lang="ts">
-import { getContext } from "svelte"
+import { getContext, onMount } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -98,7 +98,7 @@ const derivedValue = $derived(value)
 const derivedName = $derived(name)
 
 // Component state
-let currentValue = $state(derivedValue)
+let currentValue = $state(0)
 let isDragging = $state(false)
 let knobElement = $state()
 let radius = $state(0)
@@ -125,7 +125,7 @@ $effect(() => {
 
 // Update internal value when prop changes
 $effect(() => {
-  currentValue = value
+	currentValue = derivedValue
 })
 
 /**
@@ -424,6 +424,8 @@ const fontSizeClasses = $derived(
   <svg
     viewBox="0 0 100 100"
     class="knob-svg"
+    role="presentation"
+    aria-hidden="true"
     onmousedown={startDrag}
     ontouchstart={startDrag}
   >

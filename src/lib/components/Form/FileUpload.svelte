@@ -25,7 +25,7 @@ Usage:
 ```
 -->
 <script lang="ts">
-import { getContext } from "svelte"
+import { getContext, onDestroy } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -90,7 +90,7 @@ const {
 } = $props()
 
 // Component state
-let files = $state(Array.isArray(value) ? [...value] : [])
+let files = $state([])
 let inputElement
 let dropzoneElement
 let isDragging = $state(false)
@@ -100,9 +100,7 @@ let uploadProgress = $state({})
 
 // Update files when value prop changes
 $effect(() => {
-  if (value !== files) {
-    files = Array.isArray(value) ? [...value] : []
-  }
+  files = Array.isArray(value) ? [...value] : []
 })
 
 /**
@@ -525,6 +523,12 @@ onDestroy(() => {
     ondragleave={handleDragLeave}
     ondrop={handleDrop}
     onclick={browse}
+    onkeydown={(event) => {
+			if (disabled) return
+			if (event.key !== 'Enter' && event.key !== ' ') return
+			event.preventDefault()
+			browse()
+		}}
     bind:this={dropzoneElement}
     role="button"
     tabindex={disabled ? undefined : 0}

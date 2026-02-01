@@ -49,14 +49,14 @@ Usage:
 
   const groupName = crypto.randomUUID();
 
-  const accordionContext = $derived({
-    groupName,
-    allowMultiple,
-    defaultExpanded,
-    onchange,
+  $effect(() => {
+    setContext("accordion", {
+      groupName,
+      allowMultiple,
+      defaultExpanded,
+      onchange,
+    });
   });
-
-  setContext("accordion", accordionContext);
 </script>
 
 <div 

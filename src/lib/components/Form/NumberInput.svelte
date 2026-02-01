@@ -100,25 +100,26 @@ const {
 const formContext = getContext("form")
 
 // Generate unique ID if not provided
-const inputId = id || `number-input-${crypto.randomUUID()}`
-
-// Derived values for reactive prop access in closures
-const derivedValue = $derived(value)
-const derivedName = $derived(name)
+const inputId = $derived(id || `number-input-${crypto.randomUUID()}`)
 
 // Input state
-let inputValue = $state(formatValue(derivedValue))
-let numericValue = $state(derivedValue)
+let inputValue = $state("")
+let numericValue = $state()
 let isFocused = $state(false)
 let inputEl
+
+$effect(() => {
+	numericValue = value
+	inputValue = formatValue(value)
+})
 
 // Register with form if available
 let fieldApi = $state()
 
 $effect(() => {
-  if (formContext && derivedName) {
-    fieldApi = formContext.registerField(derivedName, derivedValue)
-  }
+	if (!formContext) return
+	if (!name) return
+	fieldApi = formContext.registerField(name, value)
 })
 
 // Update value when form field changes
@@ -338,9 +339,6 @@ const buttonSizeClasses = $derived(
       max={max !== undefined ? max : undefined}
       step={step}
       aria-label={ariaLabel || name}
-      aria-valuemin={min !== undefined ? min : undefined}
-      aria-valuemax={max !== undefined ? max : undefined}
-      aria-valuenow={numericValue}
       bind:this={inputEl}
       oninput={handleInput}
       onblur={handleBlur}

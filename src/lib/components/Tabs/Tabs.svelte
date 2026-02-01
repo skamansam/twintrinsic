@@ -55,18 +55,15 @@ const {
   children,
 } = $props()
 
-// Derived values for reactive prop access in closures
-const derivedDefaultIndex = $derived(defaultIndex)
-
 // Tabs state
-let selectedIndex = $state(derivedDefaultIndex)
+let selectedIndex = $state(0)
 let tabsCount = $state(0)
 let tabsRefs = $state([])
 let panelsRefs = $state([])
 
 // Sync selectedIndex when defaultIndex changes
 $effect(() => {
-  selectedIndex = derivedDefaultIndex
+	selectedIndex = defaultIndex
 })
 
 /**

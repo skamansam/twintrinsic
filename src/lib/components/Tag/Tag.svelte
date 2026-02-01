@@ -173,32 +173,26 @@ function handleClick(event) {
     {/if}
   </a>
 {:else}
-  <span
-    {id}
-    class="
-      tag
-      {variantClasses}
-      {sizeClasses}
-      {pill ? 'tag-pill' : ''}
-      {clickable ? 'tag-clickable' : ''}
-      {className}
-    "
-    role={clickable ? 'button' : undefined}
-    tabindex={clickable ? 0 : undefined}
-    onclick={handleClick}
-    onkeydown={(e) => e.key === 'Enter' && clickable && handleClick(e)}
-  >
-    {#if icon}
-      <span class="tag-icon {iconSizeClasses}">
-        {@html icon}
-      </span>
-    {/if}
-    
-    <span class="tag-content">
-      {@render children?.()}
-    </span>
-    
-    {#if dismissible}
+  {#if clickable && dismissible}
+    <span
+      {id}
+      class="
+        tag
+        {variantClasses}
+        {sizeClasses}
+        {pill ? 'tag-pill' : ''}
+        tag-clickable
+        {className}
+      "
+    >
+      <button type="button" class="tag-content" onclick={handleClick}>
+        {#if icon}
+          <span class="tag-icon {iconSizeClasses}">
+            {@html icon}
+          </span>
+        {/if}
+        {@render children?.()}
+      </button>
       <button
         type="button"
         class="tag-dismiss"
@@ -215,8 +209,69 @@ function handleClick(event) {
           </svg>
         {/if}
       </button>
-    {/if}
-  </span>
+    </span>
+  {:else if clickable}
+    <button
+      type="button"
+      {id}
+      class="
+        tag
+        {variantClasses}
+        {sizeClasses}
+        {pill ? 'tag-pill' : ''}
+        tag-clickable
+        {className}
+      "
+      onclick={handleClick}
+    >
+      {#if icon}
+        <span class="tag-icon {iconSizeClasses}">
+          {@html icon}
+        </span>
+      {/if}
+      <span class="tag-content">
+        {@render children?.()}
+      </span>
+    </button>
+  {:else}
+    <span
+      {id}
+      class="
+        tag
+        {variantClasses}
+        {sizeClasses}
+        {pill ? 'tag-pill' : ''}
+        {className}
+      "
+    >
+      {#if icon}
+        <span class="tag-icon {iconSizeClasses}">
+          {@html icon}
+        </span>
+      {/if}
+      <span class="tag-content">
+        {@render children?.()}
+      </span>
+      {#if dismissible}
+        <button
+          type="button"
+          class="tag-dismiss"
+          aria-label={dismissAriaLabel}
+          onclick={handleDismiss}
+        >
+          {#if dismissIcon}
+            <span class="tag-dismiss-icon">
+              {@html dismissIcon}
+            </span>
+          {:else}
+            <svg class="{iconSizeClasses}" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          {/if}
+        </button>
+      {/if}
+    </span>
+  {/if}
 {/if}
 
 <style lang="postcss">

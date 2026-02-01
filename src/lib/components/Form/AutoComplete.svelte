@@ -22,7 +22,6 @@ Usage:
 ```
 -->
 <script lang="ts">
-import { getContext } from "svelte"
 import { clickOutside } from "../../actions"
 import Input from "./Input.svelte"
 
@@ -73,7 +72,16 @@ const {
 
 let inputValue = $state("")
 let suggestions = $state([])
-let selectedItems = $state(multiple ? [] : null)
+/** @type {any[] | any | null} */
+let selectedItems = $state(null)
+const derivedMultiple = $derived(multiple)
+
+/** @type {any} */
+let ItemTemplate = $state(null)
+$effect(() => {
+	ItemTemplate = itemTemplate
+})
+
 let focused = $state(false)
 let showSuggestions = $state(false)
 let highlightedIndex = $state(-1)
@@ -82,8 +90,8 @@ let searchTimeout = $state()
 // Initialize selected items
 $effect(() => {
   if (value) {
-    selectedItems = multiple ? (Array.isArray(value) ? value : [value]) : value
-    inputValue = multiple ? "" : getItemLabel(value)
+    selectedItems = derivedMultiple ? (Array.isArray(value) ? value : [value]) : value
+    inputValue = derivedMultiple ? "" : getItemLabel(value)
   }
 })
 
@@ -136,7 +144,11 @@ function getItemValue(item) {
 
 // Handle item selection
 function selectItem(item) {
-  if (multiple) {
+  if (derivedMultiple) {
+		if (!Array.isArray(selectedItems)) {
+			selectedItems = []
+		}
+
     const value = getItemValue(item)
     const exists = selectedItems.some((i) => getItemValue(i) === value)
 
@@ -157,12 +169,24 @@ function selectItem(item) {
 
 // Remove selected item (multiple mode)
 function removeItem(item) {
-  if (!multiple) return
+  if (!derivedMultiple) return
+  if (!Array.isArray(selectedItems)) return
 
   const value = getItemValue(item)
   selectedItems = selectedItems.filter((i) => getItemValue(i) !== value)
   onremove?.(new CustomEvent("remove", { detail: { item } }))
   onselect?.(new CustomEvent("select", { detail: { items: selectedItems } }))
+}
+
+/**
+ * Handles keydown events for a suggestion option
+ * @param {KeyboardEvent} event - Keydown event
+ * @param {any} item - Suggestion item
+ */
+function handleOptionKeydown(event, item) {
+  if (event.key !== "Enter" && event.key !== " ") return
+  event.preventDefault()
+  selectItem(item)
 }
 
 // Handle keyboard navigation
@@ -242,7 +266,7 @@ function highlightText(text, query) {
     onkeydown={handleKeydown}
   />
   
-  {#if multiple && selectedItems.length > 0}
+  {#if derivedMultiple && Array.isArray(selectedItems) && selectedItems.length > 0}
     <div class="autocomplete-chips" aria-label="Selected items">
       {#each selectedItems as item}
         <div class="autocomplete-chip">
@@ -279,11 +303,13 @@ function highlightText(text, query) {
             class:autocomplete-item-highlighted={index === highlightedIndex}
             role="option"
             aria-selected={index === highlightedIndex}
+            tabindex={index === highlightedIndex ? 0 : -1}
             onmouseenter={() => highlightedIndex = index}
             onclick={() => selectItem(item)}
+            onkeydown={(event) => handleOptionKeydown(event, item)}
           >
-            {#if itemTemplate}
-              <svelte:component this={itemTemplate} {item} />
+            {#if ItemTemplate}
+              <ItemTemplate {item} />
             {:else}
               {@html highlightText(getItemLabel(item), inputValue)}
             {/if}

@@ -76,7 +76,7 @@ const {
   onrightIconClick,
 } = $props()
 
-let inputValue = $state(value)
+let inputValue = $state("")
 let focused = $state(false)
 let touched = $state(false)
 

@@ -183,59 +183,108 @@ function handleKeydown(event) {
 }
 </script>
 
-<div
-  {id}
-  class="
-    chip
-    {variantClasses}
-    {selectedClasses}
-    {sizeClasses}
-    {clickable ? 'chip-clickable' : ''}
-    {disabled ? 'chip-disabled' : ''}
-    {selected ? 'chip-selected' : ''}
-    {className}
-  "
-  role={clickable ? 'button' : 'presentation'}
-  tabindex={clickable && !disabled ? 0 : undefined}
-  aria-disabled={disabled ? true : undefined}
-  onclick={handleClick}
-  onkeydown={handleKeydown}
->
-  {#if avatar}
-    <span class="chip-avatar">
-      {@html avatar}
-    </span>
-  {/if}
-  
-  {#if icon}
-    <span class="chip-icon {iconSizeClasses}" aria-hidden="true">
-      {@html icon}
-    </span>
-  {/if}
-  
-  <span class="chip-content">
-    {@render children?.()}
-  </span>
-  
-  {#if removable && !disabled}
-    <button
-      type="button"
-      class="chip-remove"
-      aria-label={removeAriaLabel}
-      onclick={handleRemove}
-    >
-      {#if removeIcon}
-        <span class="chip-remove-icon {iconSizeClasses}">
-          {@html removeIcon}
-        </span>
-      {:else}
-        <svg class="{iconSizeClasses}" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
-      {/if}
-    </button>
-  {/if}
-</div>
+{#if clickable && !disabled}
+	<div
+		{id}
+		class="
+			chip
+			{variantClasses}
+			{selectedClasses}
+			{sizeClasses}
+			chip-clickable
+			{selected ? 'chip-selected' : ''}
+			{className}
+		"
+		role="button"
+		tabindex="0"
+		onclick={handleClick}
+		onkeydown={handleKeydown}
+	>
+		{#if avatar}
+			<span class="chip-avatar">
+				{@html avatar}
+			</span>
+		{/if}
+		
+		{#if icon}
+			<span class="chip-icon {iconSizeClasses}" aria-hidden="true">
+				{@html icon}
+			</span>
+		{/if}
+		
+		<span class="chip-content">
+			{@render children?.()}
+		</span>
+		
+		{#if removable}
+			<button
+				type="button"
+				class="chip-remove"
+				aria-label={removeAriaLabel}
+				onclick={handleRemove}
+			>
+				{#if removeIcon}
+					<span class="chip-remove-icon {iconSizeClasses}">
+						{@html removeIcon}
+					</span>
+				{:else}
+					<svg class="{iconSizeClasses}" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+					</svg>
+				{/if}
+			</button>
+		{/if}
+	</div>
+{:else}
+	<div
+		{id}
+		class="
+			chip
+			{variantClasses}
+			{selectedClasses}
+			{sizeClasses}
+			{disabled ? 'chip-disabled' : ''}
+			{selected ? 'chip-selected' : ''}
+			{className}
+		"
+		aria-disabled={disabled ? true : undefined}
+	>
+		{#if avatar}
+			<span class="chip-avatar">
+				{@html avatar}
+			</span>
+		{/if}
+		
+		{#if icon}
+			<span class="chip-icon {iconSizeClasses}" aria-hidden="true">
+				{@html icon}
+			</span>
+		{/if}
+		
+		<span class="chip-content">
+			{@render children?.()}
+		</span>
+		
+		{#if removable && !disabled}
+			<button
+				type="button"
+				class="chip-remove"
+				aria-label={removeAriaLabel}
+				onclick={handleRemove}
+			>
+				{#if removeIcon}
+					<span class="chip-remove-icon {iconSizeClasses}">
+						{@html removeIcon}
+					</span>
+				{:else}
+					<svg class="{iconSizeClasses}" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+					</svg>
+				{/if}
+			</button>
+		{/if}
+	</div>
+{/if}
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";

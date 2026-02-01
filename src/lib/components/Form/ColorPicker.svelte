@@ -274,6 +274,8 @@ function handleInput(event) {
       <div
         class="color-wheel"
         bind:this={pickerRef}
+        role="presentation"
+        aria-hidden="true"
         onmousedown={handleColorWheel}
         onmousemove={event => {
           if (event.buttons === 1) handleColorWheel(event);
@@ -284,7 +286,7 @@ function handleInput(event) {
           --lightness: {lightness}%;
         "
       >
-        <div class="color-wheel-pointer" />
+        <div class="color-wheel-pointer"></div>
       </div>
       
       <div class="color-sliders">
@@ -321,7 +323,7 @@ function handleInput(event) {
           style="
             background-color: hsla({hue}, {saturation}%, {lightness}%, {alpha / 100});
           "
-        />
+        ></div>
         <div class="color-value">{inputValue}</div>
       </div>
     </div>

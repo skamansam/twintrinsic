@@ -28,22 +28,11 @@
   import { toastStore } from './toastStore';
 
   const {
-    /** @type {string} - Additional CSS classes */
     class: className = '',
-
-    /** @type {string} - Position of toasts (top-right, top-left, bottom-right, bottom-left, top-center, bottom-center) */
     position = 'bottom-right',
-
-    /** @type {number} - Maximum number of toasts to show at once */
     maxToasts = 5,
-
-    /** @type {number} - Default duration in milliseconds */
     duration = 5000,
-
-    /** @type {boolean} - Whether toasts can be dismissed by clicking */
     dismissible = true,
-
-    /** @type {boolean} - Whether to pause toast timers on hover */
     pauseOnHover = true
   } = $props();
 
@@ -116,82 +105,129 @@
   bind:this={container}
 >
   {#each toasts as toast (toast.id)}
-    <div
-      class="
-        toast
-        toast-{toast.variant || 'default'}
-      "
-      role="alert"
-      aria-live={toast.variant === 'error' ? 'assertive' : 'polite'}
-      onclick={() => dismissible && removeToast(toast.id)}
-      onkeydown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          dismissible && removeToast(toast.id)
-        }
-      }}
-      onmouseenter={() => pauseToast(toast.id)}
-      onmouseleave={() => resumeToast(toast.id)}
-      tabindex={dismissible ? 0 : -1}
-      in:fly={{ y: 20, duration: 200 }}
-      out:fly={{ x: 20, duration: 200 }}
-    >
-      <div class="toast-content">
-        {#if toast.icon}
-          <div class="toast-icon">
-            {@html toast.icon}
-          </div>
-        {:else}
-          <div class="toast-icon">
-            {#if toast.variant === 'success'}
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            {:else if toast.variant === 'error'}
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-            {:else if toast.variant === 'warning'}
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-              </svg>
-            {:else if toast.variant === 'info'}
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-            {/if}
-          </div>
-        {/if}
-        
-        <div class="toast-message">
-          {#if toast.title}
-            <div class="toast-title">{toast.title}</div>
+    {#if dismissible}
+      <button
+        type="button"
+        class="
+          toast
+          toast-{toast.variant || 'default'}
+        "
+        aria-live={toast.variant === 'error' ? 'assertive' : 'polite'}
+        aria-label="Dismiss notification"
+        onclick={() => removeToast(toast.id)}
+        onmouseenter={() => pauseToast(toast.id)}
+        onmouseleave={() => resumeToast(toast.id)}
+        in:fly={{ y: 20, duration: 200 }}
+        out:fly={{ x: 20, duration: 200 }}
+      >
+        <div class="toast-content">
+          {#if toast.icon}
+            <div class="toast-icon">
+              {@html toast.icon}
+            </div>
+          {:else}
+            <div class="toast-icon">
+              {#if toast.variant === 'success'}
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              {:else if toast.variant === 'error'}
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              {:else if toast.variant === 'warning'}
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+              {:else if toast.variant === 'info'}
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              {/if}
+            </div>
           {/if}
-          <div>{toast.message}</div>
-        </div>
-        
-        {#if dismissible}
-          <button
-            type="button"
-            class="toast-close"
-            aria-label="Close notification"
-            onclick={(e) => { e.stopPropagation(); removeToast(toast.id) }}
-          >
+          
+          <div class="toast-message">
+            {#if toast.title}
+              <div class="toast-title">{toast.title}</div>
+            {/if}
+            <div>{toast.message}</div>
+          </div>
+          
+          <span class="toast-close" aria-hidden="true">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
-          </button>
+          </span>
+        </div>
+        
+        {#if toast.progress !== false}
+          <div class="toast-progress-container">
+            <div 
+              class="toast-progress" 
+              style="width: {toast.progress || 100}%"
+            ></div>
+          </div>
+        {/if}
+      </button>
+    {:else}
+      <div
+        class="
+          toast
+          toast-{toast.variant || 'default'}
+        "
+        role="alert"
+        aria-live={toast.variant === 'error' ? 'assertive' : 'polite'}
+        onmouseenter={() => pauseToast(toast.id)}
+        onmouseleave={() => resumeToast(toast.id)}
+        in:fly={{ y: 20, duration: 200 }}
+        out:fly={{ x: 20, duration: 200 }}
+      >
+        <div class="toast-content">
+          {#if toast.icon}
+            <div class="toast-icon">
+              {@html toast.icon}
+            </div>
+          {:else}
+            <div class="toast-icon">
+              {#if toast.variant === 'success'}
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              {:else if toast.variant === 'error'}
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              {:else if toast.variant === 'warning'}
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+              {:else if toast.variant === 'info'}
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              {/if}
+            </div>
+          {/if}
+          
+          <div class="toast-message">
+            {#if toast.title}
+              <div class="toast-title">{toast.title}</div>
+            {/if}
+            <div>{toast.message}</div>
+          </div>
+        </div>
+        
+        {#if toast.progress !== false}
+          <div class="toast-progress-container">
+            <div 
+              class="toast-progress" 
+              style="width: {toast.progress || 100}%"
+            ></div>
+          </div>
         {/if}
       </div>
-      
-      {#if toast.progress !== false}
-        <div class="toast-progress-container">
-          <div 
-            class="toast-progress" 
-            style="width: {toast.progress || 100}%"
-          ></div>
-        </div>
-      {/if}
-    </div>
+    {/if}
   {/each}
 </div>
 

@@ -21,73 +21,30 @@
  */
 import { getContext } from "svelte"
 
-const {
-  /** @type {string} - Input type (text, email, password, etc.) */
+let {
   type = "text",
-
-  /** @type {string} - Additional CSS classes */
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
-  id,
-
-  /** @type {string} - Input name */
-  name,
-
-  /** @type {string} - Input placeholder */
-  placeholder = "",
-
-  /** @type {string} - Input value */
-  value = "",
-
-  /** @type {boolean} - Whether the input is required */
-  required = false,
-
-  /** @type {boolean} - Whether the input is disabled */
-  disabled = false,
-
-  /** @type {boolean} - Whether the input is readonly */
-  readonly = false,
-
-  /** @type {string} - Minimum length */
-  minlength,
-
-  /** @type {string} - Maximum length */
-  maxlength,
-
-  /** @type {string} - Pattern for validation */
-  pattern,
-
-  /** @type {string} - Autocomplete attribute */
-  autocomplete,
-
-  /** @type {string} - Input size (sm, md, lg) */
-  size = "md",
-
-  /** @type {boolean} - Whether to show a clear button */
-  clearable = false,
-
-  /** @type {string} - Icon to show at the start of the input */
   startIcon,
-
-  /** @type {string} - Icon to show at the end of the input */
   endIcon,
-
-  /** @type {string} - ARIA label for accessibility */
+  id,
+  name,
+  placeholder = "",
+  value = "",
+  required = false,
+  disabled = false,
+  readonly = false,
+  minlength,
+  maxlength,
+  pattern,
+  autocomplete,
+  size = "md",
+  clearable = false,
   ariaLabel,
-
-  /** @type {(event: CustomEvent) => void} - Input event handler */
   oninput,
-  /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange,
-  /** @type {(event: Event) => void} - Focus event handler */
   onfocus,
-  /** @type {(event: Event) => void} - Blur event handler */
   onblur,
-  /** @type {() => void} - Clear event handler */
   onclear,
-
-  /** @type {object} - Additional props to pass to the input element */
   ...restProps
 } = $props()
 
@@ -99,10 +56,10 @@ const derivedValue = $derived(value)
 const derivedName = $derived(name)
 
 // Generate unique ID if not provided
-const inputId = id || `input-${crypto.randomUUID()}`
+const inputId = $derived(id || `input-${crypto.randomUUID()}`)
 
 // Input state
-let inputValue = $state(derivedValue)
+let inputValue = $state("")
 let isFocused = $state(false)
 let fieldApi = $state()
 
@@ -125,7 +82,7 @@ $effect(() => {
 
 // Update input value when prop changes
 $effect(() => {
-  inputValue = value
+	inputValue = derivedValue
 })
 
 /**

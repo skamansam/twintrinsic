@@ -281,6 +281,7 @@ function handleKeydown(event) {
       class="calendar"
       role="dialog"
       aria-label="Calendar"
+      tabindex="-1"
       transition:slide={{ duration: 150 }}
       onkeydown={handleKeydown}
     >
@@ -341,6 +342,7 @@ function handleKeydown(event) {
                   class:calendar-day-selected={isSelected(day)}
                   class:calendar-day-in-range={isInRange(day)}
                   class:calendar-day-disabled={isDisabled(day)}
+                  aria-selected={day ? isSelected(day) : undefined}
                 >
                   {#if day}
                     <button
@@ -349,7 +351,6 @@ function handleKeydown(event) {
                       onclick={() => handleDateSelect(day)}
                       onmouseenter={() => handleDateHover(day)}
                       aria-label={formatDate(day)}
-                      aria-selected={isSelected(day)}
                     >
                       {day.getDate()}
                     </button>

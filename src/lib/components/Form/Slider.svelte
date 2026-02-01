@@ -28,7 +28,7 @@ Usage:
 ```
 -->
 <script lang="ts">
-import { getContext } from "svelte"
+import { onDestroy } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -396,6 +396,13 @@ onDestroy(() => {
   <div 
     class="slider-container"
     onclick={handleTrackClick}
+    onkeydown={(event) => {
+			if (event.key !== 'Enter' && event.key !== ' ') return
+			event.preventDefault()
+			handleTrackClick(event)
+		}}
+    role="button"
+    tabindex={disabled ? undefined : 0}
   >
     <div 
       class="slider-track"

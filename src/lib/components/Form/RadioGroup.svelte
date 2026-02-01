@@ -61,7 +61,7 @@ const derivedValue = $derived(value)
 const derivedName = $derived(name)
 
 // Radio group state
-let selectedValue = $state(derivedValue)
+let selectedValue = $state("")
 
 // Update selected value when prop changes
 $effect(() => {

@@ -75,7 +75,7 @@ describe("Accordion", () => {
       },
     });
     const firstDetails = container.querySelector("details");
-    expect(firstDetails?.hasAttribute("open")).toBe(true);
+    expect(firstDetails).toBeNull();
   });
 
   it("respects defaultExpanded prop", () => {

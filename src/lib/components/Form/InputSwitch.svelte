@@ -56,28 +56,35 @@ const {
 // Get form context if available
 const formContext = getContext("form")
 
+// Derived values for reactive prop access
+const derivedName = $derived(name)
+const derivedChecked = $derived(checked)
+
 // Switch state
-let isChecked = $state(checked)
+let isChecked = $state(false)
 
 // Register with form if available
 let fieldApi = $state()
-if (formContext && name) {
-  fieldApi = formContext.registerField(name, checked)
+$effect(() => {
+	if (!formContext) return
+	if (!derivedName) return
 
-  // Update value when form field changes
-  $effect(() => {
-    const formValue = fieldApi.getValue()
-    if (formValue !== undefined && formValue !== isChecked) {
-      isChecked = !!formValue
-    }
-  })
-}
+	fieldApi = formContext.registerField(derivedName, derivedChecked)
+})
+
+// Update value when form field changes
+$effect(() => {
+	if (!fieldApi) return
+	const formValue = fieldApi.getValue()
+	if (formValue === undefined) return
+	if (formValue === isChecked) return
+	isChecked = !!formValue
+})
 
 // Update internal state when prop changes
 $effect(() => {
-  if (checked !== isChecked) {
-    isChecked = checked
-  }
+	if (derivedChecked === isChecked) return
+	isChecked = derivedChecked
 })
 
 /**

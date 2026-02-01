@@ -182,7 +182,6 @@ onMount(() => {
     {className}
   "
   role="listitem"
-  aria-disabled={disabled ? true : undefined}
   bind:this={itemElement}
 >
   <div class="timeline-item-connector">

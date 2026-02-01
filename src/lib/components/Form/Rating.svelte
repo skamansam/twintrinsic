@@ -78,7 +78,7 @@ const {
 const derivedValue = $derived(value)
 
 // Component state
-let currentValue = $state(derivedValue)
+let currentValue = $state(0)
 let hoverValue = $state(-1)
 let isDragging = $state(false)
 let ratingElement = $state()
@@ -288,7 +288,6 @@ function handleKeydown(event) {
   aria-valuetext={isInteractive ? `${currentValue} out of ${max}` : undefined}
   aria-readonly={readonly ? true : undefined}
   aria-disabled={disabled ? true : undefined}
-  tabindex={isInteractive ? 0 : undefined}
   onmousedown={handleStart}
   ontouchstart={handleStart}
   onmouseenter={handleEnter}
@@ -302,14 +301,16 @@ function handleKeydown(event) {
   
   <div class="rating-items">
     {#each items as item}
-      <span
+      <button
+        type="button"
         class="
           rating-item
           {item <= displayValue ? 'rating-item-filled' : 'rating-item-empty'}
           {variantClasses}
         "
-        role={isInteractive ? 'presentation' : undefined}
         onclick={() => handleItemClick(item)}
+        disabled={!isInteractive}
+        tabindex={isInteractive ? 0 : -1}
       >
         {#if item <= displayValue}
           {#if icon}
@@ -332,7 +333,7 @@ function handleKeydown(event) {
             </svg>
           {/if}
         {/if}
-      </span>
+      </button>
     {/each}
   </div>
   

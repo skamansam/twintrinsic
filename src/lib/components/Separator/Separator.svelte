@@ -34,6 +34,7 @@ const {
 } = $props()
 
 // Color variants mapping
+/** @type {Record<string, string>} */
 const colorClasses = {
   default: "border-border",
   primary: "border-primary-200 dark:border-primary-800",
@@ -43,23 +44,30 @@ const colorClasses = {
 }
 
 // Determine if we have content and element type
-const hasContent = $derived(children !== undefined)
-const element = $derived(as ?? (hasContent ? "div" : "hr"))
+const element = $derived(as ?? (children ? "div" : "hr"))
+const hasContent = $derived(element !== "hr" && children !== undefined)
 </script>
 
-<svelte:element
-  this={element}
-  class="separator {colorClasses[color]} {vertical ? 'separator-vertical' : 'separator-horizontal'} {hasContent ? 'separator-with-content' : ''} {className}"
-  role={element === 'div' ? 'separator' : undefined}
-  aria-orientation={vertical ? 'vertical' : 'horizontal'}
-  aria-label={ariaLabel}
->
-  {#if hasContent}
-  <div class="separator-content">
-      {@render children()}
+{#if element === "hr"}
+  <hr
+    class="separator {colorClasses[color] || colorClasses.default} {vertical ? 'separator-vertical' : 'separator-horizontal'} {className}"
+    aria-orientation={vertical ? 'vertical' : 'horizontal'}
+    aria-label={ariaLabel}
+  />
+{:else}
+  <div
+    class="separator {colorClasses[color] || colorClasses.default} {vertical ? 'separator-vertical' : 'separator-horizontal'} {hasContent ? 'separator-with-content' : ''} {className}"
+    role="separator"
+    aria-orientation={vertical ? 'vertical' : 'horizontal'}
+    aria-label={ariaLabel}
+  >
+    {#if hasContent}
+      <div class="separator-content">
+        {@render children()}
+      </div>
+    {/if}
   </div>
-  {/if}
-</svelte:element>
+{/if}
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";

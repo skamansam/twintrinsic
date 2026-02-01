@@ -44,7 +44,7 @@ $effect(() => {
           </div>
       </div>
     {/if}
-    <main role="main" class="appMain w-full grow pt-1 px-3">
+    <main class="appMain w-full grow pt-1 px-3">
       {@render children?.()}
     </main>
     {#if rightPanel}

@@ -1,4 +1,4 @@
-import { render } from "@testing-library/svelte"
+import { render, waitFor } from "@testing-library/svelte"
 import { describe, expect, it, vi } from "vitest"
 import CodeEditor from "../../src/lib/components/CodeEditor/CodeEditor.svelte"
 
@@ -9,14 +9,17 @@ describe("CodeEditor", () => {
     expect(wrapper).toBeTruthy()
   })
 
-  it("should apply custom height", () => {
+  it("should apply custom height", async () => {
     const { container } = render(CodeEditor, {
       props: {
         height: "500px",
       },
     })
     const wrapper = container.querySelector(".code-editor-wrapper")
-    expect(wrapper?.getAttribute("style")).toContain("height: 500px")
+
+    await waitFor(() => {
+      expect((wrapper as HTMLElement | null)?.style.height).toBe("500px")
+    })
   })
 
   it("should initialize with default language", () => {

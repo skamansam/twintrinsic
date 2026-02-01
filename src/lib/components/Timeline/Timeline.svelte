@@ -22,33 +22,15 @@
 import { setContext } from "svelte"
 
 const {
-  /** @type {string} - Additional CSS classes */
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - Visual style variant for all items */
   variant = "primary",
-
-  /** @type {string} - Position of content relative to the line (left, right, alternate) */
   position = "left",
-
-  /** @type {string} - Orientation of the timeline (vertical, horizontal) */
   orientation = "vertical",
-
-  /** @type {boolean} - Whether to reverse the order of items */
   reverse = false,
-
-  /** @type {boolean} - Whether to show connecting lines between items */
   connected = true,
-
-  /** @type {boolean} - Whether to animate items when they enter the viewport */
   animated = false,
-
-  /** @type {string} - ARIA label for the timeline */
   ariaLabel = "Timeline",
-
   children,
 } = $props()
 

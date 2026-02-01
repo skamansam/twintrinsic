@@ -63,7 +63,7 @@ const {
 const formContext = getContext("form")
 
 // Radio state
-let isChecked = $state(checked)
+let isChecked = $state(false)
 
 // Update checked state when prop changes
 $effect(() => {

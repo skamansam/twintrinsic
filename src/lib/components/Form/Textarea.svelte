@@ -19,57 +19,25 @@
  */
 import { getContext } from "svelte"
 
-const {
-  /** @type {string} - Additional CSS classes */
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id,
-
-  /** @type {string} - Textarea name */
   name,
-
-  /** @type {string} - Textarea placeholder */
   placeholder = "",
-
-  /** @type {string} - Textarea value */
   value = "",
-
-  /** @type {number} - Number of rows */
   rows = 3,
-
-  /** @type {boolean} - Whether the textarea is required */
   required = false,
-
-  /** @type {boolean} - Whether the textarea is disabled */
   disabled = false,
-
-  /** @type {boolean} - Whether the textarea is readonly */
   readonly = false,
-
-  /** @type {string} - Minimum length */
   minlength,
-
-  /** @type {string} - Maximum length */
   maxlength,
-
-  /** @type {string} - Autocomplete attribute */
   autocomplete,
-
-  /** @type {boolean} - Whether to auto-resize based on content */
   autoResize = false,
-
-  /** @type {string} - ARIA label for accessibility */
   ariaLabel,
-  /** @type {(event: CustomEvent) => void} - Input event handler */
   oninput,
-  /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange,
-  /** @type {(event: Event) => void} - Focus event handler */
   onfocus,
-  /** @type {(event: Event) => void} - Blur event handler */
   onblur,
-  /** @type {object} - Additional props to pass to the input element */
   ...restProps
 } = $props()
 
@@ -81,10 +49,10 @@ const derivedValue = $derived(value)
 const derivedName = $derived(name)
 
 // Generate unique ID if not provided
-const textareaId = id || `textarea-${crypto.randomUUID()}`
+const textareaId = $derived(id || `textarea-${crypto.randomUUID()}`)
 
 // Textarea state
-let textareaValue = $state(derivedValue)
+let textareaValue = $state("")
 let isFocused = $state(false)
 let textareaEl = $state()
 let fieldApi = $state()
@@ -108,7 +76,7 @@ $effect(() => {
 
 // Update textarea value when prop changes
 $effect(() => {
-  textareaValue = value
+	textareaValue = derivedValue
 })
 
 /**

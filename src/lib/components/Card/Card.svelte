@@ -56,10 +56,10 @@ const {
 } = $props()
 
 // Determine if card has clickable behavior
-const isClickable = !!href
+const isClickable = $derived(!!href)
 
 // Determine element type based on href
-const elementType = href ? "a" : "div"
+const elementType = $derived(href ? "a" : "div")
 </script>
 
 <svelte:element

@@ -25,9 +25,10 @@ Usage:
 >
   Payment step content
 </StepperStep>
+```
 -->
 <script lang="ts">
-import { getContext } from "svelte"
+import { getContext, onMount } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -159,15 +160,17 @@ function handleClick() {
   "
   role="listitem"
   aria-current={stepState === 'active' ? 'step' : undefined}
-  aria-disabled={disabled ? true : undefined}
   bind:this={stepElement}
 >
-  <div 
+  <svelte:element
+    this={isClickable ? 'button' : 'div'}
     class="stepper-step-header"
-    onclick={handleClick}
-    onkeydown={(e) => e.key === 'Enter' && handleClick()}
-    tabindex={isClickable ? 0 : undefined}
-    role={isClickable ? 'button' : undefined}
+    type={isClickable ? 'button' : undefined}
+    disabled={isClickable ? disabled : undefined}
+    aria-disabled={isClickable && disabled ? true : undefined}
+    role={isClickable ? undefined : 'button'}
+    onclick={isClickable ? handleClick : undefined}
+    onkeydown={isClickable ? (e) => e.key === 'Enter' && handleClick() : undefined}
   >
     <div class="stepper-step-icon-container">
       <div class="stepper-step-icon {variantClasses}">
@@ -215,7 +218,7 @@ function handleClick() {
         </span>
       {/if}
     </div>
-  </div>
+  </svelte:element>
   
   {#if showContent}
     <div class="stepper-step-content">

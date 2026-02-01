@@ -176,11 +176,11 @@ const iconSize = $derived(
   {disabled}
   aria-disabled={disabled || loading ? 'true' : undefined}
   aria-label={ariaLabel}
+  role={elementType === 'button' || elementType === 'a' ? undefined : 'button'}
   onclick={handleClick}
   {form}
   {name}
   {value}
-  {autofocus}
   {formmethod}
   {formenctype}
   {formnovalidate}

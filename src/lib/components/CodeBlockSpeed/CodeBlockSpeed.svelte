@@ -4,6 +4,8 @@
 	import { onDestroy, onMount } from 'svelte';
 
 	const {
+		/** @type {string} - Code content to render when not using snippets */
+		code: codeProp = '',
 		/** @type {string} - The language for syntax highlighting */
 		language = '',
 		/** @type {string} - Additional CSS classes */
@@ -24,7 +26,7 @@
 	onMount(() => {
 		if (!codeElement) return;
 
-		code = codeElement.textContent || '';
+		code = codeProp || codeElement.textContent || '';
 
 		const detectedLang = language || detectLanguage(code);
 
@@ -66,6 +68,9 @@
 </script>
 
 <div class="code-block-speed {className}">
+	<span class="shj-lang-http shj-oneline" aria-hidden="true" hidden>
+		<span class="shj-syn-kwd"></span>
+	</span>
 	<div class="code-header">
 		<div class="code-header-left">
 			{#if language}
@@ -101,12 +106,18 @@
 		</button>
 	</div>
 
-	<pre class="code-pre"><code bind:this={codeElement}>{@render children?.()}</code></pre>
+	<pre class="code-pre"><code bind:this={codeElement}>
+		{#if codeProp}
+			{codeProp}
+		{:else}
+			{@render children?.()}
+		{/if}
+	</code></pre>
 </div>
 
 <style lang="postcss">
+	@import '@speed-highlight/core/themes/default.css';
 	@reference '../../twintrinsic.css';
-	@import '@speed-highlight/core/dist/themes/default.css';
 	
 	.code-block-speed {
 		@apply relative my-4 rounded-lg overflow-hidden;
@@ -144,4 +155,6 @@
 		@apply font-mono text-sm;
 		@apply bg-surface dark:bg-surface;
 	}
+
+	:global(.shj-lang-http.shj-oneline .shj-syn-kwd) {}
 </style>

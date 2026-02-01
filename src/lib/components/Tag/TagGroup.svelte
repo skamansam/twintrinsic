@@ -69,6 +69,12 @@ const {
   children,
 } = $props()
 
+/** @type {any} */
+let ItemTemplate = $state(null)
+$effect(() => {
+	ItemTemplate = children?.item
+})
+
 // Provide context for child tags
 $effect(() => {
   setContext("tagGroup", {
@@ -106,18 +112,21 @@ function handleDismiss(index) {
   {#if items.length > 0}
     {#each items as item, index}
       <div class="tag-group-item">
-        <svelte:component
-          this={children?.item}
-          {item}
-          {index}
-          variant={variant}
-          size={size}
-          dismissible={dismissible}
-          outline={outline}
-          pill={pill}
-          clickable={clickable}
-          ondismiss={() => handleDismiss(index)}
-        />
+        {#if ItemTemplate}
+          <ItemTemplate
+            {item}
+            {index}
+            variant={variant}
+            size={size}
+            dismissible={dismissible}
+            outline={outline}
+            pill={pill}
+            clickable={clickable}
+            ondismiss={() => handleDismiss(index)}
+          />
+        {:else}
+          {@render children?.()}
+        {/if}
       </div>
     {/each}
   {:else}
