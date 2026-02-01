@@ -25,7 +25,7 @@
 	/** @type {any} */
 	let view;
 
-	const isSsr = import.meta.env.SSR;
+	const isSsr = import.meta.env.SSR || typeof window === 'undefined' || import.meta.env.VITEST;
 
 	/**
 	 * Constructs the CDN URL for loading a package
@@ -57,7 +57,7 @@
 			const ext = module.default || Object.values(module)[0];
 			return ext;
 		} catch (error) {
-			console.error(`Failed to load extension from ${extensionUrl}:`, error);
+			if (!isSsr) console.error(`Failed to load extension from ${extensionUrl}:`, error);
 			return null;
 		}
 	}
@@ -128,7 +128,7 @@
 
 		const packageName = themeMap[themeName.toLowerCase()];
 		if (!packageName) {
-			console.warn(`Theme ${themeName} not available`);
+			if (!isSsr) console.warn(`Theme ${themeName} not available`);
 			return null;
 		}
 
@@ -138,7 +138,7 @@
 			const themeFn = module[themeName.toLowerCase().replace(/-/g, '')] || module.default;
 			return themeFn || null;
 		} catch (error) {
-			console.error(`Failed to load theme ${themeName}:`, error);
+			if (!isSsr) console.error(`Failed to load theme ${themeName}:`, error);
 			return null;
 		}
 	}
