@@ -196,7 +196,7 @@ function handleKeydown(event) {
 			{className}
 		"
 		role="button"
-		tabindex="0"
+		tabindex={clickable && !disabled ? 0 : undefined}
 		onclick={handleClick}
 		onkeydown={handleKeydown}
 	>

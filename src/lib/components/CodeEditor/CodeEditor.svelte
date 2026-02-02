@@ -57,7 +57,7 @@
 			const ext = module.default || Object.values(module)[0];
 			return ext;
 		} catch (error) {
-			if (!isSsr) console.error(`Failed to load extension from ${extensionUrl}:`, error);
+			console.error(`Failed to load extension from ${extensionUrl}:`, error);
 			return null;
 		}
 	}
@@ -128,7 +128,7 @@
 
 		const packageName = themeMap[themeName.toLowerCase()];
 		if (!packageName) {
-			if (!isSsr) console.warn(`Theme ${themeName} not available`);
+			console.warn(`Theme ${themeName} not available`);
 			return null;
 		}
 
@@ -138,7 +138,7 @@
 			const themeFn = module[themeName.toLowerCase().replace(/-/g, '')] || module.default;
 			return themeFn || null;
 		} catch (error) {
-			if (!isSsr) console.error(`Failed to load theme ${themeName}:`, error);
+			console.error(`Failed to load theme ${themeName}:`, error);
 			return null;
 		}
 	}

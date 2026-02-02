@@ -181,6 +181,7 @@ const iconSize = $derived(
   {form}
   {name}
   {value}
+  {autofocus}
   {formmethod}
   {formenctype}
   {formnovalidate}

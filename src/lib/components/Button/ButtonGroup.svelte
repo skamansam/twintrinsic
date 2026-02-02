@@ -46,17 +46,10 @@ const {
   children,
 } = $props()
 
-const derivedVariant = $derived(variant)
-const derivedSize = $derived(size)
-
 // Provide context for child buttons
 setContext("buttonGroup", {
-  get variant() {
-    return derivedVariant
-  },
-  get size() {
-    return derivedSize
-  },
+  variant,
+  size,
   inGroup: true,
 })
 </script>
