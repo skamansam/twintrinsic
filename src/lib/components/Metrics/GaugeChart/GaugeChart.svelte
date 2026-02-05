@@ -75,7 +75,7 @@
 	const radius = size / 2 - 30;
 	const arcRange = arcEnd - arcStart;
 	const percentage = $derived(((value - min) / (max - min)) * 100);
-	const currentAngle = $derived(arcStart + (percentage / 100) * arcRange);
+	const currentAngle = $derived(arcEnd - (percentage / 100) * arcRange);
 
 	function polarToCartesian(angle: number): { x: number; y: number } {
 		const rad = (angle * Math.PI) / 180;
@@ -85,14 +85,17 @@
 		};
 	}
 
-	function describeArc(startAngle: number, endAngle: number): string {
-		const start = polarToCartesian(startAngle);
-		const end = polarToCartesian(endAngle);
-		const largeArc = endAngle - startAngle > 180 ? 1 : 0;
+	function describeArc(startAngle: number, endAngle: number, swapAngles = false): string {
+		const [angle1, angle2] = swapAngles ? [endAngle, startAngle] : [startAngle, endAngle];
+		const start = polarToCartesian(-angle1);
+		const end = polarToCartesian(-angle2);
+		const arcDiff = angle2 - angle1;
+		const largeArc = Math.abs(arcDiff) > 180 ? 1 : 0;
+		const sweep = arcDiff > 0 ? 0 : 1;
 
 		return [
 			`M ${start.x} ${start.y}`,
-			`A ${radius} ${radius} 0 ${largeArc} 1 ${end.x} ${end.y}`
+			`A ${radius} ${radius} 0 ${largeArc} ${sweep} ${end.x} ${end.y}`
 		].join(' ');
 	}
 
@@ -140,7 +143,7 @@
 			{@const zoneStart = arcStart + ((zone.start - min) / (max - min)) * arcRange}
 			{@const zoneEnd = arcStart + ((zone.end - min) / (max - min)) * arcRange}
 			<path
-				d={describeArc(zoneStart, zoneEnd)}
+				d={describeArc(zoneStart, zoneEnd, true)}
 				fill="none"
 				stroke={zone.color}
 				stroke-width="12"
@@ -152,8 +155,8 @@
 		<!-- Tic marks and labels -->
 		{#if tics.show && ticValues.length > 0}
 			{#each ticValues as ticValue}
-				{@const ticAngle = arcStart + ((ticValue - min) / (max - min)) * arcRange}
-				{@const innerRad = (ticAngle * Math.PI) / 180}
+				{@const ticAngle = arcEnd - ((ticValue - min) / (max - min)) * arcRange}
+				{@const innerRad = (-ticAngle * Math.PI) / 180}
 				{@const ticInnerRadius = radius - 8}
 				{@const ticOuterRadius = radius}
 				{@const ticInnerX = size / 2 + ticInnerRadius * Math.cos(innerRad)}
@@ -175,7 +178,7 @@
 				<!-- Tic label -->
 				{#if tics.showLabels}
 					{@const labelRadius = radius + 20}
-					{@const labelRad = (ticAngle * Math.PI) / 180}
+					{@const labelRad = (-ticAngle * Math.PI) / 180}
 					{@const labelX = size / 2 + labelRadius * Math.cos(labelRad)}
 					{@const labelY = size / 2 + labelRadius * Math.sin(labelRad)}
 					<text
@@ -195,12 +198,12 @@
 
 		<!-- Min and Max labels -->
 		{#if true}
-			{@const minLabelRadius = radius + 28}
-			{@const minLabelRad = (arcStart * Math.PI) / 180}
+			{@const minLabelRadius = radius + 45}
+			{@const minLabelRad = (-arcStart * Math.PI) / 180}
 			{@const minLabelX = size / 2 + minLabelRadius * Math.cos(minLabelRad)}
 			{@const minLabelY = size / 2 + minLabelRadius * Math.sin(minLabelRad)}
-			{@const maxLabelRadius = radius + 28}
-			{@const maxLabelRad = (arcEnd * Math.PI) / 180}
+			{@const maxLabelRadius = radius + 45}
+			{@const maxLabelRad = (-arcEnd * Math.PI) / 180}
 			{@const maxLabelX = size / 2 + maxLabelRadius * Math.cos(maxLabelRad)}
 			{@const maxLabelY = size / 2 + maxLabelRadius * Math.sin(maxLabelRad)}
 
@@ -235,11 +238,10 @@
 
 		<!-- Needle -->
 		{#if true}
-			{@const needleStart = polarToCartesian(arcStart)}
-			{@const needleEnd = polarToCartesian(currentAngle)}
+			{@const needleEnd = polarToCartesian(-currentAngle)}
 			<line
-				x1={needleStart.x}
-				y1={needleStart.y}
+				x1={size / 2}
+				y1={size / 2}
 				x2={needleEnd.x}
 				y2={needleEnd.y}
 				stroke={colorValue}
