@@ -30,7 +30,7 @@ let rightSidebarExpanded = true
 // Component links for the left sidebar
 const componentLinks = [
   // Examples
-  { category: "Examples", name: "Dashboard", href: "/docs/examples/dashboard" },
+  { category: "Examples", name: "Data Dashboard", href: "/docs/examples/dashboard" },
 
   // Core Components
   { category: "Core", name: "App", href: "/docs/components/App/App" },
