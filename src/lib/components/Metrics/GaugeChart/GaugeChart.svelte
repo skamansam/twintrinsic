@@ -71,9 +71,9 @@
 		info: '#06b6d4'
 	};
 
-	const colorValue = colorMap[color];
-	const radius = size / 2 - 30;
-	const arcRange = arcEnd - arcStart;
+	const colorValue = $derived(colorMap[color]);
+	const radius = $derived(size / 2 - 30);
+	const arcRange = $derived(arcEnd - arcStart);
 	const percentage = $derived(((value - min) / (max - min)) * 100);
 	const currentAngle = $derived(arcEnd - (percentage / 100) * arcRange);
 
@@ -99,7 +99,7 @@
 		].join(' ');
 	}
 
-	function getTicValues(): number[] {
+	const ticValues = $derived.by(() => {
 		if (tics.values) return tics.values;
 		if (!tics.step) return [];
 
@@ -108,10 +108,9 @@
 			values.push(i);
 		}
 		return values;
-	}
+	});
 
-	const ticValues = $derived(getTicValues());
-	const formatLabel = tics.format || ((v: number) => v.toString());
+	const formatLabel = $derived(tics.format || ((v: number) => v.toString()));
 </script>
 
 <div class="flex flex-col items-center gap-4">
@@ -269,7 +268,7 @@
 			fill="currentColor"
 			class="text-gray-900 dark:text-white"
 		>
-			{value.toFixed(0)}%
+			{value.toFixed(0)}
 		</text>
 
 		<!-- Unit text -->

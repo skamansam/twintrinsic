@@ -1,20 +1,70 @@
 <script lang="ts">
+import type { Snippet } from "svelte"
 import { setContext } from "svelte"
+import AppHeader from "../AppHeader/AppHeader.svelte"
+import Sidebar from "../Sidebar/Sidebar.svelte"
+import type { MenuItem } from "../TreeMenu/TreeMenu.svelte"
 
-const props = $props();
+type Brand = string | { name: string; logo?: string | Snippet; href?: string }
+type User = { name: string; avatar?: string; href?: string } | null
+type NavItem = { label: string; href?: string; current?: boolean }
 
-const {
+interface AppProps {
+  darkMode?: boolean
+  appName?: string
+  brand?: Brand
+  user?: User
+  navItems?: NavItem[]
+  siteLinks?: NavItem[]
+  siteMenu?: any[]
+  showSearch?: boolean
+  showNotifications?: boolean
+  leftSidebarHidden?: boolean
+  rightSidebarHidden?: boolean
+  leftSidebarWidth?: string
+  rightSidebarWidth?: string
+  leftSidebarCollapsedWidth?: string
+  rightSidebarCollapsedWidth?: string
+  leftPanel?: Snippet | null
+  rightPanel?: Snippet | null
+  footer?: Snippet | null
+  children?: Snippet | null
+  onsearch?: (payload: { query: string }) => void
+  onsignout?: () => void
+  onleftSidebarVisibilityChange?: (payload: { visible: boolean }) => void
+  onrightSidebarVisibilityChange?: (payload: { visible: boolean }) => void
+  onleftSidebarToggle?: (payload: { expanded: boolean }) => void
+  onrightSidebarToggle?: (payload: { expanded: boolean }) => void
+}
+
+let {
   darkMode = false,
   appName = "Twintrinsic App",
-  leftPanelWidth = "300px",
-  rightPanelWidth = "300px",
-  menu = null,
-  header = null,
-  footer = null,
-  leftPanel = null,
-  rightPanel = null,
+  brand = appName,
+  user = null,
+  navItems = [],
+  siteLinks,
+  siteMenu,
+  showSearch = false,
+  showNotifications = false,
+  leftSidebarHidden = false,
+  rightSidebarHidden = false,
+  leftSidebarWidth = "16rem",
+  rightSidebarWidth = "auto",
+  leftSidebarCollapsedWidth = "4rem",
+  rightSidebarCollapsedWidth = "4rem",
+  leftPanel,
+  rightPanel,
+  header,
+  footer,
   children,
-} = props;
+  onsearch,
+  onsignout,
+  onleftSidebarVisibilityChange,
+  onrightSidebarVisibilityChange,
+  onleftSidebarToggle,
+  onrightSidebarToggle,
+}: AppProps = $props();
 
 $effect(() => {
   setContext("appDarkMode", {
@@ -26,31 +76,59 @@ $effect(() => {
 <svelte:head>
   <title>{appName}</title>
 </svelte:head>
-<!-- <svelte:body class="{darkMode ? "dark" : "light"}"/> -->
-<div class='app bg-element-100 dark:bg-dark dark:text-light h-screen grid gap-0 grid-rows-[var(--header-height,auto)_1fr_var(--footer-height,auto)] grid-cols-[var(--left-panel-width,300px)_1fr_var(--right-panel-width,300px)]' data-theme style="--left-panel-width: {leftPanelWidth}; --right-panel-width: {rightPanelWidth};">
+
+<div class='app bg-element-100 dark:bg-dark dark:text-light min-h-screen grid gap-0 grid-rows-[var(--header-height,120px)_1fr_var(--footer-height,60px)] grid-cols-[var(--leftbar-width,300px)_1fr_var(--rightbar-width,300px)]' style="--rightbar-width: {rightPanel ? rightSidebarWidth : 'auto'}; --leftbar-width: {(leftPanel || siteMenu) ? leftSidebarWidth : 'auto'}; --header-height: auto; --footer-height: auto;" data-theme>
+  <!-- Header -->
   {#if header}
-    <header class="appHeader col-span-3">
-      {#if menu}
-        <div class="appMenu">
-          {@render menu()}
-        </div>
+    {@render header()}
+  {:else}
+    <AppHeader
+      {brand}
+      {user}
+      navItems={siteLinks || navItems}
+      {showSearch}
+      {showNotifications}
+      {onsearch}
+      {onsignout}
+      class="appHeader col-span-3"
+    />
+  {/if}
+  <!-- Left Sidebar -->
+  {#if !leftSidebarHidden && (leftPanel || siteMenu)}
+    <Sidebar
+      visible={!leftSidebarHidden}
+      position="left"
+      width={leftSidebarWidth}
+      collapsedWidth={leftSidebarCollapsedWidth}
+      menu={siteMenu}
+      ontoggle={onleftSidebarToggle}
+      class="appLeftPanel shadow-lg p-5"
+    >
+      {#if leftPanel}
+        {@render leftPanel()}
       {/if}
-      {@render header()}
-    </header>
+    </Sidebar>
   {/if}
-  {#if leftPanel}
-    <aside class="appLeftPanel overflow-y-auto shadow-lg col-span-1">
-      {@render leftPanel()}
-    </aside>
-  {/if}
-  <main class="appMain overflow-y-auto col-span-1">
+
+  <!-- Main Content -->
+  <main id="main-content" class="appMain p-5">
     {@render children?.()}
   </main>
-  {#if rightPanel}
-    <aside class="appRightPanel overflow-y-auto col-span-1">
+
+  <!-- Right Sidebar -->
+  {#if !rightSidebarHidden && rightPanel}
+    <Sidebar
+      position="right"
+      width={rightSidebarWidth}
+      collapsedWidth={rightSidebarCollapsedWidth}
+      ontoggle={onrightSidebarToggle}
+      class="appRightPanel overflow-y-auto"
+    >
       {@render rightPanel()}
-    </aside>
+    </Sidebar>
   {/if}
+
+  <!-- Footer -->
   {#if footer}
     <footer class="appFooter col-span-3">
       {@render footer()}
@@ -59,5 +137,5 @@ $effect(() => {
 </div>
 
 <style lang="postcss">
-  @reference '../../twintrinsic.css';  
+  @reference '../../twintrinsic.css';
 </style>

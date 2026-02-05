@@ -1,19 +1,16 @@
 <!--
 @component
-Documentation site layout with left navigation, right theme sidebar, and header
+Documentation site layout with left navigation and header
 -->
 <script>
 import { page } from "$app/stores"
 import App from "$lib/components/App/App.svelte"
-import AppHeader from "$lib/components/AppHeader/AppHeader.svelte"
-import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte"
-import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
-import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
+import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte";
 import { Separator } from "$lib/index.js"
 
 let { children } = $props();
 
-const navItems = [
+const siteLinks = [
   { label: "Getting Started", href: "/docs", current: $page.url.pathname === "/docs" },
   {
     label: "Components",
@@ -24,123 +21,151 @@ const navItems = [
   { label: "Completion", href: "/docs/completion", current: $page.url.pathname === "/docs/completion" },
 ]
 
-let leftSidebarExpanded = true
-let rightSidebarExpanded = true
+let leftSidebarExpanded = $state(false)
 
 // Component links for the left sidebar
-const componentLinks = [
-  // Examples
-  { category: "Examples", name: "Data Dashboard", href: "/docs/examples/dashboard" },
-
-  // Core Components
-  { category: "Core", name: "App", href: "/docs/components/App/App" },
-  { name: "Split", href: "/docs/components/App/Split" },
-
-  // Layout Components
-  { category: "Layout", name: "Accordion", href: "/docs/components/Accordion/Accordion" },
-  { name: "AccordionItem", href: "/docs/components/Accordion/AccordionItem" },
-  { name: "Card", href: "/docs/components/Card/Card" },
-  { name: "Container", href: "/docs/components/Container/Container" },
-  { name: "Panel", href: "/docs/components/Panel/Panel" },
-  { name: "Separator", href: "/docs/components/Separator/Separator" },
-  { name: "Sidebar", href: "/docs/components/Sidebar/Sidebar" },
-
-  // Navigation Components
-  { category: "Navigation", name: "AppHeader", href: "/docs/components/AppHeader/AppHeader" },
-  { name: "BottomBar", href: "/docs/components/BottomBar/BottomBar" },
-  { name: "Breadcrumb", href: "/docs/components/Breadcrumb/Breadcrumb" },
-  { name: "BreadcrumbItem", href: "/docs/components/Breadcrumb/BreadcrumbItem" },
-  { name: "Menu", href: "/docs/components/Menu/Menu" },
-  { name: "MenuItem", href: "/docs/components/Menu/MenuItem" },
-  { name: "Tabs", href: "/docs/components/Tabs/Tabs" },
-  { name: "Tab", href: "/docs/components/Tabs/Tab" },
-  { name: "TabList", href: "/docs/components/Tabs/TabList" },
-  { name: "TabPanel", href: "/docs/components/Tabs/TabPanel" },
-
-  // Data Display Components
-  { category: "Data Display", name: "Avatar", href: "/docs/components/Avatar/Avatar" },
-  { name: "AvatarGroup", href: "/docs/components/Avatar/AvatarGroup" },
-  { name: "Badge", href: "/docs/components/Badge/Badge" },
-  { name: "Carousel", href: "/docs/components/Carousel/Carousel" },
-  { name: "CarouselItem", href: "/docs/components/Carousel/CarouselItem" },
-  { name: "Chip", href: "/docs/components/Chip/Chip" },
-  { name: "ChipGroup", href: "/docs/components/Chip/ChipGroup" },
-  { name: "CodeBlock", href: "/docs/components/CodeBlock/CodeBlock" },
-  { name: "CodeBlockSpeed", href: "/docs/components/CodeBlockSpeed/CodeBlockSpeed" },
-  { name: "CodeEditor", href: "/docs/components/CodeEditor/CodeEditor" },
-  { name: "DataTable", href: "/docs/components/DataTable/DataTable" },
-  { name: "Progress", href: "/docs/components/Progress/Progress" },
-  { name: "Skeleton", href: "/docs/components/Skeleton/Skeleton" },
-  { name: "Table", href: "/docs/components/Table/Table" },
-  { name: "TableBody", href: "/docs/components/Table/TableBody" },
-  { name: "TableCell", href: "/docs/components/Table/TableCell" },
-  { name: "TableHead", href: "/docs/components/Table/TableHead" },
-  { name: "TableHeader", href: "/docs/components/Table/TableHeader" },
-  { name: "TableRow", href: "/docs/components/Table/TableRow" },
-  { name: "Tag", href: "/docs/components/Tag/Tag" },
-  { name: "TagGroup", href: "/docs/components/Tag/TagGroup" },
-  { name: "Timeline", href: "/docs/components/Timeline/Timeline" },
-  { name: "TimelineItem", href: "/docs/components/Timeline/TimelineItem" },
-  { name: "Tooltip", href: "/docs/components/Tooltip/Tooltip" },
-  { name: "Tree", href: "/docs/components/Tree/Tree" },
-  { name: "TreeNode", href: "/docs/components/Tree/TreeNode" },
-
-  // Metrics Components
-  { category: "Metrics", name: "DonutChart", href: "/docs/components/Metrics/DonutChart" },
-  { name: "PieChart", href: "/docs/components/Metrics/PieChart" },
-  { name: "LineChart", href: "/docs/components/Metrics/LineChart" },
-  { name: "BarChart", href: "/docs/components/Metrics/BarChart" },
-  { name: "HorizontalBarChart", href: "/docs/components/Metrics/HorizontalBarChart" },
-  { name: "AreaChart", href: "/docs/components/Metrics/AreaChart" },
-  { name: "StatsCard", href: "/docs/components/Metrics/StatsCard" },
-  { name: "MetricGrid", href: "/docs/components/Metrics/MetricGrid" },
-  { name: "KPICard", href: "/docs/components/Metrics/KPICard" },
-  { name: "GaugeChart", href: "/docs/components/Metrics/GaugeChart" },
-  { name: "ProgressMetric", href: "/docs/components/Metrics/ProgressMetric" },
-  { name: "MetricTrend", href: "/docs/components/Metrics/MetricTrend" },
-
-  // Form Components
-  { category: "Form", name: "AutoComplete", href: "/docs/components/Form/AutoComplete" },
-  { name: "Button", href: "/docs/components/Button/Button" },
-  { name: "ButtonGroup", href: "/docs/components/Button/ButtonGroup" },
-  { name: "Calendar", href: "/docs/components/Form/Calendar" },
-  { name: "Checkbox", href: "/docs/components/Form/Checkbox" },
-  { name: "ColorPicker", href: "/docs/components/Form/ColorPicker" },
-  { name: "Combobox", href: "/docs/components/Form/Combobox" },
-  { name: "Dropdown", href: "/docs/components/Form/Dropdown" },
-  { name: "FileUpload", href: "/docs/components/Form/FileUpload" },
-  { name: "FloatLabel", href: "/docs/components/Form/FloatLabel" },
-  { name: "Form", href: "/docs/components/Form/Form" },
-  { name: "FormField", href: "/docs/components/Form/FormField" },
-  { name: "Input", href: "/docs/components/Form/Input" },
-  { name: "InputSwitch", href: "/docs/components/Form/InputSwitch" },
-  { name: "InvalidState", href: "/docs/components/Form/InvalidState" },
-  { name: "Knob", href: "/docs/components/Form/Knob" },
-  { name: "ListInput", href: "/docs/components/Form/ListInput" },
-  { name: "Listbox", href: "/docs/components/Form/Listbox" },
-  { name: "NumberInput", href: "/docs/components/Form/NumberInput" },
-  { name: "Radio", href: "/docs/components/Form/Radio" },
-  { name: "RadioGroup", href: "/docs/components/Form/RadioGroup" },
-  { name: "Rating", href: "/docs/components/Form/Rating" },
-  { name: "Select", href: "/docs/components/Form/Select" },
-  { name: "SelectGroup", href: "/docs/components/Form/SelectGroup" },
-  { name: "Slider", href: "/docs/components/Form/Slider" },
-  { name: "Switch", href: "/docs/components/Form/Switch" },
-  { name: "TextInput", href: "/docs/components/Form/TextInput" },
-  { name: "Textarea", href: "/docs/components/Form/Textarea" },
-
-  // Feedback Components
-  { category: "Feedback", name: "Modal", href: "/docs/components/Modal/Modal" },
-  { name: "Stepper", href: "/docs/components/Stepper/Stepper" },
-  { name: "StepperStep", href: "/docs/components/Stepper/StepperStep" },
-  { name: "Toast", href: "/docs/components/Toast/Toast" },
-
-  // Utility Components
-  { category: "Utility", name: "Icon", href: "/docs/components/Icon/Icon" },
-  { name: "Lazy", href: "/docs/components/Lazy/Lazy" },
-  { name: "LazyPanel", href: "/docs/components/Lazy/LazyPanel" },
-  { name: "Masonry", href: "/docs/components/Masonry/Masonry" },
-  { name: "ThemeToggle", href: "/docs/components/ThemeToggle/ThemeToggle" },
+const siteMenu = [
+  {
+    title: "Examples",
+    children: [
+      { title: "Data Dashboard", link: "/docs/examples/dashboard" },
+    ],
+  },
+  {
+    title: "Core",
+    children: [
+      { title: "App", link: "/docs/components/App/App" },
+      { title: "Split", link: "/docs/components/App/Split" },
+    ],
+  },
+  {
+    title: "Layout",
+    children: [
+      { title: "Accordion", link: "/docs/components/Accordion/Accordion" },
+      { title: "AccordionItem", link: "/docs/components/Accordion/AccordionItem" },
+      { title: "Card", link: "/docs/components/Card/Card" },
+      { title: "Container", link: "/docs/components/Container/Container" },
+      { title: "Panel", link: "/docs/components/Panel/Panel" },
+      { title: "Separator", link: "/docs/components/Separator/Separator" },
+      { title: "Sidebar", link: "/docs/components/Sidebar/Sidebar" },
+    ],
+  },
+  {
+    title: "Navigation",
+    children: [
+      { title: "AppHeader", link: "/docs/components/AppHeader/AppHeader" },
+      { title: "BottomBar", link: "/docs/components/BottomBar/BottomBar" },
+      { title: "Breadcrumb", link: "/docs/components/Breadcrumb/Breadcrumb" },
+      { title: "BreadcrumbItem", link: "/docs/components/Breadcrumb/BreadcrumbItem" },
+      { title: "Menu", link: "/docs/components/Menu/Menu" },
+      { title: "MenuItem", link: "/docs/components/Menu/MenuItem" },
+      { title: "Tabs", link: "/docs/components/Tabs/Tabs" },
+      { title: "Tab", link: "/docs/components/Tabs/Tab" },
+      { title: "TabList", link: "/docs/components/Tabs/TabList" },
+      { title: "TabPanel", link: "/docs/components/Tabs/TabPanel" },
+      { title: "TreeMenu", link: "/docs/components/TreeMenu/TreeMenu" },
+    ],
+  },
+  {
+    title: "Data Display",
+    children: [
+      { title: "Avatar", link: "/docs/components/Avatar/Avatar" },
+      { title: "AvatarGroup", link: "/docs/components/Avatar/AvatarGroup" },
+      { title: "Badge", link: "/docs/components/Badge/Badge" },
+      { title: "Carousel", link: "/docs/components/Carousel/Carousel" },
+      { title: "CarouselItem", link: "/docs/components/Carousel/CarouselItem" },
+      { title: "Chip", link: "/docs/components/Chip/Chip" },
+      { title: "ChipGroup", link: "/docs/components/Chip/ChipGroup" },
+      { title: "CodeBlock", link: "/docs/components/CodeBlock/CodeBlock" },
+      { title: "CodeBlockSpeed", link: "/docs/components/CodeBlockSpeed/CodeBlockSpeed" },
+      { title: "CodeEditor", link: "/docs/components/CodeEditor/CodeEditor" },
+      { title: "DataTable", link: "/docs/components/DataTable/DataTable" },
+      { title: "Progress", link: "/docs/components/Progress/Progress" },
+      { title: "Skeleton", link: "/docs/components/Skeleton/Skeleton" },
+      { title: "Table", link: "/docs/components/Table/Table" },
+      { title: "TableBody", link: "/docs/components/Table/TableBody" },
+      { title: "TableCell", link: "/docs/components/Table/TableCell" },
+      { title: "TableHead", link: "/docs/components/Table/TableHead" },
+      { title: "TableHeader", link: "/docs/components/Table/TableHeader" },
+      { title: "TableRow", link: "/docs/components/Table/TableRow" },
+      { title: "Tag", link: "/docs/components/Tag/Tag" },
+      { title: "TagGroup", link: "/docs/components/Tag/TagGroup" },
+      { title: "Timeline", link: "/docs/components/Timeline/Timeline" },
+      { title: "TimelineItem", link: "/docs/components/Timeline/TimelineItem" },
+      { title: "Tooltip", link: "/docs/components/Tooltip/Tooltip" },
+      { title: "Tree", link: "/docs/components/Tree/Tree" },
+      { title: "TreeNode", link: "/docs/components/Tree/TreeNode" },
+    ],
+  },
+  {
+    title: "Metrics",
+    children: [
+      { title: "DonutChart", link: "/docs/components/Metrics/DonutChart" },
+      { title: "PieChart", link: "/docs/components/Metrics/PieChart" },
+      { title: "LineChart", link: "/docs/components/Metrics/LineChart" },
+      { title: "BarChart", link: "/docs/components/Metrics/BarChart" },
+      { title: "HorizontalBarChart", link: "/docs/components/Metrics/HorizontalBarChart" },
+      { title: "AreaChart", link: "/docs/components/Metrics/AreaChart" },
+      { title: "StatsCard", link: "/docs/components/Metrics/StatsCard" },
+      { title: "MetricGrid", link: "/docs/components/Metrics/MetricGrid" },
+      { title: "KPICard", link: "/docs/components/Metrics/KPICard" },
+      { title: "GaugeChart", link: "/docs/components/Metrics/GaugeChart" },
+      { title: "ProgressMetric", link: "/docs/components/Metrics/ProgressMetric" },
+      { title: "MetricTrend", link: "/docs/components/Metrics/MetricTrend" },
+    ],
+  },
+  {
+    title: "Form",
+    children: [
+      { title: "AutoComplete", link: "/docs/components/Form/AutoComplete" },
+      { title: "Button", link: "/docs/components/Button/Button" },
+      { title: "ButtonGroup", link: "/docs/components/Button/ButtonGroup" },
+      { title: "Calendar", link: "/docs/components/Form/Calendar" },
+      { title: "Checkbox", link: "/docs/components/Form/Checkbox" },
+      { title: "ColorPicker", link: "/docs/components/Form/ColorPicker" },
+      { title: "Combobox", link: "/docs/components/Form/Combobox" },
+      { title: "Dropdown", link: "/docs/components/Form/Dropdown" },
+      { title: "FileUpload", link: "/docs/components/Form/FileUpload" },
+      { title: "FloatLabel", link: "/docs/components/Form/FloatLabel" },
+      { title: "Form", link: "/docs/components/Form/Form" },
+      { title: "FormField", link: "/docs/components/Form/FormField" },
+      { title: "Input", link: "/docs/components/Form/Input" },
+      { title: "InputSwitch", link: "/docs/components/Form/InputSwitch" },
+      { title: "InvalidState", link: "/docs/components/Form/InvalidState" },
+      { title: "Knob", link: "/docs/components/Form/Knob" },
+      { title: "ListInput", link: "/docs/components/Form/ListInput" },
+      { title: "Listbox", link: "/docs/components/Form/Listbox" },
+      { title: "NumberInput", link: "/docs/components/Form/NumberInput" },
+      { title: "Radio", link: "/docs/components/Form/Radio" },
+      { title: "RadioGroup", link: "/docs/components/Form/RadioGroup" },
+      { title: "Rating", link: "/docs/components/Form/Rating" },
+      { title: "Select", link: "/docs/components/Form/Select" },
+      { title: "SelectGroup", link: "/docs/components/Form/SelectGroup" },
+      { title: "Slider", link: "/docs/components/Form/Slider" },
+      { title: "Switch", link: "/docs/components/Form/Switch" },
+      { title: "TextInput", link: "/docs/components/Form/TextInput" },
+      { title: "Textarea", link: "/docs/components/Form/Textarea" },
+    ],
+  },
+  {
+    title: "Feedback",
+    children: [
+      { title: "Modal", link: "/docs/components/Modal/Modal" },
+      { title: "Stepper", link: "/docs/components/Stepper/Stepper" },
+      { title: "StepperStep", link: "/docs/components/Stepper/StepperStep" },
+      { title: "Toast", link: "/docs/components/Toast/Toast" },
+    ],
+  },
+  {
+    title: "Utility",
+    children: [
+      { title: "Icon", link: "/docs/components/Icon/Icon" },
+      { title: "Lazy", link: "/docs/components/Lazy/Lazy" },
+      { title: "LazyPanel", link: "/docs/components/Lazy/LazyPanel" },
+      { title: "Masonry", link: "/docs/components/Masonry/Masonry" },
+      { title: "ThemeToggle", link: "/docs/components/ThemeToggle/ThemeToggle" },
+    ],
+  },
 ]
 
 // Theme colors for the right sidebar
@@ -155,81 +180,26 @@ const themeColors = [
   { name: "Error", value: "rgb(var(--color-error-bold))" },
 ]
 </script>
-  
-  <App appName="Twintrinsic Documentation" leftPanelWidth="14rem">
-    {#snippet header()}
-      <AppHeader
-        brand={{
-          name: 'Twintrinsic',
-          href: '/'
-        }}
-        {navItems}
-        class="relative"
-      >
-        {#snippet logo()}
-          <div class="flex items-center gap-2">
-            <button
-              type="button"
-              class="lg:hidden -ml-2 p-2 rounded-md text-muted hover:text-text focus:outline-none focus:ring-2 focus:ring-primary-500"
-              onclick={() => leftSidebarExpanded = !leftSidebarExpanded}
-              aria-label="Toggle navigation menu"
-            >
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-            <TwintrinsicLogo size="2rem" class="text-primary-500" />
-            <span class="font-semibold">Twintrinsic</span>
-          </div>
-        {/snippet}
-        {#snippet actions()}
-          <ThemeToggle />
-        {/snippet}
-      </AppHeader>
-    {/snippet}
-  
-    {#snippet leftPanel()}
-      <nav class="docs-nav">
-        {#each componentLinks as link, i}
-          {#if link.category && (i === 0 || componentLinks[i-1].category !== link.category)}
-            <Separator aria-label={link.category} class="docs-nav-category" disabled>{link.category}</Separator>
-          {/if}
-          <a
-            href={link.href}
-            class="docs-nav-link"
-            class:active={$page.url.pathname === link.href}
-          >
-            {link.name}
-          </a>
-        {/each}
-      </nav>
-    {/snippet}
-  
-    {@render children?.()}
-  </App>
+
+{#snippet logo(size)}
+  <TwintrinsicLogo {size}/>
+{/snippet}
+
+<App
+  rightSidebarHidden={true}
+  appName="Twintrinsic Documentation"
+  brand={{
+    name: 'Twintrinsic',
+    href: '/',
+    logo
+  }}
+  {siteMenu}
+  {siteLinks}
+>
+  {@render children?.()}
+</App>
   
   <style lang="postcss">
     @reference '$lib/twintrinsic.css';
-    .docs-nav {
-      @apply flex flex-col gap-2 p-4;
-    }
-  
-    .docs-nav-category {
-      color: red;
-      @apply text-xs font-semibold uppercase tracking-wider text-muted;
-      @apply mt-4 mb-1 px-4;
-    }
-  
-    .docs-nav-category:first-child {
-      @apply mt-0;
-    }
-  
-    .docs-nav-link {
-      @apply px-4 py-2 rounded-md text-sm;
-      @apply hover:bg-hover focus:outline-none focus:ring-2 focus:ring-primary-500;
-    }
-  
-    .docs-nav-link.active {
-      @apply bg-primary-500 text-white;
-    }
+
   </style>

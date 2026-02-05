@@ -23,8 +23,9 @@ Usage:
 <script lang="ts">
 import { slide } from "svelte/transition"
 import ThemeToggle from "../ThemeToggle/ThemeToggle.svelte"
+import type { Snippet } from "svelte";
 
-type Brand = string | { name: string; logo?: string; href?: string }
+type Brand = string | { name: string; logo?: Snippet | string; href?: string }
 type User = { name: string; avatar?: string; href?: string } | null
 type NavItem = { label: string; href?: string; current?: boolean }
 type AppHeaderProps = {
@@ -50,7 +51,6 @@ const {
   navItems = [],
   class: className = "",
   id = crypto.randomUUID(),
-  logo,
   notifications,
   userMenu,
   onsearch,
@@ -102,22 +102,24 @@ function handleSignout() {
   onsignout?.()
 }
 
+
 const brandName = $derived(typeof brand === "string" ? brand : brand.name)
-const brandLogo = $derived(typeof brand === "string" ? null : brand.logo)
 const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
 
 {#snippet defaultLogo()}
-  {#if brandLogo}
+  {#if typeof brand.logo === "string"}
     <img
-      src={brandLogo}
+      src={brand.logo}
       alt={brandName}
       class="app-header-logo"
       width="32"
       height="32"
     />
+  {:else if brand.logo}
+    {@render brand.logo(32)}
   {/if}
   <span class="app-header-brand-name">{brandName}</span>
 {/snippet}
@@ -154,7 +156,9 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
     <!-- Brand -->
     <div class="app-header-brand">
       <a href={brandHref} class="app-header-brand-link" aria-label={brandName}>
-        {@render (logo ?? defaultLogo)()}
+        {#if defaultLogo}
+          {@render defaultLogo()}
+        {/if}
       </a>
     </div>
 

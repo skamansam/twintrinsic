@@ -14,7 +14,5 @@ const { children } = $props()
 </a>
 
 <div class="min-h-screen bg-background text-text">
-  <main id="main-content" class="bg-background text-text">
-    {@render children()}
-  </main>
+  {@render children()}
 </div>

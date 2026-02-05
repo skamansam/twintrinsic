@@ -1,153 +1,119 @@
 <!--
 @component
-Sidebar - A collapsible side panel that attaches to its parent container.
-Built on top of the Panel component with additional positioning and animation features.
+Sidebar - A responsive side panel that adapts to screen size.
+- Mobile: Hidden by default, controlled by parent via `visible` prop
+- Tablet: Shows only icons (collapsed width via CSS)
+- Desktop: Shows full width with labels
 
 ## Props
-- `expanded` - Initial expanded state (default: true)
+- `visible` - Show/hide the sidebar (controlled by parent) (default: false)
 - `position` - Sidebar position: "left" or "right" (default: "left")
-- `width` - Width of the sidebar when expanded (default: "16rem")
-- `floatOnMobile` - Float above content on mobile instead of taking full width (default: false)
-- `disabled` - Disable toggle functionality (default: false)
-- `hideBackdrop` - Hide the backdrop overlay when expanded (default: false)
+- `width` - Width of the sidebar on desktop when fully expanded (default: "16rem")
+- `collapsedWidth` - Width of the sidebar on tablet (icon-only mode) (default: "4rem")
 - `id` - Custom element ID (default: random UUID)
 - `ariaLabel` - Accessibility label for the sidebar
-- `docked` - Reserved for future use
+- `disabled` - Disable toggle functionality (default: false)
 - `class` - Additional CSS classes
 - `menu` - Menu items array for SidebarMenu component (optional)
-- `ontoggle` - Callback when sidebar is toggled
+- `onvisibilitychange` - Callback when sidebar visibility changes
+- `ontoggle` - Callback when sidebar is toggled (for desktop expand/collapse)
 
 ## Slots
 - `header` - Header content for the Panel
 - `default` - Main sidebar content
 
+## Responsive Behavior
+- Mobile (< 768px): Hidden unless `visible={true}`, controlled by parent
+- Tablet (768px - 1024px): Shows with `collapsedWidth` (icons only)
+- Desktop (> 1024px): Shows with full `width`
+
 ## Usage
 ```svelte
-<Sidebar>
-  <svelte:fragment slot="header">Navigation</svelte:fragment>
-  <nav>Menu items here</nav>
-</Sidebar>
-
-<Sidebar {menu}>
+<Sidebar {menu} visible={showMobileMenu} onvisibilitychange={(e) => showMobileMenu = e.visible}>
   Menu will be rendered using SidebarMenu
-</Sidebar>
-
-<Sidebar position="right" expanded={false}>
-  <svelte:fragment slot="header">Settings</svelte:fragment>
-  Settings content
-</Sidebar>
-
-<Sidebar floatOnMobile>
-  <svelte:fragment slot="header">Mobile Menu</svelte:fragment>
-  Content that floats on mobile
 </Sidebar>
 ```
 -->
 <script lang="ts">
-import { slide } from "svelte/transition"
 import Panel from "../Panel/Panel.svelte"
 import type { MenuItem } from "../TreeMenu/TreeMenu.svelte"
 import TreeMenu from "../TreeMenu/TreeMenu.svelte"
 
 /** Sidebar component props configuration */
 type SidebarProps = {
-  /** Initial expanded state */
-  expanded?: boolean
+  /** Show/hide the sidebar (controlled by parent) */
+  visible?: boolean
   /** Additional CSS classes */
   class?: string
   /** Sidebar position: left or right */
   position?: "left" | "right"
-  /** Width of the sidebar when expanded */
+  /** Width of the sidebar on desktop (default: "16rem") */
   width?: string
+  /** Width of the sidebar on tablet - icon only mode (default: "4rem") */
+  collapsedWidth?: string
   /** Custom element ID (auto-generated if not provided) */
   id?: string
   /** Accessibility label for the sidebar */
   ariaLabel?: string
   /** Disable toggle functionality */
   disabled?: boolean
-  /** Hide the backdrop overlay when expanded */
-  hideBackdrop?: boolean
-  /** Float above content on mobile instead of taking full width */
-  floatOnMobile?: boolean
-  /** Reserved for future use */
-  docked?: boolean
   /** Menu items for SidebarMenu component */
   menu?: MenuItem[]
-  /** Callback when sidebar is toggled */
+  /** Callback when sidebar visibility changes (mobile) */
+  onvisibilitychange?: (payload: { visible: boolean }) => void
+  /** Callback when sidebar is toggled (desktop expand/collapse) */
   ontoggle?: (payload: { expanded: boolean }) => void
 }
 
 const {
-  expanded = false,
+  visible = false,
   class: className = "",
   position = "left",
   width = "16rem",
+  collapsedWidth = "4rem",
   id = crypto.randomUUID(),
   ariaLabel,
   disabled = false,
-  hideBackdrop = false,
-  floatOnMobile = false,
-  docked = false,
   menu,
+  onvisibilitychange,
   ontoggle,
   header,
+  title,
   children,
 } = $props() satisfies SidebarProps
 
-let isExpanded = $state(false)
+let isExpanded = $state(true)
 let sidebarElement = $state()
 
-// Initialize and sync expanded state when prop changes
-$effect(() => {
-  isExpanded = expanded
-})
+/** Handle visibility change callback */
+function handleVisibilityChange(): void {
+  onvisibilitychange?.({ visible })
+}
 
-/** Handle toggle events from the Panel component */
+/** Handle toggle events from the Panel component (desktop expand/collapse) */
 function handleToggle(payload: { expanded: boolean }): void {
   isExpanded = payload.expanded
   ontoggle?.({ expanded: isExpanded })
 }
 
-/** Handle backdrop click to collapse the sidebar */
-function handleBackdropClick(): void {
-  if (!disabled) {
-    isExpanded = false
-    ontoggle?.({ expanded: isExpanded })
-  }
-}
-
-/** Handle Escape key to collapse the sidebar */
-function handleKeydown(event: KeyboardEvent): void {
-  if (!disabled && event.key === "Escape" && isExpanded) {
-    isExpanded = false
-    ontoggle?.({ expanded: isExpanded })
-  }
-}
+$effect(() => {
+  handleVisibilityChange()
+})
 </script>
 
-<svelte:window onkeydown={handleKeydown} />
-
-<div
+<aside
   class="
     sidebar-container
     {position === 'right' ? 'sidebar-right' : 'sidebar-left'}
-    {floatOnMobile ? 'sidebar-float-mobile' : ''}
+    {visible ? 'sidebar-visible' : 'sidebar-hidden'}
     {className}
   "
-  style="--sidebar-width: {width}"
+  style="--sidebar-width: {width}; --sidebar-collapsed-width: {collapsedWidth}"
   {id}
   role="complementary"
   aria-label={ariaLabel}
+  aria-hidden={!visible}
 >
-  {#if !hideBackdrop && isExpanded}
-    <div
-      class="sidebar-backdrop"
-      onclick={handleBackdropClick}
-      transition:slide={{ duration: 200 }}
-      aria-hidden="true"
-    ></div>
-  {/if}
-
   <div
     class="
       sidebar
@@ -156,15 +122,12 @@ function handleKeydown(event: KeyboardEvent): void {
     role="region"
     aria-labelledby="{id}-header"
   >
-    <Panel
-      expanded={isExpanded}
-      {disabled}
-      bordered={false}
-      ontoggle={handleToggle}
-    >
-      {#if header}
+      {#if header || title}
         <div class="sidebar-header">
-          {@render header()}
+          {#if title}
+            <h2 id="{id}-header">{title}</h2>
+          {/if}
+          {@render header?.()}
         </div>
       {/if}
       {#if menu}
@@ -172,20 +135,49 @@ function handleKeydown(event: KeyboardEvent): void {
       {:else}
         {@render children?.()}
       {/if}
-    </Panel>
   </div>
-</div>
+</aside>
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";
+  
   .sidebar-container {
-    @apply relative;
+    @apply relative overflow-hidden;
   }
 
   /* Base sidebar styles */
   .sidebar {
-    @apply h-full bg-background transition-[width,transform] duration-200 ease-in-out;
+    @apply h-full bg-background transition-[width] duration-200 ease-in-out;
     width: var(--sidebar-width);
+  }
+
+  /* Mobile: Hidden by default */
+  @media (max-width: 767px) {
+    .sidebar-container.sidebar-hidden {
+      @apply hidden;
+    }
+
+    .sidebar-container.sidebar-visible {
+      @apply fixed inset-0 z-50 w-full;
+    }
+
+    .sidebar-container.sidebar-visible .sidebar {
+      @apply w-full;
+    }
+  }
+
+  /* Tablet: Icon-only (collapsed width) */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .sidebar {
+      width: var(--sidebar-collapsed-width);
+    }
+  }
+
+  /* Desktop: Full width */
+  @media (min-width: 1024px) {
+    .sidebar {
+      width: var(--sidebar-width);
+    }
   }
 
   /* Left position styles */
@@ -193,39 +185,8 @@ function handleKeydown(event: KeyboardEvent): void {
     @apply left-0;
   }
 
-  .sidebar-left .sidebar-collapsed {
-    @apply -translate-x-full;
-  }
-
   /* Right position styles */
   .sidebar-right .sidebar {
     @apply right-0;
-  }
-
-  .sidebar-right .sidebar-collapsed {
-    @apply translate-x-full;
-  }
-
-  /* Backdrop styles */
-  .sidebar-backdrop {
-    @apply fixed inset-0 bg-black/20 backdrop-blur-sm z-40;
-  }
-
-  /* Mobile styles */
-  @media (max-width: 640px) {
-    .sidebar-float-mobile .sidebar {
-      @apply fixed top-0 bottom-0 z-50;
-    }
-
-    .sidebar-float-mobile .sidebar-backdrop {
-      @apply z-40;
-    }
-  }
-
-  /* Non-floating mobile styles */
-  @media (max-width: 640px) {
-    .sidebar:not(.sidebar-float-mobile) {
-      @apply w-full;
-    }
   }
 </style>
