@@ -80,6 +80,21 @@ const componentLinks = [
   { name: "Tree", href: "/docs/components/Tree/Tree" },
   { name: "TreeNode", href: "/docs/components/Tree/TreeNode" },
 
+  // Metrics Components
+  { category: "Metrics", name: "DonutChart", href: "/docs/components/Metrics/DonutChart/DonutChart" },
+  { name: "PieChart", href: "/docs/components/Metrics/PieChart/PieChart" },
+  { name: "LineChart", href: "/docs/components/Metrics/LineChart/LineChart" },
+  { name: "BarChart", href: "/docs/components/Metrics/BarChart/BarChart" },
+  { name: "HorizontalBarChart", href: "/docs/components/Metrics/HorizontalBarChart/HorizontalBarChart" },
+  { name: "AreaChart", href: "/docs/components/Metrics/AreaChart/AreaChart" },
+  { name: "StatsCard", href: "/docs/components/Metrics/StatsCard/StatsCard" },
+  { name: "MetricGrid", href: "/docs/components/Metrics/MetricGrid/MetricGrid" },
+  { name: "KPICard", href: "/docs/components/Metrics/KPICard/KPICard" },
+  { name: "GaugeChart", href: "/docs/components/Metrics/GaugeChart/GaugeChart" },
+  { name: "ProgressMetric", href: "/docs/components/Metrics/ProgressMetric/ProgressMetric" },
+  { name: "MetricTrend", href: "/docs/components/Metrics/MetricTrend/MetricTrend" },
+  { name: "Examples", href: "/docs/components/Metrics/examples" },
+
   // Form Components
   { category: "Form", name: "AutoComplete", href: "/docs/components/Form/AutoComplete" },
   { name: "Button", href: "/docs/components/Button/Button" },

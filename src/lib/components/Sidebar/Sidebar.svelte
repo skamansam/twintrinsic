@@ -14,6 +14,7 @@ Built on top of the Panel component with additional positioning and animation fe
 - `ariaLabel` - Accessibility label for the sidebar
 - `docked` - Reserved for future use
 - `class` - Additional CSS classes
+- `menu` - Menu items array for SidebarMenu component (optional)
 - `ontoggle` - Callback when sidebar is toggled
 
 ## Slots
@@ -25,6 +26,10 @@ Built on top of the Panel component with additional positioning and animation fe
 <Sidebar>
   <svelte:fragment slot="header">Navigation</svelte:fragment>
   <nav>Menu items here</nav>
+</Sidebar>
+
+<Sidebar {menu}>
+  Menu will be rendered using SidebarMenu
 </Sidebar>
 
 <Sidebar position="right" expanded={false}>
@@ -41,6 +46,8 @@ Built on top of the Panel component with additional positioning and animation fe
 <script lang="ts">
 import { slide } from "svelte/transition"
 import Panel from "../Panel/Panel.svelte"
+import type { MenuItem } from "../TreeMenu/TreeMenu.svelte"
+import TreeMenu from "../TreeMenu/TreeMenu.svelte"
 
 /** Sidebar component props configuration */
 type SidebarProps = {
@@ -64,12 +71,14 @@ type SidebarProps = {
   floatOnMobile?: boolean
   /** Reserved for future use */
   docked?: boolean
+  /** Menu items for SidebarMenu component */
+  menu?: MenuItem[]
   /** Callback when sidebar is toggled */
   ontoggle?: (payload: { expanded: boolean }) => void
 }
 
 const {
-  expanded = true,
+  expanded = false,
   class: className = "",
   position = "left",
   width = "16rem",
@@ -79,6 +88,7 @@ const {
   hideBackdrop = false,
   floatOnMobile = false,
   docked = false,
+  menu,
   ontoggle,
   header,
   children,
@@ -157,7 +167,11 @@ function handleKeydown(event: KeyboardEvent): void {
           {@render header()}
         </div>
       {/if}
-      {@render children?.()}
+      {#if menu}
+        <TreeMenu items={menu} />
+      {:else}
+        {@render children?.()}
+      {/if}
     </Panel>
   </div>
 </div>
