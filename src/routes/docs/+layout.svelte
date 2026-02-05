@@ -9,7 +9,9 @@ import AppHeader from "$lib/components/AppHeader/AppHeader.svelte"
 import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte"
 import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
 import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
-	import { Separator } from "$lib/index.js";
+import { Separator } from "$lib/index.js"
+
+let { children } = $props();
 
 const navItems = [
   { label: "Getting Started", href: "/docs", current: $page.url.pathname === "/docs" },
@@ -27,6 +29,9 @@ let rightSidebarExpanded = true
 
 // Component links for the left sidebar
 const componentLinks = [
+  // Examples
+  { category: "Examples", name: "Dashboard", href: "/docs/examples/dashboard" },
+
   // Core Components
   { category: "Core", name: "App", href: "/docs/components/App/App" },
   { name: "Split", href: "/docs/components/App/Split" },
@@ -81,19 +86,18 @@ const componentLinks = [
   { name: "TreeNode", href: "/docs/components/Tree/TreeNode" },
 
   // Metrics Components
-  { category: "Metrics", name: "DonutChart", href: "/docs/components/Metrics/DonutChart/DonutChart" },
-  { name: "PieChart", href: "/docs/components/Metrics/PieChart/PieChart" },
-  { name: "LineChart", href: "/docs/components/Metrics/LineChart/LineChart" },
-  { name: "BarChart", href: "/docs/components/Metrics/BarChart/BarChart" },
-  { name: "HorizontalBarChart", href: "/docs/components/Metrics/HorizontalBarChart/HorizontalBarChart" },
-  { name: "AreaChart", href: "/docs/components/Metrics/AreaChart/AreaChart" },
-  { name: "StatsCard", href: "/docs/components/Metrics/StatsCard/StatsCard" },
-  { name: "MetricGrid", href: "/docs/components/Metrics/MetricGrid/MetricGrid" },
-  { name: "KPICard", href: "/docs/components/Metrics/KPICard/KPICard" },
-  { name: "GaugeChart", href: "/docs/components/Metrics/GaugeChart/GaugeChart" },
-  { name: "ProgressMetric", href: "/docs/components/Metrics/ProgressMetric/ProgressMetric" },
-  { name: "MetricTrend", href: "/docs/components/Metrics/MetricTrend/MetricTrend" },
-  { name: "Examples", href: "/docs/components/Metrics/examples" },
+  { category: "Metrics", name: "DonutChart", href: "/docs/components/Metrics/DonutChart" },
+  { name: "PieChart", href: "/docs/components/Metrics/PieChart" },
+  { name: "LineChart", href: "/docs/components/Metrics/LineChart" },
+  { name: "BarChart", href: "/docs/components/Metrics/BarChart" },
+  { name: "HorizontalBarChart", href: "/docs/components/Metrics/HorizontalBarChart" },
+  { name: "AreaChart", href: "/docs/components/Metrics/AreaChart" },
+  { name: "StatsCard", href: "/docs/components/Metrics/StatsCard" },
+  { name: "MetricGrid", href: "/docs/components/Metrics/MetricGrid" },
+  { name: "KPICard", href: "/docs/components/Metrics/KPICard" },
+  { name: "GaugeChart", href: "/docs/components/Metrics/GaugeChart" },
+  { name: "ProgressMetric", href: "/docs/components/Metrics/ProgressMetric" },
+  { name: "MetricTrend", href: "/docs/components/Metrics/MetricTrend" },
 
   // Form Components
   { category: "Form", name: "AutoComplete", href: "/docs/components/Form/AutoComplete" },
