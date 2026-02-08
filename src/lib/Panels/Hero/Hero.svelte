@@ -14,6 +14,7 @@
 </Section>
 
 <style>
+	@reference "../../twintrinsic.css";
 	:global(.twin-hero) {
 		@apply p-4;
 	}

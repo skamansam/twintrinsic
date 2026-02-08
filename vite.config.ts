@@ -1,13 +1,14 @@
 /// <reference types="histoire" />
+/// <reference types="vitest" />
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vitest/config';
-import { HstSvelte } from '@histoire/plugin-svelte';
+import tailwindcss from '@tailwindcss/vite';
 
-/** @type {import('vite').UserConfig} */
-export default defineConfig({
-	plugins: [sveltekit()],
+const config = {
+	plugins: [sveltekit(), tailwindcss()],
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	}
 	// histoire: { plugins: [HstSvelte()], setupFile: '/histoire-setup.ts' }
-});
+};
+
+export default config;
