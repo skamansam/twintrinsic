@@ -50,7 +50,7 @@ const {
   /** @type {string[]} - List of plugin names (e.g., "autoloader") or full paths to load */
   plugins = [],
   /** @type {import('svelte').Snippet} - The code to display */
-  children = ""
+  children
 } = $props()
 
 let code = $state("")

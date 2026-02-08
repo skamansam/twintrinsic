@@ -103,7 +103,7 @@ const elementType = href ? "a" : "div"
   @reference "../../twintrinsic.css";
   
   .card {
-    @apply bg-background dark:bg-background text-text dark:text-text rounded-lg overflow-hidden flex flex-col;
+    @apply bg-background text-text rounded-lg overflow-hidden flex flex-col;
   }
   
   .card-media {
