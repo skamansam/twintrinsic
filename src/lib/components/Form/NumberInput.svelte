@@ -97,16 +97,16 @@ const {
 } = $props()
 
 // Get form context if available
-const formContext = getContext("form")
+const formContext = getContext("form") as { registerField?: (name: string, value: unknown) => { getValue?: () => unknown; setValue?: (value: unknown) => void } } | undefined
 
 // Generate unique ID if not provided
 const inputId = $derived(id || `number-input-${crypto.randomUUID()}`)
 
 // Input state
 let inputValue = $state("")
-let numericValue = $state()
+let numericValue: number | undefined = $state()
 let isFocused = $state(false)
-let inputEl
+let inputEl: HTMLInputElement | undefined
 
 $effect(() => {
 	numericValue = value
@@ -114,21 +114,21 @@ $effect(() => {
 })
 
 // Register with form if available
-let fieldApi = $state()
+let fieldApi: { getValue?: () => unknown; setValue?: (value: unknown) => void } | undefined = $state()
 
 $effect(() => {
-	if (!formContext) return
+	if (!formContext?.registerField) return
 	if (!name) return
 	fieldApi = formContext.registerField(name, value)
 })
 
 // Update value when form field changes
 $effect(() => {
-  if (fieldApi) {
+  if (fieldApi?.getValue) {
     const formValue = fieldApi.getValue()
     if (formValue !== undefined && formValue !== numericValue) {
-      numericValue = formValue
-      inputValue = formatValue(formValue)
+      numericValue = formValue as number
+      inputValue = formatValue(formValue as number)
     }
   }
 })
@@ -146,7 +146,7 @@ $effect(() => {
  * @param {number} val - Value to format
  * @returns {string} - Formatted value
  */
-function formatValue(val) {
+function formatValue(val: number | undefined | null): string {
   if (val === undefined || val === null) return ""
 
   let formatted = decimalPlaces !== undefined ? val.toFixed(decimalPlaces) : val.toString()
@@ -159,7 +159,7 @@ function formatValue(val) {
  * @param {string} val - Value to parse
  * @returns {number} - Parsed number
  */
-function parseValue(val) {
+function parseValue(val: string): number {
   if (!val) return 0
 
   // Remove non-numeric characters except decimal point
@@ -172,7 +172,7 @@ function parseValue(val) {
  * @param {number} val - Value to constrain
  * @returns {number} - Constrained value
  */
-function constrainValue(val) {
+function constrainValue(val: number): number {
   let constrained = val
 
   if (min !== undefined && constrained < min) {
@@ -189,7 +189,7 @@ function constrainValue(val) {
 /**
  * Increments the current value
  */
-function increment() {
+function increment(): void {
   if (disabled || readonly) return
 
   const currentValue = parseValue(inputValue)
@@ -199,7 +199,7 @@ function increment() {
   inputValue = formatValue(newValue)
 
   // Update form field if available
-  if (fieldApi) {
+  if (fieldApi?.setValue) {
     fieldApi.setValue(newValue)
   }
 
@@ -209,7 +209,7 @@ function increment() {
 /**
  * Decrements the current value
  */
-function decrement() {
+function decrement(): void {
   if (disabled || readonly) return
 
   const currentValue = parseValue(inputValue)
@@ -219,7 +219,7 @@ function decrement() {
   inputValue = formatValue(newValue)
 
   // Update form field if available
-  if (fieldApi) {
+  if (fieldApi?.setValue) {
     fieldApi.setValue(newValue)
   }
 
@@ -230,8 +230,8 @@ function decrement() {
  * Handles input change
  * @param {Event} event - Input event
  */
-function handleInput(event) {
-  const rawValue = event.target.value
+function handleInput(event: Event): void {
+  const rawValue = (event.target as HTMLInputElement).value
   inputValue = rawValue
 
   // Only update numeric value if it's a valid number
@@ -240,7 +240,7 @@ function handleInput(event) {
     numericValue = parsed
 
     // Update form field if available
-    if (fieldApi) {
+    if (fieldApi?.setValue) {
       fieldApi.setValue(parsed)
     }
 
@@ -251,7 +251,7 @@ function handleInput(event) {
 /**
  * Handles blur event
  */
-function handleBlur(event) {
+function handleBlur(event: FocusEvent): void {
   // Format and constrain the value on blur
   const parsed = parseValue(inputValue)
   const constrained = constrainValue(parsed)
@@ -272,7 +272,7 @@ function handleBlur(event) {
 /**
  * Handles focus event
  */
-function handleFocus(event) {
+function handleFocus(event: FocusEvent): void {
   isFocused = true
   onfocus?.(event)
 }
@@ -281,7 +281,7 @@ function handleFocus(event) {
  * Handles keydown event
  * @param {KeyboardEvent} event - Keydown event
  */
-function handleKeydown(event) {
+function handleKeydown(event: KeyboardEvent): void {
   if (disabled || readonly) return
 
   if (event.key === "ArrowUp") {

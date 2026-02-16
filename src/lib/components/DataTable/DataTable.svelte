@@ -131,10 +131,10 @@ let currentPage = $state(1)
 let currentPageSize = $state(10)
 let currentSortField = $state("")
 let currentSortOrder = $state("asc")
-let currentFilters = $state({})
-let selectedRows = $state([])
+let currentFilters: Record<string, string> = $state({})
+let selectedRows: unknown[] = $state([])
 let allSelected = $state(false)
-let tableElement = $state()
+let tableElement: HTMLTableElement | undefined = $state()
 
 // Derived values for reactive prop access
 const derivedStriped = $derived(striped)
@@ -158,7 +158,7 @@ $effect(() => {
   currentPageSize = derivedPageSize
   currentSortField = sortField || ""
   currentSortOrder = sortOrder || "asc"
-  currentFilters = filters || {}
+  currentFilters = (filters as Record<string, string>) || {}
   selectedRows = Array.isArray(derivedSelectedRows) ? [...derivedSelectedRows] : []
 })
 
@@ -174,10 +174,10 @@ $effect(() => {
     getSortOrder: () => currentSortOrder,
     getFilters: () => currentFilters,
     getSelected: () => selectedRows,
-    isSelected: (key) => selectedRows.includes(key),
-    toggleSort: (field) => handleSort(field),
-    setFilter: (field, value) => handleFilter(field, value),
-    toggleSelection: (key) => toggleRowSelection(key),
+    isSelected: (key: unknown): boolean => selectedRows.includes(key as never),
+    toggleSort: (field: string): void => handleSort(field),
+    setFilter: (field: string, value: string): void => handleFilter(field, value),
+    toggleSelection: (key: unknown): void => toggleRowSelection(key),
     selectAll: () => toggleSelectAll(),
     cellFormatter,
   })
@@ -246,7 +246,7 @@ const processedData = $derived.by(() => {
  * Handles sorting
  * @param {string} field - Field to sort by
  */
-function handleSort(field) {
+function handleSort(field: string) {
   if (!sortable) return
 
   if (currentSortField === field) {
@@ -266,15 +266,17 @@ function handleSort(field) {
  * @param {string} field - Field to filter
  * @param {string} value - Filter value
  */
-function handleFilter(field, value) {
+function handleFilter(field: string, value: string) {
   if (!filterable) return
 
   if (value) {
     currentFilters = { ...currentFilters, [field]: value }
   } else {
     // Remove filter if value is empty
-    const { [field]: removed, ...rest } = currentFilters
+    if (!value) {
+      const { [field]: _, ...rest } = currentFilters
     currentFilters = rest
+    }
   }
 
   // Reset to first page when filtering
@@ -287,7 +289,7 @@ function handleFilter(field, value) {
  * Handles page change
  * @param {number} newPage - New page number
  */
-function handlePageChange(newPage) {
+function handlePageChange(newPage: number): void {
   if (!pageable) return
 
   if (newPage >= 1 && newPage <= totalPages) {
@@ -300,14 +302,14 @@ function handlePageChange(newPage) {
  * Handles page size change
  * @param {Event} event - Change event
  */
-function handlePageSizeChange(event) {
+function handlePageSizeChange(event: Event): void {
   if (!pageable) return
 
-  const newPageSize = Number(event.target.value)
+  const newPageSize: number = Number((event.target as HTMLSelectElement).value)
   currentPageSize = newPageSize
 
   // Adjust current page to maintain position
-  const newTotalPages = Math.max(1, Math.ceil(totalRecords / newPageSize))
+  const newTotalPages: number = Math.max(1, Math.ceil(totalRecords / newPageSize))
   if (currentPage > newTotalPages) {
     currentPage = newTotalPages
   }
@@ -319,18 +321,17 @@ function handlePageSizeChange(event) {
  * Toggles selection of a row
  * @param {string|number} key - Row key
  */
-function toggleRowSelection(key) {
+function toggleRowSelection(key: unknown): void {
   if (!selectable) return
 
-  if (selectedRows.includes(key)) {
+  if (selectedRows.includes(key as never)) {
     // Remove if already selected
     selectedRows = selectedRows.filter((k) => k !== key)
     allSelected = false
   } else {
     // Add if not selected
     if (multiSelect) {
-      selectedRows = [...selectedRows, key]
-
+      selectedRows = [...selectedRows, key as never]
       // Check if all visible rows are now selected
       const visibleKeys = processedData.rows.map((row) => row[keyField])
       allSelected = visibleKeys.every((k) => selectedRows.includes(k))
@@ -346,7 +347,7 @@ function toggleRowSelection(key) {
 /**
  * Toggles selection of all rows
  */
-function toggleSelectAll() {
+function toggleSelectAll(): void {
   if (!selectable || !multiSelect) return
 
   if (allSelected) {
@@ -378,7 +379,10 @@ function toggleSelectAll() {
  * @param {number} index - Row index
  * @returns {string} - CSS classes
  */
-function getRowClasses(row, index) {
+function getRowClasses(row: Record<string, unknown>, index: number): string {
+  if (typeof rowClass === 'function') {
+    return rowClass(row, index) || ''
+  }
   const isSelected = selectedRows.includes(row[keyField])
   const classes = [
     "data-table-row",
@@ -404,13 +408,13 @@ function getRowClasses(row, index) {
  * @param {Object} row - Row data
  * @returns {string} - Formatted value
  */
-function formatCell(value, column, row) {
-  if (column.formatter) {
-    return column.formatter(value, row)
+function formatCell(value: unknown, column: Record<string, unknown>, row: Record<string, unknown>): string {
+  if (column.formatter && typeof column.formatter === 'function') {
+    return (column.formatter as (value: unknown, row: Record<string, unknown>) => string)(value, row)
   }
 
-  if (cellFormatter) {
-    return cellFormatter(value, column, row)
+  if (cellFormatter && typeof cellFormatter === 'function') {
+    return (cellFormatter as (value: unknown, column: Record<string, unknown>, row: Record<string, unknown>) => string)(value, column, row)
   }
 
   if (value === null || value === undefined) {
@@ -504,7 +508,7 @@ function formatCell(value, column, row) {
                     type="text"
                     placeholder="Filter..."
                     value={currentFilters[column.field] || ''}
-                    oninput={(e) => handleFilter(column.field, e.target.value)}
+                    onchange={(e) => handleFilter(column.field, (e.target as HTMLInputElement).value)}
                     onclick={(e) => e.stopPropagation()}
                     aria-label={`Filter by ${column.header || column.field}`}
                     class="data-table-filter-input"

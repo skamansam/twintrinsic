@@ -82,7 +82,7 @@ $effect(() => {
 /**
  * Opens the modal
  */
-function openModal() {
+function openModal(): void {
   // Save the currently focused element to restore later
   previouslyFocusedElement = document.activeElement
 
@@ -102,7 +102,7 @@ function openModal() {
  * Closes the modal
  * @param {string} reason - Reason for closing (backdrop, escape, or programmatic)
  */
-function closeModal(reason = "programmatic") {
+function closeModal(reason: string = "programmatic"): void {
   // Remove body class
   document.body.classList.remove("modal-open")
 
@@ -118,7 +118,7 @@ function closeModal(reason = "programmatic") {
  * Handles backdrop clicks
  * @param {MouseEvent} event - Click event
  */
-function handleBackdropClick(event) {
+function handleBackdropClick(event: MouseEvent): void {
   // Only close if clicking directly on the backdrop, not on the modal content
   if (closeOnOutsideClick && event.target === event.currentTarget) {
     isOpen = false
@@ -130,7 +130,7 @@ function handleBackdropClick(event) {
  * Handles keydown events
  * @param {KeyboardEvent} event - Keydown event
  */
-function handleKeydown(event) {
+function handleKeydown(event: KeyboardEvent): void {
   if (!isOpen) return
 
   // Close on Escape key
@@ -151,7 +151,7 @@ function handleKeydown(event) {
  * Traps focus within the modal
  * @param {KeyboardEvent} event - Keydown event
  */
-function trapFocus(event) {
+function trapFocus(event: KeyboardEvent): void {
   if (!modalElement) return
 
   // Get all focusable elements
@@ -179,7 +179,7 @@ function trapFocus(event) {
 /**
  * Focuses the first focusable element in the modal
  */
-function focusFirstElement() {
+function focusFirstElement(): void {
   if (!modalElement) return
 
   // Try to focus the first focusable element

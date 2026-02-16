@@ -65,7 +65,7 @@ let codeElement = $state()
  * @param {string} pluginSource - CDN name
  * @returns {string} Full URL to plugin
  */
-function getPluginUrl(plugin, pluginSource) {
+function getPluginUrl(plugin: string, pluginSource: string): string {
   // If it's a full path (contains :// or starts with /), return as-is
   if (plugin.includes("://") || plugin.startsWith("/")) {
     return plugin;
@@ -89,7 +89,7 @@ function getPluginUrl(plugin, pluginSource) {
  * Load plugins via script tags
  * @param {string[]} pluginList - List of plugin names or paths
  */
-async function loadPlugins(pluginList) {
+async function loadPlugins(pluginList: string[]): Promise<void> {
   for (const plugin of pluginList) {
     const url = getPluginUrl(plugin, pluginSource);
     await new Promise<void>((resolve, reject) => {
@@ -107,7 +107,7 @@ async function loadPlugins(pluginList) {
  * @param {string} pluginSource - CDN name or path to a custom cdn
  * @returns {string} Path to language grammars
  */
-function getLanguagesPath(pluginSource) {
+function getLanguagesPath(pluginSource: string): string {
 
   switch (pluginSource) {
     case "esm.sh":
@@ -134,7 +134,7 @@ onMount(async () => {
  * @param {string} language - The language to determine the path for
  * @returns {[string, boolean]} The path to the language components and whether to use minified files
  */
-function determineComponentsDirectory(language) {
+function determineComponentsDirectory(language: string): [string, boolean] {
   if(language === "svelte") {
     switch (pluginSource) {
       case "esm.sh":
@@ -153,7 +153,7 @@ function determineComponentsDirectory(language) {
 /**
  * Highlight code with language detection
  */
-async function highlightCode() {
+async function highlightCode(): Promise<void> {
   if (!codeElement) return
 
   code = codeElement.textContent || ""

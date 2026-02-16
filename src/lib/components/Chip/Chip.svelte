@@ -144,7 +144,7 @@ const iconSizeClasses = $derived(
  * Handles click on the chip
  * @param {MouseEvent} event - Click event
  */
-function handleClick(event) {
+function handleClick(event: MouseEvent): void {
   if (disabled) {
     event.preventDefault()
     return
@@ -159,7 +159,7 @@ function handleClick(event) {
  * Handles remove button click
  * @param {MouseEvent} event - Click event
  */
-function handleRemove(event) {
+function handleRemove(event: MouseEvent): void {
   if (disabled) {
     event.preventDefault()
     return
@@ -173,7 +173,7 @@ function handleRemove(event) {
  * Handles keydown events
  * @param {KeyboardEvent} event - Keydown event
  */
-function handleKeydown(event) {
+function handleKeydown(event: KeyboardEvent): void {
   if (disabled) return
 
   if ((clickable && event.key === "Enter") || event.key === " ") {

@@ -21,7 +21,7 @@ Usage:
 -->
 <script lang="ts">
 import { getContext } from "svelte"
-import { clickOutside } from "../../actions"
+import { clickOutside } from "../../actions/index.js"
 import Input from "./Input.svelte"
 
 const {
@@ -66,18 +66,20 @@ const {
 
 let showCalendar = $state(false)
 let currentMonth = $state(new Date())
-let hoverDate = $state(null)
+let hoverDate: Date | null = $state(null)
 let inputValue = $state("")
-let startDate = $state(null)
-let endDate = $state(null)
-let calendarElement = $state()
+let startDate: Date | null = $state(null)
+let endDate: Date | null = $state(null)
+let calendarElement: HTMLElement | undefined = $state()
 
 // Initialize dates from value prop
 $effect(() => {
   if (value) {
     if (range && Array.isArray(value)) {
-      ;[startDate, endDate] = value
-      currentMonth = new Date(startDate)
+      const [start, end] = value as [Date, Date]
+      startDate = start
+      endDate = end
+      currentMonth = new Date(start)
     } else if (!range && value instanceof Date) {
       startDate = value
       currentMonth = new Date(value)
@@ -87,7 +89,7 @@ $effect(() => {
 })
 
 // Get days in month matrix
-function getDaysInMonth(date) {
+function getDaysInMonth(date: Date): (Date | null)[][] {
   const year = date.getFullYear()
   const month = date.getMonth()
   const firstDay = new Date(year, month, 1)
@@ -119,7 +121,7 @@ function getDaysInMonth(date) {
 }
 
 // Get week number
-function getWeekNumber(date) {
+function getWeekNumber(date: Date): number {
   const target = new Date(date.valueOf())
   const dayNr = (date.getDay() + 6) % 7
   target.setDate(target.getDate() - dayNr + 3)
@@ -132,17 +134,17 @@ function getWeekNumber(date) {
 }
 
 // Format date for display
-function formatDate(date) {
+function formatDate(date: Date | null): string {
   if (!date) return ""
 
   return format
     .replace("MM", String(date.getMonth() + 1).padStart(2, "0"))
     .replace("dd", String(date.getDate()).padStart(2, "0"))
-    .replace("yyyy", date.getFullYear())
+    .replace("yyyy", String(date.getFullYear()))
 }
 
 // Update input value based on selected dates
-function updateInputValue() {
+function updateInputValue(): void {
   if (range) {
     inputValue = startDate && endDate ? `${formatDate(startDate)} - ${formatDate(endDate)}` : ""
   } else {
@@ -151,7 +153,7 @@ function updateInputValue() {
 }
 
 // Handle date selection
-function handleDateSelect(date) {
+function handleDateSelect(date: Date): void {
   if (disabled) return
 
   if (range) {
@@ -174,26 +176,29 @@ function handleDateSelect(date) {
 }
 
 // Handle date hover for range selection
-function handleDateHover(date) {
+function handleDateHover(date: Date | null): void {
   if (range && startDate && !endDate) {
     hoverDate = date
   }
 }
 
 // Check if date is in range
-function isInRange(date) {
+function isInRange(date: Date | null): boolean {
   if (!date) return false
   if (range) {
     if (startDate && !endDate && hoverDate) {
-      return date >= startDate && date <= hoverDate
+      return date.getTime() >= startDate.getTime() && date.getTime() <= hoverDate.getTime()
     }
-    return startDate && endDate && date >= startDate && date <= endDate
+    if (startDate && endDate) {
+      return date.getTime() >= startDate.getTime() && date.getTime() <= endDate.getTime()
+    }
+    return false
   }
   return false
 }
 
 // Check if date is selected
-function isSelected(date) {
+function isSelected(date: Date | null): boolean {
   if (!date) return false
   if (range) {
     return (
@@ -205,7 +210,7 @@ function isSelected(date) {
 }
 
 // Check if date is disabled
-function isDisabled(date) {
+function isDisabled(date: Date | null): boolean {
   if (!date) return true
   if (minDate && date < minDate) return true
   if (maxDate && date > maxDate) return true
@@ -213,14 +218,14 @@ function isDisabled(date) {
 }
 
 // Navigate to previous/next month
-function navigateMonth(delta) {
+function navigateMonth(delta: number): void {
   const newMonth = new Date(currentMonth)
   newMonth.setMonth(newMonth.getMonth() + delta)
   currentMonth = newMonth
 }
 
 // Handle keyboard navigation
-function handleKeydown(event) {
+function handleKeydown(event: KeyboardEvent): void {
   if (!showCalendar) return
 
   const key = event.key

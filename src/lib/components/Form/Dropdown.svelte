@@ -97,7 +97,7 @@ const {
 } = $props()
 
 // Get form context if available
-const formContext = getContext("form")
+const formContext = getContext("form") as { registerField?: (name: string, value: unknown) => { getValue?: () => unknown } } | undefined
 
 // Derived values for reactive prop access in closures
 const derivedValue = $derived(value)
@@ -106,29 +106,29 @@ const derivedMultiple = $derived(multiple)
 
 // Component state
 let isOpen = $state(false)
-let selectedValues = $state(derivedMultiple ? [] : null)
+let selectedValues: unknown[] | null = $state(derivedMultiple ? [] : null)
 let filterValue = $state("")
 let highlightedIndex = $state(0)
-let dropdownElement = $state()
-let inputElement = $state()
-let menuElement = $state()
-let activeSubmenu = $state(null)
+let dropdownElement: HTMLElement | undefined = $state()
+let inputElement: HTMLInputElement | undefined = $state()
+let menuElement: HTMLElement | undefined = $state()
+let activeSubmenu: unknown = $state(null)
 
 // Register with form if available
-let fieldApi = $state()
+let fieldApi: { getValue?: () => unknown; setValue?: (value: unknown) => void } | undefined = $state()
 
 $effect(() => {
-  if (formContext && derivedName) {
+  if (formContext?.registerField && derivedName) {
     fieldApi = formContext.registerField(derivedName, derivedValue)
   }
 })
 
 // Update value when form field changes
 $effect(() => {
-  if (fieldApi) {
+  if (fieldApi?.getValue) {
     const formValue = fieldApi.getValue()
     if (formValue !== undefined && JSON.stringify(formValue) !== JSON.stringify(selectedValues)) {
-      selectedValues = formValue
+      selectedValues = formValue as unknown[] | null
     }
   }
 })
@@ -145,11 +145,11 @@ $effect(() => {
  * @param {Object|string} option - Option to get label for
  * @returns {string} - Display label
  */
-function getOptionLabel(option) {
+function getOptionLabel(option: unknown): string {
   if (!option) return ""
 
   if (typeof option === "object") {
-    return option[optionLabel] || ""
+    return String((option as Record<string, unknown>)[optionLabel] || "")
   }
 
   return option.toString()
@@ -160,11 +160,11 @@ function getOptionLabel(option) {
  * @param {Object|string} option - Option to get value for
  * @returns {any} - Option value
  */
-function getOptionValue(option) {
+function getOptionValue(option: unknown): unknown {
   if (!option) return null
 
   if (typeof option === "object") {
-    return option[optionValue]
+    return (option as Record<string, unknown>)[optionValue]
   }
 
   return option
@@ -175,10 +175,10 @@ function getOptionValue(option) {
  * @param {Object} option - Option to get icon for
  * @returns {string} - Icon HTML
  */
-function getOptionIcon(option) {
+function getOptionIcon(option: unknown): unknown {
   if (!option || !optionIcon || typeof option !== "object") return null
 
-  return option[optionIcon]
+  return (option as Record<string, unknown>)[optionIcon]
 }
 
 /**
@@ -186,10 +186,10 @@ function getOptionIcon(option) {
  * @param {Object} option - Option to get children for
  * @returns {Array} - Child options
  */
-function getOptionChildren(option) {
+function getOptionChildren(option: unknown): unknown {
   if (!option || typeof option !== "object") return null
 
-  return option[optionChildren] || null
+  return (option as Record<string, unknown>)[optionChildren] || null
 }
 
 /**
@@ -197,19 +197,19 @@ function getOptionChildren(option) {
  * @param {Object|string} option - Option to check
  * @returns {boolean} - Whether the option is selected
  */
-function isOptionSelected(option) {
+function isOptionSelected(option: unknown): boolean {
   const value = getOptionValue(option)
 
   if (multiple) {
     return (
       Array.isArray(selectedValues) &&
-      selectedValues.some((v) => (typeof v === "object" ? v[optionValue] === value : v === value))
+      selectedValues.some((v) => (typeof v === "object" ? (v as Record<string, unknown>)[optionValue] === value : v === value))
     )
   }
 
   return (
     selectedValues === value ||
-    (typeof selectedValues === "object" && selectedValues && selectedValues[optionValue] === value)
+    (typeof selectedValues === "object" && (selectedValues as Record<string, unknown>)[optionValue] === value)
   )
 }
 
@@ -218,10 +218,10 @@ function isOptionSelected(option) {
  * @param {Array} opts - Options to filter
  * @returns {Array} - Filtered options
  */
-function filterOptions(opts) {
+function filterOptions(opts: unknown[]): unknown[] {
   if (!filter || !filterValue) return opts
 
-  return opts.filter((option) => {
+  return opts.filter((option: unknown) => {
     const label = getOptionLabel(option).toLowerCase()
     return label.includes(filterValue.toLowerCase())
   })
@@ -231,7 +231,7 @@ function filterOptions(opts) {
  * Gets the display value for the input
  * @returns {string} - Display value
  */
-function getDisplayValue() {
+function getDisplayValue(): string {
   if (!selectedValues || (Array.isArray(selectedValues) && selectedValues.length === 0)) {
     return ""
   }
@@ -260,9 +260,10 @@ function getDisplayValue() {
 /**
  * Selects an option
  * @param {Object|string} option - Option to select
+ * @param {Event} event - Event that triggered the selection
  */
-function selectOption(option, evt) {
-  evt.stopPropagation()
+function selectOption(option: unknown, event: Event): void {
+  event.stopPropagation()
   const value = getOptionValue(option)
 
   if (multiple) {
@@ -270,7 +271,7 @@ function selectOption(option, evt) {
       // Remove from selection
       selectedValues = Array.isArray(selectedValues)
         ? selectedValues.filter((v) =>
-            typeof v === "object" ? v[optionValue] !== value : v !== value
+            typeof v === "object" ? (v as Record<string, unknown>)[optionValue] !== value : v !== value
           )
         : []
     } else {
@@ -279,13 +280,13 @@ function selectOption(option, evt) {
     }
   } else {
     // Single selection
-    selectedValues = value
+    selectedValues = value as unknown[] | null
     closeDropdown()
   }
 
   // Update form field if available
-  if (fieldApi) {
-    fieldApi.setValue(selectedValues)
+  if (fieldApi?.setValue) {
+    (fieldApi as { setValue?: (value: unknown) => void }).setValue?.(selectedValues)
   }
 
   onchange?.(new CustomEvent("change", { detail: { value: selectedValues } }))
@@ -294,13 +295,13 @@ function selectOption(option, evt) {
 /**
  * Clears the selection
  */
-function clearSelection(evt) {
+function clearSelection(evt: Event): void {
   evt.stopPropagation()
   selectedValues = multiple ? [] : null
 
   // Update form field if available
-  if (fieldApi) {
-    fieldApi.setValue(selectedValues)
+  if (fieldApi?.setValue) {
+    (fieldApi as { setValue?: (value: unknown) => void }).setValue?.(selectedValues)
   }
 
   onchange?.(new CustomEvent("change", { detail: { value: selectedValues } }))
@@ -310,7 +311,7 @@ function clearSelection(evt) {
 /**
  * Opens the dropdown
  */
-function openDropdown() {
+function openDropdown(): void {
   if (disabled) return
 
   isOpen = true
@@ -330,7 +331,7 @@ function openDropdown() {
 /**
  * Closes the dropdown
  */
-function closeDropdown() {
+function closeDropdown(): void {
   isOpen = false
   filterValue = ""
   activeSubmenu = null
@@ -341,7 +342,7 @@ function closeDropdown() {
 /**
  * Toggles the dropdown
  */
-function toggleDropdown() {
+function toggleDropdown(): void {
   if (isOpen) {
     closeDropdown()
   } else {
@@ -354,7 +355,7 @@ function toggleDropdown() {
  * @param {Object} option - Parent option
  * @param {Event} event - Mouse event
  */
-function openSubmenu(option, event) {
+function openSubmenu(option: unknown, event: Event): void {
   if (event) {
     event.stopPropagation()
   }
@@ -366,7 +367,7 @@ function openSubmenu(option, event) {
  * Handles keydown events
  * @param {KeyboardEvent} event - Keydown event
  */
-function handleKeydown(event) {
+function handleKeydown(event: KeyboardEvent): void {
   if (disabled) return
 
   const filteredOptions = filterOptions(options)
@@ -396,7 +397,7 @@ function handleKeydown(event) {
       event.preventDefault()
       if (isOpen) {
         if (filteredOptions[highlightedIndex]) {
-          selectOption(filteredOptions[highlightedIndex])
+          selectOption(new Event("click"), filteredOptions[highlightedIndex])
         }
       } else {
         openDropdown()
@@ -441,8 +442,8 @@ function scrollOptionIntoView() {
  * Handles filter input
  * @param {Event} event - Input event
  */
-function handleFilterInput(event) {
-  filterValue = event.target.value
+function handleFilterInput(event: Event): void {
+  filterValue = (event.target as HTMLInputElement).value
   highlightedIndex = 0
 
   onfilter?.(new CustomEvent("filter", { detail: { filter: filterValue } }))

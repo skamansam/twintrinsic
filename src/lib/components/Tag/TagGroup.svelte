@@ -91,7 +91,7 @@ $effect(() => {
  * Handles removing a tag
  * @param {number} index - Index of the tag to remove
  */
-function handleDismiss(index) {
+function handleDismiss(index: number): void {
   if (items.length > 0) {
     const removedItem = items[index]
     ondismiss?.(new CustomEvent("dismiss", { detail: { item: removedItem, index } }))

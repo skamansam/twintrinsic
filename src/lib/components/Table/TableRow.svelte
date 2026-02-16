@@ -54,7 +54,7 @@ const hoverable = tableContext?.hoverable || false
  * Handles row click
  * @param {MouseEvent} event - Click event
  */
-function handleClick(event) {
+function handleClick(event: MouseEvent): void {
   if (disabled) return
 
   onclick?.(new CustomEvent("click", { detail: { event, row: data } }))

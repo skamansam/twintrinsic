@@ -89,12 +89,12 @@ const {
 const derivedValue = $derived(value)
 
 // Component state
-let sliderValues = $state([])
+let sliderValues: number[] = $state([])
 let isDragging = $state(false)
 let dragIndex = $state(-1)
 let hoverIndex = $state(-1)
-let trackElement = $state()
-let thumbElements = $state([])
+let trackElement: HTMLElement | undefined = $state()
+let thumbElements: HTMLElement[] = $state([])
 
 // Update internal value when prop changes
 $effect(() => {
@@ -119,11 +119,11 @@ const variantClasses = $derived(
 )
 
 // Generate tick values if not provided
-const ticks = $derived.by(() => {
+const ticks: number[] = $derived.by(() => {
   if (!showTicks) return []
 
   if (tickValues.length > 0) {
-    return tickValues
+    return tickValues as number[]
   }
 
   // Generate ticks based on step
@@ -139,7 +139,7 @@ const ticks = $derived.by(() => {
  * @param {number} val - Value to calculate position for
  * @returns {number} - Percentage (0-100)
  */
-function getPercentage(val) {
+function getPercentage(val: number): number {
   return ((val - min) / range) * 100
 }
 
@@ -148,7 +148,7 @@ function getPercentage(val) {
  * @param {number} percentage - Percentage position (0-100)
  * @returns {number} - Value
  */
-function getValueFromPercentage(percentage) {
+function getValueFromPercentage(percentage: number): number {
   const rawValue = min + (percentage / 100) * range
 
   // Round to nearest step
@@ -163,19 +163,19 @@ function getValueFromPercentage(percentage) {
  * @param {number} val - Value to format
  * @returns {string} - Formatted value
  */
-function formatValue(val) {
-  return valueFormat.replace("{value}", val)
+function formatValue(val: number): string {
+  return valueFormat.replace("{value}", String(val))
 }
 
 /**
  * Updates the value based on pointer position
  * @param {MouseEvent|TouchEvent} event - Pointer event
  */
-function updateValue(event) {
+function updateValue(event: MouseEvent | TouchEvent): void {
   if (disabled || !trackElement) return
 
-  const rect = trackElement.getBoundingClientRect()
-  const clientPos = event.type.startsWith("touch") ? event.touches[0].clientX : event.clientX
+  const rect = (trackElement as HTMLElement).getBoundingClientRect()
+  const clientPos = event.type.startsWith("touch") ? (event as TouchEvent).touches[0].clientX : (event as MouseEvent).clientX
 
   // Calculate percentage
   let percentage
@@ -195,7 +195,7 @@ function updateValue(event) {
   if (isRange) {
     if (dragIndex >= 0) {
       // Update the dragging thumb
-      sliderValues[dragIndex] = newValue
+      sliderValues[dragIndex] = newValue as never
 
       // Ensure values remain in order
       if (dragIndex === 0 && newValue > sliderValues[1]) {
@@ -229,7 +229,7 @@ function updateValue(event) {
  * @param {MouseEvent|TouchEvent} event - Pointer event
  * @param {number} index - Thumb index
  */
-function handlePointerDown(event, index) {
+function handlePointerDown(event: MouseEvent | TouchEvent, index: number): void {
   if (disabled) return
 
   isDragging = true
@@ -255,7 +255,7 @@ function handlePointerDown(event, index) {
  * Handles pointer move event
  * @param {MouseEvent|TouchEvent} event - Pointer event
  */
-function handlePointerMove(event) {
+function handlePointerMove(event: MouseEvent | TouchEvent): void {
   if (!isDragging) return
 
   updateValue(event)
@@ -269,7 +269,7 @@ function handlePointerMove(event) {
 /**
  * Handles pointer up event
  */
-function handlePointerUp() {
+function handlePointerUp(): void {
   isDragging = false
   dragIndex = -1
 
@@ -287,7 +287,7 @@ function handlePointerUp() {
  * Handles track click
  * @param {MouseEvent} event - Click event
  */
-function handleTrackClick(event) {
+function handleTrackClick(event: MouseEvent): void {
   if (disabled) return
 
   // Only handle direct track clicks
@@ -300,14 +300,14 @@ function handleTrackClick(event) {
  * Handles thumb hover
  * @param {number} index - Thumb index
  */
-function handleThumbHover(index) {
+function handleThumbHover(index: number): void {
   hoverIndex = index
 }
 
 /**
  * Handles thumb leave
  */
-function handleThumbLeave() {
+function handleThumbLeave(): void {
   hoverIndex = -1
 }
 
@@ -316,7 +316,7 @@ function handleThumbLeave() {
  * @param {KeyboardEvent} event - Keydown event
  * @param {number} index - Thumb index
  */
-function handleKeydown(event, index) {
+function handleKeydown(event: KeyboardEvent, index: number): void {
   if (disabled) return
 
   let newValue = sliderValues[index]
@@ -360,7 +360,7 @@ function handleKeydown(event, index) {
 /**
  * Dispatches change event
  */
-function dispatchChange() {
+function dispatchChange(): void {
   const eventValue = isRange ? [...sliderValues] : sliderValues[0]
   onchange?.(new CustomEvent("change", { detail: { value: eventValue } }))
   oninput?.(new CustomEvent("input", { detail: { value: eventValue } }))
@@ -452,7 +452,7 @@ onDestroy(() => {
           aria-valuemin={min}
           aria-valuemax={max}
           aria-valuenow={value}
-          aria-orientation={orientation}
+          aria-orientation={orientation || 'horizontal'}
           aria-label={ariaLabel || `Slider ${isRange ? i + 1 : ''}`}
           tabindex={disabled ? undefined : 0}
           onmousedown={(e) => handlePointerDown(e, i)}

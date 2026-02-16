@@ -51,13 +51,15 @@ const {
 } = $props()
 
 // Handle click events if card is clickable
-function handleClick(event) {
-  if (clickable) {
+let cardElement: HTMLDivElement | undefined
+
+function handleClick(event: MouseEvent | KeyboardEvent): void {
+  if (clickable && cardElement) {
     const customEvent = new CustomEvent("click", {
       detail: { originalEvent: event },
       bubbles: true,
     })
-    this?.dispatchEvent(customEvent)
+    cardElement.dispatchEvent(customEvent)
   }
 }
 </script>
@@ -74,13 +76,14 @@ function handleClick(event) {
   role={clickable ? 'button' : 'article'}
   aria-label={ariaLabel}
   onclick={handleClick}
-  onkeydown={event => {
+  onkeydown={(event: KeyboardEvent): void => {
     if (clickable && (event.key === 'Enter' || event.key === ' ')) {
       event.preventDefault();
       handleClick(event);
     }
   }}
-  tabindex={clickable ? '0' : undefined}
+  tabindex={clickable ? 0 : undefined}
+  bind:this={cardElement}
 >
   {#if media}
     <div class="card-media">

@@ -42,7 +42,7 @@ let {
 } = $props()
 
 // Get form context if available
-const formContext = getContext("form")
+const formContext = getContext("form") as { registerField?: (name: string, value: unknown) => { getValue?: () => unknown; setValue?: (value: unknown) => void; isDisabled?: () => boolean } } | undefined
 
 // Derived values for reactive prop access in closures
 const derivedValue = $derived(value)
@@ -54,22 +54,22 @@ const textareaId = $derived(id || `textarea-${crypto.randomUUID()}`)
 // Textarea state
 let textareaValue = $state("")
 let isFocused = $state(false)
-let textareaEl = $state()
-let fieldApi = $state()
+let textareaEl: HTMLTextAreaElement | undefined = $state()
+let fieldApi: { getValue?: () => unknown; setValue?: (value: unknown) => void; isDisabled?: () => boolean } | undefined = $state()
 
 // Register with form if available
 $effect(() => {
-  if (formContext && derivedName) {
+  if (formContext?.registerField && derivedName) {
     fieldApi = formContext.registerField(derivedName, derivedValue)
   }
 })
 
 // Update value when form field changes
 $effect(() => {
-  if (fieldApi) {
+  if (fieldApi?.getValue) {
     const formValue = fieldApi.getValue()
     if (formValue !== undefined && formValue !== textareaValue) {
-      textareaValue = formValue
+      textareaValue = formValue as string
     }
   }
 })
@@ -83,12 +83,12 @@ $effect(() => {
  * Handles textarea input
  * @param {Event} event - Input event
  */
-function handleInput(event) {
-  const newValue = event.target.value
+function handleInput(event: Event): void {
+  const newValue = (event.target as HTMLTextAreaElement).value
   textareaValue = newValue
 
   // Update form field if available
-  if (fieldApi) {
+  if (fieldApi?.setValue) {
     fieldApi.setValue(newValue)
   }
 
@@ -104,7 +104,7 @@ function handleInput(event) {
 /**
  * Handles focus events
  */
-function handleFocus(event) {
+function handleFocus(event: FocusEvent): void {
   isFocused = true
   onfocus?.(event)
 }
@@ -112,7 +112,7 @@ function handleFocus(event) {
 /**
  * Handles blur events
  */
-function handleBlur(event) {
+function handleBlur(event: FocusEvent): void {
   isFocused = false
   onblur?.(event)
 }
@@ -120,14 +120,14 @@ function handleBlur(event) {
 /**
  * Resizes the textarea based on content
  */
-function resizeTextarea() {
+function resizeTextarea(): void {
   if (!textareaEl) return
 
   // Reset height to calculate scroll height
-  textareaEl.style.height = "auto"
+  (textareaEl as HTMLTextAreaElement).style.height = "auto"
 
   // Set height to scroll height
-  textareaEl.style.height = `${textareaEl.scrollHeight}px`
+  (textareaEl as HTMLTextAreaElement).style.height = `${(textareaEl as HTMLTextAreaElement).scrollHeight}px`
 }
 
 // Initialize auto-resize
@@ -147,7 +147,7 @@ $effect(() => {
     value={textareaValue}
     {rows}
     {required}
-    disabled={disabled || (fieldApi && fieldApi.isDisabled())}
+    disabled={disabled || (fieldApi?.isDisabled ? fieldApi.isDisabled() : false)}
     {readonly}
     {minlength}
     {maxlength}

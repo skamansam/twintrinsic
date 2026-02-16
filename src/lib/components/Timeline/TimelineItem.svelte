@@ -71,21 +71,21 @@ const {
 } = $props()
 
 // Get timeline context
-const timelineContext = getContext("timeline")
+const timelineContext = getContext("timeline") as { variant?: string; position?: string; orientation?: string; connected?: boolean; animated?: boolean } | undefined
 
 // Component state
-let itemElement
+let itemElement: HTMLElement | undefined
 let isVisible = $state(false)
 let index = $state(0)
 
 // Determine variant
-const itemVariant = $derived(variant || timelineContext?.variant || "primary")
+const itemVariant = $derived((variant || (timelineContext?.variant as string) || "primary") as string)
 
 // Determine position
-const itemPosition = $derived(position || timelineContext?.position || "left")
+const itemPosition = $derived((position || (timelineContext?.position as string) || "left") as string)
 
 // Determine orientation
-const orientation = $derived(timelineContext?.orientation || "vertical")
+const orientation = $derived((timelineContext?.orientation as string) || "vertical")
 
 // Determine if connected
 const connected = $derived(timelineContext?.connected !== false)
@@ -109,7 +109,7 @@ const variantClasses = $derived(
     warning: "text-warning-500 dark:text-warning-500",
     error: "text-error-500 dark:text-error-500",
     info: "text-info-500 dark:text-info-500",
-  }[itemVariant] || "text-primary-500 dark:text-primary-500"
+  }[itemVariant as string] || "text-primary-500 dark:text-primary-500"
 )
 
 // Determine icon background classes
@@ -123,7 +123,7 @@ const iconBgClasses = $derived(
       warning: "bg-warning-100 dark:bg-warning-900",
       error: "bg-error-100 dark:bg-error-900",
       info: "bg-info-100 dark:bg-info-900",
-    }[itemVariant] ||
+    }[itemVariant as string] ||
     "bg-primary-100 dark:bg-primary-900"
 )
 
@@ -147,8 +147,8 @@ onMount(() => {
     // Set up intersection observer for animations
     if (animated) {
       const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
+        (entries: IntersectionObserverEntry[]): void => {
+          entries.forEach((entry: IntersectionObserverEntry): void => {
             if (entry.isIntersecting) {
               isVisible = true
               observer.unobserve(entry.target)

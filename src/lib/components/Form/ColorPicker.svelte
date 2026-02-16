@@ -61,7 +61,7 @@ $effect(() => {
 })
 
 // Parse color string to HSL(A) values
-function parseColor(colorStr) {
+function parseColor(colorStr: string): { hue: number; saturation: number; lightness: number; alpha: number } | null {
   try {
     const div = document.createElement("div")
     div.style.color = colorStr
@@ -87,7 +87,7 @@ function parseColor(colorStr) {
 }
 
 // Convert RGB to HSL
-function rgbToHsl(r, g, b) {
+function rgbToHsl(r: number, g: number, b: number): number[] {
   r /= 255
   g /= 255
   b /= 255
@@ -123,7 +123,7 @@ function rgbToHsl(r, g, b) {
 }
 
 // Convert HSL to RGB
-function hslToRgb(h, s, l) {
+function hslToRgb(h: number, s: number, l: number): number[] {
   h /= 360
   s /= 100
   l /= 100
@@ -133,7 +133,7 @@ function hslToRgb(h, s, l) {
   if (s === 0) {
     r = g = b = l
   } else {
-    const hue2rgb = (p, q, t) => {
+    const hue2rgb = (p: number, q: number, t: number): number => {
       if (t < 0) t += 1
       if (t > 1) t -= 1
       if (t < 1 / 6) return p + (q - p) * 6 * t
@@ -154,8 +154,8 @@ function hslToRgb(h, s, l) {
 }
 
 // Convert RGB to hex
-function rgbToHex(r, g, b) {
-  const toHex = (x) => {
+function rgbToHex(r: number, g: number, b: number): string {
+  const toHex = (x: number): string => {
     const hex = x.toString(16)
     return hex.length === 1 ? "0" + hex : hex
   }
@@ -164,7 +164,7 @@ function rgbToHex(r, g, b) {
 }
 
 // Update color from HSL values
-function updateColor(h, s, l, a) {
+function updateColor(h: number, s: number, l: number, a: number): void {
   hue = h
   saturation = s
   lightness = l
@@ -175,7 +175,7 @@ function updateColor(h, s, l, a) {
 }
 
 // Update input value based on current color
-function updateInputValue() {
+function updateInputValue(): void {
   const [r, g, b] = hslToRgb(hue, saturation, lightness)
   const a = alpha / 100
 
@@ -199,7 +199,7 @@ function updateInputValue() {
 }
 
 // Handle color wheel interaction
-function handleColorWheel(event) {
+function handleColorWheel(event: MouseEvent): void {
   if (disabled) return
 
   const rect = pickerRef.getBoundingClientRect()
@@ -224,21 +224,21 @@ function handleColorWheel(event) {
 }
 
 // Handle lightness slider
-function handleLightness(event) {
+function handleLightness(event: Event): void {
   if (disabled) return
   const newLightness = Number(event.target.value)
   updateColor(hue, saturation, newLightness, alpha)
 }
 
 // Handle alpha slider
-function handleAlpha(event) {
+function handleAlpha(event: Event): void {
   if (disabled) return
   const newAlpha = Number(event.target.value)
   updateColor(hue, saturation, lightness, newAlpha)
 }
 
 // Handle input change
-function handleInput(event) {
+function handleInput(event: CustomEvent): void {
   const newValue = event.detail.value
   const color = parseColor(newValue)
 

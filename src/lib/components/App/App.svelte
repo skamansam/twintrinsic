@@ -5,9 +5,9 @@ import AppHeader from "../AppHeader/AppHeader.svelte"
 import Sidebar from "../Sidebar/Sidebar.svelte"
 import type { MenuItem } from "../TreeMenu/TreeMenu.svelte"
 
+type NavItem = { label: string; href?: string; current?: boolean }
 type Brand = string | { name: string; logo?: string | Snippet; href?: string }
 type User = { name: string; avatar?: string; href?: string } | null
-type NavItem = { label: string; href?: string; current?: boolean }
 
 interface AppProps {
   darkMode?: boolean
@@ -16,7 +16,7 @@ interface AppProps {
   user?: User
   navItems?: NavItem[]
   siteLinks?: NavItem[]
-  siteMenu?: any[]
+  siteMenu?: MenuItem[]
   showSearch?: boolean
   showNotifications?: boolean
   leftSidebarHidden?: boolean
@@ -27,12 +27,13 @@ interface AppProps {
   rightSidebarCollapsedWidth?: string
   leftPanel?: Snippet | null
   rightPanel?: Snippet | null
+  header?: Snippet | null
   footer?: Snippet | null
   children?: Snippet | null
   onsearch?: (payload: { query: string }) => void
   onsignout?: () => void
-  onleftSidebarVisibilityChange?: (payload: { visible: boolean }) => void
-  onrightSidebarVisibilityChange?: (payload: { visible: boolean }) => void
+  // onleftSidebarVisibilityChange?: (payload: { visible: boolean }) => void
+  // onrightSidebarVisibilityChange?: (payload: { visible: boolean }) => void
   onleftSidebarToggle?: (payload: { expanded: boolean }) => void
   onrightSidebarToggle?: (payload: { expanded: boolean }) => void
 }
@@ -60,8 +61,8 @@ let {
   children,
   onsearch,
   onsignout,
-  onleftSidebarVisibilityChange,
-  onrightSidebarVisibilityChange,
+  // onleftSidebarVisibilityChange,
+  // onrightSidebarVisibilityChange,
   onleftSidebarToggle,
   onrightSidebarToggle,
 }: AppProps = $props();

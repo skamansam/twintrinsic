@@ -63,14 +63,14 @@ const {
 // Component state
 let size = $state(initialSize)
 let isDragging = $state(false)
-let containerElement = $state()
-let firstPanelElement = $state()
-let secondPanelElement = $state()
-let dividerElement = $state()
+let containerElement: HTMLElement | undefined = $state()
+let firstPanelElement: HTMLElement | undefined = $state()
+let secondPanelElement: HTMLElement | undefined = $state()
+let dividerElement: HTMLElement | undefined = $state()
 let startPosition = $state(0)
 let startSize = $state(0)
 let containerSize = $state(0)
-let resizeObserver = $state()
+let resizeObserver: ResizeObserver | undefined = $state()
 
 // Computed values
 const isHorizontal = $derived(direction === "horizontal")
@@ -87,7 +87,7 @@ const dividerLabel = $derived(
  * Starts dragging the divider
  * @param {MouseEvent|TouchEvent} event - Mouse or touch event
  */
-function startDrag(event) {
+function startDrag(event: MouseEvent | TouchEvent): void {
   if (!resizable || collapseFirst || collapseSecond) return
 
   isDragging = true
@@ -95,16 +95,16 @@ function startDrag(event) {
   // Get starting position
   startPosition = isHorizontal
     ? event.type === "touchstart"
-      ? event.touches[0].clientX
-      : event.clientX
+      ? (event as TouchEvent).touches[0].clientX
+      : (event as MouseEvent).clientX
     : event.type === "touchstart"
-      ? event.touches[0].clientY
-      : event.clientY
+      ? (event as TouchEvent).touches[0].clientY
+      : (event as MouseEvent).clientY
 
   startSize = size
 
   // Get container size
-  const rect = containerElement.getBoundingClientRect()
+  const rect = (containerElement as HTMLElement).getBoundingClientRect()
   containerSize = isHorizontal ? rect.width : rect.height
 
   // Add event listeners for drag
@@ -124,17 +124,17 @@ function startDrag(event) {
  * Handles dragging the divider
  * @param {MouseEvent|TouchEvent} event - Mouse or touch event
  */
-function handleDrag(event) {
+function handleDrag(event: MouseEvent | TouchEvent): void {
   if (!isDragging) return
 
   // Get current position
   const currentPosition = isHorizontal
     ? event.type === "touchmove"
-      ? event.touches[0].clientX
-      : event.clientX
+      ? (event as TouchEvent).touches[0].clientX
+      : (event as MouseEvent).clientX
     : event.type === "touchmove"
-      ? event.touches[0].clientY
-      : event.clientY
+      ? (event as TouchEvent).touches[0].clientY
+      : (event as MouseEvent).clientY
 
   // Calculate delta and new size
   const delta = currentPosition - startPosition
@@ -157,7 +157,7 @@ function handleDrag(event) {
 /**
  * Stops dragging the divider
  */
-function stopDrag() {
+function stopDrag(): void {
   if (!isDragging) return
 
   isDragging = false
@@ -176,7 +176,7 @@ function stopDrag() {
  * Handles keyboard navigation for resizing
  * @param {KeyboardEvent} event - Keydown event
  */
-function handleKeydown(event) {
+function handleKeydown(event: KeyboardEvent): void {
   if (!resizable || collapseFirst || collapseSecond) return
 
   let newSize = size

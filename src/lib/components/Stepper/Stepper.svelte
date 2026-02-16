@@ -67,7 +67,7 @@ $effect(() => {
     alternativeLabels,
     linear,
     connector,
-    getStepState: (index) => {
+    getStepState: (index: number): string => {
       if (index < activeStep) return "completed"
       if (index === activeStep) return "active"
       return "pending"

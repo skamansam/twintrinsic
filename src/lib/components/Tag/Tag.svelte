@@ -112,7 +112,7 @@ const iconSizeClasses = $derived(
  * Handles dismiss button click
  * @param {MouseEvent} event - Click event
  */
-function handleDismiss(event) {
+function handleDismiss(event: MouseEvent): void {
   event.stopPropagation()
   ondismiss?.(new CustomEvent("dismiss"))
 }
@@ -121,7 +121,7 @@ function handleDismiss(event) {
  * Handles click on the tag
  * @param {MouseEvent} event - Click event
  */
-function handleClick(event) {
+function handleClick(event: MouseEvent): void {
   if (clickable && !href) {
     // Click events are handled by native browser behavior for links
   }

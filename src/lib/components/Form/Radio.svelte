@@ -91,8 +91,8 @@ $effect(() => {
  * Handles radio change
  * @param {Event} event - Change event
  */
-function handleChange(event) {
-  isChecked = event.target.checked
+function handleChange(event: Event): void {
+  isChecked = (event.target as HTMLInputElement).checked
 
   // Update form field if available
   if (fieldApi && isChecked) {

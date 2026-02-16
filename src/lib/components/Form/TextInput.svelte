@@ -89,8 +89,8 @@ $effect(() => {
  * Handles input changes
  * @param {Event} event - Input event
  */
-function handleInput(event) {
-  const newValue = event.target.value
+function handleInput(event: Event): void {
+  const newValue = (event.target as HTMLInputElement).value
   inputValue = newValue
 
   // Update form field if available
@@ -105,7 +105,7 @@ function handleInput(event) {
 /**
  * Handles focus events
  */
-function handleFocus(event) {
+function handleFocus(event: FocusEvent): void {
   isFocused = true
   onfocus?.(event)
 }
@@ -113,7 +113,7 @@ function handleFocus(event) {
 /**
  * Handles blur events
  */
-function handleBlur(event) {
+function handleBlur(event: FocusEvent): void {
   isFocused = false
   onblur?.(event)
 }
@@ -121,7 +121,7 @@ function handleBlur(event) {
 /**
  * Clears the input value
  */
-function clearInput() {
+function clearInput(): void {
   inputValue = ""
 
   // Update form field if available

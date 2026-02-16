@@ -61,8 +61,8 @@ $effect(() => {
     get multiSelect() { return derivedMultiSelect },
     showIcons,
     showLines,
-    isSelected: (key) => selectedNodes.includes(key),
-    toggleSelection: (key) => {
+    isSelected: (key: unknown): boolean => selectedNodes.includes(key),
+    toggleSelection: (key: unknown): void => {
       if (derivedSelectable) {
         if (selectedNodes.includes(key)) {
           // Remove if already selected

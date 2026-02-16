@@ -91,7 +91,7 @@ const {
 } = $props()
 
 // Get form context if available
-const formContext = getContext("form")
+const formContext = getContext("form") as { registerField?: (name: string, value: unknown) => { getValue?: () => unknown; setValue?: (value: unknown) => void } } | undefined
 
 // Derived values for reactive prop access in closures
 const derivedValue = $derived(value)
@@ -100,25 +100,25 @@ const derivedName = $derived(name)
 // Component state
 let currentValue = $state(0)
 let isDragging = $state(false)
-let knobElement = $state()
+let knobElement: HTMLElement | undefined = $state()
 let radius = $state(0)
 let center = $state({ x: 0, y: 0 })
 
 // Register with form if available
-let fieldApi = $state()
+let fieldApi: { getValue?: () => unknown; setValue?: (value: unknown) => void } | undefined = $state()
 
 $effect(() => {
-  if (formContext && derivedName) {
+  if (formContext?.registerField && derivedName) {
     fieldApi = formContext.registerField(derivedName, derivedValue)
   }
 })
 
 // Update value when form field changes
 $effect(() => {
-  if (fieldApi) {
+  if (fieldApi?.getValue) {
     const formValue = fieldApi.getValue()
     if (formValue !== undefined && formValue !== currentValue) {
-      currentValue = formValue
+      currentValue = formValue as number
     }
   }
 })
@@ -133,7 +133,7 @@ $effect(() => {
  * @param {number} val - Value to constrain
  * @returns {number} - Constrained value
  */
-function constrainValue(val) {
+function constrainValue(val: number): number {
   // Apply min/max constraints
   let constrained = Math.max(min, Math.min(max, val))
 
@@ -150,7 +150,7 @@ function constrainValue(val) {
  * @param {number} val - Value to convert
  * @returns {number} - Percentage
  */
-function valueToPercentage(val) {
+function valueToPercentage(val: number): number {
   return ((val - min) / (max - min)) * 100
 }
 
@@ -159,7 +159,7 @@ function valueToPercentage(val) {
  * @param {number} percentage - Percentage (0-100)
  * @returns {number} - Value
  */
-function percentageToValue(percentage) {
+function percentageToValue(percentage: number): number {
   return (percentage / 100) * (max - min) + min
 }
 
@@ -167,7 +167,7 @@ function percentageToValue(percentage) {
  * Formats the current value using the template
  * @returns {string} - Formatted value
  */
-function formatValue() {
+function formatValue(): string {
   return valueTemplate.replace("{value}", currentValue.toString())
 }
 
@@ -176,7 +176,7 @@ function formatValue() {
  * @param {number} percentage - Percentage (0-100)
  * @returns {string} - SVG path
  */
-function calculateArc(percentage) {
+function calculateArc(percentage: number): string {
   const r = 50 - thickness / 2 // Adjust radius for thickness
   const circumference = 2 * Math.PI * r
   const arcLength = (percentage / 100) * circumference
@@ -189,8 +189,8 @@ function calculateArc(percentage) {
  * Calculates tick positions
  * @returns {Array} - Array of tick positions
  */
-function calculateTicks() {
-  const ticks = []
+function calculateTicks(): Array<{x1: number; y1: number; x2: number; y2: number}> {
+  const ticks: Array<{x1: number; y1: number; x2: number; y2: number}> = []
   const r = 50 - thickness / 2 // Adjust radius for thickness
 
   for (let i = 0; i < tickCount; i++) {
@@ -215,7 +215,7 @@ function calculateTicks() {
  * @param {number} y - Y coordinate
  * @returns {number} - Angle in degrees (0-360)
  */
-function calculateAngle(x, y) {
+function calculateAngle(x: number, y: number): number {
   const dx = x - center.x
   const dy = y - center.y
 
@@ -236,7 +236,7 @@ function calculateAngle(x, y) {
  * @param {number} angle - Angle in degrees (0-360)
  * @returns {number} - Percentage (0-100)
  */
-function angleToPercentage(angle) {
+function angleToPercentage(angle: number): number {
   return (angle / 360) * 100
 }
 
@@ -244,7 +244,7 @@ function angleToPercentage(angle) {
  * Updates the value based on mouse/touch position
  * @param {MouseEvent|TouchEvent} event - Mouse or touch event
  */
-function updateValueFromEvent(event) {
+function updateValueFromEvent(event: MouseEvent | TouchEvent): void {
   if (disabled) return
 
   // Get coordinates
@@ -276,7 +276,7 @@ function updateValueFromEvent(event) {
  * Starts dragging
  * @param {MouseEvent|TouchEvent} event - Mouse or touch event
  */
-function startDrag(event) {
+function startDrag(event: MouseEvent | TouchEvent): void {
   if (disabled) return
 
   isDragging = true
@@ -295,7 +295,7 @@ function startDrag(event) {
 /**
  * Stops dragging
  */
-function stopDrag() {
+function stopDrag(): void {
   if (!isDragging) return
 
   isDragging = false
@@ -313,7 +313,7 @@ function stopDrag() {
  * Handles keyboard navigation
  * @param {KeyboardEvent} event - Keydown event
  */
-function handleKeydown(event) {
+function handleKeydown(event: KeyboardEvent): void {
   if (disabled) return
 
   let newValue = currentValue

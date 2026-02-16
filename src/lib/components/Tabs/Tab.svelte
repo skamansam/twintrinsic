@@ -37,19 +37,19 @@ const {
 } = $props()
 
 // Get tabs context
-const tabsContext = getContext("tabs")
+const tabsContext = getContext("tabs") as { registerTab?: (element: HTMLElement) => number; selectedIndex?: () => number; disabled?: () => boolean; selectTab?: (index: number) => void; handleKeydown?: (event: KeyboardEvent, index: number) => void } | undefined
 
 if (!tabsContext) {
   throw new Error("Tab must be used within a Tabs component")
 }
 
 // Tab state
-let tabElement
+let tabElement: HTMLButtonElement | undefined
 let index = -1
 
 // Register tab on mount
 onMount(() => {
-  if (tabElement) {
+  if (tabElement && tabsContext?.registerTab) {
     index = tabsContext.registerTab(tabElement)
   }
 
@@ -59,28 +59,32 @@ onMount(() => {
 })
 
 // Determine if this tab is selected
-const isSelected = $derived(tabsContext.selectedIndex() === index)
+const isSelected = $derived((tabsContext?.selectedIndex ? tabsContext.selectedIndex() : -1) === index)
 
 // Determine if tabs are disabled from parent
-const isDisabled = $derived(disabled || tabsContext.disabled())
+const isDisabled = $derived(disabled || (tabsContext?.disabled ? tabsContext.disabled() : false))
 
 /**
  * Handles tab click
  */
-function handleClick() {
+function handleClick(): void {
   if (isDisabled) return
 
-  tabsContext.selectTab(index)
+  if (tabsContext?.selectTab) {
+    tabsContext.selectTab(index)
+  }
 }
 
 /**
  * Handles tab keydown
  * @param {KeyboardEvent} event - Keydown event
  */
-function handleKeydown(event) {
+function handleKeydown(event: KeyboardEvent): void {
   if (isDisabled) return
 
-  tabsContext.handleKeydown(event, index)
+  if (tabsContext?.handleKeydown) {
+    tabsContext.handleKeydown(event, index)
+  }
 }
 
 // Derived values for reactive prop access in closures

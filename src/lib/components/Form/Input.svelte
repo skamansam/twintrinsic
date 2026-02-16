@@ -86,21 +86,21 @@ $effect(() => {
 })
 
 // Handle input focus
-function handleFocus(event) {
+function handleFocus(event: FocusEvent): void {
   focused = true
   onfocus?.(event)
 }
 
 // Handle input blur
-function handleBlur(event) {
+function handleBlur(event: FocusEvent): void {
   focused = false
   touched = true
   onblur?.(event)
 }
 
 // Handle input change
-function handleInput(event) {
-  const newValue = event.target.value
+function handleInput(event: Event): void {
+  const newValue = (event.target as HTMLInputElement).value
 
   // Apply mask if provided
   if (mask) {
@@ -122,7 +122,7 @@ function handleRightIconClick() {
 }
 
 // Apply input mask
-function applyMask(value, pattern) {
+function applyMask(value: string, pattern: string): string {
   let result = ""
   let valueIndex = 0
 

@@ -48,49 +48,49 @@ const {
 
 let showDropdown = $state(false)
 let searchValue = $state("")
-let selectedValues = $state([])
+let selectedValues: string[] = $state([])
 let focusedIndex = $state(-1)
-let dropdownRef = $state()
+let dropdownRef: HTMLElement | undefined = $state()
 
 // Initialize selected values
 $effect(() => {
-  selectedValues = Array.isArray(value) ? value : value ? [value] : []
+  selectedValues = Array.isArray(value) ? (value as string[]) : value ? [value as string] : []
 })
 
 // Filter options based on search
-const filteredOptions = $derived(() => {
+const filteredOptions = $derived.by(() => {
   const search = searchValue.toLowerCase()
-  return options.filter((option) => option.label.toLowerCase().includes(search))
+  return options.filter((option) => (option as Record<string, unknown>).label?.toString().toLowerCase().includes(search))
 })
 
 // Group options by their group property
-const groupedOptions = $derived(() => {
-  const groups = new Map()
+const groupedOptions = $derived.by(() => {
+  const groups = new Map<string, unknown[]>()
 
   for (const option of filteredOptions) {
-    const group = option.group || ""
+    const group = ((option as Record<string, unknown>).group as string) || ""
     if (!groups.has(group)) {
       groups.set(group, [])
     }
-    groups.get(group).push(option)
+    groups.get(group)?.push(option)
   }
 
   return groups
 })
 
 // Handle option selection
-function selectOption(option) {
+function selectOption(option: unknown): void {
   if (disabled) return
 
-  const value = option.value
-  let newValues
+  const optionValue = (option as Record<string, unknown>).value as string
+  let newValues: string[]
 
   if (multiple) {
-    newValues = selectedValues.includes(value)
-      ? selectedValues.filter((v) => v !== value)
-      : [...selectedValues, value]
+    newValues = selectedValues.includes(optionValue)
+      ? selectedValues.filter((v) => v !== optionValue)
+      : [...selectedValues, optionValue]
   } else {
-    newValues = [value]
+    newValues = [optionValue]
     showDropdown = false
   }
 
@@ -103,7 +103,7 @@ function selectOption(option) {
 }
 
 // Handle keyboard navigation
-function handleKeydown(event) {
+function handleKeydown(event: KeyboardEvent): void {
   if (disabled) return
 
   switch (event.key) {
@@ -112,7 +112,7 @@ function handleKeydown(event) {
       if (!showDropdown) {
         event.preventDefault()
         showDropdown = true
-      } else if (focusedIndex >= 0) {
+      } else if (focusedIndex >= 0 && filteredOptions[focusedIndex]) {
         event.preventDefault()
         selectOption(filteredOptions[focusedIndex])
       }
@@ -123,7 +123,7 @@ function handleKeydown(event) {
       if (!showDropdown) {
         showDropdown = true
       } else {
-        focusedIndex = Math.min(focusedIndex + 1, filteredOptions.length - 1)
+        focusedIndex = Math.min(focusedIndex + 1, (filteredOptions as unknown[]).length - 1)
         scrollToOption(focusedIndex)
       }
       break
@@ -147,19 +147,19 @@ function handleKeydown(event) {
 }
 
 // Scroll focused option into view
-function scrollToOption(index) {
+function scrollToOption(index: number): void {
   if (!dropdownRef) return
 
-  const options = dropdownRef.querySelectorAll(".select-option")
-  if (options[index]) {
-    options[index].scrollIntoView({
+  const optionElements = (dropdownRef as HTMLElement).querySelectorAll(".select-option")
+  if (optionElements[index]) {
+    (optionElements[index] as HTMLElement).scrollIntoView({
       block: "nearest",
     })
   }
 }
 
 // Clear selection
-function clearSelection(event) {
+function clearSelection(event: Event): void {
   event.stopPropagation()
   if (disabled) return
   selectedValues = []
@@ -167,16 +167,16 @@ function clearSelection(event) {
 }
 
 // Get display value
-const displayValue = $derived(() => {
+const displayValue = $derived.by(() => {
   if (!selectedValues.length) return ""
 
-  const selected = options.filter((option) => selectedValues.includes(option.value))
+  const selected = options.filter((option) => selectedValues.includes((option as Record<string, unknown>).value as string))
 
   if (multiple) {
-    return selected.length === 1 ? selected[0].label : `${selected.length} items selected`
+    return selected.length === 1 ? (selected[0] as Record<string, unknown>).label : `${selected.length} items selected`
   }
 
-  return selected[0]?.label || ""
+  return ((selected[0] as Record<string, unknown>)?.label as string) || ""
 })
 </script>
 

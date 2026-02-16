@@ -50,8 +50,8 @@ const {
 } = $props()
 
 let isVisible = $state(false)
-let panelElement
-let observer
+let panelElement: HTMLElement | undefined = $state()
+let observer: IntersectionObserver | undefined = $state()
 
 onMount(() => {
   observer = new IntersectionObserver(

@@ -53,7 +53,7 @@ let element
  * Handles intersection changes
  * @param {IntersectionObserverEntry[]} entries - Intersection entries
  */
-function handleIntersection(entries) {
+function handleIntersection(entries: IntersectionObserverEntry[]): void {
   const [entry] = entries
 
   if (entry.isIntersecting) {

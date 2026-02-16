@@ -172,7 +172,7 @@ function goToNext() {
  * Goes to a specific slide
  * @param {number} index - Slide index
  */
-function goToSlide(index) {
+function goToSlide(index: number): void {
   if (index >= 0 && index < totalSlides) {
     currentIndex = index
     dispatchChange()
@@ -182,14 +182,14 @@ function goToSlide(index) {
 /**
  * Dispatches change event
  */
-function dispatchChange() {
+function dispatchChange(): void {
   onchange?.(new CustomEvent("change", { detail: { index: currentIndex } }))
 }
 
 /**
  * Handles mouse enter event
  */
-function handleMouseEnter() {
+function handleMouseEnter(): void {
   if (pauseOnHover) {
     isHovering = true
   }
@@ -198,7 +198,7 @@ function handleMouseEnter() {
 /**
  * Handles mouse leave event
  */
-function handleMouseLeave() {
+function handleMouseLeave(): void {
   isHovering = false
 }
 
@@ -206,7 +206,7 @@ function handleMouseLeave() {
  * Handles touch start event
  * @param {TouchEvent} event - Touch event
  */
-function handleTouchStart(event) {
+function handleTouchStart(event: TouchEvent): void {
   if (!swipeable) return
 
   isDragging = true
@@ -219,7 +219,7 @@ function handleTouchStart(event) {
  * Handles touch move event
  * @param {TouchEvent} event - Touch event
  */
-function handleTouchMove(event) {
+function handleTouchMove(event: TouchEvent): void {
   if (!swipeable || !isDragging) return
 
   currentX = event.touches[0].clientX
@@ -231,7 +231,7 @@ function handleTouchMove(event) {
 /**
  * Handles touch end event
  */
-function handleTouchEnd() {
+function handleTouchEnd(): void {
   if (!swipeable || !isDragging) return
 
   const deltaX = currentX - startX
@@ -258,7 +258,7 @@ function handleTouchEnd() {
  * Handles key down event
  * @param {KeyboardEvent} event - Key event
  */
-function handleKeyDown(event) {
+function handleKeyDown(event: KeyboardEvent): void {
   switch (event.key) {
     case "ArrowLeft":
       goToPrev()
@@ -280,7 +280,7 @@ function handleKeyDown(event) {
 }
 
 // Update slide width on mount and resize
-function updateDimensions() {
+function updateDimensions(): void {
   if (carouselElement) {
     slideWidth = carouselElement.offsetWidth
   }

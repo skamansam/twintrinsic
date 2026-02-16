@@ -21,9 +21,9 @@ Usage:
 ```
 -->
 <script lang="ts">
+import type { Snippet } from "svelte";
 import { slide } from "svelte/transition"
 import ThemeToggle from "../ThemeToggle/ThemeToggle.svelte"
-import type { Snippet } from "svelte";
 
 type Brand = string | { name: string; logo?: Snippet | string; href?: string }
 type User = { name: string; avatar?: string; href?: string } | null
@@ -90,7 +90,7 @@ function toggleUserMenu() {
 }
 
 // Handle escape key
-function handleKeydown(event) {
+function handleKeydown(event: KeyboardEvent): void {
   if (event.key === "Escape") {
     mobileMenuOpen = false
     notificationsOpen = false

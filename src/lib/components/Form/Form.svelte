@@ -60,10 +60,10 @@ const {
 } = $props()
 
 // Form state
-let formElement
-let formData = $state({})
-let errors = $state({})
-let touched = $state({})
+let formElement: HTMLFormElement | undefined
+let formData: Record<string, unknown> = $state({})
+let errors: Record<string, string> = $state({})
+let touched: Record<string, boolean> = $state({})
 let isSubmitting = $state(false)
 let isValid = $state(true)
 
@@ -72,7 +72,7 @@ let isValid = $state(true)
  * @param {string} name - Field name
  * @param {any} value - Field value
  */
-function updateField(name, value) {
+function updateField(name: string, value: unknown): void {
   formData[name] = value
   touched[name] = true
 
@@ -88,8 +88,8 @@ function updateField(name, value) {
  * @param {any} value - Field value
  * @returns {boolean} - Whether the field is valid
  */
-function validateField(name, value) {
-  const field = formElement?.elements[name]
+function validateField(name: string, value: unknown): boolean {
+  const field = formElement?.elements.namedItem(name) as HTMLFormElement | null
 
   if (!field) return true
 
@@ -111,7 +111,7 @@ function validateField(name, value) {
  * Validates the entire form
  * @returns {boolean} - Whether the form is valid
  */
-function validateForm() {
+function validateForm(): boolean {
   // Reset errors
   errors = {}
 
@@ -121,9 +121,9 @@ function validateForm() {
   if (formElement) {
     const formControls = Array.from(formElement.elements)
 
-    formControls.forEach((field) => {
-      if (field.name) {
-        const fieldValid = validateField(field.name, field.value)
+    formControls.forEach((field: Element) => {
+      if ((field as HTMLFormElement).name) {
+        const fieldValid = validateField((field as HTMLFormElement).name, (field as HTMLFormElement).value)
         if (!fieldValid) {
           valid = false
         }
@@ -139,16 +139,17 @@ function validateForm() {
  * Handles form submission
  * @param {Event} event - Submit event
  */
-function handleSubmit(event) {
+function handleSubmit(event: Event): void {
   // Prevent default form submission
   event.preventDefault()
 
   // Mark all fields as touched
   if (formElement) {
     const formControls = Array.from(formElement.elements)
-    formControls.forEach((field) => {
-      if (field.name) {
-        touched[field.name] = true
+    formControls.forEach((field: Element) => {
+      const control = field as HTMLFormElement
+      if (control.name) {
+        touched[control.name] = true
       }
     })
   }
@@ -166,11 +167,11 @@ function handleSubmit(event) {
   isSubmitting = true
 
   // Get form data
-  const formDataObj = new FormData(formElement)
-  const dataObj = {}
+  const formDataObj = new FormData(formElement as HTMLFormElement)
+  const dataObj: Record<string, unknown> = {}
 
   for (const [key, value] of formDataObj.entries()) {
-    dataObj[key] = value
+    dataObj[key] = value as unknown
   }
 
   // Dispatch submit event with form data
@@ -189,7 +190,7 @@ function handleSubmit(event) {
 /**
  * Resets the form to its initial state
  */
-function resetForm() {
+function resetForm(): void {
   if (formElement) {
     formElement.reset()
     formData = {}
@@ -202,14 +203,14 @@ function resetForm() {
 // Provide form context to child components
 $effect(() => {
   setContext("form", {
-    registerField: (name, initialValue) => {
+    registerField: (name: string, initialValue: unknown) => {
       if (initialValue !== undefined && formData[name] === undefined) {
         formData[name] = initialValue
       }
 
       return {
-        getValue: () => formData[name],
-        setValue: (value) => updateField(name, value),
+        getValue: (): unknown => formData[name],
+        setValue: (value: unknown): void => updateField(name, value),
         getError: () => errors[name],
         isTouched: () => !!touched[name],
         isDisabled: () => disabled || loading || isSubmitting,
@@ -224,15 +225,15 @@ $effect(() => {
 const formApi = {
   reset: resetForm,
   validate: validateForm,
-  setValues: (values) => {
+  setValues: (values: Record<string, unknown>): void => {
     formData = { ...formData, ...values }
   },
-  getValues: () => ({ ...formData }),
-  setErrors: (newErrors) => {
+  getValues: (): Record<string, unknown> => ({ ...formData }),
+  setErrors: (newErrors: Record<string, string>): void => {
     errors = { ...errors, ...newErrors }
     isValid = Object.keys(errors).length === 0
   },
-  clearErrors: () => {
+  clearErrors: (): void => {
     errors = {}
     isValid = true
   },
@@ -244,12 +245,10 @@ const formApi = {
 
 <form
   {id}
-  class="form {layout === 'horizontal' ? 'form-horizontal' : 'form-vertical'} {className}"
-  class:disabled
-  class:loading={loading || isSubmitting}
-  {method}
+  method={method as 'get' | 'post'}
   {action}
-  novalidate={!useNativeValidation}
+  class="form {layout} {className}"
+  class:disabled
   onsubmit={handleSubmit}
   bind:this={formElement}
 >

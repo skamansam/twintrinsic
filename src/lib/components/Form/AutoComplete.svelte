@@ -22,7 +22,7 @@ Usage:
 ```
 -->
 <script lang="ts">
-import { clickOutside } from "../../actions"
+import { clickOutside } from "../../actions/index.js"
 import Input from "./Input.svelte"
 
 const {
@@ -71,13 +71,11 @@ const {
 } = $props()
 
 let inputValue = $state("")
-let suggestions = $state([])
-/** @type {any[] | any | null} */
-let selectedItems = $state(null)
+let suggestions: unknown[] = $state([])
+let selectedItems: unknown[] | unknown | null = $state(null)
 const derivedMultiple = $derived(multiple)
 
-/** @type {any} */
-let ItemTemplate = $state(null)
+let ItemTemplate: unknown = $state(null)
 $effect(() => {
 	ItemTemplate = itemTemplate
 })
@@ -85,7 +83,7 @@ $effect(() => {
 let focused = $state(false)
 let showSuggestions = $state(false)
 let highlightedIndex = $state(-1)
-let searchTimeout = $state()
+let searchTimeout: ReturnType<typeof setTimeout> | undefined = $state()
 
 // Initialize selected items
 $effect(() => {
@@ -96,11 +94,11 @@ $effect(() => {
 })
 
 // Handle input changes
-function handleInput(event) {
+function handleInput(event: CustomEvent): void {
   const query = event.detail.value
   inputValue = query
 
-  if (searchTimeout) {
+  if (searchTimeout !== undefined) {
     clearTimeout(searchTimeout)
   }
 
@@ -115,11 +113,11 @@ function handleInput(event) {
 }
 
 // Search for suggestions
-function search(query) {
-  if (filter) {
-    suggestions = filter(items, query)
+function search(query: string): void {
+  if (filter && typeof filter === 'function') {
+    suggestions = (filter as (items: unknown[], query: string) => unknown[])(items, query)
   } else {
-    suggestions = items.filter((item) => {
+    suggestions = items.filter((item: unknown): boolean => {
       const label = getItemLabel(item).toLowerCase()
       return label.includes(query.toLowerCase())
     })
@@ -131,29 +129,29 @@ function search(query) {
 }
 
 // Get label for an item
-function getItemLabel(item) {
+function getItemLabel(item: unknown): string {
   if (!item) return ""
-  return typeof item === "object" ? item[labelField] : item
+  return typeof item === "object" ? ((item as Record<string, unknown>)[labelField]?.toString() || "") : item.toString()
 }
 
 // Get value for an item
-function getItemValue(item) {
+function getItemValue(item: unknown): unknown {
   if (!item) return ""
-  return typeof item === "object" ? item[valueField] : item
+  return typeof item === "object" ? (item as Record<string, unknown>)[valueField] : item
 }
 
 // Handle item selection
-function selectItem(item) {
+function selectItem(item: unknown): void {
   if (derivedMultiple) {
 		if (!Array.isArray(selectedItems)) {
 			selectedItems = []
 		}
 
     const value = getItemValue(item)
-    const exists = selectedItems.some((i) => getItemValue(i) === value)
+    const exists = (selectedItems as unknown[]).some((i: unknown) => getItemValue(i) === value)
 
     if (!exists) {
-      selectedItems = [...selectedItems, item]
+      selectedItems = [...(selectedItems as unknown[]), item]
       onselect?.(new CustomEvent("select", { detail: { items: selectedItems } }))
     }
 
@@ -168,12 +166,12 @@ function selectItem(item) {
 }
 
 // Remove selected item (multiple mode)
-function removeItem(item) {
+function removeItem(item: unknown): void {
   if (!derivedMultiple) return
   if (!Array.isArray(selectedItems)) return
 
   const value = getItemValue(item)
-  selectedItems = selectedItems.filter((i) => getItemValue(i) !== value)
+  selectedItems = (selectedItems as unknown[]).filter((i: unknown) => getItemValue(i) !== value)
   onremove?.(new CustomEvent("remove", { detail: { item } }))
   onselect?.(new CustomEvent("select", { detail: { items: selectedItems } }))
 }
@@ -183,14 +181,14 @@ function removeItem(item) {
  * @param {KeyboardEvent} event - Keydown event
  * @param {any} item - Suggestion item
  */
-function handleOptionKeydown(event, item) {
+function handleOptionKeydown(event: KeyboardEvent, item: unknown): void {
   if (event.key !== "Enter" && event.key !== " ") return
   event.preventDefault()
   selectItem(item)
 }
 
 // Handle keyboard navigation
-function handleKeydown(event) {
+function handleKeydown(event: KeyboardEvent): void {
   if (!showSuggestions) return
 
   switch (event.key) {
@@ -221,14 +219,14 @@ function handleKeydown(event) {
 }
 
 // Handle focus events
-function handleFocus() {
+function handleFocus(): void {
   focused = true
   if (inputValue.length >= minLength) {
     showSuggestions = true
   }
 }
 
-function handleBlur() {
+function handleBlur(): void {
   focused = false
   // Delay hiding suggestions to allow click events
   setTimeout(() => {
@@ -242,7 +240,7 @@ function handleBlur() {
 }
 
 // Highlight matching text
-function highlightText(text, query) {
+function highlightText(text: string, query: string): string {
   if (!highlight || !query) return text
 
   const regex = new RegExp(`(${query})`, "gi")

@@ -33,7 +33,7 @@
 	 * @param {string} version - Package version
 	 * @returns {string} CDN URL
 	 */
-	function getCdnUrl(packageName, version = 'latest') {
+	function getCdnUrl(packageName: string, version: string = 'latest'): string {
 		switch (cdnSource) {
 			case 'jsdelivr':
 				return `https://cdn.jsdelivr.net/npm/${packageName}@${version}/+esm`;
@@ -50,7 +50,7 @@
 	 * @param {string} extensionUrl - URL to load extension from
 	 * @returns {Promise<any|null>} Loaded extension or null
 	 */
-	async function loadExtension(extensionUrl) {
+	async function loadExtension(extensionUrl: string): Promise<any | null> {
 		if (isSsr) return null;
 		try {
 			const module = await import(/* @vite-ignore */ extensionUrl);
@@ -67,7 +67,7 @@
 	 * @param {string} lang - Language name
 	 * @returns {Promise<any|null>} Language extension or null
 	 */
-	async function loadLanguageSupport(lang) {
+	async function loadLanguageSupport(lang: string): Promise<any | null> {
 		if (isSsr) return null;
 		/** @type {Record<string, string>} */
 		const languageMap = {
@@ -111,7 +111,7 @@
 	 * @param {string} themeName - Theme name
 	 * @returns {Promise<any|null>} Theme extension or null
 	 */
-	async function loadTheme(themeName) {
+	async function loadTheme(themeName: string): Promise<any | null> {
 		if (isSsr) return null;
 		/** @type {Record<string, string>} */
 		const themeMap = {
@@ -146,7 +146,7 @@
 	/**
 	 * Initializes the editor with all extensions
 	 */
-	async function initializeEditor() {
+	async function initializeEditor(): Promise<void> {
 		const exts = [];
 
 		const langExt = await loadLanguageSupport(language);

@@ -40,10 +40,10 @@ const {
 
 // Tooltip state
 let isVisible = $state(false)
-let triggerElement = $state()
-let tooltipElement = $state()
-let showTimeout = $state(null)
-let hideTimeout = $state(null)
+let triggerElement: HTMLElement | undefined = $state()
+let tooltipElement: HTMLElement | undefined = $state()
+let showTimeout: ReturnType<typeof setTimeout> | null = $state(null)
+let hideTimeout: ReturnType<typeof setTimeout> | null = $state(null)
 
 // Position state
 let tooltipPosition = $state({
@@ -54,8 +54,8 @@ let tooltipPosition = $state({
 /**
  * Shows the tooltip
  */
-function showTooltip() {
-  clearTimeout(hideTimeout)
+function showTooltip(): void {
+  if (hideTimeout !== null) clearTimeout(hideTimeout)
 
   if (delay > 0) {
     showTimeout = setTimeout(() => {
@@ -83,8 +83,8 @@ function showTooltip() {
 /**
  * Hides the tooltip
  */
-function hideTooltip() {
-  clearTimeout(showTimeout)
+function hideTooltip(): void {
+  if (showTimeout !== null) clearTimeout(showTimeout)
   isVisible = false
   onhide?.(new CustomEvent("hide"))
 }
@@ -92,12 +92,12 @@ function hideTooltip() {
 /**
  * Updates the tooltip position based on trigger element
  */
-function updatePosition() {
+function updatePosition(): void {
   if (!triggerElement || !tooltipElement) return
 
   // Get element dimensions and positions
-  const triggerRect = triggerElement.getBoundingClientRect()
-  const tooltipRect = tooltipElement.getBoundingClientRect()
+  const triggerRect = (triggerElement as HTMLElement).getBoundingClientRect()
+  const tooltipRect = (tooltipElement as HTMLElement).getBoundingClientRect()
 
   // Calculate position based on specified position
   let top = 0
@@ -153,29 +153,29 @@ function updatePosition() {
 }
 
 // Event handlers
-function handleMouseEnter() {
+function handleMouseEnter(): void {
   showTooltip()
 }
 
-function handleMouseLeave() {
+function handleMouseLeave(): void {
   hideTooltip()
 }
 
-function handleFocus() {
+function handleFocus(): void {
   if (showOnFocus) {
     showTooltip()
   }
 }
 
-function handleBlur() {
+function handleBlur(): void {
   hideTooltip()
 }
 
 // Clean up timers on unmount
 onMount(() => {
   return () => {
-    clearTimeout(showTimeout)
-    clearTimeout(hideTimeout)
+    if (showTimeout !== null) clearTimeout(showTimeout)
+    if (hideTimeout !== null) clearTimeout(hideTimeout)
   }
 })
 </script>

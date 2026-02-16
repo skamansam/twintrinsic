@@ -16,8 +16,11 @@ import { writable } from "svelte/store"
  * @property {number} [duration] - Duration in milliseconds
  * @property {string|boolean} [icon] - Custom icon or false to hide icon
  * @property {boolean} [dismissible] - Whether toast can be dismissed by clicking
- * @property {number} [progress] - Progress percentage (0-100) or false to hide progress
+ * @property {number|boolean} [progress] - Progress percentage (0-100) or false to hide progress
  * @property {boolean} [closing] - Whether toast is in closing animation
+ * @property {number} [createdAt] - Timestamp when toast was created
+ * @property {boolean} [paused] - Whether toast timer is paused
+ * @property {number} [remaining] - Remaining time in milliseconds when paused
  */
 
 /**

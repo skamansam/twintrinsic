@@ -71,10 +71,10 @@ const {
 } = $props()
 
 // Get stepper context
-const stepperContext = getContext("stepper")
+const stepperContext = getContext("stepper") as { getStepState?: (index: number) => string; variant?: string; orientation?: string; alternativeLabels?: boolean; connector?: boolean } | undefined
 
 // Component state
-let stepElement
+let stepElement: HTMLElement | undefined
 let index = $state(-1)
 
 // Register with parent on mount
@@ -90,13 +90,13 @@ onMount(() => {
 })
 
 // Determine step state based on context and props
-const stepState = $derived(() => {
+const stepState = $derived.by(() => {
   if (error) return "error"
   if (completed) return "completed"
   if (active) return "active"
 
   // If not explicitly set, use context
-  if (stepperContext && index >= 0) {
+  if (stepperContext?.getStepState && index >= 0) {
     return stepperContext.getStepState(index)
   }
 
@@ -104,21 +104,21 @@ const stepState = $derived(() => {
 })
 
 // Determine if this is the last step
-const isLast = $derived(!stepElement?.nextElementSibling)
+const isLast = $derived(!(stepElement as HTMLElement | undefined)?.nextElementSibling)
 
 // Determine if step is clickable
 const isClickable = $derived(!!onClick && !disabled)
 
 // Determine if content should be shown
 const showContent = $derived(
-  stepperContext?.orientation === "vertical" && (expanded || stepState === "active") && !!children
+  (stepperContext?.orientation as string) === "vertical" && (expanded || (stepState as string) === "active") && !!children
 )
 
 // Determine variant from context
-const variant = $derived(stepperContext?.variant || "primary")
+const variant = $derived((stepperContext?.variant as string) || "primary")
 
 // Determine orientation from context
-const orientation = $derived(stepperContext?.orientation || "horizontal")
+const orientation = $derived((stepperContext?.orientation as string) || "horizontal")
 
 // Determine if using alternative labels
 const alternativeLabels = $derived(stepperContext?.alternativeLabels || false)
@@ -136,11 +136,11 @@ const variantClasses = $derived(
     warning: "text-warning-500 dark:text-warning-500",
     error: "text-error-500 dark:text-error-500",
     info: "text-info-500 dark:text-info-500",
-  }[variant] || "text-primary-500 dark:text-primary-500"
+  }[variant as string] || "text-primary-500 dark:text-primary-500"
 )
 
 // Handle click on step
-function handleClick() {
+function handleClick(): void {
   if (isClickable) {
     onClick(index)
   }
@@ -170,7 +170,7 @@ function handleClick() {
     aria-disabled={isClickable && disabled ? true : undefined}
     role={isClickable ? undefined : 'button'}
     onclick={isClickable ? handleClick : undefined}
-    onkeydown={isClickable ? (e) => e.key === 'Enter' && handleClick() : undefined}
+    onkeydown={isClickable ? (e: KeyboardEvent) => e.key === 'Enter' && handleClick() : undefined}
   >
     <div class="stepper-step-icon-container">
       <div class="stepper-step-icon {variantClasses}">

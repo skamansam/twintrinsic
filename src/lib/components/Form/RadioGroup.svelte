@@ -91,7 +91,7 @@ $effect(() => {
  * Handles radio selection
  * @param {CustomEvent} event - Change event from Radio component
  */
-function handleRadioChange(event) {
+function handleRadioChange(event: CustomEvent): void {
   const { value: radioValue } = event.detail
   selectedValue = radioValue
 

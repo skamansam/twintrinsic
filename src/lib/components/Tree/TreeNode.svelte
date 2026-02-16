@@ -69,7 +69,7 @@ const {
 } = $props()
 
 // Get tree context
-const treeContext = getContext("tree")
+const treeContext = getContext("tree") as { selectable?: boolean; isSelected?: (key: string) => boolean; toggleSelection?: (key: string) => void; showIcons?: boolean; showLines?: boolean } | undefined
 
 // Derived values for reactive prop access in closures
 const derivedExpanded = $derived(expanded)
@@ -79,7 +79,7 @@ const derivedSelected = $derived(selected)
 let isExpanded = $state(derivedExpanded)
 let isSelected = $state(derivedSelected)
 let hasChildren = $state(false)
-let nodeElement
+let nodeElement: HTMLElement | undefined
 
 // Update expanded state when prop changes
 $effect(() => {
@@ -88,7 +88,7 @@ $effect(() => {
 
 // Update selected state from context or prop
 $effect(() => {
-  if (treeContext?.selectable) {
+  if (treeContext?.selectable && treeContext?.isSelected) {
     isSelected = treeContext.isSelected(key)
   } else {
     isSelected = derivedSelected
@@ -117,7 +117,7 @@ const showLines = $derived(treeContext?.showLines !== false)
  * Toggles the expanded state
  * @param {Event} event - Click event
  */
-function toggleExpanded(event) {
+function toggleExpanded(event: Event): void {
   if (disabled || !hasChildren) return
 
   isExpanded = !isExpanded
@@ -130,10 +130,10 @@ function toggleExpanded(event) {
 /**
  * Handles click on the node
  */
-function handleClick() {
+function handleClick(): void {
   if (disabled) return
 
-  if (isSelectable) {
+  if (isSelectable && treeContext?.toggleSelection) {
     treeContext.toggleSelection(key)
     onselect?.(new CustomEvent("select", { detail: { selected: !isSelected, key } }))
   }
@@ -143,14 +143,14 @@ function handleClick() {
  * Handles keydown events for accessibility
  * @param {KeyboardEvent} event - Keydown event
  */
-function handleKeyDown(event) {
+function handleKeyDown(event: KeyboardEvent): void {
   if (disabled) return
 
   switch (event.key) {
     case "Enter":
     case " ":
       // Select node
-      if (isSelectable) {
+      if (isSelectable && treeContext?.toggleSelection) {
         treeContext.toggleSelection(key)
         onselect?.(new CustomEvent("select", { detail: { selected: !isSelected, key } }))
         event.preventDefault()

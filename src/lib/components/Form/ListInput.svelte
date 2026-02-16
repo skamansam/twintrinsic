@@ -81,7 +81,7 @@ const {
 } = $props()
 
 // Get form context if available
-const formContext = getContext("form")
+const formContext = getContext("form") as { registerField?: (name: string, value: unknown) => { getValue?: () => unknown; setValue?: (value: unknown) => void } } | undefined
 
 // Derived values for reactive prop access in closures
 const derivedValues = $derived(values)
@@ -89,27 +89,27 @@ const derivedName = $derived(name)
 
 // Input state
 let inputValue = $state("")
-let itemValues = $state([...derivedValues])
+let itemValues: string[] = $state([...derivedValues])
 let focusedIndex = $state(-1)
-let inputEl
+let inputEl: HTMLInputElement | undefined
 let isInvalid = $state(false)
 let validationMessage = $state("")
 
 // Register with form if available
-let fieldApi = $state()
+let fieldApi: { getValue?: () => unknown; setValue?: (value: unknown) => void } | undefined = $state()
 
 $effect(() => {
-  if (formContext && derivedName) {
+  if (formContext?.registerField && derivedName) {
     fieldApi = formContext.registerField(derivedName, derivedValues)
   }
 })
 
 // Update values when form field changes
 $effect(() => {
-  if (fieldApi) {
+  if (fieldApi?.getValue) {
     const formValue = fieldApi.getValue()
     if (formValue !== undefined && JSON.stringify(formValue) !== JSON.stringify(itemValues)) {
-      itemValues = [...formValue]
+      itemValues = [...(formValue as string[])]
     }
   }
 })
@@ -126,7 +126,7 @@ $effect(() => {
  * @param {string} value - Value to validate
  * @returns {boolean} - Whether the value is valid
  */
-function validateValue(value) {
+function validateValue(value: string): boolean {
   if (!value.trim()) return false
 
   if (!allowDuplicates && itemValues.includes(value.trim())) {
@@ -154,7 +154,7 @@ function validateValue(value) {
  * Adds a new item
  * @param {string} value - Value to add
  */
-function addItem(value) {
+function addItem(value: string): void {
   const trimmedValue = value.trim()
 
   if (!validateValue(trimmedValue)) {
@@ -170,7 +170,7 @@ function addItem(value) {
   inputValue = ""
 
   // Update form field if available
-  if (fieldApi) {
+  if (fieldApi?.setValue) {
     fieldApi.setValue(itemValues)
   }
 
@@ -182,14 +182,14 @@ function addItem(value) {
  * Removes an item
  * @param {number} index - Index of the item to remove
  */
-function removeItem(index) {
+function removeItem(index: number): void {
   if (index < 0 || index >= itemValues.length) return
 
   const removedValue = itemValues[index]
   itemValues = itemValues.filter((_, i) => i !== index)
 
   // Update form field if available
-  if (fieldApi) {
+  if (fieldApi?.setValue) {
     fieldApi.setValue(itemValues)
   }
 
@@ -206,7 +206,7 @@ function removeItem(index) {
  * Handles input keydown
  * @param {KeyboardEvent} event - Keydown event
  */
-function handleKeydown(event) {
+function handleKeydown(event: KeyboardEvent): void {
   // Get add trigger keys
   const triggerKeys = addOnKeys.split(",").map((k) => k.trim().toLowerCase())
 
@@ -254,11 +254,13 @@ function handleKeydown(event) {
 }
 
 /**
- * Handles input change
+ * Handles input event
  * @param {Event} event - Input event
  */
-function handleInput(event) {
-  inputValue = event.target.value
+function handleInput(event: Event): void {
+  const target = event.target as HTMLInputElement | null
+  if (!target) return
+  inputValue = target.value
 
   // Clear validation state when typing
   if (isInvalid) {
@@ -281,7 +283,7 @@ function handleInput(event) {
  * Handles paste event
  * @param {ClipboardEvent} event - Paste event
  */
-function handlePaste(event) {
+function handlePaste(event: ClipboardEvent): void {
   if (!pasteSeparator) return
 
   const pastedText = event.clipboardData?.getData("text") || ""
@@ -305,14 +307,14 @@ function handlePaste(event) {
  * Handles chip click
  * @param {number} index - Chip index
  */
-function handleChipClick(index) {
+function handleChipClick(index: number): void {
   focusedIndex = index
 }
 
 /**
  * Handles input focus
  */
-function handleFocus() {
+function handleFocus(): void {
   focusedIndex = -1
   onfocus?.(new CustomEvent("focus"))
 }
@@ -320,7 +322,7 @@ function handleFocus() {
 /**
  * Handles input blur
  */
-function handleBlur(event) {
+function handleBlur(event: FocusEvent): void {
   // Add current value if not empty and not clicking on a chip
   if (inputValue.trim() && !event.relatedTarget?.classList.contains("list-input-chip")) {
     addItem(inputValue)

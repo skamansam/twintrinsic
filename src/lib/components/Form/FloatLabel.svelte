@@ -55,7 +55,7 @@ let isFloating = $state(false)
 /**
  * Checks if the input has a value
  */
-function checkValue() {
+function checkValue(): void {
   if (!inputElement) return
 
   // Find the actual input element (could be nested)
@@ -74,7 +74,7 @@ function checkValue() {
  * @param {HTMLElement} element - Element to search in
  * @returns {HTMLElement|null} - Found input element or null
  */
-function findInputElement(element) {
+function findInputElement(element: HTMLElement): HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null {
   // Check if this is an input, textarea, or select
   if (
     element.tagName === "INPUT" ||
@@ -96,7 +96,7 @@ function findInputElement(element) {
 /**
  * Handles focus event
  */
-function handleFocus() {
+function handleFocus(): void {
   isFocused = true
   isFloating = true
 }
@@ -104,7 +104,7 @@ function handleFocus() {
 /**
  * Handles blur event
  */
-function handleBlur() {
+function handleBlur(): void {
   isFocused = false
   checkValue()
 }
@@ -112,7 +112,7 @@ function handleBlur() {
 /**
  * Handles input event
  */
-function handleInput() {
+function handleInput(): void {
   checkValue()
 }
 

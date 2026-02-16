@@ -23,7 +23,7 @@ Usage:
 </Masonry>
 -->
 <script lang="ts">
-const { onMount, onDestroy } = "svelte"
+import { onDestroy, onMount } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -60,13 +60,13 @@ const {
 } = $props()
 
 // Component state
-let containerElement = $state()
-let items = $state([])
+let containerElement: HTMLElement | undefined = $state()
+let items: HTMLElement[] = $state([])
 let columnCount = $state(3)
-let columnHeights = $state([])
-let resizeObserver = $state()
-let mutationObserver = $state()
-let itemObservers = $state([])
+let columnHeights: number[] = $state([])
+let resizeObserver: ResizeObserver | undefined = $state()
+let mutationObserver: MutationObserver | undefined = $state()
+let itemObservers: ResizeObserver[] = $state([])
 
 // Initialize column count based on columns prop
 $effect(() => {
@@ -81,27 +81,27 @@ function initLayout() {
 
   // Determine column count based on container width and breakpoints
   if (typeof columns === "object") {
-    const containerWidth = containerElement.offsetWidth
-    const breakpoints = {
+    const containerWidth = (containerElement as HTMLElement).offsetWidth
+    const breakpoints: Record<string, number> = {
       default: 1,
       sm: 640,
       md: 768,
       lg: 1024,
       xl: 1280,
       "2xl": 1536,
-      ...columns,
+      ...(columns as Record<string, number>),
     }
 
     // Sort breakpoints by size (descending)
     const sortedBreakpoints = Object.entries(breakpoints)
       .filter(([key]) => key !== "default")
-      .sort((a, b) => b[1] - a[1])
+      .sort((a, b) => (b[1] as number) - (a[1] as number))
 
     // Find the first breakpoint that matches
     let matchedColumns = breakpoints.default
     for (const [key, width] of sortedBreakpoints) {
-      if (containerWidth >= width) {
-        matchedColumns = columns[key]
+      if (containerWidth >= (width as number)) {
+        matchedColumns = (columns as Record<string, number>)[key]
         break
       }
     }
@@ -109,14 +109,14 @@ function initLayout() {
     columnCount = matchedColumns
   } else if (columnWidth) {
     // Calculate column count based on fixed column width
-    const containerWidth = containerElement.offsetWidth
+    const containerWidth = (containerElement as HTMLElement).offsetWidth
     columnCount = Math.max(1, Math.floor(containerWidth / parseInt(columnWidth)))
   } else {
-    columnCount = columns
+    columnCount = columns as number
   }
 
   // Initialize column heights
-  columnHeights = Array(columnCount).fill(0)
+  columnHeights = Array(columnCount).fill(0) as number[]
 
   // Position items
   positionItems()
@@ -125,18 +125,18 @@ function initLayout() {
 /**
  * Positions items in the masonry layout
  */
-function positionItems() {
+function positionItems(): void {
   if (!containerElement || !items.length) return
 
   // Reset column heights
   columnHeights = Array(columnCount).fill(0)
 
   // Calculate column width
-  const containerWidth = containerElement.offsetWidth
+  const containerWidth = (containerElement as HTMLElement).offsetWidth
   const colWidth = (containerWidth - gap * (columnCount - 1)) / columnCount
 
   // Position each item
-  items.forEach((item, index) => {
+  items.forEach((item: HTMLElement, index: number) => {
     // Find the shortest column
     const shortestCol = columnHeights.indexOf(Math.min(...columnHeights))
 
@@ -145,7 +145,7 @@ function positionItems() {
     const top = columnHeights[shortestCol]
 
     // Update item style
-    const itemStyle = item.style
+    const itemStyle = (item as HTMLElement).style
     itemStyle.width = `${colWidth}px`
     itemStyle.left = `${left}px`
     itemStyle.top = `${top}px`
@@ -169,7 +169,7 @@ function positionItems() {
 /**
  * Observes changes to item dimensions
  */
-function observeItems() {
+function observeItems(): void {
   // Clean up existing observers
   itemObservers.forEach((observer) => observer.disconnect())
   itemObservers = []
@@ -190,7 +190,7 @@ function observeItems() {
 onMount(() => {
   if (containerElement) {
     // Get all immediate children
-    items = Array.from(containerElement.children)
+    items = Array.from(containerElement.children) as HTMLElement[]
 
     // Set initial styles
     items.forEach((item) => {
@@ -222,8 +222,8 @@ onMount(() => {
         }
       })
 
-      if (needsUpdate) {
-        items = Array.from(containerElement.children)
+      if (needsUpdate && containerElement) {
+        items = Array.from(containerElement.children) as HTMLElement[]
 
         // Set styles for new items
         items.forEach((item) => {

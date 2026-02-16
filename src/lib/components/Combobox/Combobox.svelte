@@ -19,23 +19,23 @@ const {
 let isOpen = $state(false)
 let searchValue = $state("")
 let highlightedIndex = $state(-1)
-let selectedValue = $state(null)
-let inputElement
+let selectedValue: unknown = $state(null)
+let inputElement: HTMLInputElement | undefined
 
 $effect(() => {
   selectedValue = value
 })
 
-const getOptionLabel = (option) => {
+const getOptionLabel = (option: unknown): string => {
   if (typeof option === "object" && option !== null) {
-    return option[optionLabel]
+    return ((option as Record<string, unknown>)[optionLabel]?.toString() || "")
   }
-  return option
+  return option?.toString() || ""
 }
 
-const getOptionValue = (option) => {
+const getOptionValue = (option: unknown): unknown => {
   if (typeof option === "object" && option !== null) {
-    return option[optionValue]
+    return (option as Record<string, unknown>)[optionValue]
   }
   return option
 }
@@ -53,19 +53,23 @@ const handleInputFocus = () => {
   isOpen = true
 }
 
-const handleInputBlur = (e) => {
-  if (!e.relatedTarget?.closest(".combobox-dropdown")) {
+const handleInputBlur = (e: FocusEvent): void => {
+  const target = e.relatedTarget as HTMLElement | null
+  if (!target?.closest(".combobox-dropdown")) {
     isOpen = false
   }
 }
 
-const handleInputChange = (e) => {
+const handleInputChange = (e: Event): void => {
   if (searchable) {
-    searchValue = e.target.value
+    const target = e.target as HTMLInputElement | null
+    if (target) {
+      searchValue = target.value
+    }
   }
 }
 
-const handleOptionClick = (option) => {
+const handleOptionClick = (option: unknown): void => {
   const newValue = getOptionValue(option)
   selectedValue = newValue
   isOpen = false
@@ -73,7 +77,7 @@ const handleOptionClick = (option) => {
   onchange?.(new CustomEvent("change", { detail: { value: newValue, option } }))
 }
 
-const handleClear = (e) => {
+const handleClear = (e: MouseEvent): void => {
   e.stopPropagation()
   selectedValue = null
   searchValue = ""
@@ -81,7 +85,7 @@ const handleClear = (e) => {
   inputElement?.focus()
 }
 
-const handleKeydown = (e) => {
+const handleKeydown = (e: KeyboardEvent): void => {
   if (!isOpen) {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault()

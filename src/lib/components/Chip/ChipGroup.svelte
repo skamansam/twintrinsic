@@ -28,7 +28,7 @@
  * </ChipGroup>
  * ```
  */
-import { setContext } from "svelte"
+import { getContext, setContext } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -82,10 +82,9 @@ const {
 } = $props()
 
 // Component state
-let selectedItems = $state([])
+let selectedItems: unknown[] = $state([])
 
-/** @type {any} */
-let ItemTemplate = $state(null)
+let ItemTemplate: any = $state(null)
 $effect(() => {
 	ItemTemplate = children?.item
 })
@@ -102,7 +101,7 @@ const derivedOutline = $derived(outline)
 
 // Update selected items when prop changes
 $effect(() => {
-  selectedItems = Array.isArray(selected) ? [...selected] : []
+  selectedItems = Array.isArray(selected) ? [...(selected as unknown[])] : []
 })
 
 // Provide context for child chips
@@ -116,18 +115,18 @@ $effect(() => {
     get multiple() { return derivedMultiple },
     get disabled() { return derivedDisabled },
     get outline() { return derivedOutline },
-    isSelected: (item) => selectedItems.includes(item),
-    toggleSelection: (item) => {
+    isSelected: (item: unknown): boolean => selectedItems.includes(item as never),
+    toggleSelection: (item: unknown): void => {
       if (derivedSelectable) {
-        if (selectedItems.includes(item)) {
+        if (selectedItems.includes(item as never)) {
           // Remove item if already selected
           selectedItems = selectedItems.filter((i) => i !== item)
         } else {
           // Add item if not selected
           if (derivedMultiple) {
-            selectedItems = [...selectedItems, item]
+            selectedItems = [...selectedItems, item as never]
           } else {
-            selectedItems = [item]
+            selectedItems = [item as never]
           }
         }
         onselect?.(new CustomEvent("select", { detail: { selected: selectedItems } }))
@@ -140,7 +139,7 @@ $effect(() => {
  * Handles removing a chip
  * @param {number} index - Index of the chip to remove
  */
-function handleRemove(index) {
+function handleRemove(index: number): void {
   if (items.length > 0) {
     const newItems = [...items]
     const removedItem = newItems.splice(index, 1)[0]
@@ -164,17 +163,18 @@ function handleRemove(index) {
     {#each items as item, index}
       <div class="chip-group-item">
         {#if ItemTemplate}
-          <ItemTemplate
+          <svelte:component
+            this={ItemTemplate}
             {item}
             {index}
-            variant={variant}
-            size={size}
-            removable={removable}
+            {variant}
+            {size}
+            {removable}
             clickable={clickable || selectable}
-            disabled={disabled}
-            selected={selectedItems.includes(item)}
-            outline={outline}
-            onclick={() => selectable && !disabled && setContext('chipGroup').toggleSelection(item)}
+            {disabled}
+            selected={selectedItems.includes(item as never)}
+            {outline}
+            onclick={() => selectable && !disabled && getContext('chipGroup').toggleSelection(item)}
             onremove={() => handleRemove(index)}
           />
         {:else}

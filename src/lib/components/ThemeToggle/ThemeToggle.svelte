@@ -16,7 +16,7 @@ Usage:
   onMount(() => {
     // Initialize theme from localStorage or system preference
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const prefersDark = typeof window !== 'undefined' && typeof window.matchMedia === 'function' && window.matchMedia('(prefers-color-scheme: dark)').matches;
     
     isDarkMode = savedTheme ? savedTheme === 'dark' : prefersDark;
     applyTheme(isDarkMode);

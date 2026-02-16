@@ -35,7 +35,7 @@ Usage:
 </Combobox>
 -->
 <script lang="ts">
-import { getContext } from "svelte"
+import { getContext, tick } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -110,21 +110,21 @@ const {
 } = $props()
 
 // Component state
-let inputElement = $state()
-let dropdownElement = $state()
+let inputElement: HTMLInputElement | undefined = $state()
+let dropdownElement: HTMLElement | undefined = $state()
 let isOpen = $state(false)
 let inputValue = $state("")
-let selectedOption = $state(null)
+let selectedOption: unknown = $state(null)
 let highlightedIndex = $state(-1)
-let filteredOptions = $state([])
+let filteredOptions: unknown[] = $state([])
 let inputWidth = $state(0)
 
 // Update selected option when value prop changes
 $effect(() => {
   if (value !== undefined && value !== null) {
-    const option = findOptionByValue(value)
-    selectedOption = option
-    inputValue = option ? getOptionLabel(option) : ""
+    const opt = findOptionByValue(value)
+    selectedOption = opt
+    inputValue = opt ? getOptionLabel(opt) : ""
   } else {
     selectedOption = null
     if (!isOpen) {
@@ -146,7 +146,7 @@ $effect(() => {
 // Update input width when element is mounted
 $effect(() => {
   if (inputElement) {
-    inputWidth = inputElement.offsetWidth
+    inputWidth = (inputElement as HTMLInputElement).offsetWidth
   }
 })
 
@@ -155,7 +155,7 @@ $effect(() => {
  * @param {any} value - Value to find
  * @returns {Object|null} - Found option or null
  */
-function findOptionByValue(value) {
+function findOptionByValue(value: unknown): unknown {
   if (value === null || value === undefined) return null
 
   return options.find((option) => {
@@ -169,14 +169,14 @@ function findOptionByValue(value) {
  * @param {Object|string} option - Option to get label for
  * @returns {string} - Option label
  */
-function getOptionLabel(option) {
+function getOptionLabel(option: unknown): string {
   if (!option) return ""
 
   if (typeof option === "string" || typeof option === "number") {
     return String(option)
   }
 
-  return option[optionLabel] || ""
+  return ((option as Record<string, unknown>)[optionLabel]?.toString() || "")
 }
 
 /**
@@ -184,14 +184,14 @@ function getOptionLabel(option) {
  * @param {Object|string} option - Option to get value for
  * @returns {any} - Option value
  */
-function getOptionValue(option) {
+function getOptionValue(option: unknown): unknown {
   if (!option) return null
 
   if (typeof option === "string" || typeof option === "number") {
     return option
   }
 
-  return option[optionValue]
+  return (option as Record<string, unknown>)[optionValue]
 }
 
 /**
@@ -199,7 +199,7 @@ function getOptionValue(option) {
  * @param {string} query - Query to filter by
  * @returns {Array} - Filtered options
  */
-function filterOptions(query) {
+function filterOptions(query: string): unknown[] {
   if (!query) return [...options]
 
   if (filter) {
@@ -215,7 +215,7 @@ function filterOptions(query) {
 /**
  * Handles input focus
  */
-function handleFocus() {
+function handleFocus(): void {
   if (disabled || readonly) return
 
   if (openOnFocus) {
@@ -226,12 +226,12 @@ function handleFocus() {
 /**
  * Handles input blur
  */
-function handleBlur(event) {
+function handleBlur(event: Event): void {
   // Close dropdown after a short delay to allow for click events
   setTimeout(() => {
     if (
       document.activeElement !== inputElement &&
-      !dropdownElement?.contains(document.activeElement)
+      !(dropdownElement as HTMLElement)?.contains(document.activeElement)
     ) {
       closeDropdown()
 
@@ -249,10 +249,12 @@ function handleBlur(event) {
  * Handles input change
  * @param {Event} event - Input event
  */
-function handleInput(event) {
+function handleInput(event: Event): void {
   if (disabled || readonly) return
 
-  inputValue = event.target.value
+  const target = event.target as HTMLInputElement | null
+  if (!target) return
+  inputValue = target.value
 
   if (!isOpen) {
     openDropdown()
@@ -269,7 +271,7 @@ function handleInput(event) {
  * Handles keydown events
  * @param {KeyboardEvent} event - Keydown event
  */
-async function handleKeydown(event) {
+async function handleKeydown(event: KeyboardEvent): Promise<void> {
   if (disabled || readonly) return
 
   switch (event.key) {
@@ -324,7 +326,7 @@ async function handleKeydown(event) {
 /**
  * Scrolls to the highlighted option
  */
-async function scrollToHighlighted() {
+async function scrollToHighlighted(): Promise<void> {
   await tick()
 
   if (dropdownElement && highlightedIndex >= 0) {
@@ -345,7 +347,7 @@ async function scrollToHighlighted() {
 /**
  * Opens the dropdown
  */
-function openDropdown() {
+function openDropdown(): void {
   if (disabled || readonly) return
 
   isOpen = true
@@ -361,7 +363,7 @@ function openDropdown() {
 /**
  * Closes the dropdown
  */
-function closeDropdown() {
+function closeDropdown(): void {
   isOpen = false
   highlightedIndex = -1
 }
@@ -370,7 +372,7 @@ function closeDropdown() {
  * Selects an option
  * @param {Object|string} option - Option to select
  */
-function selectOption(option) {
+function selectOption(option: unknown): void {
   selectedOption = option
   inputValue = getOptionLabel(option)
   closeDropdown()
@@ -384,7 +386,7 @@ function selectOption(option) {
  * Clears the selection
  * @param {Event} event - Click event
  */
-function clearSelection(event) {
+function clearSelection(event: Event): void {
   event.stopPropagation()
 
   if (disabled || readonly) return
@@ -402,7 +404,7 @@ function clearSelection(event) {
 /**
  * Toggles the dropdown
  */
-function toggleDropdown() {
+function toggleDropdown(): void {
   if (disabled || readonly) return
 
   if (isOpen) {

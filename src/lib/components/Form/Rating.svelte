@@ -131,7 +131,7 @@ const items = $derived(Array.from({ length: max / precision }, (_, i) => (i + 1)
  * @param {MouseEvent|TouchEvent} event - Mouse or touch event
  * @returns {number} - Calculated value
  */
-function calculateValue(event) {
+function calculateValue(event: MouseEvent | TouchEvent): number {
   if (!ratingElement) return 0
 
   const rect = ratingElement.getBoundingClientRect()
@@ -151,7 +151,7 @@ function calculateValue(event) {
  * Handles mouse move or touch move events
  * @param {MouseEvent|TouchEvent} event - Mouse or touch event
  */
-function handleMove(event) {
+function handleMove(event: MouseEvent | TouchEvent): void {
   if (!isInteractive) return
 
   if (isDragging || event.type === "mousemove") {
@@ -163,7 +163,7 @@ function handleMove(event) {
  * Handles mouse down or touch start events
  * @param {MouseEvent|TouchEvent} event - Mouse or touch event
  */
-function handleStart(event) {
+function handleStart(event: MouseEvent | TouchEvent): void {
   if (!isInteractive) return
 
   isDragging = true
@@ -182,7 +182,7 @@ function handleStart(event) {
 /**
  * Handles mouse up or touch end events
  */
-function handleEnd() {
+function handleEnd(): void {
   if (!isInteractive || !isDragging) return
 
   // Update value and dispatch change event
@@ -203,7 +203,7 @@ function handleEnd() {
 /**
  * Handles mouse enter events
  */
-function handleEnter() {
+function handleEnter(): void {
   if (!isInteractive) return
   hoverValue = currentValue
 }
@@ -211,7 +211,7 @@ function handleEnter() {
 /**
  * Handles mouse leave events
  */
-function handleLeave() {
+function handleLeave(): void {
   if (!isInteractive || isDragging) return
   hoverValue = -1
 }
@@ -220,7 +220,7 @@ function handleLeave() {
  * Handles click events on individual items
  * @param {number} itemValue - Value of the clicked item
  */
-function handleItemClick(itemValue) {
+function handleItemClick(itemValue: number): void {
   if (!isInteractive) return
 
   // Toggle off if clicking the same value
@@ -238,7 +238,7 @@ function handleItemClick(itemValue) {
  * Handles keyboard navigation
  * @param {KeyboardEvent} event - Keydown event
  */
-function handleKeydown(event) {
+function handleKeydown(event: KeyboardEvent): void {
   if (!isInteractive) return
 
   let newValue = currentValue

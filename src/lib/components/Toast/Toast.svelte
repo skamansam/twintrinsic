@@ -25,7 +25,7 @@
  */
   import { onDestroy, onMount } from 'svelte';
   import { fade, fly } from 'svelte/transition';
-  import { toastStore } from './toastStore';
+  import { toastStore } from './toastStore.js';
 
   const {
     class: className = '',
@@ -37,8 +37,23 @@
   } = $props();
 
   // Component state
-  let toasts = $state([]);
-  let container;
+  interface Toast {
+    id: string;
+    message: string;
+    title?: string;
+    variant?: 'default' | 'primary' | 'success' | 'warning' | 'error' | 'info';
+    duration: number;
+    icon?: string | boolean;
+    dismissible: boolean;
+    progress: number | boolean;
+    closing: boolean;
+    createdAt: number;
+    paused?: boolean;
+    remaining?: number;
+  }
+  
+  let toasts: Toast[] = $state([]);
+  let container: HTMLElement | undefined;
   
   // Determine position classes
   const positionClasses = $derived({
@@ -52,7 +67,7 @@
   
   // Subscribe to toast store
   onMount(() => {
-    const unsubscribe = toastStore.subscribe(($toasts) => {
+    const unsubscribe = toastStore.subscribe(($toasts: Toast[]): void => {
       // Limit to maxToasts
       toasts = $toasts.slice(0, maxToasts);
     });
@@ -64,7 +79,7 @@
    * Removes a toast by id
    * @param {string} id - Toast id
    */
-  function removeToast(id) {
+  function removeToast(id: string): void {
     toastStore.remove(id);
   }
   
@@ -72,9 +87,9 @@
    * Pauses a toast's timer
    * @param {string} id - Toast id
    */
-  function pauseToast(id) {
+  function pauseToast(id: string): void {
     if (pauseOnHover) {
-      toastStore.pause(id);
+      toastStore.pause?.(id);
     }
   }
   
@@ -82,7 +97,7 @@
    * Resumes a toast's timer
    * @param {string} id - Toast id
    */
-  function resumeToast(id) {
+  function resumeToast(id: string): void {
     if (pauseOnHover) {
       toastStore.resume(id);
     }

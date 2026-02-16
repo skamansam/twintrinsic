@@ -101,7 +101,7 @@ const {
  * Handles button click
  * @param {Event} event - Click event
  */
-function handleClick(event) {
+function handleClick(event: Event): void {
   if (disabled || loading) {
     event.preventDefault()
     return

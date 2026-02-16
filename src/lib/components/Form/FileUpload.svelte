@@ -90,13 +90,13 @@ const {
 } = $props()
 
 // Component state
-let files = $state([])
-let inputElement
-let dropzoneElement
+let files: File[] = $state([])
+let inputElement: HTMLInputElement | undefined
+let dropzoneElement: HTMLElement | undefined
 let isDragging = $state(false)
-let errors = $state([])
+let errors: Array<{ type: string; message: string; file?: File }> = $state([])
 let uploading = $state(false)
-let uploadProgress = $state({})
+let uploadProgress: Record<string, number> = $state({})
 
 // Update files when value prop changes
 $effect(() => {
@@ -108,10 +108,10 @@ $effect(() => {
  * @param {FileList|Array} newFiles - Files to validate
  * @returns {Array} - Valid files
  */
-function validateFiles(newFiles) {
+function validateFiles(newFiles: FileList | File[]): File[] {
   const fileArray = Array.from(newFiles)
-  const validFiles = []
-  const newErrors = []
+  const validFiles: File[] = []
+  const newErrors: Array<{ type: string; message: string; file?: File }> = []
 
   // Check max files
   if (maxFiles && files.length + fileArray.length > maxFiles) {
@@ -138,11 +138,11 @@ function validateFiles(newFiles) {
 
     // Check file type if accept is specified
     if (accept) {
-      const acceptTypes = accept.split(",").map((type) => type.trim())
+      const acceptTypes = accept.split(",").map((type: string) => type.trim())
       const fileType = file.type
       const fileExtension = `.${file.name.split(".").pop()}`
 
-      const isAccepted = acceptTypes.some((type) => {
+      const isAccepted = acceptTypes.some((type: string) => {
         if (type.startsWith(".")) {
           // Extension match
           return type === fileExtension
@@ -183,10 +183,10 @@ function validateFiles(newFiles) {
  * Handles file input change
  * @param {Event} event - Change event
  */
-function handleInputChange(event) {
+function handleInputChange(event: Event): void {
   if (disabled) return
 
-  const inputFiles = event.target.files
+  const inputFiles = (event.target as HTMLInputElement | null)?.files
   if (!inputFiles || inputFiles.length === 0) return
 
   addFiles(inputFiles)
@@ -201,7 +201,7 @@ function handleInputChange(event) {
  * Adds files to the current selection
  * @param {FileList|Array} newFiles - Files to add
  */
-function addFiles(newFiles) {
+function addFiles(newFiles: FileList | File[]): void {
   const validFiles = validateFiles(newFiles)
 
   if (validFiles.length > 0) {
@@ -223,24 +223,20 @@ function addFiles(newFiles) {
  * Removes a file from the selection
  * @param {number} index - Index of the file to remove
  */
-function removeFile(index) {
+function removeFile(index: number): void {
   if (disabled) return
 
-  const removedFile = files[index]
   files = files.filter((_, i) => i !== index)
 
   // Dispatch change event
   onchange?.(new CustomEvent("change", { detail: { files } }))
-
-  // Dispatch remove event
-  onremove?.(new CustomEvent("remove", { detail: { file: removedFile, index } }))
 }
 
 /**
  * Handles drag enter event
  * @param {DragEvent} event - Drag event
  */
-function handleDragEnter(event) {
+function handleDragEnter(event: DragEvent): void {
   if (disabled) return
 
   event.preventDefault()
@@ -252,7 +248,7 @@ function handleDragEnter(event) {
  * Handles drag over event
  * @param {DragEvent} event - Drag event
  */
-function handleDragOver(event) {
+function handleDragOver(event: DragEvent): void {
   if (disabled) return
 
   event.preventDefault()
@@ -264,7 +260,7 @@ function handleDragOver(event) {
  * Handles drag leave event
  * @param {DragEvent} event - Drag event
  */
-function handleDragLeave(event) {
+function handleDragLeave(event: DragEvent): void {
   if (disabled) return
 
   event.preventDefault()
@@ -272,7 +268,7 @@ function handleDragLeave(event) {
 
   // Only set isDragging to false if we're leaving the dropzone
   // and not entering a child element
-  const rect = dropzoneElement.getBoundingClientRect()
+  const rect = (dropzoneElement as HTMLElement).getBoundingClientRect()
   const x = event.clientX
   const y = event.clientY
 
@@ -285,14 +281,14 @@ function handleDragLeave(event) {
  * Handles drop event
  * @param {DragEvent} event - Drop event
  */
-function handleDrop(event) {
+function handleDrop(event: DragEvent): void {
   if (disabled) return
 
   event.preventDefault()
   event.stopPropagation()
   isDragging = false
 
-  const droppedFiles = event.dataTransfer.files
+  const droppedFiles = (event.dataTransfer as DataTransfer).files
   if (!droppedFiles || droppedFiles.length === 0) return
 
   addFiles(droppedFiles)
@@ -301,7 +297,7 @@ function handleDrop(event) {
 /**
  * Opens the file browser
  */
-function browse(evt) {
+function browse(evt: Event): void {
   evt.stopPropagation()
   if (disabled) return
 
@@ -314,7 +310,7 @@ function browse(evt) {
  * Uploads files to the server
  * @param {Array} filesToUpload - Files to upload
  */
-async function uploadFiles(filesToUpload) {
+async function uploadFiles(filesToUpload: File[]): Promise<void> {
   if (!uploadUrl || !filesToUpload.length) return
 
   uploading = true
@@ -323,7 +319,7 @@ async function uploadFiles(filesToUpload) {
   const formData = new FormData()
 
   // Add files to FormData
-  filesToUpload.forEach((file, index) => {
+  filesToUpload.forEach((file: File) => {
     formData.append(name || "files", file, file.name)
     uploadProgress[file.name] = 0
   })
@@ -333,7 +329,7 @@ async function uploadFiles(filesToUpload) {
     const xhr = new XMLHttpRequest()
 
     // Track progress
-    xhr.upload.addEventListener("progress", (event) => {
+    xhr.upload.addEventListener("progress", (event: ProgressEvent<XMLHttpRequestUpload>): void => {
       if (event.lengthComputable) {
         const progress = Math.round((event.loaded / event.total) * 100)
 
@@ -351,7 +347,7 @@ async function uploadFiles(filesToUpload) {
     })
 
     // Set up completion handler
-    xhr.addEventListener("load", () => {
+    xhr.addEventListener("load", (): void => {
       if (xhr.status >= 200 && xhr.status < 300) {
         // Success
         filesToUpload.forEach((file) => {
@@ -387,7 +383,7 @@ async function uploadFiles(filesToUpload) {
     })
 
     // Set up error handler
-    xhr.addEventListener("error", () => {
+    xhr.addEventListener("error", (): void => {
       const error = {
         type: "upload",
         message: "Network error during upload",
@@ -407,7 +403,7 @@ async function uploadFiles(filesToUpload) {
     // Add headers if provided
     if (uploadHeaders) {
       Object.entries(uploadHeaders).forEach(([key, value]) => {
-        xhr.setRequestHeader(key, value)
+        xhr.setRequestHeader(key, String(value))
       })
     }
 
@@ -415,7 +411,7 @@ async function uploadFiles(filesToUpload) {
   } catch (error) {
     const errorObj = {
       type: "upload",
-      message: error.message || "Error during upload",
+      message: (error instanceof Error ? error.message : String(error)) || "Error during upload",
     }
 
     errors = [...errors, errorObj]
@@ -432,7 +428,7 @@ async function uploadFiles(filesToUpload) {
  * @param {number} bytes - Bytes to format
  * @returns {string} - Formatted size
  */
-function formatBytes(bytes) {
+function formatBytes(bytes: number): string {
   if (bytes === 0) return "0 Bytes"
 
   const k = 1024
@@ -447,7 +443,7 @@ function formatBytes(bytes) {
  * @param {File} file - File to get icon for
  * @returns {string} - Icon HTML
  */
-function getFileIcon(file) {
+function getFileIcon(file: File): string {
   const type = file.type
 
   if (type.startsWith("image/")) {
@@ -488,7 +484,7 @@ function getFileIcon(file) {
  * @param {File} file - File to preview
  * @returns {string} - Preview URL
  */
-function createPreviewUrl(file) {
+function createPreviewUrl(file: File): string {
   if (!file) return ""
 
   if (file.type.startsWith("image/")) {
@@ -500,7 +496,7 @@ function createPreviewUrl(file) {
 
 // Clean up object URLs on component destroy
 onDestroy(() => {
-  files.forEach((file) => {
+  files.forEach((file: File & { preview?: string }) => {
     if (file.preview) {
       URL.revokeObjectURL(file.preview)
     }
@@ -523,11 +519,11 @@ onDestroy(() => {
     ondragleave={handleDragLeave}
     ondrop={handleDrop}
     onclick={browse}
-    onkeydown={(event) => {
+    onkeydown={(event: KeyboardEvent) => {
 			if (disabled) return
 			if (event.key !== 'Enter' && event.key !== ' ') return
 			event.preventDefault()
-			browse()
+			browse(event)
 		}}
     bind:this={dropzoneElement}
     role="button"

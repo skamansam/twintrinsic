@@ -58,8 +58,8 @@ const {
 // Tabs state
 let selectedIndex = $state(0)
 let tabsCount = $state(0)
-let tabsRefs = $state([])
-let panelsRefs = $state([])
+let tabsRefs: HTMLElement[] = $state([])
+let panelsRefs: HTMLElement[] = $state([])
 
 // Sync selectedIndex when defaultIndex changes
 $effect(() => {
@@ -70,7 +70,7 @@ $effect(() => {
  * Selects a tab by index
  * @param {number} index - Tab index to select
  */
-function selectTab(index) {
+function selectTab(index: number): void {
   if (index < 0 || index >= tabsCount || disabled) return
 
   selectedIndex = index
@@ -82,7 +82,7 @@ function selectTab(index) {
  * @param {KeyboardEvent} event - Keydown event
  * @param {number} index - Current tab index
  */
-function handleKeydown(event, index) {
+function handleKeydown(event: KeyboardEvent, index: number): void {
   if (disabled) return
 
   let newIndex
@@ -124,7 +124,7 @@ function handleKeydown(event, index) {
  * @param {HTMLElement} tabElement - Tab element reference
  * @returns {number} - Tab index
  */
-function registerTab(tabElement) {
+function registerTab(tabElement: HTMLElement): number {
   const index = tabsRefs.length
   tabsRefs = [...tabsRefs, tabElement]
   tabsCount = tabsRefs.length
@@ -136,7 +136,7 @@ function registerTab(tabElement) {
  * @param {HTMLElement} panelElement - Panel element reference
  * @returns {number} - Panel index
  */
-function registerPanel(panelElement) {
+function registerPanel(panelElement: HTMLElement): number {
   const index = panelsRefs.length
   panelsRefs = [...panelsRefs, panelElement]
   return index
