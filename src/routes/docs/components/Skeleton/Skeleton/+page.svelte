@@ -2,9 +2,9 @@
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Skeleton from "$lib/components/Skeleton/Skeleton.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -22,7 +22,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Skeleton width="100%" height="20px" />
   </div>
 
-  <CodeBlock language="svelte">{`{`<Skeleton width="100%" height="20px" />`}</CodeBlock>
+  <CodeBlock language="svelte">{`<Skeleton width="100%" height="20px" />`}</CodeBlock>
 
   <h3>Skeleton Variants</h3>
   <div class="flex flex-col gap-4 p-4 bg-surface rounded-md mb-4">
@@ -44,7 +44,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </div>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Skeleton variant="rectangle" width="100%" height="100px" />
+  <CodeBlock language="svelte">{`<Skeleton variant="rectangle" width="100%" height="100px" />
 <Skeleton variant="circle" size="48px" />
 <Skeleton variant="rounded" width="100%" height="60px" />
 <Skeleton variant="text" width="100%" />`}</CodeBlock>
@@ -54,7 +54,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Skeleton variant="text" lines={3} />
   </div>
 
-  <CodeBlock language="svelte">{`{`<Skeleton variant="text" lines={3} />`}</CodeBlock>
+  <CodeBlock language="svelte">{`<Skeleton variant="text" lines={3} />`}</CodeBlock>
 
   <h3>Skeleton Loading Pattern</h3>
   <div class="flex gap-4 p-4 bg-surface rounded-md mb-4">
@@ -65,7 +65,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </div>
   </div>
 
-  <CodeBlock language="svelte">{`{`<div class="flex gap-4">
+  <CodeBlock language="svelte">{`<div class="flex gap-4">
   <Skeleton variant="circle" size="48px" />
   <div class="flex-1">
     <Skeleton variant="text" width="60%" />
@@ -78,7 +78,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Skeleton width="100%" height="20px" animated={false} />
   </div>
 
-  <CodeBlock language="svelte">{`{`<Skeleton width="100%" height="20px" animated={false} />`}</CodeBlock>
+  <CodeBlock language="svelte">{`<Skeleton width="100%" height="20px" animated={false} />`}</CodeBlock>
 
   <h2>Props</h2>
   <table>

@@ -23,10 +23,10 @@ let { children } = $props()
   </Separator>
 
   <h2>Installation</h2>
-  <CodeBlock language="bash">{`npm install twintrinsic</CodeBlock>
+  <CodeBlock language="bash">{`npm install twintrinsic`}</CodeBlock>
 
   <h2>Usage</h2>
-  <CodeBlock language="javascript">{`{`// In your app.css
+  <CodeBlock language="javascript">{`{\`// In your app.css
 @import 'twintrinsic/styles.css';
 
 // In your component
@@ -80,7 +80,7 @@ import { Container, AppHeader } from 'twintrinsic';`}</CodeBlock>
     by overriding these variables in your CSS:
   </p>
 
-  <CodeBlock language="css">{`{`:root {
+  <CodeBlock language="css">{`:root {
   --color-primary-500: 59 130 246;   /* Blue */
   --color-secondary-500: 99 102 241;  /* Indigo */
   --color-background: 255 255 255;    /* White */
@@ -97,7 +97,7 @@ import { Container, AppHeader } from 'twintrinsic';`}</CodeBlock>
     dark mode colors:
   </p>
 
-  <CodeBlock language="css">{`{`:root[data-theme="dark"] {
+  <CodeBlock language="css">{`:root[data-theme="dark"] {
   --color-background: 17 24 39;       /* Gray 900 */
   --color-surface: 31 41 55;          /* Gray 800 */
   --color-border: 75 85 99;           /* Gray 600 */

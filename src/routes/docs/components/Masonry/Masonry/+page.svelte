@@ -77,7 +77,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
     </Masonry>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Masonry columns={3} gap={16}>
+  <CodeBlock language="svelte">{`<Masonry columns={3} gap={16}>
   <div class="item">Item 1</div>
   <div class="item">Item 2</div>
   <div class="item">Item 3</div>
@@ -103,7 +103,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
     </Masonry>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Masonry 
+  <CodeBlock language="svelte">{`<Masonry 
   columns={{ default: 1, sm: 2, md: 3, lg: 4 }}
   gap={16}
 >
@@ -133,7 +133,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
     </Masonry>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Masonry 
+  <CodeBlock language="svelte">{`<Masonry 
   columnWidth="150px"
   gap={16}
   centered
@@ -147,7 +147,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
 </Masonry>`}</CodeBlock>
 
   <h3>With Dynamic Content</h3>
-  <CodeBlock language="svelte">{`{`<script>
+  <CodeBlock language="svelte">{`<script>
   import Masonry from "$lib/components/Masonry/Masonry.svelte";
   
   let items = [
@@ -262,7 +262,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
     You can specify different column counts for different screen sizes:
   </p>
 
-  <CodeBlock language="javascript">{`{`// Responsive columns configuration
+  <CodeBlock language="javascript">{`// Responsive columns configuration
 columns={{
   default: 1,  // Default (mobile first)
   sm: 2,       // Small screens (640px and up)
@@ -325,7 +325,7 @@ columns={{
     columns can fit in the container:
   </p>
 
-  <CodeBlock language="svelte">{`{`<Masonry columnWidth="300px" gap={16}>
+  <CodeBlock language="svelte">{`<Masonry columnWidth="300px" gap={16}>
   <!-- Items -->
 </Masonry>`}</CodeBlock>
 

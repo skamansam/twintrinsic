@@ -3,10 +3,10 @@
 Tree documentation page
 -->
 <script lang="ts">
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Tree from "$lib/components/Tree/Tree.svelte"
 import TreeNode from "$lib/components/Tree/TreeNode.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -37,7 +37,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Tree>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Tree>
+  <CodeBlock language="svelte">{`<Tree>
   <TreeNode label="Root Node">
     <TreeNode label="Child Node 1">
       <TreeNode label="Grandchild 1.1" />
@@ -75,7 +75,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Tree>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Tree>
+  <CodeBlock language="svelte">{`<Tree>
   <TreeNode 
     label="Documents" 
     icon='<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>'
@@ -109,7 +109,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Tree>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Tree selectable onselect={(e) => console.log(e.detail)}>
+  <CodeBlock language="svelte">{`<Tree selectable onselect={(e) => console.log(e.detail)}>
   <TreeNode label="Root Node">
     <TreeNode label="Child Node 1">
       <TreeNode label="Grandchild 1.1" />
@@ -140,7 +140,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Tree>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Tree selectable multiSelect onselect={(e) => console.log(e.detail)}>
+  <CodeBlock language="svelte">{`<Tree selectable multiSelect onselect={(e) => console.log(e.detail)}>
   <TreeNode label="Root Node">
     <!-- Child nodes -->
   </TreeNode>
@@ -163,7 +163,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Tree>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Tree showLines>
+  <CodeBlock language="svelte">{`<Tree showLines>
   <TreeNode label="Root Node">
     <!-- Child nodes -->
   </TreeNode>
@@ -186,7 +186,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Tree>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Tree expandAll>
+  <CodeBlock language="svelte">{`<Tree expandAll>
   <TreeNode label="Root Node">
     <!-- Child nodes -->
   </TreeNode>

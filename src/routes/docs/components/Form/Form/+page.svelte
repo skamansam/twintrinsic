@@ -7,12 +7,12 @@ Form documentation page
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
+import Button from "$lib/components/Button/Button.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import Checkbox from "$lib/components/Form/Checkbox.svelte"
 import Form from "$lib/components/Form/Form.svelte"
 import FormField from "$lib/components/Form/FormField.svelte"
-import Button from "$lib/components/Button/Button.svelte"
 import Input from "$lib/components/Form/Input.svelte"
-import Checkbox from "$lib/components/Form/Checkbox.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -82,7 +82,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
     </Form>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Form layout="horizontal">
+  <CodeBlock language="svelte">{`<Form layout="horizontal">
   <FormField label="First Name" name="firstName">
     <Input placeholder="Enter first name" />
   </FormField>
@@ -117,7 +117,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
     </Form>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Form validate oninvalid={handleInvalid} onsubmit={handleSubmit}>
+  <CodeBlock language="svelte">{`<Form validate oninvalid={handleInvalid} onsubmit={handleSubmit}>
   <FormField label="Username" name="username" required helpText="Username must be at least 3 characters">
     <Input placeholder="Enter username" minlength="3" />
   </FormField>
@@ -168,7 +168,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
     </div>
   </div>
 
-  <CodeBlock language="svelte">{`{`<!-- Disabled Form -->
+  <CodeBlock language="svelte">{`<!-- Disabled Form -->
 <Form disabled>
   <FormField label="Username" name="username">
     <Input placeholder="Enter username" />
@@ -374,7 +374,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
     interact with the form:
   </p>
 
-  <CodeBlock language="svelte">{`{`<script>
+  <CodeBlock language="svelte">{`<script>
   let formApi;
 
   function handleFormReady(event) {

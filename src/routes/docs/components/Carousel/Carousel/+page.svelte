@@ -3,10 +3,10 @@
 Carousel documentation page
 -->
 <script lang="ts">
-import Container from "$lib/components/Container/Container.svelte"
 import Carousel from "$lib/components/Carousel/Carousel.svelte"
 import CarouselItem from "$lib/components/Carousel/CarouselItem.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -42,7 +42,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Carousel>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Carousel>
+  <CodeBlock language="svelte">{`<Carousel>
   <div slot="items">
     <CarouselItem>
       <div class="h-64 bg-primary-100 dark:bg-primary-900 flex items-center justify-center rounded-lg">
@@ -85,7 +85,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Carousel>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Carousel autoplay interval={5000}>
+  <CodeBlock language="svelte">{`<Carousel autoplay interval={5000}>
   <div slot="items">
     <CarouselItem><!-- content --></CarouselItem>
     <CarouselItem><!-- content --></CarouselItem>
@@ -116,7 +116,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Carousel>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Carousel transition="fade">
+  <CodeBlock language="svelte">{`<Carousel transition="fade">
   <div slot="items">
     <CarouselItem><!-- content --></CarouselItem>
     <CarouselItem><!-- content --></CarouselItem>
@@ -147,7 +147,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Carousel>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Carousel showIndicators={false}>
+  <CodeBlock language="svelte">{`<Carousel showIndicators={false}>
   <div slot="items">
     <CarouselItem><!-- content --></CarouselItem>
     <CarouselItem><!-- content --></CarouselItem>
@@ -184,7 +184,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Carousel>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Carousel>
+  <CodeBlock language="svelte">{`<Carousel>
   <div slot="items">
     <CarouselItem>
       <img 

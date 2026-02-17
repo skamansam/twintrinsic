@@ -16,7 +16,7 @@ const components = [
   
   // Layout
   { name: "Card", category: "Layout", updated: false, apis: [
-    { name: "Semantic HTML", implemented: false },
+    { name: "Semantic HTML <article>", implemented: false },
   ]},
   { name: "Container", category: "Layout", updated: false, apis: [
     { name: "Responsive design", implemented: false },
@@ -27,8 +27,7 @@ const components = [
     { name: "CSS animations", implemented: false },
   ]},
   { name: "Separator", category: "Layout", updated: false, apis: [
-    { name: "Semantic HTML", implemented: false },
-    { name: "ARIA roles", implemented: false },
+    { name: "HTML <hr> element", implemented: false },
   ]},
   { name: "Sidebar", category: "Layout", updated: false, apis: [
     { name: "CSS Grid", implemented: false },
@@ -37,7 +36,7 @@ const components = [
   
   // Navigation
   { name: "Accordion", category: "Navigation", updated: false, apis: [
-    { name: "HTML Details/Summary", implemented: false },
+    { name: "<details> + <summary> elements", implemented: false },
   ]},
   { name: "AppHeader", category: "Navigation", updated: false, apis: [
     { name: "Semantic HTML nav", implemented: false },
@@ -48,15 +47,15 @@ const components = [
     { name: "CSS variables", implemented: false },
   ]},
   { name: "Breadcrumb", category: "Navigation", updated: false, apis: [
-    { name: "ARIA breadcrumb", implemented: false },
-    { name: "Semantic HTML", implemented: false },
+    { name: "<nav> + <ol> + <a> elements", implemented: false },
+    { name: "ARIA breadcrumb pattern", implemented: false },
   ]},
   { name: "Menu", category: "Navigation", updated: false, apis: [
-    { name: "Popover API", implemented: false },
+    { name: "<nav> + <ul> + <a> elements", implemented: false },
     { name: "Keyboard navigation", implemented: false },
   ]},
   { name: "Tabs", category: "Navigation", updated: false, apis: [
-    { name: "ARIA tabs", implemented: false },
+    { name: "ARIA tablist pattern (APG)", implemented: false },
   ]},
   
   // Data Display
@@ -67,42 +66,41 @@ const components = [
     { name: "Semantic HTML", implemented: false },
   ]},
   { name: "Carousel", category: "Data Display", updated: false, apis: [
-    { name: "CSS scroll-snap", implemented: false },
-    { name: "Intersection Observer", implemented: false },
+    { name: "ARIA carousel pattern (APG)", implemented: false },
+    { name: "Keyboard navigation", implemented: false },
   ]},
   { name: "Chip", category: "Data Display", updated: false, apis: [
     { name: "ARIA labels", implemented: false },
   ]},
   { name: "CodeBlock", category: "Data Display", updated: false, apis: [
+    { name: "<pre> + <code> + <figure> elements", implemented: false },
     { name: "Copy to clipboard API", implemented: false },
   ]},
   { name: "DataTable", category: "Data Display", updated: false, apis: [
-    { name: "HTML table elements", implemented: false },
+    { name: "<table> + <thead> + <tbody> + semantic structure", implemented: false },
     { name: "ARIA table roles", implemented: false },
   ]},
   { name: "Progress", category: "Data Display", updated: false, apis: [
-    { name: "HTML progress element", implemented: false },
-    { name: "CSS animations", implemented: false },
+    { name: "HTML <progress> element", implemented: false },
   ]},
   { name: "Skeleton", category: "Data Display", updated: false, apis: [
     { name: "CSS animations", implemented: false },
   ]},
   { name: "Table", category: "Data Display", updated: false, apis: [
-    { name: "Semantic HTML table", implemented: false },
+    { name: "<table> + <thead> + <tbody> + semantic structure", implemented: false },
     { name: "ARIA attributes", implemented: false },
   ]},
   { name: "Tag", category: "Data Display", updated: false, apis: [
     { name: "CSS flexbox", implemented: false },
   ]},
   { name: "Timeline", category: "Data Display", updated: false, apis: [
-    { name: "CSS Grid", implemented: false },
-    { name: "Semantic HTML", implemented: false },
+    { name: "<ol> + <time> elements", implemented: false },
   ]},
   { name: "Tooltip", category: "Data Display", updated: false, apis: [
-    { name: "Popover API", implemented: false },
+    { name: "<abbr> or aria-describedby", implemented: false },
   ]},
   { name: "Tree", category: "Data Display", updated: false, apis: [
-    { name: "ARIA tree roles", implemented: false },
+    { name: "ARIA tree pattern (APG)", implemented: false },
     { name: "Keyboard navigation", implemented: false },
   ]},
   
@@ -173,7 +171,7 @@ const components = [
     { name: "Keyboard navigation", implemented: false },
   ]},
   { name: "Rating", category: "Form", updated: false, apis: [
-    { name: "CSS hover states", implemented: false },
+    { name: "<fieldset> + <input type=\"radio\"> elements", implemented: false },
   ]},
   { name: "Select", category: "Form", updated: false, apis: [
     { name: "HTML select element", implemented: false },
@@ -182,8 +180,7 @@ const components = [
     { name: "HTML optgroup", implemented: false },
   ]},
   { name: "Slider", category: "Form", updated: false, apis: [
-    { name: "HTML range input", implemented: false },
-    { name: "ARIA slider", implemented: false },
+    { name: "<input type=\"range\"> element", implemented: false },
   ]},
   { name: "Switch", category: "Form", updated: false, apis: [
     { name: "HTML checkbox input", implemented: false },
@@ -195,11 +192,10 @@ const components = [
   
   // Feedback
   { name: "Modal", category: "Feedback", updated: false, apis: [
-    { name: "HTML Dialog element", implemented: false },
-    { name: "Popover API", implemented: false },
+    { name: "HTML <dialog> element", implemented: false },
   ]},
   { name: "Stepper", category: "Feedback", updated: false, apis: [
-    { name: "ARIA steps", implemented: false },
+    { name: "<ol> + ARIA attributes", implemented: false },
   ]},
   { name: "Toast", category: "Feedback", updated: false, apis: [
     { name: "CSS animations", implemented: false },

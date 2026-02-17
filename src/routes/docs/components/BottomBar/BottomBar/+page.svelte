@@ -7,11 +7,11 @@ BottomBar documentation page
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import Container from "$lib/components/Container/Container.svelte"
+import { onMount } from "svelte"
 import BottomBar from "$lib/components/BottomBar/BottomBar.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 import Panel from "$lib/components/Panel/Panel.svelte"
-import { onMount } from "svelte"
 
 let showExamples = $state(false)
 
@@ -53,7 +53,7 @@ onMount(() => {
     </div>
   </div>
 
-  <CodeBlock language="svelte">{`{`<BottomBar>
+  <CodeBlock language="svelte">{`<BottomBar>
   <svelte:fragment slot="header">Details</svelte:fragment>
   <div class="p-4">
     <h3 class="text-lg font-medium mb-2">Project Information</h3>

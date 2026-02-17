@@ -2,10 +2,10 @@
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
+import { getContext } from "svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Table from "$lib/components/Table/Table.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import { getContext } from "svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -48,7 +48,7 @@ import { getContext } from "svelte"
     </Table>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Table>
+  <CodeBlock language="svelte">{`<Table>
   <thead>
     <tr>
       <th>Name</th>
@@ -95,7 +95,7 @@ import { getContext } from "svelte"
     </Table>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Table striped>
+  <CodeBlock language="svelte">{`<Table striped>
   <!-- table content -->
 </Table>`}</CodeBlock>
 
@@ -121,7 +121,7 @@ import { getContext } from "svelte"
     </Table>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Table bordered>
+  <CodeBlock language="svelte">{`<Table bordered>
   <!-- table content -->
 </Table>`}</CodeBlock>
 
@@ -147,7 +147,7 @@ import { getContext } from "svelte"
     </Table>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Table hoverable>
+  <CodeBlock language="svelte">{`<Table hoverable>
   <!-- table content -->
 </Table>`}</CodeBlock>
 
@@ -176,7 +176,7 @@ import { getContext } from "svelte"
     </Table>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Table compact striped>
+  <CodeBlock language="svelte">{`<Table compact striped>
   <!-- table content -->
 </Table>`}</CodeBlock>
 

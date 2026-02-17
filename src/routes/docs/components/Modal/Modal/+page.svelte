@@ -2,10 +2,10 @@
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
+import { writable } from "svelte/store"
+import Button from "$lib/components/Button/Button.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Modal from "$lib/components/Modal/Modal.svelte"
-import Button from "$lib/components/Button/Button.svelte"
-import { writable } from "svelte/store"
 
 let showBasicModal = writable(false)
 let showSizedModal = writable(false)
@@ -43,7 +43,7 @@ let showScrollableModal = writable(false)
     </svelte:fragment>
   </Modal>
 
-  <CodeBlock language="svelte">{`{`<script>
+  <CodeBlock language="svelte">{`<script>
   import Modal from "$lib/components/Modal/Modal.svelte"
   import Button from "$lib/components/Button/Button.svelte"
   
@@ -82,7 +82,7 @@ let showScrollableModal = writable(false)
     </svelte:fragment>
   </Modal>
 
-  <CodeBlock language="svelte">{`{`<Modal open={true} size="sm"><!-- Small modal --></Modal>
+  <CodeBlock language="svelte">{`<Modal open={true} size="sm"><!-- Small modal --></Modal>
 <Modal open={true} size="md"><!-- Medium modal (default) --></Modal>
 <Modal open={true} size="lg"><!-- Large modal --></Modal>
 <Modal open={true} size="xl"><!-- Extra large modal --></Modal>

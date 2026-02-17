@@ -2,10 +2,10 @@
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
+import Button from "$lib/components/Button/Button.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Tooltip from "$lib/components/Tooltip/Tooltip.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Button from "$lib/components/Button/Button.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -25,7 +25,7 @@ import Button from "$lib/components/Button/Button.svelte"
     </Tooltip>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Tooltip text="This is a helpful tooltip">
+  <CodeBlock language="svelte">{`<Tooltip text="This is a helpful tooltip">
   <Button>Hover me</Button>
 </Tooltip>`}</CodeBlock>
 

@@ -3,10 +3,10 @@
 Stepper documentation page
 -->
 <script lang="ts">
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Stepper from "$lib/components/Stepper/Stepper.svelte"
 import StepperStep from "$lib/components/Stepper/StepperStep.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -44,7 +44,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Stepper>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Stepper>
+  <CodeBlock language="svelte">{`<Stepper>
   <StepperStep label="Step 1">
     <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
       <h3 class="text-lg font-medium">Step 1 Content</h3>
@@ -127,7 +127,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Stepper>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Stepper orientation="vertical">
+  <CodeBlock language="svelte">{`<Stepper orientation="vertical">
   <StepperStep label="Personal Information">
     <!-- Step content -->
   </StepperStep>
@@ -169,7 +169,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Stepper>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Stepper linear={false}>
+  <CodeBlock language="svelte">{`<Stepper linear={false}>
   <StepperStep label="Account" optional="Optional">
     <!-- Step content -->
   </StepperStep>
@@ -214,7 +214,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Stepper>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Stepper alternativeLabels>
+  <CodeBlock language="svelte">{`<Stepper alternativeLabels>
   <StepperStep label="Cart">
     <!-- Step content -->
   </StepperStep>
@@ -262,7 +262,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Stepper>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Stepper>
+  <CodeBlock language="svelte">{`<Stepper>
   <StepperStep 
     label="Account" 
     icon='<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>'

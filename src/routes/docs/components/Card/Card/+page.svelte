@@ -7,8 +7,8 @@ Documentation page for the Card component
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import Card from "$lib/components/Panel/Card.svelte"
 import { CodeBlock } from "$lib/components/CodeBlock"
+import Card from "$lib/components/Panel/Card.svelte"
 </script>
 
 <article class="prose dark:prose-invert max-w-none">
@@ -177,6 +177,46 @@ import { CodeBlock } from "$lib/components/CodeBlock"
       </tbody>
     </table>
   </div>
+
+  <h2>When to Use Card vs Container vs Panel</h2>
+  <p>
+    Twintrinsic provides three distinct layout components. Choose based on your use case:
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Use When</th>
+        <th>HTML Element</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Card</strong></td>
+        <td>Displaying self-contained, reusable content that could stand alone (blog post, product listing, user profile, testimonial)</td>
+        <td><code>&lt;article&gt;</code></td>
+      </tr>
+      <tr>
+        <td><strong>Container</strong></td>
+        <td>Creating page/section layout structure with responsive max-width constraints</td>
+        <td><code>&lt;div&gt;</code></td>
+      </tr>
+      <tr>
+        <td><strong>Panel</strong></td>
+        <td>Content should be collapsible/expandable to save vertical space (FAQ, settings, advanced options)</td>
+        <td><code>&lt;details&gt;</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Card-Specific Guidelines</h3>
+  <ul>
+    <li><strong>Use for independent content:</strong> Blog posts, product cards, team member profiles, testimonials</li>
+    <li><strong>Semantic HTML:</strong> Card renders as <code>&lt;article&gt;</code>, indicating self-contained content</li>
+    <li><strong>Always visible:</strong> Cards are not collapsible; content is always displayed</li>
+    <li><strong>Nest in Container:</strong> Use Container to wrap multiple Cards for layout control</li>
+    <li><strong>Not for layout:</strong> Don't use Card as a general layout wrapper; use Container instead</li>
+  </ul>
 
   <h2>Best Practices</h2>
   <ul>

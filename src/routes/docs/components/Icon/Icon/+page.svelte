@@ -23,9 +23,9 @@ Icon documentation page
   }
 </style>
 <script lang="ts">
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Icon from "$lib/components/Icon/Icon.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 
 // Group icons by category
 const iconsByCategory = {
@@ -62,7 +62,7 @@ const iconsByCategory = {
     <Icon name="check" />
   </div>
 
-  <CodeBlock language="svelte">{`{`<Icon name="check" />`}</CodeBlock>
+  <CodeBlock language="svelte">{`<Icon name="check" />`}</CodeBlock>
 
   <h3>Icon Sizes</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -72,7 +72,7 @@ const iconsByCategory = {
     <Icon name="settings" size="xl" />
   </div>
 
-  <CodeBlock language="svelte">{`{`<Icon name="settings" size="sm" />
+  <CodeBlock language="svelte">{`<Icon name="settings" size="sm" />
 <Icon name="settings" size="md" />
 <Icon name="settings" size="lg" />
 <Icon name="settings" size="xl" />`}</CodeBlock>
@@ -85,7 +85,7 @@ const iconsByCategory = {
     <Icon name="success" class="text-success-500" />
   </div>
 
-  <CodeBlock language="svelte">{`{`<Icon name="info" class="text-info-500" />
+  <CodeBlock language="svelte">{`<Icon name="info" class="text-info-500" />
 <Icon name="warning" class="text-warning-500" />
 <Icon name="error" class="text-error-500" />
 <Icon name="success" class="text-success-500" />`}</CodeBlock>
@@ -158,13 +158,13 @@ const iconsByCategory = {
   </p>
 
   <h3>With Buttons</h3>
-  <CodeBlock language="svelte">{`{`<Button>
+  <CodeBlock language="svelte">{`<Button>
   <Icon name="plus" size="sm" />
   <span class="ml-2">Add Item</span>
 </Button>`}</CodeBlock>
 
   <h3>With Form Fields</h3>
-  <CodeBlock language="svelte">{`{`<div class="relative">
+  <CodeBlock language="svelte">{`<div class="relative">
   <Input placeholder="Search..." />
   <div class="absolute right-3 top-1/2 transform -translate-y-1/2">
     <Icon name="search" class="text-muted" />
@@ -172,7 +172,7 @@ const iconsByCategory = {
 </div>`}</CodeBlock>
 
   <h3>With Badges</h3>
-  <CodeBlock language="svelte">{`{`<Badge variant="warning">
+  <CodeBlock language="svelte">{`<Badge variant="warning">
   <Icon name="warning" size="sm" />
   <span class="ml-1">Warning</span>
 </Badge>`}</CodeBlock>

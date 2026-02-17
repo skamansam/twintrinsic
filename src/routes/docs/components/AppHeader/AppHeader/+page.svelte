@@ -35,7 +35,7 @@ import Container from "$lib/components/Container/Container.svelte"
     />
   </div>
 
-  <CodeBlock language="svelte">{`{`<AppHeader
+  <CodeBlock language="svelte">{`<AppHeader
   brand="My App"
   navItems={[
     { label: 'Home', href: '#', current: true },
@@ -59,7 +59,7 @@ import Container from "$lib/components/Container/Container.svelte"
     />
   </div>
 
-  <CodeBlock language="svelte">{`{`<AppHeader
+  <CodeBlock language="svelte">{`<AppHeader
   brand={{
     name: 'My App',
     logo: '/path/to/logo.svg',

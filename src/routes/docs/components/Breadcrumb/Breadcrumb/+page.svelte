@@ -7,10 +7,10 @@ Breadcrumb documentation page
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import Container from "$lib/components/Container/Container.svelte"
 import Breadcrumb from "$lib/components/Breadcrumb/Breadcrumb.svelte"
 import BreadcrumbItem from "$lib/components/Breadcrumb/BreadcrumbItem.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -32,7 +32,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Breadcrumb>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Breadcrumb>
+  <CodeBlock language="svelte">{`<Breadcrumb>
   <BreadcrumbItem href="/">Home</BreadcrumbItem>
   <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
   <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
@@ -47,7 +47,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Breadcrumb>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Breadcrumb separator="›">
+  <CodeBlock language="svelte">{`<Breadcrumb separator="›">
   <BreadcrumbItem href="/">Home</BreadcrumbItem>
   <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
   <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
@@ -67,7 +67,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Breadcrumb>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Breadcrumb>
+  <CodeBlock language="svelte">{`<Breadcrumb>
   <BreadcrumbItem 
     href="/" 
     icon='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,7 +92,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Breadcrumb>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Breadcrumb collapsible maxVisibleItems={1}>
+  <CodeBlock language="svelte">{`<Breadcrumb collapsible maxVisibleItems={1}>
   <BreadcrumbItem href="/">Home</BreadcrumbItem>
   <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
   <BreadcrumbItem href="/docs/components">Components</BreadcrumbItem>

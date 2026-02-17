@@ -3,9 +3,9 @@
 Panel documentation page
 -->
 <script lang="ts">
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Panel from "$lib/components/Panel/Panel.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -30,7 +30,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Panel>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Panel>
+  <CodeBlock language="svelte">{`<Panel>
   <svelte:fragment slot="header">Basic Panel</svelte:fragment>
   <p>Panel content here</p>
 </Panel>`}</CodeBlock>
@@ -153,6 +153,46 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
       </tr>
     </tbody>
   </table>
+
+  <h2>When to Use Panel vs Container vs Card</h2>
+  <p>
+    Twintrinsic provides three distinct layout components. Choose based on your use case:
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Use When</th>
+        <th>HTML Element</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Panel</strong></td>
+        <td>Content should be collapsible/expandable to save vertical space (FAQ, settings, advanced options, collapsible documentation)</td>
+        <td><code>&lt;details&gt;</code></td>
+      </tr>
+      <tr>
+        <td><strong>Container</strong></td>
+        <td>Creating page/section layout structure with responsive max-width constraints</td>
+        <td><code>&lt;div&gt;</code></td>
+      </tr>
+      <tr>
+        <td><strong>Card</strong></td>
+        <td>Displaying self-contained, reusable content that could stand alone (blog post, product listing, user profile)</td>
+        <td><code>&lt;article&gt;</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Panel-Specific Guidelines</h3>
+  <ul>
+    <li><strong>Collapsible content:</strong> Use Panel when you want to hide/show content on demand</li>
+    <li><strong>Save vertical space:</strong> Panels are ideal for FAQ sections, settings, and advanced options</li>
+    <li><strong>Native HTML:</strong> Panel uses <code>&lt;details&gt;</code> element for built-in accessibility and keyboard support</li>
+    <li><strong>Keyboard navigation:</strong> Users can toggle with Enter/Space without any custom JavaScript</li>
+    <li><strong>Not for layout:</strong> Don't use Panel as a general layout wrapper; use Container instead</li>
+  </ul>
 
   <h2>Accessibility</h2>
   <p>

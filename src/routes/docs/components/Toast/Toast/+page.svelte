@@ -2,11 +2,11 @@
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import Container from "$lib/components/Container/Container.svelte"
 import Button from "$lib/components/Button/Button.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 import Toast from "$lib/components/Toast/Toast.svelte"
 import { toastStore } from "$lib/components/Toast/toastStore"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -26,7 +26,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Button>
   </div>
 
-  <CodeBlock language="svelte">{`{`<script>
+  <CodeBlock language="svelte">{`<script>
   import { toastStore } from "$lib/components/Toast/toastStore"
 </script>
 
@@ -52,7 +52,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Button>
   </div>
 
-  <CodeBlock language="svelte">{`{`toastStore.add({ message: "Success!", variant: "success" })
+  <CodeBlock language="svelte">{`toastStore.add({ message: "Success!", variant: "success" })
 toastStore.add({ message: "Error occurred!", variant: "error" })
 toastStore.add({ message: "Warning!", variant: "warning" })
 toastStore.add({ message: "Info message", variant: "info" })`}</CodeBlock>
@@ -64,7 +64,7 @@ toastStore.add({ message: "Info message", variant: "info" })`}</CodeBlock>
     </Button>
   </div>
 
-  <CodeBlock language="svelte">{`{`toastStore.add({
+  <CodeBlock language="svelte">{`toastStore.add({
   title: "Success",
   message: "Your changes have been saved",
   variant: "success"
@@ -86,7 +86,7 @@ toastStore.add({ message: "Info message", variant: "info" })`}</CodeBlock>
     </Button>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Toast position="top-right" />
+  <CodeBlock language="svelte">{`<Toast position="top-right" />
 <Toast position="top-left" />
 <Toast position="bottom-right" />
 <Toast position="bottom-left" />`}</CodeBlock>

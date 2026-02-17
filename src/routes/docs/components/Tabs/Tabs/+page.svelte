@@ -7,12 +7,12 @@ Tabs documentation page
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import Container from "$lib/components/Container/Container.svelte"
-import Tabs from "$lib/components/Tabs/Tabs.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import TabList from "$lib/components/Tabs/TabList.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 import Tab from "$lib/components/Tabs/Tab.svelte"
+import TabList from "$lib/components/Tabs/TabList.svelte"
 import TabPanel from "$lib/components/Tabs/TabPanel.svelte"
+import Tabs from "$lib/components/Tabs/Tabs.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -39,7 +39,7 @@ import TabPanel from "$lib/components/Tabs/TabPanel.svelte"
     </Tabs>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Tabs>
+  <CodeBlock language="svelte">{`<Tabs>
   <TabList>
     <Tab>Tab 1</Tab>
     <Tab>Tab 2</Tab>

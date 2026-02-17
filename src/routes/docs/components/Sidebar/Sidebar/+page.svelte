@@ -3,11 +3,11 @@
 Sidebar documentation page
 -->
 <script lang="ts">
-import Container from "$lib/components/Container/Container.svelte"
-import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Panel from "$lib/components/Panel/Panel.svelte"
 import { onMount } from "svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import Panel from "$lib/components/Panel/Panel.svelte"
+import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
 
 let showExamples = $state(false)
 
@@ -47,7 +47,7 @@ onMount(() => {
     </div>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Sidebar>
+  <CodeBlock language="svelte">{`<Sidebar>
   <svelte:fragment slot="header">Navigation</svelte:fragment>
   <nav class="space-y-2">
     <a href="#" class="block p-2 rounded hover:bg-hover">Home</a>

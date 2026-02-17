@@ -2,11 +2,11 @@
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
+import Button from "$lib/components/Button/Button.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Menu from "$lib/components/Menu/Menu/Menu.svelte"
 import MenuItem from "$lib/components/Menu/Menu/MenuItem.svelte"
-import Button from "$lib/components/Button/Button.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -29,7 +29,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Menu>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Menu>
+  <CodeBlock language="svelte">{`<Menu>
   <Button slot="trigger">Open Menu</Button>
   <MenuItem>Option 1</MenuItem>
   <MenuItem>Option 2</MenuItem>
@@ -46,7 +46,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Menu>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Menu>
+  <CodeBlock language="svelte">{`<Menu>
   <Button slot="trigger">Actions</Button>
   <MenuItem>Edit</MenuItem>
   <MenuItem>Copy</MenuItem>

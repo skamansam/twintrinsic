@@ -3,9 +3,9 @@
 Separator documentation page
 -->
 <script lang="ts">
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Separator from "$lib/components/Separator/Separator.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -26,14 +26,14 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <p class="mt-4">Content below</p>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Separator />`}</CodeBlock>
+  <CodeBlock language="svelte">{`<Separator />`}</CodeBlock>
 
   <h3>With Text</h3>
   <div class="not-prose mb-8 max-w-sm">
     <Separator>or</Separator>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Separator>or</Separator>`}</CodeBlock>
+  <CodeBlock language="svelte">{`<Separator>or</Separator>`}</CodeBlock>
 
   <h3>With Icon and Text</h3>
   <div class="not-prose mb-8 max-w-sm">
@@ -52,7 +52,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <span>Right content</span>
   </div>
 
-  <CodeBlock language="svelte">{`{`<div class="h-32 flex items-center">
+  <CodeBlock language="svelte">{`<div class="h-32 flex items-center">
   <span>Left content</span>
   <Separator vertical />
   <span>Right content</span>
@@ -67,7 +67,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Separator color="error">Error</Separator>
   </div>
 
-  <CodeBlock language="svelte">{`{`<Separator color="primary">Primary</Separator>`}</CodeBlock>
+  <CodeBlock language="svelte">{`<Separator color="primary">Primary</Separator>`}</CodeBlock>
 
   <h2>Props</h2>
   <table>
