@@ -42,7 +42,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Carousel>
   </div>
 
-  <pre class="language-svelte"><code>{`<Carousel>
+  <CodeBlock language="svelte">{`{`<Carousel>
   <div slot="items">
     <CarouselItem>
       <div class="h-64 bg-primary-100 dark:bg-primary-900 flex items-center justify-center rounded-lg">
@@ -60,7 +60,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
       </div>
     </CarouselItem>
   </div>
-</Carousel>`}</code></pre>
+</Carousel>`}</CodeBlock>
 
   <h3>Autoplay Carousel</h3>
   <div class="not-prose mb-8 max-w-2xl">
@@ -85,13 +85,13 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Carousel>
   </div>
 
-  <pre class="language-svelte"><code>{`<Carousel autoplay interval={5000}>
+  <CodeBlock language="svelte">{`{`<Carousel autoplay interval={5000}>
   <div slot="items">
     <CarouselItem><!-- content --></CarouselItem>
     <CarouselItem><!-- content --></CarouselItem>
     <CarouselItem><!-- content --></CarouselItem>
   </div>
-</Carousel>`}</code></pre>
+</Carousel>`}</CodeBlock>
 
   <h3>Fade Transition</h3>
   <div class="not-prose mb-8 max-w-2xl">
@@ -116,13 +116,13 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Carousel>
   </div>
 
-  <pre class="language-svelte"><code>{`<Carousel transition="fade">
+  <CodeBlock language="svelte">{`{`<Carousel transition="fade">
   <div slot="items">
     <CarouselItem><!-- content --></CarouselItem>
     <CarouselItem><!-- content --></CarouselItem>
     <CarouselItem><!-- content --></CarouselItem>
   </div>
-</Carousel>`}</code></pre>
+</Carousel>`}</CodeBlock>
 
   <h3>Without Indicators</h3>
   <div class="not-prose mb-8 max-w-2xl">
@@ -147,13 +147,13 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Carousel>
   </div>
 
-  <pre class="language-svelte"><code>{`<Carousel showIndicators={false}>
+  <CodeBlock language="svelte">{`{`<Carousel showIndicators={false}>
   <div slot="items">
     <CarouselItem><!-- content --></CarouselItem>
     <CarouselItem><!-- content --></CarouselItem>
     <CarouselItem><!-- content --></CarouselItem>
   </div>
-</Carousel>`}</code></pre>
+</Carousel>`}</CodeBlock>
 
   <h3>Image Carousel</h3>
   <div class="not-prose mb-8 max-w-2xl">
@@ -184,7 +184,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Carousel>
   </div>
 
-  <pre class="language-svelte"><code>{`<Carousel>
+  <CodeBlock language="svelte">{`{`<Carousel>
   <div slot="items">
     <CarouselItem>
       <img 
@@ -208,7 +208,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
       />
     </CarouselItem>
   </div>
-</Carousel>`}</code></pre>
+</Carousel>`}</CodeBlock>
 
   <h2>Carousel Props</h2>
   <table>

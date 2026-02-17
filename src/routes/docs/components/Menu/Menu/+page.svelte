@@ -29,12 +29,12 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Menu>
   </div>
 
-  <pre class="language-svelte"><code>{`<Menu>
+  <CodeBlock language="svelte">{`{`<Menu>
   <Button slot="trigger">Open Menu</Button>
   <MenuItem>Option 1</MenuItem>
   <MenuItem>Option 2</MenuItem>
   <MenuItem>Option 3</MenuItem>
-</Menu>`}</code></pre>
+</Menu>`}</CodeBlock>
 
   <h3>Menu with Dividers</h3>
   <div class="p-4 bg-surface rounded-md mb-4">
@@ -46,12 +46,12 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Menu>
   </div>
 
-  <pre class="language-svelte"><code>{`<Menu>
+  <CodeBlock language="svelte">{`{`<Menu>
   <Button slot="trigger">Actions</Button>
   <MenuItem>Edit</MenuItem>
   <MenuItem>Copy</MenuItem>
   <MenuItem divider>Delete</MenuItem>
-</Menu>`}</code></pre>
+</Menu>`}</CodeBlock>
 
   <h3>Menu with Icons</h3>
   <div class="p-4 bg-surface rounded-md mb-4">

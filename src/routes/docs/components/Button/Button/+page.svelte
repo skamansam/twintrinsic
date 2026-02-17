@@ -28,7 +28,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Button>Default Button</Button>
   </div>
 
-  <pre class="language-svelte"><code>{`<Button>Default Button</Button>`}</code></pre>
+  <CodeBlock language="svelte">{`{`<Button>Default Button</Button>`}</CodeBlock>
 
   <h3>Button Variants</h3>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -40,12 +40,12 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Button variant="link">Link</Button>
   </div>
 
-  <pre class="language-svelte"><code>{`<Button variant="default">Default</Button>
+  <CodeBlock language="svelte">{`{`<Button variant="default">Default</Button>
 <Button variant="primary">Primary</Button>
 <Button variant="secondary">Secondary</Button>
 <Button variant="outline">Outline</Button>
 <Button variant="ghost">Ghost</Button>
-<Button variant="link">Link</Button>`}</code></pre>
+<Button variant="link">Link</Button>`}</CodeBlock>
 
   <h3>Button Sizes</h3>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -56,11 +56,11 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Button size="xl">Extra Large</Button>
   </div>
 
-  <pre class="language-svelte"><code>{`<Button size="xs">Extra Small</Button>
+  <CodeBlock language="svelte">{`{`<Button size="xs">Extra Small</Button>
 <Button size="sm">Small</Button>
 <Button size="md">Medium</Button>
 <Button size="lg">Large</Button>
-<Button size="xl">Extra Large</Button>`}</code></pre>
+<Button size="xl">Extra Large</Button>`}</CodeBlock>
 
   <h3>Button with Icons</h3>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -123,9 +123,9 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Button fullWidth>Full Width Button</Button>
   </div>
 
-  <pre class="language-svelte"><code>{`<Button disabled>Disabled</Button>
+  <CodeBlock language="svelte">{`{`<Button disabled>Disabled</Button>
 <Button loading>Loading</Button>
-<Button fullWidth>Full Width Button</Button>`}</code></pre>
+<Button fullWidth>Full Width Button</Button>`}</CodeBlock>
 
   <h3>Link Button</h3>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -133,8 +133,8 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Button href="https://example.com" target="_blank" variant="primary">External Link</Button>
   </div>
 
-  <pre class="language-svelte"><code>{`<Button href="/docs">Link Button</Button>
-<Button href="https://example.com" target="_blank" variant="primary">External Link</Button>`}</code></pre>
+  <CodeBlock language="svelte">{`{`<Button href="/docs">Link Button</Button>
+<Button href="https://example.com" target="_blank" variant="primary">External Link</Button>`}</CodeBlock>
 
   <h2>Props</h2>
   <table>

@@ -7,9 +7,9 @@ Chip documentation page
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import Container from "$lib/components/Container/Container.svelte"
 import Chip from "$lib/components/Chip/Chip.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -28,7 +28,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Chip>Basic Chip</Chip>
   </div>
 
-  <pre class="language-svelte"><code>{`<Chip>Basic Chip</Chip>`}</code></pre>
+  <CodeBlock language="svelte">{`<Chip>Basic Chip</Chip>`}</CodeBlock>
 
   <h3>Chip Variants</h3>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -41,13 +41,13 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Chip variant="info">Info</Chip>
   </div>
 
-  <pre class="language-svelte"><code>{`<Chip variant="default">Default</Chip>
+  <CodeBlock language="svelte">{`<Chip variant="default">Default</Chip>
 <Chip variant="primary">Primary</Chip>
 <Chip variant="secondary">Secondary</Chip>
 <Chip variant="success">Success</Chip>
 <Chip variant="warning">Warning</Chip>
 <Chip variant="error">Error</Chip>
-<Chip variant="info">Info</Chip>`}</code></pre>
+<Chip variant="info">Info</Chip>`}</CodeBlock>
 
   <h3>Outline Chips</h3>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -57,10 +57,10 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Chip variant="success" outline>Success</Chip>
   </div>
 
-  <pre class="language-svelte"><code>{`<Chip outline>Default</Chip>
+  <CodeBlock language="svelte">{`<Chip outline>Default</Chip>
 <Chip variant="primary" outline>Primary</Chip>
 <Chip variant="secondary" outline>Secondary</Chip>
-<Chip variant="success" outline>Success</Chip>`}</code></pre>
+<Chip variant="success" outline>Success</Chip>`}</CodeBlock>
 
   <h3>Chip Sizes</h3>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -69,9 +69,9 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Chip size="lg">Large</Chip>
   </div>
 
-  <pre class="language-svelte"><code>{`<Chip size="sm">Small</Chip>
+  <CodeBlock language="svelte">{`<Chip size="sm">Small</Chip>
 <Chip size="md">Medium</Chip>
-<Chip size="lg">Large</Chip>`}</code></pre>
+<Chip size="lg">Large</Chip>`}</CodeBlock>
 
   <h3>Removable Chips</h3>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -80,9 +80,9 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Chip variant="error" removable>Error</Chip>
   </div>
 
-  <pre class="language-svelte"><code>{`<Chip removable onremove={() => handleRemove()}>Removable</Chip>
+  <CodeBlock language="svelte">{`<Chip removable onremove={() => handleRemove()}>Removable</Chip>
 <Chip variant="primary" removable onremove={() => handleRemove()}>Primary</Chip>
-<Chip variant="error" removable onremove={() => handleRemove()}>Error</Chip>`}</code></pre>
+<Chip variant="error" removable onremove={() => handleRemove()}>Error</Chip>`}</CodeBlock>
 
   <h3>Clickable Chips</h3>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -91,9 +91,9 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Chip variant="success" clickable selected>Selected</Chip>
   </div>
 
-  <pre class="language-svelte"><code>{`<Chip clickable onclick={() => handleClick()}>Clickable</Chip>
+  <CodeBlock language="svelte">{`<Chip clickable onclick={() => handleClick()}>Clickable</Chip>
 <Chip variant="primary" clickable onclick={() => handleClick()}>Primary</Chip>
-<Chip variant="success" clickable selected onclick={() => handleClick()}>Selected</Chip>`}</code></pre>
+<Chip variant="success" clickable selected onclick={() => handleClick()}>Selected</Chip>`}</CodeBlock>
 
   <h3>Chips with Icons</h3>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -110,7 +110,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Chip>
   </div>
 
-  <pre class="language-svelte"><code>{`<Chip 
+  <CodeBlock language="svelte">{`<Chip 
   icon='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
       d="M5 13l4 4L19 7" />
@@ -127,7 +127,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   </svg>'
 >
   Warning
-</Chip>`}</code></pre>
+</Chip>`}</CodeBlock>
 
   <h3>Chips with Avatar</h3>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -145,7 +145,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Chip>
   </div>
 
-  <pre class="language-svelte"><code>{`<Chip 
+  <CodeBlock language="svelte">{`<Chip 
   avatar='<img src="https://i.pravatar.cc/100?img=1" alt="User Avatar">'
 >
   John Doe
@@ -157,7 +157,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   removable
 >
   Jane Doe
-</Chip>`}</code></pre>
+</Chip>`}</CodeBlock>
 
   <h3>Disabled Chips</h3>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -166,9 +166,9 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Chip variant="error" disabled removable>Disabled Removable</Chip>
   </div>
 
-  <pre class="language-svelte"><code>{`<Chip disabled>Disabled</Chip>
+  <CodeBlock language="svelte">{`<Chip disabled>Disabled</Chip>
 <Chip variant="primary" disabled clickable>Disabled Clickable</Chip>
-<Chip variant="error" disabled removable>Disabled Removable</Chip>`}</code></pre>
+<Chip variant="error" disabled removable>Disabled Removable</Chip>`}</CodeBlock>
 
   <h2>Props</h2>
   <table>

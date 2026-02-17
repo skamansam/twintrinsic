@@ -26,11 +26,11 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<FileUpload 
+  <CodeBlock language="svelte">{`<FileUpload 
   dropzoneLabel="Drop files here or click to browse"
   browseLabel="Select Files"
   onchange={(e) => console.log(e.detail.files)}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Image Upload</h3>
   <div class="not-prose mb-8 max-w-xl">
@@ -43,13 +43,13 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<FileUpload 
+  <CodeBlock language="svelte">{`<FileUpload 
   accept="image/*"
   dropzoneLabel="Drop images here or click to browse"
   browseLabel="Select Images"
   maxSize={2097152} // 2MB
   onchange={(e) => console.log(e.detail.files)}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Document Upload</h3>
   <div class="not-prose mb-8 max-w-xl">
@@ -60,12 +60,12 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<FileUpload 
+  <CodeBlock language="svelte">{`<FileUpload 
   accept=".pdf,.doc,.docx,.txt"
   dropzoneLabel="Drop documents here or click to browse"
   browseLabel="Select Documents"
   onchange={(e) => console.log(e.detail.files)}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Single File Upload</h3>
   <div class="not-prose mb-8 max-w-xl">
@@ -76,12 +76,12 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<FileUpload 
+  <CodeBlock language="svelte">{`<FileUpload 
   multiple={false}
   dropzoneLabel="Drop a file here or click to browse"
   browseLabel="Select File"
   onchange={(e) => console.log(e.detail.files)}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>With File Validation</h3>
   <div class="not-prose mb-8 max-w-xl">
@@ -95,14 +95,14 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<FileUpload 
+  <CodeBlock language="svelte">{`<FileUpload 
   accept="image/*"
   maxFiles={3}
   maxSize={1048576} // 1MB
   dropzoneLabel="Drop up to 3 images (max 1MB each)"
   browseLabel="Select Images"
   onerror={(e) => console.log(e.detail.errors)}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Disabled State</h3>
   <div class="not-prose mb-8 max-w-xl">
@@ -113,11 +113,11 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<FileUpload 
+  <CodeBlock language="svelte">{`<FileUpload 
   disabled
   dropzoneLabel="Upload disabled"
   browseLabel="Cannot select files"
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Custom Styling</h3>
   <div class="not-prose mb-8 max-w-xl">
@@ -128,11 +128,11 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<FileUpload 
+  <CodeBlock language="svelte">{`<FileUpload 
   class="border-2 border-dashed border-primary-500 dark:border-primary-400 rounded-xl p-8"
   dropzoneLabel="Drop files here or click to browse"
   browseLabel="Select Files"
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>With Auto Upload</h3>
   <div class="not-prose mb-8 max-w-xl">
@@ -144,7 +144,7 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<FileUpload 
+  <CodeBlock language="svelte">{`<FileUpload 
   dropzoneLabel="Drop files here or click to browse"
   browseLabel="Select Files"
   autoUpload
@@ -152,7 +152,7 @@ import FileUpload from "$lib/components/Form/FileUpload.svelte"
   onsuccess={(e) => console.log('Upload successful', e.detail)}
   onerror={(e) => console.log('Upload failed', e.detail.errors)}
   onprogress={(e) => console.log('Progress:', e.detail.progress)}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h2>Props</h2>
   <table>

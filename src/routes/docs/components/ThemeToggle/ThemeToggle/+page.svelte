@@ -130,11 +130,11 @@ import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
   <h2>Usage</h2>
   <p>Import and use the ThemeToggle component:</p>
 
-  <pre class="language-svelte"><code>{`<script>
+  <CodeBlock language="svelte">{`{`<script>
   import ThemeToggle from '$lib/components/ThemeToggle/ThemeToggle.svelte';
 </script>
 
-<ThemeToggle />`}</code></pre>
+<ThemeToggle />`}</CodeBlock>
 
   <h2>Implementation Details</h2>
   <p>

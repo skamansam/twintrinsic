@@ -4,9 +4,9 @@ Slider documentation page
 -->
 
 <script lang="ts">
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Slider from "$lib/components/Form/Slider.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -25,12 +25,12 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Slider value={50} min={0} max={100} />
   </div>
 
-  <pre class="language-svelte"><code>{`<Slider 
+  <CodeBlock language="svelte">{`<Slider 
   value={50} 
   min={0} 
   max={100} 
   onchange={(e) => console.log(e.detail.value)}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Range Slider</h3>
   <div class="not-prose mb-8 max-w-xl">
@@ -41,12 +41,12 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<Slider 
+  <CodeBlock language="svelte">{`<Slider 
   value={[20, 80]} 
   min={0} 
   max={100} 
   onchange={(e) => console.log(e.detail.value)}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>With Ticks and Values</h3>
   <div class="not-prose mb-8 max-w-xl">
@@ -60,7 +60,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<Slider 
+  <CodeBlock language="svelte">{`<Slider 
   value={50} 
   min={0} 
   max={100} 
@@ -68,7 +68,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   showTicks
   showValue
   onchange={(e) => console.log(e.detail.value)}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Custom Tick Values</h3>
   <div class="not-prose mb-8 max-w-xl">
@@ -82,7 +82,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<Slider 
+  <CodeBlock language="svelte">{`<Slider 
   value={50} 
   min={0} 
   max={100} 
@@ -90,7 +90,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   showTicks
   showValue
   onchange={(e) => console.log(e.detail.value)}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>With Tooltip</h3>
   <div class="not-prose mb-8 max-w-xl">
@@ -102,13 +102,13 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<Slider 
+  <CodeBlock language="svelte">{`<Slider 
   value={50} 
   min={0} 
   max={100} 
   showTooltip
   onchange={(e) => console.log(e.detail.value)}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Custom Variants</h3>
   <div class="not-prose mb-8 max-w-xl space-y-6">
@@ -120,12 +120,12 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Slider value={80} min={0} max={100} variant="info" />
   </div>
 
-  <pre class="language-svelte"><code>{`<Slider value={30} min={0} max={100} variant="primary" />
+  <CodeBlock language="svelte">{`<Slider value={30} min={0} max={100} variant="primary" />
 <Slider value={40} min={0} max={100} variant="secondary" />
 <Slider value={50} min={0} max={100} variant="success" />
 <Slider value={60} min={0} max={100} variant="warning" />
 <Slider value={70} min={0} max={100} variant="error" />
-<Slider value={80} min={0} max={100} variant="info" />`}</code></pre>
+<Slider value={80} min={0} max={100} variant="info" />`}</CodeBlock>
 
   <h3>Vertical Orientation</h3>
   <div class="not-prose mb-8 max-w-xl flex items-center space-x-8 h-48">
@@ -145,13 +145,13 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<Slider 
+  <CodeBlock language="svelte">{`<Slider 
   value={50} 
   min={0} 
   max={100} 
   orientation="vertical"
   onchange={(e) => console.log(e.detail.value)}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Disabled State</h3>
   <div class="not-prose mb-8 max-w-xl">
@@ -163,12 +163,12 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<Slider 
+  <CodeBlock language="svelte">{`<Slider 
   value={50} 
   min={0} 
   max={100} 
   disabled
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Custom Value Format</h3>
   <div class="not-prose mb-8 max-w-xl">
@@ -181,14 +181,14 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<Slider 
+  <CodeBlock language="svelte">{`<Slider 
   value={50} 
   min={0} 
   max={100} 
   showValue
   valueFormat="\${value}%"
   onchange={(e) => console.log(e.detail.value)}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h2>Props</h2>
   <table>

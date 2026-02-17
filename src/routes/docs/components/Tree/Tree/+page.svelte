@@ -37,7 +37,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Tree>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tree>
+  <CodeBlock language="svelte">{`{`<Tree>
   <TreeNode label="Root Node">
     <TreeNode label="Child Node 1">
       <TreeNode label="Grandchild 1.1" />
@@ -49,7 +49,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </TreeNode>
     <TreeNode label="Child Node 3" />
   </TreeNode>
-</Tree>`}</code></pre>
+</Tree>`}</CodeBlock>
 
   <h3>With Icons</h3>
   <div class="not-prose mb-8 max-w-md">
@@ -75,7 +75,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Tree>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tree>
+  <CodeBlock language="svelte">{`{`<Tree>
   <TreeNode 
     label="Documents" 
     icon='<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>'
@@ -90,7 +90,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
       />
     </TreeNode>
   </TreeNode>
-</Tree>`}</code></pre>
+</Tree>`}</CodeBlock>
 
   <h3>Selectable Tree</h3>
   <div class="not-prose mb-8 max-w-md">
@@ -109,7 +109,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Tree>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tree selectable onselect={(e) => console.log(e.detail)}>
+  <CodeBlock language="svelte">{`{`<Tree selectable onselect={(e) => console.log(e.detail)}>
   <TreeNode label="Root Node">
     <TreeNode label="Child Node 1">
       <TreeNode label="Grandchild 1.1" />
@@ -121,7 +121,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </TreeNode>
     <TreeNode label="Child Node 3" />
   </TreeNode>
-</Tree>`}</code></pre>
+</Tree>`}</CodeBlock>
 
   <h3>Multi-Select Tree</h3>
   <div class="not-prose mb-8 max-w-md">
@@ -140,11 +140,11 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Tree>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tree selectable multiSelect onselect={(e) => console.log(e.detail)}>
+  <CodeBlock language="svelte">{`{`<Tree selectable multiSelect onselect={(e) => console.log(e.detail)}>
   <TreeNode label="Root Node">
     <!-- Child nodes -->
   </TreeNode>
-</Tree>`}</code></pre>
+</Tree>`}</CodeBlock>
 
   <h3>With Connecting Lines</h3>
   <div class="not-prose mb-8 max-w-md">
@@ -163,11 +163,11 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Tree>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tree showLines>
+  <CodeBlock language="svelte">{`{`<Tree showLines>
   <TreeNode label="Root Node">
     <!-- Child nodes -->
   </TreeNode>
-</Tree>`}</code></pre>
+</Tree>`}</CodeBlock>
 
   <h3>Expanded By Default</h3>
   <div class="not-prose mb-8 max-w-md">
@@ -186,11 +186,11 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Tree>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tree expandAll>
+  <CodeBlock language="svelte">{`{`<Tree expandAll>
   <TreeNode label="Root Node">
     <!-- Child nodes -->
   </TreeNode>
-</Tree>`}</code></pre>
+</Tree>`}</CodeBlock>
 
   <h2>Tree Props</h2>
   <table>

@@ -22,7 +22,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Skeleton width="100%" height="20px" />
   </div>
 
-  <pre class="language-svelte"><code>{`<Skeleton width="100%" height="20px" />`}</code></pre>
+  <CodeBlock language="svelte">{`{`<Skeleton width="100%" height="20px" />`}</CodeBlock>
 
   <h3>Skeleton Variants</h3>
   <div class="flex flex-col gap-4 p-4 bg-surface rounded-md mb-4">
@@ -44,17 +44,17 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </div>
   </div>
 
-  <pre class="language-svelte"><code>{`<Skeleton variant="rectangle" width="100%" height="100px" />
+  <CodeBlock language="svelte">{`{`<Skeleton variant="rectangle" width="100%" height="100px" />
 <Skeleton variant="circle" size="48px" />
 <Skeleton variant="rounded" width="100%" height="60px" />
-<Skeleton variant="text" width="100%" />`}</code></pre>
+<Skeleton variant="text" width="100%" />`}</CodeBlock>
 
   <h3>Multiple Lines</h3>
   <div class="flex flex-col gap-4 p-4 bg-surface rounded-md mb-4">
     <Skeleton variant="text" lines={3} />
   </div>
 
-  <pre class="language-svelte"><code>{`<Skeleton variant="text" lines={3} />`}</code></pre>
+  <CodeBlock language="svelte">{`{`<Skeleton variant="text" lines={3} />`}</CodeBlock>
 
   <h3>Skeleton Loading Pattern</h3>
   <div class="flex gap-4 p-4 bg-surface rounded-md mb-4">
@@ -65,20 +65,20 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </div>
   </div>
 
-  <pre class="language-svelte"><code>{`<div class="flex gap-4">
+  <CodeBlock language="svelte">{`{`<div class="flex gap-4">
   <Skeleton variant="circle" size="48px" />
   <div class="flex-1">
     <Skeleton variant="text" width="60%" />
     <Skeleton variant="text" width="80%" />
   </div>
-</div>`}</code></pre>
+</div>`}</CodeBlock>
 
   <h3>Static Skeleton (No Animation)</h3>
   <div class="flex flex-col gap-4 p-4 bg-surface rounded-md mb-4">
     <Skeleton width="100%" height="20px" animated={false} />
   </div>
 
-  <pre class="language-svelte"><code>{`<Skeleton width="100%" height="20px" animated={false} />`}</code></pre>
+  <CodeBlock language="svelte">{`{`<Skeleton width="100%" height="20px" animated={false} />`}</CodeBlock>
 
   <h2>Props</h2>
   <table>

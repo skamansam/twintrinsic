@@ -30,10 +30,10 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Panel>
   </div>
 
-  <pre class="language-svelte"><code>{`<Panel>
+  <CodeBlock language="svelte">{`{`<Panel>
   <svelte:fragment slot="header">Basic Panel</svelte:fragment>
   <p>Panel content here</p>
-</Panel>`}</code></pre>
+</Panel>`}</CodeBlock>
 
   <h3>Custom Header with Icon</h3>
   <div class="not-prose mb-8">

@@ -111,7 +111,7 @@ const productColumns = [
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<script>
+  <CodeBlock language="svelte">{`<script>
   const users = [
     { id: 1, name: "John Doe", email: "john.doe@example.com", role: "Admin", status: "Active" },
     { id: 2, name: "Jane Smith", email: "jane.smith@example.com", role: "Editor", status: "Active" },
@@ -130,7 +130,7 @@ const productColumns = [
 <DataTable 
   data={users} 
   columns={columns}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Sortable and Filterable</h3>
   <div class="not-prose mb-8">
@@ -142,12 +142,12 @@ const productColumns = [
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<DataTable 
+  <CodeBlock language="svelte">{`<DataTable 
   data={users} 
   columns={columns}
   sortable
   filterable
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Pagination</h3>
   <div class="not-prose mb-8">
@@ -162,7 +162,7 @@ const productColumns = [
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<DataTable 
+  <CodeBlock language="svelte">{`<DataTable 
   data={users} 
   columns={columns}
   pageable
@@ -170,7 +170,7 @@ const productColumns = [
   rowsPerPageOptions={[5, 10, 25]}
   showRowsPerPage
   showPagination
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Selectable Rows</h3>
   <div class="not-prose mb-8">
@@ -182,13 +182,13 @@ const productColumns = [
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<DataTable 
+  <CodeBlock language="svelte">{`<DataTable 
   data={users} 
   columns={columns}
   selectable
   multiSelect
   onselectionChange={(e) => console.log(e.detail.selection)}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Striped and Bordered</h3>
   <div class="not-prose mb-8">
@@ -200,12 +200,12 @@ const productColumns = [
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<DataTable 
+  <CodeBlock language="svelte">{`<DataTable 
   data={users} 
   columns={columns}
   striped
   bordered
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Dense Layout</h3>
   <div class="not-prose mb-8">
@@ -232,12 +232,12 @@ const productColumns = [
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<DataTable 
+  <CodeBlock language="svelte">{`<DataTable 
   data={[]}
   columns={columns}
   loading
   loadingText="Fetching user data..."
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Empty State</h3>
   <div class="not-prose mb-8">
@@ -248,12 +248,11 @@ const productColumns = [
     />
   </div>
 
-  <pre class="language-svelte"><code>
-    {`<DataTable 
+  <CodeBlock language="svelte">{`<DataTable 
   data={[]}
   columns={columns}
   emptyText="No users found"
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Custom Templates</h3>
   <div class="not-prose mb-8">
@@ -265,7 +264,7 @@ const productColumns = [
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<script>
+  <CodeBlock language="svelte">{`<script>
   const products = [
     { id: 1, name: "Laptop", category: "Electronics", price: 1299.99, stock: 45 },
     { id: 2, name: "Smartphone", category: "Electronics", price: 899.99, stock: 120 },
@@ -281,7 +280,7 @@ const productColumns = [
       header: 'Price', 
       sortable: true, 
       filterable: true,
-      template: (value) => \`$\$\{value.toFixed(2)\}\`
+      template: (value) => \`\${value.toFixed(2)}\`
     },
     { 
       field: 'stock', 
@@ -303,7 +302,7 @@ const productColumns = [
   columns={columns}
   sortable
   filterable
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Custom Styling</h3>
   <div class="not-prose mb-8">
@@ -318,7 +317,7 @@ const productColumns = [
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<DataTable 
+  <CodeBlock language="svelte">{`<DataTable 
   data={products} 
   columns={columns}
   class="border border-primary-200 dark:border-primary-800 rounded-lg overflow-hidden"
@@ -326,7 +325,7 @@ const productColumns = [
   rowClass="hover:bg-primary-50 dark:hover:bg-primary-900/30"
   sortable
   filterable
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h2>Props</h2>
   <table>

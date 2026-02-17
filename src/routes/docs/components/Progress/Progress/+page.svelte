@@ -2,8 +2,7 @@
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import Container from "$lib/components/Container/Container.svelte"
-import Progress from "$lib/components/Progress/Progress.svelte"
+import { CodeBlock, Container, Progress } from "$lib"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -137,16 +136,10 @@ import Progress from "$lib/components/Progress/Progress.svelte"
         <td>Maximum progress value</td>
       </tr>
       <tr>
-        <td><code>min</code></td>
-        <td><code>number</code></td>
-        <td><code>0</code></td>
-        <td>Minimum progress value</td>
-      </tr>
-      <tr>
         <td><code>variant</code></td>
         <td><code>string</code></td>
         <td><code>"primary"</code></td>
-        <td>Visual style variant (primary, secondary, success, warning, error, info)</td>
+        <td>Visual style variant (default, primary, secondary, success, warning, error, info)</td>
       </tr>
       <tr>
         <td><code>size</code></td>
@@ -161,12 +154,6 @@ import Progress from "$lib/components/Progress/Progress.svelte"
         <td>Whether to display the progress value as text</td>
       </tr>
       <tr>
-        <td><code>valueInside</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show the value inside the progress bar</td>
-      </tr>
-      <tr>
         <td><code>striped</code></td>
         <td><code>boolean</code></td>
         <td><code>false</code></td>
@@ -176,13 +163,13 @@ import Progress from "$lib/components/Progress/Progress.svelte"
         <td><code>animated</code></td>
         <td><code>boolean</code></td>
         <td><code>false</code></td>
-        <td>Whether to animate the striped pattern</td>
+        <td>Whether to animate the striped pattern (requires striped to be true)</td>
       </tr>
       <tr>
         <td><code>indeterminate</code></td>
         <td><code>boolean</code></td>
         <td><code>false</code></td>
-        <td>Whether to show an indeterminate loading animation</td>
+        <td>Whether to show an indeterminate loading state (removes the value attribute)</td>
       </tr>
       <tr>
         <td><code>format</code></td>
@@ -195,6 +182,12 @@ import Progress from "$lib/components/Progress/Progress.svelte"
         <td><code>string</code></td>
         <td>-</td>
         <td>ARIA label for accessibility</td>
+      </tr>
+      <tr>
+        <td><code>id</code></td>
+        <td><code>string</code></td>
+        <td><code>auto-generated</code></td>
+        <td>HTML id attribute for the progress element</td>
       </tr>
       <tr>
         <td><code>class</code></td>

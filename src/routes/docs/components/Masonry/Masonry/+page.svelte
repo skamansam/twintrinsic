@@ -77,14 +77,14 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
     </Masonry>
   </div>
 
-  <pre class="language-svelte"><code>{`<Masonry columns={3} gap={16}>
+  <CodeBlock language="svelte">{`{`<Masonry columns={3} gap={16}>
   <div class="item">Item 1</div>
   <div class="item">Item 2</div>
   <div class="item">Item 3</div>
   <div class="item">Item 4</div>
   <div class="item">Item 5</div>
   <div class="item">Item 6</div>
-</Masonry>`}</code></pre>
+</Masonry>`}</CodeBlock>
 
   <h3>Responsive Masonry</h3>
   <div class="masonry-demo">
@@ -103,7 +103,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
     </Masonry>
   </div>
 
-  <pre class="language-svelte"><code>{`<Masonry 
+  <CodeBlock language="svelte">{`{`<Masonry 
   columns={{ default: 1, sm: 2, md: 3, lg: 4 }}
   gap={16}
 >
@@ -115,7 +115,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
   <div class="item">Item 6</div>
   <div class="item">Item 7</div>
   <div class="item">Item 8</div>
-</Masonry>`}</code></pre>
+</Masonry>`}</CodeBlock>
 
   <h3>Fixed Column Width</h3>
   <div class="masonry-demo">
@@ -133,7 +133,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
     </Masonry>
   </div>
 
-  <pre class="language-svelte"><code>{`<Masonry 
+  <CodeBlock language="svelte">{`{`<Masonry 
   columnWidth="150px"
   gap={16}
   centered
@@ -144,10 +144,10 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
   <div class="item">Item 4</div>
   <div class="item">Item 5</div>
   <div class="item">Item 6</div>
-</Masonry>`}</code></pre>
+</Masonry>`}</CodeBlock>
 
   <h3>With Dynamic Content</h3>
-  <pre class="language-svelte"><code>{`<script>
+  <CodeBlock language="svelte">{`{`<script>
   import Masonry from "$lib/components/Masonry/Masonry.svelte";
   
   let items = [
@@ -165,7 +165,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
       ...items,
       { 
         id: items.length + 1, 
-        content: \`Item \$\{items.length + 1\}\`, 
+        content: \`Item \${items.length + 1 }\`, 
         height: randomHeight 
       }
     ];
@@ -180,7 +180,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
       {item.content}
     </div>
   {/each}
-</Masonry>`}</code></pre>
+</Masonry>`}</CodeBlock>
 
   <h2>Props</h2>
   <table>
@@ -262,7 +262,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
     You can specify different column counts for different screen sizes:
   </p>
 
-  <pre class="language-javascript"><code>{`// Responsive columns configuration
+  <CodeBlock language="javascript">{`{`// Responsive columns configuration
 columns={{
   default: 1,  // Default (mobile first)
   sm: 2,       // Small screens (640px and up)
@@ -270,7 +270,7 @@ columns={{
   lg: 4,       // Large screens (1024px and up)
   xl: 5,       // Extra large screens (1280px and up)
   '2xl': 6     // 2XL screens (1536px and up)
-}}`}</code></pre>
+}}`}</CodeBlock>
 
   <p>
     The breakpoints correspond to Tailwind CSS's default breakpoints:
@@ -325,9 +325,9 @@ columns={{
     columns can fit in the container:
   </p>
 
-  <pre class="language-svelte"><code>{`<Masonry columnWidth="300px" gap={16}>
+  <CodeBlock language="svelte">{`{`<Masonry columnWidth="300px" gap={16}>
   <!-- Items -->
-</Masonry>`}</code></pre>
+</Masonry>`}</CodeBlock>
 
   <h2>Accessibility</h2>
   <p>

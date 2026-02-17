@@ -47,7 +47,7 @@ onMount(() => {
     </div>
   </div>
 
-  <pre class="language-svelte"><code>{`<Sidebar>
+  <CodeBlock language="svelte">{`{`<Sidebar>
   <svelte:fragment slot="header">Navigation</svelte:fragment>
   <nav class="space-y-2">
     <a href="#" class="block p-2 rounded hover:bg-hover">Home</a>
@@ -55,7 +55,7 @@ onMount(() => {
     <a href="#" class="block p-2 rounded hover:bg-hover">Settings</a>
     <a href="#" class="block p-2 rounded hover:bg-hover">Help</a>
   </nav>
-</Sidebar>`}</code></pre>
+</Sidebar>`}</CodeBlock>
 
   <h3>Right-positioned Sidebar</h3>
   <div class="not-prose mb-8">

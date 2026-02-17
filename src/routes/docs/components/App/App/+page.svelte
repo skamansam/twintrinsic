@@ -24,7 +24,7 @@ import Container from "$lib/components/Container/Container.svelte"
   <h2>Usage</h2>
 
   <h3>Basic App Layout</h3>
-  <pre class="language-svelte"><code>{`<App appName="My Application">
+  <CodeBlock language="svelte">{`{`<App appName="My Application">
   <div slot="header">
     <!-- Header content -->
   </div>
@@ -42,7 +42,7 @@ import Container from "$lib/components/Container/Container.svelte"
   <div slot="footer">
     <!-- Footer content -->
   </div>
-</App>`}</code></pre>
+</App>`}</CodeBlock>
 
   <h2>Props</h2>
   <table>

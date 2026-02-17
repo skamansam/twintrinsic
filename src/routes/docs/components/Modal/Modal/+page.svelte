@@ -43,7 +43,7 @@ let showScrollableModal = writable(false)
     </svelte:fragment>
   </Modal>
 
-  <pre class="language-svelte"><code>{`<script>
+  <CodeBlock language="svelte">{`{`<script>
   import Modal from "$lib/components/Modal/Modal.svelte"
   import Button from "$lib/components/Button/Button.svelte"
   
@@ -63,7 +63,7 @@ let showScrollableModal = writable(false)
     <Button on:click={() => open = false}>Cancel</Button>
     <Button variant="primary">Save</Button>
   </svelte:fragment>
-</Modal>`}</code></pre>
+</Modal>`}</CodeBlock>
 
   <h3>Modal Sizes</h3>
   <div class="p-4 bg-surface rounded-md mb-4">
@@ -82,11 +82,11 @@ let showScrollableModal = writable(false)
     </svelte:fragment>
   </Modal>
 
-  <pre class="language-svelte"><code>{`<Modal open={true} size="sm"><!-- Small modal --></Modal>
+  <CodeBlock language="svelte">{`{`<Modal open={true} size="sm"><!-- Small modal --></Modal>
 <Modal open={true} size="md"><!-- Medium modal (default) --></Modal>
 <Modal open={true} size="lg"><!-- Large modal --></Modal>
 <Modal open={true} size="xl"><!-- Extra large modal --></Modal>
-<Modal open={true} size="full"><!-- Full screen modal --></Modal>`}</code></pre>
+<Modal open={true} size="full"><!-- Full screen modal --></Modal>`}</CodeBlock>
 
   <h3>Scrollable Modal</h3>
   <div class="p-4 bg-surface rounded-md mb-4">

@@ -82,7 +82,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
     </Form>
   </div>
 
-  <pre class="language-svelte"><code>{`<Form layout="horizontal">
+  <CodeBlock language="svelte">{`{`<Form layout="horizontal">
   <FormField label="First Name" name="firstName">
     <Input placeholder="Enter first name" />
   </FormField>
@@ -94,7 +94,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
   <div class="col-span-12 col-start-4">
     <Button variant="primary" type="submit">Submit</Button>
   </div>
-</Form>`}</code></pre>
+</Form>`}</CodeBlock>
 
   <h3>Form with Validation</h3>
   <div class="p-4 bg-surface rounded-md mb-4">
@@ -117,7 +117,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
     </Form>
   </div>
 
-  <pre class="language-svelte"><code>{`<Form validate oninvalid={handleInvalid} onsubmit={handleSubmit}>
+  <CodeBlock language="svelte">{`{`<Form validate oninvalid={handleInvalid} onsubmit={handleSubmit}>
   <FormField label="Username" name="username" required helpText="Username must be at least 3 characters">
     <Input placeholder="Enter username" minlength="3" />
   </FormField>
@@ -133,7 +133,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
   <div class="mt-4">
     <Button variant="primary" type="submit">Register</Button>
   </div>
-</Form>`}</code></pre>
+</Form>`}</CodeBlock>
 
   <h3>Form States</h3>
   <div class="p-4 bg-surface rounded-md mb-4">
@@ -168,7 +168,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
     </div>
   </div>
 
-  <pre class="language-svelte"><code>{`<!-- Disabled Form -->
+  <CodeBlock language="svelte">{`{`<!-- Disabled Form -->
 <Form disabled>
   <FormField label="Username" name="username">
     <Input placeholder="Enter username" />
@@ -196,7 +196,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
   <div class="mt-4">
     <Button variant="primary" type="submit" loading>Submit</Button>
   </div>
-</Form>`}</code></pre>
+</Form>`}</CodeBlock>
 
   <h2>Form Props</h2>
   <table>
@@ -374,7 +374,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
     interact with the form:
   </p>
 
-  <pre class="language-svelte"><code>{`<script>
+  <CodeBlock language="svelte">{`{`<script>
   let formApi;
 
   function handleFormReady(event) {
@@ -415,7 +415,7 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
 
 <Form onready={handleFormReady}>
   <!-- Form fields -->
-</Form>`}</code></pre>
+</Form>`}</CodeBlock>
 
   <h2>Accessibility</h2>
   <p>

@@ -48,7 +48,7 @@ import { getContext } from "svelte"
     </Table>
   </div>
 
-  <pre class="language-svelte"><code>{`<Table>
+  <CodeBlock language="svelte">{`{`<Table>
   <thead>
     <tr>
       <th>Name</th>
@@ -63,7 +63,7 @@ import { getContext } from "svelte"
       <td>Admin</td>
     </tr>
   </tbody>
-</Table>`}</code></pre>
+</Table>`}</CodeBlock>
 
   <h3>Striped Table</h3>
   <div class="p-4 bg-surface rounded-md mb-4 overflow-x-auto">
@@ -95,9 +95,9 @@ import { getContext } from "svelte"
     </Table>
   </div>
 
-  <pre class="language-svelte"><code>{`<Table striped>
+  <CodeBlock language="svelte">{`{`<Table striped>
   <!-- table content -->
-</Table>`}</code></pre>
+</Table>`}</CodeBlock>
 
   <h3>Bordered Table</h3>
   <div class="p-4 bg-surface rounded-md mb-4 overflow-x-auto">
@@ -121,9 +121,9 @@ import { getContext } from "svelte"
     </Table>
   </div>
 
-  <pre class="language-svelte"><code>{`<Table bordered>
+  <CodeBlock language="svelte">{`{`<Table bordered>
   <!-- table content -->
-</Table>`}</code></pre>
+</Table>`}</CodeBlock>
 
   <h3>Hoverable Table</h3>
   <div class="p-4 bg-surface rounded-md mb-4 overflow-x-auto">
@@ -147,9 +147,9 @@ import { getContext } from "svelte"
     </Table>
   </div>
 
-  <pre class="language-svelte"><code>{`<Table hoverable>
+  <CodeBlock language="svelte">{`{`<Table hoverable>
   <!-- table content -->
-</Table>`}</code></pre>
+</Table>`}</CodeBlock>
 
   <h3>Compact Table</h3>
   <div class="p-4 bg-surface rounded-md mb-4 overflow-x-auto">
@@ -176,9 +176,9 @@ import { getContext } from "svelte"
     </Table>
   </div>
 
-  <pre class="language-svelte"><code>{`<Table compact striped>
+  <CodeBlock language="svelte">{`{`<Table compact striped>
   <!-- table content -->
-</Table>`}</code></pre>
+</Table>`}</CodeBlock>
 
   <h2>Props</h2>
   <table>

@@ -32,11 +32,11 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Breadcrumb>
   </div>
 
-  <pre class="language-svelte"><code>{`<Breadcrumb>
+  <CodeBlock language="svelte">{`{`<Breadcrumb>
   <BreadcrumbItem href="/">Home</BreadcrumbItem>
   <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
   <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
-</Breadcrumb>`}</code></pre>
+</Breadcrumb>`}</CodeBlock>
 
   <h3>Custom Separator</h3>
   <div class="p-4 bg-surface rounded-md mb-4">
@@ -47,11 +47,11 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Breadcrumb>
   </div>
 
-  <pre class="language-svelte"><code>{`<Breadcrumb separator="›">
+  <CodeBlock language="svelte">{`{`<Breadcrumb separator="›">
   <BreadcrumbItem href="/">Home</BreadcrumbItem>
   <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
   <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
-</Breadcrumb>`}</code></pre>
+</Breadcrumb>`}</CodeBlock>
 
   <h3>With Icons</h3>
   <div class="p-4 bg-surface rounded-md mb-4">
@@ -67,7 +67,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Breadcrumb>
   </div>
 
-  <pre class="language-svelte"><code>{`<Breadcrumb>
+  <CodeBlock language="svelte">{`{`<Breadcrumb>
   <BreadcrumbItem 
     href="/" 
     icon='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,7 +79,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   </BreadcrumbItem>
   <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
   <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
-</Breadcrumb>`}</code></pre>
+</Breadcrumb>`}</CodeBlock>
 
   <h3>Collapsible Breadcrumb</h3>
   <div class="p-4 bg-surface rounded-md mb-4">
@@ -92,13 +92,13 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Breadcrumb>
   </div>
 
-  <pre class="language-svelte"><code>{`<Breadcrumb collapsible maxVisibleItems={1}>
+  <CodeBlock language="svelte">{`{`<Breadcrumb collapsible maxVisibleItems={1}>
   <BreadcrumbItem href="/">Home</BreadcrumbItem>
   <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
   <BreadcrumbItem href="/docs/components">Components</BreadcrumbItem>
   <BreadcrumbItem href="/docs/components/navigation">Navigation</BreadcrumbItem>
   <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
-</Breadcrumb>`}</code></pre>
+</Breadcrumb>`}</CodeBlock>
 
   <h2>Breadcrumb Props</h2>
   <table>

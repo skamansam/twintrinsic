@@ -26,14 +26,14 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <p class="mt-4">Content below</p>
   </div>
 
-  <pre class="language-svelte"><code>{`<Separator />`}</code></pre>
+  <CodeBlock language="svelte">{`{`<Separator />`}</CodeBlock>
 
   <h3>With Text</h3>
   <div class="not-prose mb-8 max-w-sm">
     <Separator>or</Separator>
   </div>
 
-  <pre class="language-svelte"><code>{`<Separator>or</Separator>`}</code></pre>
+  <CodeBlock language="svelte">{`{`<Separator>or</Separator>`}</CodeBlock>
 
   <h3>With Icon and Text</h3>
   <div class="not-prose mb-8 max-w-sm">
@@ -52,11 +52,11 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <span>Right content</span>
   </div>
 
-  <pre class="language-svelte"><code>{`<div class="h-32 flex items-center">
+  <CodeBlock language="svelte">{`{`<div class="h-32 flex items-center">
   <span>Left content</span>
   <Separator vertical />
   <span>Right content</span>
-</div>`}</code></pre>
+</div>`}</CodeBlock>
 
   <h3>Color Variants</h3>
   <div class="not-prose mb-8 space-y-4">
@@ -67,7 +67,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Separator color="error">Error</Separator>
   </div>
 
-  <pre class="language-svelte"><code>{`<Separator color="primary">Primary</Separator>`}</code></pre>
+  <CodeBlock language="svelte">{`{`<Separator color="primary">Primary</Separator>`}</CodeBlock>
 
   <h2>Props</h2>
   <table>

@@ -25,9 +25,9 @@ import Button from "$lib/components/Button/Button.svelte"
     </Tooltip>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tooltip text="This is a helpful tooltip">
+  <CodeBlock language="svelte">{`{`<Tooltip text="This is a helpful tooltip">
   <Button>Hover me</Button>
-</Tooltip>`}</code></pre>
+</Tooltip>`}</CodeBlock>
 
   <h3>Tooltip Positions</h3>
   <div class="flex gap-4 p-4 bg-surface rounded-md mb-4">

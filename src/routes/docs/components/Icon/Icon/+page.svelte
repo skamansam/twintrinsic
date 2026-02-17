@@ -62,7 +62,7 @@ const iconsByCategory = {
     <Icon name="check" />
   </div>
 
-  <pre class="language-svelte"><code>{`<Icon name="check" />`}</code></pre>
+  <CodeBlock language="svelte">{`{`<Icon name="check" />`}</CodeBlock>
 
   <h3>Icon Sizes</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -72,10 +72,10 @@ const iconsByCategory = {
     <Icon name="settings" size="xl" />
   </div>
 
-  <pre class="language-svelte"><code>{`<Icon name="settings" size="sm" />
+  <CodeBlock language="svelte">{`{`<Icon name="settings" size="sm" />
 <Icon name="settings" size="md" />
 <Icon name="settings" size="lg" />
-<Icon name="settings" size="xl" />`}</code></pre>
+<Icon name="settings" size="xl" />`}</CodeBlock>
 
   <h3>Colored Icons</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -85,10 +85,10 @@ const iconsByCategory = {
     <Icon name="success" class="text-success-500" />
   </div>
 
-  <pre class="language-svelte"><code>{`<Icon name="info" class="text-info-500" />
+  <CodeBlock language="svelte">{`{`<Icon name="info" class="text-info-500" />
 <Icon name="warning" class="text-warning-500" />
 <Icon name="error" class="text-error-500" />
-<Icon name="success" class="text-success-500" />`}</code></pre>
+<Icon name="success" class="text-success-500" />`}</CodeBlock>
 
   <h2>Props</h2>
   <table>
@@ -158,24 +158,24 @@ const iconsByCategory = {
   </p>
 
   <h3>With Buttons</h3>
-  <pre class="language-svelte"><code>{`<Button>
+  <CodeBlock language="svelte">{`{`<Button>
   <Icon name="plus" size="sm" />
   <span class="ml-2">Add Item</span>
-</Button>`}</code></pre>
+</Button>`}</CodeBlock>
 
   <h3>With Form Fields</h3>
-  <pre class="language-svelte"><code>{`<div class="relative">
+  <CodeBlock language="svelte">{`{`<div class="relative">
   <Input placeholder="Search..." />
   <div class="absolute right-3 top-1/2 transform -translate-y-1/2">
     <Icon name="search" class="text-muted" />
   </div>
-</div>`}</code></pre>
+</div>`}</CodeBlock>
 
   <h3>With Badges</h3>
-  <pre class="language-svelte"><code>{`<Badge variant="warning">
+  <CodeBlock language="svelte">{`{`<Badge variant="warning">
   <Icon name="warning" size="sm" />
   <span class="ml-1">Warning</span>
-</Badge>`}</code></pre>
+</Badge>`}</CodeBlock>
 
   <h2>Best Practices</h2>
   <ul>

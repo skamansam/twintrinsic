@@ -3,9 +3,9 @@
 Combobox documentation page
 -->
 <script lang="ts">
-import Container from "$lib/components/Container/Container.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Combobox from "$lib/components/Combobox/Combobox.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 
 // Sample data for examples
 const fruits = ["Apple", "Banana", "Cherry", "Date", "Elderberry", "Fig", "Grape", "Honeydew"]
@@ -38,11 +38,11 @@ const countries = [
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<Combobox 
+  <CodeBlock language="svelte">{`<Combobox 
   options={['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry']}
   placeholder="Select a fruit"
   onchange={(e) => console.log(e.detail.value)}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>With Object Data</h3>
   <div class="not-prose mb-8 max-w-md">
@@ -54,13 +54,13 @@ const countries = [
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<Combobox 
+  <CodeBlock language="svelte">{`<Combobox 
   options={countries}
   optionLabel="name"
   optionValue="code"
   placeholder="Select a country"
   onchange={(e) => console.log(e.detail.value)}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Custom Option Template</h3>
   <div class="not-prose mb-8 max-w-md">
@@ -79,7 +79,7 @@ const countries = [
     </Combobox>
   </div>
 
-  <pre class="language-svelte"><code>{`<Combobox 
+  <CodeBlock language="svelte">{`<Combobox 
   options={countries}
   optionLabel="name"
   optionValue="code"
@@ -91,7 +91,7 @@ const countries = [
     <span>{option.name}</span>
     <span class="ml-2 text-xs text-muted">({option.code})</span>
   </div>
-</Combobox>`}</code></pre>
+</Combobox>`}</CodeBlock>
 
   <h3>Disabled State</h3>
   <div class="not-prose mb-8 max-w-md">
@@ -102,11 +102,11 @@ const countries = [
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<Combobox 
+  <CodeBlock language="svelte">{`<Combobox 
   options={fruits}
   placeholder="Select a fruit"
   disabled
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Loading State</h3>
   <div class="not-prose mb-8 max-w-md">
@@ -117,11 +117,11 @@ const countries = [
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<Combobox 
+  <CodeBlock language="svelte">{`<Combobox 
   options={[]}
   placeholder="Loading options..."
   loading
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>With Initial Value</h3>
   <div class="not-prose mb-8 max-w-md">
@@ -132,11 +132,11 @@ const countries = [
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<Combobox 
+  <CodeBlock language="svelte">{`<Combobox 
   options={fruits}
   placeholder="Select a fruit"
   value="Banana"
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Form Integration</h3>
   <div class="not-prose mb-8 max-w-md space-y-4">
@@ -152,7 +152,7 @@ const countries = [
     </div>
   </div>
 
-  <pre class="language-svelte"><code>{`<div>
+  <CodeBlock language="svelte">{`<div>
   <label for="fruit-select" class="block text-sm font-medium mb-1">Favorite Fruit</label>
   <Combobox 
     id="fruit-select"
@@ -161,7 +161,7 @@ const countries = [
     placeholder="Select a fruit"
     required
   />
-</div>`}</code></pre>
+</div>`}</CodeBlock>
 
   <h2>Props</h2>
   <table>

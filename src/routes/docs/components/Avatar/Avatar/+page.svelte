@@ -31,24 +31,24 @@ import Container from "$lib/components/Container/Container.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<Avatar 
+  <CodeBlock language="svelte">{`<Avatar 
   src="https://i.pravatar.cc/300?img=1" 
   alt="User Avatar" 
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Fallback with Initials</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
     <Avatar name="John Doe" />
   </div>
 
-  <pre class="language-svelte"><code>{`<Avatar name="John Doe" />`}</code></pre>
+  <CodeBlock language="svelte">{`<Avatar name="John Doe" />`}</CodeBlock>
 
   <h3>Custom Fallback</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
     <Avatar fallback="JD" bgColor="bg-primary-600" />
   </div>
 
-  <pre class="language-svelte"><code>{`<Avatar fallback="JD" bgColor="bg-primary-600" />`}</code></pre>
+  <CodeBlock language="svelte">{`<Avatar fallback="JD" bgColor="bg-primary-600" />`}</CodeBlock>
 
   <h3>Gravatar Email</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -59,11 +59,11 @@ import Container from "$lib/components/Container/Container.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<Avatar 
+  <CodeBlock language="svelte">{`<Avatar 
   gravatarEmail="user@example.com"
   name="John Doe"
   alt="John's Avatar"
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Sizes</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -74,11 +74,11 @@ import Container from "$lib/components/Container/Container.svelte"
     <Avatar size="xl" name="XL" />
   </div>
 
-  <pre class="language-svelte"><code>{`<Avatar size="xs" name="XS" />
+  <CodeBlock language="svelte">{`<Avatar size="xs" name="XS" />
 <Avatar size="sm" name="SM" />
 <Avatar size="md" name="MD" />
 <Avatar size="lg" name="LG" />
-<Avatar size="xl" name="XL" />`}</code></pre>
+<Avatar size="xl" name="XL" />`}</CodeBlock>
 
   <h3>Shapes</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -87,9 +87,9 @@ import Container from "$lib/components/Container/Container.svelte"
     <Avatar shape="rounded" name="Rounded" />
   </div>
 
-  <pre class="language-svelte"><code>{`<Avatar shape="circle" name="Circle" />
+  <CodeBlock language="svelte">{`<Avatar shape="circle" name="Circle" />
 <Avatar shape="square" name="Square" />
-<Avatar shape="rounded" name="Rounded" />`}</code></pre>
+<Avatar shape="rounded" name="Rounded" />`}</CodeBlock>
 
   <h3>Status Indicators</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -99,10 +99,10 @@ import Container from "$lib/components/Container/Container.svelte"
     <Avatar name="Busy" status="busy" />
   </div>
 
-  <pre class="language-svelte"><code>{`<Avatar name="Online" status="online" />
+  <CodeBlock language="svelte">{`<Avatar name="Online" status="online" />
 <Avatar name="Offline" status="offline" />
 <Avatar name="Away" status="away" />
-<Avatar name="Busy" status="busy" />`}</code></pre>
+<Avatar name="Busy" status="busy" />`}</CodeBlock>
 
   <h3>Styled Avatars</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -111,9 +111,9 @@ import Container from "$lib/components/Container/Container.svelte"
     <Avatar name="Both" bordered shadowed />
   </div>
 
-  <pre class="language-svelte"><code>{`<Avatar name="Bordered" bordered />
+  <CodeBlock language="svelte">{`<Avatar name="Bordered" bordered />
 <Avatar name="Shadowed" shadowed />
-<Avatar name="Both" bordered shadowed />`}</code></pre>
+<Avatar name="Both" bordered shadowed />`}</CodeBlock>
 
   <h2>Props</h2>
   <table>

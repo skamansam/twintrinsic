@@ -7,9 +7,9 @@ AppHeader documentation page
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import Container from "$lib/components/Container/Container.svelte"
 import AppHeader from "$lib/components/AppHeader/AppHeader.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -35,14 +35,14 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<AppHeader
+  <CodeBlock language="svelte">{`{`<AppHeader
   brand="My App"
   navItems={[
     { label: 'Home', href: '#', current: true },
     { label: 'About', href: '#' },
     { label: 'Contact', href: '#' }
   ]}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>With Logo</h3>
   <div class="not-prose mb-8 -mx-4 sm:-mx-6">
@@ -59,7 +59,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     />
   </div>
 
-  <pre class="language-svelte"><code>{`<AppHeader
+  <CodeBlock language="svelte">{`{`<AppHeader
   brand={{
     name: 'My App',
     logo: '/path/to/logo.svg',
@@ -69,7 +69,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     { label: 'Home', href: '/', current: true },
     { label: 'About', href: '/about' }
   ]}
-/>`}</code></pre>
+/>`}</CodeBlock>
 
   <h3>Full Featured</h3>
   <div class="not-prose mb-8 -mx-4 sm:-mx-6">
@@ -144,7 +144,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   </table>
 
   <h3>Type Definitions</h3>
-  <pre class="language-typescript"><code>{`interface BrandInfo {
+  <CodeBlock language="typescript">{`interface BrandInfo {
   name: string;
   logo?: string;
   href?: string;
@@ -160,7 +160,7 @@ interface NavItem {
   label: string;
   href?: string;
   current?: boolean;
-}`}</code></pre>
+}`}</CodeBlock>
 
   <h2>Events</h2>
   <table>

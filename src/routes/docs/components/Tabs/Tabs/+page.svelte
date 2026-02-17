@@ -39,7 +39,7 @@ import TabPanel from "$lib/components/Tabs/TabPanel.svelte"
     </Tabs>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tabs>
+  <CodeBlock language="svelte">{`{`<Tabs>
   <TabList>
     <Tab>Tab 1</Tab>
     <Tab>Tab 2</Tab>
@@ -48,7 +48,7 @@ import TabPanel from "$lib/components/Tabs/TabPanel.svelte"
   <TabPanel>Content for tab 1</TabPanel>
   <TabPanel>Content for tab 2</TabPanel>
   <TabPanel>Content for tab 3</TabPanel>
-</Tabs>`}</code></pre>
+</Tabs>`}</CodeBlock>
 
   <h3>Tab Variants</h3>
   <div class="space-y-6 p-4 bg-surface rounded-md mb-4">

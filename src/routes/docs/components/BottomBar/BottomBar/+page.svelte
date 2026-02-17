@@ -53,7 +53,7 @@ onMount(() => {
     </div>
   </div>
 
-  <pre class="language-svelte"><code>{`<BottomBar>
+  <CodeBlock language="svelte">{`{`<BottomBar>
   <svelte:fragment slot="header">Details</svelte:fragment>
   <div class="p-4">
     <h3 class="text-lg font-medium mb-2">Project Information</h3>
@@ -63,7 +63,7 @@ onMount(() => {
       <p>Owner: John Doe</p>
     </div>
   </div>
-</BottomBar>`}</code></pre>
+</BottomBar>`}</CodeBlock>
 
   <h3>Console Example</h3>
   <div class="not-prose mb-8">

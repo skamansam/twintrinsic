@@ -26,7 +26,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Button>
   </div>
 
-  <pre class="language-svelte"><code>{`<script>
+  <CodeBlock language="svelte">{`{`<script>
   import { toastStore } from "$lib/components/Toast/toastStore"
 </script>
 
@@ -34,7 +34,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   Show Toast
 </button>
 
-<Toast />`}</code></pre>
+<Toast />`}</CodeBlock>
 
   <h3>Toast Variants</h3>
   <div class="flex flex-wrap gap-4 p-4 bg-surface rounded-md mb-4">
@@ -52,10 +52,10 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Button>
   </div>
 
-  <pre class="language-svelte"><code>{`toastStore.add({ message: "Success!", variant: "success" })
+  <CodeBlock language="svelte">{`{`toastStore.add({ message: "Success!", variant: "success" })
 toastStore.add({ message: "Error occurred!", variant: "error" })
 toastStore.add({ message: "Warning!", variant: "warning" })
-toastStore.add({ message: "Info message", variant: "info" })`}</code></pre>
+toastStore.add({ message: "Info message", variant: "info" })`}</CodeBlock>
 
   <h3>Toast with Title</h3>
   <div class="flex flex-wrap gap-4 p-4 bg-surface rounded-md mb-4">
@@ -64,11 +64,11 @@ toastStore.add({ message: "Info message", variant: "info" })`}</code></pre>
     </Button>
   </div>
 
-  <pre class="language-svelte"><code>{`toastStore.add({
+  <CodeBlock language="svelte">{`{`toastStore.add({
   title: "Success",
   message: "Your changes have been saved",
   variant: "success"
-})`}</code></pre>
+})`}</CodeBlock>
 
   <h3>Toast Positions</h3>
   <div class="flex flex-wrap gap-4 p-4 bg-surface rounded-md mb-4">
@@ -86,10 +86,10 @@ toastStore.add({ message: "Info message", variant: "info" })`}</code></pre>
     </Button>
   </div>
 
-  <pre class="language-svelte"><code>{`<Toast position="top-right" />
+  <CodeBlock language="svelte">{`{`<Toast position="top-right" />
 <Toast position="top-left" />
 <Toast position="bottom-right" />
-<Toast position="bottom-left" />`}</code></pre>
+<Toast position="bottom-left" />`}</CodeBlock>
 
   <h2>Props</h2>
   <table>

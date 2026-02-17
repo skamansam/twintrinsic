@@ -3,10 +3,10 @@
 Tag documentation page
 -->
 <script lang="ts">
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Tag from "$lib/components/Tag/Tag.svelte"
 import TagGroup from "$lib/components/Tag/TagGroup.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -30,13 +30,13 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Tag variant="info">Info</Tag>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tag>Default</Tag>
+  <CodeBlock language="svelte">{`<Tag>Default</Tag>
 <Tag variant="primary">Primary</Tag>
 <Tag variant="secondary">Secondary</Tag>
 <Tag variant="success">Success</Tag>
 <Tag variant="warning">Warning</Tag>
 <Tag variant="error">Error</Tag>
-<Tag variant="info">Info</Tag>`}</code></pre>
+<Tag variant="info">Info</Tag>`}</CodeBlock>
 
   <h3>Sizes</h3>
   <div class="not-prose mb-8 flex flex-wrap items-center gap-2">
@@ -45,9 +45,9 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Tag size="lg">Large</Tag>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tag size="sm">Small</Tag>
+  <CodeBlock language="svelte">{`<Tag size="sm">Small</Tag>
 <Tag size="md">Medium</Tag>
-<Tag size="lg">Large</Tag>`}</code></pre>
+<Tag size="lg">Large</Tag>`}</CodeBlock>
 
   <h3>Outline Tags</h3>
   <div class="not-prose mb-8 flex flex-wrap gap-2">
@@ -57,10 +57,10 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Tag variant="warning" outline>Warning</Tag>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tag outline>Default</Tag>
+  <CodeBlock language="svelte">{`<Tag outline>Default</Tag>
 <Tag variant="primary" outline>Primary</Tag>
 <Tag variant="success" outline>Success</Tag>
-<Tag variant="warning" outline>Warning</Tag>`}</code></pre>
+<Tag variant="warning" outline>Warning</Tag>`}</CodeBlock>
 
   <h3>Pill Tags</h3>
   <div class="not-prose mb-8 flex flex-wrap gap-2">
@@ -70,10 +70,10 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Tag variant="warning" pill>Warning</Tag>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tag pill>Default</Tag>
+  <CodeBlock language="svelte">{`<Tag pill>Default</Tag>
 <Tag variant="primary" pill>Primary</Tag>
 <Tag variant="success" pill>Success</Tag>
-<Tag variant="warning" pill>Warning</Tag>`}</code></pre>
+<Tag variant="warning" pill>Warning</Tag>`}</CodeBlock>
 
   <h3>With Icons</h3>
   <div class="not-prose mb-8 flex flex-wrap gap-2">
@@ -85,14 +85,14 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </Tag>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tag 
+  <CodeBlock language="svelte">{`<Tag 
   variant="success" 
   icon='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
   </svg>'
 >
   Completed
-</Tag>`}</code></pre>
+</Tag>`}</CodeBlock>
 
   <h3>Dismissible Tags</h3>
   <div class="not-prose mb-8 flex flex-wrap gap-2">
@@ -100,8 +100,8 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Tag variant="primary" dismissible>Primary</Tag>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tag dismissible ondismiss={() => handleDismiss()}>Dismissible</Tag>
-<Tag variant="primary" dismissible ondismiss={() => handleDismiss()}>Primary</Tag>`}</code></pre>
+  <CodeBlock language="svelte">{`<Tag dismissible ondismiss={() => handleDismiss()}>Dismissible</Tag>
+<Tag variant="primary" dismissible ondismiss={() => handleDismiss()}>Primary</Tag>`}</CodeBlock>
 
   <h3>Clickable Tags</h3>
   <div class="not-prose mb-8 flex flex-wrap gap-2">
@@ -110,9 +110,9 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     <Tag href="https://example.com" target="_blank">Link</Tag>
   </div>
 
-  <pre class="language-svelte"><code>{`<Tag clickable onclick={handleClick}>Clickable</Tag>
+  <CodeBlock language="svelte">{`<Tag clickable onclick={handleClick}>Clickable</Tag>
 <Tag variant="primary" clickable onclick={handleClick}>Primary</Tag>
-<Tag href="https://example.com" target="_blank">Link</Tag>`}</code></pre>
+<Tag href="https://example.com" target="_blank">Link</Tag>`}</CodeBlock>
 
   <h3>Tag Group</h3>
   <div class="not-prose mb-8">
@@ -124,12 +124,12 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </TagGroup>
   </div>
 
-  <pre class="language-svelte"><code>{`<TagGroup>
+  <CodeBlock language="svelte">{`<TagGroup>
   <Tag>JavaScript</Tag>
   <Tag>TypeScript</Tag>
   <Tag>Svelte</Tag>
   <Tag>React</Tag>
-</TagGroup>`}</code></pre>
+</TagGroup>`}</CodeBlock>
 
   <h3>Tag Group with Dynamic Items</h3>
   <div class="not-prose mb-8">
@@ -143,7 +143,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </TagGroup>
   </div>
 
-  <pre class="language-svelte"><code>{`<TagGroup 
+  <CodeBlock language="svelte">{`<TagGroup 
   items={['JavaScript', 'TypeScript', 'Svelte', 'React']} 
   variant="primary"
   dismissible
@@ -151,7 +151,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   ondismiss={(e) => handleDismiss(e.detail)}
 >
   <Tag>{item}</Tag>
-</TagGroup>`}</code></pre>
+</TagGroup>`}</CodeBlock>
 
   <h2>Tag Props</h2>
   <table>

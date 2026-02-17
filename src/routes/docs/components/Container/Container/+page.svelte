@@ -29,11 +29,11 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </div>
   </Container>
 
-  <pre class="language-svelte"><code>{`<Container>
+  <CodeBlock language="svelte">{`{`<Container>
   <div class="bg-primary-100 dark:bg-primary-800 p-4 rounded">
     <p>Content in a basic container</p>
   </div>
-</Container>`}</code></pre>
+</Container>`}</CodeBlock>
 
   <h3>Fluid Container</h3>
   <Container fluid class="bg-surface p-4 mb-8">
@@ -42,11 +42,11 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     </div>
   </Container>
 
-  <pre class="language-svelte"><code>{`<Container fluid>
+  <CodeBlock language="svelte">{`{`<Container fluid>
   <div class="bg-primary-100 dark:bg-primary-800 p-4 rounded">
     <p>Content in a fluid container</p>
   </div>
-</Container>`}</code></pre>
+</Container>`}</CodeBlock>
 
   <h2>Props</h2>
   <table>
@@ -99,11 +99,11 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     appropriate ARIA attributes:
   </p>
 
-  <pre class="language-svelte"><code>{`<Container
+  <CodeBlock language="svelte">{`{`<Container
   as="main"
   role="main"
   ariaLabel="Main content"
 >
   <!-- Content -->
-</Container>`}</code></pre>
+</Container>`}</CodeBlock>
 </Container>
