@@ -2,10 +2,7 @@
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import Button from "$lib/components/Button/Button.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Container from "$lib/components/Container/Container.svelte"
-import Toast from "$lib/components/Toast/Toast.svelte"
+import { Button, CodeBlock, Container, Toast } from "$lib"
 import { toastStore } from "$lib/components/Toast/toastStore"
 </script>
 

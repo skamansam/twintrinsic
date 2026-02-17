@@ -7,12 +7,7 @@ Form documentation page
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import Button from "$lib/components/Button/Button.svelte"
-import Container from "$lib/components/Container/Container.svelte"
-import Checkbox from "$lib/components/Form/Checkbox.svelte"
-import Form from "$lib/components/Form/Form.svelte"
-import FormField from "$lib/components/Form/FormField.svelte"
-import Input from "$lib/components/Form/Input.svelte"
+import { Button, Checkbox, Container, Form, FormField, Input } from "$lib"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

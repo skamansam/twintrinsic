@@ -49,9 +49,7 @@ Masonry documentation page
   }
 </style>
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Container from "$lib/components/Container/Container.svelte"
-import Masonry from "$lib/components/Masonry/Masonry.svelte"
+import { CodeBlock, Container, Masonry } from "$lib"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

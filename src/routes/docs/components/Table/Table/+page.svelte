@@ -3,9 +3,7 @@
 </style>
 <script lang="ts">
 import { getContext } from "svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Container from "$lib/components/Container/Container.svelte"
-import Table from "$lib/components/Table/Table.svelte"
+import { CodeBlock, Container, Table } from "$lib"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

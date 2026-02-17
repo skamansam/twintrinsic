@@ -7,8 +7,7 @@ Documentation page for the Card component
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import { CodeBlock } from "$lib/components/CodeBlock"
-import Card from "$lib/components/Panel/Card.svelte"
+import { Card, CodeBlock } from "$lib"
 </script>
 
 <article class="prose dark:prose-invert max-w-none">

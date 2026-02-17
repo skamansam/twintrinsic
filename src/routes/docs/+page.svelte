@@ -3,8 +3,7 @@
 Documentation home page
 -->
 <script lang="ts">
-import Container from "$lib/components/Container/Container.svelte"
-import Separator from "$lib/components/Separator/Separator.svelte"
+import { CodeBlock, Container, Separator } from "$lib"
 
 let { children } = $props()
 </script>

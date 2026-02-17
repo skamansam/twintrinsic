@@ -3,10 +3,7 @@
 Tree documentation page
 -->
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Container from "$lib/components/Container/Container.svelte"
-import Tree from "$lib/components/Tree/Tree.svelte"
-import TreeNode from "$lib/components/Tree/TreeNode.svelte"
+import { CodeBlock, Container, Tree, TreeNode } from "$lib"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

@@ -7,9 +7,7 @@ App documentation page
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import App from "$lib/components/App/App.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Container from "$lib/components/Container/Container.svelte"
+import { App, CodeBlock, Container } from "$lib"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

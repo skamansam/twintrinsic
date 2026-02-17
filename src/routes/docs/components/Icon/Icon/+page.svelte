@@ -23,9 +23,7 @@ Icon documentation page
   }
 </style>
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Container from "$lib/components/Container/Container.svelte"
-import Icon from "$lib/components/Icon/Icon.svelte"
+import { CodeBlock, Container, Icon } from "$lib"
 
 // Group icons by category
 const iconsByCategory = {
