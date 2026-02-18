@@ -319,4 +319,85 @@ describe("Avatar", () => {
     const status = container.querySelector(".avatar-status");
     expect(status?.getAttribute("aria-label")).toBe("Status: online");
   });
+
+  it("renders icon avatar when icon prop is provided", () => {
+    const { container } = render(Avatar, {
+      props: {
+        icon: "user",
+        size: "md",
+      } as AvatarProps,
+    });
+    const iconDiv = container.querySelector(".avatar-icon");
+    expect(iconDiv).toBeTruthy();
+  });
+
+  it("sets aria-label from icon when provided", () => {
+    const { container } = render(Avatar, {
+      props: {
+        icon: "user",
+      } as AvatarProps,
+    });
+    const avatar = container.querySelector(".avatar");
+    expect(avatar?.getAttribute("aria-label")).toBe("user");
+  });
+
+  it("renders status icon when statusIcon prop is provided", () => {
+    const { container } = render(Avatar, {
+      props: {
+        name: "John",
+        status: "online",
+        statusIcon: "check-circle",
+      } as AvatarProps,
+    });
+    const status = container.querySelector(".avatar-status");
+    expect(status).toBeTruthy();
+  });
+
+  it("uses default status icon for online status", () => {
+    const { container } = render(Avatar, {
+      props: {
+        name: "John",
+        status: "online",
+      } as AvatarProps,
+    });
+    const status = container.querySelector(".avatar-status");
+    expect(status).toBeTruthy();
+  });
+
+  it("prioritizes explicit src over icon", () => {
+    const { container } = render(Avatar, {
+      props: {
+        src: "https://example.com/avatar.jpg",
+        icon: "user",
+        alt: "User avatar",
+      } as AvatarProps,
+    });
+    const img = container.querySelector("img");
+    const iconDiv = container.querySelector(".avatar-icon");
+    expect(img).toBeTruthy();
+    expect(iconDiv).toBeFalsy();
+  });
+
+  it("shows icon when no src or fallback provided", () => {
+    const { container } = render(Avatar, {
+      props: {
+        icon: "user",
+      } as AvatarProps,
+    });
+    const iconDiv = container.querySelector(".avatar-icon");
+    expect(iconDiv).toBeTruthy();
+  });
+
+  it("prioritizes fallback over icon", () => {
+    const { container } = render(Avatar, {
+      props: {
+        fallback: "JD",
+        icon: "user",
+      } as AvatarProps,
+    });
+    const fallback = container.querySelector(".avatar-fallback");
+    const iconDiv = container.querySelector(".avatar-icon");
+    expect(fallback).toBeTruthy();
+    expect(iconDiv).toBeFalsy();
+  });
 });
