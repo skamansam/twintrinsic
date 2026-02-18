@@ -27,10 +27,17 @@ Usage:
   fallback="JD" 
   status="online" 
 />
+
+<Avatar 
+  icon="user"
+  size="md"
+/>
 ```
 -->
 <script lang="ts">
 import { onMount } from "svelte"
+import Badge from "../Badge/Badge.svelte"
+import Icon from "../Icon/Icon.svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -54,6 +61,9 @@ const {
   /** @type {string} - Gravatar email address */
   gravatarEmail,
 
+  /** @type {string} - Icon name to display (e.g., "user", "star") */
+  icon,
+
   /** @type {string} - Size of the avatar (xs, sm, md, lg, xl) */
   size = "md",
 
@@ -63,8 +73,17 @@ const {
   /** @type {"online" | "offline" | "away" | "busy" | undefined} - Status indicator (online, offline, away, busy) */
   status,
 
+  /** @type {string} - Icon name for status indicator (e.g., "check", "x", "clock") */
+  statusIcon,
+
   /** @type {string} - Background color for text avatars (CSS color value) */
   bgColor,
+
+  /** @type {string} - Badge text to display in top-right corner */
+  badge,
+
+  /** @type {"default" | "primary" | "secondary" | "success" | "warning" | "error" | "info"} - Badge variant */
+  badgeVariant = "primary",
 
   /** @type {boolean} - Whether to show a border */
   bordered = false,
@@ -158,6 +177,30 @@ const showImage = $derived(imageSrc && !imageError)
 // Determine if we should show the fallback
 const showFallback = $derived(!showImage && !!displayFallback)
 
+// Determine if we should show the icon
+const showIcon = $derived(icon && !showImage && !showFallback)
+
+// Determine icon size based on avatar size
+const iconSize = $derived(
+  {
+    xs: "12px",
+    sm: "16px",
+    md: "20px",
+    lg: "24px",
+    xl: "32px",
+  }[size] || "20px"
+)
+
+// Determine status icon based on status
+const statusIconName = $derived.by(() => {
+  if (statusIcon) return statusIcon
+  if (status === "online") return "check"
+  if (status === "offline") return "x"
+  if (status === "away") return "clock"
+  if (status === "busy") return "alert-circle"
+  return ""
+})
+
 // Determine size classes
 const sizeClasses = $derived(
   {
@@ -180,11 +223,11 @@ const shapeClasses = $derived(
 
 // Determine status classes
 const statusClasses = $derived.by(() => {
-  if (status === "online") return "bg-success-500"
-  if (status === "offline") return "bg-muted"
-  if (status === "away") return "bg-warning-500"
-  if (status === "busy") return "bg-error-500"
-  return "bg-muted"
+  if (status === "online") return "text-success-500"
+  if (status === "offline") return "text-muted"
+  if (status === "away") return "text-warning-500"
+  if (status === "busy") return "text-error-500"
+  return "text-muted"
 })
 
 // Generate a random color based on the name or fallback
@@ -226,26 +269,30 @@ function generateRandomColor() {
     {shadowed ? 'avatar-shadowed' : ''}
     {className}
   "
-  aria-label={alt || name || 'Avatar'}
+  aria-label={alt || name || icon || 'Avatar'}
   bind:this={avatarElement}
 >
   {#if showImage}
     <img
       src={imageSrc}
       alt={alt || name || 'Avatar'}
-      class="avatar-image"
+      class="avatar-image {shapeClasses}"
       onload={handleImageLoad}
       onerror={handleImageError}
     />
   {:else if showFallback}
     <div 
-      class="avatar-fallback {randomBgColor}"
+      class="avatar-fallback {randomBgColor} {shapeClasses}"
       style={bgColor ? `background-color: ${bgColor}` : ''}
     >
       {displayFallback}
     </div>
+  {:else if showIcon}
+    <div class="avatar-icon {randomBgColor} {shapeClasses}">
+      <Icon name={icon} width={iconSize} height={iconSize} />
+    </div>
   {:else}
-    <div class="avatar-placeholder">
+    <div class="avatar-placeholder {shapeClasses}">
       <svg class="w-full h-full" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 12a5 5 0 100-10 5 5 0 000 10zm0-2a3 3 0 100-6 3 3 0 000 6zm9 11a1 1 0 01-1 1H4a1 1 0 01-1-1v-1c0-3.87 3.13-7 7-7h4c3.87 0 7 3.13 7 7v1z"/>
       </svg>
@@ -256,7 +303,20 @@ function generateRandomColor() {
     <span 
       class="avatar-status {statusClasses}" 
       aria-label={`Status: ${status}`}
-    ></span>
+    >
+      {#if statusIconName}
+        <Icon name={statusIconName}/>
+      {/if}
+    </span>
+  {/if}
+
+  {#if badge}
+    <Badge 
+      overlay 
+      position="top-right"
+      variant={badgeVariant}
+      pill
+    >{badge}</Badge>
   {/if}
 </div>
 
@@ -266,7 +326,6 @@ function generateRandomColor() {
   .avatar {
     @apply relative inline-flex items-center justify-center flex-shrink-0;
     @apply bg-surface dark:bg-surface text-text dark:text-text;
-    @apply overflow-hidden;
   }
   
   .avatar-bordered {
@@ -285,6 +344,11 @@ function generateRandomColor() {
     @apply w-full h-full flex items-center justify-center;
     @apply text-white dark:text-white font-medium;
   }
+
+  .avatar-icon {
+    @apply w-full h-full flex items-center justify-center;
+    @apply text-white dark:text-white;
+  }
   
   .avatar-placeholder {
     @apply w-full h-full flex items-center justify-center;
@@ -293,8 +357,7 @@ function generateRandomColor() {
   
   .avatar-status {
     @apply absolute bottom-0 right-0;
-    @apply w-1/4 h-1/4 min-w-1.5 min-h-1.5 max-w-3 max-h-3;
-    @apply rounded-full;
-    @apply border-2 border-background dark:border-background;
+    @apply w-1/2 h-1/2 min-w-1.5 min-h-1.5 max-w-3 max-h-3;
+    @apply rounded-full font-bold stroke-3;
   }
 </style>

@@ -103,7 +103,7 @@ $effect(() => {
       collapsedWidth={leftSidebarCollapsedWidth}
       menu={siteMenu}
       ontoggle={onleftSidebarToggle}
-      class="appLeftPanel shadow-lg p-5"
+      class="appLeftPanel shadow-lg p-1 pe-3"
     >
       {#if leftPanel}
         {@render leftPanel()}

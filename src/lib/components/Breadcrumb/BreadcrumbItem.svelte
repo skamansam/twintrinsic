@@ -16,6 +16,7 @@ Usage:
 -->
 <script lang="ts">
 import { getContext, onMount } from "svelte"
+import Icon from "../Icon/Icon.svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -27,7 +28,7 @@ const {
   /** @type {string} - Link target (_blank, _self, etc.) */
   target,
 
-  /** @type {string} - Icon to display (HTML or SVG string) */
+  /** @type {string} - Icon name to display */
   icon,
 
   /** @type {boolean} - Whether this is the current/active page */
@@ -109,7 +110,7 @@ const isCurrent = $derived(current || isLast)
     >
       {#if icon}
         <span class="breadcrumb-icon" aria-hidden="true">
-          {@html icon}
+          <Icon name={icon} width="16px" height="16px" />
         </span>
       {/if}
       <span class="breadcrumb-text">
@@ -120,7 +121,7 @@ const isCurrent = $derived(current || isLast)
     <span class="breadcrumb-text">
       {#if icon}
         <span class="breadcrumb-icon" aria-hidden="true">
-          {@html icon}
+          <Icon name={icon} width="16px" height="16px" />
         </span>
       {/if}
       {@render children?.()}

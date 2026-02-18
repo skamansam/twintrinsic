@@ -131,7 +131,7 @@ $effect(() => {
         </div>
       {/if}
       {#if menu}
-        <TreeMenu items={menu} />
+        <TreeMenu items={menu} showSearch />
       {:else}
         {@render children?.()}
       {/if}

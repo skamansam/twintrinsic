@@ -16,6 +16,8 @@ Usage:
 ```
 -->
 <script lang="ts">
+import Icon from "../Icon/Icon.svelte"
+
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",
@@ -23,8 +25,8 @@ const {
   /** @type {string} - Error message to display */
   message,
 
-  /** @type {string} - Icon to display (HTML or SVG string) */
-  icon,
+  /** @type {string} - Icon name to display */
+  icon = "alert-circle",
 
   /** @type {boolean} - Whether to show the default icon */
   showIcon = true,
@@ -42,15 +44,9 @@ const {
   aria-live="assertive"
 >
   <div class="invalid-state-content">
-    {#if showIcon}
+    {#if showIcon && icon}
       <div class="invalid-state-icon">
-        {#if icon}
-          {@html icon}
-        {:else}
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-        {/if}
+        <Icon name={icon} width="16px" height="16px" />
       </div>
     {/if}
     

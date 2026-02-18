@@ -109,3 +109,12 @@ export { default as TreeNode } from "./components/Tree/TreeNode.svelte";
 export { default as TreeMenu, type MenuItem } from "./components/TreeMenu/TreeMenu.svelte";
 export { EventsTable, PropsTable } from "./docs/index.js";
 export { default as Section } from "./Section.svelte";
+// Icon Manager
+export {
+  type IconConfig,
+  iconConfig,
+  setIconColor,
+  setIconSize,
+  setIconset,
+  updateIconConfig,
+} from "./stores/iconManager.js";

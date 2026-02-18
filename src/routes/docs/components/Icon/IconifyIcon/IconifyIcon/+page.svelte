@@ -1,22 +1,20 @@
 <!--
 @component
-Icon documentation page
+IconifyIcon documentation page
 -->
 
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import { CodeBlock, Container, Icon, setIconset } from "$lib"
-
-setIconset('mdi')
+import { CodeBlock, Container, IconifyIcon, setIconset } from "$lib"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Icon</h1>
+  <h1>IconifyIcon</h1>
   
   <p>
-    The Icon component is a wrapper around the Iconify SVG icon library that integrates with Twintrinsic's global icon management system. It allows you to use over 275,000 icons from 200+ icon sets with a single default iconset configuration.
+    The IconifyIcon component is a wrapper around the Iconify SVG icon library that integrates with Twintrinsic's global icon management system. It allows you to use over 275,000 icons from 200+ icon sets with a single default iconset configuration.
   </p>
 
   <h2>Setup</h2>
@@ -27,30 +25,30 @@ setIconset('mdi')
   <CodeBlock language="svelte">{`<script>
   import { setIconset } from 'twintrinsic'
   
-  // Set globally once - all Icon components will use this
+  // Set globally once - all IconifyIcon components will use this
   setIconset('mdi-light')
 </script>`}</CodeBlock>
 
   <h2>Basic Usage</h2>
   <p>
-    Once the default iconset is set, use Icon with just the icon name:
+    Once the default iconset is set, use IconifyIcon with just the icon name:
   </p>
 
   <CodeBlock language="svelte">{`<script>
-  import { Icon } from 'twintrinsic'
+  import { IconifyIcon } from 'twintrinsic'
 </script>
 
 <!-- Uses default iconset (mdi-light) -->
-<Icon name="home" />
-<Icon name="settings" />
-<Icon name="star" />`}</CodeBlock>
+<IconifyIcon name="home" />
+<IconifyIcon name="settings" />
+<IconifyIcon name="star" />`}</CodeBlock>
 
   <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark">
     <h3 class="text-sm font-semibold mb-4">Demo: Basic Icons</h3>
     <div class="flex gap-4 items-center text-2xl">
-      <Icon name="home" />
-      <Icon name="settings" />
-      <Icon name="star" />
+      <IconifyIcon name="home" />
+      <IconifyIcon name="settings" />
+      <IconifyIcon name="star" />
     </div>
   </div>
 
@@ -60,29 +58,29 @@ setIconset('mdi')
   </p>
 
   <CodeBlock language="svelte">{`<!-- Uses default iconset -->
-<Icon name="home" />
+<IconifyIcon name="home" />
 
 <!-- Override to use a different iconset -->
-<Icon name="star" iconset="fa" />
-<Icon name="heart" iconset="heroicons" />`}</CodeBlock>
+<IconifyIcon name="star" iconset="fa" />
+<IconifyIcon name="heart" iconset="heroicons" />`}</CodeBlock>
 
   <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark">
     <h3 class="text-sm font-semibold mb-4">Demo: Different Iconsets</h3>
     <div class="flex gap-6 items-center flex-wrap text-2xl">
       <div class="flex flex-col items-center gap-2">
-        <Icon name="home" width="32px" height="32px" />
-        <span class="text-xs text-muted">Default (tabler)</span>
+        <IconifyIcon name="home" width="32px" height="32px" />
+        <span class="text-xs text-muted">Default (mdi)</span>
       </div>
       <div class="flex flex-col items-center gap-2">
-        <Icon name="home" iconset="fa" width="32px" height="32px" />
+        <IconifyIcon name="star" iconset="fa" width="32px" height="32px" />
         <span class="text-xs text-muted">Font Awesome</span>
       </div>
       <div class="flex flex-col items-center gap-2">
-        <Icon name="home" iconset="heroicons" width="32px" height="32px" />
+        <IconifyIcon name="heart" iconset="heroicons" width="32px" height="32px" />
         <span class="text-xs text-muted">Heroicons</span>
       </div>
       <div class="flex flex-col items-center gap-2">
-        <Icon name="home" iconset="tabler" width="32px" height="32px" />
+        <IconifyIcon name="search" iconset="tabler" width="32px" height="32px" />
         <span class="text-xs text-muted">Tabler</span>
       </div>
     </div>
@@ -94,16 +92,16 @@ setIconset('mdi')
   </p>
 
   <CodeBlock language="svelte">{`<!-- With color -->
-<Icon name="home" color="red" />
+<IconifyIcon name="home" color="red" />
 
 <!-- With size -->
-<Icon name="settings" width="32px" height="32px" />
+<IconifyIcon name="settings" width="32px" height="32px" />
 
 <!-- With CSS classes -->
-<Icon name="star" class="text-yellow-500" />
+<IconifyIcon name="star" class="text-yellow-500" />
 
 <!-- Combined -->
-<Icon 
+<IconifyIcon 
   name="heart" 
   color="pink" 
   width="24px"
@@ -114,19 +112,19 @@ setIconset('mdi')
     <h3 class="text-sm font-semibold mb-4">Demo: Styled Icons</h3>
     <div class="flex gap-6 items-center flex-wrap">
       <div class="flex flex-col items-center gap-2">
-        <Icon name="home" color="red" width="32px" height="32px" />
+        <IconifyIcon name="home" color="red" width="32px" height="32px" />
         <span class="text-xs text-muted">Red</span>
       </div>
       <div class="flex flex-col items-center gap-2">
-        <Icon name="settings" color="blue" width="32px" height="32px" />
+        <IconifyIcon name="settings" color="blue" width="32px" height="32px" />
         <span class="text-xs text-muted">Blue</span>
       </div>
       <div class="flex flex-col items-center gap-2">
-        <Icon name="star" color="yellow-500" width="32px" height="32px" />
+        <IconifyIcon name="star" color="yellow-500" width="32px" height="32px" />
         <span class="text-xs text-muted">Yellow</span>
       </div>
       <div class="flex flex-col items-center gap-2">
-        <Icon name="heart" color="pink" width="32px" height="32px" />
+        <IconifyIcon name="heart" color="pink" width="32px" height="32px" />
         <span class="text-xs text-muted">Pink</span>
       </div>
     </div>
@@ -138,33 +136,33 @@ setIconset('mdi')
   </p>
 
   <CodeBlock language="svelte">{`<!-- Rotate icon -->
-<Icon name="arrow-right" rotate={1} />
+<IconifyIcon name="arrow-right" rotate={1} />
 
 <!-- Flip icon -->
-<Icon name="arrow-left" hFlip={true} />
-<Icon name="arrow-up" vFlip={true} />`}</CodeBlock>
+<IconifyIcon name="arrow-left" hFlip={true} />
+<IconifyIcon name="arrow-up" vFlip={true} />`}</CodeBlock>
 
   <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark">
     <h3 class="text-sm font-semibold mb-4">Demo: Transformations</h3>
     <div class="flex gap-6 items-center flex-wrap text-2xl">
       <div class="flex flex-col items-center gap-2">
-        <Icon name="arrow-right" width="32px" height="32px" />
+        <IconifyIcon name="arrow-right" width="32px" height="32px" />
         <span class="text-xs text-muted">Normal</span>
       </div>
       <div class="flex flex-col items-center gap-2">
-        <Icon name="arrow-right" rotate={1} width="32px" height="32px" />
+        <IconifyIcon name="arrow-right" rotate={1} width="32px" height="32px" />
         <span class="text-xs text-muted">Rotate 90°</span>
       </div>
       <div class="flex flex-col items-center gap-2">
-        <Icon name="arrow-right" rotate={2} width="32px" height="32px" />
+        <IconifyIcon name="arrow-right" rotate={2} width="32px" height="32px" />
         <span class="text-xs text-muted">Rotate 180°</span>
       </div>
       <div class="flex flex-col items-center gap-2">
-        <Icon name="arrow-right" rotate={3} width="32px" height="32px" />
+        <IconifyIcon name="arrow-right" rotate={3} width="32px" height="32px" />
         <span class="text-xs text-muted">Rotate 270°</span>
       </div>
       <div class="flex flex-col items-center gap-2">
-        <Icon name="arrow-right" hFlip={true} width="32px" height="32px" />
+        <IconifyIcon name="arrow-right" hFlip={true} width="32px" height="32px" />
         <span class="text-xs text-muted">H-Flip</span>
       </div>
     </div>

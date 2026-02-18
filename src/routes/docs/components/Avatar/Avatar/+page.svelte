@@ -53,16 +53,16 @@ import Container from "$lib/components/Container/Container.svelte"
   <h3>Gravatar Email</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
     <Avatar 
-      gravatarEmail="user@example.com"
-      name="John Doe"
-      alt="John's Avatar"
+      gravatarEmail="skamansam@gmail.com"
+      name="Skaman Sam Tyler"
+      alt="Skaman Sam Tyler's Avatar"
     />
   </div>
 
   <CodeBlock language="svelte">{`<Avatar 
-  gravatarEmail="user@example.com"
-  name="John Doe"
-  alt="John's Avatar"
+      gravatarEmail="skamansam@gmail.com"
+      name="Skaman Sam Tyler"
+      alt="Skaman Sam Tyler's Avatar"
 />`}</CodeBlock>
 
   <h3>Sizes</h3>
@@ -91,6 +91,21 @@ import Container from "$lib/components/Container/Container.svelte"
 <Avatar shape="square" name="Square" />
 <Avatar shape="rounded" name="Rounded" />`}</CodeBlock>
 
+  <h3>Icon Avatar</h3>
+  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
+    <Avatar icon="user" size="xs" />
+    <Avatar icon="star" size="sm" />
+    <Avatar icon="heart" size="md" />
+    <Avatar icon="settings" size="lg" />
+    <Avatar icon="bell" size="xl" />
+  </div>
+
+  <CodeBlock language="svelte">{`<Avatar icon="user" size="xs" />
+<Avatar icon="star" size="sm" />
+<Avatar icon="heart" size="md" />
+<Avatar icon="settings" size="lg" />
+<Avatar icon="bell" size="xl" />`}</CodeBlock>
+
   <h3>Status Indicators</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
     <Avatar name="Online" status="online" />
@@ -103,6 +118,28 @@ import Container from "$lib/components/Container/Container.svelte"
 <Avatar name="Offline" status="offline" />
 <Avatar name="Away" status="away" />
 <Avatar name="Busy" status="busy" />`}</CodeBlock>
+
+  <h3>Custom Status Icons</h3>
+  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
+    <Avatar name="Verified" status="online" statusIcon="circle-check" />
+    <Avatar name="Error" status="busy" statusIcon="circle-x" />
+    <Avatar name="Warning" status="away" statusIcon="alert-triangle" />
+  </div>
+
+  <CodeBlock language="svelte">{`<Avatar name="Verified" status="online" statusIcon="circle-check" />
+<Avatar name="Error" status="busy" statusIcon="circle-x" />
+<Avatar name="Warning" status="away" statusIcon="alert-triangle" />`}</CodeBlock>
+
+  <h3>Badges</h3>
+  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
+    <Avatar name="New" badge="3" />
+    <Avatar name="Pro" badge="Pro" badgeVariant="success" />
+    <Avatar name="Alert" badge="!" badgeVariant="error" />
+  </div>
+
+  <CodeBlock language="svelte">{`<Avatar name="New" badge="3" />
+<Avatar name="Pro" badge="Pro" badgeVariant="success" />
+<Avatar name="Alert" badge="!" badgeVariant="error" />`}</CodeBlock>
 
   <h3>Styled Avatars</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
@@ -157,6 +194,12 @@ import Container from "$lib/components/Container/Container.svelte"
         <td>Gravatar email address to generate avatar URL from. Uses SHA-256 hashing with identicon fallback</td>
       </tr>
       <tr>
+        <td><code>icon</code></td>
+        <td><code>string</code></td>
+        <td><code>undefined</code></td>
+        <td>Icon name to display (e.g., "user", "star"). Uses tabler iconset</td>
+      </tr>
+      <tr>
         <td><code>size</code></td>
         <td><code>"xs" | "sm" | "md" | "lg" | "xl"</code></td>
         <td><code>"md"</code></td>
@@ -175,10 +218,28 @@ import Container from "$lib/components/Container/Container.svelte"
         <td>Status indicator</td>
       </tr>
       <tr>
+        <td><code>statusIcon</code></td>
+        <td><code>string</code></td>
+        <td><code>undefined</code></td>
+        <td>Icon name for status indicator. Defaults to check, x, clock, or alert-circle based on status</td>
+      </tr>
+      <tr>
         <td><code>bgColor</code></td>
         <td><code>string</code></td>
         <td><code>undefined</code></td>
         <td>Background color for text avatars (CSS color value or Tailwind class)</td>
+      </tr>
+      <tr>
+        <td><code>badge</code></td>
+        <td><code>string</code></td>
+        <td><code>undefined</code></td>
+        <td>Badge text to display in top-right corner</td>
+      </tr>
+      <tr>
+        <td><code>badgeVariant</code></td>
+        <td><code>"default" | "primary" | "secondary" | "success" | "warning" | "error" | "info"</code></td>
+        <td><code>"primary"</code></td>
+        <td>Badge variant/color</td>
       </tr>
       <tr>
         <td><code>bordered</code></td>
