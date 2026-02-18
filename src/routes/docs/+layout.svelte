@@ -33,7 +33,6 @@ const siteMenu = [
     title: "Core",
     children: [
       { title: "App", link: "/docs/components/App/App" },
-      { title: "Split", link: "/docs/components/App/Split" },
     ],
   },
   {
@@ -46,6 +45,7 @@ const siteMenu = [
       { title: "Panel", link: "/docs/components/Panel/Panel" },
       { title: "Separator", link: "/docs/components/Separator/Separator" },
       { title: "Sidebar", link: "/docs/components/Sidebar/Sidebar" },
+      { title: "Splitter", link: "/docs/components/Splitter/Splitter" },
     ],
   },
   {

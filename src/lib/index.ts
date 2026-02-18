@@ -4,7 +4,6 @@
 export { default as Accordion } from "./components/Accordion/Accordion.svelte";
 export { default as AccordionItem } from "./components/Accordion/AccordionItem.svelte";
 export { default as App } from "./components/App/index.js";
-export { default as Split } from "./components/App/Split.svelte";
 export { default as AppHeader } from "./components/AppHeader/AppHeader.svelte";
 export { default as Avatar } from "./components/Avatar/Avatar.svelte";
 export { default as AvatarGroup } from "./components/Avatar/AvatarGroup.svelte";
@@ -85,6 +84,7 @@ export { default as Progress } from "./components/Progress/Progress.svelte";
 export { default as Separator } from "./components/Separator/Separator.svelte";
 export { default as Sidebar } from "./components/Sidebar/Sidebar.svelte";
 export { default as Skeleton } from "./components/Skeleton/Skeleton.svelte";
+export { default as Splitter } from "./components/Splitter/Splitter.svelte";
 export { default as Stepper } from "./components/Stepper/Stepper.svelte";
 export { default as StepperStep } from "./components/Stepper/StepperStep.svelte";
 export { default as Table } from "./components/Table/Table.svelte";
