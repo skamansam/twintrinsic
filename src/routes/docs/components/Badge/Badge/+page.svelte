@@ -10,6 +10,7 @@ Badge documentation page
 import Badge from "$lib/components/Badge/Badge.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import Icon from "$lib/components/Icon/Icon.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -147,7 +148,47 @@ import Container from "$lib/components/Container/Container.svelte"
   <Badge variant="success" overlay position="bottom-right" dot></Badge>
 </div>`}</CodeBlock>
 
-  <h2>Props</h2>
+  <h3>Long Text Overlay Positions</h3>
+  <div class="flex items-center gap-8 p-4 bg-surface rounded-md mb-4">
+    <div class="relative inline-block">
+      <div class="w-10 h-10 bg-muted/20 rounded"></div>
+      <Badge variant="primary" overlay inline position="top-right">5,100,234,439,927</Badge>
+    </div>
+    <div class="relative inline-block">
+      <div class="w-10 h-10 bg-muted/20 rounded"></div>
+      <Badge variant="error" overlay position="bottom-right"><Icon name="alert" /><Icon name="alpha"/><Icon name="beta"/><Icon name="gamma"/><Icon name="omega"/></Badge>
+    </div>
+    <div class="relative inline-block">
+      <div class="w-10 h-10 bg-muted/20 rounded"></div>
+      <Badge variant="success" overlay position="bottom-left">Bottom Left Positioning</Badge>
+    </div>
+    <div class="relative inline-block">
+      <div class="w-10 h-10 bg-muted/20 rounded"></div>
+      <Badge variant="success" overlay position="top-left">Top Left Positioning</Badge>
+    </div>
+  </div>
+
+  <CodeBlock language="svelte">{`  <div class="flex items-center gap-8 p-4 bg-surface rounded-md mb-4">
+    <div class="relative inline-block">
+      <div class="w-10 h-10 bg-muted/20 rounded"></div>
+      <Badge variant="primary" overlay position="top-right">5,100,234,439,927</Badge>
+    </div>
+    <div class="relative inline-block">
+      <div class="w-10 h-10 bg-muted/20 rounded"></div>
+      <Badge variant="error" overlay position="bottom-right"><Icon name="alert" /><Icon name="alpha"/><Icon name="beta"/><Icon name="gamma"/><Icon name="omega"/></Badge>
+    </div>
+    <div class="relative inline-block">
+      <div class="w-10 h-10 bg-muted/20 rounded"></div>
+      <Badge variant="success" overlay position="bottom-left">Bottom Left Positioning</Badge>
+    </div>
+    <div class="relative inline-block">
+      <div class="w-10 h-10 bg-muted/20 rounded"></div>
+      <Badge variant="success" overlay position="top-left">Top Left Positioning</Badge>
+    </div>
+  </div>
+`}</CodeBlock>
+
+<h2>Props</h2>
   <table>
     <thead>
       <tr>

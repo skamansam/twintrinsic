@@ -52,11 +52,21 @@ const {
   /** @type {string} - Position when used as overlay (top-right, top-left, etc.) */
   position = "top-right",
 
+  /** @type {boolean} - Whether badge is inline (absolute positioning) or takes up space */
+  inline = true,
+
   children,
 } = $props()
 
 // Determine if badge should be hidden
-const isEmpty = $derived(!children || children().toString().trim() === "")
+const isEmpty = $derived.by(() => {
+  if (!children) return true
+  try {
+    return children().toString().trim() === ""
+  } catch {
+    return false
+  }
+})
 const isHidden = $derived(hideEmpty && isEmpty)
 
 // Determine variant classes
@@ -110,15 +120,20 @@ const dotSizeClasses = $derived(
   }[size] || "w-2.5 h-2.5"
 )
 
+const topOffset = "-top-[0.5rem]";
+const bottomOffset = "-bottom-[0.5rem]";
+const rightOffset = "left-[calc(100%_-_1rem)]";
+const leftOffset = "right-[calc(100%_-_1rem)]";
+
 // Determine position classes for overlay
 const positionClasses = $derived(
-  overlay
+  overlay && inline
     ? {
-        "top-right": "absolute -top-1 -right-1",
-        "top-left": "absolute -top-1 -left-1",
-        "bottom-right": "absolute -bottom-1 -right-1",
-        "bottom-left": "absolute -bottom-1 -left-1",
-      }[position] || "absolute -top-1 -right-1"
+      "top-right": `${topOffset} ${rightOffset}`,
+      "top-left": `${topOffset} ${leftOffset}`,
+      "bottom-right": `${bottomOffset} ${rightOffset}`,
+      "bottom-left": `${bottomOffset} ${leftOffset}`,
+    }[position] || `${topOffset} ${rightOffset}`
     : ""
 )
 </script>
@@ -132,6 +147,7 @@ const positionClasses = $derived(
       {pill ? 'badge-pill' : ''}
       {pulse ? 'badge-pulse' : ''}
       {overlay ? 'badge-overlay' : ''}
+      {inline ? 'badge-inline' : ''}
       {outline ? outlineClasses : variantClasses}
       {dot ? dotSizeClasses : sizeClasses}
       {positionClasses}
@@ -141,7 +157,7 @@ const positionClasses = $derived(
     aria-label={dot ? 'Status indicator' : undefined}
   >
     {#if !dot}
-      {@render children?.()}
+      {@render children()}
     {/if}
   </span>
 {/if}
@@ -152,7 +168,11 @@ const positionClasses = $derived(
   .badge {
     @apply inline-flex items-center justify-center;
     @apply font-medium leading-none;
-    @apply rounded;
+    @apply rounded whitespace-nowrap;
+  }
+
+  .badge-inline {
+    @apply absolute;
   }
   
   .badge-pill {
