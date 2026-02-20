@@ -58,6 +58,7 @@ export { default as TextInput } from "./components/Form/TextInput.svelte";
 export { default as Icon } from "./components/Icon/Icon.svelte";
 export { default as TwintrinsicLogo } from "./components/icons/TwintrinsicLogo.svelte";
 export { default as Lazy } from "./components/Lazy/Lazy.svelte";
+export { default as Map } from "./components/Map/Map.svelte";
 export { default as Masonry } from "./components/Masonry/Masonry.svelte";
 export { default as Menu } from "./components/Menu/Menu/Menu.svelte";
 // Metrics Components

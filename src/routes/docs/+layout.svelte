@@ -27,6 +27,7 @@ const siteMenu = [
     title: "Examples",
     children: [
       { title: "Data Dashboard", link: "/docs/examples/dashboard" },
+      { title: "Game Map", link: "/docs/examples/game-map" },
     ],
   },
   {
@@ -78,6 +79,7 @@ const siteMenu = [
       { title: "CodeBlockSpeed", link: "/docs/components/CodeBlockSpeed/CodeBlockSpeed" },
       { title: "CodeEditor", link: "/docs/components/CodeEditor/CodeEditor" },
       { title: "DataTable", link: "/docs/components/DataTable/DataTable" },
+      { title: "Map", link: "/docs/components/Map/Map" },
       { title: "Progress", link: "/docs/components/Progress/Progress" },
       { title: "Skeleton", link: "/docs/components/Skeleton/Skeleton" },
       { title: "Table", link: "/docs/components/Table/Table" },
