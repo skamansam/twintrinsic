@@ -65,7 +65,7 @@
     "playwright": "^1.58.2",
     "publint": "^0.3.17",
     "storybook": "^10.2.7",
-    "svelte": "^5.50.0",
+    "svelte": "^5.51.5",
     "svelte-check": "^4.3.6",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
