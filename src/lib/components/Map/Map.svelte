@@ -7,6 +7,10 @@
 		lat: number;
 		lng: number;
 		tooltip?: string;
+		/** Custom icon - can be a string (HTML) or HTMLElement to render as marker icon */
+		icon?: string | HTMLElement;
+		/** Iconify icon identifier (e.g., "mdi:map-marker", "fluent-emoji-flat:pin") to fetch from Iconify API */
+		iconName?: string;
 		[key: string]: any;
 	}
 
@@ -74,6 +78,50 @@
 	// biome-ignore lint/suspicious/noExplicitAny: Leaflet types not fully available in alpha
 	let map: any;
 	let editingMarkerId: string | number | null = null;
+	const iconCache = new Map<string, string>();
+
+	/**
+	 * Fetches an icon SVG from Iconify API and creates a Leaflet icon
+	 * @param iconId - Icon identifier in format "prefix:name" (e.g., "mdi:map-marker")
+	 * @param size - Icon size in pixels (default: 32)
+	 * @param leafletModule - Leaflet module reference
+	 * @returns Promise resolving to a Leaflet Icon object or null if failed
+	 */
+	async function createIconifyIcon(iconId: string, size: number, leafletModule: any) {
+		// Check cache first
+		if (iconCache.has(iconId)) {
+			const svgUrl = iconCache.get(iconId)!;
+			return new leafletModule.Icon({
+				iconUrl: svgUrl,
+				iconSize: [size, size],
+				iconAnchor: [size / 2, size],
+				popupAnchor: [0, -size],
+			});
+		}
+
+		try {
+			const svgUrl = `https://api.iconify.design/${iconId.replace(":","/")}.svg?height=${size}`;
+			// Verify the icon exists by fetching it
+			const response = await fetch(svgUrl);
+			if (!response.ok) {
+				console.warn(`Failed to fetch icon: ${iconId}`);
+				return null;
+			}
+
+			// Cache the URL
+			iconCache.set(iconId, svgUrl);
+
+			return new leafletModule.Icon({
+				iconUrl: svgUrl,
+				iconSize: [size, size],
+				iconAnchor: [size / 2, size],
+				popupAnchor: [0, -size],
+			});
+		} catch (error) {
+			console.error(`Error creating icon for ${iconId}:`, error);
+			return null;
+		}
+	}
 
 	onMount(async () => {
 		if (!mapContainer) return;
@@ -125,117 +173,141 @@
 			}).addTo(map);
 		}
 
-
 		// Add markers to the map
 		if (markers && markers.length > 0) {
-			markers.forEach((markerData: Marker) => {
-				// biome-ignore lint/suspicious/noExplicitAny: Leaflet types not fully available in alpha
-				const marker = new (leaflet as any).Marker([markerData.lat, markerData.lng]);
-				marker.addTo(map);
-				const tooltipText = markerData.tooltip || markerData.description;
-				// Add tooltip from marker data if provided
-				if (tooltipText) {
-					marker.bindTooltip(tooltipText, { permanent: false});
-				}
+			await Promise.all(
+				markers.map(async (markerData: Marker) => {
+					// Create marker with custom icon if specified
+					const markerOptions: any = {};
 
-				// Add popup if popupContent function is provided
-				if (popupContent) {
-					const isEditing = editingMarkerId === markerData.id;
-					const htmlContent = popupContent(markerData, isEditing);
-					if (htmlContent) {
-						marker.bindPopup(htmlContent);
-						
-						// Attach event listeners to popup buttons
-						marker.on('popupopen', () => {
-							const popupElement = marker.getPopup().getElement();
-							if (popupElement) {
-								attachPopupListeners(popupElement);
-							}
-						});
+					// Handle iconName (Iconify icon)
+					if (markerData.iconName) {
+						const customIcon = await createIconifyIcon(markerData.iconName, 32, leaflet);
+						if (customIcon) {
+							markerOptions.icon = customIcon;
+						}
 					}
-				}
-				
-				function attachPopupListeners(popupElement: HTMLElement) {
-					const editButton = popupElement.querySelector('[data-action="edit"]');
-					const saveButton = popupElement.querySelector('[data-action="save"]');
-					const deleteButton = popupElement.querySelector('[data-action="delete"]');
-					
-					if (editButton) {
-						editButton.addEventListener('click', () => {
-							editingMarkerId = markerData.id || null;
-							const updatedContent = popupContent(markerData, true);
-							marker.setPopupContent(updatedContent);
-							// Re-attach listeners after content update
-							setTimeout(() => {
-								const newPopupElement = marker.getPopup().getElement();
-								attachPopupListeners(newPopupElement);
-							}, 0);
+					// Handle icon (custom HTML string or HTMLElement)
+					else if (markerData.icon) {
+						const iconHtml = typeof markerData.icon === 'string' 
+							? markerData.icon 
+							: markerData.icon.outerHTML;
+						markerOptions.icon = new leaflet.DivIcon({
+							html: iconHtml,
+							iconSize: [32, 32],
+							iconAnchor: [16, 32],
+							popupAnchor: [0, -32],
+							className: 'custom-marker-icon'
 						});
 					}
 
-					if (saveButton) {
-						saveButton.addEventListener('click', () => {
-							// Capture all form inputs and pass to parent
-							const formData: Record<string, any> = { id: markerData.id };
-							const inputs = popupElement.querySelectorAll('input, textarea, select');
-							inputs.forEach((input: any) => {
-								if (input.name || input.id) {
-									const key = input.name || input.id;
-									formData[key] = input.value;
+					// Create marker
+					const marker = new (leaflet as any).Marker([markerData.lat, markerData.lng], markerOptions);
+					marker.addTo(map);
+
+					// Add tooltip from marker data if provided
+					const tooltipText = markerData.tooltip || markerData.description;
+					if (tooltipText) {
+						marker.bindTooltip(tooltipText, { permanent: false });
+					}
+
+					// Define popup listener function
+					function attachPopupListeners(popupElement: HTMLElement) {
+						const editButton = popupElement.querySelector('[data-action="edit"]');
+						const saveButton = popupElement.querySelector('[data-action="save"]');
+						const deleteButton = popupElement.querySelector('[data-action="delete"]');
+
+						if (editButton) {
+							editButton.addEventListener('click', () => {
+								editingMarkerId = markerData.id || null;
+								if (popupContent) {
+									const updatedContent = popupContent(markerData, true);
+									marker.setPopupContent(updatedContent);
+									setTimeout(() => {
+										const newPopupElement = marker.getPopup().getElement();
+										attachPopupListeners(newPopupElement);
+									}, 0);
 								}
 							});
+						}
 
-							// Dispatch save event with form data
-							onmarkerclick?.(
-								new CustomEvent('markersave', {
-									detail: formData,
-								}) as any
-							);
+						if (saveButton) {
+							saveButton.addEventListener('click', () => {
+								const formData: Record<string, any> = { id: markerData.id };
+								const inputs = popupElement.querySelectorAll('input, textarea, select');
+								inputs.forEach((input: any) => {
+									if (input.name || input.id) {
+										const key = input.name || input.id;
+										formData[key] = input.value;
+									}
+								});
 
-							// Update marker data 
-							let markerToUpdateIndex = markers.findIndex((m) => m.id === markerData.id);
-							markers[markerToUpdateIndex] = {...markers[markerToUpdateIndex], ...formData};
-							const newMarkerData = markers[markerToUpdateIndex];
+								onmarkerclick?.(
+									new CustomEvent('markersave', {
+										detail: formData,
+									}) as any
+								);
 
-							editingMarkerId = null;
-							const updatedContent = popupContent(newMarkerData, false);
-							marker.setPopupContent(updatedContent);
-							setTimeout(() => {
-								const newPopupElement = marker.getPopup().getElement();
-								attachPopupListeners(newPopupElement);
-							}, 0);
-						});
+								let markerToUpdateIndex = markers.findIndex((m) => m.id === markerData.id);
+								markers[markerToUpdateIndex] = {...markers[markerToUpdateIndex], ...formData};
+								const newMarkerData = markers[markerToUpdateIndex];
+
+								editingMarkerId = null;
+								if (popupContent) {
+									const updatedContent = popupContent(newMarkerData, false);
+									marker.setPopupContent(updatedContent);
+									setTimeout(() => {
+										const newPopupElement = marker.getPopup().getElement();
+										attachPopupListeners(newPopupElement);
+									}, 0);
+								}
+							});
+						}
+
+						if (deleteButton) {
+							deleteButton.addEventListener('click', () => {
+								editingMarkerId = null;
+								markers = markers.filter((m) => m.id !== markerData.id);
+								marker.remove();
+								onmarkerclick?.(
+									new CustomEvent('markerdelete', {
+										detail: markerData,
+									})
+								);
+							});
+						}
 					}
-					
-					if (deleteButton) {
-						deleteButton.addEventListener('click', () => {
-							editingMarkerId = null;
-							// Remove marker from internal markers array
-							markers = markers.filter((m) => m.id !== markerData.id);
-							// Remove marker from map
-							marker.remove();
-							// Dispatch delete event
-							onmarkerclick?.(
-								new CustomEvent('markerdelete', {
-									detail: markerData,
-								})
-							);
-						});
-					}
-				}
 
-				// Add click event to marker
-				marker.on('click', () => {
-					onmarkerclick?.(
-						new CustomEvent('markerclick', {
-							detail: markerData,
-						})
-					);
-				});
+					// Add popup if popupContent function is provided
+					if (popupContent) {
+						const isEditing = editingMarkerId === markerData.id;
+						const htmlContent = popupContent(markerData, isEditing);
+						if (htmlContent) {
+							marker.bindPopup(htmlContent);
+							marker.on('popupopen', () => {
+								const popupElement = marker.getPopup().getElement();
+								if (popupElement) {
+									attachPopupListeners(popupElement);
+								}
+							});
+						}
+					}
+
+					// Add click event to marker
+					marker.on('click', () => {
+						onmarkerclick?.(
+							new CustomEvent('markerclick', {
+								detail: markerData,
+							})
+						);
+					});
+				})
+			).catch((error) => {
+				console.error('Error loading markers:', error);
 			});
 		}
 
-		// biome-ignore lint/suspicious/noExplicitAny: Leaflet types not fully available in alpha
+		// Attach event listeners to map
 		map.on('click', (event: any) => {
 			onclick?.(
 				new CustomEvent('click', {

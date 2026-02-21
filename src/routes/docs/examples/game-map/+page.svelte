@@ -13,7 +13,8 @@ Game Map Example - Interactive map with markers, popups, and editing
 		name: string;
 		description: string;
 		type: 'treasure' | 'enemy' | 'npc' | 'location';
-		icon?: string;
+		icon?: string | HTMLElement;
+		iconName?: string;
 	}
 
 	const IMAGE_URL = 'https://staticdelivery.nexusmods.com/mods/1151/images/92456/92456-1742822281-187495018.png';
@@ -36,14 +37,14 @@ Game Map Example - Interactive map with markers, popups, and editing
 	];
 
 	onMount(() => {
-		// Initialize with random markers
+		// Initialize with markers showing all three icon methods
 		const randomMarkers: GameMarker[] = [
 			{
 				id: '1',
 				lat: 200,
 				lng: 300,
 				name: 'Ancient Ruins',
-				description: 'Mysterious ruins with valuable artifacts',
+				description: 'Using emoji string icon',
 				type: 'location',
 				icon: '📍',
 			},
@@ -52,36 +53,36 @@ Game Map Example - Interactive map with markers, popups, and editing
 				lat: 400,
 				lng: 600,
 				name: 'Dragon Hoard',
-				description: 'Legendary treasure guarded by a dragon',
+				description: 'Using Iconify icon (mdi:treasure-chest)',
 				type: 'treasure',
-				icon: '💎',
+				iconName: 'mdi:treasure-chest',
 			},
 			{
 				id: '3',
 				lat: 700,
 				lng: 200,
 				name: 'Bandit Camp',
-				description: 'Dangerous bandits roam this area',
+				description: 'Using Iconify icon (mdi:sword)',
 				type: 'enemy',
-				icon: '⚔️',
+				iconName: 'mdi:sword',
 			},
 			{
 				id: '4',
 				lat: 600,
 				lng: 800,
 				name: 'Village Elder',
-				description: 'Wise elder with knowledge of the land',
+				description: 'Using HTML string icon',
 				type: 'npc',
-				icon: '🧑',
+				icon: '<div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:#4f46e5;border-radius:50%;color:white;font-weight:bold;">👤</div>',
 			},
 			{
 				id: '5',
 				lat: 300,
 				lng: 700,
 				name: 'Hidden Chest',
-				description: 'Small treasure chest hidden in the forest',
+				description: 'Using Iconify icon (mdi:chest)',
 				type: 'treasure',
-				icon: '💎',
+				iconName: 'mdi:chest',
 			},
 		];
 		markers = randomMarkers;
