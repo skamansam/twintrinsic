@@ -11,6 +11,8 @@
 		icon?: string | HTMLElement;
 		/** Iconify icon identifier (e.g., "mdi:map-marker", "fluent-emoji-flat:pin") to fetch from Iconify API */
 		iconName?: string;
+		/** Color for the marker (CSS color value, e.g., "#ff0000", "red", "rgb(255,0,0)") */
+		color?: string;
 		[key: string]: any;
 	}
 
@@ -85,12 +87,15 @@
 	 * @param iconId - Icon identifier in format "prefix:name" (e.g., "mdi:map-marker")
 	 * @param size - Icon size in pixels (default: 32)
 	 * @param leafletModule - Leaflet module reference
+	 * @param color - Optional CSS color to tint the icon
 	 * @returns Promise resolving to a Leaflet Icon object or null if failed
 	 */
-	async function createIconifyIcon(iconId: string, size: number, leafletModule: any) {
+	async function createIconifyIcon(iconId: string, size: number, leafletModule: any, color?: string) {
+		const cacheKey = color ? `${iconId}:${color}` : iconId;
+		
 		// Check cache first
-		if (iconCache.has(iconId)) {
-			const svgUrl = iconCache.get(iconId)!;
+		if (iconCache.has(cacheKey)) {
+			const svgUrl = iconCache.get(cacheKey)!;
 			return new leafletModule.Icon({
 				iconUrl: svgUrl,
 				iconSize: [size, size],
@@ -100,7 +105,8 @@
 		}
 
 		try {
-			const svgUrl = `https://api.iconify.design/${iconId.replace(":","/")}.svg?height=${size}`;
+			const colorParam = color ? `&color=${encodeURIComponent(color)}` : '';
+			const svgUrl = `https://api.iconify.design/${iconId.replace(":","/")}.svg?height=${size}${colorParam}`;
 			// Verify the icon exists by fetching it
 			const response = await fetch(svgUrl);
 			if (!response.ok) {
@@ -109,7 +115,7 @@
 			}
 
 			// Cache the URL
-			iconCache.set(iconId, svgUrl);
+			iconCache.set(cacheKey, svgUrl);
 
 			return new leafletModule.Icon({
 				iconUrl: svgUrl,
@@ -182,7 +188,7 @@
 
 					// Handle iconName (Iconify icon)
 					if (markerData.iconName) {
-						const customIcon = await createIconifyIcon(markerData.iconName, 32, leaflet);
+						const customIcon = await createIconifyIcon(markerData.iconName, 32, leaflet, markerData.color);
 						if (customIcon) {
 							markerOptions.icon = customIcon;
 						}
@@ -192,8 +198,11 @@
 						const iconHtml = typeof markerData.icon === 'string' 
 							? markerData.icon 
 							: markerData.icon.outerHTML;
+						const colorFilter = markerData.color 
+							? `filter: hue-rotate(${markerData.color === 'red' ? '0deg' : markerData.color === 'blue' ? '240deg' : markerData.color === 'green' ? '120deg' : '0deg'});`
+							: '';
 						markerOptions.icon = new leaflet.DivIcon({
-							html: iconHtml,
+							html: `<div style="${colorFilter}">${iconHtml}</div>`,
 							iconSize: [32, 32],
 							iconAnchor: [16, 32],
 							popupAnchor: [0, -32],

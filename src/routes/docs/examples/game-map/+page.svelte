@@ -15,6 +15,7 @@ Game Map Example - Interactive map with markers, popups, and editing
 		type: 'treasure' | 'enemy' | 'npc' | 'location';
 		icon?: string | HTMLElement;
 		iconName?: string;
+		color?: string;
 	}
 
 	const IMAGE_URL = 'https://staticdelivery.nexusmods.com/mods/1151/images/92456/92456-1742822281-187495018.png';
@@ -37,14 +38,14 @@ Game Map Example - Interactive map with markers, popups, and editing
 	];
 
 	onMount(() => {
-		// Initialize with markers showing all three icon methods
+		// Initialize with markers showing all three icon methods and colorization
 		const randomMarkers: GameMarker[] = [
 			{
 				id: '1',
 				lat: 200,
 				lng: 300,
 				name: 'Ancient Ruins',
-				description: 'Using emoji string icon',
+				description: 'Emoji string icon (no color)',
 				type: 'location',
 				icon: '📍',
 			},
@@ -53,36 +54,39 @@ Game Map Example - Interactive map with markers, popups, and editing
 				lat: 400,
 				lng: 600,
 				name: 'Dragon Hoard',
-				description: 'Using Iconify icon (mdi:treasure-chest)',
+				description: 'Iconify icon with gold color',
 				type: 'treasure',
 				iconName: 'mdi:treasure-chest',
+				color: '#fbbf24',
 			},
 			{
 				id: '3',
 				lat: 700,
 				lng: 200,
 				name: 'Bandit Camp',
-				description: 'Using Iconify icon (mdi:sword)',
+				description: 'Iconify icon with red color',
 				type: 'enemy',
 				iconName: 'mdi:sword',
+				color: '#ef4444',
 			},
 			{
 				id: '4',
 				lat: 600,
 				lng: 800,
 				name: 'Village Elder',
-				description: 'Using HTML string icon',
+				description: 'HTML string icon with purple background',
 				type: 'npc',
-				icon: '<div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:#4f46e5;border-radius:50%;color:white;font-weight:bold;">👤</div>',
+				icon: '<div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:#a855f7;border-radius:50%;color:white;font-weight:bold;">👤</div>',
 			},
 			{
 				id: '5',
 				lat: 300,
 				lng: 700,
 				name: 'Hidden Chest',
-				description: 'Using Iconify icon (mdi:chest)',
+				description: 'Iconify icon with blue color',
 				type: 'treasure',
 				iconName: 'mdi:chest',
+				color: '#3b82f6',
 			},
 		];
 		markers = randomMarkers;
