@@ -80,7 +80,34 @@
 	// biome-ignore lint/suspicious/noExplicitAny: Leaflet types not fully available in alpha
 	let map: any;
 	let editingMarkerId: string | number | null = null;
-	const iconCache = new Map<string, string>();
+	const ICON_CACHE_KEY = 'twintrinsic_map_icon_cache';
+
+	/**
+	 * Get icon URL from localStorage cache
+	 */
+	function getCachedIconUrl(cacheKey: string): string | null {
+		if (typeof window === 'undefined') return null;
+		try {
+			const cache = JSON.parse(localStorage.getItem(ICON_CACHE_KEY) || '{}');
+			return cache[cacheKey] || null;
+		} catch {
+			return null;
+		}
+	}
+
+	/**
+	 * Store icon URL in localStorage cache
+	 */
+	function setCachedIconUrl(cacheKey: string, url: string): void {
+		if (typeof window === 'undefined') return;
+		try {
+			const cache = JSON.parse(localStorage.getItem(ICON_CACHE_KEY) || '{}');
+			cache[cacheKey] = url;
+			localStorage.setItem(ICON_CACHE_KEY, JSON.stringify(cache));
+		} catch (error) {
+			console.warn('Failed to cache icon in localStorage:', error);
+		}
+	}
 
 	/**
 	 * Fetches an icon SVG from Iconify API and creates a Leaflet icon
@@ -93,11 +120,11 @@
 	async function createIconifyIcon(iconId: string, size: number, leafletModule: any, color?: string) {
 		const cacheKey = color ? `${iconId}:${color}` : iconId;
 		
-		// Check cache first
-		if (iconCache.has(cacheKey)) {
-			const svgUrl = iconCache.get(cacheKey)!;
+		// Check localStorage cache first
+		const cachedUrl = getCachedIconUrl(cacheKey);
+		if (cachedUrl) {
 			return new leafletModule.Icon({
-				iconUrl: svgUrl,
+				iconUrl: cachedUrl,
 				iconSize: [size, size],
 				iconAnchor: [size / 2, size],
 				popupAnchor: [0, -size],
@@ -114,8 +141,8 @@
 				return null;
 			}
 
-			// Cache the URL
-			iconCache.set(cacheKey, svgUrl);
+			// Cache the URL in localStorage
+			setCachedIconUrl(cacheKey, svgUrl);
 
 			return new leafletModule.Icon({
 				iconUrl: svgUrl,
