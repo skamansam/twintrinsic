@@ -7,7 +7,7 @@ IconifyIcon documentation page
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import { CodeBlock, Container, IconifyIcon, setIconset } from "$lib"
+import { CodeBlock, Container, setIconset } from "$lib"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
