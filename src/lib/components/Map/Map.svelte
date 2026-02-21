@@ -6,7 +6,7 @@
 		id?: string | number;
 		lat: number;
 		lng: number;
-		tooltip?: string | HTMLElement | Function | leaflet.TooltipOptions;
+		tooltip?: string;
 		[key: string]: any;
 	}
 
@@ -37,10 +37,8 @@
 		imageHeight?: number;
 		/** Array of markers to display on the map */
 		markers?: Marker[];
-		/** Slot for custom marker popup content */
-		markerPopup?: any;
-		/** Slot for custom marker form for editing */
-		markerForm?: any;
+		/** Function to render marker popup content - receives marker data and isEditing flag, returns HTML string */
+		popupContent?: (marker: Marker, isEditing: boolean) => string;
 		/** Map click handler */
 		onclick?: (event: CustomEvent<{ lat: number; lng: number }>) => void;
 		/** Map zoom change handler */
@@ -65,8 +63,7 @@
 		imageWidth,
 		imageHeight,
 		markers = [],
-		markerPopup,
-		markerForm,
+		popupContent,
 		onclick,
 		onzoomchange,
 		onmove,
@@ -76,6 +73,7 @@
 	let mapContainer: HTMLDivElement;
 	// biome-ignore lint/suspicious/noExplicitAny: Leaflet types not fully available in alpha
 	let map: any;
+	let editingMarkerId: string | number | null = null;
 
 	onMount(async () => {
 		if (!mapContainer) return;
@@ -140,9 +138,90 @@
 					marker.bindTooltip(tooltipText, { permanent: false});
 				}
 
-				// Add popup if markerPopup slot is provided
-				if (markerPopup) {
-					marker.bindPopup(markerPopup);
+				// Add popup if popupContent function is provided
+				if (popupContent) {
+					const isEditing = editingMarkerId === markerData.id;
+					const htmlContent = popupContent(markerData, isEditing);
+					if (htmlContent) {
+						marker.bindPopup(htmlContent);
+						
+						// Attach event listeners to popup buttons
+						marker.on('popupopen', () => {
+							const popupElement = marker.getPopup().getElement();
+							if (popupElement) {
+								attachPopupListeners(popupElement);
+							}
+						});
+					}
+				}
+				
+				function attachPopupListeners(popupElement: HTMLElement) {
+					const editButton = popupElement.querySelector('[data-action="edit"]');
+					const saveButton = popupElement.querySelector('[data-action="save"]');
+					const deleteButton = popupElement.querySelector('[data-action="delete"]');
+					
+					if (editButton) {
+						editButton.addEventListener('click', () => {
+							editingMarkerId = markerData.id || null;
+							const updatedContent = popupContent(markerData, true);
+							marker.setPopupContent(updatedContent);
+							// Re-attach listeners after content update
+							setTimeout(() => {
+								const newPopupElement = marker.getPopup().getElement();
+								attachPopupListeners(newPopupElement);
+							}, 0);
+						});
+					}
+
+					if (saveButton) {
+						saveButton.addEventListener('click', () => {
+							// Capture all form inputs and pass to parent
+							const formData: Record<string, any> = { id: markerData.id };
+							const inputs = popupElement.querySelectorAll('input, textarea, select');
+							inputs.forEach((input: any) => {
+								if (input.name || input.id) {
+									const key = input.name || input.id;
+									formData[key] = input.value;
+								}
+							});
+
+							// Dispatch save event with form data
+							onmarkerclick?.(
+								new CustomEvent('markersave', {
+									detail: formData,
+								}) as any
+							);
+
+							// Update marker data 
+							let markerToUpdateIndex = markers.findIndex((m) => m.id === markerData.id);
+							markers[markerToUpdateIndex] = {...markers[markerToUpdateIndex], ...formData};
+							const newMarkerData = markers[markerToUpdateIndex];
+
+							editingMarkerId = null;
+							const updatedContent = popupContent(newMarkerData, false);
+							marker.setPopupContent(updatedContent);
+							setTimeout(() => {
+								const newPopupElement = marker.getPopup().getElement();
+								attachPopupListeners(newPopupElement);
+							}, 0);
+						});
+					}
+					
+					if (deleteButton) {
+						deleteButton.addEventListener('click', () => {
+							editingMarkerId = null;
+							// Remove marker from internal markers array
+							markers = markers.filter((m) => m.id !== markerData.id);
+							// Remove marker from map
+							marker.remove();
+							// Dispatch delete event
+							onmarkerclick?.(
+								new CustomEvent('markerdelete', {
+									detail: markerData,
+								})
+							);
+						});
+					}
 				}
 
 				// Add click event to marker
@@ -191,7 +270,3 @@
 </script>
 
 <div bind:this={mapContainer} class="h-full w-full"></div>
-
-<style lang="postcss">
-	@reference "../../twintrinsic.css";
-</style>

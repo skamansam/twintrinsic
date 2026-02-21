@@ -23,6 +23,7 @@ Game Map Example - Interactive map with markers, popups, and editing
 	let markers: GameMarker[] = [];
 	let editingMarker: GameMarker | null = null;
 	let showForm = false;
+	let showPopupForm = false;
 	let formMode: 'create' | 'edit' = 'create';
 	let newMarkerLat = 500;
 	let newMarkerLng = 500;
@@ -93,6 +94,24 @@ Game Map Example - Interactive map with markers, popups, and editing
 		showForm = true;
 	}
 
+	function handleMarkerSave(formData: Record<string, any>) {
+		const markerId = formData.id;
+		const index = markers.findIndex((m) => m.id === markerId);
+		if (index !== -1) {
+			markers[index] = {
+				...markers[index],
+				name: formData.name,
+				description: formData.description,
+				type: formData.type,
+			};
+			markers = markers; // Trigger reactivity
+		}
+	}
+
+	function handleMarkerDelete(marker: GameMarker) {
+		markers = markers.filter((m) => m.id !== marker.id);
+	}
+
 	function handleMapClick(event: CustomEvent<{ lat: number; lng: number }>) {
 		newMarkerLat = event.detail.lat;
 		newMarkerLng = event.detail.lng;
@@ -135,6 +154,51 @@ Game Map Example - Interactive map with markers, popups, and editing
 		const typeObj = markerTypes.find((t) => t.value === type);
 		return typeObj?.icon || '📍';
 	}
+
+	function popupContent(marker: GameMarker, isEditing: boolean): string {
+		if (isEditing) {
+			return `
+				<div class="p-3 min-w-56">
+					<h3 class="font-bold text-lg mb-3">Edit Marker</h3>
+					<form class="space-y-3" onsubmit="return false;">
+						<div>
+							<label class="block text-xs font-medium mb-1">Name</label>
+							<input type="text" name="name" value="${marker.name}" class="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Marker name" />
+						</div>
+						<div>
+							<label class="block text-xs font-medium mb-1">Description</label>
+							<textarea name="description" class="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Description" rows="2">${marker.description}</textarea>
+						</div>
+						<div>
+							<label class="block text-xs font-medium mb-1">Type</label>
+							<select name="type" class="w-full px-2 py-1 border border-gray-300 rounded text-sm">
+								<option value="treasure" ${marker.type === 'treasure' ? 'selected' : ''}>💎 Treasure</option>
+								<option value="enemy" ${marker.type === 'enemy' ? 'selected' : ''}>⚔️ Enemy</option>
+								<option value="npc" ${marker.type === 'npc' ? 'selected' : ''}>🧑 NPC</option>
+								<option value="location" ${marker.type === 'location' ? 'selected' : ''}>📍 Location</option>
+							</select>
+						</div>
+						<div class="flex gap-2 pt-2">
+							<button type="button" data-action="save" class="flex-1 bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">Save</button>
+							<button type="button" data-action="delete" class="flex-1 bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700">Delete</button>
+						</div>
+					</form>
+				</div>
+			`;
+		}
+		
+		return `
+			<div class="p-3 min-w-56">
+				<h3 class="font-bold text-lg mb-2">${marker.name}</h3>
+				<p class="text-sm text-gray-600 mb-3">${marker.description}</p>
+				<div class="flex items-center gap-2 mb-4">
+					<span class="text-2xl">${getMarkerIcon(marker.type)}</span>
+					<span class="text-sm font-medium capitalize">${marker.type}</span>
+				</div>
+				<button type="button" data-action="edit" class="w-full bg-blue-600 text-white px-3 py-2 rounded text-sm hover:bg-blue-700">Edit</button>
+			</div>
+		`;
+	}
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -156,8 +220,17 @@ Game Map Example - Interactive map with markers, popups, and editing
 					center={[515, 515]}
 					zoom={5}
 					{markers}
+					{popupContent}
 					attribution='Map image from <a href="https://www.nexusmods.com/fallout4/mods/92456" target="_blank">Nexus Mods</a>'
-					onmarkerclick={handleMarkerClick}
+					onmarkerclick={(e: any) => {
+						if (e.type === 'markersave') {
+							handleMarkerSave(e.detail);
+						} else if (e.type === 'markerdelete') {
+							handleMarkerDelete(e.detail);
+						} else {
+							handleMarkerClick(e);
+						}
+					}}
 					onclick={handleMapClick}
 				/>
 			</div>
@@ -170,10 +243,10 @@ Game Map Example - Interactive map with markers, popups, and editing
 
 				<div class="space-y-2 max-h-96 overflow-y-auto">
 					{#each markers as marker (marker.id)}
-						<button
-							on:click={() => handleMarkerClick(new CustomEvent('markerclick', { detail: marker }))}
-							class="w-full text-left rounded-lg border border-gray-200 bg-gray-50 p-3 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 transition-colors"
-						>
+					<button
+						onclick={() => handleMarkerClick(new CustomEvent('markerclick', { detail: marker }))}
+						class="w-full text-left rounded-lg border border-gray-200 bg-gray-50 p-3 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 transition-colors"
+					>
 							<div class="flex items-center gap-2">
 								<span class="text-xl">{getMarkerIcon(marker.type)}</span>
 								<div class="flex-1 min-w-0">
@@ -191,100 +264,4 @@ Game Map Example - Interactive map with markers, popups, and editing
 			</div>
 		</div>
 	</div>
-
-	<!-- Edit Form -->
-	{#if showForm}
-		<div class="not-prose fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-			<div class="w-full max-w-md rounded-lg bg-white p-6 dark:bg-gray-900">
-				<h2 class="mb-4 text-xl font-semibold">
-					{formMode === 'create' ? 'Create New Marker' : 'Edit Marker'}
-				</h2>
-
-				<div class="space-y-4">
-					<div>
-						<label for="name" class="block text-sm font-medium mb-1">Name</label>
-						<input
-							id="name"
-							type="text"
-							bind:value={editingMarker.name}
-							class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-800"
-							placeholder="Marker name"
-						/>
-					</div>
-
-					<div>
-						<label for="description" class="block text-sm font-medium mb-1">Description</label>
-						<textarea
-							id="description"
-							bind:value={editingMarker.description}
-							class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-800"
-							placeholder="Marker description"
-							rows="3"
-						/>
-					</div>
-
-					<div>
-						<label for="type" class="block text-sm font-medium mb-1">Type</label>
-						<select
-							id="type"
-							bind:value={editingMarker.type}
-							class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-800"
-						>
-							{#each markerTypes as type}
-								<option value={type.value}>{type.label}</option>
-							{/each}
-						</select>
-					</div>
-
-					{#if formMode === 'create'}
-						<div class="grid grid-cols-2 gap-4">
-							<div>
-								<label for="lat" class="block text-sm font-medium mb-1">Latitude</label>
-								<input
-									id="lat"
-									type="number"
-									bind:value={newMarkerLat}
-									class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-800"
-									placeholder="Latitude"
-								/>
-							</div>
-							<div>
-								<label for="lng" class="block text-sm font-medium mb-1">Longitude</label>
-								<input
-									id="lng"
-									type="number"
-									bind:value={newMarkerLng}
-									class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-800"
-									placeholder="Longitude"
-								/>
-							</div>
-						</div>
-					{/if}
-
-					<div class="flex gap-2 pt-4">
-						<button
-							on:click={saveMarker}
-							class="flex-1 rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 transition-colors"
-						>
-							{formMode === 'create' ? 'Create' : 'Save'}
-						</button>
-						{#if formMode === 'edit'}
-							<button
-								on:click={deleteMarker}
-								class="rounded-lg bg-red-600 px-4 py-2 font-medium text-white hover:bg-red-700 transition-colors"
-							>
-								Delete
-							</button>
-						{/if}
-						<button
-							on:click={closeForm}
-							class="rounded-lg border border-gray-300 px-4 py-2 font-medium hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800 transition-colors"
-						>
-							Cancel
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	{/if}
 </Container>
