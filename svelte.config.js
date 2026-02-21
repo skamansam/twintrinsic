@@ -5,15 +5,16 @@ import { vitePreprocess } from "@sveltejs/vite-plugin-svelte"
 
 let adapter;
 let options;
-if (process.env.VERCEL_ENV) {
+// if (process.env.VERCEL_ENV) {
   adapter = vercelAdapter;
-} else {
-  adapter = netlifyAdapter;
-  options = {
-    edge: false,
-    split: false,
-  };
-}
+  options = {out: "dist"};
+// } else {
+//   adapter = netlifyAdapter;
+//   options = {
+//     edge: false,
+//     split: false,
+//   };
+// }
 
 const config = {
   preprocess: vitePreprocess(),

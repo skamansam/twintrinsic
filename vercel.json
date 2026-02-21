@@ -1,5 +1,5 @@
 {
   "buildCommand": "pnpm build",
-  "outputDirectory": ".svelte-kit/output",
+  "outputDirectory": "dist",
   "installCommand": "pnpm install"
 }
