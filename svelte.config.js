@@ -1,13 +1,24 @@
-import adapter from "@sveltejs/adapter-netlify"
+import { default as netlifyAdapter } from "@sveltejs/adapter-netlify"
+import { default as vercelAdapter } from "@sveltejs/adapter-vercel"
 import { vitePreprocess } from "@sveltejs/vite-plugin-svelte"
+
+
+let adapter;
+let options;
+if (process.env.VERCEL_ENV) {
+  adapter = vercelAdapter;
+} else {
+  adapter = netlifyAdapter;
+  options = {
+    edge: false,
+    split: false,
+  };
+}
 
 const config = {
   preprocess: vitePreprocess(),
   kit: {
-    adapter: adapter({
-      edge: false,
-      split: false,
-    }),
+    adapter: adapter(options),
   },
 }
 
