@@ -13,6 +13,8 @@
 		iconName?: string;
 		/** Color for the marker (CSS color value, e.g., "#ff0000", "red", "rgb(255,0,0)") */
 		color?: string;
+		/** Show marker as a standard map marker shape (teardrop) with icon inside */
+		markerShape?: boolean;
 		[key: string]: any;
 	}
 
@@ -107,6 +109,34 @@
 		} catch (error) {
 			console.warn('Failed to cache icon in localStorage:', error);
 		}
+	}
+
+	/**
+	 * Creates an SVG marker shape (teardrop) with an icon inside
+	 * @param iconUrl - URL of the icon to place inside the marker
+	 * @param color - Color of the marker shape
+	 * @param size - Size of the marker in pixels
+	 * @returns Data URL of the SVG marker
+	 */
+	function createMarkerShapeSvg(iconUrl: string, color: string = '#ef4444', size: number = 40): string {
+		const svg = `
+			<svg width="${size}" height="${size * 1.3}" viewBox="0 0 40 52" xmlns="http://www.w3.org/2000/svg">
+				<defs>
+					<filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+						<feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+					</filter>
+				</defs>
+				<!-- Marker shape (teardrop) -->
+				<path d="M 20 0 C 8.95 0 0 8.95 0 20 C 0 35 20 52 20 52 C 20 52 40 35 40 20 C 40 8.95 31.05 0 20 0 Z" 
+					fill="${color}" filter="url(#shadow)"/>
+				<!-- Inner circle for icon 
+				<circle cx="20" cy="18" r="12" fill="white"/>
+				-->
+				<!-- Icon image -->
+				<image x="8" y="6" width="24" height="24" href="${iconUrl}" preserveAspectRatio="xMidYMid slice"/>
+			</svg>
+		`;
+		return `data:image/svg+xml;base64,${btoa(svg)}`;
 	}
 
 	/**
@@ -217,7 +247,19 @@
 					if (markerData.iconName) {
 						const customIcon = await createIconifyIcon(markerData.iconName, 32, leaflet, markerData.color);
 						if (customIcon) {
-							markerOptions.icon = customIcon;
+							if (markerData.markerShape) {
+								// Create marker shape with icon inside
+								const markerColor = markerData.color || '#ef4444';
+								const markerShapeUrl = createMarkerShapeSvg(customIcon.options.iconUrl, markerColor, 40);
+								markerOptions.icon = new leaflet.Icon({
+									iconUrl: markerShapeUrl,
+									iconSize: [40, 52],
+									iconAnchor: [20, 52],
+									popupAnchor: [0, -52],
+								});
+							} else {
+								markerOptions.icon = customIcon;
+							}
 						}
 					}
 					// Handle icon (custom HTML string or HTMLElement)

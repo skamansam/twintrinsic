@@ -1,0 +1,202 @@
+[
+  {
+    "id": "lockheart",
+    "name": "Lockheart",
+    "lat": 450,
+    "lng": 150,
+    "iconName": "mdi:castle",
+    "color": "#ef4444",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "airport",
+    "name": "Airport",
+    "lat": 80,
+    "lng": 90,
+    "iconName": "mdi:airplane",
+    "color": "#3b82f6",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "brownstone",
+    "name": "Brownstone",
+    "lat": 120,
+    "lng": 220,
+    "iconName": "mdi:home",
+    "color": "#8b4513",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "bridge",
+    "name": "Bridge",
+    "lat": 280,
+    "lng": 150,
+    "iconName": "mdi:bridge",
+    "color": "#6b7280",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "rocket_hill",
+    "name": "Rocket Hill",
+    "lat": 200,
+    "lng": 180,
+    "iconName": "mdi:rocket",
+    "color": "#fbbf24",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "church",
+    "name": "Church",
+    "lat": 320,
+    "lng": 280,
+    "iconName": "mdi:cross",
+    "color": "#a78bfa",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "zoo",
+    "name": "Zoo",
+    "lat": 380,
+    "lng": 320,
+    "iconName": "mdi:paw",
+    "color": "#10b981",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "docks",
+    "name": "Docks",
+    "lat": 420,
+    "lng": 380,
+    "iconName": "mdi:anchor",
+    "color": "#06b6d4",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "park",
+    "name": "Park",
+    "lat": 350,
+    "lng": 250,
+    "iconName": "mdi:tree",
+    "color": "#22c55e",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "hospital",
+    "name": "Hospital",
+    "lat": 280,
+    "lng": 320,
+    "iconName": "mdi:hospital-box",
+    "color": "#ef4444",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "library",
+    "name": "Library",
+    "lat": 310,
+    "lng": 200,
+    "iconName": "mdi:library",
+    "color": "#8b5cf6",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "school",
+    "name": "School",
+    "lat": 240,
+    "lng": 280,
+    "iconName": "mdi:school",
+    "color": "#f59e0b",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "stadium",
+    "name": "Stadium",
+    "lat": 400,
+    "lng": 200,
+    "iconName": "mdi:stadium",
+    "color": "#06b6d4",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "museum",
+    "name": "Museum",
+    "lat": 320,
+    "lng": 150,
+    "iconName": "mdi:museum",
+    "color": "#a78bfa",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "market",
+    "name": "Market",
+    "lat": 380,
+    "lng": 280,
+    "iconName": "mdi:shopping",
+    "color": "#ec4899",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "factory",
+    "name": "Factory",
+    "lat": 450,
+    "lng": 320,
+    "iconName": "mdi:factory",
+    "color": "#6b7280",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "farm",
+    "name": "Farm",
+    "lat": 200,
+    "lng": 400,
+    "iconName": "mdi:sprout",
+    "color": "#22c55e",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "lighthouse",
+    "name": "Lighthouse",
+    "lat": 500,
+    "lng": 450,
+    "iconName": "mdi:lighthouse",
+    "color": "#fbbf24",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "tower",
+    "name": "Tower",
+    "lat": 350,
+    "lng": 380,
+    "iconName": "mdi:tower-fire",
+    "color": "#ef4444",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "garden",
+    "name": "Garden",
+    "lat": 280,
+    "lng": 400,
+    "iconName": "mdi:flower",
+    "color": "#ec4899",
+    "markerShape": true,
+    "type": "location"
+  }
+]

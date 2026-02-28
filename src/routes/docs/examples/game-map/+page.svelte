@@ -4,7 +4,8 @@ Game Map Example - Interactive map with markers, popups, and editing
 -->
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Container, Map as MapComponent } from '$lib';
+	import { CodeEditor, Container, Map as MapComponent } from '$lib';
+	import fallout4Locations from './fallout4-locations.json';
 
 	interface GameMarker {
 		id: string;
@@ -16,6 +17,7 @@ Game Map Example - Interactive map with markers, popups, and editing
 		icon?: string | HTMLElement;
 		iconName?: string;
 		color?: string;
+		markerShape?: boolean;
 	}
 
 	const IMAGE_URL = 'https://staticdelivery.nexusmods.com/mods/1151/images/92456/92456-1742822281-187495018.png';
@@ -23,12 +25,14 @@ Game Map Example - Interactive map with markers, popups, and editing
 	const IMAGE_HEIGHT = 1031;
 
 	let markers: GameMarker[] = [];
+	let jsonContent = '';
 	let editingMarker: GameMarker | null = null;
 	let showForm = false;
 	let showPopupForm = false;
 	let formMode: 'create' | 'edit' = 'create';
 	let newMarkerLat = 500;
 	let newMarkerLng = 500;
+	let jsonError = '';
 
 	const markerTypes = [
 		{ value: 'treasure', label: '💎 Treasure', icon: '💎' },
@@ -37,59 +41,48 @@ Game Map Example - Interactive map with markers, popups, and editing
 		{ value: 'location', label: '📍 Location', icon: '📍' },
 	];
 
+	function updateMarkersFromJson(json: string) {
+		try {
+			const parsed = JSON.parse(json);
+			if (Array.isArray(parsed)) {
+				markers = parsed.map((location: any) => ({
+					id: location.id,
+					lat: location.lat,
+					lng: location.lng,
+					name: location.name,
+					description: location.description || location.type.replace(/_/g, ' ').charAt(0).toUpperCase() + location.type.replace(/_/g, ' ').slice(1),
+					type: location.type || 'location',
+					iconName: location.iconName,
+					color: location.color,
+					markerShape: location.markerShape,
+					icon: location.icon,
+				}));
+				jsonError = '';
+			}
+		} catch (error) {
+			jsonError = `Invalid JSON: ${error instanceof Error ? error.message : 'Unknown error'}`;
+		}
+	}
+
+	function updateJsonFromMarkers() {
+		jsonContent = JSON.stringify(markers, null, 2);
+	}
+
 	onMount(() => {
-		// Initialize with markers showing all three icon methods and colorization
-		const randomMarkers: GameMarker[] = [
-			{
-				id: '1',
-				lat: 200,
-				lng: 300,
-				name: 'Ancient Ruins',
-				description: 'Emoji string icon (no color)',
-				type: 'location',
-				icon: '📍',
-			},
-			{
-				id: '2',
-				lat: 400,
-				lng: 600,
-				name: 'Dragon Hoard',
-				description: 'Iconify icon with gold color',
-				type: 'treasure',
-				iconName: 'mdi:treasure-chest',
-				color: '#fbbf24',
-			},
-			{
-				id: '3',
-				lat: 700,
-				lng: 200,
-				name: 'Bandit Camp',
-				description: 'Iconify icon with red color',
-				type: 'enemy',
-				iconName: 'mdi:sword',
-				color: '#ef4444',
-			},
-			{
-				id: '4',
-				lat: 600,
-				lng: 800,
-				name: 'Village Elder',
-				description: 'HTML string icon with purple background',
-				type: 'npc',
-				icon: '<div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:#a855f7;border-radius:50%;color:white;font-weight:bold;">👤</div>',
-			},
-			{
-				id: '5',
-				lat: 300,
-				lng: 700,
-				name: 'Hidden Chest',
-				description: 'Iconify icon with blue color',
-				type: 'treasure',
-				iconName: 'mdi:chest',
-				color: '#3b82f6',
-			},
-		];
-		markers = randomMarkers;
+		// Load Fallout 4 locations from JSON and convert to GameMarker format
+		const falloutMarkers: GameMarker[] = fallout4Locations.map((location: any) => ({
+			id: location.id,
+			lat: location.lat,
+			lng: location.lng,
+			name: location.name,
+			description: location.type.replace(/_/g, ' ').charAt(0).toUpperCase() + location.type.replace(/_/g, ' ').slice(1),
+			type: 'location',
+			iconName: location.iconName,
+			color: location.color,
+			markerShape: location.markerShape,
+		}));
+		markers = falloutMarkers;
+		updateJsonFromMarkers();
 	});
 
 	function handleMarkerClick(event: CustomEvent<GameMarker>) {
@@ -214,7 +207,7 @@ Game Map Example - Interactive map with markers, popups, and editing
 		new markers, click on existing markers to edit them.
 	</p>
 
-	<div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+	<div class="grid grid-cols-1 gap-8 lg:grid-cols-4">
 		<!-- Map -->
 		<div class="lg:col-span-2">
 			<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200 overflow-hidden">
@@ -230,8 +223,10 @@ Game Map Example - Interactive map with markers, popups, and editing
 					onmarkerclick={(e: any) => {
 						if (e.type === 'markersave') {
 							handleMarkerSave(e.detail);
+							updateJsonFromMarkers();
 						} else if (e.type === 'markerdelete') {
 							handleMarkerDelete(e.detail);
+							updateJsonFromMarkers();
 						} else {
 							handleMarkerClick(e);
 						}
@@ -241,31 +236,29 @@ Game Map Example - Interactive map with markers, popups, and editing
 			</div>
 		</div>
 
-		<!-- Sidebar -->
-		<div class="not-prose">
-			<div class="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-900">
-				<h3 class="mb-4 text-lg font-semibold">Markers ({markers.length})</h3>
-
-				<div class="space-y-2 max-h-96 overflow-y-auto">
-					{#each markers as marker (marker.id)}
-					<button
-						onclick={() => handleMarkerClick(new CustomEvent('markerclick', { detail: marker }))}
-						class="w-full text-left rounded-lg border border-gray-200 bg-gray-50 p-3 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 transition-colors"
-					>
-							<div class="flex items-center gap-2">
-								<span class="text-xl">{getMarkerIcon(marker.type)}</span>
-								<div class="flex-1 min-w-0">
-									<div class="font-medium truncate">{marker.name}</div>
-									<div class="text-xs text-gray-500 dark:text-gray-400 truncate">{marker.description}</div>
-								</div>
-							</div>
-						</button>
-					{/each}
-				</div>
-
-				{#if markers.length === 0}
-					<p class="text-sm text-gray-500 dark:text-gray-400">No markers yet. Click on the map to create one.</p>
+		<!-- JSON Editor -->
+		<div class="lg:col-span-2">
+			<div class="not-prose rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900 h-96 flex flex-col">
+				<h3 class="mb-3 text-lg font-semibold">Markers JSON</h3>
+				{#if jsonError}
+					<div class="mb-2 rounded bg-red-100 p-2 text-sm text-red-700 dark:bg-red-900 dark:text-red-200">
+						{jsonError}
+					</div>
 				{/if}
+				<div class="flex-1 overflow-hidden rounded border border-gray-300 dark:border-gray-600">
+					<CodeEditor
+						value={jsonContent}
+						language="json"
+						onchange={(value) => {
+							jsonContent = value;
+							updateMarkersFromJson(value);
+						}}
+						height="100%"
+					/>
+				</div>
+				<p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+					Edit the JSON to update markers in real-time. Changes are reflected on the map immediately.
+				</p>
 			</div>
 		</div>
 	</div>

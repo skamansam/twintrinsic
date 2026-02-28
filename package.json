@@ -93,6 +93,7 @@
     "@codemirror/view": "^6.39.13",
     "@inlang/paraglide-js": "^2.10.0",
     "@speed-highlight/core": "^1.2.14",
+    "codemirror": "^6.0.2",
     "leaflet": "2.0.0-alpha.1",
     "prism-svelte": "^0.5.0",
     "prismjs": "^1.30.0",

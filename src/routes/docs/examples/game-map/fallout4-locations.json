@@ -1,0 +1,372 @@
+[
+  {
+    "id": "vault_111",
+    "name": "Vault 111",
+    "lat": 450,
+    "lng": 150,
+    "iconName": "mdi:vault",
+    "color": "#3b82f6",
+    "markerShape": true,
+    "type": "vault"
+  },
+  {
+    "id": "concord",
+    "name": "Concord",
+    "lat": 80,
+    "lng": 90,
+    "iconName": "mdi:home-city",
+    "color": "#10b981",
+    "markerShape": true,
+    "type": "settlement"
+  },
+  {
+    "id": "sanctuary_hills",
+    "name": "Sanctuary Hills",
+    "lat": 120,
+    "lng": 220,
+    "iconName": "mdi:home",
+    "color": "#22c55e",
+    "markerShape": true,
+    "type": "settlement"
+  },
+  {
+    "id": "red_rocket_truck_stop",
+    "name": "Red Rocket Truck Stop",
+    "lat": 280,
+    "lng": 150,
+    "iconName": "mdi:gas-cylinder",
+    "color": "#ef4444",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "lexington",
+    "name": "Lexington",
+    "lat": 200,
+    "lng": 180,
+    "iconName": "mdi:home-city",
+    "color": "#6b7280",
+    "markerShape": true,
+    "type": "settlement"
+  },
+  {
+    "id": "diamond_city",
+    "name": "Diamond City",
+    "lat": 320,
+    "lng": 280,
+    "iconName": "mdi:city",
+    "color": "#fbbf24",
+    "markerShape": true,
+    "type": "major_settlement"
+  },
+  {
+    "id": "goodneighbor",
+    "name": "Goodneighbor",
+    "lat": 380,
+    "lng": 320,
+    "iconName": "mdi:skull",
+    "color": "#a78bfa",
+    "markerShape": true,
+    "type": "settlement"
+  },
+  {
+    "id": "institute",
+    "name": "The Institute",
+    "lat": 420,
+    "lng": 380,
+    "iconName": "mdi:dna",
+    "color": "#06b6d4",
+    "markerShape": true,
+    "type": "faction"
+  },
+  {
+    "id": "brotherhood_airship",
+    "name": "Prydwen (Brotherhood Airship)",
+    "lat": 350,
+    "lng": 250,
+    "iconName": "mdi:airship",
+    "color": "#ef4444",
+    "markerShape": true,
+    "type": "faction"
+  },
+  {
+    "id": "railroad_headquarters",
+    "name": "Railroad Headquarters",
+    "lat": 280,
+    "lng": 320,
+    "iconName": "mdi:train",
+    "color": "#8b5cf6",
+    "markerShape": true,
+    "type": "faction"
+  },
+  {
+    "id": "vault_81",
+    "name": "Vault 81",
+    "lat": 310,
+    "lng": 200,
+    "iconName": "mdi:vault",
+    "color": "#3b82f6",
+    "markerShape": true,
+    "type": "vault"
+  },
+  {
+    "id": "vault_114",
+    "name": "Vault 114",
+    "lat": 240,
+    "lng": 280,
+    "iconName": "mdi:vault",
+    "color": "#3b82f6",
+    "markerShape": true,
+    "type": "vault"
+  },
+  {
+    "id": "vault_75",
+    "name": "Vault 75",
+    "lat": 400,
+    "lng": 200,
+    "iconName": "mdi:vault",
+    "color": "#3b82f6",
+    "markerShape": true,
+    "type": "vault"
+  },
+  {
+    "id": "vault_95",
+    "name": "Vault 95",
+    "lat": 320,
+    "lng": 150,
+    "iconName": "mdi:vault",
+    "color": "#3b82f6",
+    "markerShape": true,
+    "type": "vault"
+  },
+  {
+    "id": "vault_108",
+    "name": "Vault 108",
+    "lat": 380,
+    "lng": 280,
+    "iconName": "mdi:vault",
+    "color": "#3b82f6",
+    "markerShape": true,
+    "type": "vault"
+  },
+  {
+    "id": "vault_111_exterior",
+    "name": "Vault 111 (Exterior)",
+    "lat": 450,
+    "lng": 320,
+    "iconName": "mdi:vault",
+    "color": "#3b82f6",
+    "markerShape": true,
+    "type": "vault"
+  },
+  {
+    "id": "faneuil_hall",
+    "name": "Faneuil Hall",
+    "lat": 200,
+    "lng": 400,
+    "iconName": "mdi:landmark",
+    "color": "#a78bfa",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "boston_common",
+    "name": "Boston Common",
+    "lat": 500,
+    "lng": 450,
+    "iconName": "mdi:tree",
+    "color": "#22c55e",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "trinity_tower",
+    "name": "Trinity Tower",
+    "lat": 350,
+    "lng": 380,
+    "iconName": "mdi:tower-fire",
+    "color": "#ef4444",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "cambridge_polymer_labs",
+    "name": "Cambridge Polymer Labs",
+    "lat": 280,
+    "lng": 400,
+    "iconName": "mdi:flask",
+    "color": "#06b6d4",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "fort_hagen",
+    "name": "Fort Hagen",
+    "lat": 150,
+    "lng": 350,
+    "iconName": "mdi:fortress",
+    "color": "#6b7280",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "mass_fusion_building",
+    "name": "Mass Fusion Building",
+    "lat": 320,
+    "lng": 420,
+    "iconName": "mdi:lightning-bolt",
+    "color": "#fbbf24",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "boston_airport",
+    "name": "Boston Airport",
+    "lat": 420,
+    "lng": 100,
+    "iconName": "mdi:airplane",
+    "color": "#3b82f6",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "corvega_assembly_plant",
+    "name": "Corvega Assembly Plant",
+    "lat": 180,
+    "lng": 120,
+    "iconName": "mdi:factory",
+    "color": "#6b7280",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "salem",
+    "name": "Salem",
+    "lat": 250,
+    "lng": 50,
+    "iconName": "mdi:home-city",
+    "color": "#a78bfa",
+    "markerShape": true,
+    "type": "settlement"
+  },
+  {
+    "id": "coastal_cottage",
+    "name": "Coastal Cottage",
+    "lat": 500,
+    "lng": 200,
+    "iconName": "mdi:home",
+    "color": "#22c55e",
+    "markerShape": true,
+    "type": "settlement"
+  },
+  {
+    "id": "jamaica_plain",
+    "name": "Jamaica Plain",
+    "lat": 380,
+    "lng": 450,
+    "iconName": "mdi:home-city",
+    "color": "#10b981",
+    "markerShape": true,
+    "type": "settlement"
+  },
+  {
+    "id": "quincy",
+    "name": "Quincy",
+    "lat": 450,
+    "lng": 480,
+    "iconName": "mdi:home-city",
+    "color": "#ef4444",
+    "markerShape": true,
+    "type": "settlement"
+  },
+  {
+    "id": "natick_banks",
+    "name": "Natick Banks",
+    "lat": 100,
+    "lng": 450,
+    "iconName": "mdi:bank",
+    "color": "#8b5cf6",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "libertalia",
+    "name": "Libertalia",
+    "lat": 520,
+    "lng": 380,
+    "iconName": "mdi:pirate",
+    "color": "#a78bfa",
+    "markerShape": true,
+    "type": "settlement"
+  },
+  {
+    "id": "covenant",
+    "name": "Covenant",
+    "lat": 280,
+    "lng": 480,
+    "iconName": "mdi:shield",
+    "color": "#3b82f6",
+    "markerShape": true,
+    "type": "settlement"
+  },
+  {
+    "id": "bunker_hill",
+    "name": "Bunker Hill",
+    "lat": 350,
+    "lng": 150,
+    "iconName": "mdi:monument",
+    "color": "#6b7280",
+    "markerShape": true,
+    "type": "settlement"
+  },
+  {
+    "id": "south_boston_military_checkpoint",
+    "name": "South Boston Military Checkpoint",
+    "lat": 420,
+    "lng": 320,
+    "iconName": "mdi:checkpoint",
+    "color": "#ef4444",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "cambridge_police_station",
+    "name": "Cambridge Police Station",
+    "lat": 300,
+    "lng": 350,
+    "iconName": "mdi:police-badge",
+    "color": "#3b82f6",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "boston_library",
+    "name": "Boston Public Library",
+    "lat": 330,
+    "lng": 300,
+    "iconName": "mdi:library",
+    "color": "#8b5cf6",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "boston_mayoral_shelter",
+    "name": "Boston Mayoral Shelter",
+    "lat": 360,
+    "lng": 280,
+    "iconName": "mdi:home-city",
+    "color": "#fbbf24",
+    "markerShape": true,
+    "type": "location"
+  },
+  {
+    "id": "old_north_church",
+    "name": "Old North Church",
+    "lat": 340,
+    "lng": 320,
+    "iconName": "mdi:cross",
+    "color": "#a78bfa",
+    "markerShape": true,
+    "type": "location"
+  }
+]

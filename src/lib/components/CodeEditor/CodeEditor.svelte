@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { EditorState } from '@codemirror/state';
 	import { EditorView, highlightActiveLineGutter, lineNumbers } from '@codemirror/view';
+	import {basicSetup} from "codemirror";
 	import { onMount } from 'svelte';
 
 	const {
@@ -98,8 +99,13 @@
 		try {
 			const url = getCdnUrl(packageName);
 			const module = await import(/* @vite-ignore */ url);
-			const langFn = module[lang.toLowerCase()] || module.default;
-			return langFn?.() || null;
+			// Find the language function - it's typically the first exported function
+			const langFn = Object.values(module).find((val) => typeof val === 'function');
+			if (!langFn || typeof langFn !== 'function') {
+				console.warn(`Could not find language function in ${packageName}`);
+				return null;
+			}
+			return langFn();
 		} catch (error) {
 			console.error(`Failed to load language support for ${lang}:`, error);
 			return null;
@@ -131,11 +137,21 @@
 			console.warn(`Theme ${themeName} not available`);
 			return null;
 		}
+		let languageFunctionName = themeName.toLocaleLowerCase().split('-');
+		if (languageFunctionName.length > 1) {
+			// camelCase the function name
+			languageFunctionName[1] = languageFunctionName[1].charAt(0).toUpperCase() + languageFunctionName[1].slice(1);
+		}
+		languageFunctionName = languageFunctionName.join('');
 
 		try {
 			const url = getCdnUrl(packageName);
 			const module = await import(/* @vite-ignore */ url);
-			const themeFn = module[themeName.toLowerCase().replace(/-/g, '')] || module.default;
+			const themeFn = module[languageFunctionName] || module.default;
+			if (!themeFn) {
+				console.warn(`Could not find theme function in ${packageName}`, module, languageFunctionName);
+				return null;
+			}
 			return themeFn || null;
 		} catch (error) {
 			console.error(`Failed to load theme ${themeName}:`, error);
@@ -147,7 +163,7 @@
 	 * Initializes the editor with all extensions
 	 */
 	async function initializeEditor(): Promise<void> {
-		const exts = [];
+		const exts = [...basicSetup];
 
 		const langExt = await loadLanguageSupport(language);
 		if (langExt) exts.push(langExt);
@@ -161,10 +177,6 @@
 			const ext = await loadExtension(extUrl);
 			if (ext) exts.push(ext);
 		}
-
-		exts.push(lineNumbers());
-		exts.push(highlightActiveLineGutter());
-
 		const state = EditorState.create({
 			doc: code,
 			extensions: exts,
