@@ -25,7 +25,7 @@ Usage:
 <script lang="ts">
 import IconifyIcon from '@iconify/svelte'
 
-import { iconConfig } from '$lib/stores/iconManager'
+import { iconConfig } from '../../stores/iconManager.js'
 
 interface Props {
   /** Icon name without iconset prefix (e.g., "home", "star") */
