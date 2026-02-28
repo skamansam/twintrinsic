@@ -72,6 +72,9 @@ const {
 
   /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange,
+
+  /** @type {(event: CustomEvent) => void} - Hover event handler */
+  onhover,
 } = $props()
 
 // Derived values for reactive prop access in closures
@@ -86,6 +89,13 @@ let ratingElement = $state()
 // Update internal value when prop changes
 $effect(() => {
   currentValue = derivedValue
+})
+
+// Trigger onhover callback when hover value changes
+$effect(() => {
+  if (hoverValue >= 0) {
+    onhover?.(new CustomEvent("hover", { detail: { value: hoverValue } }))
+  }
 })
 
 // Computed values
@@ -157,6 +167,49 @@ function handleMove(event: MouseEvent | TouchEvent): void {
   if (isDragging || event.type === "mousemove") {
     hoverValue = calculateValue(event)
   }
+}
+
+/**
+ * Handles mouse move over the rating element for hover tracking
+ * @param {MouseEvent} event - Mouse move event
+ */
+function handleMouseMove(event: MouseEvent): void {
+  if (!isInteractive || isDragging) return
+  hoverValue = calculateValue(event)
+}
+
+/**
+ * Handles mouse over individual rating items
+ * @param {number} itemValue - Value of the hovered item
+ */
+function handleItemHover(itemValue: number): void {
+  if (!isInteractive) return
+  hoverValue = itemValue
+}
+
+/**
+ * Handles mouse leave from rating items
+ */
+function handleItemLeave(): void {
+  if (!isInteractive) return
+  hoverValue = -1
+}
+
+/**
+ * Handles focus on rating items
+ * @param {number} itemValue - Value of the focused item
+ */
+function handleItemFocus(itemValue: number): void {
+  if (!isInteractive) return
+  hoverValue = itemValue
+}
+
+/**
+ * Handles blur from rating items
+ */
+function handleItemBlur(): void {
+  if (!isInteractive) return
+  hoverValue = -1
 }
 
 /**
@@ -292,6 +345,7 @@ function handleKeydown(event: KeyboardEvent): void {
   ontouchstart={handleStart}
   onmouseenter={handleEnter}
   onmouseleave={handleLeave}
+  onmousemove={handleMouseMove}
   onkeydown={handleKeydown}
   bind:this={ratingElement}
 >
@@ -309,6 +363,10 @@ function handleKeydown(event: KeyboardEvent): void {
           {variantClasses}
         "
         onclick={() => handleItemClick(item)}
+        onmouseover={() => handleItemHover(item)}
+        onmouseout={handleItemLeave}
+        onfocus={() => handleItemFocus(item)}
+        onblur={handleItemBlur}
         disabled={!isInteractive}
         tabindex={isInteractive ? 0 : -1}
       >
