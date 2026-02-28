@@ -62,7 +62,20 @@ stories/                   # Storybook stories
 tests/
 ├── e2e/                  # Playwright e2e tests
 └── unit/                 # Vitest unit tests
+docs/
+├── plans/                # Agent planning documents
+└── ...                   # Other documentation
 ```
+
+## Planning Documents
+
+All planning files created by agents should be stored in `docs/plans/`. These documents track project scope, implementation strategies, migration progress, and other planning artifacts that help coordinate work across sessions.
+
+**Guidelines for planning files:**
+- Keep them concise and focused on actionable items
+- Update progress regularly as work completes
+- Link to relevant code, PRs, or issues when applicable
+- Archive or remove completed plans to keep the folder organized
 
 ## Component Development Workflow
 
