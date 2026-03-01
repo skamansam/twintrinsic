@@ -22,7 +22,6 @@ Usage:
 ```
 -->
 <script lang="ts">
-import { clickOutside } from "../../actions/index.js"
 import Input from "./Input.svelte"
 
 const {
@@ -82,6 +81,23 @@ $effect(() => {
 
 let focused = $state(false)
 let showSuggestions = $state(false)
+let suggestionsPopoverRef: HTMLElement | undefined = $state()
+
+// Handle popover toggle events
+$effect(() => {
+  if (!suggestionsPopoverRef) return
+  
+  const handleToggle = (event: Event) => {
+    const toggleEvent = event as ToggleEvent
+    showSuggestions = toggleEvent.newState === "open"
+  }
+  
+  suggestionsPopoverRef.addEventListener("toggle", handleToggle)
+  
+  return () => {
+    suggestionsPopoverRef?.removeEventListener("toggle", handleToggle)
+  }
+})
 let highlightedIndex = $state(-1)
 let searchTimeout: ReturnType<typeof setTimeout> | undefined = $state()
 
@@ -250,8 +266,6 @@ function highlightText(text: string, query: string): string {
 
 <div
   class="autocomplete {className}"
-  use:clickOutside
-  onclickOutside={() => showSuggestions = false}
 >
   <Input
     {label}

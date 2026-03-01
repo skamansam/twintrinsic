@@ -21,7 +21,6 @@ Usage:
 -->
 <script lang="ts">
 import { getContext } from "svelte"
-import { clickOutside } from "../../actions/index.js"
 
 const {
   /** @type {string} - Input label */
@@ -51,6 +50,23 @@ let searchValue = $state("")
 let selectedValues: string[] = $state([])
 let focusedIndex = $state(-1)
 let dropdownRef: HTMLElement | undefined = $state()
+let dropdownPopoverRef: HTMLElement | undefined = $state()
+
+// Handle popover toggle events
+$effect(() => {
+  if (!dropdownPopoverRef) return
+  
+  const handleToggle = (event: Event) => {
+    const toggleEvent = event as ToggleEvent
+    showDropdown = toggleEvent.newState === "open"
+  }
+  
+  dropdownPopoverRef.addEventListener("toggle", handleToggle)
+  
+  return () => {
+    dropdownPopoverRef?.removeEventListener("toggle", handleToggle)
+  }
+})
 
 // Initialize selected values
 $effect(() => {
@@ -91,7 +107,7 @@ function selectOption(option: unknown): void {
       : [...selectedValues, optionValue]
   } else {
     newValues = [optionValue]
-    showDropdown = false
+    dropdownPopoverRef?.hidePopover()
   }
 
   selectedValues = newValues
@@ -137,11 +153,11 @@ function handleKeydown(event: KeyboardEvent): void {
       break
 
     case "Escape":
-      showDropdown = false
+      dropdownPopoverRef?.hidePopover()
       break
 
     case "Tab":
-      showDropdown = false
+      dropdownPopoverRef?.hidePopover()
       break
   }
 }
@@ -184,8 +200,6 @@ const displayValue = $derived.by(() => {
   class="select {className}"
   class:select-error={!!error}
   class:select-disabled={disabled}
-  use:clickOutside
-  onclickOutside={() => showDropdown = false}
 >
   <label class="select-label">
     {#if label}
@@ -208,7 +222,7 @@ const displayValue = $derived.by(() => {
       aria-invalid={!!error}
       aria-describedby={error ? 'select-error' : undefined}
       tabindex={disabled ? -1 : 0}
-      onclick={() => !disabled && (showDropdown = !showDropdown)}
+      onclick={() => !disabled && dropdownPopoverRef?.togglePopover()}
       onkeydown={handleKeydown}
     >
       <div class="select-value">
@@ -256,15 +270,14 @@ const displayValue = $derived.by(() => {
     </div>
   {/if}
   
-  {#if showDropdown}
-    <div
-      class="select-dropdown"
-      id="select-options"
-      role="listbox"
-      aria-multiselectable={multiple}
-      bind:this={dropdownRef}
-      transition:slide={{ duration: 150 }}
-    >
+  <div
+    class="select-dropdown"
+    id="select-options"
+    popover="auto"
+    role="listbox"
+    aria-multiselectable={multiple}
+    bind:this={dropdownPopoverRef}
+  >
       {#if options.length > 10}
         <div class="select-search">
           <input
@@ -316,8 +329,7 @@ const displayValue = $derived.by(() => {
           </div>
         {/if}
       </div>
-    </div>
-  {/if}
+  </div>
 </div>
 
 <style lang="postcss">
@@ -385,9 +397,14 @@ const displayValue = $derived.by(() => {
   }
 
   .select-dropdown {
-    @apply absolute z-50 w-full mt-1;
+    @apply z-50 w-full;
     @apply bg-surface border border-border rounded-md shadow-lg;
     @apply max-h-60 overflow-auto;
+  }
+
+  .select-dropdown[popover] {
+    @apply inset-auto;
+    margin-top: 0.25rem;
   }
 
   .select-search {

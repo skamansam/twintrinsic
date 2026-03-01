@@ -19,7 +19,6 @@ Usage:
 -->
 <script lang="ts">
 import { getContext } from "svelte"
-import { clickOutside } from "../../actions"
 import Input from "./Input.svelte"
 
 const {
@@ -42,6 +41,23 @@ const {
 } = $props()
 
 let showPicker = $state(false)
+let pickerPopoverRef: HTMLElement | undefined = $state()
+
+// Handle popover toggle events
+$effect(() => {
+  if (!pickerPopoverRef) return
+  
+  const handleToggle = (event: Event) => {
+    const toggleEvent = event as ToggleEvent
+    showPicker = toggleEvent.newState === "open"
+  }
+  
+  pickerPopoverRef.addEventListener("toggle", handleToggle)
+  
+  return () => {
+    pickerPopoverRef?.removeEventListener("toggle", handleToggle)
+  }
+})
 let hue = $state(0)
 let saturation = $state(100)
 let lightness = $state(50)
@@ -250,8 +266,6 @@ function handleInput(event: CustomEvent): void {
 
 <div
   class="color-picker {className}"
-  use:clickOutside
-  onclickOutside={() => showPicker = false}
 >
   <Input
     {label}
@@ -259,18 +273,18 @@ function handleInput(event: CustomEvent): void {
     {error}
     value={inputValue}
     oninput={handleInput}
-    onclick={() => showPicker = !showPicker}
+    onclick={() => pickerPopoverRef?.togglePopover()}
     rightIcon="palette"
-    onrightIconClick={() => showPicker = !showPicker}
+    onrightIconClick={() => pickerPopoverRef?.togglePopover()}
   />
   
-  {#if showPicker}
-    <div
-      class="color-picker-popup"
-      role="dialog"
-      aria-label="Color picker"
-      transition:slide={{ duration: 150 }}
-    >
+  <div
+    class="color-picker-popup"
+    popover="auto"
+    role="dialog"
+    aria-label="Color picker"
+    bind:this={pickerPopoverRef}
+  >
       <div
         class="color-wheel"
         bind:this={pickerRef}
@@ -327,7 +341,6 @@ function handleInput(event: CustomEvent): void {
         <div class="color-value">{inputValue}</div>
       </div>
     </div>
-  {/if}
 </div>
 
 <style lang="postcss">

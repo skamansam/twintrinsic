@@ -21,7 +21,6 @@ Usage:
 -->
 <script lang="ts">
 import { getContext } from "svelte"
-import { clickOutside } from "../../actions/index.js"
 import Input from "./Input.svelte"
 
 const {
@@ -71,6 +70,23 @@ let inputValue = $state("")
 let startDate: Date | null = $state(null)
 let endDate: Date | null = $state(null)
 let calendarElement: HTMLElement | undefined = $state()
+let calendarPopoverRef: HTMLElement | undefined = $state()
+
+// Handle popover toggle events
+$effect(() => {
+  if (!calendarPopoverRef) return
+  
+  const handleToggle = (event: Event) => {
+    const toggleEvent = event as ToggleEvent
+    showCalendar = toggleEvent.newState === "open"
+  }
+  
+  calendarPopoverRef.addEventListener("toggle", handleToggle)
+  
+  return () => {
+    calendarPopoverRef?.removeEventListener("toggle", handleToggle)
+  }
+})
 
 // Initialize dates from value prop
 $effect(() => {
@@ -254,7 +270,7 @@ function handleKeydown(event: KeyboardEvent): void {
       break
     case "Escape":
       event.preventDefault()
-      showCalendar = false
+      calendarPopoverRef?.hidePopover()
       break
     default:
       return
@@ -268,8 +284,6 @@ function handleKeydown(event: KeyboardEvent): void {
 
 <div
   class="calendar-container {className}"
-  use:clickOutside
-  onclickOutside={() => showCalendar = false}
 >
   <Input
     {label}
@@ -277,15 +291,16 @@ function handleKeydown(event: KeyboardEvent): void {
     value={inputValue}
     readonly
     rightIcon="calendar"
-    onclick={() => showCalendar = !showCalendar}
-    onrightIconClick={() => showCalendar = !showCalendar}
+    onclick={() => calendarPopoverRef?.togglePopover()}
+    onrightIconClick={() => calendarPopoverRef?.togglePopover()}
   />
   
-  {#if showCalendar}
-    <div
-      class="calendar"
-      role="dialog"
-      aria-label="Calendar"
+  <div
+    class="calendar"
+    popover="auto"
+    role="dialog"
+    aria-label="Calendar"
+    bind:this={calendarPopoverRef}
       tabindex="-1"
       transition:slide={{ duration: 150 }}
       onkeydown={handleKeydown}
@@ -367,7 +382,6 @@ function handleKeydown(event: KeyboardEvent): void {
         </tbody>
       </table>
     </div>
-  {/if}
 </div>
 
 <style lang="postcss">

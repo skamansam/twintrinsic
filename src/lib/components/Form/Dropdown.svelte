@@ -30,7 +30,6 @@ Usage:
 <script lang="ts">
 import { getContext } from "svelte"
 import { slide } from "svelte/transition"
-import { clickOutside } from "../../actions/clickOutside.js"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -112,7 +111,24 @@ let highlightedIndex = $state(0)
 let dropdownElement: HTMLElement | undefined = $state()
 let inputElement: HTMLInputElement | undefined = $state()
 let menuElement: HTMLElement | undefined = $state()
+let menuPopoverRef: HTMLElement | undefined = $state()
 let activeSubmenu: unknown = $state(null)
+
+// Handle popover toggle events
+$effect(() => {
+  if (!menuPopoverRef) return
+  
+  const handleToggle = (event: Event) => {
+    const toggleEvent = event as ToggleEvent
+    isOpen = toggleEvent.newState === "open"
+  }
+  
+  menuPopoverRef.addEventListener("toggle", handleToggle)
+  
+  return () => {
+    menuPopoverRef?.removeEventListener("toggle", handleToggle)
+  }
+})
 
 // Register with form if available
 let fieldApi: { getValue?: () => unknown; setValue?: (value: unknown) => void } | undefined = $state()
@@ -332,7 +348,7 @@ function openDropdown(): void {
  * Closes the dropdown
  */
 function closeDropdown(): void {
-  isOpen = false
+  menuPopoverRef?.hidePopover()
   filterValue = ""
   activeSubmenu = null
 
@@ -343,11 +359,7 @@ function closeDropdown(): void {
  * Toggles the dropdown
  */
 function toggleDropdown(): void {
-  if (isOpen) {
-    closeDropdown()
-  } else {
-    openDropdown()
-  }
+  menuPopoverRef?.togglePopover()
 }
 
 /**
@@ -470,7 +482,6 @@ const displayValue = $derived(getDisplayValue())
     {className}
   "
   bind:this={dropdownElement}
-  use:clickOutside={() => isOpen && closeDropdown()}
 >
   <div
     class="dropdown-control {sizeClasses}"
@@ -528,15 +539,14 @@ const displayValue = $derived(getDisplayValue())
     </div>
   </div>
   
-  {#if isOpen}
-    <div
-      id="{id}-menu"
-      class="dropdown-menu"
-      role="listbox"
-      aria-multiselectable={multiple ? 'true' : undefined}
-      bind:this={menuElement}
-      transition:slide={{ duration: 200 }}
-    >
+  <div
+    id="{id}-menu"
+    class="dropdown-menu"
+    popover="auto"
+    role="listbox"
+    aria-multiselectable={multiple ? 'true' : undefined}
+    bind:this={menuPopoverRef}
+  >
       <ul class="dropdown-options">
         {#each filterOptions(options) as option, index}
           {@const hasChildren = getOptionChildren(option) && getOptionChildren(option).length > 0}
@@ -639,8 +649,7 @@ const displayValue = $derived(getDisplayValue())
           <li class="dropdown-empty">No options available</li>
         {/each}
       </ul>
-    </div>
-  {/if}
+  </div>
   
   <!-- Hidden input for form submission -->
   <input
@@ -705,11 +714,16 @@ const displayValue = $derived(getDisplayValue())
   }
   
   .dropdown-menu {
-    @apply absolute z-50 w-full mt-1;
+    @apply z-50 w-full;
     @apply bg-background dark:bg-background;
     @apply border border-border dark:border-border rounded-md;
     @apply shadow-lg;
     @apply max-h-60 overflow-y-auto;
+  }
+
+  .dropdown-menu[popover] {
+    @apply inset-auto;
+    margin-top: 0.25rem;
   }
   
   .dropdown-options {
