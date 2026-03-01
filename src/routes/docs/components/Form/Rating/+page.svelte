@@ -3,8 +3,8 @@
 Documentation page for the Rating component.
 -->
 <script lang="ts">
-import { Rating, CodeBlock } from "$lib/index.js"
-import { PropsTable, EventsTable } from "$lib/docs/index.js"
+import { EventsTable, PropsTable } from "$lib/docs/index.js"
+import { CodeBlock, Rating } from "$lib/index.js"
 </script>
 
 <h1>Rating</h1>
@@ -26,39 +26,64 @@ import { PropsTable, EventsTable } from "$lib/docs/index.js"
 
 <h3>Half-Star Ratings</h3>
 <div class="example">
-  <Rating 
-    value={3.5} 
-    precision={0.5}
-  />
+  <div class="flex flex-col gap-4">
+    <div class="flex items-center gap-4">
+      <span class="w-32">Default stars:</span>
+      <Rating 
+        value={3.5} 
+        step={0.5}
+      />
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="w-32">Heart icons:</span>
+      <Rating 
+        value={3.5} 
+        step={0.5}
+        icon="heart"
+        emptyIcon="heart"
+        variant="error"
+      />
+    </div>
+  </div>
 </div>
 <CodeBlock>
-  {`<Rating 
+  {`<Rating value={3.5} step={0.5} />
+
+<Rating 
   value={3.5} 
-  precision={0.5}
+  step={0.5}
+  icon="heart"
+  emptyIcon="heart"
+  variant="error"
 />`}
 </CodeBlock>
 
 <h3>Different Sizes</h3>
 <div class="example">
   <div class="flex flex-col gap-4">
-    <div class="flex items-center">
+    <div class="flex items-center gap-4">
       <span class="w-20">Small:</span>
       <Rating value={4} size="sm" />
     </div>
-    <div class="flex items-center">
+    <div class="flex items-center gap-4">
       <span class="w-20">Medium:</span>
       <Rating value={4} size="md" />
     </div>
-    <div class="flex items-center">
+    <div class="flex items-center gap-4">
       <span class="w-20">Large:</span>
       <Rating value={4} size="lg" />
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="w-20">Large (heart):</span>
+      <Rating value={4} size="lg" icon="heart" emptyIcon="heart" variant="error" />
     </div>
   </div>
 </div>
 <CodeBlock>
   {`<Rating value={4} size="sm" />
 <Rating value={4} size="md" />
-<Rating value={4} size="lg" />`}
+<Rating value={4} size="lg" />
+<Rating value={4} size="lg" icon="heart" emptyIcon="heart" variant="error" />`}
 </CodeBlock>
 
 <h3>Color Variants</h3>
@@ -124,18 +149,38 @@ import { PropsTable, EventsTable } from "$lib/docs/index.js"
 
 <h3>With Value Display</h3>
 <div class="example">
-  <Rating value={4} showValue={true} />
+  <div class="flex flex-col gap-4">
+    <div class="flex items-center gap-4">
+      <Rating value={4} showValue={true} />
+    </div>
+    <div class="flex items-center gap-4">
+      <Rating value={4} showValue={true} icon="star" variant="success" />
+    </div>
+  </div>
 </div>
 <CodeBlock>
-  {`<Rating value={4} showValue={true} />`}
+  {`<Rating value={4} showValue={true} />
+
+<Rating value={4} showValue={true} icon="star" variant="success" />`}
 </CodeBlock>
 
 <h3>Custom Maximum</h3>
 <div class="example">
-  <Rating value={7} max={10} />
+  <div class="flex flex-col gap-4">
+    <div class="flex items-center gap-4">
+      <span class="w-32">Out of 10:</span>
+      <Rating value={7} max={10} />
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="w-32">Out of 10 (info):</span>
+      <Rating value={7} max={10} icon="star" variant="info" />
+    </div>
+  </div>
 </div>
 <CodeBlock>
-  {`<Rating value={7} max={10} />`}
+  {`<Rating value={7} max={10} />
+
+<Rating value={7} max={10} icon="star" variant="info" />`}
 </CodeBlock>
 
 <h2>Props</h2>
@@ -252,9 +297,9 @@ import { PropsTable, EventsTable } from "$lib/docs/index.js"
 <h2>Keyboard Interaction</h2>
 <ul>
   <li><code>Tab</code> - Focus the rating component</li>
-  <li><code>ArrowRight/ArrowUp</code> - Increase rating by precision step</li>
-  <li><code>ArrowLeft/ArrowDown</code> - Decrease rating by precision step</li>
-  <li><code>Home</code> - Set to minimum value (precision)</li>
+  <li><code>ArrowRight/ArrowUp</code> - Increase rating by step value</li>
+  <li><code>ArrowLeft/ArrowDown</code> - Decrease rating by step value</li>
+  <li><code>Home</code> - Set to minimum value</li>
   <li><code>End</code> - Set to maximum value</li>
 </ul>
 
