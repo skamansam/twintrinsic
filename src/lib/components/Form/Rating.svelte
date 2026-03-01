@@ -87,7 +87,7 @@ const {
   showPreview = false,
 
   /** @type {string} - Custom icon name for filled state (e.g., "star", "heart") */
-  icon = "star",
+  icon = "star-filled",
 
   /** @type {string} - Custom icon name for empty state (e.g., "star", "heart") */
   emptyIcon = "star",
@@ -446,22 +446,22 @@ function handleKeydown(event: KeyboardEvent): void {
         {#if item <= displayValue}
           {#if filledIcon}
             {@render filledIcon(iconSizeClasses)}
-          {:else if icon && icon !== 'star'}
-            <Icon name={icon} class={iconSizeClasses} />
           {:else}
+            <Icon name={icon} class={iconSizeClasses} />
+          <!-- {:else}
             <svg class={iconSizeClasses} fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
-            </svg>
+            </svg> -->
           {/if}
         {:else}
           {#if emptyIconSnippet}
             {@render emptyIconSnippet(iconSizeClasses)}
-          {:else if emptyIcon && emptyIcon !== 'star'}
-            <Icon name={emptyIcon} class={iconSizeClasses} />
           {:else}
+            <Icon name={emptyIcon} class={iconSizeClasses} />
+          <!-- {:else}
             <svg class={iconSizeClasses} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
-            </svg>
+            </svg> -->
           {/if}
         {/if}
       </button>
@@ -499,7 +499,10 @@ function handleKeydown(event: KeyboardEvent): void {
   .rating-item {
     @apply inline-flex items-center justify-center;
     @apply transition-colors duration-150;
+    @apply bg-transparent border-none p-0;
+    @apply cursor-pointer;
   }
+
   
   .rating-item-empty {
     @apply text-muted/30 dark:text-muted/30;

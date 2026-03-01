@@ -44,6 +44,15 @@ import { CodeBlock, Rating } from "$lib/index.js"
         variant="error"
       />
     </div>
+    <div class="flex items-center gap-4">
+      <span class="w-32">FO4 icons:</span>
+      <Rating 
+        value={2}
+        icon="heart"
+        emptyIcon="heart"
+        variant="error"
+      />
+    </div>
   </div>
 </div>
 <CodeBlock>
