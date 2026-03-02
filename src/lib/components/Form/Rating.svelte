@@ -87,10 +87,10 @@ const {
   showPreview = false,
 
   /** @type {string} - Custom icon name for filled state (e.g., "star", "heart") */
-  icon = "star-filled",
+  icon = "tabler:star-filled",
 
   /** @type {string} - Custom icon name for empty state (e.g., "star", "heart") */
-  emptyIcon = "star",
+  emptyIcon = "tabler:star",
 
   /** @type {string} - Name attribute for form submission - same as HTML name attribute */
   name,

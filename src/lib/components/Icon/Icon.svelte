@@ -66,11 +66,29 @@ let {
   onLoad,
 }: Props = $props()
 
-// Resolve the iconset: use provided override or fall back to default
-let resolvedIconset = $derived(iconset || $iconConfig.defaultIconset)
+// Subscribe to the global iconset configuration
+let currentConfig = $state(iconConfig)
+$effect(() => {
+  const unsubscribe = iconConfig.subscribe(config => {
+    currentConfig = config
+  })
+  return unsubscribe
+})
+
+// Parse icon name to extract iconset if provided (e.g., "tabler:star-filled" -> iconset="tabler", name="star-filled")
+let parsedName = $derived.by(() => {
+  const parts = name.split(':')
+  if (parts.length > 1) {
+    return { iconset: parts[0], name: parts[1] }
+  }
+  return { iconset: null, name }
+})
+
+// Resolve the iconset: use parsed iconset, provided override, or fall back to default
+let resolvedIconset = $derived(parsedName.iconset || iconset || currentConfig.defaultIconset)
 
 // Build the full icon name with iconset prefix
-let fullIconName = $derived(`${resolvedIconset}:${name}`)
+let fullIconName = $derived(`${resolvedIconset}:${parsedName.name}`)
 </script>
 
 <IconifyIcon
@@ -82,6 +100,6 @@ let fullIconName = $derived(`${resolvedIconset}:${name}`)
   {vFlip}
   {rotate}
   {inline}
-  class={className}
+  class="_icon-{parsedName.name} _iconset-{resolvedIconset} {className}"
   {onLoad}
 />
