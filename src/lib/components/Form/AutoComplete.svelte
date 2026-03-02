@@ -351,7 +351,7 @@ function highlightText(text: string, query: string): string {
 
   /* Suggestions dropdown */
   .autocomplete-suggestions {
-    @apply absolute z-50 w-full mt-1;
+    @apply z-50 w-full;
     @apply bg-surface border border-border rounded-md shadow-lg;
     @apply max-h-60 overflow-auto;
   }

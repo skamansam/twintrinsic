@@ -1,7 +1,7 @@
 <!--
 @component
 Select - A form component for selecting options from a dropdown list.
-Supports single and multiple selection, option groups, and custom option templates.
+Supports single and multiple selection, cascading menus, option groups, and custom option templates.
 
 Usage:
 ```svelte
@@ -17,6 +17,13 @@ Usage:
   multiple={true}
   placeholder="Select skills..."
 />
+
+<Select
+  options={categories}
+  optionLabel="name"
+  optionValue="id"
+  optionChildren="items"
+/>
 ```
 -->
 <script lang="ts">
@@ -25,10 +32,10 @@ import { getContext } from "svelte"
 const {
   /** @type {string} - Input label */
   label = "",
-  /** @type {Array<{ value: string, label: string, group?: string }>} - Options to display */
+  /** @type {Array} - Options to display */
   options = [],
-  /** @type {string | string[]} - Selected value(s) */
-  value = "",
+  /** @type {any} - Selected value(s) */
+  value,
   /** @type {boolean} - Whether multiple selection is allowed */
   multiple = false,
   /** @type {string} - Placeholder text */
@@ -41,165 +48,395 @@ const {
   required = false,
   /** @type {string} - Additional CSS classes */
   class: className = "",
+  /** @type {string} - Property name for option label */
+  optionLabel = "label",
+  /** @type {string} - Property name for option value */
+  optionValue = "value",
+  /** @type {string} - Property name for option children (for cascading) */
+  optionChildren = "items",
+  /** @type {boolean} - Whether to filter options by typing */
+  filter = false,
+  /** @type {string} - Size of the select (sm, md, lg) */
+  size = "md",
+  /** @type {boolean} - Whether to show a clear button */
+  clearable = false,
   /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange,
+  /** @type {(event: CustomEvent) => void} - Clear event handler */
+  onclear,
+  /** @type {(event: CustomEvent) => void} - Open event handler */
+  onopen,
+  /** @type {(event: CustomEvent) => void} - Close event handler */
+  onclose,
+  /** @type {(event: CustomEvent) => void} - Filter event handler */
+  onfilter,
 } = $props()
 
-let showDropdown = $state(false)
-let searchValue = $state("")
-let selectedValues: string[] = $state([])
-let focusedIndex = $state(-1)
-let dropdownRef: HTMLElement | undefined = $state()
-let dropdownPopoverRef: HTMLElement | undefined = $state()
+// Get form context if available
+const formContext = getContext("form") as { registerField?: (name: string, value: unknown) => { getValue?: () => unknown } } | undefined
 
-// Handle popover toggle events
+// Derived values for reactive prop access in closures
+const derivedValue = $derived(value)
+const derivedMultiple = $derived(multiple)
+
+// Component state
+let selectedValues: unknown[] | null = $state(derivedMultiple ? [] : null)
+let filterValue = $state("")
+let highlightedIndex = $state(0)
+let dropdownElement: HTMLElement | undefined = $state()
+let inputElement: HTMLInputElement | undefined = $state()
+let menuElement: HTMLElement | undefined = $state()
+let menuPopoverRef: HTMLElement | undefined = $state()
+let activeSubmenu: unknown = $state(null)
+let isOpen = $state(false)
+
+// Register with form if available
+let fieldApi: { getValue?: () => unknown; setValue?: (value: unknown) => void } | undefined = $state()
+
 $effect(() => {
-  if (!dropdownPopoverRef) return
-  
-  const handleToggle = (event: Event) => {
-    const toggleEvent = event as ToggleEvent
-    showDropdown = toggleEvent.newState === "open"
-  }
-  
-  dropdownPopoverRef.addEventListener("toggle", handleToggle)
-  
-  return () => {
-    dropdownPopoverRef?.removeEventListener("toggle", handleToggle)
+  if (formContext?.registerField && label) {
+    fieldApi = formContext.registerField(label, derivedValue)
   }
 })
 
-// Initialize selected values
+// Update value when form field changes
 $effect(() => {
-  selectedValues = Array.isArray(value) ? (value as string[]) : value ? [value as string] : []
-})
-
-// Filter options based on search
-const filteredOptions = $derived.by(() => {
-  const search = searchValue.toLowerCase()
-  return options.filter((option) => (option as Record<string, unknown>).label?.toString().toLowerCase().includes(search))
-})
-
-// Group options by their group property
-const groupedOptions = $derived.by(() => {
-  const groups = new Map<string, unknown[]>()
-
-  for (const option of filteredOptions) {
-    const group = ((option as Record<string, unknown>).group as string) || ""
-    if (!groups.has(group)) {
-      groups.set(group, [])
+  if (fieldApi?.getValue) {
+    const formValue = fieldApi.getValue()
+    if (formValue !== undefined && JSON.stringify(formValue) !== JSON.stringify(selectedValues)) {
+      selectedValues = formValue as unknown[] | null
     }
-    groups.get(group)?.push(option)
+  }
+})
+
+// Initialize selected values from prop
+$effect(() => {
+  if (value !== undefined) {
+    selectedValues = value
+  }
+})
+
+// Sync isOpen state with popover visibility
+$effect(() => {
+  if (menuPopoverRef) {
+    const handleToggle = () => {
+      isOpen = menuPopoverRef?.matches(':popover-open') ?? false
+    }
+    
+    menuPopoverRef.addEventListener('toggle', handleToggle)
+    return () => {
+      menuPopoverRef?.removeEventListener('toggle', handleToggle)
+    }
+  }
+})
+
+/**
+ * Gets the display label for an option
+ */
+function getOptionLabel(option: unknown): string {
+  if (!option) return ""
+
+  if (typeof option === "object") {
+    return String((option as Record<string, unknown>)[optionLabel] || "")
   }
 
-  return groups
-})
-
-// Handle option selection
-function selectOption(option: unknown): void {
-  if (disabled) return
-
-  const optionValue = (option as Record<string, unknown>).value as string
-  let newValues: string[]
-
-  if (multiple) {
-    newValues = selectedValues.includes(optionValue)
-      ? selectedValues.filter((v) => v !== optionValue)
-      : [...selectedValues, optionValue]
-  } else {
-    newValues = [optionValue]
-    dropdownPopoverRef?.hidePopover()
-  }
-
-  selectedValues = newValues
-  onchange?.(new CustomEvent("change", {
-    detail: {
-      value: multiple ? newValues : newValues[0],
-    }
-  }))
+  return option.toString()
 }
 
-// Handle keyboard navigation
+/**
+ * Gets the value for an option
+ */
+function getOptionValue(option: unknown): unknown {
+  if (!option) return null
+
+  if (typeof option === "object") {
+    return (option as Record<string, unknown>)[optionValue]
+  }
+
+  return option
+}
+
+/**
+ * Gets the children for an option (for cascading)
+ */
+function getOptionChildren(option: unknown): unknown {
+  if (!option || typeof option !== "object") return null
+
+  return (option as Record<string, unknown>)[optionChildren] || null
+}
+
+/**
+ * Checks if an option is selected
+ */
+function isOptionSelected(option: unknown): boolean {
+  const val = getOptionValue(option)
+
+  if (multiple) {
+    return (
+      Array.isArray(selectedValues) &&
+      selectedValues.some((v) => (typeof v === "object" ? (v as Record<string, unknown>)[optionValue] === val : v === val))
+    )
+  }
+
+  if (!selectedValues) return false
+
+  return (
+    selectedValues === val ||
+    (typeof selectedValues === "object" && (selectedValues as Record<string, unknown>)[optionValue] === val)
+  )
+}
+
+/**
+ * Filters options based on input value
+ */
+function filterOptions(opts: unknown[]): unknown[] {
+  if (!filter || !filterValue) return opts
+
+  return opts.filter((option: unknown) => {
+    const label = getOptionLabel(option).toLowerCase()
+    return label.includes(filterValue.toLowerCase())
+  })
+}
+
+/**
+ * Gets the display value for the input
+ */
+function getDisplayValue(): string {
+  if (!selectedValues || (Array.isArray(selectedValues) && selectedValues.length === 0)) {
+    return ""
+  }
+
+  if (multiple) {
+    if (Array.isArray(selectedValues)) {
+      return selectedValues
+        .map((v) =>
+          typeof v === "object"
+            ? getOptionLabel(v)
+            : getOptionLabel(options.find((o) => getOptionValue(o) === v))
+        )
+        .join(", ")
+    }
+    return ""
+  }
+
+  if (typeof selectedValues === "object") {
+    return getOptionLabel(selectedValues)
+  }
+
+  const selectedOption = options.find((o) => getOptionValue(o) === selectedValues)
+  return selectedOption ? getOptionLabel(selectedOption) : ""
+}
+
+/**
+ * Selects an option
+ */
+function selectOption(option: unknown, event?: Event): void {
+  if (event) {
+    event.stopPropagation()
+  }
+  const val = getOptionValue(option)
+
+  if (multiple) {
+    if (isOptionSelected(option)) {
+      // Remove from selection
+      selectedValues = Array.isArray(selectedValues)
+        ? selectedValues.filter((v) =>
+            typeof v === "object" ? (v as Record<string, unknown>)[optionValue] !== val : v !== val
+          )
+        : []
+    } else {
+      // Add to selection
+      selectedValues = Array.isArray(selectedValues) ? [...selectedValues, val] : [val]
+    }
+  } else {
+    // Single selection
+    selectedValues = val as unknown[] | null
+    closeDropdown()
+  }
+
+  // Update form field if available
+  if (fieldApi?.setValue) {
+    (fieldApi as { setValue?: (value: unknown) => void }).setValue?.(selectedValues)
+  }
+
+  onchange?.(new CustomEvent("change", { detail: { value: selectedValues } }))
+}
+
+/**
+ * Clears the selection
+ */
+function clearSelection(evt: Event): void {
+  evt.stopPropagation()
+  selectedValues = multiple ? [] : null
+
+  // Update form field if available
+  if (fieldApi?.setValue) {
+    (fieldApi as { setValue?: (value: unknown) => void }).setValue?.(selectedValues)
+  }
+
+  onchange?.(new CustomEvent("change", { detail: { value: selectedValues } }))
+  onclear?.(new CustomEvent("clear"))
+}
+
+/**
+ * Opens the dropdown
+ */
+function openDropdown(): void {
+  if (disabled) return
+
+  isOpen = true
+  highlightedIndex = 0
+  activeSubmenu = null
+
+  // Focus the filter input if filtering is enabled
+  if (filter) {
+    setTimeout(() => {
+      inputElement?.focus()
+    }, 0)
+  }
+
+  onopen?.(new CustomEvent("open"))
+}
+
+/**
+ * Closes the dropdown
+ */
+function closeDropdown(): void {
+  menuPopoverRef?.hidePopover()
+  filterValue = ""
+  activeSubmenu = null
+  isOpen = false
+
+  onclose?.(new CustomEvent("close"))
+}
+
+/**
+ * Toggles the dropdown
+ */
+function toggleDropdown(): void {
+  if (isOpen) {
+    closeDropdown()
+  } else {
+    openDropdown()
+  }
+}
+
+/**
+ * Opens a submenu
+ */
+function openSubmenu(option: unknown, event: Event): void {
+  if (event) {
+    event.stopPropagation()
+  }
+
+  activeSubmenu = option
+}
+
+/**
+ * Handles keydown events
+ */
 function handleKeydown(event: KeyboardEvent): void {
   if (disabled) return
 
-  switch (event.key) {
-    case "Enter":
-    case " ":
-      if (!showDropdown) {
-        event.preventDefault()
-        showDropdown = true
-      } else if (focusedIndex >= 0 && filteredOptions[focusedIndex]) {
-        event.preventDefault()
-        selectOption(filteredOptions[focusedIndex])
-      }
-      break
+  const filteredOptions = filterOptions(options)
 
+  switch (event.key) {
     case "ArrowDown":
       event.preventDefault()
-      if (!showDropdown) {
-        showDropdown = true
+      if (!isOpen) {
+        menuPopoverRef?.showPopover()
+        isOpen = true
       } else {
-        focusedIndex = Math.min(focusedIndex + 1, (filteredOptions as unknown[]).length - 1)
-        scrollToOption(focusedIndex)
+        highlightedIndex = (highlightedIndex + 1) % filteredOptions.length
+        scrollOptionIntoView()
       }
       break
 
     case "ArrowUp":
       event.preventDefault()
-      if (showDropdown) {
-        focusedIndex = Math.max(focusedIndex - 1, 0)
-        scrollToOption(focusedIndex)
+      if (!isOpen) {
+        menuPopoverRef?.showPopover()
+        isOpen = true
+      } else {
+        highlightedIndex = (highlightedIndex - 1 + filteredOptions.length) % filteredOptions.length
+        scrollOptionIntoView()
+      }
+      break
+
+    case "Enter":
+      event.preventDefault()
+      if (isOpen) {
+        if (filteredOptions[highlightedIndex]) {
+          selectOption(filteredOptions[highlightedIndex])
+        }
+      } else {
+        menuPopoverRef?.showPopover()
+        isOpen = true
       }
       break
 
     case "Escape":
-      dropdownPopoverRef?.hidePopover()
+      event.preventDefault()
+      closeDropdown()
       break
 
     case "Tab":
-      dropdownPopoverRef?.hidePopover()
+      if (isOpen) {
+        closeDropdown()
+      }
+      break
+
+    case " ":
+      if (!filter) {
+        event.preventDefault()
+        if (!isOpen) {
+          menuPopoverRef?.showPopover()
+          isOpen = true
+        }
+      }
       break
   }
 }
 
-// Scroll focused option into view
-function scrollToOption(index: number): void {
-  if (!dropdownRef) return
+/**
+ * Scrolls the highlighted option into view
+ */
+function scrollOptionIntoView() {
+  if (!menuElement) return
 
-  const optionElements = (dropdownRef as HTMLElement).querySelectorAll(".select-option")
-  if (optionElements[index]) {
-    (optionElements[index] as HTMLElement).scrollIntoView({
-      block: "nearest",
-    })
+  const highlightedOption = menuElement.querySelector(`[data-index="${highlightedIndex}"]`)
+  if (highlightedOption) {
+    highlightedOption.scrollIntoView({ block: "nearest" })
   }
 }
 
-// Clear selection
-function clearSelection(event: Event): void {
-  event.stopPropagation()
-  if (disabled) return
-  selectedValues = []
-  onchange?.(new CustomEvent("change", { detail: { value: multiple ? [] : "" } }))
+/**
+ * Handles filter input
+ */
+function handleFilterInput(event: Event): void {
+  filterValue = (event.target as HTMLInputElement).value
+  highlightedIndex = 0
+
+  onfilter?.(new CustomEvent("filter", { detail: { filter: filterValue } }))
 }
 
-// Get display value
-const displayValue = $derived.by(() => {
-  if (!selectedValues.length) return ""
+// Determine size classes
+const sizeClasses = $derived(
+  {
+    sm: "h-8 text-sm",
+    md: "h-10 text-base",
+    lg: "h-12 text-lg",
+  }[size] || "h-10 text-base"
+)
 
-  const selected = options.filter((option) => selectedValues.includes((option as Record<string, unknown>).value as string))
-
-  if (multiple) {
-    return selected.length === 1 ? (selected[0] as Record<string, unknown>).label : `${selected.length} items selected`
-  }
-
-  return ((selected[0] as Record<string, unknown>)?.label as string) || ""
-})
+// Computed display value
+const displayValue = $derived(getDisplayValue())
 </script>
 
 <div
-  class="select {className}"
+  class="select {isOpen ? 'select-open' : ''} {disabled ? 'select-disabled' : ''} {className}"
   class:select-error={!!error}
-  class:select-disabled={disabled}
+  bind:this={dropdownElement}
 >
   <label class="select-label">
     {#if label}
@@ -212,50 +449,61 @@ const displayValue = $derived.by(() => {
     {/if}
     
     <div
-      class="select-control"
+      class="select-control {sizeClasses}"
+      popovertarget="select-menu"
+      popovertargetaction="toggle"
+      onkeydown={handleKeydown}
+      tabindex={disabled ? undefined : 0}
       role="combobox"
-      aria-expanded={showDropdown}
+      aria-expanded={isOpen}
       aria-haspopup="listbox"
-      aria-controls="select-options"
+      aria-controls="select-menu"
       aria-label={label}
       aria-required={required}
       aria-invalid={!!error}
       aria-describedby={error ? 'select-error' : undefined}
-      tabindex={disabled ? -1 : 0}
-      onclick={() => !disabled && dropdownPopoverRef?.togglePopover()}
-      onkeydown={handleKeydown}
     >
-      <div class="select-value">
-        {#if selectedValues.length}
-          <span class="select-text">{displayValue}</span>
-          {#if !disabled}
-            <button
-              type="button"
-              class="select-clear"
-              aria-label="Clear selection"
-              onclick={clearSelection}
-            >
-              ×
-            </button>
+      {#if filter && isOpen}
+        <input
+          type="text"
+          class="select-filter"
+          placeholder={placeholder}
+          value={filterValue}
+          oninput={handleFilterInput}
+          onkeydown={handleKeydown}
+          bind:this={inputElement}
+          {disabled}
+        />
+      {:else}
+        <div class="select-value">
+          {#if displayValue}
+            {displayValue}
+          {:else}
+            <span class="select-placeholder">{placeholder}</span>
           {/if}
-        {:else}
-          <span class="select-placeholder">{placeholder}</span>
-        {/if}
-      </div>
+        </div>
+      {/if}
       
-      <div class="select-indicator">
-        <svg
-          class="select-arrow"
-          class:select-arrow-open={showDropdown}
-          viewBox="0 0 24 24"
-          width="16"
-          height="16"
-        >
-          <path
-            fill="currentColor"
-            d="M7 10l5 5 5-5z"
-          />
-        </svg>
+      <div class="select-indicators">
+        {#if clearable && (selectedValues !== null && (!Array.isArray(selectedValues) || selectedValues.length > 0))}
+          <button
+            type="button"
+            class="select-clear-button"
+            aria-label="Clear selection"
+            onclick={clearSelection}
+            tabindex="-1"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        {/if}
+        
+        <div class="select-arrow">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </div>
       </div>
     </div>
   </label>
@@ -271,64 +519,104 @@ const displayValue = $derived.by(() => {
   {/if}
   
   <div
-    class="select-dropdown"
-    id="select-options"
+    id="select-menu"
+    class="select-menu"
     popover="auto"
     role="listbox"
-    aria-multiselectable={multiple}
-    bind:this={dropdownPopoverRef}
+    aria-multiselectable={multiple ? 'true' : undefined}
+    bind:this={menuPopoverRef}
+    bind:this={menuElement}
   >
-      {#if options.length > 10}
-        <div class="select-search">
-          <input
-            type="text"
-            placeholder="Search..."
-            bind:value={searchValue}
-            onclick={event => event.stopPropagation()}
-          />
-        </div>
-      {/if}
-      
-      <div class="select-options">
-        {#each [...groupedOptions.entries()] as [group, options]}
-          {#if group}
-            <div class="select-group">
-              <div class="select-group-label">{group}</div>
-              {#each options as option, index}
-                <div
-                  class="select-option"
-                  class:select-option-selected={selectedValues.includes(option.value)}
-                  class:select-option-focused={focusedIndex === index}
-                  role="option"
-                  aria-selected={selectedValues.includes(option.value)}
-                  onclick={() => selectOption(option)}
-                >
-                  {option.label}
-                </div>
-              {/each}
-            </div>
-          {:else}
-            {#each options as option, index}
-              <div
-                class="select-option"
-                class:select-option-selected={selectedValues.includes(option.value)}
-                class:select-option-focused={focusedIndex === index}
-                role="option"
-                aria-selected={selectedValues.includes(option.value)}
-                onclick={() => selectOption(option)}
-              >
-                {option.label}
-              </div>
-            {/each}
-          {/if}
-        {/each}
+    <ul class="select-options">
+      {#each filterOptions(options) as option, index}
+        {@const hasChildren = getOptionChildren(option) && (getOptionChildren(option) as unknown[]).length > 0}
+        {@const isHighlighted = index === highlightedIndex}
+        {@const isSelected = isOptionSelected(option)}
         
-        {#if filteredOptions.length === 0}
-          <div class="select-no-results">
-            No options found
+        <li
+          class="
+            select-option
+            {isHighlighted ? 'select-option-highlighted' : ''}
+            {isSelected ? 'select-option-selected' : ''}
+            {hasChildren ? 'select-option-parent' : ''}
+          "
+          role="option"
+          aria-selected={isSelected ? 'true' : 'false'}
+          data-index={index}
+          onclick={() => selectOption(option)}
+          onmouseenter={() => {
+            highlightedIndex = index;
+            if (hasChildren) {
+              openSubmenu(option, new Event('mouseenter'));
+            } else {
+              activeSubmenu = null;
+            }
+          }}
+        >
+          <div class="select-option-content">
+            {#if multiple}
+              <div class="select-checkbox">
+                {#if isSelected}
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                {/if}
+              </div>
+            {/if}
+            
+            <div class="select-option-label">
+              {getOptionLabel(option)}
+            </div>
+            
+            {#if hasChildren}
+              <div class="select-submenu-arrow">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </div>
+            {/if}
           </div>
-        {/if}
-      </div>
+          
+          {#if hasChildren && activeSubmenu === option}
+            <div class="select-submenu">
+              <ul class="select-options">
+                {#each getOptionChildren(option) as childOption, childIndex}
+                  {@const isChildSelected = isOptionSelected(childOption)}
+                  
+                  <li
+                    class="
+                      select-option
+                      {isChildSelected ? 'select-option-selected' : ''}
+                    "
+                    role="option"
+                    aria-selected={isChildSelected ? 'true' : 'false'}
+                    onclick={() => selectOption(childOption)}
+                  >
+                    <div class="select-option-content">
+                      {#if multiple}
+                        <div class="select-checkbox">
+                          {#if isChildSelected}
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                          {/if}
+                        </div>
+                      {/if}
+                      
+                      <div class="select-option-label">
+                        {getOptionLabel(childOption)}
+                      </div>
+                    </div>
+                  </li>
+                {/each}
+              </ul>
+            </div>
+          {/if}
+        </li>
+      {:else}
+        <li class="select-empty">No options available</li>
+      {/each}
+    </ul>
   </div>
 </div>
 
@@ -336,7 +624,7 @@ const displayValue = $derived.by(() => {
   @reference '../../twintrinsic.css';
 
   .select {
-    @apply relative inline-block w-full;
+    @apply relative w-full;
   }
 
   .select-label {
@@ -352,15 +640,16 @@ const displayValue = $derived.by(() => {
   }
 
   .select-control {
-    @apply relative flex items-center w-full px-3 py-2;
-    @apply bg-surface border border-border rounded-md;
-    @apply text-sm cursor-pointer;
-    @apply transition-colors duration-150;
-    @apply focus:outline-none focus:ring-2 focus:ring-primary/50;
+    @apply flex items-center justify-between;
+    @apply bg-background dark:bg-background;
+    @apply border border-border dark:border-border rounded-md;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-primary-500 dark:focus:border-primary-400;
+    @apply transition-colors duration-200;
+    @apply px-3 cursor-pointer;
   }
 
   .select-disabled .select-control {
-    @apply bg-surface/50 cursor-not-allowed;
+    @apply opacity-50 cursor-not-allowed;
   }
 
   .select-error .select-control {
@@ -368,83 +657,103 @@ const displayValue = $derived.by(() => {
   }
 
   .select-value {
-    @apply flex-1 flex items-center min-w-0;
-  }
-
-  .select-text {
-    @apply truncate;
+    @apply flex-grow truncate text-text dark:text-text;
   }
 
   .select-placeholder {
-    @apply text-muted;
+    @apply text-muted dark:text-muted;
   }
 
-  .select-clear {
-    @apply ml-2 text-lg text-muted hover:text-primary-text;
-    @apply focus:outline-none focus:text-primary-text;
-  }
-
-  .select-indicator {
-    @apply ml-2 flex-none;
+  .select-indicators {
+    @apply flex items-center ml-2;
   }
 
   .select-arrow {
-    @apply transition-transform duration-150;
+    @apply flex-shrink-0 text-muted dark:text-muted transition-transform duration-200;
   }
 
-  .select-arrow-open {
+  .select-open .select-arrow {
     @apply rotate-180;
   }
 
-  .select-dropdown {
+  .select-clear-button {
+    @apply p-1 mr-1 rounded-full text-muted dark:text-muted;
+    @apply hover:bg-hover dark:hover:bg-hover hover:text-text dark:hover:text-text;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400;
+  }
+
+  .select-filter {
+    @apply w-full bg-transparent border-none outline-none;
+    @apply text-text dark:text-text placeholder:text-muted dark:placeholder:text-muted;
+  }
+
+  .select-menu {
     @apply z-50 w-full;
-    @apply bg-surface border border-border rounded-md shadow-lg;
-    @apply max-h-60 overflow-auto;
-  }
-
-  .select-dropdown[popover] {
-    @apply inset-auto;
-    margin-top: 0.25rem;
-  }
-
-  .select-search {
-    @apply sticky top-0 p-2 border-b border-border bg-surface;
-  }
-
-  .select-search input {
-    @apply w-full px-2 py-1 text-sm;
-    @apply bg-surface border border-border rounded;
-    @apply focus:outline-none focus:ring-2 focus:ring-primary/50;
+    @apply bg-background dark:bg-background;
+    @apply border border-border dark:border-border rounded-md;
+    @apply shadow-lg;
+    @apply max-h-60 overflow-y-auto;
   }
 
   .select-options {
     @apply py-1;
   }
 
-  .select-group {
-    @apply py-1;
-  }
-
-  .select-group-label {
-    @apply px-3 py-1 text-xs font-medium text-muted;
-  }
-
   .select-option {
-    @apply px-3 py-2 text-sm cursor-pointer;
-    @apply hover:bg-hover focus:bg-hover;
+    @apply relative px-3 py-2 cursor-pointer;
+    @apply text-text dark:text-text;
+    @apply hover:bg-hover dark:hover:bg-hover;
     @apply transition-colors duration-150;
   }
 
+  .select-option-content {
+    @apply flex items-center gap-2;
+  }
+
+  .select-option-highlighted {
+    @apply bg-hover dark:bg-hover;
+  }
+
   .select-option-selected {
-    @apply bg-primary/10 text-primary;
+    @apply bg-primary-50 dark:bg-primary-900/20;
+    @apply text-primary-700 dark:text-primary-300;
   }
 
-  .select-option-focused {
-    @apply bg-hover;
+  .select-option-parent {
+    @apply pr-8;
   }
 
-  .select-no-results {
-    @apply px-3 py-2 text-sm text-muted;
+  .select-checkbox {
+    @apply w-4 h-4 flex-shrink-0;
+    @apply border border-border dark:border-border rounded;
+    @apply flex items-center justify-center;
+    @apply bg-background dark:bg-background;
+  }
+
+  .select-option-selected .select-checkbox {
+    @apply bg-primary-500 dark:bg-primary-400 border-primary-500 dark:border-primary-400;
+    @apply text-white dark:text-white;
+  }
+
+  .select-option-label {
+    @apply flex-grow truncate;
+  }
+
+  .select-submenu-arrow {
+    @apply absolute right-3 top-1/2 -translate-y-1/2;
+    @apply text-muted dark:text-muted;
+  }
+
+  .select-submenu {
+    @apply absolute left-full top-0 ml-1;
+    @apply bg-background dark:bg-background;
+    @apply border border-border dark:border-border rounded-md;
+    @apply shadow-lg;
+    @apply min-w-[200px] max-h-60 overflow-y-auto;
+  }
+
+  .select-empty {
+    @apply px-3 py-2 text-muted dark:text-muted text-center;
   }
 
   .select-error-text {

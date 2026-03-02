@@ -63,30 +63,13 @@ const {
   onselect,
 } = $props()
 
-let showCalendar = $state(false)
 let currentMonth = $state(new Date())
 let hoverDate: Date | null = $state(null)
 let inputValue = $state("")
 let startDate: Date | null = $state(null)
 let endDate: Date | null = $state(null)
 let calendarElement: HTMLElement | undefined = $state()
-let calendarPopoverRef: HTMLElement | undefined = $state()
-
-// Handle popover toggle events
-$effect(() => {
-  if (!calendarPopoverRef) return
-  
-  const handleToggle = (event: Event) => {
-    const toggleEvent = event as ToggleEvent
-    showCalendar = toggleEvent.newState === "open"
-  }
-  
-  calendarPopoverRef.addEventListener("toggle", handleToggle)
-  
-  return () => {
-    calendarPopoverRef?.removeEventListener("toggle", handleToggle)
-  }
-})
+let showCalendar = $state(false)
 
 // Initialize dates from value prop
 $effect(() => {
@@ -392,9 +375,8 @@ function handleKeydown(event: KeyboardEvent): void {
   }
 
   .calendar {
-    @apply absolute z-50 mt-1 p-4;
+    @apply z-50 p-4;
     @apply bg-surface border border-border rounded-md shadow-lg;
-    @apply min-w-[280px];
   }
 
   .calendar-header {

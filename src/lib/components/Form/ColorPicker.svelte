@@ -351,7 +351,7 @@ function handleInput(event: CustomEvent): void {
   }
 
   .color-picker-popup {
-    @apply absolute z-50 mt-1 p-4;
+    @apply z-50 p-4;
     @apply bg-surface border border-border rounded-md shadow-lg;
     @apply min-w-[240px];
   }

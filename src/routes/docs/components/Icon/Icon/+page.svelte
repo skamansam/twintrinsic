@@ -7,9 +7,49 @@ Icon documentation page
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import { CodeBlock, Container, Icon, setIconset } from "$lib"
+import { CodeBlock, Container, Icon, iconConfig, Select, setIconset, TextInput } from "$lib"
 
-setIconset('mdi')
+setIconset('tabler')
+
+const predefinedIconsets = [
+  { value: 'ic', label: 'Google Material Icons (ic)' },
+  { value: 'mdi', label: 'Material Design Icons (mdi)' },
+  { value: 'carbon', label: 'Carbon' },
+  { value: 'ion', label: 'Ion' },
+  { value: 'ep', label: 'Element Plus (ep)' },
+  { value: 'bi', label: 'Bootstrap (bi)' },
+  { value: 'tabler', label: 'Tabler' },
+  { value: 'solar', label: 'Solar' },
+  { value: 'flowbite', label: 'Flowbite' },
+  { value: 'meteor', label: 'Meteor' },
+  { value: 'streamline', label: 'Streamline Color' },
+  { value: 'streamline-cyber-color', label: 'Cyber Color (streamline-cyber-color)' },
+]
+
+let selectedIconset = $state('tabler')
+let customIconset = $state('')
+let currentIconset = $state('tabler')
+
+$effect(() => {
+  const unsubscribe = iconConfig.subscribe(config => {
+    currentIconset = config.defaultIconset
+  })
+  return unsubscribe
+})
+
+function handleIconsetChange(e: CustomEvent<{ value: string }>) {
+  selectedIconset = e.detail.value
+  customIconset = ''
+  console.log('Setting iconset to:', selectedIconset)
+  setIconset(selectedIconset)
+}
+
+function handleCustomIconset() {
+  if (customIconset.trim()) {
+    console.log('Setting custom iconset to:', customIconset.trim())
+    setIconset(customIconset.trim())
+  }
+}
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -18,6 +58,67 @@ setIconset('mdi')
   <p>
     The Icon component is a wrapper around the Iconify SVG icon library that integrates with Twintrinsic's global icon management system. It allows you to use over 275,000 icons from 200+ icon sets with a single default iconset configuration.
   </p>
+
+  <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-sm font-semibold">Change Global Iconset</h3>
+      <div class="text-sm">
+        <span class="text-muted">Current: </span>
+        <span class="font-mono font-semibold text-primary-600 dark:text-primary-400">{currentIconset}</span>
+      </div>
+    </div>
+    <div class="flex flex-col gap-4">
+      <div>
+        <Select 
+          label="Select Predefined Iconset"
+          options={predefinedIconsets}
+          onchange={handleIconsetChange}
+          placeholder="Choose an iconset..."
+        />
+      </div>
+      <div>
+        <div class="text-sm font-medium mb-2">Or Enter Custom Iconset:</div>
+        <div class="flex gap-2">
+          <input 
+            bind:value={customIconset}
+            placeholder="e.g., fa, heroicons, mdi-light"
+            class="flex-1 max-w-xs px-3 py-2 border border-border rounded"
+          />
+          <button 
+            onclick={handleCustomIconset}
+            class="px-4 py-2 bg-primary-500 text-white rounded hover:bg-primary-600 transition-colors"
+          >
+            Apply
+          </button>
+        </div>
+      </div>
+      <div class="mt-4 pt-4 border-t border-border">
+        <div class="text-sm font-medium mb-3">Preview with current iconset: (not all iconsets have the same icon names)</div>
+        <div class="flex gap-4 items-center flex-wrap text-3xl">
+          <div class="flex flex-col items-center gap-2">
+            <Icon name="home" />
+            <span class="text-xs text-muted">home</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <Icon name="star" />
+            <span class="text-xs text-muted">star</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <Icon name="heart" />
+            <span class="text-xs text-muted">heart</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <Icon name="settings" />
+            <span class="text-xs text-muted">settings</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <Icon name="search" />
+            <span class="text-xs text-muted">search</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <h2>Setup</h2>
   <p>
@@ -74,11 +175,11 @@ setIconset('mdi')
         <span class="text-xs text-muted">Default (tabler)</span>
       </div>
       <div class="flex flex-col items-center gap-2">
-        <Icon name="home" iconset="fa" width="32px" height="32px" />
+        <Icon name="fa:home" width="32px" height="32px" />
         <span class="text-xs text-muted">Font Awesome</span>
       </div>
       <div class="flex flex-col items-center gap-2">
-        <Icon name="home" iconset="heroicons" width="32px" height="32px" />
+        <Icon name="heroicons:home" width="32px" height="32px" />
         <span class="text-xs text-muted">Heroicons</span>
       </div>
       <div class="flex flex-col items-center gap-2">
