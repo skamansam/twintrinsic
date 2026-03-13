@@ -25,7 +25,7 @@ let { children } = $props()
   <CodeBlock language="bash">{`npm install twintrinsic`}</CodeBlock>
 
   <h2>Usage</h2>
-  <CodeBlock language="javascript">{`{\`// In your app.css
+  <CodeBlock language="javascript">{`// In your app.css
 @import 'twintrinsic/styles.css';
 
 // In your component
