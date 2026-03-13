@@ -52,12 +52,6 @@ interface SelectProps {
   required?: boolean
   /** Additional CSS classes */
   class?: string
-  /** Property name for option label */
-  optionLabel?: string
-  /** Property name for option value */
-  optionValue?: string
-  /** Property name for option children (for optgroup) */
-  optionChildren?: string
   /** Change event handler */
   onchange?: (event: CustomEvent<{ value: string | string[] | undefined }>) => void
 }
@@ -72,9 +66,6 @@ const {
   error = "",
   required = false,
   class: className = "",
-  optionLabel = "label",
-  optionValue = "value",
-  optionChildren = "items",
   onchange,
 }: SelectProps = $props()
 
@@ -87,6 +78,15 @@ $effect(() => {
   selectedValue = value
 })
 
+// I would expect svelte to do this, but it doesn't. See https://github.com/sveltejs/svelte/issues/1270
+$effect(() => {
+  if (multiple) {
+    selectElement && selectElement.setAttribute('multiple', '');
+  } else {
+    selectElement && selectElement.removeAttribute('multiple');
+  }
+})
+
 // Handle change event
 function handleChange(event: Event): void {
   const target = event.target as HTMLSelectElement
@@ -94,37 +94,7 @@ function handleChange(event: Event): void {
   onchange?.(new CustomEvent("change", { detail: { value: selectedValue } }))
 }
 
-/**
- * Gets the option label
- */
-function getOptionLabel(option: unknown): string {
-  if (!option) return ""
-  if (typeof option === "object") {
-    return String((option as Record<string, unknown>)[optionLabel] || "")
-  }
-  return option.toString()
-}
 
-/**
- * Gets the option value
- */
-function getOptionValue(option: unknown): string {
-  if (!option) return ""
-  if (typeof option === "object") {
-    const val = (option as Record<string, unknown>)[optionValue]
-    return String(val || "")
-  }
-  return String(option)
-}
-
-/**
- * Gets the option children (for optgroup)
- */
-function getOptionChildren(option: unknown): unknown[] | null {
-  if (!option || typeof option !== "object") return null
-  const children = (option as Record<string, unknown>)[optionChildren]
-  return Array.isArray(children) ? children : null
-}
 </script>
 
 <div class="select-wrapper {className}" class:select-error={!!error}>
@@ -138,70 +108,39 @@ function getOptionChildren(option: unknown): unknown[] | null {
       </span>
     {/if}
     
-    {#if multiple}
-      <select
-        bind:this={selectElement}
-        bind:value={selectedValue}
-        onchange={handleChange}
-        multiple
-        {disabled}
-        {required}
-        aria-invalid={!!error}
-        aria-describedby={error ? 'select-error' : undefined}
-        class="select-input"
-      >
-        {#each options as option}
-          {@const children = getOptionChildren(option)}
-          
-          {#if children && children.length > 0}
-            <optgroup label={getOptionLabel(option)}>
-              {#each children as child}
-                <option value={getOptionValue(child)}>
-                  {getOptionLabel(child)}
-                </option>
-              {/each}
-            </optgroup>
-          {:else}
-            <option value={getOptionValue(option)}>
-              {getOptionLabel(option)}
-            </option>
-          {/if}
-        {/each}
-      </select>
-    {:else}
-      <select
-        bind:this={selectElement}
-        bind:value={selectedValue}
-        onchange={handleChange}
-        {disabled}
-        {required}
-        aria-invalid={!!error}
-        aria-describedby={error ? 'select-error' : undefined}
-        class="select-input"
-      >
-        {#if !selectedValue}
-          <option value="">{placeholder}</option>
+    <select
+      bind:this={selectElement}
+      bind:value={selectedValue}
+      onchange={handleChange}
+      {disabled}
+      {required}
+      aria-invalid={!!error}
+      aria-describedby={error ? 'select-error' : undefined}
+      class="select-input"
+    >
+      {#if !selectedValue}
+        <option value="">{placeholder}</option>
+      {/if}
+      
+      {#each options as option}          
+        {#if option.children}
+          <optgroup>
+            {#if option.label}
+              <legend>{option.label}</legend>
+            {/if}
+            {#each option.children as child}
+              <option value={child.value}>
+                {child.label}
+              </option>
+            {/each}
+          </optgroup>
+        {:else}
+          <option value={option.value}>
+            {option.label}
+          </option>
         {/if}
-        
-        {#each options as option}
-          {@const children = getOptionChildren(option)}
-          
-          {#if children}
-            <optgroup label={getOptionLabel(option)}>
-              {#each children as child}
-                <option value={getOptionValue(child)}>
-                  {getOptionLabel(child)}
-                </option>
-              {/each}
-            </optgroup>
-          {:else}
-            <option value={getOptionValue(option)}>
-              {getOptionLabel(option)}
-            </option>
-          {/if}
-        {/each}
-      </select>
-    {/if}
+      {/each}
+    </select>
   </label>
   
   {#if error}
