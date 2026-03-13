@@ -5,6 +5,21 @@ Documentation page for the Rating component.
 <script lang="ts">
 import { EventsTable, PropsTable } from "$lib/docs/index.js"
 import { CodeBlock, Rating } from "$lib/index.js"
+
+let hoverRating = $state(0)
+
+const ratingLabels: Record<number, string> = {
+  0: 'Not rated',
+  1: 'Poor',
+  2: 'Fair',
+  3: 'Good',
+  4: 'Very Good',
+  5: 'Excellent'
+}
+
+function handleHover(event: CustomEvent<{ value: number }>) {
+  hoverRating = event.detail.value
+}
 </script>
 
 <h1>Rating</h1>
@@ -173,6 +188,47 @@ import { CodeBlock, Rating } from "$lib/index.js"
 <Rating value={4} showValue={true} icon="star" variant="success" />`}
 </CodeBlock>
 
+<h3>Hover Callback with Dynamic Content</h3>
+<div class="example">
+  <div class="flex flex-col gap-4">
+    <div class="flex items-center gap-4">
+      <Rating 
+        value={3} 
+        showPreview={true}
+        onhover={handleHover}
+      />
+      <div class="text-sm font-medium text-text dark:text-text">
+        {ratingLabels[hoverRating] || ratingLabels[0]}
+      </div>
+    </div>
+  </div>
+</div>
+<CodeBlock>
+  {`<script>
+  let hoverRating = $state(0)
+
+  const ratingLabels = {
+    0: 'Not rated',
+    1: 'Poor',
+    2: 'Fair',
+    3: 'Good',
+    4: 'Very Good',
+    5: 'Excellent'
+  }
+
+  function handleHover(event) {
+    hoverRating = event.detail.value
+  }
+</script>
+
+<Rating 
+  value={3} 
+  showPreview={true}
+  onhover={handleHover}
+/>
+<div>{ratingLabels[hoverRating] || ratingLabels[0]}</div>`}
+</CodeBlock>
+
 <h3>Custom Maximum</h3>
 <div class="example">
   <div class="flex flex-col gap-4">
@@ -286,6 +342,11 @@ import { CodeBlock, Rating } from "$lib/index.js"
       name: 'change',
       type: '{ value: number }',
       description: 'Fired when the rating value changes'
+    },
+    {
+      name: 'hover',
+      type: '{ value: number }',
+      description: 'Fired during hover preview when showPreview is enabled'
     }
   ]}
 />
