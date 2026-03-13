@@ -79,6 +79,15 @@ $effect(() => {
 </svelte:head>
 
 <div class='app bg-element-100 dark:bg-dark dark:text-light min-h-screen grid gap-0 grid-rows-[var(--header-height,120px)_1fr_var(--footer-height,60px)] grid-cols-[var(--leftbar-width,300px)_1fr_var(--rightbar-width,300px)]' style="--rightbar-width: {rightPanel ? rightSidebarWidth : 'auto'}; --leftbar-width: {(leftPanel || siteMenu) ? leftSidebarWidth : 'auto'}; --header-height: auto; --footer-height: auto;" data-theme>
+
+<!-- Skip to main content link for accessibility -->
+<a
+  href="#main-content"
+  class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-surface focus:text-text focus:outline-none focus:ring-2 focus:ring-primary-500"
+>
+  Skip to main content
+</a>
+
   <!-- Header -->
   {#if header}
     {@render header()}
@@ -91,7 +100,7 @@ $effect(() => {
       {showNotifications}
       {onsearch}
       {onsignout}
-      class="appHeader col-span-3"
+      class="appHeader col-span-full"
     />
   {/if}
   <!-- Left Sidebar -->
@@ -131,7 +140,7 @@ $effect(() => {
 
   <!-- Footer -->
   {#if footer}
-    <footer class="appFooter col-span-3">
+    <footer class="appFooter col-span-full">
       {@render footer()}
     </footer>
   {/if}
