@@ -670,31 +670,52 @@ function handleClick(event: MouseEvent) {
 
 ## TypeScript Best Practices
 
-### Define Props Interface
+### Define Props Interface with TypeScript
+Always use TypeScript interfaces for type safety. TypeScript provides better IDE support, type checking, and documentation than JSDoc.
+
 ```typescript
 interface Props {
-  /** Description */
+  /** Description of prop */
   label?: string;
-  /** Callback description */
+  /** Callback when value changes */
   onchange?: (event: CustomEvent<string>) => void;
   /** CSS class override */
   class?: string;
+  /** Whether to show the value */
+  showValue?: boolean;
+  /** Current progress value (0-100) */
+  value?: number;
+  /** Maximum value (default: 100) */
+  max?: number;
 }
 ```
 
-### Use JSDoc Comments
+### Use TypeScript for Type Safety
 ```typescript
-/**
- * Displays a progress bar with optional value label
- * @param value - Current progress value (0-100)
- * @param max - Maximum value (default: 100)
- * @param showValue - Whether to display the percentage
- */
+// ✅ Good: TypeScript interface with clear types
 interface Props {
-  value?: number;
-  max?: number;
-  showValue?: boolean;
+  value: number;
+  max: number;
+  disabled?: boolean;
+  onchange?: (event: CustomEvent<number>) => void;
 }
+
+let { value, max, disabled = false, onchange }: Props = $props();
+
+// ✅ Good: Type union for variants
+type Variant = "primary" | "secondary" | "danger";
+type Size = "sm" | "md" | "lg";
+
+interface ButtonProps {
+  variant?: Variant;
+  size?: Size;
+}
+
+// ❌ Bad: Using JSDoc instead of TypeScript
+/**
+ * @param {string} label - The button label
+ * @param {boolean} disabled - Whether button is disabled
+ */
 ```
 
 ### Type Union for Variants
