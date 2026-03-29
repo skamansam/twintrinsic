@@ -1,11 +1,5 @@
 {
-  "buildCommand": "pnpm build && pnpm storybook:build",
-  "outputDirectory": "dist",
-  "installCommand": "pnpm install --no-frozen-lockfile",
-  "rewrites": [
-    {
-      "source": "/storybook/:path*",
-      "destination": "/storybook/:path*"
-    }
-  ]
+  "buildCommand": "pnpm storybook:build && pnpm build",
+  "outputDirectory": ".vercel/output/static",
+  "installCommand": "pnpm install --no-frozen-lockfile"
 }

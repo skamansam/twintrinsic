@@ -6,8 +6,8 @@ import { vitePreprocess } from "@sveltejs/vite-plugin-svelte"
 let adapter;
 let options;
 // if (process.env.VERCEL_ENV) {
-  adapter = vercelAdapter;
-  options = {out: "dist"};
+adapter = vercelAdapter;
+options = { out: ".vercel/output/static" };
 // } else {
 //   adapter = netlifyAdapter;
 //   options = {
