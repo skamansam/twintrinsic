@@ -1,8 +1,8 @@
-<script>
-  import { Meta, Story, Template } from '@storybook/addon-svelte-csf';
+<script module>
+  import { defineMeta } from '@storybook/addon-svelte-csf';
   import TreeMenu from '$lib/components/TreeMenu/TreeMenu.svelte';
 
-  const meta = {
+  const { Story } = defineMeta({
     title: 'Components/TreeMenu',
     component: TreeMenu,
     tags: ['autodocs'],
@@ -16,14 +16,9 @@
         control: { type: 'text' },
       },
     },
-  };
+  });
 </script>
 
-<Meta {meta} />
-
-<Template let:args>
-  <TreeMenu {...args} />
-</Template>
 
 <Story
   name="Default"
@@ -133,7 +128,7 @@
       {
         title: 'Help',
         icon: 'info',
-        action: () => alert('Help clicked'),
+        onClick: () => alert('Help clicked'),
         separator: true,
       },
     ],
