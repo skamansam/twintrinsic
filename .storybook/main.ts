@@ -15,7 +15,7 @@ const config: StorybookConfig = {
   viteFinal: (config, { configType }) => {
     return {
       ...config,
-      ...(configType === "PRODUCTION" && { base: "/storybook/" }),
+      base: configType === "PRODUCTION" ? (process.env.STORYBOOK_BASE_PATH ?? "/") : config.base,
       server: {
         ...config.server,
         fs: {
