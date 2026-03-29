@@ -1,5 +1,11 @@
 {
-  "buildCommand": "pnpm build",
+  "buildCommand": "pnpm build && pnpm build-storybook",
   "outputDirectory": "dist",
-  "installCommand": "pnpm install"
+  "installCommand": "pnpm install",
+  "rewrites": [
+    {
+      "source": "/storybook/:path*",
+      "destination": "/storybook/:path*"
+    }
+  ]
 }
