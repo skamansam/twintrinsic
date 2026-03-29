@@ -26,7 +26,7 @@ const config: StorybookConfig = {
     if (configType === "PRODUCTION") {
       merged.base = "/storybook/";
     }
-
+    console.log("CONFIG", merged);
     return merged;
   },
 };
