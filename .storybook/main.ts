@@ -16,6 +16,7 @@ const config: StorybookConfig = {
     const { mergeConfig } = await import("vite");
     console.log("CONFIG TYPE", configType);
     const merged = mergeConfig(config, {
+      base: configType === "PRODUCTION" ? "/storybook/" : "/",
       server: {
         fs: {
           allow: [...(config.server?.fs?.allow || []), path.resolve(__dirname, "../stories")],
@@ -23,9 +24,7 @@ const config: StorybookConfig = {
       },
     });
 
-    if (configType === "PRODUCTION") {
-      merged.base = "/storybook/";
-    }
+    console.log("ViteFinal: ", merged);
     return merged;
   },
 };
