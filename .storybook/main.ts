@@ -14,8 +14,6 @@ const config: StorybookConfig = {
     options: {},
   },
 
-  outDir: "../dist/storybook",
-
   viteFinal: (config) => {
     return {
       ...config,

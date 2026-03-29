@@ -61,6 +61,7 @@ export { default as Lazy } from "./components/Lazy/Lazy.svelte";
 export { default as Map } from "./components/Map/Map.svelte";
 export { default as Masonry } from "./components/Masonry/Masonry.svelte";
 export { default as Menu } from "./components/Menu/Menu/Menu.svelte";
+export { default as MenuItem } from "./components/Menu/Menu/MenuItem.svelte";
 // Metrics Components
 export {
   AreaChart,
@@ -107,7 +108,10 @@ export { default as Toast } from "./components/Toast/Toast.svelte";
 export { default as Tooltip } from "./components/Tooltip/Tooltip.svelte";
 export { default as Tree } from "./components/Tree/Tree.svelte";
 export { default as TreeNode } from "./components/Tree/TreeNode.svelte";
-export { default as TreeMenu, type MenuItem } from "./components/TreeMenu/TreeMenu.svelte";
+export {
+  default as TreeMenu,
+  type MenuItem as TreeMenuItem,
+} from "./components/TreeMenu/TreeMenu.svelte";
 export { EventsTable, PropsTable } from "./docs/index.js";
 export { default as Section } from "./Section.svelte";
 // Icon Manager
