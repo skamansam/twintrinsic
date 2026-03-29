@@ -2,6 +2,7 @@ import type { StorybookConfig } from "@storybook/sveltekit";
 import { defineMain } from "@storybook/sveltekit/node";
 import path from "path";
 import { fileURLToPath } from "url";
+import type { UserConfig } from "vite";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -20,7 +21,7 @@ export default defineMain({
   async viteFinal(config, { configType }) {
     const { mergeConfig } = await import("vite");
     console.log("CONFIG TYPE", configType);
-    const thisConfig: StorybookConfig = {
+    const thisConfig: UserConfig = {
       server: {
         fs: {
           allow: [...(config.server?.fs?.allow || []), path.resolve(__dirname, "../stories")],
