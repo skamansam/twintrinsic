@@ -16,7 +16,7 @@
     "test:unit": "vitest run",
     "test": "pnpm run test:e2e && pnpm run test:unit",
     "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build && mkdir -p .vercel/output/static && rm -rf .vercel/output/static/storybook && mv storybook-static .vercel/output/static/storybook"
+    "storybook:build": "storybook build && mkdir -p .svelte-kit/output/server && rm -rf .svelte-kit/output/server/storybook"
   },
   "files": [
     "dist",
