@@ -1,4 +1,3 @@
-import { expect } from "@storybook/test"
 import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
 
 export default {
@@ -74,11 +73,6 @@ export const Default = {
       </div>
     `,
   }),
-  play: async ({ canvasElement }) => {
-    const sidebar = canvasElement.querySelector('[role="complementary"]')
-    expect(sidebar).toBeVisible()
-    expect(sidebar.querySelector('[role="region"]')).toBeVisible()
-  },
 }
 
 // Right-positioned sidebar

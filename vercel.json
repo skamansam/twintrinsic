@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm build && pnpm build-storybook",
+  "buildCommand": "pnpm build && pnpm storybook:build",
   "outputDirectory": "dist",
   "installCommand": "pnpm install --no-frozen-lockfile",
   "rewrites": [

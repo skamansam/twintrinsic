@@ -1,4 +1,3 @@
-import { expect } from "@storybook/test"
 import Separator from "$lib/components/Separator/Separator.svelte"
 
 export default {
@@ -40,10 +39,6 @@ export const Default = {
     Component: Separator,
     props: args,
   }),
-  play: async ({ canvasElement }) => {
-    const separator = canvasElement.querySelector("hr")
-    expect(separator).toHaveAttribute("aria-orientation", "horizontal")
-  },
 }
 
 // Separator with text

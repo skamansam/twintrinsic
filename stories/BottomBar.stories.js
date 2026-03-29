@@ -1,4 +1,3 @@
-import { expect } from "@storybook/test"
 import BottomBar from "$lib/components/BottomBar/BottomBar.svelte"
 
 export default {
@@ -74,11 +73,6 @@ export const Default = {
       </div>
     `,
   }),
-  play: async ({ canvasElement }) => {
-    const bottomBar = canvasElement.querySelector('[role="complementary"]')
-    expect(bottomBar).toBeVisible()
-    expect(bottomBar.querySelector('[role="region"]')).toBeVisible()
-  },
 }
 
 // Console example

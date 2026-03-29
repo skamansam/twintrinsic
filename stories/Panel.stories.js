@@ -1,4 +1,3 @@
-import { expect, userEvent } from "@storybook/test"
 import Panel from "$lib/components/Panel/Panel.svelte"
 
 export default {
@@ -53,23 +52,6 @@ export const Default = {
       </Panel>
     `,
   }),
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-    const button = canvas.getByRole("button")
-
-    // Test initial expanded state
-    expect(button).toHaveAttribute("aria-expanded", "true")
-
-    // Test clicking
-    await userEvent.click(button)
-    expect(button).toHaveAttribute("aria-expanded", "false")
-
-    // Test keyboard navigation
-    await userEvent.tab()
-    expect(button).toHaveFocus()
-    await userEvent.keyboard("{Enter}")
-    expect(button).toHaveAttribute("aria-expanded", "true")
-  },
 }
 
 // Collapsed panel

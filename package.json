@@ -16,7 +16,7 @@
     "test:unit": "vitest run",
     "test": "pnpm run test:e2e && pnpm run test:unit",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build && rm -rf dist/storybook && mv storybook-static dist/storybook"
+    "storybook:build": "storybook build && mkdir -p dist && rm -rf dist/storybook && mv storybook-static dist/storybook"
   },
   "files": [
     "dist",
