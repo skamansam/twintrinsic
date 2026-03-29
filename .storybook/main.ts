@@ -15,14 +15,19 @@ const config: StorybookConfig = {
   async viteFinal(config, { configType }) {
     const { mergeConfig } = await import("vite");
 
-    return mergeConfig(config, {
-      ...(configType === "PRODUCTION" && { base: "/storybook/" }),
+    const merged = mergeConfig(config, {
       server: {
         fs: {
           allow: [...(config.server?.fs?.allow || []), path.resolve(__dirname, "../stories")],
         },
       },
     });
+
+    if (configType === "PRODUCTION") {
+      merged.base = "/storybook/";
+    }
+
+    return merged;
   },
 };
 
