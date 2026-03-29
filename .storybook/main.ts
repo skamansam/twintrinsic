@@ -12,17 +12,17 @@ const config: StorybookConfig = {
     options: {},
   },
 
-  viteFinal: (config, { configType }) => {
-    return {
-      ...config,
-      base: configType === "PRODUCTION" ? (process.env.STORYBOOK_BASE_PATH ?? "/") : config.base,
+  async viteFinal(config, { configType }) {
+    const { mergeConfig } = await import("vite");
+
+    return mergeConfig(config, {
+      ...(configType === "PRODUCTION" && { base: "/storybook/" }),
       server: {
-        ...config.server,
         fs: {
           allow: [...(config.server?.fs?.allow || []), path.resolve(__dirname, "../stories")],
         },
       },
-    };
+    });
   },
 };
 
