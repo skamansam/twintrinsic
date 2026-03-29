@@ -14,7 +14,7 @@ const config: StorybookConfig = {
 
   async viteFinal(config, { configType }) {
     const { mergeConfig } = await import("vite");
-
+    console.log("CONFIG TYPE", configType);
     const merged = mergeConfig(config, {
       server: {
         fs: {
