@@ -18,6 +18,7 @@ const config: StorybookConfig = {
     const merged = mergeConfig(config, {
       base: configType === "PRODUCTION" ? "/storybook/" : "/",
       server: {
+        path: "/storybook/",
         fs: {
           allow: [...(config.server?.fs?.allow || []), path.resolve(__dirname, "../stories")],
         },
