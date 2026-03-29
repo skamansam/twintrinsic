@@ -1,7 +1,7 @@
 {
   "buildCommand": "pnpm build && pnpm build-storybook",
   "outputDirectory": "dist",
-  "installCommand": "pnpm install",
+  "installCommand": "pnpm install --no-frozen-lockfile",
   "rewrites": [
     {
       "source": "/storybook/:path*",
