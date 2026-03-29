@@ -45,6 +45,7 @@
     "@iconify/svelte": "^5.2.1",
     "@playwright/test": "^1.58.2",
     "@storybook/addon-docs": "^10.3.3",
+    "@storybook/addon-mcp": "^0.4.2",
     "@storybook/addon-svelte-csf": "^5.1.2",
     "@storybook/svelte": "^10.3.3",
     "@storybook/sveltekit": "^10.3.3",
