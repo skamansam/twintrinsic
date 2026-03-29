@@ -6,17 +6,17 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const config: StorybookConfig = {
   stories: ["../stories/**/*.stories.@(js|ts|svelte|mdx)"],
-
   addons: ["@storybook/addon-svelte-csf", "@chromatic-com/storybook", "@storybook/addon-docs"],
-
+  base: "/storybook/",
   framework: {
     name: "@storybook/sveltekit",
     options: {},
   },
 
-  viteFinal: (config) => {
+  viteFinal: (config, { configType }) => {
     return {
       ...config,
+      ...(configType === "PRODUCTION" && { base: "/storybook/" }),
       server: {
         ...config.server,
         fs: {
