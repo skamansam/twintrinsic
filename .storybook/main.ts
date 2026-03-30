@@ -30,11 +30,13 @@ export default defineMain({
     };
     if (configType === "DEVELOPMENT") {
       // Your development configuration goes here
+      thisConfig.base = "/storybook/";
     }
     if (configType === "PRODUCTION") {
       // Your production configuration goes here.
       thisConfig.base = "/storybook/";
     }
+    thisConfig.base = "/storybook/";
     return mergeConfig(config, thisConfig);
   },
 });
