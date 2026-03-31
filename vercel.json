@@ -1,5 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "pnpm install --no-frozen-lockfile",
-  "buildCommand": "STORYBOOK_BASE_PATH=/storybook/ pnpm storybook:build && pnpm build"
+  "buildCommand": "STORYBOOK_BASE_PATH=/storybook/ pnpm storybook:build && pnpm build",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
