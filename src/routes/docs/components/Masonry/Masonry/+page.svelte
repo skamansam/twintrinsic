@@ -1,8 +1,3 @@
-<!--
-@component
-Masonry documentation page
--->
-
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
   
@@ -163,7 +158,7 @@ import { CodeBlock, Container, Masonry } from "$lib"
       ...items,
       { 
         id: items.length + 1, 
-        content: \`Item \${items.length + 1 }\`, 
+        content: \`Item \$\{items.length + 1 \}\`, 
         height: randomHeight 
       }
     ];

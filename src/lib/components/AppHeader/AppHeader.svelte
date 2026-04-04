@@ -33,6 +33,7 @@ type AppHeaderProps = {
   user?: User
   showSearch?: boolean
   showNotifications?: boolean
+  themeToggleHidden?: boolean
   navItems?: NavItem[]
   class?: string
   id?: string
@@ -48,6 +49,7 @@ const {
   user = null,
   showSearch = false,
   showNotifications = false,
+  themeToggleHidden = false,
   navItems = [],
   class: className = "",
   id = crypto.randomUUID(),
@@ -203,7 +205,9 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
 
     <!-- Actions -->
     <div class="app-header-actions">
-      <ThemeToggle />
+      {#if !themeToggleHidden}
+        <ThemeToggle />
+      {/if}
       {#if showSearch}
         <div class="app-header-search">
           <label for="{id}-search" class="sr-only">Search</label>

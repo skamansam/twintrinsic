@@ -30,6 +30,7 @@ interface AppProps {
   header?: Snippet | null
   footer?: Snippet | null
   children?: Snippet | null
+  themeToggleHidden?: boolean
   onsearch?: (payload: { query: string }) => void
   onsignout?: () => void
   // onleftSidebarVisibilityChange?: (payload: { visible: boolean }) => void
@@ -61,6 +62,7 @@ let {
   children,
   onsearch,
   onsignout,
+  themeToggleHidden = false,
   // onleftSidebarVisibilityChange,
   // onrightSidebarVisibilityChange,
   onleftSidebarToggle,
@@ -100,6 +102,7 @@ $effect(() => {
       {showNotifications}
       {onsearch}
       {onsignout}
+      {themeToggleHidden}
       class="appHeader col-span-full"
     />
   {/if}
