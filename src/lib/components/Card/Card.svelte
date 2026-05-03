@@ -59,7 +59,7 @@ const {
 const isClickable = !!href
 
 // Determine element type based on href
-const elementType = href ? "a" : "div"
+const elementType = href ? "a" : "article"
 </script>
 
 <svelte:element

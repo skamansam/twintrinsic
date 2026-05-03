@@ -83,6 +83,7 @@ export { default as Hero } from "./components/Panel/Hero/Hero.svelte";
 export { default as LazyPanel } from "./components/Panel/LazyPanel.svelte";
 export { default as Panel } from "./components/Panel/Panel.svelte";
 export { default as Progress } from "./components/Progress/Progress.svelte";
+export { default as Section } from "./components/Section/Section.svelte";
 export { default as Separator } from "./components/Separator/Separator.svelte";
 export { default as Sidebar } from "./components/Sidebar/Sidebar.svelte";
 export { default as Skeleton } from "./components/Skeleton/Skeleton.svelte";
@@ -113,7 +114,6 @@ export {
   type MenuItem as TreeMenuItem,
 } from "./components/TreeMenu/TreeMenu.svelte";
 export { EventsTable, PropsTable } from "./docs/index.js";
-export { default as Section } from "./Section.svelte";
 // Icon Manager
 export {
   type IconConfig,
