@@ -18,17 +18,17 @@
  *   <Chip>Svelte</Chip>
  * </ChipGroup>
  *
- * <ChipGroup 
- *   items={['Red', 'Green', 'Blue']} 
- *   let:item 
- *   selectable 
+ * <ChipGroup
+ *   items={['Red', 'Green', 'Blue']}
+ *   let:item
+ *   selectable
  *   onselect={handleSelect}
  * >
  *   <Chip>{item}</Chip>
  * </ChipGroup>
  * ```
  */
-import { getContext, setContext } from "svelte"
+import { getContext, setContext, type Component } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -84,46 +84,36 @@ const {
 // Component state
 let selectedItems: unknown[] = $state([])
 
-let ItemTemplate: any = $state(null)
+let ItemTemplate: Component | null = $state(null)
 $effect(() => {
-	ItemTemplate = children?.item
+	ItemTemplate = (children?.item ?? null) as Component | null
 })
-
-// Derived values for reactive prop access in closures
-const derivedVariant = $derived(variant)
-const derivedSize = $derived(size)
-const derivedRemovable = $derived(removable)
-const derivedClickable = $derived(clickable)
-const derivedSelectable = $derived(selectable)
-const derivedMultiple = $derived(multiple)
-const derivedDisabled = $derived(disabled)
-const derivedOutline = $derived(outline)
 
 // Update selected items when prop changes
 $effect(() => {
   selectedItems = Array.isArray(selected) ? [...(selected as unknown[])] : []
 })
 
-// Provide context for child chips
+// Provide context for child chips (wrapped in getters so prop changes propagate)
 $effect(() => {
   setContext("chipGroup", {
-    get variant() { return derivedVariant },
-    get size() { return derivedSize },
-    get removable() { return derivedRemovable },
-    get clickable() { return derivedClickable },
-    get selectable() { return derivedSelectable },
-    get multiple() { return derivedMultiple },
-    get disabled() { return derivedDisabled },
-    get outline() { return derivedOutline },
+    get variant() { return variant },
+    get size() { return size },
+    get removable() { return removable },
+    get clickable() { return clickable },
+    get selectable() { return selectable },
+    get multiple() { return multiple },
+    get disabled() { return disabled },
+    get outline() { return outline },
     isSelected: (item: unknown): boolean => selectedItems.includes(item as never),
     toggleSelection: (item: unknown): void => {
-      if (derivedSelectable) {
+      if (selectable) {
         if (selectedItems.includes(item as never)) {
           // Remove item if already selected
           selectedItems = selectedItems.filter((i) => i !== item)
         } else {
           // Add item if not selected
-          if (derivedMultiple) {
+          if (multiple) {
             selectedItems = [...selectedItems, item as never]
           } else {
             selectedItems = [item as never]

@@ -75,15 +75,15 @@ $effect(() => {
 	ItemTemplate = (children?.item ?? null) as Component | null
 })
 
-// Provide context for child tags
+// Provide context for child tags (wrapped in getters so prop changes propagate)
 $effect(() => {
   setContext("tagGroup", {
-    variant,
-    size,
-    dismissible,
-    outline,
-    pill,
-    clickable,
+    get variant() { return variant },
+    get size() { return size },
+    get dismissible() { return dismissible },
+    get outline() { return outline },
+    get pill() { return pill },
+    get clickable() { return clickable },
   })
 })
 

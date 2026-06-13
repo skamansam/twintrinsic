@@ -44,8 +44,8 @@
 		lg: 'h-3'
 	};
 
-	const colorClass = colorMap[color];
-	const heightClass = heightMap[height];
+	const colorClass = $derived(colorMap[color]);
+	const heightClass = $derived(heightMap[height]);
 </script>
 
 <div class="flex flex-col gap-2" {...rest}>

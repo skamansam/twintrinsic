@@ -46,10 +46,10 @@ const {
   children,
 } = $props()
 
-// Provide context for child buttons
+// Provide context for child buttons (wrapped in getters so prop changes propagate)
 setContext("buttonGroup", {
-  variant,
-  size,
+  get variant() { return variant },
+  get size() { return size },
   inGroup: true,
 })
 </script>

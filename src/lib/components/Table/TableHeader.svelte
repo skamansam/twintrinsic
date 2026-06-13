@@ -91,6 +91,7 @@ const alignClasses = $derived(
   aria-sort={sortable ? (sortDirection === 'asc' ? 'ascending' : sortDirection === 'desc' ? 'descending' : 'none') : undefined}
   onclick={sortable ? handleSort : undefined}
   {...restProps}
+  {...restProps}
 >
   <div class="table-header-content">
     <span class="table-header-text">

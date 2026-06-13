@@ -47,8 +47,8 @@ const {
 // Get table context if available
 const tableContext = getContext<{ hoverable?: boolean } | undefined>("table")
 
-// Determine if table has hover effect
-const hoverable = tableContext?.hoverable || false
+// Determine if table has hover effect (reactive — updates if context changes)
+const hoverable = $derived(tableContext?.hoverable ?? false)
 
 /**
  * Handles row click

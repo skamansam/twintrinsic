@@ -59,6 +59,16 @@ let size = $state(initialSize)
 let isDragging = $state(false)
 let containerRef = $state<HTMLDivElement>()
 
+/**
+ * Stable params object for the `separator` Svelte action. Declared in the
+ * script (not inline in the template) so the action receives the same
+ * object reference on every render and isn't re-invoked.
+ */
+const separatorParams = {
+  onMouseDown: handleMouseDown,
+  onKeyDown: handleKeyDown,
+}
+
 onMount(() => {
   if (storageKey) {
     const saved = localStorage.getItem(storageKey)
@@ -169,41 +179,39 @@ function separator(
     },
   }
 }
-</script>
-
-<div
-  {id}
-  bind:this={containerRef}
-  class="splitter {className}"
-  style="flex-direction: {orientation === 'horizontal' ? 'row' : 'column'}"
->
-  <div
-    class="splitter-panel splitter-panel-first"
-    style={orientation === "horizontal"
-      ? `flex: 0 0 ${size}%`
-      : `flex: 0 0 ${size}%`}
+</script>  <div
+    {id}
+    bind:this={containerRef}
+    class="splitter {className}"
+    style="flex-direction: {orientation === 'horizontal' ? 'row' : 'column'}"
   >
-    {@render first?.()}
-  </div>
+    <div
+      class="splitter-panel splitter-panel-first"
+      style={orientation === "horizontal"
+        ? `flex: 0 0 ${size}%`
+        : `flex: 0 0 ${size}%`}
+    >
+      {@render first?.()}
+    </div>
 
-  <div
-    class={orientation === "horizontal"
-      ? "splitter-divider-horizontal"
-      : "splitter-divider-vertical"}
-    use:separator={{ onMouseDown: handleMouseDown, onKeyDown: handleKeyDown }}
-    aria-label={orientation === "horizontal"
-      ? "Resize panels left and right"
-      : "Resize panels up and down"}
-    aria-orientation={orientation}
-    aria-valuenow={Math.round(size)}
-    aria-valuemin={minSize}
-    aria-valuemax={maxSize}
-  ></div>
+    <div
+      class={orientation === "horizontal"
+        ? "splitter-divider-horizontal"
+        : "splitter-divider-vertical"}
+      use:separator={separatorParams}
+      aria-label={orientation === "horizontal"
+        ? "Resize panels left and right"
+        : "Resize panels up and down"}
+      aria-orientation={orientation}
+      aria-valuenow={Math.round(size)}
+      aria-valuemin={minSize}
+      aria-valuemax={maxSize}
+    ></div>
 
-  <div class="splitter-panel splitter-panel-second" style="flex: 1 1 auto">
-    {@render second?.()}
+    <div class="splitter-panel splitter-panel-second" style="flex: 1 1 auto">
+      {@render second?.()}
+    </div>
   </div>
-</div>
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";

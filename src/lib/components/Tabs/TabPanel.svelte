@@ -84,11 +84,8 @@ $effect(() => {
 // Determine if content should be rendered
 const shouldRenderContent = $derived(isSelected || (keepAlive && hasBeenSelected) || !lazy)
 
-// Derived values for reactive prop access in closures
-const derivedId = $derived(id)
-
-// Generate unique ID if not provided
-const panelId = derivedId || `panel-${crypto.randomUUID()}`
+// Generate unique ID if not provided (read prop directly — no shadowing $derived needed)
+const panelId = id || `panel-${crypto.randomUUID()}`
 
 // Tab ID for aria-labelledby
 const tabId = $derived(`tab-${panelId.replace("panel-", "")}`)

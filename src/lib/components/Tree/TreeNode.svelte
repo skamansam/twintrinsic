@@ -22,7 +22,7 @@ Usage:
 ```
 -->
 <script lang="ts">
-import { getContext, onMount, type Component } from "svelte"
+import { getContext, type Component, type Snippet } from "svelte"
 import TreeNode from "./TreeNode.svelte"
 
 /** Self-reference for recursive children (typed loosely to allow partial props) */
@@ -59,7 +59,7 @@ const {
   /** @type {number} - Indentation level (managed internally) */
   level = 0,
 
-  /** @type {Function} - Custom render function for the label */
+  /** @type {Snippet} - Custom snippet for rendering the label */
   labelRender,
 
   /** @type {(event: CustomEvent) => void} - Toggle event handler */
@@ -78,7 +78,6 @@ const treeContext = getContext("tree") as { selectable?: boolean; isSelected?: (
 // Component state
 let isExpanded = $state(expanded)
 let isSelected = $state(selected)
-let hasChildren = $state(false)
 let nodeElement: HTMLElement | undefined
 
 // Update expanded state when prop changes
@@ -95,14 +94,8 @@ $effect(() => {
   }
 })
 
-// Check if node has children
-onMount(() => {
-  hasChildren = !!children && children().length > 0
-
-  return () => {
-    // Cleanup if needed
-  }
-})
+// Determine if node has children (snippet is truthy when provided; doesn't change at runtime)
+const hasChildren = !!children
 
 // Determine if node is selectable
 const isSelectable = $derived(treeContext?.selectable && !disabled)

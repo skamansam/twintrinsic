@@ -87,11 +87,8 @@ function handleKeydown(event: KeyboardEvent): void {
   }
 }
 
-// Derived values for reactive prop access in closures
-const derivedId = $derived(id)
-
-// Generate unique ID if not provided
-const tabId = derivedId || `tab-${crypto.randomUUID()}`
+// Generate unique ID if not provided (read prop directly — no shadowing $derived needed)
+const tabId = id || `tab-${crypto.randomUUID()}`
 
 // Panel ID for aria-controls
 const panelId = $derived(`panel-${tabId}`)
