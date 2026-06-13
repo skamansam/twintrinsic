@@ -59,7 +59,6 @@
 - [ ] **src/lib/components/Chip/ChipGroup.svelte** - 12 errors
 - [ ] **src/lib/components/Tree/TreeNode.svelte** - 12 errors
 - [ ] **src/lib/components/Carousel/Carousel.svelte** - 11 errors
-- [ ] **src/lib/components/App/App.story.svelte** - 11 errors
 
 ### Low Priority - 5-19 Errors Each
 - [ ] **src/lib/components/Carousel/CarouselItem.svelte** - 9 errors
