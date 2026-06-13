@@ -113,4 +113,25 @@ describe("Button", () => {
     const button = container.querySelector("button")
     expect(button?.getAttribute("aria-label")).toBe("Close dialog")
   })
+
+  it("does not set an explicit role attribute (a11y fix: implicit role is used)", () => {
+    const { container } = render(Button, {
+      props: {
+        children: () => "Click me",
+      },
+    })
+    const button = container.querySelector("button")
+    expect(button?.hasAttribute("role")).toBe(false)
+  })
+
+  it("does not set an explicit role on link variant (a11y fix)", () => {
+    const { container } = render(Button, {
+      props: {
+        href: "/about",
+        children: () => "About",
+      },
+    })
+    const link = container.querySelector("a")
+    expect(link?.hasAttribute("role")).toBe(false)
+  })
 })
