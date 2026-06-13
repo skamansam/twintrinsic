@@ -510,7 +510,7 @@ function toggleDropdown(): void {
             "
             role="option"
             tabindex="-1"
-            aria-selected={selectedOption && getOptionValue(selectedOption) === getOptionValue(opt)}
+            aria-selected={selectedOption !== null && selectedOption !== undefined && getOptionValue(selectedOption) === getOptionValue(opt)}
             data-index={i}
             onclick={() => selectOption(opt)}
             onmouseenter={() => highlightedIndex = i}

@@ -247,10 +247,10 @@ const selectedLabel = $derived.by(() => {
       {placeholder}
       {disabled}
       value={searchable ? searchValue : selectedLabel}
-      on:focus={handleInputFocus}
-      on:blur={handleInputBlur}
-      on:change={handleInputChange}
-      on:keydown={handleKeydown}
+  onfocus={handleInputFocus}
+  onblur={handleInputBlur}
+  onchange={handleInputChange}
+  onkeydown={handleKeydown}
       aria-label={ariaLabel}
       aria-haspopup="listbox"
       aria-expanded={isOpen}
@@ -259,7 +259,7 @@ const selectedLabel = $derived.by(() => {
     {#if clearable && value !== null && value !== undefined}
       <button
         class="combobox-clear"
-        on:click={handleClear}
+        onclick={handleClear}
         aria-label="Clear selection"
         tabindex="-1"
       >
@@ -275,8 +275,8 @@ const selectedLabel = $derived.by(() => {
           class="combobox-option"
           class:highlighted={index === highlightedIndex}
           class:selected={getOptionValue(option) === value}
-          on:click={() => handleOptionClick(option)}
-          on:keydown={(e) => {
+          onclick={() => handleOptionClick(option)}
+          onkeydown={(e) => {
             if (e.key === "Enter") {
               handleOptionClick(option)
             }

@@ -51,9 +51,10 @@ Usage:
 
   setContext("accordion", {
     groupName,
-    allowMultiple,
-    defaultExpanded,
-    onchange,
+    isAllowMultiple: () => allowMultiple,
+    getDefaultExpanded: () => defaultExpanded,
+    onchange: (detail: { expandedItems: number[] }) =>
+      onchange?.(new CustomEvent("change", { detail })),
   });
 </script>
 

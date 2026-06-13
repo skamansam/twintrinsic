@@ -17,9 +17,9 @@ Usage:
 
   interface AccordionContext {
     groupName: string;
-    allowMultiple: boolean;
-    defaultExpanded: number | null;
-    onchange?: (event: CustomEvent<{ expandedItems: number[] }>) => void;
+    isAllowMultiple: () => boolean;
+    getDefaultExpanded: () => number | null;
+    onchange?: (detail: { expandedItems: number[] }) => void;
   }
 
   interface Props {
@@ -60,9 +60,10 @@ Usage:
     }
   });
 
-  const shouldBeOpen = $derived(
-    accordion?.defaultExpanded === index && accordion?.defaultExpanded !== null
-  );
+  const shouldBeOpen = $derived.by(() => {
+    const defaultExpanded = accordion?.getDefaultExpanded();
+    return defaultExpanded !== undefined && defaultExpanded !== null && defaultExpanded === index;
+  });
 
   function handleToggle(event: Event): void {
     if (disabled) {
@@ -71,11 +72,7 @@ Usage:
     }
 
     const target = event.target as HTMLDetailsElement;
-    accordion?.onchange?.(
-      new CustomEvent("change", {
-        detail: { expandedItems: [index] },
-      })
-    );
+    accordion?.onchange?.({ expandedItems: [index] });
   }
 </script>
 
@@ -84,7 +81,7 @@ Usage:
   class:disabled
   bind:this={detailsElement}
   {id}
-  name={accordion?.allowMultiple ? undefined : accordion?.groupName}
+  name={accordion?.isAllowMultiple() ? undefined : accordion?.groupName}
   ontoggle={handleToggle}
   open={shouldBeOpen}
 >

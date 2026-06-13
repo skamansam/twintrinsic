@@ -27,12 +27,12 @@ import { Splitter, CodeBlock, Container } from "$lib"
 </script>
 
 <Splitter orientation="horizontal" initialSize={50}>
-  <svelte:fragment slot="first">
+  {#snippet first()}
     <div class="p-4">Left Panel</div>
-  </svelte:fragment>
-  <svelte:fragment slot="second">
+  {/snippet}
+  {#snippet second()}
     <div class="p-4">Right Panel</div>
-  </svelte:fragment>
+  {/snippet}
 </Splitter>`}</CodeBlock>
 
   <h3>Horizontal Layout</h3>
@@ -42,28 +42,28 @@ import { Splitter, CodeBlock, Container } from "$lib"
 
   <div class="border border-border rounded-md overflow-hidden mb-4" style="height: 300px;">
     <Splitter orientation="horizontal" initialSize={50}>
-      <svelte:fragment slot="first">
+      {#snippet first()}
         <div class="bg-primary-100 dark:bg-primary-900 p-4 h-full overflow-auto">
           <h3 class="font-bold mb-2">Left Panel</h3>
           <p>Drag the divider to resize</p>
         </div>
-      </svelte:fragment>
-      <svelte:fragment slot="second">
+      {/snippet}
+      {#snippet second()}
         <div class="bg-secondary-100 dark:bg-secondary-900 p-4 h-full overflow-auto">
           <h3 class="font-bold mb-2">Right Panel</h3>
           <p>Use arrow keys for fine control</p>
         </div>
-      </svelte:fragment>
+      {/snippet}
     </Splitter>
   </div>
 
   <CodeBlock language="svelte">{`<Splitter orientation="horizontal" initialSize={50}>
-  <svelte:fragment slot="first">
+  {#snippet first()}
     <div>Left content</div>
-  </svelte:fragment>
-  <svelte:fragment slot="second">
+  {/snippet}
+  {#snippet second()}
     <div>Right content</div>
-  </svelte:fragment>
+  {/snippet}
 </Splitter>`}</CodeBlock>
 
   <h3>Vertical Layout</h3>
@@ -73,28 +73,28 @@ import { Splitter, CodeBlock, Container } from "$lib"
 
   <div class="border border-border rounded-md overflow-hidden mb-4" style="height: 300px;">
     <Splitter orientation="vertical" initialSize={50}>
-      <svelte:fragment slot="first">
+      {#snippet first()}
         <div class="bg-primary-100 dark:bg-primary-900 p-4 h-full overflow-auto">
           <h3 class="font-bold mb-2">Top Panel</h3>
           <p>Drag the divider to resize</p>
         </div>
-      </svelte:fragment>
-      <svelte:fragment slot="second">
+      {/snippet}
+      {#snippet second()}
         <div class="bg-secondary-100 dark:bg-secondary-900 p-4 h-full overflow-auto">
           <h3 class="font-bold mb-2">Bottom Panel</h3>
           <p>Use arrow keys for fine control</p>
         </div>
-      </svelte:fragment>
+      {/snippet}
     </Splitter>
   </div>
 
   <CodeBlock language="svelte">{`<Splitter orientation="vertical" initialSize={50}>
-  <svelte:fragment slot="first">
+  {#snippet first()}
     <div>Top content</div>
-  </svelte:fragment>
-  <svelte:fragment slot="second">
+  {/snippet}
+  {#snippet second()}
     <div>Bottom content</div>
-  </svelte:fragment>
+  {/snippet}
 </Splitter>`}</CodeBlock>
 
   <h2>Props</h2>

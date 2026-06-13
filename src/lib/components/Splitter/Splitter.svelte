@@ -25,7 +25,7 @@ Svelte action to bypass the false positive. If Svelte updates its role
 classifications, move these attributes back into the template.
 -->
 <script lang="ts">
-import { onMount } from "svelte"
+import { onMount, type Snippet } from "svelte"
 
 interface Props {
   class?: string
@@ -35,6 +35,10 @@ interface Props {
   minSize?: number
   maxSize?: number
   storageKey?: string
+  /** Snippet for the first (resizable) panel */
+  first?: Snippet
+  /** Snippet for the second (flex) panel */
+  second?: Snippet
   onresize?: (size: number) => void
 }
 
@@ -46,6 +50,8 @@ let {
   minSize = 20,
   maxSize = 80,
   storageKey,
+  first,
+  second,
   onresize,
 }: Props = $props()
 
@@ -177,7 +183,7 @@ function separator(
       ? `flex: 0 0 ${size}%`
       : `flex: 0 0 ${size}%`}
   >
-    <slot name="first" />
+    {@render first?.()}
   </div>
 
   <div
@@ -195,7 +201,7 @@ function separator(
   ></div>
 
   <div class="splitter-panel splitter-panel-second" style="flex: 1 1 auto">
-    <slot name="second" />
+    {@render second?.()}
   </div>
 </div>
 

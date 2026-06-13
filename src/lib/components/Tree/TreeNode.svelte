@@ -76,8 +76,8 @@ const derivedExpanded = $derived(expanded)
 const derivedSelected = $derived(selected)
 
 // Component state
-let isExpanded = $state(derivedExpanded)
-let isSelected = $state(derivedSelected)
+let isExpanded = $state(expanded)
+let isSelected = $state(selected)
 let hasChildren = $state(false)
 let nodeElement: HTMLElement | undefined
 
