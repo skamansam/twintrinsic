@@ -118,16 +118,13 @@ function handleChange(event: Event): void {
       aria-describedby={error ? 'select-error' : undefined}
       class="select-input"
     >
-      {#if !selectedValue}
+      {#if !selectedValue && !multiple}
         <option value="">{placeholder}</option>
       {/if}
       
       {#each options as option}          
         {#if option.children}
-          <optgroup>
-            {#if option.label}
-              <legend>{option.label}</legend>
-            {/if}
+          <optgroup label={option.label}>
             {#each option.children as child}
               <option value={child.value}>
                 {child.label}

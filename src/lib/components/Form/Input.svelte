@@ -25,6 +25,66 @@ Usage:
 />
 ```
 -->
+<script module lang="ts">
+/**
+ * Exported so consumers (Calendar, AutoComplete, etc.) can type-check
+ * their Input usage. Without this, Input's props resolve to `never` in
+ * consumer type positions, causing cascade errors like
+ * "Missing properties (onfocus, onblur, onkeydown, oninput, onleftIconClick)
+ *  from type $$ComponentProps".
+ */
+export type InputProps = {
+  /** Input label text */
+  label?: string
+  /** Input type (text, email, password, etc.) */
+  type?: string
+  /** Input value */
+  value?: string
+  /** Placeholder text */
+  placeholder?: string
+  /** Name attribute */
+  name?: string
+  /** Id attribute */
+  id?: string
+  /** Whether the input is disabled */
+  disabled?: boolean
+  /** Whether the input is required */
+  required?: boolean
+  /** Whether to use floating labels */
+  floating?: boolean
+  /** Whether the input is readonly */
+  readonly?: boolean
+  /** Error message to display */
+  error?: string
+  /** Help text to display below input */
+  helpText?: string
+  /** Left icon name */
+  leftIcon?: string
+  /** Right icon name */
+  rightIcon?: string
+  /** Additional CSS classes */
+  class?: string
+  /** Input mask pattern */
+  mask?: string
+  /** ARIA description */
+  ariaDescription?: string
+  /** Focus event handler */
+  onfocus?: (event: FocusEvent) => void
+  /** Blur event handler */
+  onblur?: (event: FocusEvent) => void
+  /** Click event handler on the input field */
+  onclick?: (event: MouseEvent) => void
+  /** Keydown event handler on the input field */
+  onkeydown?: (event: KeyboardEvent) => void
+  /** Input event handler */
+  oninput?: (event: CustomEvent<{ value: string }>) => void
+  /** Left icon click handler */
+  onleftIconClick?: () => void
+  /** Right icon click handler */
+  onrightIconClick?: () => void
+}
+</script>
+
 <script lang="ts">
 import { slide } from "svelte/transition"
 import Icon from "../Icon/Icon.svelte"
@@ -68,13 +128,17 @@ const {
   onfocus,
   /** @type {(event: Event) => void} - Blur event handler */
   onblur,
+  /** @type {(event: MouseEvent) => void} - Click event handler on the input field */
+  onclick,
+  /** @type {(event: KeyboardEvent) => void} - Keydown event handler on the input field */
+  onkeydown,
   /** @type {(event: CustomEvent) => void} - Input event handler */
   oninput,
   /** @type {() => void} - Left icon click handler */
   onleftIconClick,
   /** @type {() => void} - Right icon click handler */
   onrightIconClick,
-} = $props()
+}: InputProps = $props()
 
 let inputValue = $state("")
 let focused = $state(false)
@@ -215,6 +279,8 @@ const inputClasses = $derived(`
       aria-describedby={error || helpText ? `${id}-description` : undefined}
       onfocus={handleFocus}
       onblur={handleBlur}
+      onclick={onclick}
+      onkeydown={onkeydown}
       oninput={handleInput}
     />
 

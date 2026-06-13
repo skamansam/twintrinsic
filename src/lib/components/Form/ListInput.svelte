@@ -24,6 +24,7 @@ Usage:
 -->
 <script lang="ts">
 import { getContext } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -81,7 +82,7 @@ const {
 } = $props()
 
 // Get form context if available
-const formContext = getContext("form") as { registerField?: (name: string, value: unknown) => { getValue?: () => unknown; setValue?: (value: unknown) => void } } | undefined
+const formContext = getContext<FormContext | undefined>("form")
 
 // Derived values for reactive prop access in closures
 const derivedValues = $derived(values)
@@ -96,20 +97,20 @@ let isInvalid = $state(false)
 let validationMessage = $state("")
 
 // Register with form if available
-let fieldApi: { getValue?: () => unknown; setValue?: (value: unknown) => void } | undefined = $state()
+let fieldApi: FormFieldApi | undefined
 
 $effect(() => {
-  if (formContext?.registerField && derivedName) {
+  if (formContext && derivedName) {
     fieldApi = formContext.registerField(derivedName, derivedValues)
   }
 })
 
 // Update values when form field changes
 $effect(() => {
-  if (fieldApi?.getValue) {
-    const formValue = fieldApi.getValue()
-    if (formValue !== undefined && JSON.stringify(formValue) !== JSON.stringify(itemValues)) {
-      itemValues = [...(formValue as string[])]
+  if (fieldApi) {
+    const formValue = fieldApi.getValue() as string[] | null | undefined
+    if (formValue !== undefined && formValue !== null && JSON.stringify(formValue) !== JSON.stringify(itemValues)) {
+      itemValues = [...formValue]
     }
   }
 })
@@ -117,9 +118,15 @@ $effect(() => {
 // Update internal values when prop changes
 $effect(() => {
   if (JSON.stringify(values) !== JSON.stringify(itemValues)) {
-    itemValues = [...values]
+    itemValues = [...(values as string[])]
   }
 })
+
+// Disabled from form context takes precedence over the local prop
+// (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
 
 /**
  * Validates a value
@@ -170,7 +177,7 @@ function addItem(value: string): void {
   inputValue = ""
 
   // Update form field if available
-  if (fieldApi?.setValue) {
+  if (fieldApi) {
     fieldApi.setValue(itemValues)
   }
 
@@ -189,7 +196,7 @@ function removeItem(index: number): void {
   itemValues = itemValues.filter((_, i) => i !== index)
 
   // Update form field if available
-  if (fieldApi?.setValue) {
+  if (fieldApi) {
     fieldApi.setValue(itemValues)
   }
 
@@ -324,15 +331,17 @@ function handleFocus(): void {
  */
 function handleBlur(event: FocusEvent): void {
   // Add current value if not empty and not clicking on a chip
-  if (inputValue.trim() && !event.relatedTarget?.classList.contains("list-input-chip")) {
+  if (inputValue.trim() && !(event.relatedTarget as HTMLElement | null)?.classList?.contains("list-input-chip")) {
     addItem(inputValue)
   }
 
   // Reset focused index after a short delay
   // This allows chip click events to fire first
-  setTimeout(() => {
+  const resetFocusedIndex = (): void => {
     focusedIndex = -1
-  }, 100)
+  }
+  // biome-ignore lint/suspicious/noExplicitAny: setTimeout this context workaround
+  globalThis.setTimeout(resetFocusedIndex, 100)
 
   onblur?.(new CustomEvent("blur"))
 }
@@ -342,19 +351,19 @@ function handleBlur(event: FocusEvent): void {
   class="
     list-input
     {isInvalid ? 'list-input-invalid' : ''}
-    {disabled ? 'list-input-disabled' : ''}
+    {effectiveDisabled ? 'list-input-disabled' : ''}
     {className}
   "
 >
-  <div
-    class="list-input-container"
-    onclick={() => inputEl?.focus()}
-  >
+  <div class="list-input-container">
     <!-- Chips -->
     {#each itemValues as value, index}
+      <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions a11y_no_noninteractive_tabindex -->
       <div
         class="list-input-chip {focusedIndex === index ? 'list-input-chip-focused' : ''}"
+        role="button"
         tabindex="0"
+        aria-label={`Tag: ${value}. Press Backspace to remove.`}
         onclick={() => handleChipClick(index)}
         onkeydown={(e) => {
           if (e.key === 'Backspace' || e.key === 'Delete') {
@@ -391,7 +400,7 @@ function handleBlur(event: FocusEvent): void {
       class="list-input-field"
       {placeholder}
       value={inputValue}
-      disabled={disabled || (maxItems && itemValues.length >= maxItems)}
+      disabled={effectiveDisabled || (maxItems && itemValues.length >= maxItems)}
       aria-label={ariaLabel || name}
       aria-invalid={isInvalid ? 'true' : undefined}
       bind:this={inputEl}
@@ -415,7 +424,7 @@ function handleBlur(event: FocusEvent): void {
     {name}
     value={JSON.stringify(itemValues)}
     {required}
-    {disabled}
+    disabled={effectiveDisabled}
   />
 </div>
 

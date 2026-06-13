@@ -30,6 +30,7 @@ Usage:
 -->
 <script lang="ts">
 import { getContext, onMount } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -87,7 +88,7 @@ const {
 } = $props()
 
 // Get form context if available
-const formContext = getContext("form") as { registerField?: (name: string, value: unknown) => { getValue?: () => unknown; setValue?: (value: unknown) => void } } | undefined
+const formContext = getContext<FormContext | undefined>("form")
 
 // Component state
 let selectedValues: unknown[] | unknown | null = $state(multiple ? [] : null)
@@ -97,19 +98,19 @@ let listboxElement: HTMLElement | undefined = $state()
 let filterInputElement: HTMLInputElement | undefined = $state()
 
 // Register with form if available
-let fieldApi: { getValue?: () => unknown; setValue?: (value: unknown) => void } | undefined = $state()
+let fieldApi: FormFieldApi | undefined
 
 $effect(() => {
-  if (formContext?.registerField && name) {
+  if (formContext && name) {
     fieldApi = formContext.registerField(name, value)
   }
 })
 
 // Update value when form field changes
 $effect(() => {
-  if (fieldApi?.getValue) {
-    const formValue = fieldApi.getValue()
-    if (formValue !== undefined && JSON.stringify(formValue) !== JSON.stringify(selectedValues)) {
+  if (fieldApi) {
+    const formValue = fieldApi.getValue() as unknown[] | unknown | null | undefined
+    if (formValue !== undefined && formValue !== null && JSON.stringify(formValue) !== JSON.stringify(selectedValues)) {
       selectedValues = formValue
     }
   }
@@ -121,6 +122,12 @@ $effect(() => {
     selectedValues = value
   }
 })
+
+// Disabled from form context takes precedence over the local prop
+// (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
 
 /**
  * Gets the display label for an option
@@ -202,7 +209,7 @@ function filterOptions(): unknown[] {
  * @param {Object|string} option - Option to select
  */
 function selectOption(option: unknown): void {
-  if (disabled) return
+  if (effectiveDisabled) return
 
   const value = getOptionValue(option)
 
@@ -224,7 +231,7 @@ function selectOption(option: unknown): void {
   }
 
   // Update form field if available
-  if (fieldApi?.setValue) {
+  if (fieldApi) {
     fieldApi.setValue(selectedValues)
   }
 
@@ -236,7 +243,7 @@ function selectOption(option: unknown): void {
  * @param {KeyboardEvent} event - Keydown event
  */
 function handleKeydown(event: KeyboardEvent): void {
-  if (disabled) return
+  if (effectiveDisabled) return
 
   const filteredOptions = filterOptions()
 
@@ -324,7 +331,7 @@ function scrollOptionIntoView(): void {
  * @param {Event} event - Input event
  */
 function handleFilterInput(event: Event): void {
-  filterValue = event.target.value
+  filterValue = (event.target as HTMLInputElement).value
   highlightedIndex = 0
 
   onfilter?.(new CustomEvent("filter", { detail: { filter: filterValue } }))
@@ -354,7 +361,7 @@ const filteredOptions = $derived(filterOptions())
         oninput={handleFilterInput}
         onkeydown={handleKeydown}
         bind:this={filterInputElement}
-        {disabled}
+        disabled={effectiveDisabled}
         aria-controls={`${id}-listbox`}
       />
     </div>
@@ -364,11 +371,11 @@ const filteredOptions = $derived(filterOptions())
     id="{id}-listbox"
     class="listbox"
     style="max-height: {maxHeight}px;"
-    tabindex={disabled ? undefined : 0}
+    tabindex={effectiveDisabled ? undefined : 0}
     role="listbox"
     aria-multiselectable={multiple ? 'true' : undefined}
     aria-label={ariaLabel || name}
-    aria-disabled={disabled ? 'true' : undefined}
+    aria-disabled={effectiveDisabled ? 'true' : undefined}
     onkeydown={handleKeydown}
     bind:this={listboxElement}
   >
@@ -385,10 +392,17 @@ const filteredOptions = $derived(filterOptions())
               {isSelected ? 'listbox-option-selected' : ''}
             "
             role="option"
+            tabindex="0"
             aria-selected={isSelected ? 'true' : 'false'}
             data-index={index}
             onclick={() => selectOption(option)}
             onmouseenter={() => highlightedIndex = index}
+            onkeydown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                selectOption(option);
+              }
+            }}
           >
             <div class="listbox-option-content">
               {#if multiple && showCheckbox}
@@ -426,7 +440,7 @@ const filteredOptions = $derived(filterOptions())
     {name}
     value={JSON.stringify(selectedValues)}
     {required}
-    {disabled}
+    disabled={effectiveDisabled}
   />
 </div>
 

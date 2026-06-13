@@ -23,6 +23,7 @@ Usage:
 -->
 <script lang="ts">
 import { getContext } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -60,7 +61,7 @@ const {
 } = $props()
 
 // Get form context if available
-const formContext = getContext("form")
+const formContext = getContext<FormContext | undefined>("form")
 
 // Radio state
 let isChecked = $state(false)
@@ -71,7 +72,7 @@ $effect(() => {
 })
 
 // Register with form if available
-let fieldApi = $state()
+let fieldApi: FormFieldApi | undefined
 
 $effect(() => {
   if (formContext && name) {
@@ -86,6 +87,12 @@ $effect(() => {
     isChecked = formValue === value
   }
 })
+
+// Disabled from form context takes precedence over the local prop
+// (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
 
 /**
  * Handles radio change
@@ -121,7 +128,7 @@ const labelSizeClasses = $derived(
 </script>
 
 <label 
-  class="radio-wrapper {className} {labelSizeClasses} {disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}"
+  class="radio-wrapper {className} {labelSizeClasses} {effectiveDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}"
 >
   <div class="radio-container">
     <input
@@ -131,7 +138,7 @@ const labelSizeClasses = $derived(
       {value}
       checked={isChecked}
       {required}
-      disabled={disabled || (fieldApi && fieldApi.isDisabled())}
+      disabled={effectiveDisabled}
       aria-label={ariaLabel || label}
       class="radio-input"
       onchange={handleChange}

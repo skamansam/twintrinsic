@@ -230,6 +230,7 @@ function handleBlur(event: Event): void {
   // Close dropdown after a short delay to allow for click events
   setTimeout(() => {
     if (
+      inputElement &&
       document.activeElement !== inputElement &&
       !(dropdownElement as HTMLElement)?.contains(document.activeElement)
     ) {
@@ -355,7 +356,7 @@ function openDropdown(): void {
   highlightedIndex = autoSelect && filteredOptions.length > 0 ? 0 : -1
 
   // Focus input if not already focused
-  if (document.activeElement !== inputElement) {
+  if (inputElement && document.activeElement !== inputElement) {
     inputElement.focus()
   }
 }
@@ -398,7 +399,7 @@ function clearSelection(event: Event): void {
   oninput?.(new CustomEvent("input", { detail: { value: null } }))
 
   // Focus input after clearing
-  inputElement.focus()
+  inputElement?.focus()
 }
 
 /**
@@ -499,26 +500,33 @@ function toggleDropdown(): void {
           No options available
         </div>
       {:else}
-        {#each filteredOptions as option, i}
+        {#each filteredOptions as opt, i}
           <div
             id={`${id}-option-${i}`}
             class="
               combobox-option
               {i === highlightedIndex ? 'combobox-option-highlighted' : ''}
-              {selectedOption && getOptionValue(selectedOption) === getOptionValue(option) ? 'combobox-option-selected' : ''}
+              {selectedOption && getOptionValue(selectedOption) === getOptionValue(opt) ? 'combobox-option-selected' : ''}
             "
             role="option"
-            aria-selected={selectedOption && getOptionValue(selectedOption) === getOptionValue(option)}
+            tabindex="-1"
+            aria-selected={selectedOption && getOptionValue(selectedOption) === getOptionValue(opt)}
             data-index={i}
-            onclick={() => selectOption(option)}
+            onclick={() => selectOption(opt)}
             onmouseenter={() => highlightedIndex = i}
+            onkeydown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                selectOption(opt);
+              }
+            }}
           >
             {#if optionTemplate}
-              {@render optionTemplate(option)}
+              {@render optionTemplate(opt)}
             {:else if option}
-              {@render option?.({ option })}
+              {@render option?.({ option: opt })}
             {:else}
-              {getOptionLabel(option)}
+              {getOptionLabel(opt)}
             {/if}
           </div>
         {/each}

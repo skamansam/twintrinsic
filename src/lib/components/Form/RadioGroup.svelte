@@ -18,6 +18,7 @@ Usage:
 -->
 <script lang="ts">
 import { getContext, setContext } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -54,7 +55,7 @@ const {
 } = $props()
 
 // Get form context if available
-const formContext = getContext("form")
+const formContext = getContext<FormContext | undefined>("form")
 
 // Derived values for reactive prop access in closures
 const derivedValue = $derived(value)
@@ -69,7 +70,7 @@ $effect(() => {
 })
 
 // Register with form if available
-let fieldApi = $state()
+let fieldApi: FormFieldApi | undefined
 
 $effect(() => {
   if (formContext && derivedName) {
@@ -86,6 +87,12 @@ $effect(() => {
     }
   }
 })
+
+// Disabled from form context takes precedence over the local prop
+// (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
 
 /**
  * Handles radio selection
@@ -109,7 +116,7 @@ $effect(() => {
     name,
     selectedValue: () => selectedValue,
     required,
-    disabled: () => disabled || (fieldApi && fieldApi.isDisabled()),
+    disabled: () => effectiveDisabled,
     size,
     onChange: handleRadioChange,
   })
@@ -119,7 +126,7 @@ $effect(() => {
 <fieldset
   {id}
   class="radio-group {layout === 'horizontal' ? 'radio-group-horizontal' : 'radio-group-vertical'} {className}"
-  {disabled}
+  disabled={effectiveDisabled}
 >
   {#if legend}
     <legend class="radio-group-legend">{legend}</legend>

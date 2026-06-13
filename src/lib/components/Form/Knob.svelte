@@ -34,64 +34,70 @@ Usage:
 -->
 <script lang="ts">
 import { getContext, onMount } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
-const {
-  /** @type {string} - Additional CSS classes */
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Input name */
+  name?: string
+  /** Current value */
+  value?: number
+  /** Minimum value */
+  min?: number
+  /** Maximum value */
+  max?: number
+  /** Step increment */
+  step?: number
+  /** Size of the knob (sm, md, lg, xl) */
+  size?: string
+  /** Whether the knob is disabled */
+  disabled?: boolean
+  /** Whether to show the current value */
+  showValue?: boolean
+  /** Template for displaying the value, use {value} as placeholder */
+  valueTemplate?: string
+  /** Color of the progress arc */
+  color?: string
+  /** Thickness of the progress arc (1-10) */
+  thickness?: number
+  /** Whether to show tick marks */
+  showTicks?: boolean
+  /** Input event handler */
+  oninput?: (event: CustomEvent<{ value: number }>) => void
+  /** Change event handler */
+  onchange?: (event: CustomEvent<{ value: number }>) => void
+  /** Number of tick marks to display */
+  tickCount?: number
+  /** ARIA label for accessibility */
+  ariaLabel?: string
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - Input name */
   name,
-
-  /** @type {number} - Current value */
   value = 0,
-
-  /** @type {number} - Minimum value */
   min = 0,
-
-  /** @type {number} - Maximum value */
   max = 100,
-
-  /** @type {number} - Step increment */
   step = 1,
-
-  /** @type {string} - Size of the knob (sm, md, lg, xl) */
   size = "md",
-
-  /** @type {boolean} - Whether the knob is disabled */
   disabled = false,
-
-  /** @type {boolean} - Whether to show the current value */
   showValue = false,
-
-  /** @type {string} - Template for displaying the value, use {value} as placeholder */
   valueTemplate = "{value}",
-
-  /** @type {string} - Color of the progress arc */
   color,
-
-  /** @type {number} - Thickness of the progress arc (1-10) */
   thickness = 4,
-
-  /** @type {boolean} - Whether to show tick marks */
   showTicks = false,
-
-  /** @type {(event: CustomEvent) => void} - Input event handler */
   oninput,
-  /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange,
-
-  /** @type {number} - Number of tick marks to display */
   tickCount = 10,
-
-  /** @type {string} - ARIA label for accessibility */
   ariaLabel,
-} = $props()
+}: Props = $props()
 
 // Get form context if available
-const formContext = getContext("form") as { registerField?: (name: string, value: unknown) => { getValue?: () => unknown; setValue?: (value: unknown) => void } } | undefined
+const formContext = getContext<FormContext | undefined>("form")
 
 // Derived values for reactive prop access in closures
 const derivedValue = $derived(value)
@@ -105,17 +111,17 @@ let radius = $state(0)
 let center = $state({ x: 0, y: 0 })
 
 // Register with form if available
-let fieldApi: { getValue?: () => unknown; setValue?: (value: unknown) => void } | undefined = $state()
+let fieldApi: FormFieldApi | undefined
 
 $effect(() => {
-  if (formContext?.registerField && derivedName) {
+  if (formContext && derivedName) {
     fieldApi = formContext.registerField(derivedName, derivedValue)
   }
 })
 
 // Update value when form field changes
 $effect(() => {
-  if (fieldApi?.getValue) {
+  if (fieldApi) {
     const formValue = fieldApi.getValue()
     if (formValue !== undefined && formValue !== currentValue) {
       currentValue = formValue as number
@@ -127,6 +133,12 @@ $effect(() => {
 $effect(() => {
 	currentValue = derivedValue
 })
+
+// Disabled from form context takes precedence over the local prop
+// (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
 
 /**
  * Constrains a value to min/max bounds and applies step
@@ -245,11 +257,12 @@ function angleToPercentage(angle: number): number {
  * @param {MouseEvent|TouchEvent} event - Mouse or touch event
  */
 function updateValueFromEvent(event: MouseEvent | TouchEvent): void {
-  if (disabled) return
+  if (effectiveDisabled) return
+  if (!knobElement) return
 
   // Get coordinates
-  const clientX = event.type.includes("touch") ? event.touches[0].clientX : event.clientX
-  const clientY = event.type.includes("touch") ? event.touches[0].clientY : event.clientY
+  const clientX = "touches" in event ? event.touches[0].clientX : event.clientX
+  const clientY = "touches" in event ? event.touches[0].clientY : event.clientY
 
   // Get element position
   const rect = knobElement.getBoundingClientRect()
@@ -277,7 +290,7 @@ function updateValueFromEvent(event: MouseEvent | TouchEvent): void {
  * @param {MouseEvent|TouchEvent} event - Mouse or touch event
  */
 function startDrag(event: MouseEvent | TouchEvent): void {
-  if (disabled) return
+  if (effectiveDisabled) return
 
   isDragging = true
   updateValueFromEvent(event)
@@ -314,7 +327,7 @@ function stopDrag(): void {
  * @param {KeyboardEvent} event - Keydown event
  */
 function handleKeydown(event: KeyboardEvent): void {
-  if (disabled) return
+  if (effectiveDisabled) return
 
   let newValue = currentValue
 
@@ -411,8 +424,8 @@ const fontSizeClasses = $derived(
 <div
   {id}
   class="knob {sizeClasses} {className}"
-  class:disabled
-  tabindex={disabled ? undefined : 0}
+  class:disabled={effectiveDisabled}
+  tabindex={effectiveDisabled ? undefined : 0}
   role="slider"
   aria-valuemin={min}
   aria-valuemax={max}
@@ -493,7 +506,7 @@ const fontSizeClasses = $derived(
     type="hidden"
     {name}
     value={currentValue}
-    {disabled}
+    disabled={effectiveDisabled}
   />
 </div>
 

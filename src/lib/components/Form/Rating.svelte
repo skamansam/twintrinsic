@@ -123,7 +123,7 @@ const derivedValue = $derived(value)
 let currentValue = $state(0)
 let hoverValue = $state(-1)
 let isDragging = $state(false)
-let ratingElement = $state()
+let ratingElement: HTMLElement | undefined = $state()
 let inputElement = $state<HTMLInputElement>()
 
 // Update internal value when prop changes
@@ -188,7 +188,7 @@ function calculateValue(event: MouseEvent | TouchEvent): number {
   if (!ratingElement) return min
 
   const rect = ratingElement.getBoundingClientRect()
-  const clientX = event.type.startsWith("touch") ? event.touches[0].clientX : event.clientX
+  const clientX = "touches" in event ? event.touches[0].clientX : event.clientX
 
   // Calculate percentage of width
   const percent = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width))
@@ -208,7 +208,7 @@ function calculateValue(event: MouseEvent | TouchEvent): number {
 function handleMove(event: MouseEvent | TouchEvent): void {
   if (!isInteractive) return
 
-  if (isDragging || event.type === "mousemove") {
+  if (isDragging || event.type === "mousemove" as const) {
     hoverValue = calculateValue(event)
   }
 }
@@ -267,10 +267,10 @@ function handleStart(event: MouseEvent | TouchEvent): void {
   hoverValue = calculateValue(event)
 
   // Add document event listeners for drag
-  if (event.type === "mousedown") {
+  if (event.type === "mousedown" as const) {
     document.addEventListener("mousemove", handleMove)
     document.addEventListener("mouseup", handleEnd)
-  } else if (event.type === "touchstart") {
+  } else if (event.type === "touchstart" as const) {
     document.addEventListener("touchmove", handleMove, { passive: true })
     document.addEventListener("touchend", handleEnd)
   }

@@ -20,34 +20,39 @@ Usage:
 -->
 <script lang="ts">
 import { onMount } from "svelte"
+import type { Snippet } from "svelte"
 
-const {
-  /** @type {string} - Additional CSS classes */
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Label text */
+  label?: string
+  /** Whether the input is required */
+  required?: boolean
+  /** Whether the input is disabled */
+  disabled?: boolean
+  /** Error message to display */
+  error?: string
+  /** Help text to display below the input */
+  helpText?: string
+  children?: Snippet
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - Label text */
   label,
-
-  /** @type {boolean} - Whether the input is required */
   required = false,
-
-  /** @type {boolean} - Whether the input is disabled */
   disabled = false,
-
-  /** @type {string} - Error message to display */
   error,
-
-  /** @type {string} - Help text to display below the input */
   helpText,
-
   children,
-} = $props()
+}: Props = $props()
 
 // Component state
-let inputElement
+let inputElement: HTMLElement | undefined = $state()
 let isFocused = $state(false)
 let hasValue = $state(false)
 let isFloating = $state(false)
@@ -72,7 +77,7 @@ function checkValue(): void {
 /**
  * Recursively finds an input element
  * @param {HTMLElement} element - Element to search in
- * @returns {HTMLElement|null} - Found input element or null
+ * @returns {HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null} - Found input element or null
  */
 function findInputElement(element: HTMLElement): HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null {
   // Check if this is an input, textarea, or select
@@ -81,13 +86,13 @@ function findInputElement(element: HTMLElement): HTMLInputElement | HTMLTextArea
     element.tagName === "TEXTAREA" ||
     element.tagName === "SELECT"
   ) {
-    return element
+    return element as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
   }
 
   // Check children
   const inputs = element.querySelectorAll("input, textarea, select")
   if (inputs.length > 0) {
-    return inputs[0]
+    return inputs[0] as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
   }
 
   return null

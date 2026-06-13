@@ -20,28 +20,43 @@ Usage:
 <script lang="ts">
 import { getContext } from "svelte"
 import Input from "./Input.svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
-const {
-  /** @type {string} - Color value in current format */
+interface Props {
+  /** Field name for form registration */
+  name?: string
+  /** Color value in current format */
+  value?: string
+  /** Color format */
+  format?: "hex" | "rgb" | "rgba" | "hsl" | "hsla"
+  /** Whether to show alpha channel */
+  showAlpha?: boolean
+  /** Input label */
+  label?: string
+  /** Whether the picker is disabled */
+  disabled?: boolean
+  /** Error message */
+  error?: string
+  /** Additional CSS classes */
+  class?: string
+  /** Change event handler */
+  onchange?: (event: CustomEvent<{ value: string }>) => void
+}
+
+let {
+  name,
   value = "#000000",
-  /** @type {'hex' | 'rgb' | 'rgba' | 'hsl' | 'hsla'} - Color format */
   format = "hex",
-  /** @type {boolean} - Whether to show alpha channel */
   showAlpha = false,
-  /** @type {string} - Input label */
   label = "Color",
-  /** @type {boolean} - Whether the picker is disabled */
   disabled = false,
-  /** @type {string} - Error message */
   error = "",
-  /** @type {string} - Additional CSS classes */
   class: className = "",
-  /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange,
-} = $props()
+}: Props = $props()
 
 let showPicker = $state(false)
-let pickerPopoverRef: HTMLElement | undefined = $state()
+let pickerPopoverRef: HTMLElement & { togglePopover?: (force?: boolean) => boolean } | undefined = $state()
 
 // Handle popover toggle events
 $effect(() => {
@@ -63,11 +78,59 @@ let saturation = $state(100)
 let lightness = $state(50)
 let alpha = $state(100)
 let inputValue = $state("")
-let pickerRef = $state()
+let pickerRef: HTMLDivElement | undefined = $state()
 
-// Initialize color from value
+// Get form context if available
+const formContext = getContext<FormContext | undefined>("form")
+
+// Register with form if available
+let fieldApi: FormFieldApi | undefined
+
+// Disabled from form context takes precedence over the local prop
+// (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
+
 $effect(() => {
-  if (value) {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, value)
+  }
+})
+
+// Sync from form (handles form.reset(), form.setValue(), etc.)
+$effect(() => {
+  if (fieldApi) {
+    const formValue = fieldApi.getValue()
+    if (formValue === null || formValue === undefined) {
+      // Form reset: clear to defaults
+      if (hue !== 0 || saturation !== 100 || lightness !== 50 || alpha !== 100) {
+        hue = 0
+        saturation = 100
+        lightness = 50
+        alpha = 100
+        updateInputValue()
+      }
+    } else if (typeof formValue === "string" && formValue) {
+      const color = parseColor(formValue)
+      if (color) {
+        if (
+          color.hue !== hue ||
+          color.saturation !== saturation ||
+          color.lightness !== lightness ||
+          color.alpha !== alpha
+        ) {
+          ;({ hue, saturation, lightness, alpha } = color)
+          updateInputValue()
+        }
+      }
+    }
+  }
+})
+
+// Initialize color from value prop (only when not registered with form)
+$effect(() => {
+  if (!fieldApi && value) {
     const color = parseColor(value)
     if (color) {
       ;({ hue, saturation, lightness, alpha } = color)
@@ -187,6 +250,7 @@ function updateColor(h: number, s: number, l: number, a: number): void {
   alpha = a
 
   updateInputValue()
+  fieldApi?.setValue(inputValue)
   onchange?.(new CustomEvent("change", { detail: { value: inputValue } }))
 }
 
@@ -216,7 +280,8 @@ function updateInputValue(): void {
 
 // Handle color wheel interaction
 function handleColorWheel(event: MouseEvent): void {
-  if (disabled) return
+  if (effectiveDisabled) return
+  if (!pickerRef) return
 
   const rect = pickerRef.getBoundingClientRect()
   const x = event.clientX - rect.left
@@ -241,15 +306,19 @@ function handleColorWheel(event: MouseEvent): void {
 
 // Handle lightness slider
 function handleLightness(event: Event): void {
-  if (disabled) return
-  const newLightness = Number(event.target.value)
+  if (effectiveDisabled) return
+  const target = event.target as HTMLInputElement | null
+  if (!target) return
+  const newLightness = Number(target.value)
   updateColor(hue, saturation, newLightness, alpha)
 }
 
 // Handle alpha slider
 function handleAlpha(event: Event): void {
-  if (disabled) return
-  const newAlpha = Number(event.target.value)
+  if (effectiveDisabled) return
+  const target = event.target as HTMLInputElement | null
+  if (!target) return
+  const newAlpha = Number(target.value)
   updateColor(hue, saturation, lightness, newAlpha)
 }
 
@@ -269,7 +338,7 @@ function handleInput(event: CustomEvent): void {
 >
   <Input
     {label}
-    {disabled}
+    disabled={effectiveDisabled}
     {error}
     value={inputValue}
     oninput={handleInput}
@@ -311,7 +380,7 @@ function handleInput(event: CustomEvent): void {
             min="0"
             max="100"
             value={lightness}
-            disabled={disabled}
+            disabled={effectiveDisabled}
             oninput={handleLightness}
           />
         </label>
@@ -320,12 +389,12 @@ function handleInput(event: CustomEvent): void {
           <label class="color-slider">
             <span>Alpha</span>
             <input
-              type="range"
-              min="0"
-              max="100"
-              value={alpha}
-              disabled={disabled}
-              oninput={handleAlpha}
+            type="range"
+            min="0"
+            max="100"
+            value={alpha}
+            disabled={effectiveDisabled}
+            oninput={handleAlpha}
             />
           </label>
         {/if}

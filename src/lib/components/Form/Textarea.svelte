@@ -18,6 +18,7 @@
  * ```
  */
 import { getContext } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
 let {
   class: className = "",
@@ -42,7 +43,7 @@ let {
 } = $props()
 
 // Get form context if available
-const formContext = getContext("form") as { registerField?: (name: string, value: unknown) => { getValue?: () => unknown; setValue?: (value: unknown) => void; isDisabled?: () => boolean } } | undefined
+const formContext = getContext<FormContext | undefined>("form")
 
 // Derived values for reactive prop access in closures
 const derivedValue = $derived(value)
@@ -55,18 +56,18 @@ const textareaId = $derived(id || `textarea-${crypto.randomUUID()}`)
 let textareaValue = $state("")
 let isFocused = $state(false)
 let textareaEl: HTMLTextAreaElement | undefined = $state()
-let fieldApi: { getValue?: () => unknown; setValue?: (value: unknown) => void; isDisabled?: () => boolean } | undefined = $state()
+let fieldApi: FormFieldApi | undefined
 
 // Register with form if available
 $effect(() => {
-  if (formContext?.registerField && derivedName) {
+  if (formContext && derivedName) {
     fieldApi = formContext.registerField(derivedName, derivedValue)
   }
 })
 
 // Update value when form field changes
 $effect(() => {
-  if (fieldApi?.getValue) {
+  if (fieldApi) {
     const formValue = fieldApi.getValue()
     if (formValue !== undefined && formValue !== textareaValue) {
       textareaValue = formValue as string
@@ -79,6 +80,12 @@ $effect(() => {
 	textareaValue = derivedValue
 })
 
+// Disabled from form context takes precedence over the local prop
+// (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
+
 /**
  * Handles textarea input
  * @param {Event} event - Input event
@@ -88,7 +95,7 @@ function handleInput(event: Event): void {
   textareaValue = newValue
 
   // Update form field if available
-  if (fieldApi?.setValue) {
+  if (fieldApi) {
     fieldApi.setValue(newValue)
   }
 
@@ -147,7 +154,7 @@ $effect(() => {
     value={textareaValue}
     {rows}
     {required}
-    disabled={disabled || (fieldApi?.isDisabled ? fieldApi.isDisabled() : false)}
+    disabled={effectiveDisabled}
     {readonly}
     {minlength}
     {maxlength}

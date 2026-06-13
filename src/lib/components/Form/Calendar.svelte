@@ -21,9 +21,26 @@ Usage:
 -->
 <script lang="ts">
 import { getContext } from "svelte"
+import { slide } from "svelte/transition"
 import Input from "./Input.svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
+
+/**
+ * Safe wrapper around the `slide` transition that no-ops when the Web
+ * Animations API is unavailable (jsdom in unit tests). This keeps the
+ * production animation while preventing `element.animate is not a function`
+ * crashes in test environments.
+ */
+function safeSlide(node: Element, params?: { duration?: number }) {
+  if (typeof (node as HTMLElement).animate !== "function") {
+    return { duration: 0 }
+  }
+  return slide(node as HTMLElement, params)
+}
 
 const {
+  /** @type {string} - Field name for form registration */
+  name,
   /** @type {Date | [Date, Date] | null} - Selected date or date range */
   value = null,
   /** @type {boolean} - Whether to allow range selection */
@@ -68,12 +85,75 @@ let hoverDate: Date | null = $state(null)
 let inputValue = $state("")
 let startDate: Date | null = $state(null)
 let endDate: Date | null = $state(null)
-let calendarElement: HTMLElement | undefined = $state()
 let showCalendar = $state(false)
+let calendarPopoverRef: HTMLElement | undefined = $state()
 
-// Initialize dates from value prop
+// Get form context if available
+const formContext = getContext<FormContext | undefined>("form")
+
+// Register with form if available
+let fieldApi: FormFieldApi | undefined
+
+// Disabled from form context takes precedence over the local prop
+// (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
+
 $effect(() => {
-  if (value) {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, value)
+  }
+})
+
+// Sync from form (handles form.reset(), form.setValue(), etc.)
+$effect(() => {
+  if (fieldApi) {
+    const formValue = fieldApi.getValue()
+    if (formValue === null || formValue === undefined) {
+      // Form reset
+      if (startDate !== null || endDate !== null) {
+        startDate = null
+        endDate = null
+        // Reset view to today's month so the calendar doesn't show a stale month
+        currentMonth = new Date()
+        updateInputValue()
+      }
+    } else if (range && Array.isArray(formValue)) {
+      const [start, end] = formValue as [Date | string | number, Date | string | number]
+      const newStart = start instanceof Date ? start : new Date(start)
+      const newEnd = end instanceof Date ? end : new Date(end)
+      const newStartTime = isNaN(newStart.getTime()) ? null : newStart.getTime()
+      const newEndTime = isNaN(newEnd.getTime()) ? null : newEnd.getTime()
+      if (newStartTime === null) {
+        if (startDate !== null) startDate = null
+      } else if (!startDate || startDate.getTime() !== newStartTime) {
+        startDate = newStart
+      }
+      if (newEndTime === null) {
+        if (endDate !== null) endDate = null
+      } else if (!endDate || endDate.getTime() !== newEndTime) {
+        endDate = newEnd
+      }
+      // Anchor view to start of range, or today if cleared
+      currentMonth = startDate ? new Date(startDate) : new Date()
+      updateInputValue()
+    } else if (!range) {
+      const newDate = formValue instanceof Date ? formValue : new Date(formValue as string | number)
+      if (!isNaN(newDate.getTime())) {
+        if (!startDate || startDate.getTime() !== newDate.getTime()) {
+          startDate = newDate
+          currentMonth = new Date(newDate)
+          updateInputValue()
+        }
+      }
+    }
+  }
+})
+
+// Initialize dates from value prop (only when not registered with form)
+$effect(() => {
+  if (value && !fieldApi) {
     if (range && Array.isArray(value)) {
       const [start, end] = value as [Date, Date]
       startDate = start
@@ -129,7 +209,7 @@ function getWeekNumber(date: Date): number {
   if (target.getDay() !== 4) {
     target.setMonth(0, 1 + ((4 - target.getDay() + 7) % 7))
   }
-  return 1 + Math.ceil((firstThursday - target) / 604800000)
+  return 1 + Math.ceil((firstThursday - target.getTime()) / 604800000)
 }
 
 // Format date for display
@@ -144,7 +224,7 @@ function formatDate(date: Date | null): string {
 
 // Update input value based on selected dates
 function updateInputValue(): void {
-  if (range) {
+  if (!!range) {
     inputValue = startDate && endDate ? `${formatDate(startDate)} - ${formatDate(endDate)}` : ""
   } else {
     inputValue = startDate ? formatDate(startDate) : ""
@@ -153,9 +233,9 @@ function updateInputValue(): void {
 
 // Handle date selection
 function handleDateSelect(date: Date): void {
-  if (disabled) return
+  if (effectiveDisabled) return
 
-  if (range) {
+  if (!!range) {
     if (!startDate || (startDate && endDate) || date < startDate) {
       startDate = date
       endDate = null
@@ -165,10 +245,13 @@ function handleDateSelect(date: Date): void {
     }
 
     onselect?.(new CustomEvent("select", { detail: { start: startDate, end: endDate } }))
+    // Only push a complete range to the form; partial selection is in-progress
+    fieldApi?.setValue(startDate && endDate ? [startDate, endDate] : null)
   } else {
     startDate = date
     showCalendar = false
     onselect?.(new CustomEvent("select", { detail: { date } }))
+    fieldApi?.setValue(date)
   }
 
   updateInputValue()
@@ -184,7 +267,7 @@ function handleDateHover(date: Date | null): void {
 // Check if date is in range
 function isInRange(date: Date | null): boolean {
   if (!date) return false
-  if (range) {
+  if (!!range) {
     if (startDate && !endDate && hoverDate) {
       return date.getTime() >= startDate.getTime() && date.getTime() <= hoverDate.getTime()
     }
@@ -199,13 +282,13 @@ function isInRange(date: Date | null): boolean {
 // Check if date is selected
 function isSelected(date: Date | null): boolean {
   if (!date) return false
-  if (range) {
+  if (!!range) {
     return (
       (startDate && date.getTime() === startDate.getTime()) ||
       (endDate && date.getTime() === endDate.getTime())
     )
   }
-  return startDate && date.getTime() === startDate.getTime()
+  return !!(startDate && date.getTime() === startDate.getTime())
 }
 
 // Check if date is disabled
@@ -270,7 +353,7 @@ function handleKeydown(event: KeyboardEvent): void {
 >
   <Input
     {label}
-    {disabled}
+    disabled={effectiveDisabled}
     value={inputValue}
     readonly
     rightIcon="calendar"
@@ -285,7 +368,7 @@ function handleKeydown(event: KeyboardEvent): void {
     aria-label="Calendar"
     bind:this={calendarPopoverRef}
       tabindex="-1"
-      transition:slide={{ duration: 150 }}
+      transition:safeSlide={{ duration: 150 }}
       onkeydown={handleKeydown}
     >
       <div class="calendar-header">
@@ -294,7 +377,7 @@ function handleKeydown(event: KeyboardEvent): void {
           class="calendar-nav-btn"
           onclick={() => navigateMonth(-1)}
           aria-label="Previous month"
-          disabled={disabled}
+          disabled={effectiveDisabled}
         >
           <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
             <path d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" />
@@ -310,7 +393,7 @@ function handleKeydown(event: KeyboardEvent): void {
           class="calendar-nav-btn"
           onclick={() => navigateMonth(1)}
           aria-label="Next month"
-          disabled={disabled}
+          disabled={effectiveDisabled}
         >
           <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
             <path d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" />
@@ -350,7 +433,7 @@ function handleKeydown(event: KeyboardEvent): void {
                   {#if day}
                     <button
                       type="button"
-                      disabled={isDisabled(day)}
+                      disabled={isDisabled(day) || effectiveDisabled}
                       onclick={() => handleDateSelect(day)}
                       onmouseenter={() => handleDateHover(day)}
                       aria-label={formatDate(day)}

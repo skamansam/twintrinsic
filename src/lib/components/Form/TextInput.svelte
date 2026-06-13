@@ -20,7 +20,36 @@
  * ```
  */
 import { getContext } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 import Icon from "../Icon/Icon.svelte"
+
+interface Props {
+  type?: string
+  class?: string
+  startIcon?: string
+  endIcon?: string
+  id?: string
+  name?: string
+  placeholder?: string
+  value?: string
+  required?: boolean
+  disabled?: boolean
+  readonly?: boolean
+  minlength?: number
+  maxlength?: number
+  pattern?: string
+  autocomplete?: string
+  size?: string
+  clearable?: boolean
+  ariaLabel?: string
+  oninput?: (event: CustomEvent<{ value: string }>) => void
+  onchange?: (event: CustomEvent<{ value: string }>) => void
+  onfocus?: (event: FocusEvent) => void
+  onblur?: (event: FocusEvent) => void
+  onclear?: () => void
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
+}
 
 let {
   type = "text",
@@ -47,10 +76,10 @@ let {
   onblur,
   onclear,
   ...restProps
-} = $props()
+}: Props = $props()
 
 // Get form context if available
-const formContext = getContext("form")
+const formContext = getContext<FormContext | undefined>("form")
 
 // Derived values for reactive prop access in closures
 const derivedValue = $derived(value)
@@ -62,20 +91,20 @@ const inputId = $derived(id || `input-${crypto.randomUUID()}`)
 // Input state
 let inputValue = $state("")
 let isFocused = $state(false)
-let fieldApi = $state()
+let fieldApi: FormFieldApi | undefined
 
 // Register with form if available
 $effect(() => {
   if (formContext && name) {
-    fieldApi = formContext.registerField(name, value)
+    fieldApi = formContext.registerField(name, value as string)
   }
 })
 
 // Update value when form field changes
 $effect(() => {
   if (fieldApi) {
-    const formValue = fieldApi.getValue()
-    if (formValue !== undefined && formValue !== inputValue) {
+    const formValue = fieldApi.getValue() as string | null | undefined
+    if (formValue !== undefined && formValue !== null && formValue !== inputValue) {
       inputValue = formValue
     }
   }
@@ -85,6 +114,12 @@ $effect(() => {
 $effect(() => {
 	inputValue = derivedValue
 })
+
+// Disabled from form context takes precedence over the local prop
+// (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
 
 /**
  * Handles input changes
@@ -160,12 +195,12 @@ const sizeClasses = $derived(
       {placeholder}
       value={inputValue}
       {required}
-      disabled={disabled || (fieldApi && fieldApi.isDisabled())}
+      disabled={effectiveDisabled}
       {readonly}
       {minlength}
       {maxlength}
       {pattern}
-      {autocomplete}
+      autocomplete={autocomplete as HTMLInputElement["autocomplete"]}
       aria-label={ariaLabel}
       class="input {sizeClasses} {startIcon ? 'pl-9' : ''} {(endIcon || clearable) ? 'pr-9' : ''}"
       oninput={handleInput}

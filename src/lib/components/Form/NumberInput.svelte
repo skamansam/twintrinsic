@@ -30,6 +30,7 @@ Usage:
 -->
 <script lang="ts">
 import { getContext } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -97,7 +98,7 @@ const {
 } = $props()
 
 // Get form context if available
-const formContext = getContext("form") as { registerField?: (name: string, value: unknown) => { getValue?: () => unknown; setValue?: (value: unknown) => void } } | undefined
+const formContext = getContext<FormContext | undefined>("form")
 
 // Generate unique ID if not provided
 const inputId = $derived(id || `number-input-${crypto.randomUUID()}`)
@@ -114,21 +115,21 @@ $effect(() => {
 })
 
 // Register with form if available
-let fieldApi: { getValue?: () => unknown; setValue?: (value: unknown) => void } | undefined = $state()
+let fieldApi: FormFieldApi | undefined
 
 $effect(() => {
-	if (!formContext?.registerField) return
+	if (!formContext) return
 	if (!name) return
 	fieldApi = formContext.registerField(name, value)
 })
 
 // Update value when form field changes
 $effect(() => {
-  if (fieldApi?.getValue) {
-    const formValue = fieldApi.getValue()
+  if (fieldApi) {
+    const formValue = fieldApi.getValue() as number | undefined
     if (formValue !== undefined && formValue !== numericValue) {
-      numericValue = formValue as number
-      inputValue = formatValue(formValue as number)
+      numericValue = formValue
+      inputValue = formatValue(formValue)
     }
   }
 })
@@ -140,6 +141,12 @@ $effect(() => {
     inputValue = formatValue(value)
   }
 })
+
+// Disabled from form context takes precedence over the local prop
+// (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
 
 /**
  * Formats a numeric value for display
@@ -190,7 +197,7 @@ function constrainValue(val: number): number {
  * Increments the current value
  */
 function increment(): void {
-  if (disabled || readonly) return
+  if (effectiveDisabled || readonly) return
 
   const currentValue = parseValue(inputValue)
   const newValue = constrainValue(currentValue + step)
@@ -199,7 +206,7 @@ function increment(): void {
   inputValue = formatValue(newValue)
 
   // Update form field if available
-  if (fieldApi?.setValue) {
+  if (fieldApi) {
     fieldApi.setValue(newValue)
   }
 
@@ -210,7 +217,7 @@ function increment(): void {
  * Decrements the current value
  */
 function decrement(): void {
-  if (disabled || readonly) return
+  if (effectiveDisabled || readonly) return
 
   const currentValue = parseValue(inputValue)
   const newValue = constrainValue(currentValue - step)
@@ -219,7 +226,7 @@ function decrement(): void {
   inputValue = formatValue(newValue)
 
   // Update form field if available
-  if (fieldApi?.setValue) {
+  if (fieldApi) {
     fieldApi.setValue(newValue)
   }
 
@@ -240,7 +247,7 @@ function handleInput(event: Event): void {
     numericValue = parsed
 
     // Update form field if available
-    if (fieldApi?.setValue) {
+    if (fieldApi) {
       fieldApi.setValue(parsed)
     }
 
@@ -282,7 +289,7 @@ function handleFocus(event: FocusEvent): void {
  * @param {KeyboardEvent} event - Keydown event
  */
 function handleKeydown(event: KeyboardEvent): void {
-  if (disabled || readonly) return
+  if (effectiveDisabled || readonly) return
 
   if (event.key === "ArrowUp") {
     event.preventDefault()
@@ -333,7 +340,7 @@ const buttonSizeClasses = $derived(
       {placeholder}
       value={inputValue}
       {required}
-      {disabled}
+      disabled={effectiveDisabled}
       {readonly}
       min={min !== undefined ? min : undefined}
       max={max !== undefined ? max : undefined}
@@ -357,7 +364,7 @@ const buttonSizeClasses = $derived(
           class="number-input-button number-input-increment {buttonSizeClasses}"
           aria-label="Increase value"
           tabindex="-1"
-          disabled={disabled || readonly || (max !== undefined && numericValue >= max)}
+          disabled={effectiveDisabled || readonly || (max !== undefined && (numericValue !== undefined && numericValue >= max))}
           onclick={increment}
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -370,7 +377,7 @@ const buttonSizeClasses = $derived(
           class="number-input-button number-input-decrement {buttonSizeClasses}"
           aria-label="Decrease value"
           tabindex="-1"
-          disabled={disabled || readonly || (min !== undefined && numericValue <= min)}
+          disabled={effectiveDisabled || readonly || (min !== undefined && (numericValue !== undefined && numericValue <= min))}
           onclick={decrement}
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

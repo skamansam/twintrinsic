@@ -46,7 +46,7 @@ const {
   onchange,
 } = $props()
 
-let checkboxEl = $state()
+let checkboxEl: HTMLInputElement | undefined = $state()
 
 // Update indeterminate state
 $effect(() => {
@@ -56,8 +56,8 @@ $effect(() => {
 })
 
 // Handle change event
-function handleChange(event) {
-  const isChecked = event.target.checked
+function handleChange(event: Event) {
+  const isChecked = (event.target as HTMLInputElement).checked
   onchange?.(new CustomEvent("change", { detail: { checked: isChecked } }))
 }
 </script>

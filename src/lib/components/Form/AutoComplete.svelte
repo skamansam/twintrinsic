@@ -22,9 +22,14 @@ Usage:
 ```
 -->
 <script lang="ts">
+import { getContext } from "svelte"
+import { slide } from "svelte/transition"
 import Input from "./Input.svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
 const {
+  /** @type {string} - Field name for form registration */
+  name,
   /** @type {string} - Input label */
   label,
   /** @type {Array<any>} - Array of items to search through */
@@ -74,7 +79,62 @@ let suggestions: unknown[] = $state([])
 let selectedItems: unknown[] | unknown | null = $state(null)
 const derivedMultiple = $derived(multiple)
 
-let ItemTemplate: unknown = $state(null)
+// Get form context if available
+const formContext = getContext<FormContext | undefined>("form")
+
+// Register with form if available
+let fieldApi: FormFieldApi | undefined
+
+// Disabled from form context takes precedence over the local prop
+// (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
+
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, value)
+  }
+})
+
+// Sync from form (handles form.reset(), form.setValue(), etc.)
+$effect(() => {
+  if (fieldApi) {
+    const formValue = fieldApi.getValue()
+    if (formValue === null || formValue === undefined) {
+      // Form reset
+      if (selectedItems !== null) {
+        selectedItems = null
+        inputValue = ""
+      }
+    } else if (derivedMultiple) {
+      const arr = Array.isArray(formValue) ? formValue : [formValue]
+      // Compare by value-of-array to avoid reassignment loops
+      const currentArr = Array.isArray(selectedItems) ? selectedItems : []
+      const sameLength = arr.length === currentArr.length
+      const sameItems = sameLength && arr.every((v, i) => {
+        const a = typeof v === "object" ? JSON.stringify(v) : v
+        const b = typeof currentArr[i] === "object" ? JSON.stringify(currentArr[i]) : currentArr[i]
+        return a === b
+      })
+      if (!sameItems) {
+        selectedItems = arr
+        inputValue = ""
+      }
+    } else {
+      // Single mode: compare by value
+      const currentSingle = selectedItems
+      const a = typeof formValue === "object" ? JSON.stringify(formValue) : formValue
+      const b = typeof currentSingle === "object" && currentSingle !== null ? JSON.stringify(currentSingle) : currentSingle
+      if (a !== b) {
+        selectedItems = formValue
+        inputValue = getItemLabel(formValue)
+      }
+    }
+  }
+})
+
+let ItemTemplate: ((item: unknown) => string) | null = $state(null)
 $effect(() => {
 	ItemTemplate = itemTemplate
 })
@@ -101,9 +161,9 @@ $effect(() => {
 let highlightedIndex = $state(-1)
 let searchTimeout: ReturnType<typeof setTimeout> | undefined = $state()
 
-// Initialize selected items
+// Initialize selected items from value prop (only when not registered with form)
 $effect(() => {
-  if (value) {
+  if (!fieldApi && value) {
     selectedItems = derivedMultiple ? (Array.isArray(value) ? value : [value]) : value
     inputValue = derivedMultiple ? "" : getItemLabel(value)
   }
@@ -158,6 +218,7 @@ function getItemValue(item: unknown): unknown {
 
 // Handle item selection
 function selectItem(item: unknown): void {
+  if (effectiveDisabled) return
   if (derivedMultiple) {
 		if (!Array.isArray(selectedItems)) {
 			selectedItems = []
@@ -169,6 +230,7 @@ function selectItem(item: unknown): void {
     if (!exists) {
       selectedItems = [...(selectedItems as unknown[]), item]
       onselect?.(new CustomEvent("select", { detail: { items: selectedItems } }))
+      fieldApi?.setValue((selectedItems as unknown[]).map((i) => getItemValue(i)))
     }
 
     inputValue = ""
@@ -176,6 +238,7 @@ function selectItem(item: unknown): void {
     selectedItems = item
     inputValue = getItemLabel(item)
     onselect?.(new CustomEvent("select", { detail: { item } }))
+    fieldApi?.setValue(getItemValue(item))
   }
 
   showSuggestions = false
@@ -183,6 +246,7 @@ function selectItem(item: unknown): void {
 
 // Remove selected item (multiple mode)
 function removeItem(item: unknown): void {
+  if (effectiveDisabled) return
   if (!derivedMultiple) return
   if (!Array.isArray(selectedItems)) return
 
@@ -190,6 +254,7 @@ function removeItem(item: unknown): void {
   selectedItems = (selectedItems as unknown[]).filter((i: unknown) => getItemValue(i) !== value)
   onremove?.(new CustomEvent("remove", { detail: { item } }))
   onselect?.(new CustomEvent("select", { detail: { items: selectedItems } }))
+  fieldApi?.setValue((selectedItems as unknown[]).map((i) => getItemValue(i)))
 }
 
 /**
@@ -270,7 +335,7 @@ function highlightText(text: string, query: string): string {
   <Input
     {label}
     {placeholder}
-    {disabled}
+    disabled={effectiveDisabled}
     value={inputValue}
     oninput={handleInput}
     onfocus={handleFocus}
@@ -287,6 +352,7 @@ function highlightText(text: string, query: string): string {
             type="button"
             class="autocomplete-chip-remove"
             onclick={() => removeItem(item)}
+            disabled={effectiveDisabled}
             aria-label="Remove {getItemLabel(item)}"
           >
             <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
@@ -321,7 +387,7 @@ function highlightText(text: string, query: string): string {
             onkeydown={(event) => handleOptionKeydown(event, item)}
           >
             {#if ItemTemplate}
-              <ItemTemplate {item} />
+              {ItemTemplate(item)}
             {:else}
               {@html highlightText(getItemLabel(item), inputValue)}
             {/if}

@@ -20,44 +20,52 @@ Usage:
 -->
 <script lang="ts">
 import { setContext } from "svelte"
+import type { FormContext } from "./formContext.js"
 
-const {
-  /** @type {string} - Additional CSS classes */
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Form method (get or post) */
+  method?: string
+  /** Form action URL */
+  action?: string
+  /** Whether to validate the form on submission */
+  validate?: boolean
+  /** Whether to use the browser's built-in validation UI */
+  useNativeValidation?: boolean
+  /** Layout direction (vertical or horizontal) */
+  layout?: string
+  /** Whether to disable all form controls */
+  disabled?: boolean
+  /** Whether the form is in a loading state */
+  loading?: boolean
+  /** Submit event handler */
+  onsubmit?: (event: CustomEvent<{ data: Record<string, unknown>; formData: FormData; form: HTMLFormElement }>) => void
+  /** Change event handler */
+  onchange?: (event: CustomEvent) => void
+  /** Error event handler */
+  onerror?: (event: CustomEvent<{ errors: Record<string, string> }>) => void
+  /** Form children */
+  children?: import("svelte").Snippet
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - Form method (get or post) */
   method = "post",
-
-  /** @type {string} - Form action URL */
   action = "",
-
-  /** @type {boolean} - Whether to validate the form on submission */
   validate = true,
-
-  /** @type {boolean} - Whether to use the browser's built-in validation UI */
   useNativeValidation = true,
-
-  /** @type {string} - Layout direction (vertical or horizontal) */
   layout = "vertical",
-
-  /** @type {boolean} - Whether to disable all form controls */
   disabled = false,
-
-  /** @type {boolean} - Whether the form is in a loading state */
   loading = false,
-
-  /** @type {(event: CustomEvent) => void} - Submit event handler */
   onsubmit,
-  /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange,
-  /** @type {(event: CustomEvent) => void} - Error event handler */
   onerror,
-
   children,
-} = $props()
+}: Props = $props()
 
 // Form state
 let formElement: HTMLFormElement | undefined
@@ -178,13 +186,15 @@ function handleSubmit(event: Event): void {
   onsubmit?.(new CustomEvent("submit", { detail: {
     data: dataObj,
     formData: formDataObj,
-    form: formElement,
+    form: formElement as HTMLFormElement,
   } }))
 
   // Reset submitting state after a short delay
-  setTimeout(() => {
+  const resetSubmitting = (): void => {
     isSubmitting = false
-  }, 100)
+  }
+  // biome-ignore lint/suspicious/noExplicitAny: setTimeout this context workaround
+  globalThis.setTimeout(resetSubmitting, 100)
 }
 
 /**
@@ -202,7 +212,7 @@ function resetForm(): void {
 
 // Provide form context to child components
 $effect(() => {
-  setContext("form", {
+  const context: FormContext = {
     registerField: (name: string, initialValue: unknown) => {
       if (initialValue !== undefined && formData[name] === undefined) {
         formData[name] = initialValue
@@ -218,7 +228,8 @@ $effect(() => {
     },
     layout,
     disabled: () => disabled || loading || isSubmitting,
-  })
+  }
+  setContext<FormContext>("form", context)
 })
 
 // Expose form API to parent components

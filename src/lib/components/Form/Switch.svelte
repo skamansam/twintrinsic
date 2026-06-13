@@ -18,6 +18,7 @@ Usage:
 -->
 <script lang="ts">
 import { getContext } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -55,11 +56,11 @@ const {
 } = $props()
 
 // Get form context if available
-const formContext = getContext("form")
+const formContext = getContext<FormContext | undefined>("form")
 
 // Switch state
 let isChecked = $state(false)
-let fieldApi = $state()
+let fieldApi: FormFieldApi | undefined
 
 // Register with form if available
 $effect(() => {
@@ -67,6 +68,12 @@ $effect(() => {
     fieldApi = formContext.registerField(name, checked)
   }
 })
+
+// Disabled from form context takes precedence over the local prop
+// (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
 
 // Update value when form field changes
 $effect(() => {
@@ -125,7 +132,7 @@ const labelSizeClasses = $derived(
 </script>
 
 <label 
-  class="switch-wrapper {className} {labelSizeClasses} {disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}"
+  class="switch-wrapper {className} {labelSizeClasses} {effectiveDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}"
 >
   <div class="switch-container">
     <input
@@ -134,7 +141,7 @@ const labelSizeClasses = $derived(
       {name}
       checked={isChecked}
       {required}
-      disabled={disabled || (fieldApi && fieldApi.isDisabled())}
+      disabled={effectiveDisabled}
       aria-label={ariaLabel || label}
       class="switch-input"
       onchange={handleChange}

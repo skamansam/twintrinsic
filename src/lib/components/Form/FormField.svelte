@@ -17,43 +17,59 @@ Usage:
 -->
 <script lang="ts">
 import { getContext } from "svelte"
+import type { Snippet } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
-const {
-  /** @type {string} - Additional CSS classes */
+interface ChildProps {
+  name?: string
+  id: string
+  disabled: boolean
+  'aria-invalid'?: 'true'
+  'aria-describedby'?: string
+  'aria-required'?: 'true'
+  required?: boolean
+}
+
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Field name (used for form data) */
+  name?: string
+  /** Field label */
+  label?: string
+  /** Help text displayed below the field */
+  helpText?: string
+  /** Error message to display */
+  error?: string
+  /** Whether the field is required */
+  required?: boolean
+  /** Whether the field is disabled */
+  disabled?: boolean
+  /** Whether to hide the label visually (still accessible to screen readers) */
+  hideLabel?: boolean
+  /** Layout direction (vertical or horizontal) */
+  layout?: string
+  children?: Snippet<[ChildProps]>
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - Field name (used for form data) */
   name,
-
-  /** @type {string} - Field label */
   label,
-
-  /** @type {string} - Help text displayed below the field */
   helpText,
-
-  /** @type {string} - Error message to display */
   error,
-
-  /** @type {boolean} - Whether the field is required */
   required = false,
-
-  /** @type {boolean} - Whether the field is disabled */
   disabled = false,
-
-  /** @type {boolean} - Whether to hide the label visually (still accessible to screen readers) */
   hideLabel = false,
-
-  /** @type {string} - Layout direction (vertical or horizontal) */
   layout,
-
   children,
-} = $props()
+}: Props = $props()
 
 // Get form context if available
-const formContext = getContext("form")
+const formContext = getContext<FormContext | undefined>("form")
 
 // Use layout from form context if not specified
 const fieldLayout = $derived(layout || (formContext ? formContext.layout : "vertical"))
@@ -62,17 +78,17 @@ const fieldLayout = $derived(layout || (formContext ? formContext.layout : "vert
 const fieldId = $derived(`${id}-field`)
 const errorId = $derived(`${id}-error`)
 const helpId = $derived(`${id}-help`)
+const fieldName = $derived(name)
 
 // Track field state
 let fieldError = $state("")
 let touched = $state(false)
-let fieldDisabled = $state(false)
-let fieldApi = $state()
+let fieldApi: FormFieldApi | undefined
 
 // Register with form if available
 $effect(() => {
   if (formContext && name) {
-    fieldApi = formContext.registerField(name)
+    fieldApi = formContext?.registerField(name)
   }
 })
 
@@ -95,15 +111,11 @@ $effect(() => {
   }
 })
 
-// Update disabled state
-$effect(() => {
-  if (fieldApi) {
-    const formDisabled = formContext.disabled()
-    fieldDisabled = disabled || formDisabled
-  } else {
-    fieldDisabled = disabled
-  }
-})
+// Disabled from form context takes precedence over the local prop
+// (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
 
 // Determine if we should show an error
 const showError = $derived(!!fieldError && touched)
@@ -138,10 +150,10 @@ const describedBy = $derived(
   <div class="form-control-container">
     <div class="form-control">
       <!-- Slot for the actual form control -->
-      {@render children({
+      {@render children?.({
         name: fieldName,
         id: fieldId,
-        disabled: fieldDisabled,
+        disabled: effectiveDisabled,
         'aria-invalid': showError ? 'true' : undefined,
         'aria-describedby': describedBy || undefined,
         'aria-required': required ? 'true' : undefined,
