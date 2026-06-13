@@ -145,6 +145,9 @@ const selectedLabel = $derived.by(() => {
   const selected = options.find((opt) => getOptionValue(opt) === selectedValue)
   return selected ? getOptionLabel(selected) : placeholder
 })
+
+/** Stable id for the listbox dropdown; referenced by aria-controls and the dropdown's own id. */
+const listboxId = $derived(`${id}-listbox`)
 </script>
 
 <style lang="postcss">
@@ -253,7 +256,7 @@ const selectedLabel = $derived.by(() => {
   onkeydown={handleKeydown}
       aria-label={ariaLabel}
       aria-haspopup="listbox"
-      aria-controls={`${id}-listbox`}
+      aria-controls={listboxId}
       aria-expanded={isOpen}
       role="combobox"
       {name}
@@ -271,7 +274,7 @@ const selectedLabel = $derived.by(() => {
   </div>
 
   {#if isOpen && filteredOptions.length > 0}
-    <div class="combobox-dropdown" role="listbox" id={`${id}-listbox`}>
+    <div class="combobox-dropdown" role="listbox" id={listboxId}>
       {#each filteredOptions as option, index}
         <div
           class="combobox-option"
@@ -296,7 +299,7 @@ const selectedLabel = $derived.by(() => {
       {/each}
     </div>
   {:else if isOpen}
-    <div class="combobox-dropdown" id={`${id}-listbox`}>
+    <div class="combobox-dropdown" id={listboxId}>
       <div class="combobox-empty">No options available</div>
     </div>
   {/if}
