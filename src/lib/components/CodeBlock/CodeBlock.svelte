@@ -34,13 +34,11 @@ Usage:
 ```
 -->
 <script lang="ts">
-// @ts-ignore: prismjs has no declaration file; the import is side-effect-only
 import Prism from "prismjs";
 import { onDestroy, onMount } from "svelte";
 import type { Snippet } from "svelte";
 import { detectLanguage } from "../../helpers/index.js";
 // import "prism-svelte";
-// @ts-ignore: prismjs autoloader plugin has no declaration file
 import "prismjs/plugins/autoloader/prism-autoloader";
 
 interface Props {
@@ -186,10 +184,13 @@ async function highlightCode(): Promise<void> {
         document.head.appendChild(script);
       });
     } else if (Prism.plugins?.autoloader) {
-      // For standard paths, use autoloader with custom languages_path
-      Prism.plugins.autoloader.languages_path = languagesPath;
+      // For standard paths, use autoloader with custom languages_path.
+      // Capture the autoloader in a local so TypeScript narrows away `undefined`
+      // for the subsequent property/method accesses.
+      const autoloader = Prism.plugins.autoloader;
+      autoloader.languages_path = languagesPath;
       await new Promise<void>((resolve) => {
-        Prism.plugins.autoloader.loadLanguages(detectedLang, () => {
+        autoloader.loadLanguages(detectedLang, () => {
           resolve()
         })
       })

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { highlightElement } from '@speed-highlight/core';
+	import type { ShjLanguage } from '@speed-highlight/core';
 	import { detectLanguage } from '@speed-highlight/core/detect';
 	import { onDestroy, onMount } from 'svelte';
 	import type { Snippet } from 'svelte';
@@ -43,13 +44,13 @@
 
 	if (showRenderTime) {
 		const startTime = performance.now();
-		// @ts-ignore: @speed-highlight/core types detectedLang as ShjLanguage | undefined
-		highlightElement(codeElement, detectedLang);
+		// `@speed-highlight/core` types the language arg as `ShjLanguage | undefined`,
+		// but `detectLanguage` returns a plain `string`. Assert to narrow the type.
+		highlightElement(codeElement, detectedLang as ShjLanguage);
 		const endTime = performance.now();
 		renderTime = Math.round((endTime - startTime) * 100) / 100;
 	} else {
-		// @ts-ignore: @speed-highlight/core types detectedLang as ShjLanguage | undefined
-		highlightElement(codeElement, detectedLang);
+		highlightElement(codeElement, detectedLang as ShjLanguage);
 	}
 	});
 

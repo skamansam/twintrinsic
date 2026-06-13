@@ -20,152 +20,159 @@ Twintrinsic was created to provide a flexible, accessible UI library that extend
 - **Testing**: E2E (Playwright) and unit (Vitest) test coverage
 - **Documentation**: Storybook stories and demo site for every component
 
-## Technology Stack
+## History
+I got this idea during the christmas break of 2022 when I was looking for a new UI library that 
+was flexible enough to allow me to extend it in ways I wanted and had good accessibility support. 
+After combing through a bunch, I got the idea to try to create a small lib that was basically 
+extensions of HTML. Since HTML elements already have basic accessibility built-in, it's a 
+no-brainer to use these instead of fancy custom elements. I also wanted to use Tailwind for its 
+themeability and easy customization. HTML in intrinsic to the web and tailwind is an extension, 
+so i got `tailwind + intrinsic = twintrinsic`.
 
-- **Svelte 5.56.3**: Latest runes-based reactive system
-- **Tailwind CSS 4.3.1**: Utility-first styling with custom theme
-- **TypeScript 6.0.3**: Type safety across the codebase
-- **SvelteKit 2.65.0**: Full-stack framework for demo site
-- **Playwright 1.60.0**: E2E testing framework
-- **Vitest 4.1.8**: Unit testing framework
-- **Storybook 10.4.4**: Component documentation and testing
-- **Biome 2.5.0**: Linting and formatting
+# A Note on Performance for pre-1.0 releases
+I am not going to worry about performance for now. I am going to use available HTML and CSS as 
+much as possible, without using Javascript for interactivity unless absolutely necessary. This 
+should keep the compiled bundle pretty performant. My main focus is going to be on code 
+readability, accessibility, and extensibility.
 
-## Installation
-
-```bash
-pnpm install
-```
-
-## Development
-
-```bash
-# Start SvelteKit dev server
-pnpm dev
-
-# Start Storybook for component development
-pnpm storybook
-
-# Type checking
-pnpm check
-
-# Linting and formatting
-pnpm lint
-pnpm format
-
-# Testing
-pnpm test          # Run all tests (e2e + unit)
-pnpm test:e2e      # E2E tests only
-pnpm test:unit     # Unit tests only
-```
-
-## Building
-
-```bash
-# Build for production
-pnpm build
-
-# Preview production build
-pnpm preview
-
-# Build library package
-pnpm prepack
-```
-
-## Components
+## Components:
+This is in order of hierarchy.
 
 ### Layout & Containers
-- **Container** - Responsive layout wrapper
-- **Panel** - Flexible container with optional header
-- **Sidebar** - Fixed or sliding side panel
-- **BottomBar** - Bottom navigation bar
-- **Accordion** - Expandable/collapsible sections
-- **Card** - Elevated content container
-- **Lazy** - Deferred content loading
-- **Hero** - Large banner section
-- **AppHeader** - Top navigation bar
-- **App** - Root application wrapper
-- **Splitter** - Resizable panels
-- **Separator** - Visual divider
-- **Section** - Content section wrapper
-- **Footer** - Page footer
+- [x] **Container** - Responsive layout wrapper for organizing page content
+  - [x] **Panel** - Flexible container with optional header and collapsible content
+    - [x] **Sidebar** - Fixed or sliding panel that attaches to the side of parent
+    - [x] **BottomBar** - Navigation bar anchored to the bottom of the viewport
+    - [x] **Accordion** - Expandable/collapsible sections with one active at a time
+    - [x] **Card** - Elevated container for grouping related content
+    - [x] **Lazy** - Deferred content loading when card becomes visible
+    - [x] **Hero** - Large banner section for prominent messaging
+  - [x] **AppHeader** - Top navigation bar for application header
+  - [x] **App** - Root application wrapper with layout management
+    - [x] **Split** - IDE-style resizable panels with drag-to-resize dividers
+
+- [x] **Separator** - Visual divider (horizontal/vertical) with optional text or icon
 
 ### Form Components
-- **Input** - Base text input
-- **TextInput** - Text input with masking
-- **Textarea** - Multi-line text input
-- **Checkbox** - Accessible checkbox
-- **Radio** - Single-select radio button
-- **RadioGroup** - Grouped radio buttons
-- **Switch** - Toggle switch
-- **Select** - Dropdown select
-- **Combobox** - Searchable select
-- **NumberInput** - Numeric input with controls
-- **Slider** - Range slider
-- **Knob** - Circular progress slider
-- **Form** - Form wrapper with validation
-- **FormField** - Form field wrapper
+- [x] **Input** - Base text input with validation and floating labels
+- [x] **TextInput** - Extended text input with masking support
+- [x] **Textarea** - Multi-line text input with auto-resize
+- [x] **Checkbox** - Accessible checkbox with configurable states and icons
+- [x] **Radio** - Single-select radio button
+- [x] **RadioGroup** - Group of radio buttons with unified state
+- [x] **Switch** - Toggle switch component
+- [x] **Select** - Dropdown select with option groups
+- [x] **Combobox** - Searchable select with filtering
+- [x] **AutoComplete** - Input with autocomplete suggestions
+- [x] **Dropdown** - Dropdown menu with cascading support
+- [x] **Listbox** - Scrollable list of selectable items
+- [x] **ListInput** - Multiple value input with removable chips
+- [x] **NumberInput** - Numeric input with increment/decrement controls
+- [x] **Slider** - Range slider with min/max values
+- [x] **Knob** - Circular progress slider for rotational input
+- [x] **Rating** - Star or icon-based rating input
+- [x] **ColorPicker** - Color selection with hex/RGB input
+- [x] **Calendar** - Date picker with month/year navigation
+- [x] **FileUpload** - File input with drag-and-drop support
+- [x] **FloatLabel** - Label that floats above input on focus
+- [x] **Form** - Form wrapper with validation handling
+- [x] **FormField** - Form field wrapper with label and error display
+- [x] **InputSwitch** - Toggle switch variant
+- [x] **InvalidState** - Error state display for form fields
 
 ### Data Display
-- **DataTable** - Sortable, filterable table
-- **Table** - Semantic HTML table
-- **TableHeader** - Table header row
-- **TableBody** - Table body wrapper
-- **TableRow** - Table row
-- **TableCell** - Table cell
-- **Carousel** - Image/content carousel
-- **Timeline** - Timeline display
-- **Tree** - Hierarchical tree view
-- **Metrics** - Chart components (Area, Bar, Donut, Gauge, Line, Pie, etc.)
+- [x] **DataTable** - Sortable, filterable table with pagination
+- [x] **Table** - Semantic HTML table with styling
+- [x] **TableHeader** - Table header row
+- [x] **TableBody** - Table body wrapper
+- [x] **TableRow** - Table row
+- [x] **TableCell** - Table cell
+- [x] **Carousel** - Image/content carousel with navigation
+- [x] **CarouselItem** - Individual carousel slide
+- [x] **Timeline** - Vertical or horizontal timeline display
+- [x] **TimelineItem** - Individual timeline event
+- [x] **Tree** - Hierarchical tree view with expand/collapse
+- [x] **TreeNode** - Individual tree node
 
 ### Navigation & Menus
-- **Button** - Action button with variants
-- **Breadcrumb** - Navigation breadcrumb
-- **Menu** - Dropdown menu
-- **Tabs** - Tab navigation with panels
-- **SidebarMenu** - Side panel menu
-- **TreeMenu** - Tree-based menu
+- [x] **Button** - Primary action button with variants
+- [x] **ButtonGroup** - Grouped buttons with unified styling
+- [x] **Breadcrumb** - Navigation breadcrumb trail
+- [x] **BreadcrumbItem** - Individual breadcrumb item
+- [x] **Menu** - Dropdown menu with items
+- [x] **MenuItem** - Individual menu item
+- [x] **Tabs** - Tab navigation with panels
+- [x] **Tab** - Individual tab
+- [x] **TabList** - Tab list container
+- [x] **TabPanel** - Tab panel content
 
 ### Feedback & Overlays
-- **Modal** - Dialog modal
-- **Tooltip** - Hover tooltip
-- **Toast** - Notification messages
-- **Progress** - Linear progress bar
-- **Skeleton** - Loading placeholder
-- **Stepper** - Step indicator
+- [x] **Modal** - Dialog modal with backdrop
+- [x] **Tooltip** - Hover tooltip with positioning
+- [x] **Toast** - Notification toast messages
+- [x] **Progress** - Linear progress bar
+- [x] **Skeleton** - Loading skeleton placeholder
+- [x] **Stepper** - Step indicator for multi-step processes
+- [x] **StepperStep** - Individual stepper step
 
 ### Misc & Utilities
-- **Avatar** - User avatar
-- **Badge** - Small label/badge
-- **Chip** - Removable tag/chip
-- **Tag** - Label tag
-- **Icon** - Icon component
-- **Masonry** - Masonry grid layout
-- **ThemeToggle** - Dark/light mode toggle
-- **CodeBlock** - Syntax-highlighted code
-- **CodeBlockSpeed** - High-performance code block
-- **CodeEditor** - Interactive code editor
-- **Map** - Leaflet map integration
-- **RenderStringOrSnippet** - String/snippet renderer
+- [x] **Avatar** - User avatar with initials or image
+- [x] **AvatarGroup** - Group of avatars with overlap
+- [x] **Badge** - Small label/badge component
+- [x] **Chip** - Small removable tag/chip
+- [x] **ChipGroup** - Group of chips
+- [x] **Tag** - Label tag component
+- [x] **TagGroup** - Group of tags
+- [x] **Icon** - Icon component with customizable size/color
+- [x] **Masonry** - Masonry grid layout
+- [x] **ThemeToggle** - Dark/light mode toggle
+- [x] **CodeBlock** - Syntax-highlighted code display
+- [x] **CodeBlockSpeed** - High-performance code block
+- [x] **CodeEditor** - Interactive code editor
 
-## Svelte 5 Migration Progress
-
-**Status**: 12 of 40 components migrated from `createEventDispatcher` to callback props
-
-**Completed Components**:
-- Input, Checkbox, Radio, TextInput, Select, RadioGroup, Switch, Slider, Form, FormField, Masonry, Knob
-
-**Remaining Components**:
-- Form: Rating, Calendar, Combobox, AutoComplete, Textarea, NumberInput, ColorPicker, Dropdown, Listbox, ListInput, FileUpload
-- Data Display: DataTable, Table, TableHeader, TableRow, Carousel, Chip, ChipGroup, Tag, TagGroup
-- Navigation/Container: Tabs, Modal, Accordion, Button, Split, Tooltip, Tree, Stepper, Timeline, AvatarGroup
-
-## Documentation
-
-- **Storybook**: Run `pnpm storybook` to view component stories and documentation
-- **Demo Site**: Run `pnpm dev` to view the full demo application
-- **AGENTS.md**: Development guidelines for contributors
-
-## License
-
-MIT
+### Not Yet Implemented
+- [ ] Advanced
+  - [ ] Editor - Full-featured text editor
+  - [ ] Terminal - Terminal emulator component
+- [ ] General
+  - [ ] Localization - Multi-language support
+  - [ ] Theming - Advanced theming system
+  - [ ] Specifying Iconsets - Custom icon set configuration using iconify
+- [ ] Data
+  - [ ] DataView - Alternative data display format
+  - [ ] VirtualScroller - Virtual scrolling for large lists
+  - [ ] FilterService - Data filtering utilities
+  - [ ] FullCalendar - Full calendar view
+  - [ ] OrderList - Draggable ordered list
+  - [ ] OrganizationChart - Organizational hierarchy chart
+  - [ ] Paginator - Pagination controls
+  - [ ] PickList - Dual-list picker
+  - [ ] TreeTable - Tree with table structure
+- [ ] Overlay
+  - [ ] ConfirmDialog - Confirmation dialog
+  - [ ] ConfirmPopup - Confirmation popup
+  - [ ] Dialog - Generic dialog
+  - [ ] DynamicDialog - Dynamically created dialogs
+  - [ ] OverlayPanel - Overlay panel
+- [ ] File
+  - [ ] Upload - Advanced file upload
+- [ ] Menu
+  - [ ] ContextMenu - Right-click context menu
+  - [ ] MegaMenu - Large dropdown menu
+  - [ ] Menubar - Top menu bar
+  - [ ] PanelMenu - Side panel menu
+  - [ ] Steps - Step indicator menu
+  - [ ] TabMenu - Tab-based menu
+  - [ ] TieredMenu - Multi-level menu
+  - [ ] Dock - Dock menu
+- [ ] Chart
+  - [ ] Pie - Pie chart
+  - [ ] Doughnut - Doughnut chart
+  - [ ] Bar - Bar chart
+  - [ ] Line - Line chart
+  - [ ] PolarArea - Polar area chart
+  - [ ] Radar - Radar chart
+  - [ ] Combo - Combination chart
+- [ ] Media
+  - [ ] Image - Image component with lazy loading
+  - [ ] Galleria - Image gallery
