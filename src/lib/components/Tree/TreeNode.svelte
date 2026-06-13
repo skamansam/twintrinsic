@@ -76,8 +76,8 @@ const {
 const treeContext = getContext("tree") as { selectable?: boolean; isSelected?: (key: string) => boolean; toggleSelection?: (key: string) => void; showIcons?: boolean; showLines?: boolean } | undefined
 
 // Component state
-let isExpanded = $state(expanded)
-let isSelected = $state(selected)
+let isExpanded = $state(false)
+let isSelected = $state(false)
 let nodeElement: HTMLElement | undefined
 
 // Update expanded state when prop changes
@@ -95,7 +95,7 @@ $effect(() => {
 })
 
 // Determine if node has children (snippet is truthy when provided; doesn't change at runtime)
-const hasChildren = !!children
+const hasChildren = $derived(!!children)
 
 // Determine if node is selectable
 const isSelectable = $derived(treeContext?.selectable && !disabled)

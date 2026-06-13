@@ -253,7 +253,9 @@ const selectedLabel = $derived.by(() => {
   onkeydown={handleKeydown}
       aria-label={ariaLabel}
       aria-haspopup="listbox"
+      aria-controls={`${id}-listbox`}
       aria-expanded={isOpen}
+      role="combobox"
       {name}
     />
     {#if clearable && value !== null && value !== undefined}
@@ -269,7 +271,7 @@ const selectedLabel = $derived.by(() => {
   </div>
 
   {#if isOpen && filteredOptions.length > 0}
-    <div class="combobox-dropdown" role="listbox">
+    <div class="combobox-dropdown" role="listbox" id={`${id}-listbox`}>
       {#each filteredOptions as option, index}
         <div
           class="combobox-option"
@@ -294,7 +296,7 @@ const selectedLabel = $derived.by(() => {
       {/each}
     </div>
   {:else if isOpen}
-    <div class="combobox-dropdown">
+    <div class="combobox-dropdown" id={`${id}-listbox`}>
       <div class="combobox-empty">No options available</div>
     </div>
   {/if}

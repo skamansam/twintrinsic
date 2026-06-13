@@ -37,7 +37,7 @@
 		6: 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6'
 	};
 
-	const gridClass = columnMap[columns] || columnMap[4];
+	const gridClass = $derived(columnMap[columns] || columnMap[4]);
 </script>
 
 <div class="grid {gridClass} {gapMap[gap]}" {...rest}>

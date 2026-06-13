@@ -60,7 +60,7 @@
 		danger: 'bg-red-500'
 	};
 
-	const colorClasses = colorMap[color];
+	const colorClasses = $derived(colorMap[color]);
 
 	function handleClick() {
 		onclick?.(new CustomEvent('click'));
