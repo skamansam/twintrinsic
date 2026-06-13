@@ -45,7 +45,7 @@ const {
 } = $props()
 
 // Get table context if available
-const tableContext = getContext("table")
+const tableContext = getContext<{ hoverable?: boolean } | undefined>("table")
 
 // Determine if table has hover effect
 const hoverable = tableContext?.hoverable || false

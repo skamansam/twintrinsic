@@ -27,7 +27,7 @@
  * </TagGroup>
  * ```
  */
-import { setContext } from "svelte"
+import { setContext, type Component } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -69,10 +69,10 @@ const {
   children,
 } = $props()
 
-/** @type {any} */
-let ItemTemplate = $state(null)
+/** @type {Component | null} */
+let ItemTemplate: Component | null = $state(null)
 $effect(() => {
-	ItemTemplate = children?.item
+	ItemTemplate = (children?.item ?? null) as Component | null
 })
 
 // Provide context for child tags
@@ -113,7 +113,8 @@ function handleDismiss(index: number): void {
     {#each items as item, index}
       <div class="tag-group-item">
         {#if ItemTemplate}
-          <ItemTemplate
+          {@const ItemCtor = ItemTemplate}
+          <ItemCtor
             {item}
             {index}
             variant={variant}

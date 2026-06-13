@@ -36,6 +36,10 @@ interface SelectOption {
 interface SelectProps {
   /** Input label */
   label?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Input name */
+  name?: string
   /** Options to display */
   options?: SelectOption[]
   /** Selected value(s) */
@@ -50,14 +54,34 @@ interface SelectProps {
   error?: string
   /** Whether the field is required */
   required?: boolean
+  /** Property name for option children (for cascading) */
+  optionChildren?: string
+  /** Whether to filter options by typing */
+  filter?: boolean
+  /** Size of the dropdown (sm, md, lg) */
+  size?: "sm" | "md" | "lg"
+  /** Whether to show a clear button */
+  clearable?: boolean
+  /** ARIA label for accessibility */
+  ariaLabel?: string
   /** Additional CSS classes */
   class?: string
   /** Change event handler */
   onchange?: (event: CustomEvent<{ value: string | string[] | undefined }>) => void
+  /** Clear event handler */
+  onclear?: (event: CustomEvent<void>) => void
+  /** Open event handler */
+  onopen?: (event: CustomEvent<void>) => void
+  /** Close event handler */
+  onclose?: (event: CustomEvent<void>) => void
+  /** Filter event handler */
+  onfilter?: (event: CustomEvent<{ query: string }>) => void
 }
 
 const {
   label = "",
+  id,
+  name,
   options = [],
   value,
   multiple = false,
@@ -65,8 +89,17 @@ const {
   disabled = false,
   error = "",
   required = false,
+  optionChildren,
+  filter = false,
+  size = "md",
+  clearable = false,
+  ariaLabel,
   class: className = "",
   onchange,
+  onclear,
+  onopen,
+  onclose,
+  onfilter,
 }: SelectProps = $props()
 
 // Component state

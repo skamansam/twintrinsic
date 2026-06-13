@@ -30,8 +30,8 @@ const {
   /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
 
-  /** @type {string} - Button type (button, submit, reset) */
-  type = "button",
+  /** @type {"button" | "submit" | "reset"} - Button type (button, submit, reset) */
+  type = "button" as const,
 
   /** @type {string} - Button variant (default, primary, secondary, outline, ghost, link) */
   variant = "default",
@@ -117,9 +117,6 @@ function handleClick(event: Event): void {
 // Determine if button should render as a link
 const isLink = $derived(!!href && !disabled && !loading)
 
-// Determine element type
-const elementType = $derived(isLink ? "a" : "button")
-
 // Determine variant classes
 const variantClasses = $derived(
   {
@@ -162,6 +159,20 @@ const iconSize = $derived(
   }[size] || "w-5 h-5"
 )
 
+// Shared class string for both <a> and <button> renderings
+const buttonClass = $derived(
+  [
+    "button",
+    variantClasses,
+    sizeClasses,
+    fullWidth ? "w-full" : "",
+    loading ? "opacity-80 pointer-events-none" : "",
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ")
+)
+
 // Ref for the rendered element (used to programmatically focus when autofocus is set)
 let buttonElement: HTMLElement | undefined = $state()
 
@@ -176,62 +187,71 @@ onMount(() => {
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<svelte:element
-  this={elementType}
-  {id}
-  class="
-    button
-    {variantClasses}
-    {sizeClasses}
-    {fullWidth ? 'w-full' : ''}
-    {loading ? 'opacity-80 pointer-events-none' : ''}
-    {className}
-  "
-  {type}
-  {href}
-  {target}
-  {disabled}
-  aria-disabled={disabled || loading ? 'true' : undefined}
-  aria-label={ariaLabel}
-  onclick={handleClick}
-  {form}
-  {name}
-  {value}
-  {formmethod}
-  {formenctype}
-  {formnovalidate}
-  {formtarget}
-  {rel}
-  {download}
-  bind:this={buttonElement}
->
+{#snippet buttonContent()}
   {#if loading}
     <span class="button-loader {iconSize}" aria-hidden="true"></span>
     <span class="sr-only">Loading</span>
   {:else}
-    {#if icon && iconPosition === 'left'}
+    {#if icon && iconPosition === "left"}
       <span class="button-icon button-icon-left {iconSize}" aria-hidden="true">
         {@html icon}
       </span>
     {/if}
-    
+
     {#if children}
       <span class="button-content">
         {@render children?.()}
       </span>
     {/if}
-    
-    {#if icon && iconPosition === 'right'}
+
+    {#if icon && iconPosition === "right"}
       <span class="button-icon button-icon-right {iconSize}" aria-hidden="true">
         {@html icon}
       </span>
     {/if}
   {/if}
-</svelte:element>
+{/snippet}
+
+{#if isLink}
+  <a
+    {id}
+    class={buttonClass}
+    {href}
+    {target}
+    aria-disabled={disabled || loading ? "true" : undefined}
+    aria-label={ariaLabel}
+    onclick={handleClick}
+    {rel}
+    {download}
+    bind:this={buttonElement}
+  >
+    {@render buttonContent()}
+  </a>
+{:else}
+  <button
+    {id}
+    class={buttonClass}
+    {type}
+    {disabled}
+    aria-disabled={disabled || loading ? "true" : undefined}
+    aria-label={ariaLabel}
+    onclick={handleClick}
+    {form}
+    {name}
+    {value}
+    {formmethod}
+    {formenctype}
+    {formnovalidate}
+    {formtarget}
+    bind:this={buttonElement}
+  >
+    {@render buttonContent()}
+  </button>
+{/if}
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";
-  
+
   .button {
     @apply inline-flex items-center justify-center;
     @apply font-medium rounded-md;
@@ -240,24 +260,24 @@ onMount(() => {
     @apply disabled:opacity-50 disabled:cursor-not-allowed;
     @apply whitespace-nowrap;
   }
-  
+
   .button-content {
     @apply flex-grow;
   }
-  
+
   .button-icon-left {
     @apply mr-2 -ml-1;
   }
-  
+
   .button-icon-right {
-    @apply ml-2 -mr-1;
+    @apply ml-2 -mr-2;
   }
-  
+
   .button-loader {
     @apply rounded-full border-2 border-transparent border-t-current border-r-current;
     animation: button-spin 0.6s linear infinite;
   }
-  
+
   @keyframes button-spin {
     from {
       transform: rotate(0deg);

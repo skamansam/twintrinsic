@@ -163,8 +163,8 @@ function handleRemove(index: number): void {
     {#each items as item, index}
       <div class="chip-group-item">
         {#if ItemTemplate}
-          <svelte:component
-            this={ItemTemplate}
+          {@const ItemCtor = ItemTemplate}
+          <ItemCtor
             {item}
             {index}
             {variant}
@@ -174,7 +174,7 @@ function handleRemove(index: number): void {
             {disabled}
             selected={selectedItems.includes(item as never)}
             {outline}
-            onclick={() => selectable && !disabled && getContext('chipGroup').toggleSelection(item)}
+            onclick={() => selectable && !disabled && (getContext<{ toggleSelection: (item: unknown) => void }>('chipGroup')?.toggleSelection(item))}
             onremove={() => handleRemove(index)}
           />
         {:else}

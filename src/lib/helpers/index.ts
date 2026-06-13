@@ -1,1 +1,1 @@
-export { detectLanguage } from "./detectLanguage.ts"
+export { detectLanguage } from "./detectLanguage.js"

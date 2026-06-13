@@ -287,7 +287,7 @@ function isInRange(date: Date | null): boolean {
 function isSelected(date: Date | null): boolean {
   if (!date) return false
   if (!!range) {
-    return (
+    return !!(
       (startDate && date.getTime() === startDate.getTime()) ||
       (endDate && date.getTime() === endDate.getTime())
     )

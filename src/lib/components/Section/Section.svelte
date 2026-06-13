@@ -30,18 +30,18 @@ import type { Snippet } from "svelte";
 type Props = {
   /** @type {string} - Additional CSS classes */
   class?: string;
-  
+
   /** @type {string} - HTML id for accessibility.  Defaults to a random UUID. */
   id?: string;
-  
+
   /** @type {string | Snippet} - Section title */
   title?: string | Snippet;
-  
+
   /** @type {string | Snippet} - Optional subtitle or description */
   subtitle?: string | Snippet;
-  
-  /** @type {() => void} - Section content */
-  children?: () => void | Snippet | HTMLElement;
+
+  /** @type {Snippet} - Section content */
+  children?: Snippet;
 };
 
 const {
@@ -49,7 +49,7 @@ const {
   id = crypto.randomUUID(),
   title = "",
   subtitle = "",
-  children = undefined,
+  children,
 }: Props = $props()
 </script>
 

@@ -38,7 +38,7 @@ const {
   as = "section",
   role = null,
   ariaLabel = null,
-  children = null,
+  children,
 }: Props = $props()
 </script>
 

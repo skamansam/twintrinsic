@@ -25,7 +25,7 @@ import type { Snippet } from "svelte";
 import { slide } from "svelte/transition"
 import ThemeToggle from "../ThemeToggle/ThemeToggle.svelte"
 
-type Brand = string | { name: string; logo?: Snippet | string; href?: string; tagline?: string }
+type Brand = string | { name: string; logo?: import("svelte").Snippet<[number]> | string; href?: string; tagline?: string }
 type User = { name: string; avatar?: string; href?: string } | null
 type NavItem = { label: string; href?: string; current?: boolean }
 interface Props {

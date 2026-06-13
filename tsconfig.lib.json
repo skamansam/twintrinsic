@@ -9,9 +9,15 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
+    "types": [],
     "module": "NodeNext",
     "moduleResolution": "NodeNext"
   },
   "include": ["src/lib/**/*", "src/app.d.ts"],
-  "exclude": ["src/routes/**/*", "tests/**/*", "stories/**/*"]
+  "exclude": [
+    "src/lib/paraglide/**/*",
+    "src/routes/**/*",
+    "tests/**/*",
+    "stories/**/*"
+  ]
 }

@@ -127,24 +127,26 @@ function handleBlur(event: FocusEvent): void {
 }
 
 /**
- * Resizes the textarea based on content
+ * Resizes the textarea based on content.
+ * Declared as a const arrow function to avoid the DOM lib `this: Window` binding
+ * ambiguity that occurs with `function` declarations when passed as a callback.
  */
-function resizeTextarea(): void {
+const resizeTextarea = (): void => {
   if (!textareaEl) return
 
   // Reset height to calculate scroll height
-  (textareaEl as HTMLTextAreaElement).style.height = "auto"
+  textareaEl.style.height = "auto"
 
   // Set height to scroll height
-  (textareaEl as HTMLTextAreaElement).style.height = `${(textareaEl as HTMLTextAreaElement).scrollHeight}px`
+  textareaEl.style.height = `${textareaEl.scrollHeight}px`
 }
 
 // Initialize auto-resize
 $effect(() => {
   if (autoResize && textareaEl) {
-    // Use setTimeout to ensure content is rendered
-    // @ts-ignore: DOM lib types setTimeout with `this: Window` binding
-    setTimeout(resizeTextarea, 0)
+    // Use queueMicrotask to defer resize until after the DOM has updated.
+    // Arrow function strips the `this` binding ambiguity that DOM lib has with setTimeout/queueMicrotask.
+    queueMicrotask(() => resizeTextarea())
   }
 })
 </script>

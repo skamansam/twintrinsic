@@ -22,7 +22,11 @@ Usage:
 ```
 -->
 <script lang="ts">
-import { getContext, onMount } from "svelte"
+import { getContext, onMount, type Component } from "svelte"
+import TreeNode from "./TreeNode.svelte"
+
+/** Self-reference for recursive children (typed loosely to allow partial props) */
+const Self = TreeNode as unknown as Component<Record<string, unknown>>;
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -71,10 +75,6 @@ const {
 // Get tree context
 const treeContext = getContext("tree") as { selectable?: boolean; isSelected?: (key: string) => boolean; toggleSelection?: (key: string) => void; showIcons?: boolean; showLines?: boolean } | undefined
 
-// Derived values for reactive prop access in closures
-const derivedExpanded = $derived(expanded)
-const derivedSelected = $derived(selected)
-
 // Component state
 let isExpanded = $state(expanded)
 let isSelected = $state(selected)
@@ -83,7 +83,7 @@ let nodeElement: HTMLElement | undefined
 
 // Update expanded state when prop changes
 $effect(() => {
-  isExpanded = derivedExpanded
+  isExpanded = expanded
 })
 
 // Update selected state from context or prop
@@ -91,7 +91,7 @@ $effect(() => {
   if (treeContext?.selectable && treeContext?.isSelected) {
     isSelected = treeContext.isSelected(key)
   } else {
-    isSelected = derivedSelected
+    isSelected = selected
   }
 })
 
@@ -258,9 +258,9 @@ function handleKeyDown(event: KeyboardEvent): void {
   
   {#if hasChildren && isExpanded}
     <div class="tree-node-children" role="group">
-      <svelte:self {...restProps} level={level + 1}>
+      <Self {...restProps} level={level + 1}>
         {@render children?.()}
-      </svelte:self>
+      </Self>
     </div>
   {/if}
 </div>

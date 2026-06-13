@@ -1,5 +1,9 @@
 <script lang="ts">
-import { getContext } from "svelte";
+import { getContext, type Component } from "svelte";
+import MenuItem from "./MenuItem.svelte";
+
+/** Self-reference for recursive children (typed loosely to allow partial props) */
+const Self = MenuItem as unknown as Component<{ value: Record<string, unknown> }>;
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -59,7 +63,7 @@ const toggleMenu = () => {
   {#if (value as { children?: unknown[] })?.children}
     <ul class="menu-item-submenu" class:hidden={!isOpen}>
       {#each (value as { children: unknown[] }).children as child}
-        <svelte:self value={child as Record<string, unknown>} />
+        <Self value={child as Record<string, unknown>} />
       {/each}
     </ul>
   {/if}

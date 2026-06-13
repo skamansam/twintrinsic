@@ -36,15 +36,6 @@ const {
   /** @type {boolean} - Whether multiple selection is allowed */
   multiple = false,
 
-  /** @type {string} - Property name for option label */
-  optionLabel = "label",
-
-  /** @type {string} - Property name for option value */
-  optionValue = "value",
-
-  /** @type {string} - Property name for option icon */
-  optionIcon,
-
   /** @type {string} - Property name for option children (for cascading) */
   optionChildren = "items",
 
@@ -57,8 +48,8 @@ const {
   /** @type {boolean} - Whether to filter options by typing */
   filter = false,
 
-  /** @type {string} - Size of the dropdown (sm, md, lg) */
-  size = "md",
+  /** @type {"sm" | "md" | "lg"} - Size of the dropdown (sm, md, lg) */
+  size = "md" as const,
 
   /** @type {boolean} - Whether to show a clear button */
   clearable = false,
@@ -86,8 +77,6 @@ const {
   {value}
   {placeholder}
   {multiple}
-  {optionLabel}
-  {optionValue}
   {optionChildren}
   {disabled}
   required={required || false}

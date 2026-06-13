@@ -86,7 +86,7 @@ const alignClasses = $derived(
     {truncate ? 'truncate' : ''}
     {className}
   "
-  {scope}
+  scope={scope as "col" | "row" | "colgroup" | "rowgroup"}
   style={width ? `width: ${width}` : undefined}
   aria-sort={sortable ? (sortDirection === 'asc' ? 'ascending' : sortDirection === 'desc' ? 'descending' : 'none') : undefined}
   onclick={sortable ? handleSort : undefined}
