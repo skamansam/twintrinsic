@@ -88,7 +88,7 @@ function handleKeydown(event: KeyboardEvent): void {
 }
 
 // Generate unique ID if not provided (read prop directly — no shadowing $derived needed)
-const tabId = id || `tab-${crypto.randomUUID()}`
+const tabId = $derived(id || `tab-${crypto.randomUUID()}`)
 
 // Panel ID for aria-controls
 const panelId = $derived(`panel-${tabId}`)

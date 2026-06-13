@@ -104,7 +104,7 @@ const {
 
 // Component state
 let selectElement: HTMLSelectElement | undefined = $state()
-let selectedValue: string | string[] | undefined = $state(value)
+let selectedValue: string | string[] | undefined = $state()
 
 // Sync selected value with prop
 $effect(() => {

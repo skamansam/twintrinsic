@@ -90,7 +90,7 @@ const derivedName = $derived(name)
 
 // Input state
 let inputValue = $state("")
-let itemValues: string[] = $state([...derivedValues])
+let itemValues: string[] = $state([])
 let focusedIndex = $state(-1)
 let inputEl: HTMLInputElement | undefined
 let isInvalid = $state(false)

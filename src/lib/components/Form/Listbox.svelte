@@ -91,7 +91,7 @@ const {
 const formContext = getContext<FormContext | undefined>("form")
 
 // Component state
-let selectedValues: unknown[] | unknown | null = $state(multiple ? [] : null)
+let selectedValues: unknown[] | unknown | null = $state()
 let filterValue = $state("")
 let highlightedIndex = $state(0)
 let listboxElement: HTMLElement | undefined = $state()

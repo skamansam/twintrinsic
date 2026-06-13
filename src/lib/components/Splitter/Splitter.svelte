@@ -55,7 +55,7 @@ let {
   onresize,
 }: Props = $props()
 
-let size = $state(initialSize)
+let size = $state(0)
 let isDragging = $state(false)
 let containerRef = $state<HTMLDivElement>()
 
@@ -70,6 +70,11 @@ const separatorParams = {
 }
 
 onMount(() => {
+  // Default to the prop value, then override with a saved value if present.
+  // We can't initialize `size` from `initialSize` directly (that would
+  // capture only the initial value of a prop), so we set it on mount.
+  size = initialSize
+
   if (storageKey) {
     const saved = localStorage.getItem(storageKey)
     if (saved) {

@@ -240,6 +240,7 @@ const selectedLabel = $derived.by(() => {
 
 <div class="combobox-wrapper {className}" {id}>
   <div class="combobox-input-wrapper">
+    <!-- svelte-ignore a11y_role_supports_aria_props_implicit -->
     <input
       bind:this={inputElement}
       type="text"

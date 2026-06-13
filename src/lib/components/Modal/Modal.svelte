@@ -71,7 +71,11 @@ let {
   footer,
 }: Props = $props()
 
-// Modal state
+// Modal state. We initialize from the `open` prop to avoid a one-tick
+// flash where the dialog isn't in the DOM before the sync $effect runs.
+// The $effect below keeps `isOpen` in sync with subsequent prop changes;
+// the initial-value capture warning is a false positive here.
+// svelte-ignore state_referenced_locally
 let isOpen = $state(open)
 let modalElement: HTMLElement | undefined = $state()
 let previouslyFocusedElement: HTMLElement | null = $state(null)
