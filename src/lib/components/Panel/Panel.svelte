@@ -6,18 +6,22 @@ Provides smooth animations and keyboard accessibility.
 Usage:
 ```svelte
 <Panel>
-  <svelte:fragment slot="header">Panel Title</svelte:fragment>
+  {#snippet header()}Panel Title{/snippet}
   Content goes here
 </Panel>
 
 <Panel expanded={false} class="custom-class">
-  <svelte:fragment slot="header">
+  {#snippet header()}
     <Icon name="settings" />
     Settings
-  </svelte:fragment>
+  {/snippet}
   Settings content
 </Panel>
 ```
+
+Note: Panel uses the Svelte 5 snippet prop API (`header`, `children`, `footer`).
+The legacy `<svelte:fragment slot="header">` slot syntax is no longer supported
+and triggers a `$$slot_def` type error — use `{#snippet header()}` instead.
 -->
 <script module lang="ts">
 /**

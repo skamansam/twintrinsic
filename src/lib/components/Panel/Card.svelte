@@ -112,19 +112,13 @@ function handleClick(event: MouseEvent | KeyboardEvent): void {
     expanded={true}
     showIcon={false}
     bordered={false}
+    {header}
   >
-    <svelte:fragment slot="header">
-      <!-- @ts-ignore Svelte 5 internal `$$slot_def` type on snippet render via slot fragment -->
-      {@render header?.()}
-    </svelte:fragment>
-
-    <!-- @ts-ignore Svelte 5 internal `$$slot_def` type on snippet render -->
     {@render children?.()}
   </Panel>
 
   {#if footer}
     <div class="card-footer">
-      <!-- @ts-ignore Svelte 5 internal `$$slot_def` type on snippet render -->
       {@render footer?.()}
     </div>
   {/if}
