@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import 'leaflet/dist/leaflet.css';
+/// <reference path="../../../types/css-modules.d.ts" />
+import { onMount } from 'svelte';
+import 'leaflet/dist/leaflet.css';
 
 	interface Marker {
 		id?: string | number;
@@ -186,8 +187,8 @@
 		}
 	}
 
-	onMount(async () => {
-		if (!mapContainer) return;
+async function initializeMap() {
+	if (!mapContainer) return undefined;
 
 		// Dynamically import leaflet to avoid type issues
 		const leafletModule = await import('leaflet');
@@ -411,12 +412,18 @@
 			);
 		});
 
-		return () => {
-			if (map) {
-				map.remove();
-			}
-		};
-	});
+	return () => {
+		if (map) {
+			map.remove();
+		}
+	};
+}
+
+onMount(() => {
+	// Run async init without returning a Promise to onMount
+	// (Svelte's onMount cleanup signature can't accept a Promise<cleanup>)
+	initializeMap();
+});
 </script>
 
 <div bind:this={mapContainer} class="h-full w-full"></div>
