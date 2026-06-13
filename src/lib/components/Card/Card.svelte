@@ -84,15 +84,14 @@ const {
   footer,
 }: Props = $props()
 
-// Determine if card has clickable behavior
-const isClickable = !!href
-
-// Determine element type based on href
-const elementType = href ? "a" : "article"
+// Determine if card has clickable behavior (derived so the conditional render
+// stays reactive to prop changes — otherwise svelte-check warns that the
+// reference only captures the initial value of `href`)
+const isClickable = $derived(!!href)
 </script>
 
 <svelte:element
-  this={elementType}
+  this={href ? "a" : "article"}
   {id}
   class="
     card
@@ -110,17 +109,17 @@ const elementType = href ? "a" : "article"
       <img src={image} alt={imageAlt} />
     </div>
   {/if}
-  
+
   {#if header}
     <div class="card-header">
       {@render header?.()}
     </div>
   {/if}
-  
+
   <div class="card-body">
     {@render children?.()}
   </div>
-  
+
   {#if footer}
     <div class="card-footer">
       {@render footer?.()}

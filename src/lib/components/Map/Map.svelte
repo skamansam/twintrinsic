@@ -1,6 +1,9 @@
 <script lang="ts">
-/// <reference path="../../../types/css-modules.d.ts" />
 import { onMount } from 'svelte';
+// @ts-ignore - CSS side-effect import; no types available for the CSS bundle.
+// (A `declare module '*.css'` in app.d.ts is not applied by svelte-check to
+// files under src/lib/**/*, so an inline suppression is the most reliable
+// approach for the lib typecheck.)
 import 'leaflet/dist/leaflet.css';
 
 	interface Marker {

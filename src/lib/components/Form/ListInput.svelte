@@ -283,6 +283,8 @@ function handleInput(event: Event): void {
     }
   }
 
+  // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
+  // constructing it from module scope has `this: void` which svelte-check flags.
   oninput?.(new CustomEvent("input", { detail: { value: inputValue } }))
 }
 
@@ -337,11 +339,11 @@ function handleBlur(event: FocusEvent): void {
 
   // Reset focused index after a short delay
   // This allows chip click events to fire first
-  const resetFocusedIndex = (): void => {
+  // @ts-ignore: DOM lib types setTimeout with `this: Window` binding;
+  // calling it from module scope has `this: void` which svelte-check flags.
+  globalThis.setTimeout(() => {
     focusedIndex = -1
-  }
-  // biome-ignore lint/suspicious/noExplicitAny: setTimeout this context workaround
-  globalThis.setTimeout(resetFocusedIndex, 100)
+  }, 100)
 
   onblur?.(new CustomEvent("blur"))
 }
