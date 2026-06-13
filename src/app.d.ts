@@ -19,6 +19,29 @@ declare global {
     // If your adapter provides platform-specific context via event.platform, you can specify it here.
     interface Platform {}
   }
+
+  // Augment the global Window interface with custom properties used by the
+  // Twintrinsic demo site. These are set by the layout/page scripts and read
+  // by components like App, AppHeader, and the Map demo.
+  // NOTE: demo-site-only. If Twintrinsic is consumed as a library, these
+  // augmentations will leak into the consumer's Window type. Consider
+  // moving to `src/routes/demo.d.ts` once the library is published.
+  interface Window {
+    /** Base URL for the demo site's API calls */
+    baseUrl?: string
+    /** Map tile URL template (e.g., "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png") */
+    mapUrl?: string
+    /** CDN URL for static assets */
+    cdnUrl?: string
+    /** CDN URL for map tiles */
+    tilesCdnUrl?: string
+    /** CDN URL for user-uploaded storage */
+    storageCdnUrl?: string
+    /** Current user object, or null if not signed in */
+    user?: { name: string; avatar?: string; href?: string } | null
+    /** Whether the current page is the code editor (disables certain features) */
+    isEditor?: boolean
+  }
 }
 
 export {}

@@ -3,7 +3,7 @@
 // Data Display Components
 export { default as Accordion } from "./components/Accordion/Accordion.svelte";
 export { default as AccordionItem } from "./components/Accordion/AccordionItem.svelte";
-export { default as App } from "./components/App/index.js";
+export { default as App } from "./components/App/App.svelte";
 export { default as AppHeader } from "./components/AppHeader/AppHeader.svelte";
 export { default as Avatar } from "./components/Avatar/Avatar.svelte";
 export { default as AvatarGroup } from "./components/Avatar/AvatarGroup.svelte";

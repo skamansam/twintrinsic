@@ -8,6 +8,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     include: ['tests/unit/**/*.test.{js,ts}'],
+    setupFiles: ['./tests/vitest.setup.ts'],
   },
   resolve: process.env.VITEST
     ? {
