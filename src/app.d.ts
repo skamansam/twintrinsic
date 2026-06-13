@@ -41,6 +41,25 @@ declare global {
     user?: { name: string; avatar?: string; href?: string } | null
     /** Whether the current page is the code editor (disables certain features) */
     isEditor?: boolean
+    // --- Genie Map demo (game-map route) ---
+    /** Marker sprite positions and map data for the game-map demo */
+    mapData?: unknown
+    /** Special overlay data (highlighted regions, custom markers) */
+    specialData?: unknown
+    /** Whether the page is embedded in an iframe */
+    isEmbedded?: boolean
+    /** Whether the page is rendered in a mini/compact embed mode */
+    isMini?: boolean
+    /** Embed context type (e.g., "game", "tour", "preview") */
+    embedType?: string
+    /** Partner/affiliate identifier for the embed */
+    partner?: string
+    /** Whether the embed needs email verification before full access */
+    needsVerification?: boolean
+    /** Game metadata for the game-map demo (id, title, slug, etc.) */
+    game?: { id: number; title: string; slug: string }
+    /** Generic config object for demo scripts */
+    config?: Record<string, unknown>
   }
 }
 
