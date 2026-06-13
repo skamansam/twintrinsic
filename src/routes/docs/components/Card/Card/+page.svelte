@@ -59,7 +59,7 @@ import { Card, CodeBlock } from "$lib"
       <svelte:fragment slot="media">
         <img
           src="https://picsum.photos/600/300"
-          alt="Sample image"
+          alt="Sample landscape"
           class="w-full h-48 object-cover"
         />
       </svelte:fragment>

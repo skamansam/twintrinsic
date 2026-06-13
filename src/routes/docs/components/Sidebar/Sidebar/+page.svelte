@@ -35,12 +35,12 @@ onMount(() => {
     <div class="h-[400px] bg-surface relative">
       {#if showExamples}
         <Sidebar>
-          <svelte:fragment slot="header">Navigation</svelte:fragment>
+          {#snippet header()}Navigation{/snippet}
           <nav class="space-y-2">
-            <a href="#" class="block p-2 rounded hover:bg-hover">Home</a>
-            <a href="#" class="block p-2 rounded hover:bg-hover">About</a>
-            <a href="#" class="block p-2 rounded hover:bg-hover">Settings</a>
-            <a href="#" class="block p-2 rounded hover:bg-hover">Help</a>
+            <a href="#home" class="block p-2 rounded hover:bg-hover">Home</a>
+            <a href="#about" class="block p-2 rounded hover:bg-hover">About</a>
+            <a href="#settings" class="block p-2 rounded hover:bg-hover">Settings</a>
+            <a href="#help" class="block p-2 rounded hover:bg-hover">Help</a>
           </nav>
         </Sidebar>
       {/if}
@@ -62,11 +62,11 @@ onMount(() => {
     <div class="h-[400px] bg-surface relative">
       {#if showExamples}
         <Sidebar position="right">
-          <svelte:fragment slot="header">Settings</svelte:fragment>
+          {#snippet header()}Settings{/snippet}
           <div class="space-y-4">
             <div class="space-y-2">
-              <label class="block text-sm font-medium">Theme</label>
-              <select class="w-full rounded-md border-border bg-background">
+              <label for="theme-select" class="block text-sm font-medium">Theme</label>
+              <select id="theme-select" class="w-full rounded-md border-border bg-background">
                 <option>Light</option>
                 <option>Dark</option>
                 <option>System</option>

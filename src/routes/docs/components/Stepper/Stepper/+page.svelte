@@ -71,12 +71,12 @@ import { CodeBlock, Container, Stepper, StepperStep } from "$lib"
           <p class="mt-2">Enter your personal details.</p>
           <div class="mt-4 space-y-4">
             <div>
-              <label class="block text-sm font-medium">Full Name</label>
-              <input type="text" class="mt-1 block w-full rounded-md border-border bg-background p-2" />
+              <label for="full-name" class="block text-sm font-medium">Full Name</label>
+              <input id="full-name" type="text" class="mt-1 block w-full rounded-md border-border bg-background p-2" />
             </div>
             <div>
-              <label class="block text-sm font-medium">Email</label>
-              <input type="email" class="mt-1 block w-full rounded-md border-border bg-background p-2" />
+              <label for="email" class="block text-sm font-medium">Email</label>
+              <input id="email" type="email" class="mt-1 block w-full rounded-md border-border bg-background p-2" />
             </div>
           </div>
         </div>
@@ -87,17 +87,17 @@ import { CodeBlock, Container, Stepper, StepperStep } from "$lib"
           <p class="mt-2">Enter your address details.</p>
           <div class="mt-4 space-y-4">
             <div>
-              <label class="block text-sm font-medium">Street Address</label>
-              <input type="text" class="mt-1 block w-full rounded-md border-border bg-background p-2" />
+              <label for="street-address" class="block text-sm font-medium">Street Address</label>
+              <input id="street-address" type="text" class="mt-1 block w-full rounded-md border-border bg-background p-2" />
             </div>
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="block text-sm font-medium">City</label>
-                <input type="text" class="mt-1 block w-full rounded-md border-border bg-background p-2" />
+                <label for="city" class="block text-sm font-medium">City</label>
+                <input id="city" type="text" class="mt-1 block w-full rounded-md border-border bg-background p-2" />
               </div>
               <div>
-                <label class="block text-sm font-medium">Postal Code</label>
-                <input type="text" class="mt-1 block w-full rounded-md border-border bg-background p-2" />
+                <label for="postal-code" class="block text-sm font-medium">Postal Code</label>
+                <input id="postal-code" type="text" class="mt-1 block w-full rounded-md border-border bg-background p-2" />
               </div>
             </div>
           </div>
