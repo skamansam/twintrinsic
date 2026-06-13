@@ -2,25 +2,34 @@
 	import { highlightElement } from '@speed-highlight/core';
 	import { detectLanguage } from '@speed-highlight/core/detect';
 	import { onDestroy, onMount } from 'svelte';
+	import type { Snippet } from 'svelte';
 
-	const {
-		/** @type {string} - Code content to render when not using snippets */
+	interface Props {
+		/** Code content to render when not using snippets */
+		code?: string;
+		/** The language for syntax highlighting */
+		language?: string;
+		/** Additional CSS classes */
+		class?: string;
+		/** Whether to show rendering time */
+		showRenderTime?: boolean;
+		children?: Snippet;
+	}
+
+	let {
 		code: codeProp = '',
-		/** @type {string} - The language for syntax highlighting */
 		language = '',
-		/** @type {string} - Additional CSS classes */
 		class: className = '',
-		/** @type {boolean} - Whether to show rendering time */
 		showRenderTime = false,
 		children,
-	} = $props();
+	}: Props = $props();
 
 	// className is used in the template below
 
 	let code = $state('');
 	let copied = $state(false);
-	let copyTimeout = $state();
-	let codeElement = $state();
+	let copyTimeout: ReturnType<typeof setTimeout> | undefined = $state();
+	let codeElement: HTMLElement | undefined = $state();
 	let renderTime = $state(0);
 
 	onMount(() => {

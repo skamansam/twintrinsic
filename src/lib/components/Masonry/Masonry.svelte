@@ -23,41 +23,50 @@ Usage:
 </Masonry>
 -->
 <script lang="ts">
+import type { Snippet } from "svelte"
 import { onDestroy, onMount } from "svelte"
 
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /**
+   * Number of columns, or a responsive breakpoints object
+   * (e.g., `{ default: 1, sm: 2, md: 3, lg: 4 }`).
+   */
+  columns?: number | Record<string, number>
+  /** Gap between items in pixels */
+  gap?: number
+  /** Fixed column width (overrides columns) */
+  columnWidth?: string
+  /** Whether to center the grid */
+  centered?: boolean
+  /** Whether to animate item positions */
+  animated?: boolean
+  /** Animation duration in milliseconds */
+  animationDuration?: number
+  /** Animation easing function */
+  animationEasing?: string
+  /** ARIA label for the grid */
+  ariaLabel?: string
+  /** Masonry items */
+  children?: Snippet
+}
+
 const {
-  /** @type {string} - Additional CSS classes */
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {number|Object} - Number of columns or responsive breakpoints object */
   columns = 3,
-
-  /** @type {number} - Gap between items in pixels */
   gap = 16,
-
-  /** @type {string} - Fixed column width (overrides columns) */
   columnWidth,
-
-  /** @type {boolean} - Whether to center the grid */
   centered = false,
-
-  /** @type {boolean} - Whether to animate item positions */
   animated = true,
-
-  /** @type {number} - Animation duration in milliseconds */
   animationDuration = 300,
-
-  /** @type {string} - Animation easing function */
   animationEasing = "ease-out",
-
-  /** @type {string} - ARIA label for the grid */
   ariaLabel = "Masonry grid",
-
   children,
-} = $props()
+}: Props = $props()
 
 // Component state
 let containerElement: HTMLElement | undefined = $state()

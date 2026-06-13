@@ -67,39 +67,37 @@ let {
 }: Props = $props()
 
 // Subscribe to the global iconset configuration
-let currentConfig = $state(iconConfig)
+let currentConfig = $state({ defaultIconset: 'mdi-light' })
 $effect(() => {
   const unsubscribe = iconConfig.subscribe(config => {
-    currentConfig = config
+    currentConfig = config as { defaultIconset: string }
   })
   return unsubscribe
 })
 
 // Parse icon name to extract iconset if provided (e.g., "tabler:star-filled" -> iconset="tabler", name="star-filled")
-let parsedName = $derived.by(() => {
+let parsedName: { iconset: string | null; name: string } = $derived.by(() => {
   const parts = name.split(':')
   if (parts.length > 1) {
-    return { iconset: parts[0], name: parts[1] }
+    return { iconset: parts[0] as string, name: parts[1] as string }
   }
   return { iconset: null, name }
 })
 
 // Resolve the iconset: use parsed iconset, provided override, or fall back to default
-let resolvedIconset = $derived(parsedName.iconset || iconset || currentConfig.defaultIconset)
+let resolvedIconset = $derived(parsedName.iconset || iconset || (currentConfig as { defaultIconset: string }).defaultIconset)
 
 // Build the full icon name with iconset prefix
 let fullIconName = $derived(`${resolvedIconset}:${parsedName.name}`)
-</script>
-
-<IconifyIcon
+</script>  <IconifyIcon
   icon={fullIconName}
   {color}
   {width}
   {height}
   {hFlip}
   {vFlip}
-  {rotate}
+  rotate={typeof rotate === 'number' ? rotate : undefined}
   {inline}
   class="_icon-{parsedName.name} _iconset-{resolvedIconset} {className}"
-  {onLoad}
+  onload={onLoad}
 />

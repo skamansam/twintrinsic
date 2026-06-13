@@ -33,6 +33,7 @@ Usage:
 -->
 <script lang="ts">
 import { onDestroy, onMount, setContext } from "svelte"
+import type { CarouselContext } from "./carouselContext.js"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -100,9 +101,9 @@ let isHovering = $state(false)
 let isDragging = $state(false)
 let startX = $state(0)
 let currentX = $state(0)
-let carouselElement = $state()
-let itemsElement = $state()
-let autoplayInterval = $state()
+let carouselElement: HTMLElement | undefined = $state()
+let itemsElement: HTMLElement | undefined = $state()
+let autoplayInterval: ReturnType<typeof setInterval> | undefined = $state()
 let slideWidth = $state(0)
 let touchStartTime = $state(0)
 
@@ -118,7 +119,7 @@ $effect(() => {
 
 // Provide context for child components
 $effect(() => {
-  setContext("carousel", {
+  const carouselContext: CarouselContext = {
     registerItem: () => {
       totalSlides++
       return totalSlides - 1
@@ -126,7 +127,8 @@ $effect(() => {
     currentIndex,
     transition,
     transitionDuration,
-  })
+  }
+  setContext<CarouselContext>("carousel", carouselContext)
 })
 
 // Set up autoplay
@@ -307,6 +309,7 @@ onDestroy(() => {
 })
 </script>
 
+<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <div
   {id}
   class="
@@ -318,7 +321,6 @@ onDestroy(() => {
   role="region"
   aria-label={ariaLabel}
   aria-roledescription="carousel"
-  tabindex="0"
   onmouseenter={handleMouseEnter}
   onmouseleave={handleMouseLeave}
   ontouchstart={handleTouchStart}

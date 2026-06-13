@@ -33,8 +33,22 @@
  * ```
  */
 import { setContext } from "svelte";
+import type { Snippet } from "svelte";
 
-const {
+interface Props {
+  class?: string
+  id?: string
+  selectable?: boolean
+  multiSelect?: boolean
+  selected?: unknown[]
+  showIcons?: boolean
+  showLines?: boolean
+  ariaLabel?: string
+  onselect?: (event: CustomEvent<{ selected: unknown[] }>) => void
+  children?: Snippet
+}
+
+let {
   class: className = "",
   id = crypto.randomUUID(),
   selectable = false,
@@ -45,14 +59,14 @@ const {
   ariaLabel = "Tree",
   onselect,
   children,
-} = $props()
+}: Props = $props()
 
 // Derived values for reactive prop access in closures
 const derivedSelectable = $derived(selectable)
 const derivedMultiSelect = $derived(multiSelect)
 
 // Component state
-let selectedNodes = $state(/** @type {any[]} */ ([]))
+let selectedNodes: unknown[] = $state([])
 
 // Provide context for child components
 $effect(() => {

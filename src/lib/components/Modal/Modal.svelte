@@ -18,55 +18,63 @@ Usage:
 <script lang="ts">
 import { onMount } from "svelte"
 import { fade, scale } from "svelte/transition"
+import type { Snippet } from "svelte"
 
-const {
-  /** @type {string} - Additional CSS classes */
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Whether the modal is open */
+  open?: boolean
+  /** Whether to close when clicking outside */
+  closeOnOutsideClick?: boolean
+  /** Whether to close when pressing Escape */
+  closeOnEscape?: boolean
+  /** Size of the modal (sm, md, lg, xl, full) */
+  size?: string
+  /** Whether to center the modal vertically */
+  centered?: boolean
+  /** Whether to show a close button in the header */
+  showCloseButton?: boolean
+  /** ARIA label for the close button */
+  closeButtonLabel?: string
+  /** ARIA label for the modal */
+  ariaLabel?: string
+  /** ARIA description for the modal */
+  ariaDescription?: string
+  /** Open event handler */
+  onopen?: (event: CustomEvent) => void
+  /** Close event handler */
+  onclose?: (event: CustomEvent<{ reason: string }>) => void
+  children?: Snippet
+  header?: Snippet
+  footer?: Snippet
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {boolean} - Whether the modal is open */
   open = false,
-
-  /** @type {boolean} - Whether to close when clicking outside */
   closeOnOutsideClick = true,
-
-  /** @type {boolean} - Whether to close when pressing Escape */
   closeOnEscape = true,
-
-  /** @type {string} - Size of the modal (sm, md, lg, xl, full) */
   size = "md",
-
-  /** @type {boolean} - Whether to center the modal vertically */
   centered = true,
-
-  /** @type {boolean} - Whether to show a close button in the header */
   showCloseButton = true,
-
-  /** @type {string} - ARIA label for the close button */
   closeButtonLabel = "Close modal",
-
-  /** @type {string} - ARIA label for the modal */
   ariaLabel,
-
-  /** @type {string} - ARIA description for the modal */
   ariaDescription,
-
-  /** @type {(event: CustomEvent) => void} - Open event handler */
   onopen,
-  /** @type {(event: CustomEvent) => void} - Close event handler */
   onclose,
-
   children,
   header,
   footer,
-} = $props()
+}: Props = $props()
 
 // Modal state
 let isOpen = $state(open)
-let modalElement = $state()
-let previouslyFocusedElement = $state()
+let modalElement: HTMLElement | undefined = $state()
+let previouslyFocusedElement: HTMLElement | null = $state(null)
 
 // Sync open state when prop changes
 $effect(() => {
@@ -84,7 +92,7 @@ $effect(() => {
  */
 function openModal(): void {
   // Save the currently focused element to restore later
-  previouslyFocusedElement = document.activeElement
+  previouslyFocusedElement = document.activeElement as HTMLElement | null
 
   // Add body class to prevent scrolling
   document.body.classList.add("modal-open")
@@ -107,9 +115,7 @@ function closeModal(reason: string = "programmatic"): void {
   document.body.classList.remove("modal-open")
 
   // Restore focus to the previously focused element
-  if (previouslyFocusedElement) {
-    previouslyFocusedElement.focus()
-  }
+  previouslyFocusedElement?.focus()
 
   onclose?.(new CustomEvent("close", { detail: { reason } }))
 }
@@ -161,8 +167,8 @@ function trapFocus(event: KeyboardEvent): void {
 
   if (focusableElements.length === 0) return
 
-  const firstElement = focusableElements[0]
-  const lastElement = focusableElements[focusableElements.length - 1]
+  const firstElement = focusableElements[0] as HTMLElement
+  const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement
 
   // If shift+tab on first element, move to last element
   if (event.shiftKey && document.activeElement === firstElement) {
@@ -185,7 +191,7 @@ function focusFirstElement(): void {
   // Try to focus the first focusable element
   const focusableElement = modalElement.querySelector(
     'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-  )
+  ) as HTMLElement | null
 
   if (focusableElement) {
     focusableElement.focus()
@@ -231,9 +237,15 @@ const sizeClasses = $derived(
 {#if isOpen}
   <div
     class="modal-backdrop"
-    onclick={handleBackdropClick}
     transition:fade={{ duration: 200 }}
   >
+  <button
+    type="button"
+    class="modal-backdrop-button"
+    aria-hidden="true"
+    tabindex="-1"
+    onclick={handleBackdropClick}
+  ></button>
     <div
       {id}
       class="
@@ -297,8 +309,14 @@ const sizeClasses = $derived(
   
   .modal-backdrop {
     @apply fixed inset-0 z-50;
-    @apply bg-black/50 dark:bg-black/60 backdrop-blur-sm;
     @apply flex items-center justify-center p-4;
+  }
+
+  .modal-backdrop-button {
+    @apply absolute inset-0;
+    @apply bg-black/50 dark:bg-black/60 backdrop-blur-sm;
+    @apply border-0 cursor-default;
+    @apply p-0 m-0;
   }
   
   .modal {

@@ -16,21 +16,44 @@ Usage:
 </BottomBar>
 ```
 -->
+<script module lang="ts">
+import type { Snippet } from "svelte"
+
+/**
+ * Public props for the BottomBar component.
+ * Exported so consumers (e.g. the App shell) can type-check against it
+ * and avoid the `never` cascade that occurs when a component's
+ * destructured props are not annotated with its own type.
+ */
+export type BottomBarProps = {
+  /** Whether the bottom bar is expanded by default */
+  expanded?: boolean
+  /** Additional CSS classes */
+  class?: string
+  /** Height of the bottom bar (CSS length value) */
+  height?: string
+  /** Unique ID for the bottom bar */
+  id?: string
+  /** Accessible label for the bottom bar */
+  ariaLabel?: string
+  /** Whether the bottom bar is disabled */
+  disabled?: boolean
+  /** Whether the bottom bar floats on mobile (fixed positioning) */
+  floatOnMobile?: boolean
+  /** Whether the bottom bar is docked to the bottom of the viewport */
+  docked?: boolean
+  /** Called when the bottom bar is toggled */
+  ontoggle?: (payload: { expanded: boolean }) => void
+  /** Header content */
+  header?: Snippet
+  /** Main content */
+  children?: Snippet
+}
+</script>
+
 <script lang="ts">
 import { slide } from "svelte/transition"
 import Panel from "../Panel/Panel.svelte"
-
-type BottomBarProps = {
-  expanded?: boolean
-  class?: string
-  height?: string
-  id?: string
-  ariaLabel?: string
-  disabled?: boolean
-  floatOnMobile?: boolean
-  docked?: boolean
-  ontoggle?: (payload: { expanded: boolean }) => void
-}
 
 const {
   expanded = true,
@@ -44,10 +67,10 @@ const {
   ontoggle,
   header,
   children,
-} = $props() satisfies BottomBarProps
+}: BottomBarProps = $props()
 
 let isExpanded = $state(false)
-let bottomBarElement = $state()
+let bottomBarElement: HTMLElement | undefined = $state()
 
 // Initialize and sync expanded state when prop changes
 $effect(() => {

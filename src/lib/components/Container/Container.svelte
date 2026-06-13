@@ -15,27 +15,34 @@ Usage:
 ```
 -->
 <script lang="ts">
+import type { Snippet } from "svelte"
+
+interface Props {
+  /** If true, container will be full-width */
+  fluid?: boolean
+  /** Additional CSS classes to apply */
+  class?: string
+  /** HTML element to render */
+  as?: "main" | "section" | "article" | "div" | "header" | "footer" | "nav" | "aside"
+  /** ARIA role if needed */
+  role?: string | null
+  /** ARIA label if needed */
+  ariaLabel?: string | null
+  /** Container content */
+  children?: Snippet
+}
+
 const {
-  /** @type {boolean} - If true, container will be full-width */
   fluid = false,
-
-  /** @type {string} - Additional CSS classes to apply */
   class: className = "",
-
-  /** @type {"main" | "section" | "article" | "div"} - HTML element to render */
   as = "section",
-
-  /** @type {string} - ARIA role if needed */
   role = null,
-
-  /** @type {string} - ARIA label if needed */
   ariaLabel = null,
-
   children = null,
-} = $props()
+}: Props = $props()
 </script>
 
-<svelte:element 
+<svelte:element
   this={as}
   class="{fluid ? 'w-full' : 'container mx-auto px-4 sm:px-6 lg:px-8'} {className}"
   {role}

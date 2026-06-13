@@ -20,6 +20,7 @@ Usage:
 -->
 <script lang="ts">
 import { setContext } from "svelte"
+import type { BreadcrumbContext } from "./breadcrumbContext.js"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -45,12 +46,12 @@ const {
 
 // Provide context for child components
 $effect(() => {
-  const breadcrumbContext = {
+  const breadcrumbContext: BreadcrumbContext = {
     separator,
     collapsible,
     maxVisibleItems,
   }
-  setContext("breadcrumb", breadcrumbContext)
+  setContext<BreadcrumbContext>("breadcrumb", breadcrumbContext)
 })
 </script>
 

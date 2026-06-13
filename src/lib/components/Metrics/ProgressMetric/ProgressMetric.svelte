@@ -24,6 +24,9 @@
 		...rest
 	}: Props = $props();
 
+	// Unique id so the <label> can be associated with the progressbar control.
+	const id = `progress-${crypto.randomUUID()}`;
+
 	const percentage = $derived(Math.min((value / max) * 100, 100));
 
 	const colorMap: Record<string, string> = {
@@ -47,7 +50,7 @@
 
 <div class="flex flex-col gap-2" {...rest}>
 	<div class="flex items-center justify-between">
-		<label class="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>
+		<label for={id} class="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>
 		{#if showPercentage}
 			<span class="text-sm font-semibold text-gray-900 dark:text-white">{percentage.toFixed(0)}%</span>
 		{/if}
@@ -55,6 +58,7 @@
 
 	<div class="overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700 {heightClass}">
 		<div
+			{id}
 			class="h-full transition-all duration-300 {colorClass}"
 			style="width: {percentage}%"
 			role="progressbar"

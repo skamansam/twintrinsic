@@ -30,7 +30,7 @@ const {
 } = $props()
 
 // Get tabs context
-const tabsContext = getContext("tabs")
+const tabsContext = getContext<{ centered?: boolean; fullWidth?: boolean } | undefined>("tabs")
 
 // Get context values with defaults
 const centered = tabsContext?.centered || false

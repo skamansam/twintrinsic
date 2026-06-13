@@ -16,38 +16,44 @@ Usage:
 -->
 <script lang="ts">
 import { getContext, onMount } from "svelte"
+import type { Snippet } from "svelte"
 import Icon from "../Icon/Icon.svelte"
+import type { BreadcrumbContext } from "./breadcrumbContext.js"
 
-const {
-  /** @type {string} - Additional CSS classes */
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** Link URL (if item is a link) */
+  href?: string
+  /** Link target (_blank, _self, etc.) */
+  target?: string
+  /** Icon name to display */
+  icon?: string
+  /** Whether this is the current/active page */
+  current?: boolean
+  /** Whether this item should be hidden when collapsed */
+  collapsible?: boolean
+  children?: Snippet
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - Link URL (if item is a link) */
   href,
-
-  /** @type {string} - Link target (_blank, _self, etc.) */
   target,
-
-  /** @type {string} - Icon name to display */
   icon,
-
-  /** @type {boolean} - Whether this is the current/active page */
   current = false,
-
-  /** @type {boolean} - Whether this item should be hidden when collapsed */
   collapsible = true,
-
   children,
-} = $props()
+}: Props = $props()
 
 // Get breadcrumb context
-const breadcrumbContext = getContext("breadcrumb")
+const breadcrumbContext = getContext<BreadcrumbContext | undefined>("breadcrumb")
 
 // Get separator from context
 const separator = breadcrumbContext?.separator || "/"
 
 // Component state
-let itemElement
+let itemElement: HTMLElement | undefined = $state()
 let index = $state(-1)
 let isVisible = $state(true)
 

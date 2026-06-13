@@ -151,8 +151,8 @@ const positionClasses = $derived(
       {outline ? outlineClasses : variantClasses}
       {dot ? dotSizeClasses : sizeClasses}
       {positionClasses}
-      {className}
-    "
+      {      className}
+    absolute"
     role={dot ? 'status' : 'status'}
     aria-label={dot ? 'Status indicator' : undefined}
   >

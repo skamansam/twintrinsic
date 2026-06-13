@@ -34,13 +34,17 @@ Sidebar - A responsive side panel that adapts to screen size.
 </Sidebar>
 ```
 -->
-<script lang="ts">
-import Panel from "../Panel/Panel.svelte"
+<script module lang="ts">
+import type { Snippet } from "svelte"
 import type { MenuItem } from "../TreeMenu/TreeMenu.svelte"
-import TreeMenu from "../TreeMenu/TreeMenu.svelte"
 
-/** Sidebar component props configuration */
-type SidebarProps = {
+/**
+ * Public props for the Sidebar component.
+ * Exported so consumers (e.g. the App shell) can type-check against it
+ * and avoid the `never` cascade that occurs when a component's
+ * destructured props are not annotated with its own type.
+ */
+export type SidebarProps = {
   /** Show/hide the sidebar (controlled by parent) */
   visible?: boolean
   /** Additional CSS classes */
@@ -63,7 +67,18 @@ type SidebarProps = {
   onvisibilitychange?: (payload: { visible: boolean }) => void
   /** Callback when sidebar is toggled (desktop expand/collapse) */
   ontoggle?: (payload: { expanded: boolean }) => void
+  /** Header content for the Panel */
+  header?: Snippet
+  /** Title text for the sidebar header */
+  title?: string
+  /** Main sidebar content */
+  children?: Snippet
 }
+</script>
+
+<script lang="ts">
+import Panel from "../Panel/Panel.svelte"
+import TreeMenu from "../TreeMenu/TreeMenu.svelte"
 
 const {
   visible = false,
@@ -80,7 +95,7 @@ const {
   header,
   title,
   children,
-} = $props() satisfies SidebarProps
+}: SidebarProps = $props()
 
 let isExpanded = $state(true)
 let sidebarElement = $state()
@@ -101,6 +116,7 @@ $effect(() => {
 })
 </script>
 
+<!-- svelte-ignore a11y_no_redundant_roles -->
 <aside
   class="
     sidebar-container
@@ -119,7 +135,6 @@ $effect(() => {
       sidebar
       {isExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'}
     "
-    role="region"
     aria-labelledby="{id}-header"
   >
       {#if header || title}

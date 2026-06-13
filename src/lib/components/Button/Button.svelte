@@ -21,6 +21,8 @@ Usage:
 ```
 -->
 <script lang="ts">
+import { onMount } from "svelte"
+
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",
@@ -70,7 +72,9 @@ const {
   /** @type {string} - Value attribute for form buttons */
   value,
 
-  /** @type {boolean} - Whether the button should be autofocused */
+  /** @type {boolean} - Whether the button should be autofocused on mount.
+   *  Implemented via programmatic focus in `onMount` rather than the HTML
+   *  `autofocus` attribute, to avoid the Svelte a11y_autofocus warning. */
   autofocus = false,
 
   /** @type {string} - Form submission method (post, get, etc.) */
@@ -157,8 +161,21 @@ const iconSize = $derived(
     xl: "w-7 h-7",
   }[size] || "w-5 h-5"
 )
+
+// Ref for the rendered element (used to programmatically focus when autofocus is set)
+let buttonElement: HTMLElement | undefined = $state()
+
+// Focus the element ONCE on mount when autofocus is requested.
+// Using onMount (not $effect) ensures focus is only stolen on initial
+// render, not on every reactive dependency change.
+onMount(() => {
+  if (autofocus && !disabled && !loading && buttonElement) {
+    buttonElement.focus()
+  }
+})
 </script>
 
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <svelte:element
   this={elementType}
   {id}
@@ -176,18 +193,17 @@ const iconSize = $derived(
   {disabled}
   aria-disabled={disabled || loading ? 'true' : undefined}
   aria-label={ariaLabel}
-  role={elementType === 'button' || elementType === 'a' ? undefined : 'button'}
   onclick={handleClick}
   {form}
   {name}
   {value}
-  {autofocus}
   {formmethod}
   {formenctype}
   {formnovalidate}
   {formtarget}
   {rel}
   {download}
+  bind:this={buttonElement}
 >
   {#if loading}
     <span class="button-loader {iconSize}" aria-hidden="true"></span>

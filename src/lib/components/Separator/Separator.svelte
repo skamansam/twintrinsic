@@ -34,29 +34,31 @@ const {
 } = $props()
 
 // Color variants mapping
-/** @type {Record<string, string>} */
 const colorClasses = {
   default: "border-border",
   primary: "border-primary-200 dark:border-primary-800",
   success: "border-success/30",
   warning: "border-warning/30",
   error: "border-error/30",
-}
+} as const
+
+type Color = keyof typeof colorClasses
 
 // Determine if we have content and element type
 const element = $derived(as ?? (children ? "div" : "hr"))
 const hasContent = $derived(element !== "hr" && children !== undefined)
+const resolvedColorClass = $derived(colorClasses[color as Color] ?? colorClasses.default)
 </script>
 
 {#if element === "hr"}
   <hr
-    class="separator {colorClasses[color] || colorClasses.default} {vertical ? 'separator-vertical' : 'separator-horizontal'} {className}"
+    class="separator {resolvedColorClass} {vertical ? 'separator-vertical' : 'separator-horizontal'} {className}"
     aria-orientation={vertical ? 'vertical' : 'horizontal'}
     aria-label={ariaLabel}
   />
 {:else}
   <div
-    class="separator {colorClasses[color] || colorClasses.default} {vertical ? 'separator-vertical' : 'separator-horizontal'} {hasContent ? 'separator-with-content' : ''} {className}"
+    class="separator {resolvedColorClass} {vertical ? 'separator-vertical' : 'separator-horizontal'} {hasContent ? 'separator-with-content' : ''} {className}"
     role="separator"
     aria-orientation={vertical ? 'vertical' : 'horizontal'}
     aria-label={ariaLabel}

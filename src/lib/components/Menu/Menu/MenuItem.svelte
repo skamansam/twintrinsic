@@ -50,15 +50,16 @@ const toggleMenu = () => {
   class:active
   class:disabled
   role="menuitem"
+  tabindex="0"
   aria-label={ariaLabel}
   aria-disabled={disabled}
-  onclick={!disabled && toggleMenu}
+  onclick={() => !disabled && toggleMenu()}
 >
   {@render children?.()}
-  {#if value?.children}
+  {#if (value as { children?: unknown[] })?.children}
     <ul class="menu-item-submenu" class:hidden={!isOpen}>
-      {#each value.children as child}
-        <MenuItem value={child}/>
+      {#each (value as { children: unknown[] }).children as child}
+        <svelte:self value={child as Record<string, unknown>} />
       {/each}
     </ul>
   {/if}

@@ -13,6 +13,16 @@ Usage:
   </svelte:fragment>
 </Splitter>
 ```
+
+## A11y note
+
+The divider follows the [W3C APG window-splitter pattern](https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/)
+(`role="separator"` + `tabindex="0"` + `aria-valuenow/min/max` + keyboard handlers).
+Svelte 5's static analysis flags this as `a11y_no_noninteractive_tabindex`
+because `separator` is classified as a non-interactive role. The `role`,
+`tabindex`, and event listeners are set at runtime via the `separator`
+Svelte action to bypass the false positive. If Svelte updates its role
+classifications, move these attributes back into the template.
 -->
 <script lang="ts">
 import { onMount } from "svelte"
@@ -123,6 +133,36 @@ function handleKeyDown(event: KeyboardEvent) {
     onresize?.(size)
   }
 }
+
+/**
+ * Svelte action that wires up the W3C APG splitter pattern.
+ * Sets role="separator" + tabindex="0" and attaches mouse/keyboard
+ * handlers at runtime so Svelte's static analysis does not flag the
+ * `tabindex` and `onmousedown`/`onkeydown` on a non-interactive role.
+ * The handler identities are stable (defined in the component script),
+ * so no `update` is needed — Svelte would re-invoke it on every
+ * reactive change to the params object, causing unnecessary listener
+ * thrash during drag.
+ * @see https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/
+ */
+function separator(
+  node: HTMLElement,
+  params: {
+    onMouseDown: (e: MouseEvent) => void
+    onKeyDown: (e: KeyboardEvent) => void
+  }
+) {
+  node.setAttribute("role", "separator")
+  node.setAttribute("tabindex", "0")
+  node.addEventListener("mousedown", params.onMouseDown)
+  node.addEventListener("keydown", params.onKeyDown)
+  return {
+    destroy() {
+      node.removeEventListener("mousedown", params.onMouseDown)
+      node.removeEventListener("keydown", params.onKeyDown)
+    },
+  }
+}
 </script>
 
 <div
@@ -144,14 +184,14 @@ function handleKeyDown(event: KeyboardEvent) {
     class={orientation === "horizontal"
       ? "splitter-divider-horizontal"
       : "splitter-divider-vertical"}
-    role="button"
-    tabindex="0"
+    use:separator={{ onMouseDown: handleMouseDown, onKeyDown: handleKeyDown }}
     aria-label={orientation === "horizontal"
       ? "Resize panels left and right"
       : "Resize panels up and down"}
     aria-orientation={orientation}
-    onmousedown={handleMouseDown}
-    onkeydown={handleKeyDown}
+    aria-valuenow={Math.round(size)}
+    aria-valuemin={minSize}
+    aria-valuemax={maxSize}
   ></div>
 
   <div class="splitter-panel splitter-panel-second" style="flex: 1 1 auto">

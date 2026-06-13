@@ -32,7 +32,7 @@
 		...rest
 	}: Props = $props();
 
-	let paths: SVGPathElement[] = [];
+	let paths: (SVGPathElement | null)[] = $state([]);
 
 	const total = $derived(data.reduce((sum, val) => sum + val, 0));
 	const slices = $derived.by(() => {
@@ -92,7 +92,7 @@
 
 	onMount(() => {
 		paths.forEach((path, index) => {
-			path.addEventListener('click', () => handleSliceClick(index));
+			path?.addEventListener('click', () => handleSliceClick(index));
 		});
 	});
 </script>

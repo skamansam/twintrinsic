@@ -6,10 +6,10 @@ import Sidebar from "../Sidebar/Sidebar.svelte"
 import type { MenuItem } from "../TreeMenu/TreeMenu.svelte"
 
 type NavItem = { label: string; href?: string; current?: boolean }
-type Brand = string | { name: string; logo?: string | Snippet; href?: string }
-type User = { name: string; avatar?: string; href?: string } | null
+type Brand = string | { name: string; logo?: string | Snippet; href?: string; tagline?: string }
+type User = { name: string; avatar?: string; href?: string; role?: string; email?: string } | null
 
-interface AppProps {
+interface Props {
   darkMode?: boolean
   appName?: string
   brand?: Brand
@@ -67,12 +67,16 @@ let {
   // onrightSidebarVisibilityChange,
   onleftSidebarToggle,
   onrightSidebarToggle,
-}: AppProps = $props();
+}: Props = $props()
+
+/** @deprecated Use `Props` instead. Re-exported for backward compatibility. */
+export type AppProps = Props
 
 $effect(() => {
-  setContext("appDarkMode", {
-    getDarkMode: () => darkMode,
-  })
+  const darkModeContext = {
+    getDarkMode: (): boolean => darkMode,
+  }
+  setContext("appDarkMode", darkModeContext)
 })
 </script>
 
@@ -80,7 +84,7 @@ $effect(() => {
   <title>{appName}</title>
 </svelte:head>
 
-<div class='app bg-element-100 dark:bg-dark dark:text-light min-h-screen grid gap-0 grid-rows-[var(--header-height,120px)_1fr_var(--footer-height,60px)] grid-cols-[var(--leftbar-width,300px)_1fr_var(--rightbar-width,300px)]' style="--rightbar-width: {rightPanel ? rightSidebarWidth : 'auto'}; --leftbar-width: {(leftPanel || siteMenu) ? leftSidebarWidth : 'auto'}; --header-height: auto; --footer-height: auto;" data-theme>
+<div class='app bg-element-100 dark:bg-dark dark:text-light h-screen overflow-hidden grid gap-0 grid-rows-[var(--header-height,120px)_minmax(0,1fr)_var(--footer-height,60px)] grid-cols-[var(--leftbar-width,300px)_1fr_var(--rightbar-width,300px)]' style="--rightbar-width: {rightPanel ? rightSidebarWidth : 'auto'}; --leftbar-width: {(leftPanel || siteMenu) ? leftSidebarWidth : 'auto'}; --header-height: auto; --footer-height: auto;" data-theme>
 
 <!-- Skip to main content link for accessibility -->
 <a
@@ -103,7 +107,7 @@ $effect(() => {
       {onsearch}
       {onsignout}
       {themeToggleHidden}
-      class="appHeader col-span-full"
+      class="appHeader col-span-full overflow-x-hidden"
     />
   {/if}
   <!-- Left Sidebar -->
@@ -124,7 +128,7 @@ $effect(() => {
   {/if}
 
   <!-- Main Content -->
-  <main id="main-content" class="appMain p-5">
+  <main id="main-content" class="appMain p-5 overflow-y-auto overflow-x-auto">
     {@render children?.()}
   </main>
 

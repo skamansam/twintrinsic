@@ -1,5 +1,24 @@
 <script lang="ts">
-const {
+import type { Snippet } from "svelte"
+
+interface Props {
+  class?: string
+  id?: string
+  name?: string
+  options?: unknown[]
+  value?: unknown
+  placeholder?: string
+  optionLabel?: string
+  optionValue?: string
+  disabled?: boolean
+  searchable?: boolean
+  clearable?: boolean
+  ariaLabel?: string
+  onchange?: (event: CustomEvent<{ value: unknown; option: unknown }>) => void
+  children?: Snippet<[unknown]>
+}
+
+let {
   class: className = "",
   id = crypto.randomUUID(),
   name,
@@ -14,13 +33,13 @@ const {
   ariaLabel,
   onchange,
   children,
-} = $props()
+}: Props = $props()
 
 let isOpen = $state(false)
 let searchValue = $state("")
 let highlightedIndex = $state(-1)
 let selectedValue: unknown = $state(null)
-let inputElement: HTMLInputElement | undefined
+let inputElement: HTMLInputElement | undefined = $state()
 
 $effect(() => {
   selectedValue = value
@@ -49,7 +68,7 @@ const filteredOptions = $derived.by(() => {
   )
 })
 
-const handleInputFocus = () => {
+const handleInputFocus = (): void => {
   isOpen = true
 }
 
@@ -106,7 +125,10 @@ const handleKeydown = (e: KeyboardEvent): void => {
     case "Enter":
       e.preventDefault()
       if (highlightedIndex >= 0) {
-        handleOptionClick(filteredOptions[highlightedIndex])
+        const option = filteredOptions[highlightedIndex]
+        if (option !== undefined) {
+          handleOptionClick(option)
+        }
       }
       break
     case "Escape":
@@ -230,7 +252,6 @@ const selectedLabel = $derived.by(() => {
       on:change={handleInputChange}
       on:keydown={handleKeydown}
       aria-label={ariaLabel}
-      aria-description={ariaDescription}
       aria-haspopup="listbox"
       aria-expanded={isOpen}
       {name}
@@ -248,7 +269,7 @@ const selectedLabel = $derived.by(() => {
   </div>
 
   {#if isOpen && filteredOptions.length > 0}
-    <div class="combobox-dropdown" bind:this={dropdownElement} role="listbox">
+    <div class="combobox-dropdown" role="listbox">
       {#each filteredOptions as option, index}
         <div
           class="combobox-option"

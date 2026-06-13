@@ -15,40 +15,48 @@ Usage:
 ```
 -->
 <script lang="ts">
-import { getContext } from "svelte"
+import { getContext, onMount } from "svelte"
 import { fade } from "svelte/transition"
+import type { Snippet } from "svelte"
 
-const {
-  /** @type {string} - Additional CSS classes */
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Whether to lazy load panel content */
+  lazy?: boolean
+  /** Whether to keep content in DOM when not visible */
+  keepAlive?: boolean
+  /** Whether to animate panel transitions */
+  animated?: boolean
+  /** Animation duration in ms */
+  animationDuration?: number
+  children?: Snippet
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id,
-
-  /** @type {boolean} - Whether to lazy load panel content */
   lazy = false,
-
-  /** @type {boolean} - Whether to keep content in DOM when not visible */
   keepAlive = true,
-
-  /** @type {boolean} - Whether to animate panel transitions */
   animated = true,
-
-  /** @type {number} - Animation duration in ms */
   animationDuration = 200,
-
   children,
-} = $props()
+}: Props = $props()
 
 // Get tabs context
-const tabsContext = getContext("tabs")
+const tabsContext = getContext<{
+  registerPanel: (element: HTMLElement) => number
+  selectedIndex: () => number
+} | undefined>("tabs")
 
 if (!tabsContext) {
   throw new Error("TabPanel must be used within a Tabs component")
 }
 
 // Panel state
-let panelElement
+let panelElement: HTMLElement | undefined = $state()
 let index = -1
 let hasBeenSelected = $state(false)
 

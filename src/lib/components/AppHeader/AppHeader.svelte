@@ -25,10 +25,10 @@ import type { Snippet } from "svelte";
 import { slide } from "svelte/transition"
 import ThemeToggle from "../ThemeToggle/ThemeToggle.svelte"
 
-type Brand = string | { name: string; logo?: Snippet | string; href?: string }
+type Brand = string | { name: string; logo?: Snippet | string; href?: string; tagline?: string }
 type User = { name: string; avatar?: string; href?: string } | null
 type NavItem = { label: string; href?: string; current?: boolean }
-type AppHeaderProps = {
+interface Props {
   brand: Brand
   user?: User
   showSearch?: boolean
@@ -37,9 +37,8 @@ type AppHeaderProps = {
   navItems?: NavItem[]
   class?: string
   id?: string
-  logo?: () => any
-  notifications?: () => any
-  userMenu?: () => any
+  notifications?: Snippet
+  userMenu?: Snippet
   onsearch?: (payload: { query: string }) => void
   onsignout?: () => void
 }
@@ -57,7 +56,7 @@ const {
   userMenu,
   onsearch,
   onsignout,
-} = $props() satisfies AppHeaderProps
+}: Props = $props()
 
 let mobileMenuOpen = $state(false)
 let searchQuery = $state("")
@@ -112,16 +111,18 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
 <svelte:window onkeydown={handleKeydown} />
 
 {#snippet defaultLogo()}
-  {#if typeof brand.logo === "string"}
-    <img
-      src={brand.logo}
-      alt={brandName}
-      class="app-header-logo"
-      width="32"
-      height="32"
-    />
-  {:else if brand.logo}
-    {@render brand.logo(32)}
+  {#if typeof brand === "object"}
+    {#if typeof brand.logo === "string"}
+      <img
+        src={brand.logo}
+        alt={brandName}
+        class="app-header-logo"
+        width="32"
+        height="32"
+      />
+    {:else if brand.logo}
+      {@render brand.logo(32)}
+    {/if}
   {/if}
   <span class="app-header-brand-name">{brandName}</span>
 {/snippet}
@@ -133,9 +134,11 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
 {/snippet}
 
 {#snippet defaultUserMenu()}
-  <div class="app-header-user-menu-header">
-    <p class="app-header-user-name">{user.name}</p>
-  </div>
+  {#if user}
+    <div class="app-header-user-menu-header">
+      <p class="app-header-user-name">{user.name}</p>
+    </div>
+  {/if}
   <div class="app-header-user-menu-items">
     <a href="/profile" class="app-header-user-menu-item">Profile</a>
     <a href="/settings" class="app-header-user-menu-item">Settings</a>

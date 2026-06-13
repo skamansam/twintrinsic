@@ -223,11 +223,11 @@ const shapeClasses = $derived(
 
 // Determine status classes
 const statusClasses = $derived.by(() => {
-  if (status === "online") return "text-success-500"
-  if (status === "offline") return "text-muted"
-  if (status === "away") return "text-warning-500"
-  if (status === "busy") return "text-error-500"
-  return "text-muted"
+  if (status === "online") return "bg-success-500"
+  if (status === "offline") return "bg-muted"
+  if (status === "away") return "bg-warning-500"
+  if (status === "busy") return "bg-error-500"
+  return "bg-muted"
 })
 
 // Generate a random color based on the name or fallback

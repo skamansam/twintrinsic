@@ -16,38 +16,44 @@ Usage:
 -->
 <script lang="ts">
 import { onMount } from "svelte"
+import type { Snippet } from "svelte"
 
-const {
-  /** @type {string} - Additional CSS classes */
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Threshold for intersection (0-1), where 1 means fully visible */
+  threshold?: number
+  /** Margin around the root element for intersection detection */
+  rootMargin?: string
+  /** Whether to keep content rendered after it's been visible once */
+  keepRendered?: boolean
+  /** Whether to show a loading indicator while content is loading */
+  showLoading?: boolean
+  /** Delay in ms before showing content after it becomes visible */
+  delay?: number
+  children?: Snippet
+  placeholder?: Snippet
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {number} - Threshold for intersection (0-1), where 1 means fully visible */
   threshold = 0.1,
-
-  /** @type {string} - Margin around the root element for intersection detection */
   rootMargin = "0px",
-
-  /** @type {boolean} - Whether to keep content rendered after it's been visible once */
   keepRendered = true,
-
-  /** @type {boolean} - Whether to show a loading indicator while content is loading */
   showLoading = false,
-
-  /** @type {number} - Delay in ms before showing content after it becomes visible */
   delay = 0,
-
   children,
   placeholder,
-} = $props()
+}: Props = $props()
 
 // State
 let isVisible = $state(false)
 let hasBeenVisible = $state(false)
 let shouldRender = $state(false)
-let element
+let element: HTMLElement | undefined = $state()
 
 /**
  * Handles intersection changes
@@ -82,7 +88,7 @@ function handleIntersection(entries: IntersectionObserverEntry[]): void {
   }
 }
 
-let observer
+let observer: IntersectionObserver | undefined
 
 onMount(() => {
   // Check if IntersectionObserver is available

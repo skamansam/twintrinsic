@@ -19,22 +19,28 @@ Usage:
 -->
 <script lang="ts">
 import { getContext, onMount } from "svelte"
+import type { Snippet } from "svelte"
+import type { CarouselContext } from "./carouselContext.js"
 
-const {
-  /** @type {string} - Additional CSS classes */
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Whether the item is active */
+  active?: boolean
+  children?: Snippet
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {boolean} - Whether the item is active */
   active = false,
-
   children,
-} = $props()
+}: Props = $props()
 
 // Get carousel context
-const carouselContext = getContext("carousel")
+const carouselContext = getContext<CarouselContext | undefined>("carousel")
 
 // Component state
 let index = $state(-1)

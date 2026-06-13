@@ -36,27 +36,36 @@ Usage:
 <script lang="ts">
 import Prism from "prismjs";
 import { onDestroy, onMount } from "svelte";
+import type { Snippet } from "svelte";
 import { detectLanguage } from "../../helpers/index.js";
 // import "prism-svelte";
 import "prismjs/plugins/autoloader/prism-autoloader";
 
-const {
-  /** @type {string} - The language for syntax highlighting */
+interface Props {
+  /** The language for syntax highlighting */
+  language?: string
+  /** Additional CSS classes */
+  class?: string
+  /** CDN to use for autoloader, or custom path to prism components folder */
+  pluginSource?: "unpkg" | "esm.sh" | "jsdelivr" | string
+  /** List of plugin names (e.g., "autoloader") or full paths to load */
+  plugins?: string[]
+  /** The code to display */
+  children?: Snippet
+}
+
+let {
   language = "",
-  /** @type {string} - Additional CSS classes */
   class: className = "",
-  /** @type { "unpkg" | "esm.sh" | "jsdelivr" | string } - CDN to use for autoloader, or custom path to prism components folder*/
   pluginSource = "unpkg",
-  /** @type {string[]} - List of plugin names (e.g., "autoloader") or full paths to load */
   plugins = [],
-  /** @type {import('svelte').Snippet} - The code to display */
   children
-} = $props()
+}: Props = $props()
 
 let code = $state("")
 let copied = $state(false)
-let copyTimeout = $state()
-let codeElement = $state()
+let copyTimeout: ReturnType<typeof setTimeout> | undefined = $state()
+let codeElement: HTMLElement | undefined = $state()
 
 
 /**
