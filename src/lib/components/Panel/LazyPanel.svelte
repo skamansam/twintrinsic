@@ -14,53 +14,61 @@ Usage:
 -->
 <script lang="ts">
 import { onMount } from "svelte"
+import type { Snippet } from "svelte"
 import Panel from "./Panel.svelte"
 
-const {
-  /** @type {boolean} - Whether the panel is expanded */
+interface Props {
+  /** Whether the panel is expanded */
+  expanded?: boolean
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** ARIA label */
+  ariaLabel?: string
+  /** Whether to disable the panel controls */
+  disabled?: boolean
+  /** Whether to show a border */
+  bordered?: boolean
+  /** Whether to show the expand/collapse icon */
+  showIcon?: boolean
+  /** Root margin for intersection observer */
+  rootMargin?: string
+  /** Threshold for intersection observer */
+  threshold?: number
+  children?: Snippet
+  header?: Snippet
+  loading?: Snippet
+}
+
+let {
   expanded = true,
-
-  /** @type {string} - Additional CSS classes */
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - ARIA label */
   ariaLabel,
-
-  /** @type {boolean} - Whether to disable the panel controls */
   disabled = false,
-
-  /** @type {boolean} - Whether to show a border */
   bordered = true,
-
-  /** @type {boolean} - Whether to show the expand/collapse icon */
   showIcon = true,
-
-  /** @type {number} - Root margin for intersection observer */
   rootMargin = "50px",
-
-  /** @type {number} - Threshold for intersection observer */
   threshold = 0,
-
   children,
   header,
   loading,
-} = $props()
+}: Props = $props()
 
 let isVisible = $state(false)
 let panelElement: HTMLElement | undefined = $state()
-let observer: IntersectionObserver | undefined = $state()
+let observer: IntersectionObserver | undefined
 
 onMount(() => {
-  observer = new IntersectionObserver(
+  const obs = new IntersectionObserver(
     (entries) => {
       const [entry] = entries
       if (entry.isIntersecting) {
         isVisible = true
         // Once visible, disconnect the observer
-        observer.disconnect()
+        obs.disconnect()
+        observer = undefined
       }
     },
     {
@@ -68,15 +76,15 @@ onMount(() => {
       threshold,
     }
   )
+  observer = obs
 
   if (panelElement) {
-    observer.observe(panelElement)
+    obs.observe(panelElement)
   }
 
   return () => {
-    if (observer) {
-      observer.disconnect()
-    }
+    obs.disconnect()
+    observer = undefined
   }
 })
 </script>
@@ -90,11 +98,8 @@ onMount(() => {
     {disabled}
     {bordered}
     {showIcon}
+    {header}
   >
-    <svelte:fragment slot="header">
-      {@render header?.()}
-    </svelte:fragment>
-
     {#if isVisible}
       {@render children?.()}
     {:else if loading}

@@ -19,39 +19,56 @@ Usage:
   <p>Content with hover effect</p>
 </Card>
 -->
+<script module lang="ts">
+import type { Snippet } from "svelte"
+
+/**
+ * Public props for the Card component.
+ * Exported so consumers can type-check against it and avoid the
+ * `never` cascade that occurs when a component's destructured props
+ * are not annotated with its own type.
+ */
+export type CardProps = {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** ARIA label */
+  ariaLabel?: string
+  /** Whether to add hover effects */
+  hoverable?: boolean
+  /** Whether to add shadow */
+  shadow?: boolean
+  /** Shadow size when shadow is true */
+  shadowSize?: "none" | "sm" | "md" | "lg" | "xl"
+  /** Whether the card is clickable */
+  clickable?: boolean
+  children?: Snippet
+  header?: Snippet
+  footer?: Snippet
+  media?: Snippet
+}
+</script>
+
 <script lang="ts">
 import Panel from "./Panel.svelte"
 
-const {
-  /** @type {string} - Additional CSS classes */
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - ARIA label */
   ariaLabel,
-
-  /** @type {boolean} - Whether to add hover effects */
   hoverable = false,
-
-  /** @type {boolean} - Whether to add shadow */
   shadow = true,
-
-  /** @type {"none" | "sm" | "md" | "lg" | "xl"} - Shadow size when shadow is true */
   shadowSize = "md",
-
-  /** @type {boolean} - Whether the card is clickable */
   clickable = false,
-
   children,
   header,
   footer,
   media,
-} = $props()
+}: CardProps = $props()
 
 // Handle click events if card is clickable
-let cardElement: HTMLDivElement | undefined
+let cardElement: HTMLDivElement | undefined = $state()
 
 function handleClick(event: MouseEvent | KeyboardEvent): void {
   if (clickable && cardElement) {

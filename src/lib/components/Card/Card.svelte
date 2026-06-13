@@ -22,38 +22,67 @@ Usage:
 ```
 -->
 <script lang="ts">
+import type { Snippet } from "svelte"
+
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Link URL if the card is clickable */
+  href?: string
+  /** Image URL for card media */
+  image?: string
+  /** Alt text for the image */
+  imageAlt?: string
+  /** Whether to show a border */
+  bordered?: boolean
+  /** Whether to add a shadow */
+  shadowed?: boolean
+  /** Whether to make the card compact (less padding) */
+  compact?: boolean
+  /** Whether to add hover effects */
+  hoverable?: boolean
+  /** Card body content */
+  children?: Snippet
+  /** Card header content */
+  header?: Snippet
+  /** Card footer content */
+  footer?: Snippet
+}
+
 const {
-  /** @type {string} - Additional CSS classes */
+  /** Additional CSS classes */
   class: className = "",
 
-  /** @type {string} - HTML id for accessibility */
+  /** HTML id for accessibility */
   id = crypto.randomUUID(),
 
-  /** @type {string} - Link URL if the card is clickable */
+  /** Link URL if the card is clickable */
   href,
 
-  /** @type {string} - Image URL for card media */
+  /** Image URL for card media */
   image,
 
-  /** @type {string} - Alt text for the image */
+  /** Alt text for the image */
   imageAlt = "",
 
-  /** @type {boolean} - Whether to show a border */
+  /** Whether to show a border */
   bordered = true,
 
-  /** @type {boolean} - Whether to add a shadow */
+  /** Whether to add a shadow */
   shadowed = false,
 
-  /** @type {boolean} - Whether to make the card compact (less padding) */
+  /** Whether to make the card compact (less padding) */
   compact = false,
 
-  /** @type {boolean} - Whether to add hover effects */
+  /** Whether to add hover effects */
   hoverable = false,
 
   children,
   header,
   footer,
-} = $props()
+}: Props = $props()
 
 // Determine if card has clickable behavior
 const isClickable = !!href
@@ -84,7 +113,7 @@ const elementType = href ? "a" : "article"
   
   {#if header}
     <div class="card-header">
-      {@render header()}
+      {@render header?.()}
     </div>
   {/if}
   
@@ -94,7 +123,7 @@ const elementType = href ? "a" : "article"
   
   {#if footer}
     <div class="card-footer">
-      {@render footer()}
+      {@render footer?.()}
     </div>
   {/if}
 </svelte:element>

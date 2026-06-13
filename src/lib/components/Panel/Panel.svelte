@@ -19,16 +19,14 @@ Usage:
 </Panel>
 ```
 -->
-<script lang="ts">
-import { slide } from "svelte/transition"
-import type { Snippet } from "svelte"
-
+<script module lang="ts">
 /**
- * @slot header Renders custom header content for the panel button
- * @slot default Provides the main panel body content
- * @slot footer Displays supplemental content below the body (e.g., actions)
+ * Exported so consumers (LazyPanel, BottomBar, Card, etc.) can type-check
+ * their Panel usage. Without this, Panel's props resolve to `never` in
+ * consumer type positions, causing cascade errors like
+ * "Type 'boolean' is not assignable to type 'never'".
  */
-type PanelProps = {
+export type PanelProps = {
   /** Whether the panel is expanded */
   expanded?: boolean
   /** Additional CSS classes */
@@ -44,14 +42,24 @@ type PanelProps = {
   /** Whether to show the expand/collapse icon */
   showIcon?: boolean
   /** Slot content for the panel body */
-  children?: Snippet | null
+  children?: import("svelte").Snippet | null
   /** Slot content for the header */
-  header?: Snippet | null
+  header?: import("svelte").Snippet | null
   /** Slot content rendered below the body */
-  footer?: Snippet | null
+  footer?: import("svelte").Snippet | null
   /** Callback invoked whenever the panel toggles expanded state */
   ontoggle?: (payload: { expanded: boolean }) => void
 }
+</script>
+
+<script lang="ts">
+import { slide } from "svelte/transition"
+
+/**
+ * @slot header Renders custom header content for the panel button
+ * @slot default Provides the main panel body content
+ * @slot footer Displays supplemental content below the body (e.g., actions)
+ */
 
 const {
   /** @type {boolean} - Whether the panel is expanded */
@@ -78,7 +86,8 @@ const {
   children = null,
   header = null,
   footer = null,
-} = $props() satisfies PanelProps
+  ontoggle,
+}: PanelProps = $props()
 
 let isExpanded = $state(true)
 

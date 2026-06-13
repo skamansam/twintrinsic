@@ -1,5 +1,14 @@
 <script lang="ts">
+import type { Snippet } from "svelte"
 import Container from "../../Container/Container.svelte"
+
+interface Props {
+	class?: string
+	type?: string
+	heading?: Snippet
+	children?: Snippet
+	[key: string]: unknown
+}
 
 const {
 	class: propClasses,
@@ -7,7 +16,7 @@ const {
 	heading,
 	children,
 	...rest
-} = $props()
+}: Props = $props()
 
 const typeClass = $derived(type ? `bg-${type}` : "bg-light")
 </script>
