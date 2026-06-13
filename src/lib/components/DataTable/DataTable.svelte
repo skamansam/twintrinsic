@@ -149,7 +149,6 @@ const derivedColumns = $derived(columns)
 const derivedData = $derived(data)
 const derivedKeyField = $derived(keyField)
 const derivedRowClass = $derived(rowClass)
-const derivedOnrowclick = $derived(onrowclick)
 const derivedSelectedRows = $derived(selected)
 
 // Update state when props change

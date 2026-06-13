@@ -41,14 +41,16 @@
 
 		codeElement.className = `shj-lang-${detectedLang}`;
 
-		if (showRenderTime) {
-			const startTime = performance.now();
-			highlightElement(codeElement, detectedLang);
-			const endTime = performance.now();
-			renderTime = Math.round((endTime - startTime) * 100) / 100;
-		} else {
-			highlightElement(codeElement, detectedLang);
-		}
+	if (showRenderTime) {
+		const startTime = performance.now();
+		// @ts-ignore: @speed-highlight/core types detectedLang as ShjLanguage | undefined
+		highlightElement(codeElement, detectedLang);
+		const endTime = performance.now();
+		renderTime = Math.round((endTime - startTime) * 100) / 100;
+	} else {
+		// @ts-ignore: @speed-highlight/core types detectedLang as ShjLanguage | undefined
+		highlightElement(codeElement, detectedLang);
+	}
 	});
 
 	onDestroy(() => {

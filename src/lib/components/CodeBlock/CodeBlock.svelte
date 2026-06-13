@@ -34,11 +34,13 @@ Usage:
 ```
 -->
 <script lang="ts">
+// @ts-ignore: prismjs has no declaration file; the import is side-effect-only
 import Prism from "prismjs";
 import { onDestroy, onMount } from "svelte";
 import type { Snippet } from "svelte";
 import { detectLanguage } from "../../helpers/index.js";
 // import "prism-svelte";
+// @ts-ignore: prismjs autoloader plugin has no declaration file
 import "prismjs/plugins/autoloader/prism-autoloader";
 
 interface Props {
