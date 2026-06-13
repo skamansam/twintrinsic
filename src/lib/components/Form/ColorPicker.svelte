@@ -166,15 +166,15 @@ function parseColor(colorStr: string): { hue: number; saturation: number; lightn
 }
 
 // Convert RGB to HSL
-function rgbToHsl(r: number, g: number, b: number): number[] {
+function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
   r /= 255
   g /= 255
   b /= 255
 
   const max = Math.max(r, g, b)
   const min = Math.min(r, g, b)
-  let h,
-    s,
+  let h = 0,
+    s = 0,
     l = (max + min) / 2
 
   if (max === min) {
@@ -202,12 +202,14 @@ function rgbToHsl(r: number, g: number, b: number): number[] {
 }
 
 // Convert HSL to RGB
-function hslToRgb(h: number, s: number, l: number): number[] {
+function hslToRgb(h: number, s: number, l: number): [number, number, number] {
   h /= 360
   s /= 100
   l /= 100
 
-  let r, g, b
+  let r = 0,
+    g = 0,
+    b = 0
 
   if (s === 0) {
     r = g = b = l
@@ -251,6 +253,8 @@ function updateColor(h: number, s: number, l: number, a: number): void {
 
   updateInputValue()
   fieldApi?.setValue(inputValue)
+  // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
+  // module-scope has `this: void`
   onchange?.(new CustomEvent("change", { detail: { value: inputValue } }))
 }
 

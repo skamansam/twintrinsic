@@ -102,6 +102,8 @@ function handleChange(event: Event): void {
     fieldApi.setValue(isChecked)
   }
 
+  // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
+  // module-scope has `this: void`
   onchange?.(new CustomEvent("change", { detail: { checked: isChecked } }))
 }
 

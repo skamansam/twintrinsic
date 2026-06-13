@@ -97,7 +97,7 @@ let fieldApi: FormFieldApi | undefined
 // Disabled from form context takes precedence over the local prop
 // (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
 const effectiveDisabled = $derived(
-  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+  disabled === true || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
 )
 
 $effect(() => {
@@ -244,12 +244,16 @@ function handleDateSelect(date: Date): void {
       showCalendar = false
     }
 
+    // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
+    // module-scope has `this: void`
     onselect?.(new CustomEvent("select", { detail: { start: startDate, end: endDate } }))
     // Only push a complete range to the form; partial selection is in-progress
     fieldApi?.setValue(startDate && endDate ? [startDate, endDate] : null)
   } else {
     startDate = date
     showCalendar = false
+    // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
+    // module-scope has `this: void`
     onselect?.(new CustomEvent("select", { detail: { date } }))
     fieldApi?.setValue(date)
   }

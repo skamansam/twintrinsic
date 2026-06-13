@@ -104,7 +104,9 @@ function handleInput(event: Event): void {
     resizeTextarea()
   }
 
+  // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding
   oninput?.(new CustomEvent("input", { detail: { value: newValue } }))
+  // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding
   onchange?.(new CustomEvent("change", { detail: { value: newValue } }))
 }
 
@@ -141,6 +143,7 @@ function resizeTextarea(): void {
 $effect(() => {
   if (autoResize && textareaEl) {
     // Use setTimeout to ensure content is rendered
+    // @ts-ignore: DOM lib types setTimeout with `this: Window` binding
     setTimeout(resizeTextarea, 0)
   }
 })

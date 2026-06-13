@@ -282,6 +282,7 @@ function updateValueFromEvent(event: MouseEvent | TouchEvent): void {
     fieldApi.setValue(newValue)
   }
 
+  // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding
   oninput?.(new CustomEvent("input", { detail: { value: newValue } }))
 }
 
@@ -319,6 +320,7 @@ function stopDrag(): void {
   document.removeEventListener("touchmove", updateValueFromEvent)
   document.removeEventListener("touchend", stopDrag)
 
+  // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding
   onchange?.(new CustomEvent("change", { detail: { value: currentValue } }))
 }
 
@@ -373,7 +375,8 @@ function handleKeydown(event: KeyboardEvent): void {
       fieldApi.setValue(newValue)
     }
 
-    oninput?.(new CustomEvent("input", { detail: { value: newValue } }))
+    // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding
+  oninput?.(new CustomEvent("input", { detail: { value: newValue } }))
     onchange?.(new CustomEvent("change", { detail: { value: newValue } }))
   }
 }

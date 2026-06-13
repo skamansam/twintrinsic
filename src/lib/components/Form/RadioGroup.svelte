@@ -82,7 +82,9 @@ $effect(() => {
 $effect(() => {
   if (fieldApi) {
     const formValue = fieldApi.getValue()
-    if (formValue !== undefined && formValue !== selectedValue) {
+    if (formValue === null || formValue === undefined) return
+    if (typeof formValue !== "string") return
+    if (formValue !== selectedValue) {
       selectedValue = formValue
     }
   }
@@ -107,6 +109,8 @@ function handleRadioChange(event: CustomEvent): void {
     fieldApi.setValue(radioValue)
   }
 
+  // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
+  // module-scope has `this: void`
   onchange?.(new CustomEvent("change", { detail: { value: radioValue } }))
 }
 

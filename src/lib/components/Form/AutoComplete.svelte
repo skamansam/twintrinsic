@@ -179,6 +179,8 @@ function handleInput(event: CustomEvent): void {
   }
 
   if (query.length >= minLength) {
+    // @ts-ignore: DOM lib types setTimeout with `this: Window` binding;
+    // module-scope has `this: void`
     searchTimeout = setTimeout(() => {
       search(query)
     }, delay)
@@ -229,6 +231,8 @@ function selectItem(item: unknown): void {
 
     if (!exists) {
       selectedItems = [...(selectedItems as unknown[]), item]
+      // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
+      // module-scope has `this: void`
       onselect?.(new CustomEvent("select", { detail: { items: selectedItems } }))
       fieldApi?.setValue((selectedItems as unknown[]).map((i) => getItemValue(i)))
     }
@@ -237,6 +241,8 @@ function selectItem(item: unknown): void {
   } else {
     selectedItems = item
     inputValue = getItemLabel(item)
+    // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
+    // module-scope has `this: void`
     onselect?.(new CustomEvent("select", { detail: { item } }))
     fieldApi?.setValue(getItemValue(item))
   }
@@ -252,7 +258,11 @@ function removeItem(item: unknown): void {
 
   const value = getItemValue(item)
   selectedItems = (selectedItems as unknown[]).filter((i: unknown) => getItemValue(i) !== value)
+  // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
+  // module-scope has `this: void`
   onremove?.(new CustomEvent("remove", { detail: { item } }))
+  // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
+  // module-scope has `this: void`
   onselect?.(new CustomEvent("select", { detail: { items: selectedItems } }))
   fieldApi?.setValue((selectedItems as unknown[]).map((i) => getItemValue(i)))
 }
@@ -310,6 +320,8 @@ function handleFocus(): void {
 function handleBlur(): void {
   focused = false
   // Delay hiding suggestions to allow click events
+  // @ts-ignore: DOM lib types setTimeout with `this: Window` binding;
+  // module-scope has `this: void`
   setTimeout(() => {
     if (!focused) {
       showSuggestions = false
