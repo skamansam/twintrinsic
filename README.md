@@ -4,7 +4,7 @@ A Tailwind-based Svelte 5 component library emphasizing accessibility, extensibi
 
 ## Project Status
 
-**Version**: 0.0.1 (Development)
+**Version**: pre-release < 1.0 (In Heavy Development)
 
 **Current Focus**: Svelte 5 migration - migrating 40 components from `createEventDispatcher` to callback props. 12 of 40 components completed.
 
