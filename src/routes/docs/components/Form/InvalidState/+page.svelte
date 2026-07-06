@@ -162,7 +162,7 @@ import { PropsTable, EventsTable } from "$lib/docs/index.js"
   The InvalidState component is typically used within forms to display validation errors:
 </p>
 <CodeBlock>
-  {`<script>
+  {`\u003Cscript>
   let errors = {};
   
   function validateForm(values) {
@@ -182,7 +182,7 @@ import { PropsTable, EventsTable } from "$lib/docs/index.js"
     
     return Object.keys(errors).length === 0;
   }
-</script>
+\u003C/script>
 
 <Form onSubmit={handleSubmit}>
   <FormField label="Email">
@@ -229,4 +229,4 @@ import { PropsTable, EventsTable } from "$lib/docs/index.js"
   .props-table td {
     @apply py-2 px-4 border-b border-border dark:border-border text-text dark:text-text;
   }
-</style>
+\u003C/style>

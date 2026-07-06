@@ -31,9 +31,9 @@ let fruit = $state("apple")
   />
 </div>
 <CodeBlock>
-  {`<script>
+  {`\u003Cscript>
   let theme = 'light'
-</script>
+\u003C/script>
 
 <Radio 
   name="theme" 
@@ -53,9 +53,9 @@ let fruit = $state("apple")
   <p class="text-sm text-muted mt-2">Selected theme: {theme}</p>
 </div>
 <CodeBlock>
-  {`<script>
+  {`\u003Cscript>
   let theme = 'light'
-</script>
+\u003C/script>
 
 <div class="flex flex-col gap-2">
   <Radio 
@@ -93,9 +93,9 @@ let fruit = $state("apple")
   <p class="text-sm text-muted mt-2">Selected fruit: {fruit}</p>
 </div>
 <CodeBlock>
-  {`<script>
+  {`\u003Cscript>
   let fruit = 'apple'
-</script>
+\u003C/script>
 
 <div class="flex gap-4">
   <Radio 
@@ -290,4 +290,4 @@ let fruit = $state("apple")
     @apply my-4 p-4 border border-border rounded-md;
     @apply flex flex-col gap-4 max-w-md;
   }
-</style>
+\u003C/style>

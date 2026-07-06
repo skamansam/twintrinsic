@@ -432,10 +432,10 @@ module.exports = {
   </p>
   
   <CodeBlock language="svelte">
-{`<script>
+{`\u003Cscript>
   // Component props
   const { color = "primary" } = $props();
-</script>
+\u003C/script>
 
 <!-- Using color variants in a component -->
 <button class="bg-{color}-500 hover:bg-{color}-600 text-white px-4 py-2 rounded-md">
@@ -450,6 +450,6 @@ module.exports = {
     transition: background-color 0.2s;
     box-shadow: 0 2px 4px var(--color-shadow);
   }
-</style>`}
+\u003C/style>`}
   </CodeBlock>
 </Container>

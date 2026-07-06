@@ -38,9 +38,9 @@ Map documentation page
 		<MapComponent center={[-25.2637, -57.5759]} zoom={13} />
 	</div>
 
-	<CodeBlock language="svelte">{`<script>
+	<CodeBlock language="svelte">{`\u003Cscript>
   import { Map } from '$lib';
-</script>
+\u003C/script>
 
 <Map center={[-25.2637, -57.5759]} zoom={13} />`}</CodeBlock>
 
@@ -50,9 +50,9 @@ Map documentation page
 		<MapComponent center={[-25.2637, -57.5759]} zoom={12} />
 	</div>
 
-	<CodeBlock language="svelte">{`<script>
+	<CodeBlock language="svelte">{`\u003Cscript>
   import { Map } from '$lib';
-</script>
+\u003C/script>
 
 <Map center={[-25.2637, -57.5759]} zoom={12} />`}</CodeBlock>
 
@@ -67,9 +67,9 @@ Map documentation page
 		/>
 	</div>
 
-	<CodeBlock language="svelte">{`<script>
+	<CodeBlock language="svelte">{`\u003Cscript>
   import { Map } from '$lib';
-</script>
+\u003C/script>
 
 <Map 
   center={[-25.2637, -57.5759]} 
@@ -84,9 +84,9 @@ Map documentation page
 		<MapComponent center={[-25.2637, -57.5759]} zoom={13} zoomControl={false} attributionControl={false} />
 	</div>
 
-	<CodeBlock language="svelte">{`<script>
+	<CodeBlock language="svelte">{`\u003Cscript>
   import { Map } from '$lib';
-</script>
+\u003C/script>
 
 <Map 
   center={[-25.2637, -57.5759]} 
@@ -108,9 +108,9 @@ Map documentation page
 		/>
 	</div>
 
-	<CodeBlock language="svelte">{`<script>
+	<CodeBlock language="svelte">{`\u003Cscript>
   import { Map } from '$lib';
-</script>
+\u003C/script>
 
 <Map 
   useSimpleCRS={true}
@@ -133,14 +133,14 @@ Map documentation page
 		/>
 	</div>
 
-	<CodeBlock language="svelte">{`<script>
+	<CodeBlock language="svelte">{`\u003Cscript>
   import { Map } from '$lib';
 
   let markers = [
     { id: 1, lat: 384, lng: 512, name: 'Center Marker' },
     { id: 2, lat: 300, lng: 400, name: 'Marker 2' }
   ];
-</script>
+\u003C/script>
 
 <Map 
   useSimpleCRS={true}
@@ -163,7 +163,7 @@ Map documentation page
 		/>
 	</div>
 
-	<CodeBlock language="svelte">{`<script>
+	<CodeBlock language="svelte">{`\u003Cscript>
   import { Map } from '$lib';
   import { onMount } from 'svelte';
 
@@ -182,7 +182,7 @@ Map documentation page
       marker.bindPopup(` + '\`Marker at \${lat.toFixed(4)}, \${lng.toFixed(4)}\`' + `);
     });
   }
-</script>
+\u003C/script>
 
 <Map 
   bind:this={mapInstance}
@@ -210,7 +210,7 @@ Map documentation page
 		/>
 	</div>
 
-	<CodeBlock language="svelte">{`<script>
+	<CodeBlock language="svelte">{`\u003Cscript>
   import { Map } from '$lib';
   import { onMount } from 'svelte';
 
@@ -224,7 +224,7 @@ Map documentation page
     const imageOverlay = new L.ImageOverlay(imageUrl, imageBounds);
     imageOverlay.addTo(mapInstance);
   });
-</script>
+\u003C/script>
 
 <Map 
   bind:this={mapInstance}
