@@ -41,6 +41,7 @@ interface Props {
   selectable?: boolean
   multiSelect?: boolean
   selected?: unknown[]
+  expandAll?: boolean
   showIcons?: boolean
   showLines?: boolean
   ariaLabel?: string

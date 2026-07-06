@@ -25,52 +25,62 @@ Usage:
 import { getContext, type Component, type Snippet } from "svelte"
 import TreeNode from "./TreeNode.svelte"
 
-/** Self-reference for recursive children (typed loosely to allow partial props) */
+/**
+ * Self-reference for recursive children. Typed loosely because Svelte 5
+ * has no clean recursion-with-partial-props type. The recursive pass-through
+ * props are validated by the parent's `interface Props`; this alias only
+ * exists so the JSX/HTML shape of TreeNode is preserved through recursion.
+ */
 const Self = TreeNode as unknown as Component<Record<string, unknown>>;
 
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Node key for selection (defaults to id) */
+  key?: string
+  /** Node label */
+  label?: string
+  /** Custom icon (HTML or SVG string) */
+  icon?: string
+  /** Whether the node is expanded */
+  expanded?: boolean
+  /** Whether the node is selected */
+  selected?: boolean
+  /** Whether the node is disabled */
+  disabled?: boolean
+  /** Whether the node is a leaf (no children) */
+  leaf?: boolean
+  /** Indentation level (managed internally) */
+  level?: number
+  /** Custom snippet for rendering the label */
+  labelRender?: Snippet
+  /** Toggle event handler */
+  ontoggle?: (event: CustomEvent) => void
+  /** Select event handler */
+  onselect?: (event: CustomEvent) => void
+  /** Child node snippet */
+  children?: Snippet
+}
+
 const {
-  /** @type {string} - Additional CSS classes */
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - Node key for selection (defaults to id) */
   key = id,
-
-  /** @type {string} - Node label */
-  label,
-
-  /** @type {string} - Custom icon (HTML or SVG string) */
-  icon,
-
-  /** @type {boolean} - Whether the node is expanded */
+  label = undefined,
+  icon = undefined,
   expanded = false,
-
-  /** @type {boolean} - Whether the node is selected */
   selected = false,
-
-  /** @type {boolean} - Whether the node is disabled */
   disabled = false,
-
-  /** @type {boolean} - Whether the node is a leaf (no children) */
   leaf = false,
-
-  /** @type {number} - Indentation level (managed internally) */
   level = 0,
-
-  /** @type {Snippet} - Custom snippet for rendering the label */
-  labelRender,
-
-  /** @type {(event: CustomEvent) => void} - Toggle event handler */
-  ontoggle,
-  /** @type {(event: CustomEvent) => void} - Select event handler */
-  onselect,
-
-  children,
-
+  labelRender = undefined,
+  ontoggle = undefined,
+  onselect = undefined,
+  children = undefined,
   ...restProps
-} = $props()
+}: Props = $props()
 
 // Get tree context
 const treeContext = getContext("tree") as { selectable?: boolean; isSelected?: (key: string) => boolean; toggleSelection?: (key: string) => void; showIcons?: boolean; showLines?: boolean } | undefined

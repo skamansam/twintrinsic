@@ -30,53 +30,59 @@
  * </Chip>
  * ```
  */
-const {
+interface Props {
   /** @type {string} - Additional CSS classes */
-  class: className = "",
-
+  class?: string
   /** @type {string} - HTML id for accessibility */
-  id = crypto.randomUUID(),
-
-  /** @type {string} - Visual style variant */
-  variant = "default",
-
-  /** @type {string} - Size of the chip (sm, md, lg) */
-  size = "md",
-
+  id?: string
+  /** @type {"default" | "primary" | "secondary" | "success" | "warning" | "error" | "info"} - Visual style variant */
+  variant?: string
+  /** @type {"sm" | "md" | "lg"} - Size of the chip */
+  size?: string
   /** @type {string} - Icon to display (HTML or SVG string) */
-  icon,
-
+  icon?: string
   /** @type {string} - Avatar to display (HTML or img tag) */
-  avatar,
-
+  avatar?: string
   /** @type {boolean} - Whether the chip is removable */
-  removable = false,
-
+  removable?: boolean
   /** @type {boolean} - Whether the chip is clickable */
-  clickable = false,
-
+  clickable?: boolean
   /** @type {boolean} - Whether the chip is disabled */
-  disabled = false,
-
+  disabled?: boolean
   /** @type {boolean} - Whether the chip is selected */
-  selected = false,
-
+  selected?: boolean
   /** @type {boolean} - Whether to show an outline style */
-  outline = false,
-
+  outline?: boolean
   /** @type {string} - ARIA label for the remove button */
-  removeAriaLabel = "Remove",
-
+  removeAriaLabel?: string
   /** @type {string} - Custom remove icon (HTML or SVG string) */
-  removeIcon,
-
+  removeIcon?: string
   /** @type {(event: CustomEvent) => void} - Remove event handler */
-  onremove,
+  onremove?: (event: CustomEvent) => void
   /** @type {(event: CustomEvent) => void} - Click event handler */
-  onclick,
+  onclick?: (event: CustomEvent) => void
+  /** Child content (snippet) */
+  children?: import("svelte").Snippet
+}
 
-  children,
-} = $props()
+const {
+  class: className = "",
+  id = crypto.randomUUID(),
+  variant = "default",
+  size = "md",
+  icon = undefined,
+  avatar = undefined,
+  removable = false,
+  clickable = false,
+  disabled = false,
+  selected = false,
+  outline = false,
+  removeAriaLabel = "Remove",
+  removeIcon = undefined,
+  onremove = undefined,
+  onclick = undefined,
+  children = undefined,
+}: Props = $props()
 
 // Determine variant classes
 const variantClasses = $derived(
