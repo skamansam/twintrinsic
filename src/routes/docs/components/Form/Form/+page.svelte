@@ -370,7 +370,7 @@ import { Button, Checkbox, Container, Form, FormField, Input } from "$lib"
     interact with the form:
   </p>
 
-  <CodeBlock language="svelte">{`<script>
+  <CodeBlock language="svelte">{`\u003Cscript>
   let formApi;
 
   function handleFormReady(event) {
@@ -407,7 +407,7 @@ import { Button, Checkbox, Container, Form, FormField, Input } from "$lib"
   function clearFormErrors() {
     formApi.clearErrors();
   }
-</script>
+\u003C/script>
 
 <Form onready={handleFormReady}>
   <!-- Form fields -->
