@@ -18,8 +18,8 @@
 		showGrid?: boolean;
 		/** Stack areas on top of each other */
 		stacked?: boolean;
-		/** Callback when a point is clicked */
-		onpointclick?: (event: CustomEvent<{ seriesIndex: number; pointIndex: number; value: number }>) => void;
+	/** Callback when a point is clicked (mouse or keyboard activation) */
+	onpointclick?: (event: MouseEvent | KeyboardEvent, detail: Readonly<{ seriesIndex: number; pointIndex: number; value: number }>) => void;
 		/** Show legend */
 		showLegend?: boolean;
 		/** Size of the chart in pixels */
@@ -30,11 +30,11 @@
 	let {
 		series,
 		labels,
-		title,
-		yAxisLabel,
+		title = undefined,
+		yAxisLabel = undefined,
 		showGrid = true,
 		stacked = false,
-		onpointclick,
+		onpointclick = undefined,
 		showLegend = true,
 		width = 500,
 		height = 300,
@@ -90,16 +90,12 @@
 		return [...points, ...closePath, 'Z'].join(' ');
 	}
 
-	function handlePointClick(seriesIndex: number, pointIndex: number) {
-		onpointclick?.(
-			new CustomEvent('pointclick', {
-				detail: {
-					seriesIndex,
-					pointIndex,
-					value: series[seriesIndex].data[pointIndex]
-				}
-			})
-		);
+	function handlePointClick(event: MouseEvent | KeyboardEvent, seriesIndex: number, pointIndex: number) {
+		onpointclick?.(event, {
+			seriesIndex,
+			pointIndex,
+			value: series[seriesIndex].data[pointIndex]
+		});
 	}
 </script>
 
@@ -246,10 +242,10 @@
 					aria-label="{s.label}: {value}"
 					onkeydown={(e) => {
 						if (e.key === 'Enter' || e.key === ' ') {
-							handlePointClick(seriesIndex, pointIndex);
+							handlePointClick(e, seriesIndex, pointIndex);
 						}
 					}}
-					onclick={() => handlePointClick(seriesIndex, pointIndex)}
+					onclick={(e) => handlePointClick(e, seriesIndex, pointIndex)}
 				></circle>
 			{/each}
 		{/each}

@@ -20,39 +20,46 @@ Usage:
 import { getContext, setContext } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
 
-const {
-  /** @type {string} - Additional CSS classes */
+import type { Snippet } from "svelte"
+
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Radio group name */
+  name?: string
+  /** Currently selected value */
+  value?: string
+  /** Legend text for the fieldset */
+  legend?: string
+  /** Whether the radio group is required */
+  required?: boolean
+  /** Whether the radio group is disabled */
+  disabled?: boolean
+  /** Layout direction (horizontal or vertical) */
+  layout?: "horizontal" | "vertical"
+  /** Size of the radio buttons (sm, md, lg) */
+  size?: "sm" | "md" | "lg"
+  /** Change event handler */
+  onchange?: (event: CustomEvent<{ value: string }>) => void
+  /** Radio children */
+  children?: Snippet
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - Radio group name */
   name,
-
-  /** @type {string} - Currently selected value */
   value = "",
-
-  /** @type {string} - Legend text for the fieldset */
   legend,
-
-  /** @type {boolean} - Whether the radio group is required */
   required = false,
-
-  /** @type {boolean} - Whether the radio group is disabled */
   disabled = false,
-
-  /** @type {string} - Layout direction (horizontal or vertical) */
   layout = "vertical",
-
-  /** @type {string} - Size of the radio buttons (sm, md, lg) */
   size = "md",
-
-  /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange,
-
   children,
-} = $props()
+}: Props = $props()
 
 // Get form context if available
 const formContext = getContext<FormContext | undefined>("form")

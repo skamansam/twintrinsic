@@ -21,7 +21,7 @@ import { Breadcrumb, BreadcrumbItem, CodeBlock, Container } from "$lib"
   <h2>Usage</h2>
 
   <h3>Basic Breadcrumb</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="breadcrumb-basic">
     <Breadcrumb>
       <BreadcrumbItem href="/">Home</BreadcrumbItem>
       <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
@@ -36,7 +36,7 @@ import { Breadcrumb, BreadcrumbItem, CodeBlock, Container } from "$lib"
 </Breadcrumb>`}</CodeBlock>
 
   <h3>Custom Separator</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="breadcrumb-custom-separator">
     <Breadcrumb separator="›">
       <BreadcrumbItem href="/">Home</BreadcrumbItem>
       <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
@@ -51,7 +51,7 @@ import { Breadcrumb, BreadcrumbItem, CodeBlock, Container } from "$lib"
 </Breadcrumb>`}</CodeBlock>
 
   <h3>With Icons</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="breadcrumb-with-icons">
     <Breadcrumb>
       <BreadcrumbItem 
         href="/" 
@@ -79,7 +79,7 @@ import { Breadcrumb, BreadcrumbItem, CodeBlock, Container } from "$lib"
 </Breadcrumb>`}</CodeBlock>
 
   <h3>Collapsible Breadcrumb</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="breadcrumb-collapsible">
     <Breadcrumb collapsible maxVisibleItems={1}>
       <BreadcrumbItem href="/">Home</BreadcrumbItem>
       <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>

@@ -90,7 +90,7 @@ const {
   children = null,
   header = null,
   footer = null,
-  ontoggle,
+  ontoggle = undefined,
 }: PanelProps = $props()
 
 let isExpanded = $state(true)

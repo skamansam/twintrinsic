@@ -23,8 +23,8 @@ import { CodeBlock, LazyPanel } from "$lib"
     title="Basic Usage"
     code={`
 <LazyPanel>
-  <svelte:fragment slot="header">Lazy Content</svelte:fragment>
-  <svelte:fragment slot="loading">Loading...</svelte:fragment>
+  {#snippet header()}Lazy Content{/snippet}
+  {#snippet loading()}Loading...{/snippet}
   <ExpensiveComponent />
 </LazyPanel>
     `}
@@ -35,8 +35,8 @@ import { CodeBlock, LazyPanel } from "$lib"
   <h3>Basic LazyPanel</h3>
   <div class="not-prose mb-8">
     <LazyPanel>
-      <svelte:fragment slot="header">Basic Example</svelte:fragment>
-      <svelte:fragment slot="loading">Loading content...</svelte:fragment>
+      {#snippet header()}Basic Example{/snippet}
+      {#snippet loading()}Loading content...{/snippet}
       <div class="p-4">
         <p>This content was loaded lazily when the panel became visible.</p>
       </div>
@@ -46,12 +46,12 @@ import { CodeBlock, LazyPanel } from "$lib"
   <h3>Custom Loading State</h3>
   <div class="not-prose mb-8">
     <LazyPanel>
-      <svelte:fragment slot="header">Custom Loading</svelte:fragment>
-      <svelte:fragment slot="loading">
+      {#snippet header()}Custom Loading{/snippet}
+      {#snippet loading()}
         <div class="p-4 flex items-center justify-center">
           <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
-      </svelte:fragment>
+      {/snippet}
       <div class="p-4">
         <p>Content with custom loading indicator.</p>
       </div>

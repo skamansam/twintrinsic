@@ -16,8 +16,8 @@
 		yAxisLabel?: string;
 		/** Show grid lines */
 		showGrid?: boolean;
-		/** Callback when a bar is clicked */
-		onbarclick?: (event: CustomEvent<{ seriesIndex: number; barIndex: number; value: number }>) => void;
+	/** Callback when a bar is clicked (mouse or keyboard activation) */
+	onbarclick?: (event: MouseEvent | KeyboardEvent, detail: Readonly<{ seriesIndex: number; barIndex: number; value: number }>) => void;
 		/** Show legend */
 		showLegend?: boolean;
 		/** Size of the chart in pixels */
@@ -28,10 +28,10 @@
 	let {
 		series,
 		labels,
-		title,
-		yAxisLabel,
+		title = undefined,
+		yAxisLabel = undefined,
 		showGrid = true,
-		onbarclick,
+		onbarclick = undefined,
 		showLegend = true,
 		width = 500,
 		height = 300,
@@ -63,16 +63,12 @@
 		return padding.top + chartHeight - ((value - minValue) / yRange) * chartHeight;
 	}
 
-	function handleBarClick(seriesIndex: number, barIndex: number) {
-		onbarclick?.(
-			new CustomEvent('barclick', {
-				detail: {
-					seriesIndex,
-					barIndex,
-					value: series[seriesIndex].data[barIndex]
-				}
-			})
-		);
+	function handleBarClick(event: MouseEvent | KeyboardEvent, seriesIndex: number, barIndex: number) {
+		onbarclick?.(event, {
+			seriesIndex,
+			barIndex,
+			value: series[seriesIndex].data[barIndex]
+		});
 	}
 </script>
 
@@ -192,10 +188,10 @@
 					aria-label="{s.label}: {value}"
 					onkeydown={(e) => {
 						if (e.key === 'Enter' || e.key === ' ') {
-							handleBarClick(seriesIndex, barIndex);
+							handleBarClick(e, seriesIndex, barIndex);
 						}
 					}}
-					onclick={() => handleBarClick(seriesIndex, barIndex)}
+					onclick={(e) => handleBarClick(e, seriesIndex, barIndex)}
 				></rect>
 			{/each}
 		{/each}

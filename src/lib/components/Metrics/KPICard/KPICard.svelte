@@ -12,11 +12,11 @@
 		icon?: string;
 		/** Color theme */
 		color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
-		/** Callback when card is clicked */
-		onclick?: (event: CustomEvent<void>) => void;
+	/** Callback when card is clicked (mouse or keyboard activation) */
+	onclick?: (event: MouseEvent | KeyboardEvent) => void;
 	}
 
-	let { label, value, target, unit, icon, color = 'primary', onclick, ...rest }: Props = $props();
+	let { label, value, target, unit = undefined, icon = undefined, color = 'primary', onclick = undefined, ...rest }: Props = $props();
 
 	const percentage = $derived(Math.min((value / target) * 100, 100));
 	const status = $derived(percentage >= 100 ? 'success' : percentage >= 75 ? 'warning' : 'danger');
@@ -62,8 +62,8 @@
 
 	const colorClasses = $derived(colorMap[color]);
 
-	function handleClick() {
-		onclick?.(new CustomEvent('click'));
+	function handleClick(event: MouseEvent | KeyboardEvent) {
+		onclick?.(event);
 	}
 </script>
 
@@ -74,7 +74,7 @@
 	aria-label="{label}: {value} of {target} {unit || ''}"
 	onkeydown={(e) => {
 		if (e.key === 'Enter' || e.key === ' ') {
-			handleClick();
+			handleClick(e);
 		}
 	}}
 	onclick={handleClick}

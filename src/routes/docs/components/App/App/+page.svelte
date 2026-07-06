@@ -23,13 +23,13 @@ import { App, CodeBlock, Container } from "$lib"
 
   <h3>Basic App Layout</h3>
   <CodeBlock language="svelte">{`<App appName="My Application">
-  <div slot="header">
+  {#snippet header()}
     <!-- Header content -->
-  </div>
+  {/snippet}
   
-  <div slot="leftPanel">
+  {#snippet leftPanel()}
     <!-- Sidebar navigation -->
-  </div>
+  {/snippet}
   
   <!-- Main content -->
   <div>
@@ -37,9 +37,9 @@ import { App, CodeBlock, Container } from "$lib"
     <p>This is the main content area of the application.</p>
   </div>
   
-  <div slot="footer">
+  {#snippet footer()}
     <!-- Footer content -->
-  </div>
+  {/snippet}
 </App>`}</CodeBlock>
 
   <h2>Props</h2>

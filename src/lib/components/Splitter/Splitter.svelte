@@ -49,10 +49,10 @@ let {
   initialSize = 50,
   minSize = 20,
   maxSize = 80,
-  storageKey,
-  first,
-  second,
-  onresize,
+  storageKey = undefined,
+  first = undefined,
+  second = undefined,
+  onresize = undefined,
 }: Props = $props()
 
 let size = $state(0)

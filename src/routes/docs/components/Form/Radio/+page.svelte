@@ -3,7 +3,7 @@
 Documentation page for the Radio component.
 -->
 <script lang="ts">
-import { Radio, FormField, CodeBlock } from "$lib/index.js"
+import { Radio, FormField, CodeBlock } from "$lib"
 import { PropsTable, EventsTable } from "$lib/docs/index.js"
 
 // Sample data for examples

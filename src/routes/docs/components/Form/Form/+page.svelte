@@ -3,12 +3,13 @@
 Form documentation page
 -->
 
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-</style>
 <script lang="ts">
 import { Button, Checkbox, Container, Form, FormField, Input } from "$lib"
 </script>
+
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>Form</h1>

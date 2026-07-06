@@ -16,14 +16,14 @@ import { CodeBlock, Container, Skeleton } from "$lib"
   <h2>Usage</h2>
 
   <h3>Basic Skeleton</h3>
-  <div class="flex flex-col gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-col gap-4 p-4 bg-surface rounded-md mb-4" data-testid="skeleton-basic">
     <Skeleton width="100%" height="20px" />
   </div>
 
   <CodeBlock language="svelte">{`<Skeleton width="100%" height="20px" />`}</CodeBlock>
 
   <h3>Skeleton Variants</h3>
-  <div class="flex flex-col gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-col gap-4 p-4 bg-surface rounded-md mb-4" data-testid="skeleton-variants">
     <div>
       <p class="text-sm text-muted mb-2">Rectangle (default)</p>
       <Skeleton variant="rectangle" width="100%" height="100px" />
@@ -48,14 +48,14 @@ import { CodeBlock, Container, Skeleton } from "$lib"
 <Skeleton variant="text" width="100%" />`}</CodeBlock>
 
   <h3>Multiple Lines</h3>
-  <div class="flex flex-col gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-col gap-4 p-4 bg-surface rounded-md mb-4" data-testid="skeleton-multi-line">
     <Skeleton variant="text" lines={3} />
   </div>
 
   <CodeBlock language="svelte">{`<Skeleton variant="text" lines={3} />`}</CodeBlock>
 
   <h3>Skeleton Loading Pattern</h3>
-  <div class="flex gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex gap-4 p-4 bg-surface rounded-md mb-4" data-testid="skeleton-loading-pattern">
     <Skeleton variant="circle" size="48px" />
     <div class="flex-1">
       <Skeleton variant="text" width="60%" />
@@ -72,7 +72,7 @@ import { CodeBlock, Container, Skeleton } from "$lib"
 </div>`}</CodeBlock>
 
   <h3>Static Skeleton (No Animation)</h3>
-  <div class="flex flex-col gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-col gap-4 p-4 bg-surface rounded-md mb-4" data-testid="skeleton-static">
     <Skeleton width="100%" height="20px" animated={false} />
   </div>
 

@@ -40,7 +40,7 @@ import { Splitter, CodeBlock, Container } from "$lib"
     Horizontal splitter divides content left and right:
   </p>
 
-  <div class="border border-border rounded-md overflow-hidden mb-4" style="height: 300px;">
+  <div class="border border-border rounded-md overflow-hidden mb-4" style="height: 300px;" data-testid="splitter-horizontal">
     <Splitter orientation="horizontal" initialSize={50}>
       {#snippet first()}
         <div class="bg-primary-100 dark:bg-primary-900 p-4 h-full overflow-auto">
@@ -71,7 +71,7 @@ import { Splitter, CodeBlock, Container } from "$lib"
     Vertical splitter divides content top and bottom:
   </p>
 
-  <div class="border border-border rounded-md overflow-hidden mb-4" style="height: 300px;">
+  <div class="border border-border rounded-md overflow-hidden mb-4" style="height: 300px;" data-testid="splitter-vertical">
     <Splitter orientation="vertical" initialSize={50}>
       {#snippet first()}
         <div class="bg-primary-100 dark:bg-primary-900 p-4 h-full overflow-auto">

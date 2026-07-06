@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/svelte';
+import type { Meta, StoryObj } from '@storybook/sveltekit';
 import ProgressMetric from '$lib/components/Metrics/ProgressMetric/ProgressMetric.svelte';
 
 const meta = {

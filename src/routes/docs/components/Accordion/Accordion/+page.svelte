@@ -30,11 +30,11 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
     code={`
 <Accordion>
   <AccordionItem>
-    <svelte:fragment slot="header">Section 1</svelte:fragment>
+    {#snippet header()}Section 1{/snippet}
     Content 1
   </AccordionItem>
   <AccordionItem>
-    <svelte:fragment slot="header">Section 2</svelte:fragment>
+    {#snippet header()}Section 2{/snippet}
     Content 2
   </AccordionItem>
 </Accordion>
@@ -42,11 +42,11 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 <Accordion allowMultiple>
   <!-- Allows multiple items to be expanded -->
   <AccordionItem>
-    <svelte:fragment slot="header">Section 1</svelte:fragment>
+    {#snippet header()}Section 1{/snippet}
     Content 1
   </AccordionItem>
   <AccordionItem>
-    <svelte:fragment slot="header">Section 2</svelte:fragment>
+    {#snippet header()}Section 2{/snippet}
     Content 2
   </AccordionItem>
 </Accordion>
@@ -56,22 +56,22 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   <h2>Examples</h2>
 
   <h3>Basic Accordion</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="accordion-basic">
     <Accordion>
       <AccordionItem>
-        <svelte:fragment slot="header">Section 1</svelte:fragment>
+        {#snippet header()}Section 1{/snippet}
         <div class="p-4">
           <p>Content for section 1. Only one section can be open at a time.</p>
         </div>
       </AccordionItem>
       <AccordionItem>
-        <svelte:fragment slot="header">Section 2</svelte:fragment>
+        {#snippet header()}Section 2{/snippet}
         <div class="p-4">
           <p>Content for section 2. Opening this will close other sections.</p>
         </div>
       </AccordionItem>
       <AccordionItem>
-        <svelte:fragment slot="header">Section 3</svelte:fragment>
+        {#snippet header()}Section 3{/snippet}
         <div class="p-4">
           <p>Content for section 3.</p>
         </div>
@@ -80,16 +80,16 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   </div>
 
   <h3>Multiple Sections</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="accordion-multiple">
     <Accordion allowMultiple>
       <AccordionItem>
-        <svelte:fragment slot="header">Multiple 1</svelte:fragment>
+        {#snippet header()}Multiple 1{/snippet}
         <div class="p-4">
           <p>Multiple sections can be expanded at once.</p>
         </div>
       </AccordionItem>
       <AccordionItem>
-        <svelte:fragment slot="header">Multiple 2</svelte:fragment>
+        {#snippet header()}Multiple 2{/snippet}
         <div class="p-4">
           <p>Try expanding this while the other is open.</p>
         </div>
@@ -98,16 +98,16 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   </div>
 
   <h3>Without Border</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="accordion-no-border">
     <Accordion bordered={false}>
       <AccordionItem>
-        <svelte:fragment slot="header">No Border 1</svelte:fragment>
+        {#snippet header()}No Border 1{/snippet}
         <div class="p-4">
           <p>This accordion has no border around it.</p>
         </div>
       </AccordionItem>
       <AccordionItem>
-        <svelte:fragment slot="header">No Border 2</svelte:fragment>
+        {#snippet header()}No Border 2{/snippet}
         <div class="p-4">
           <p>Notice the clean look without a border.</p>
         </div>
@@ -116,16 +116,16 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
   </div>
 
   <h3>All Collapsed</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="accordion-all-collapsed">
     <Accordion defaultExpanded={null}>
       <AccordionItem>
-        <svelte:fragment slot="header">Collapsed 1</svelte:fragment>
+        {#snippet header()}Collapsed 1{/snippet}
         <div class="p-4">
           <p>All items start in a collapsed state.</p>
         </div>
       </AccordionItem>
       <AccordionItem>
-        <svelte:fragment slot="header">Collapsed 2</svelte:fragment>
+        {#snippet header()}Collapsed 2{/snippet}
         <div class="p-4">
           <p>Users must click to expand any section.</p>
         </div>

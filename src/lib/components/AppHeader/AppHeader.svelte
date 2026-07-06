@@ -52,10 +52,10 @@ const {
   navItems = [],
   class: className = "",
   id = crypto.randomUUID(),
-  notifications,
-  userMenu,
-  onsearch,
-  onsignout,
+  notifications = undefined,
+  userMenu = undefined,
+  onsearch = undefined,
+  onsignout = undefined,
 }: Props = $props()
 
 let mobileMenuOpen = $state(false)

@@ -297,7 +297,7 @@ function getTotalCount() {
       <div 
         class="bg-primary-500 h-2 rounded-full transition-all"
         style="width: {(getUpdatedCount() / getTotalCount()) * 100}%"
-      />
+      ></div>
     </div>
   </div>
 

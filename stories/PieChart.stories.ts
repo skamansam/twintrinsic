@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/svelte';
+import type { Meta, StoryObj } from '@storybook/sveltekit';
 import PieChart from '$lib/components/Metrics/PieChart/PieChart.svelte';
 
 const meta = {
@@ -44,5 +44,22 @@ export const TwoSlices: Story = {
 		colors: ['#10b981', '#ef4444'],
 		title: 'Test Results',
 		showLegend: true
+	}
+};
+
+export const Interactive: Story = {
+	args: {
+		data: [35, 25, 20, 20],
+		labels: ['Chrome', 'Firefox', 'Safari', 'Edge'],
+		title: 'Browser Market Share (click a slice)',
+		showLegend: true,
+		size: 300,
+		onsliceclick: (
+			_event: MouseEvent | KeyboardEvent,
+			detail: { index: number; label: string; value: number }
+		) => {
+			// eslint-disable-next-line no-console
+			console.log('Slice clicked:', detail);
+		}
 	}
 };

@@ -2,7 +2,6 @@
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import Button from "$lib/components/Button/Button.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Menu from "$lib/components/Menu/Menu/Menu.svelte"
@@ -20,9 +19,9 @@ import MenuItem from "$lib/components/Menu/Menu/MenuItem.svelte"
   <h2>Usage</h2>
 
   <h3>Basic Menu</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="menu-basic">
     <Menu>
-      <Button slot="trigger">Open Menu</Button>
+      {#snippet trigger()}Open Menu{/snippet}
       <MenuItem>Option 1</MenuItem>
       <MenuItem>Option 2</MenuItem>
       <MenuItem>Option 3</MenuItem>
@@ -30,16 +29,16 @@ import MenuItem from "$lib/components/Menu/Menu/MenuItem.svelte"
   </div>
 
   <CodeBlock language="svelte">{`<Menu>
-  <Button slot="trigger">Open Menu</Button>
+  {#snippet trigger()}Open Menu{/snippet}
   <MenuItem>Option 1</MenuItem>
   <MenuItem>Option 2</MenuItem>
   <MenuItem>Option 3</MenuItem>
 </Menu>`}</CodeBlock>
 
   <h3>Menu with Dividers</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="menu-dividers">
     <Menu>
-      <Button slot="trigger">Actions</Button>
+      {#snippet trigger()}Actions{/snippet}
       <MenuItem>Edit</MenuItem>
       <MenuItem>Copy</MenuItem>
       <MenuItem divider>Delete</MenuItem>
@@ -47,16 +46,16 @@ import MenuItem from "$lib/components/Menu/Menu/MenuItem.svelte"
   </div>
 
   <CodeBlock language="svelte">{`<Menu>
-  <Button slot="trigger">Actions</Button>
+  {#snippet trigger()}Actions{/snippet}
   <MenuItem>Edit</MenuItem>
   <MenuItem>Copy</MenuItem>
   <MenuItem divider>Delete</MenuItem>
 </Menu>`}</CodeBlock>
 
   <h3>Menu with Icons</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="menu-icons">
     <Menu>
-      <Button slot="trigger">More</Button>
+      {#snippet trigger()}More{/snippet}
       <MenuItem icon="edit">Edit</MenuItem>
       <MenuItem icon="copy">Copy</MenuItem>
       <MenuItem icon="trash">Delete</MenuItem>

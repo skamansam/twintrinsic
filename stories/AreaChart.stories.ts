@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/svelte';
+import type { Meta, StoryObj } from '@storybook/sveltekit';
 import AreaChart from '$lib/components/Metrics/AreaChart/AreaChart.svelte';
 
 const meta = {
@@ -91,5 +91,29 @@ export const Stacked: Story = {
 		showGrid: true,
 		stacked: true,
 		showLegend: true
+	}
+};
+
+export const Interactive: Story = {
+	args: {
+		series: [
+			{
+				label: 'Website Traffic',
+				data: [10, 15, 12, 18, 22, 20, 25],
+				color: '#3b82f6'
+			}
+		],
+		labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+		title: 'Weekly Traffic (click a point)',
+		yAxisLabel: 'Visits',
+		showGrid: true,
+		showLegend: true,
+		onpointclick: (
+			_event: MouseEvent | KeyboardEvent,
+			detail: { seriesIndex: number; pointIndex: number; value: number }
+		) => {
+			// eslint-disable-next-line no-console
+			console.log('Point clicked:', detail);
+		}
 	}
 };

@@ -24,14 +24,14 @@ import Container from "$lib/components/Container/Container.svelte"
   <h2>Usage</h2>
 
   <h3>Basic Button</h3>
-  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="button-basic">
     <Button>Default Button</Button>
   </div>
 
   <CodeBlock language="svelte">{`<Button>Default Button</Button>`}</CodeBlock>
 
   <h3>Button Variants</h3>
-  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="button-variants">
     <Button variant="default">Default</Button>
     <Button variant="primary">Primary</Button>
     <Button variant="secondary">Secondary</Button>
@@ -48,7 +48,7 @@ import Container from "$lib/components/Container/Container.svelte"
 <Button variant="link">Link</Button>`}</CodeBlock>
 
   <h3>Button Sizes</h3>
-  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="button-sizes">
     <Button size="xs">Extra Small</Button>
     <Button size="sm">Small</Button>
     <Button size="md">Medium</Button>
@@ -63,7 +63,7 @@ import Container from "$lib/components/Container/Container.svelte"
 <Button size="xl">Extra Large</Button>`}</CodeBlock>
 
   <h3>Button with Icons</h3>
-  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="button-with-icons">
     <Button 
       icon='<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>'
     >
@@ -117,7 +117,7 @@ import Container from "$lib/components/Container/Container.svelte"
 </Button>`}</CodeBlock>
 
   <h3>Button States</h3>
-  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="button-states">
     <Button disabled>Disabled</Button>
     <Button loading>Loading</Button>
     <Button fullWidth>Full Width Button</Button>
@@ -128,7 +128,7 @@ import Container from "$lib/components/Container/Container.svelte"
 <Button fullWidth>Full Width Button</Button>`}</CodeBlock>
 
   <h3>Link Button</h3>
-  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="button-link">
     <Button href="/docs">Link Button</Button>
     <Button href="https://example.com" target="_blank" variant="primary">External Link</Button>
   </div>

@@ -1,13 +1,39 @@
 name: Publish to npm and Create Release
 
+# Per the E2E → Storybook migration plan § 9.4 A tag push only publishes
+# when the same SHA has cleared the `test` job defined in this file
+# (which mirrors `.github/workflows/test.yml`). Locally, the equivalent
+# gate is `pnpm test:all`.
+
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 jobs:
-  publish:
+  test:
+    name: Pre-publish test sweep
+    # Mirror the parallel jobs in .github/workflows/test.yml.
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm check:lib
+      - run: pnpm check:a11y
+      - run: pnpm test:unit
+
+  publish:
+    name: Publish to npm and create GitHub release
+    runs-on: ubuntu-latest
+    needs: test
     permissions:
       contents: read
       packages: write
@@ -19,8 +45,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -66,7 +92,7 @@ jobs:
           release_name: Release ${{ github.ref_name }}
           body: |
             Published to npm as `@skamansam/twintrinsic@${{ github.ref_name }}`
-            
+
             Install with:
             ```bash
             npm install @skamansam/twintrinsic@${{ github.ref_name }}

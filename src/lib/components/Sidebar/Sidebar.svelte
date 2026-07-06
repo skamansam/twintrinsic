@@ -87,14 +87,14 @@ const {
   width = "16rem",
   collapsedWidth = "4rem",
   id = crypto.randomUUID(),
-  ariaLabel,
+  ariaLabel = undefined,
   disabled = false,
-  menu,
-  onvisibilitychange,
-  ontoggle,
-  header,
-  title,
-  children,
+  menu = undefined,
+  onvisibilitychange = undefined,
+  ontoggle = undefined,
+  header = undefined,
+  title = undefined,
+  children = undefined,
 }: SidebarProps = $props()
 
 let isExpanded = $state(true)

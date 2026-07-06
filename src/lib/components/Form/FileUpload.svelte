@@ -25,69 +25,93 @@ Usage:
 ```
 -->
 <script lang="ts">
-import { getContext, onDestroy } from "svelte"
+import { onDestroy } from "svelte"
+import type { Snippet } from "svelte"
 
-const {
-  /** @type {string} - Additional CSS classes */
+interface PreviewsArgs {
+  files: File[]
+  removeFile: (index: number) => void
+}
+
+interface UploadError {
+  type: string
+  message: string
+  file?: File
+  status?: number
+  response?: unknown
+}
+
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Name attribute for the input */
+  name?: string
+  /** Current value (array of files) */
+  value?: File[]
+  /** Accepted file types (e.g., "image/*,.pdf") */
+  accept?: string
+  /** Whether multiple files can be selected */
+  multiple?: boolean
+  /** Whether the upload is disabled */
+  disabled?: boolean
+  /** Maximum number of files allowed */
+  maxFiles?: number
+  /** Maximum file size in bytes */
+  maxSize?: number
+  /** Whether to show file previews */
+  showPreviews?: boolean
+  /** Whether to auto upload files */
+  autoUpload?: boolean
+  /** Upload URL for auto upload */
+  uploadUrl?: string
+  /** Upload headers for auto upload */
+  uploadHeaders?: Record<string, string>
+  /** Label for the browse button */
+  browseLabel?: string
+  /** Label for the dropzone */
+  dropzoneLabel?: string
+  /** ARIA label for the file input */
+  ariaLabel?: string
+  /** Change event handler */
+  onchange?: (event: CustomEvent<{ files: File[] }>) => void
+  /** Error event handler */
+  onerror?: (event: CustomEvent<{ errors: UploadError[] }>) => void
+  /** Progress event handler */
+  onprogress?: (event: CustomEvent<{ progress: number; files: File[] }>) => void
+  /** Success event handler */
+  onsuccess?: (event: CustomEvent<{ response: unknown; files: File[] }>) => void
+  /** Custom dropzone snippet */
+  dropzone?: Snippet
+  /** Custom previews snippet */
+  previews?: Snippet<[PreviewsArgs]>
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - Name attribute for the input */
   name,
-
-  /** @type {Array} - Current value (array of files) */
   value = [],
-
-  /** @type {string} - Accepted file types */
   accept,
-
-  /** @type {boolean} - Whether multiple files can be selected */
   multiple = false,
-
-  /** @type {boolean} - Whether the upload is disabled */
   disabled = false,
-
-  /** @type {number} - Maximum number of files allowed */
   maxFiles,
-
-  /** @type {number} - Maximum file size in bytes */
   maxSize,
-
-  /** @type {boolean} - Whether to show file previews */
   showPreviews = true,
-
-  /** @type {boolean} - Whether to auto upload files */
   autoUpload = false,
-
-  /** @type {string} - Upload URL for auto upload */
   uploadUrl,
-
-  /** @type {Object} - Upload headers for auto upload */
   uploadHeaders,
-
-  /** @type {string} - Label for the browse button */
   browseLabel = "Browse",
-
-  /** @type {string} - Label for the dropzone */
   dropzoneLabel = "Drag files here or click to browse",
-
-  /** @type {string} - ARIA label for the file input */
   ariaLabel = "File upload",
-
-  /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange,
-  /** @type {(event: CustomEvent) => void} - Error event handler */
   onerror,
-  /** @type {(event: CustomEvent) => void} - Progress event handler */
   onprogress,
-  /** @type {(event: CustomEvent) => void} - Success event handler */
   onsuccess,
-
   dropzone,
   previews,
-} = $props()
+}: Props = $props()
 
 // Component state
 let files: File[] = $state([])

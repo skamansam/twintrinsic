@@ -21,62 +21,103 @@ Usage:
 />
 ```
 -->
-<script lang="ts">
+<script lang="ts" generics="TItem extends string | Record<string, unknown> = string | Record<string, unknown>">
 import { getContext } from "svelte"
 import { slide } from "svelte/transition"
 import Input from "./Input.svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
 
-const {
-  /** @type {string} - Field name for form registration */
+/**
+ * Shape consumers can use to override the suggestion-item rendering.
+ *
+ * Two shapes are supported for backward-compat with existing docs and
+ * consumers:
+ *   1. A plain function `(item) => string` — the primary form.
+ *   2. A render-object `{ render: ({ item }) => string }` — the older
+ *      docs convention; both callables return an HTML string that is
+ *      injected with `{@html ...}`.
+ */
+export type ItemTemplateValue<TItem> =
+  | ((item: TItem) => string)
+  | { render: (args: { item: TItem }) => string }
+
+interface Props<TItem extends string | Record<string, unknown> = string | Record<string, unknown>> {
+  /** Field name for form registration */
+  name?: string
+  /** Input label */
+  label?: string
+  /** Array of items to search through (strings or objects) */
+  items?: TItem[]
+  /** Field to use for item labels */
+  labelField?: string
+  /** Field to use for item values */
+  valueField?: string
+  /** Selected value(s) */
+  value?: TItem | TItem[]
+  /** Minimum characters before showing suggestions */
+  minLength?: number
+  /** Delay in ms before searching */
+  delay?: number
+  /** Whether to allow multiple selections */
+  multiple?: boolean
+  /** Whether to highlight matching text */
+  highlight?: boolean
+  /** Whether to force selection from suggestions */
+  forceSelection?: boolean
+  /** Maximum number of suggestions to show */
+  maxItems?: number
+  /** Additional CSS classes */
+  class?: string
+  /** Custom filter function */
+  filter?: ((items: TItem[], query: string) => TItem[]) | null
+  /** Custom item template (function or { render: ... } object) */
+  itemTemplate?: ItemTemplateValue<TItem> | null
+  /** No results message */
+  emptyMessage?: string
+  /** Loading message */
+  loadingMessage?: string
+  /** Whether suggestions are loading */
+  loading?: boolean
+  /** Placeholder text */
+  placeholder?: string
+  /** Whether the input is disabled */
+  disabled?: boolean
+  /** Select event handler */
+  onselect?: (event: CustomEvent<{ item?: TItem; items?: TItem[] }>) => void
+  /** Remove event handler */
+  onremove?: (event: CustomEvent<{ item: TItem }>) => void
+}
+
+let {
   name,
-  /** @type {string} - Input label */
   label,
-  /** @type {Array<any>} - Array of items to search through */
   items = [],
-  /** @type {string} - Field to use for item labels */
   labelField = "label",
-  /** @type {string} - Field to use for item values */
   valueField = "value",
-  /** @type {string | Array<string>} - Selected value(s) */
-  value = "",
-  /** @type {number} - Minimum characters before showing suggestions */
+  // sentinel default; TItem extends string | Record<string, unknown>, so bare "" can't narrow to it.
+  // Downstream code reads via fieldApi?.getValue(), so the literal default rarely surfaces.
+  value = "" as unknown as TItem,
   minLength = 1,
-  /** @type {number} - Delay in ms before searching */
   delay = 150,
-  /** @type {boolean} - Whether to allow multiple selections */
   multiple = false,
-  /** @type {boolean} - Whether to highlight matching text */
   highlight = true,
-  /** @type {boolean} - Whether to force selection from suggestions */
   forceSelection = false,
-  /** @type {number} - Maximum number of suggestions to show */
   maxItems = 10,
-  /** @type {string} - Additional CSS classes */
   class: className = "",
-  /** @type {function} - Custom filter function */
   filter = null,
-  /** @type {function} - Custom item template */
   itemTemplate = null,
-  /** @type {string} - No results message */
   emptyMessage = "No results found",
-  /** @type {string} - Loading message */
   loadingMessage = "Loading...",
-  /** @type {boolean} - Whether suggestions are loading */
   loading = false,
-  /** @type {string} - Placeholder text */
   placeholder = "",
-  /** @type {boolean} - Whether the input is disabled */
   disabled = false,
-  /** @type {(event: CustomEvent) => void} - Select event handler */
   onselect,
-  /** @type {(event: CustomEvent) => void} - Remove event handler */
   onremove,
-} = $props()
+}: Props<TItem> = $props()
 
 let inputValue = $state("")
-let suggestions: unknown[] = $state([])
-let selectedItems: unknown[] | unknown | null = $state(null)
+let suggestions: TItem[] = $state([])
+let selectedItems: TItem[] | TItem | null = $state<TItem[] | TItem | null>(null)
 const derivedMultiple = $derived(multiple)
 
 // Get form context if available
@@ -118,7 +159,7 @@ $effect(() => {
         return a === b
       })
       if (!sameItems) {
-        selectedItems = arr
+        selectedItems = arr as TItem[]
         inputValue = ""
       }
     } else {
@@ -127,14 +168,14 @@ $effect(() => {
       const a = typeof formValue === "object" ? JSON.stringify(formValue) : formValue
       const b = typeof currentSingle === "object" && currentSingle !== null ? JSON.stringify(currentSingle) : currentSingle
       if (a !== b) {
-        selectedItems = formValue
-        inputValue = getItemLabel(formValue)
+        selectedItems = formValue as TItem
+        inputValue = getItemLabel(formValue as TItem)
       }
     }
   }
 })
 
-let ItemTemplate: ((item: unknown) => string) | null = $state(null)
+let ItemTemplate: ItemTemplateValue<TItem> | null = $state<ItemTemplateValue<TItem> | null>(null)
 $effect(() => {
 	ItemTemplate = itemTemplate
 })
@@ -146,14 +187,14 @@ let suggestionsPopoverRef: HTMLElement | undefined = $state()
 // Handle popover toggle events
 $effect(() => {
   if (!suggestionsPopoverRef) return
-  
+
   const handleToggle = (event: Event) => {
     const toggleEvent = event as ToggleEvent
     showSuggestions = toggleEvent.newState === "open"
   }
-  
+
   suggestionsPopoverRef.addEventListener("toggle", handleToggle)
-  
+
   return () => {
     suggestionsPopoverRef?.removeEventListener("toggle", handleToggle)
   }
@@ -165,7 +206,7 @@ let searchTimeout: ReturnType<typeof setTimeout> | undefined = $state()
 $effect(() => {
   if (!fieldApi && value) {
     selectedItems = derivedMultiple ? (Array.isArray(value) ? value : [value]) : value
-    inputValue = derivedMultiple ? "" : getItemLabel(value)
+    inputValue = derivedMultiple ? "" : (Array.isArray(value) ? getItemLabel(value[0] as TItem) : getItemLabel(value))
   }
 })
 
@@ -192,10 +233,10 @@ function handleInput(event: CustomEvent): void {
 
 // Search for suggestions
 function search(query: string): void {
-  if (filter && typeof filter === 'function') {
-    suggestions = (filter as (items: unknown[], query: string) => unknown[])(items, query)
+  if (filter && typeof filter === "function") {
+    suggestions = filter(items, query)
   } else {
-    suggestions = items.filter((item: unknown): boolean => {
+    suggestions = items.filter((item: TItem): boolean => {
       const label = getItemLabel(item).toLowerCase()
       return label.includes(query.toLowerCase())
     })
@@ -207,34 +248,34 @@ function search(query: string): void {
 }
 
 // Get label for an item
-function getItemLabel(item: unknown): string {
+function getItemLabel(item: TItem): string {
   if (!item) return ""
   return typeof item === "object" ? ((item as Record<string, unknown>)[labelField]?.toString() || "") : item.toString()
 }
 
-// Get value for an item
-function getItemValue(item: unknown): unknown {
+// Get value for an item (string for primitives, item[valueField] for objects)
+function getItemValue(item: TItem): unknown {
   if (!item) return ""
   return typeof item === "object" ? (item as Record<string, unknown>)[valueField] : item
 }
 
 // Handle item selection
-function selectItem(item: unknown): void {
+function selectItem(item: TItem): void {
   if (effectiveDisabled) return
   if (derivedMultiple) {
 		if (!Array.isArray(selectedItems)) {
-			selectedItems = []
+			selectedItems = [] as TItem[]
 		}
 
     const value = getItemValue(item)
-    const exists = (selectedItems as unknown[]).some((i: unknown) => getItemValue(i) === value)
+    const exists = (selectedItems as TItem[]).some((i) => getItemValue(i) === value)
 
     if (!exists) {
-      selectedItems = [...(selectedItems as unknown[]), item]
+      selectedItems = [...(selectedItems as TItem[]), item]
       // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
       // module-scope has `this: void`
       onselect?.(new CustomEvent("select", { detail: { items: selectedItems } }))
-      fieldApi?.setValue((selectedItems as unknown[]).map((i) => getItemValue(i)))
+      fieldApi?.setValue((selectedItems as TItem[]).map((i) => getItemValue(i)))
     }
 
     inputValue = ""
@@ -251,28 +292,26 @@ function selectItem(item: unknown): void {
 }
 
 // Remove selected item (multiple mode)
-function removeItem(item: unknown): void {
+function removeItem(item: TItem): void {
   if (effectiveDisabled) return
   if (!derivedMultiple) return
   if (!Array.isArray(selectedItems)) return
 
   const value = getItemValue(item)
-  selectedItems = (selectedItems as unknown[]).filter((i: unknown) => getItemValue(i) !== value)
+  selectedItems = (selectedItems as TItem[]).filter((i) => getItemValue(i) !== value)
   // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
   // module-scope has `this: void`
   onremove?.(new CustomEvent("remove", { detail: { item } }))
   // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
   // module-scope has `this: void`
   onselect?.(new CustomEvent("select", { detail: { items: selectedItems } }))
-  fieldApi?.setValue((selectedItems as unknown[]).map((i) => getItemValue(i)))
+  fieldApi?.setValue((selectedItems as TItem[]).map((i) => getItemValue(i)))
 }
 
 /**
  * Handles keydown events for a suggestion option
- * @param {KeyboardEvent} event - Keydown event
- * @param {any} item - Suggestion item
  */
-function handleOptionKeydown(event: KeyboardEvent, item: unknown): void {
+function handleOptionKeydown(event: KeyboardEvent, item: TItem): void {
   if (event.key !== "Enter" && event.key !== " ") return
   event.preventDefault()
   selectItem(item)
@@ -298,7 +337,10 @@ function handleKeydown(event: KeyboardEvent): void {
       if (highlightedIndex >= 0) {
         selectItem(suggestions[highlightedIndex])
       } else if (!forceSelection && inputValue) {
-        selectItem(inputValue)
+        // Allow free-form entry only when items are strings (single-select primitive)
+        if (typeof items[0] === "string") {
+          selectItem(inputValue as TItem)
+        }
       }
       break
 
@@ -339,6 +381,29 @@ function highlightText(text: string, query: string): string {
   const regex = new RegExp(`(${query})`, "gi")
   return text.replace(regex, "<mark>$1</mark>")
 }
+
+/**
+ * Dispatch on the ItemTemplate shape and produce the HTML string for one
+ * suggestion row. Used by the markup below with `{@html ...}` so that
+ * consumer-returned HTML is injected (not escaped) into the popover.
+ *
+ * **Security note:** the HTML returned by `function`-form or `render`-form
+ * templates is injected unescaped via `{@html}`, executing any
+ * `<script>` tags or attribute-style event handlers (`onerror`,
+ * `onload`, ...) interpolated from data-item fields. Callers must
+ * sanitize data-item fields before interpolating.
+ *
+ * When no template is provided, fall back to the highlighted label.
+ */
+function renderItemTemplate(item: TItem): string {
+  if (ItemTemplate === null) {
+    return highlightText(getItemLabel(item), inputValue)
+  }
+  if (typeof ItemTemplate === "function") {
+    return ItemTemplate(item)
+  }
+  return ItemTemplate.render({ item })
+}
 </script>
 
 <div
@@ -354,7 +419,7 @@ function highlightText(text: string, query: string): string {
     onblur={handleBlur}
     onkeydown={handleKeydown}
   />
-  
+
   {#if derivedMultiple && Array.isArray(selectedItems) && selectedItems.length > 0}
     <div class="autocomplete-chips" aria-label="Selected items">
       {#each selectedItems as item}
@@ -375,7 +440,7 @@ function highlightText(text: string, query: string): string {
       {/each}
     </div>
   {/if}
-  
+
   {#if showSuggestions && (suggestions.length > 0 || loading)}
     <div
       class="autocomplete-suggestions"
@@ -399,7 +464,7 @@ function highlightText(text: string, query: string): string {
             onkeydown={(event) => handleOptionKeydown(event, item)}
           >
             {#if ItemTemplate}
-              {ItemTemplate(item)}
+              {@html renderItemTemplate(item)}
             {:else}
               {@html highlightText(getItemLabel(item), inputValue)}
             {/if}

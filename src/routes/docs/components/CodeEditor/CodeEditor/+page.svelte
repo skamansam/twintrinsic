@@ -61,8 +61,8 @@
 
 		<div class="space-y-8">
 			<div>
-				<h3 class="text-xl font-semibold mb-3">JavaScript Editor</h3>
-				<CodeEditor
+			<div data-testid="code-editor-javascript"><h3 class="text-xl font-semibold mb-3">JavaScript Editor</h3>
+			<CodeEditor
 					code={`function fibonacci(n) {
   if (n <= 1) return n;
   return fibonacci(n - 1) + fibonacci(n - 2);
@@ -75,7 +75,7 @@ console.log(fibonacci(10));`}
 				/>
 			</div>
 
-			<div>
+			<div data-testid="code-editor-python">
 				<h3 class="text-xl font-semibold mb-3">Python Editor</h3>
 				<CodeEditor
 					code={`def hello_world():
@@ -89,7 +89,7 @@ if __name__ == "__main__":
 				/>
 			</div>
 
-			<div>
+			<div data-testid="code-editor-html">
 				<h3 class="text-xl font-semibold mb-3">HTML Editor</h3>
 				<CodeEditor
 					code={`<!DOCTYPE html>
@@ -107,7 +107,7 @@ if __name__ == "__main__":
 				/>
 			</div>
 
-			<div>
+			<div data-testid="code-editor-one-dark">
 				<h3 class="text-xl font-semibold mb-3">Dark Theme (One Dark)</h3>
 				<CodeEditor
 					code={`const greeting = "Hello, CodeMirror!";
@@ -120,7 +120,7 @@ console.log(doubled);`}
 				/>
 			</div>
 
-			<div>
+			<div data-testid="code-editor-dracula">
 				<h3 class="text-xl font-semibold mb-3">Dracula Theme</h3>
 				<CodeEditor
 					code={`interface User {

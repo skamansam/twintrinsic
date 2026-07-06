@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/svelte';
+import type { Meta, StoryObj } from '@storybook/sveltekit';
 import BarChart from '$lib/components/Metrics/BarChart/BarChart.svelte';
 
 const meta = {
@@ -80,5 +80,29 @@ export const LargeDataset: Story = {
 		showLegend: true,
 		width: 700,
 		height: 350
+	}
+};
+
+export const Interactive: Story = {
+	args: {
+		series: [
+			{
+				label: 'Revenue',
+				data: [45, 52, 48, 61, 55, 67],
+				color: '#3b82f6'
+			}
+		],
+		labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+		title: 'Monthly Revenue (click a bar)',
+		yAxisLabel: 'Revenue ($K)',
+		showGrid: true,
+		showLegend: true,
+		onbarclick: (
+			_event: MouseEvent | KeyboardEvent,
+			detail: { seriesIndex: number; barIndex: number; value: number }
+		) => {
+			// eslint-disable-next-line no-console
+			console.log('Bar clicked:', detail);
+		}
 	}
 };

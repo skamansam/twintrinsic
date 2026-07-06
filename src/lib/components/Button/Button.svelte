@@ -46,7 +46,7 @@ const {
   loading = false,
 
   /** @type {string} - Icon to display (HTML or SVG string) */
-  icon,
+  icon = undefined,
 
   /** @type {string} - Icon position (left or right) */
   iconPosition = "left",
@@ -55,22 +55,22 @@ const {
   fullWidth = false,
 
   /** @type {string} - Link URL (renders as <a> instead of <button>) */
-  href,
+  href = undefined,
 
   /** @type {string} - Link target (_blank, _self, etc.) */
-  target,
+  target = undefined,
 
   /** @type {string} - ARIA label for accessibility */
-  ariaLabel,
+  ariaLabel = undefined,
 
   /** @type {string} - Form ID that this button is associated with */
-  form,
+  form = undefined,
 
   /** @type {string} - Name attribute for form buttons */
-  name,
+  name = undefined,
 
   /** @type {string} - Value attribute for form buttons */
-  value,
+  value = undefined,
 
   /** @type {boolean} - Whether the button should be autofocused on mount.
    *  Implemented via programmatic focus in `onMount` rather than the HTML
@@ -78,27 +78,27 @@ const {
   autofocus = false,
 
   /** @type {string} - Form submission method (post, get, etc.) */
-  formmethod,
+  formmethod = undefined,
 
   /** @type {string} - Form submission encoding */
-  formenctype,
+  formenctype = undefined,
 
   /** @type {string} - Form validation mode */
-  formnovalidate,
+  formnovalidate = undefined,
 
   /** @type {string} - Form target */
-  formtarget,
+  formtarget = undefined,
 
   /** @type {string} - Relationship attribute for links */
-  rel,
+  rel = undefined,
 
   /** @type {string} - Download attribute for links */
-  download,
+  download = undefined,
 
   /** @type {(event: CustomEvent) => void} - Click event handler */
-  onclick,
+  onclick = undefined,
 
-  children,
+  children = undefined,
 } = $props()
 
 /**

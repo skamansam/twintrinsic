@@ -20,7 +20,7 @@ import TagGroup from "$lib/components/Tag/TagGroup.svelte"
   <h2>Examples</h2>
 
   <h3>Basic Tags</h3>
-  <div class="not-prose mb-8 flex flex-wrap gap-2">
+  <div class="not-prose mb-8 flex flex-wrap gap-2" data-testid="tag-basic">
     <Tag>Default</Tag>
     <Tag variant="primary">Primary</Tag>
     <Tag variant="secondary">Secondary</Tag>
@@ -39,7 +39,7 @@ import TagGroup from "$lib/components/Tag/TagGroup.svelte"
 <Tag variant="info">Info</Tag>`}</CodeBlock>
 
   <h3>Sizes</h3>
-  <div class="not-prose mb-8 flex flex-wrap items-center gap-2">
+  <div class="not-prose mb-8 flex flex-wrap items-center gap-2" data-testid="tag-sizes">
     <Tag size="sm">Small</Tag>
     <Tag size="md">Medium</Tag>
     <Tag size="lg">Large</Tag>
@@ -50,7 +50,7 @@ import TagGroup from "$lib/components/Tag/TagGroup.svelte"
 <Tag size="lg">Large</Tag>`}</CodeBlock>
 
   <h3>Outline Tags</h3>
-  <div class="not-prose mb-8 flex flex-wrap gap-2">
+  <div class="not-prose mb-8 flex flex-wrap gap-2" data-testid="tag-outline">
     <Tag outline>Default</Tag>
     <Tag variant="primary" outline>Primary</Tag>
     <Tag variant="success" outline>Success</Tag>
@@ -63,7 +63,7 @@ import TagGroup from "$lib/components/Tag/TagGroup.svelte"
 <Tag variant="warning" outline>Warning</Tag>`}</CodeBlock>
 
   <h3>Pill Tags</h3>
-  <div class="not-prose mb-8 flex flex-wrap gap-2">
+  <div class="not-prose mb-8 flex flex-wrap gap-2" data-testid="tag-pill">
     <Tag pill>Default</Tag>
     <Tag variant="primary" pill>Primary</Tag>
     <Tag variant="success" pill>Success</Tag>
@@ -76,7 +76,7 @@ import TagGroup from "$lib/components/Tag/TagGroup.svelte"
 <Tag variant="warning" pill>Warning</Tag>`}</CodeBlock>
 
   <h3>With Icons</h3>
-  <div class="not-prose mb-8 flex flex-wrap gap-2">
+  <div class="not-prose mb-8 flex flex-wrap gap-2" data-testid="tag-icons">
     <Tag variant="success" icon='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'>
       Completed
     </Tag>
@@ -95,7 +95,7 @@ import TagGroup from "$lib/components/Tag/TagGroup.svelte"
 </Tag>`}</CodeBlock>
 
   <h3>Dismissible Tags</h3>
-  <div class="not-prose mb-8 flex flex-wrap gap-2">
+  <div class="not-prose mb-8 flex flex-wrap gap-2" data-testid="tag-dismissible">
     <Tag dismissible>Dismissible</Tag>
     <Tag variant="primary" dismissible>Primary</Tag>
   </div>
@@ -104,7 +104,7 @@ import TagGroup from "$lib/components/Tag/TagGroup.svelte"
 <Tag variant="primary" dismissible ondismiss={() => handleDismiss()}>Primary</Tag>`}</CodeBlock>
 
   <h3>Clickable Tags</h3>
-  <div class="not-prose mb-8 flex flex-wrap gap-2">
+  <div class="not-prose mb-8 flex flex-wrap gap-2" data-testid="tag-clickable">
     <Tag clickable>Clickable</Tag>
     <Tag variant="primary" clickable>Primary</Tag>
     <Tag href="https://example.com" target="_blank">Link</Tag>
@@ -115,7 +115,7 @@ import TagGroup from "$lib/components/Tag/TagGroup.svelte"
 <Tag href="https://example.com" target="_blank">Link</Tag>`}</CodeBlock>
 
   <h3>Tag Group</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="tag-group">
     <TagGroup>
       <Tag>JavaScript</Tag>
       <Tag>TypeScript</Tag>
@@ -132,7 +132,7 @@ import TagGroup from "$lib/components/Tag/TagGroup.svelte"
 </TagGroup>`}</CodeBlock>
 
   <h3>Tag Group with Dynamic Items</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="tag-group-dynamic">
     <TagGroup 
       items={['JavaScript', 'TypeScript', 'Svelte', 'React']} 
       variant="primary"

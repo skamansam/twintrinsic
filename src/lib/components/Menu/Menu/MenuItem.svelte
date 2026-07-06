@@ -1,5 +1,6 @@
 <script lang="ts">
 import { getContext, type Component } from "svelte";
+import Icon from "../../Icon/Icon.svelte";
 import MenuItem from "./MenuItem.svelte";
 
 /** Self-reference for recursive children (typed loosely to allow partial props) */
@@ -27,6 +28,12 @@ const {
   /** @type {boolean} - Whether the submenu is initially open */
   initialOpen = false,
 
+  /** @type {boolean} - Whether to show a visual divider below this item */
+  divider = false,
+
+  /** @type {string} - Icon name to render before the menu item text */
+  icon,
+
   /** @type {any} - Value associated with this menu item */
   value = {},
 
@@ -53,12 +60,16 @@ const toggleMenu = () => {
   class="menu-item {className}"
   class:active
   class:disabled
+  class:divider
   role="menuitem"
   tabindex="0"
   aria-label={ariaLabel}
   aria-disabled={disabled}
   onclick={() => !disabled && toggleMenu()}
 >
+  {#if icon}
+    <Icon name={icon} class="inline-block w-4 h-4 mr-2 align-middle text-muted" />
+  {/if}
   {@render children?.()}
   {#if (value as { children?: unknown[] })?.children}
     <ul class="menu-item-submenu" class:hidden={!isOpen}>
@@ -87,10 +98,15 @@ const toggleMenu = () => {
     @apply hover:bg-transparent;
   }
 
+  /* Divider sits between this item and the one below it. */
+  .menu-item.divider {
+    @apply border-b border-border;
+  }
+
   .menu-item-submenu {
     @apply pl-4;
   }
-  
+
   .hidden {
     @apply hidden;
   }

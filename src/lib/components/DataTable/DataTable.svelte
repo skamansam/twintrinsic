@@ -5,8 +5,8 @@ Provides sorting, filtering, pagination, and selection capabilities with proper 
 
 Usage:
 ```svelte
-<DataTable 
-  data={users} 
+<DataTable
+  data={users}
   columns={[
     { field: 'id', header: 'ID' },
     { field: 'name', header: 'Name' },
@@ -14,8 +14,8 @@ Usage:
   ]}
 />
 
-<DataTable 
-  data={products} 
+<DataTable
+  data={products}
   columns={columns}
   sortable
   filterable
@@ -28,103 +28,132 @@ Usage:
 />
 ```
 -->
-<script lang="ts">
+<script module lang="ts">
+/**
+ * Public column definition for `DataTable`. Declared in `<script module>` so
+ * consumers can import it cross-file:
+ *   `import type { ColumnDef } from "$lib/components/DataTable/DataTable.svelte"`
+ */
+export interface ColumnDef<TRow extends Record<string, unknown> = Record<string, unknown>> {
+  field: string
+  header?: string
+  sortable?: boolean
+  filterable?: boolean
+  class?: string
+  style?: string
+  cellClass?: string
+  cellStyle?: string
+  template?: (value: unknown) => string
+  formatter?: (value: unknown, row: TRow) => string
+}
+</script>
+
+<script lang="ts" generics="TRow extends Record<string, unknown> = Record<string, unknown>">
 import { setContext } from "svelte"
 
-const {
-  /** @type {string} - Additional CSS classes */
+// `ColumnDef` is imported from the `<script module>` above; not redeclared here.
+
+interface Props<TRow extends Record<string, unknown> = Record<string, unknown>> {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Data to display (array of row objects) */
+  data?: TRow[]
+  /** Column definitions */
+  columns?: ColumnDef<TRow>[]
+  /** Whether to enable sorting */
+  sortable?: boolean
+  /** Whether to enable filtering */
+  filterable?: boolean
+  /** Whether to enable pagination */
+  pageable?: boolean
+  /** Whether to enable row selection */
+  selectable?: boolean
+  /** Whether to enable multiple row selection */
+  multiSelect?: boolean
+  /** Selected row keys (values at `keyField` for each selected row) */
+  selected?: unknown[]
+  /** Key field for row identification */
+  keyField?: string
+  /** Current page (1-based) */
+  page?: number
+  /** Number of rows per page */
+  pageSize?: number
+  /** Available page size options */
+  pageSizeOptions?: number[]
+  /** Field to sort by */
+  sortField?: string
+  /** Sort order */
+  sortOrder?: "asc" | "desc"
+  /** Filter values by field */
+  filters?: Record<string, string>
+  /** Whether to show a loading indicator */
+  loading?: boolean
+  /** Text to display when there is no data */
+  emptyMessage?: string
+  /** ARIA label for the table */
+  ariaLabel?: string
+  /** Custom row class function */
+  rowClass?: (row: TRow, index: number) => string
+  /** Custom cell formatter */
+  cellFormatter?: (value: unknown, column: ColumnDef<TRow>, row: TRow) => string
+  /** Whether to enable responsive mode */
+  responsive?: boolean
+  /** Whether to enable striped rows */
+  striped?: boolean
+  /** Whether to enable hoverable rows */
+  hoverable?: boolean
+  /** Whether to show a border */
+  bordered?: boolean
+  /** Whether to make the header sticky */
+  stickyHeader?: boolean
+  /** Whether to enable compact mode */
+  compact?: boolean
+  /** Sort event handler */
+  onsort?: (event: CustomEvent<{ field: string; order: string }>) => void
+  /** Filter event handler */
+  onfilter?: (event: CustomEvent<{ filters: Record<string, string> }>) => void
+  /** Page event handler */
+  onpage?: (event: CustomEvent<{ page: number; pageSize: number }>) => void
+  /** Select event handler */
+  onselect?: (event: CustomEvent<{ selected: unknown[] }>) => void
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {Array} - Data to display */
   data = [],
-
-  /** @type {Array} - Column definitions */
   columns = [],
-
-  /** @type {boolean} - Whether to enable sorting */
   sortable = false,
-
-  /** @type {boolean} - Whether to enable filtering */
   filterable = false,
-
-  /** @type {boolean} - Whether to enable pagination */
   pageable = false,
-
-  /** @type {boolean} - Whether to enable row selection */
   selectable = false,
-
-  /** @type {boolean} - Whether to enable multiple row selection */
   multiSelect = false,
-
-  /** @type {Array} - Selected row keys */
   selected = [],
-
-  /** @type {string} - Key field for row identification */
   keyField = "id",
-
-  /** @type {number} - Current page (1-based) */
   page = 1,
-
-  /** @type {number} - Number of rows per page */
   pageSize = 10,
-
-  /** @type {Array} - Available page size options */
   pageSizeOptions = [5, 10, 20, 50, 100],
-
-  /** @type {string} - Field to sort by */
   sortField,
-
-  /** @type {string} - Sort order (asc, desc) */
   sortOrder = "asc",
-
-  /** @type {Object} - Filter values by field */
   filters = {},
-
-  /** @type {boolean} - Whether to show a loading indicator */
   loading = false,
-
-  /** @type {string} - Text to display when there is no data */
   emptyMessage = "No data available",
-
-  /** @type {string} - ARIA label for the table */
   ariaLabel = "Data table",
-
-  /** @type {Function} - Custom row class function */
   rowClass,
-
-  /** @type {Function} - Custom cell formatter */
   cellFormatter,
-
-  /** @type {boolean} - Whether to enable responsive mode */
   responsive = true,
-
-  /** @type {boolean} - Whether to enable striped rows */
   striped = false,
-
-  /** @type {boolean} - Whether to enable hoverable rows */
   hoverable = true,
-
-  /** @type {boolean} - Whether to show a border */
   bordered = false,
-
-  /** @type {boolean} - Whether to make the header sticky */
   stickyHeader = false,
-
-  /** @type {boolean} - Whether to enable compact mode */
   compact = false,
-
-  /** @type {(event: CustomEvent) => void} - Sort event handler */
   onsort,
-  /** @type {(event: CustomEvent) => void} - Filter event handler */
   onfilter,
-  /** @type {(event: CustomEvent) => void} - Page event handler */
   onpage,
-  /** @type {(event: CustomEvent) => void} - Select event handler */
   onselect,
-} = $props()
+}: Props<TRow> = $props()
 
 // Component state
 let currentPage = $state(1)
@@ -132,6 +161,11 @@ let currentPageSize = $state(10)
 let currentSortField = $state("")
 let currentSortOrder = $state("asc")
 let currentFilters: Record<string, string> = $state({})
+/**
+ * `selectedRows` stores row KEYS (each value at `row[keyField]`), not full
+ * rows. It stays loosely typed because `keyField` is a dynamic string and
+ * consumers may use string / number / nested object keys.
+ */
 let selectedRows: unknown[] = $state([])
 let allSelected = $state(false)
 let tableElement: HTMLTableElement | undefined = $state()
@@ -161,7 +195,8 @@ $effect(() => {
   selectedRows = Array.isArray(derivedSelectedRows) ? [...derivedSelectedRows] : []
 })
 
-// Provide context for child components
+// Provide context for child components. Keys stay `unknown` because the row-key
+// type is determined dynamically by `keyField`.
 $effect(() => {
   setContext("dataTable", {
     get sortable() { return derivedSortable },
@@ -190,7 +225,7 @@ const endIndex = $derived(Math.min(startIndex + currentPageSize, totalRecords))
 
 // Process data with sorting, filtering, and pagination
 const processedData = $derived.by(() => {
-  let result = [...data]
+  let result: TRow[] = [...data]
 
   // Apply filters
   if (filterable && Object.keys(currentFilters).length > 0) {
@@ -223,7 +258,14 @@ const processedData = $derived.by(() => {
           : valueB.localeCompare(valueA)
       }
 
-      return currentSortOrder === "asc" ? valueA - valueB : valueB - valueA
+      // Coerce to number for arithmetic comparison. TRow values are `unknown`
+      // (the field is a dynamic keyof TRow), so the arithmetic operator needs
+      // an explicit numeric cast. Return 0 (stable order) when either operand
+      // is non-finite to avoid NaN-poisoned sort behavior.
+      const numA = Number(valueA)
+      const numB = Number(valueB)
+      if (!Number.isFinite(numA) || !Number.isFinite(numB)) return 0
+      return currentSortOrder === "asc" ? numA - numB : numB - numA
     })
   }
 
@@ -274,7 +316,7 @@ function handleFilter(field: string, value: string) {
     // Remove filter if value is empty
     if (!value) {
       const { [field]: _, ...rest } = currentFilters
-    currentFilters = rest
+      currentFilters = rest
     }
   }
 
@@ -318,7 +360,7 @@ function handlePageSizeChange(event: Event): void {
 
 /**
  * Toggles selection of a row
- * @param {string|number} key - Row key
+ * @param {unknown} key - Row key (typically the value at `keyField`)
  */
 function toggleRowSelection(key: unknown): void {
   if (!selectable) return
@@ -374,15 +416,15 @@ function toggleSelectAll(): void {
 
 /**
  * Gets CSS classes for a row
- * @param {Object} row - Row data
+ * @param {TRow} row - Row data
  * @param {number} index - Row index
  * @returns {string} - CSS classes
  */
-function getRowClasses(row: Record<string, unknown>, index: number): string {
-  if (typeof rowClass === 'function') {
-    return rowClass(row, index) || ''
+function getRowClasses(row: TRow, index: number): string {
+  if (typeof rowClass === "function") {
+    return rowClass(row, index) || ""
   }
-  const isSelected = selectedRows.includes(row[keyField])
+  const isSelected = selectedRows.includes(row[keyField] as never)
   const classes = [
     "data-table-row",
     isSelected ? "data-table-row-selected" : "",
@@ -390,30 +432,23 @@ function getRowClasses(row: Record<string, unknown>, index: number): string {
     hoverable ? "data-table-row-hoverable" : "",
   ]
 
-  if (rowClass && typeof rowClass === "function") {
-    const customClass = rowClass(row, index)
-    if (customClass) {
-      classes.push(customClass)
-    }
-  }
-
   return classes.filter(Boolean).join(" ")
 }
 
 /**
  * Formats a cell value
- * @param {any} value - Cell value
- * @param {Object} column - Column definition
- * @param {Object} row - Row data
+ * @param {unknown} value - Cell value
+ * @param {ColumnDef<TRow>} column - Column definition
+ * @param {TRow} row - Row data
  * @returns {string} - Formatted value
  */
-function formatCell(value: unknown, column: Record<string, unknown>, row: Record<string, unknown>): string {
-  if (column.formatter && typeof column.formatter === 'function') {
-    return (column.formatter as (value: unknown, row: Record<string, unknown>) => string)(value, row)
+function formatCell(value: unknown, column: ColumnDef<TRow>, row: TRow): string {
+  if (column.formatter && typeof column.formatter === "function") {
+    return column.formatter(value, row)
   }
 
-  if (cellFormatter && typeof cellFormatter === 'function') {
-    return (cellFormatter as (value: unknown, column: Record<string, unknown>, row: Record<string, unknown>) => string)(value, column, row)
+  if (cellFormatter && typeof cellFormatter === "function") {
+    return cellFormatter(value, column, row)
   }
 
   if (value === null || value === undefined) {
@@ -460,7 +495,7 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
               {/if}
             </th>
           {/if}
-          
+
           {#each columns as column, colIndex}
             <th
               class="
@@ -470,25 +505,25 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
               "
               style={column.style || ''}
               onclick={() => column.sortable !== false && sortable && handleSort(column.field)}
-              aria-sort={currentSortField === column.field 
-                ? (currentSortOrder === 'asc' ? 'ascending' : 'descending') 
+              aria-sort={currentSortField === column.field
+                ? (currentSortOrder === 'asc' ? 'ascending' : 'descending')
                 : undefined}
             >
               <div class="data-table-header-content">
                 <span class="data-table-header-text">
                   {column.header || column.field}
                 </span>
-                
+
                 {#if column.sortable !== false && sortable}
                   <span class="data-table-sort-icon">
                     {#if currentSortField === column.field}
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path 
-                          stroke-linecap="round" 
-                          stroke-linejoin="round" 
-                          stroke-width="2" 
-                          d={currentSortOrder === 'asc' 
-                            ? "M5 15l7-7 7 7" 
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d={currentSortOrder === 'asc'
+                            ? "M5 15l7-7 7 7"
                             : "M19 9l-7 7-7-7"}
                         ></path>
                       </svg>
@@ -500,7 +535,7 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
                   </span>
                 {/if}
               </div>
-              
+
               {#if column.filterable !== false && filterable}
                 <div class="data-table-filter">
                   <input
@@ -518,7 +553,7 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
           {/each}
         </tr>
       </thead>
-      
+
       <tbody class="data-table-body">
         {#if loading}
           <tr class="data-table-loading-row">
@@ -543,14 +578,14 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
             <tr
               class={getRowClasses(row, rowIndex)}
               onclick={() => selectable && toggleRowSelection(row[keyField])}
-              aria-selected={selectable && selectedRows.includes(row[keyField])}
+              aria-selected={selectable && selectedRows.includes(row[keyField] as never)}
             >
               {#if selectable}
                 <td class="data-table-selection-cell">
                   <div class="data-table-checkbox">
                     <input
                       type={multiSelect ? 'checkbox' : 'radio'}
-                      checked={selectedRows.includes(row[keyField])}
+                      checked={selectedRows.includes(row[keyField] as never)}
                       onchange={() => toggleRowSelection(row[keyField])}
                       name={multiSelect ? undefined : `${id}-selection`}
                       aria-label={`Select row ${rowIndex + 1}`}
@@ -559,7 +594,7 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
                   </div>
                 </td>
               {/if}
-              
+
               {#each columns as column, colIndex}
                 <td
                   class="
@@ -582,19 +617,19 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
       </tbody>
     </table>
   </div>
-  
+
   {#if pageable && totalRecords > 0}
     <div class="data-table-pagination">
       <div class="data-table-pagination-info">
         Showing {startIndex + 1} to {endIndex} of {processedData.filteredTotal} entries
       </div>
-      
+
       <div class="data-table-pagination-controls">
         <div class="data-table-page-size">
           <label>
             <span>Rows per page:</span>
-            <select 
-              value={currentPageSize} 
+            <select
+              value={currentPageSize}
               onchange={handlePageSizeChange}
               aria-label="Rows per page"
             >
@@ -604,7 +639,7 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
             </select>
           </label>
         </div>
-        
+
         <div class="data-table-page-controls">
           <button
             type="button"
@@ -617,7 +652,7 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
             </svg>
           </button>
-          
+
           <button
             type="button"
             class="data-table-page-button"
@@ -629,11 +664,11 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
           </button>
-          
+
           <span class="data-table-page-info">
             Page {currentPage} of {totalPages}
           </span>
-          
+
           <button
             type="button"
             class="data-table-page-button"
@@ -645,7 +680,7 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
             </svg>
           </button>
-          
+
           <button
             type="button"
             class="data-table-page-button"
@@ -665,70 +700,70 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";
-  
+
   .data-table-wrapper {
     @apply w-full;
   }
-  
+
   .data-table-container {
     @apply w-full overflow-x-auto;
   }
-  
+
   .data-table {
     @apply w-full border-collapse;
     @apply text-text dark:text-text;
   }
-  
+
   .data-table-bordered {
     @apply border border-border dark:border-border;
   }
-  
+
   .data-table-bordered th,
   .data-table-bordered td {
     @apply border border-border dark:border-border;
   }
-  
+
   .data-table-compact th,
   .data-table-compact td {
     @apply py-1 px-2;
   }
-  
+
   .data-table-sticky-header thead {
     @apply sticky top-0;
     @apply z-10;
   }
-  
+
   .data-table-header {
     @apply bg-surface dark:bg-surface;
   }
-  
+
   .data-table-header-cell {
     @apply py-3 px-4;
     @apply font-medium text-left;
     @apply whitespace-nowrap;
   }
-  
+
   .data-table-sortable {
     @apply cursor-pointer;
     @apply hover:bg-hover dark:hover:bg-hover;
   }
-  
+
   .data-table-header-content {
     @apply flex items-center;
   }
-  
+
   .data-table-header-text {
     @apply flex-grow;
   }
-  
+
   .data-table-sort-icon {
     @apply ml-1 flex-shrink-0;
   }
-  
+
   .data-table-filter {
     @apply mt-2;
   }
-  
+
   .data-table-filter-input {
     @apply w-full px-2 py-1;
     @apply bg-background dark:bg-background;
@@ -737,41 +772,41 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
     @apply text-sm;
     @apply focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400;
   }
-  
+
   .data-table-body {
     @apply bg-background dark:bg-background;
   }
-  
+
   .data-table-row {
     @apply border-t border-border dark:border-border;
   }
-  
+
   .data-table-row-striped {
     @apply bg-muted/5 dark:bg-muted/5;
   }
-  
+
   .data-table-row-hoverable {
     @apply hover:bg-hover dark:hover:bg-hover;
   }
-  
+
   .data-table-row-selected {
     @apply bg-primary-50 dark:bg-primary-900/20;
   }
-  
+
   .data-table-cell {
     @apply py-3 px-4;
     @apply align-middle;
   }
-  
+
   .data-table-selection-cell {
     @apply w-10 py-3 px-4;
     @apply text-center;
   }
-  
+
   .data-table-checkbox {
     @apply flex items-center justify-center;
   }
-  
+
   .data-table-checkbox input {
     @apply w-4 h-4;
     @apply text-primary-500 dark:text-primary-500;
@@ -779,31 +814,31 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
     @apply rounded;
     @apply focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400;
   }
-  
+
   .data-table-loading-cell,
   .data-table-empty-cell {
     @apply py-8 px-4;
     @apply text-center;
     @apply text-muted dark:text-muted;
   }
-  
+
   .data-table-loading {
     @apply flex flex-col items-center justify-center;
     @apply space-y-2;
   }
-  
+
   .data-table-spinner {
     @apply w-8 h-8;
     @apply animate-spin;
   }
-  
+
   .data-table-spinner-track {
     @apply opacity-25;
     @apply stroke-current;
     @apply fill-none;
     @apply stroke-2;
   }
-  
+
   .data-table-spinner-path {
     @apply opacity-75;
     @apply stroke-current;
@@ -812,28 +847,28 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
     stroke-dasharray: 60;
     stroke-dashoffset: 45;
   }
-  
+
   .data-table-pagination {
     @apply mt-4;
     @apply flex flex-col sm:flex-row items-center justify-between;
     @apply text-sm;
   }
-  
+
   .data-table-pagination-info {
     @apply mb-2 sm:mb-0;
     @apply text-muted dark:text-muted;
   }
-  
+
   .data-table-pagination-controls {
     @apply flex flex-col sm:flex-row items-center;
     @apply space-y-2 sm:space-y-0 sm:space-x-4;
   }
-  
+
   .data-table-page-size {
     @apply flex items-center;
     @apply space-x-2;
   }
-  
+
   .data-table-page-size select {
     @apply px-2 py-1;
     @apply bg-background dark:bg-background;
@@ -841,12 +876,12 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
     @apply rounded-md;
     @apply focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400;
   }
-  
+
   .data-table-page-controls {
     @apply flex items-center;
     @apply space-x-1;
   }
-  
+
   .data-table-page-button {
     @apply p-1;
     @apply bg-background dark:bg-background;
@@ -856,41 +891,41 @@ function formatCell(value: unknown, column: Record<string, unknown>, row: Record
     @apply hover:bg-hover dark:hover:bg-hover;
     @apply transition-colors duration-150;
   }
-  
+
   .data-table-page-button:disabled {
     @apply opacity-50 cursor-not-allowed;
     @apply hover:bg-background dark:hover:bg-background;
   }
-  
+
   .data-table-page-info {
     @apply px-2;
   }
-  
+
   /* Responsive styles */
   @media (max-width: 640px) {
     .data-table-responsive thead {
       @apply hidden;
     }
-    
+
     .data-table-responsive tbody tr {
       @apply block border-b border-border dark:border-border;
     }
-    
+
     .data-table-responsive tbody td {
       @apply block text-right;
       @apply py-2 px-3;
       @apply border-none;
     }
-    
+
     .data-table-responsive tbody td::before {
       content: attr(data-label);
       @apply float-left font-medium;
     }
-    
+
     .data-table-responsive .data-table-selection-cell {
       @apply w-full text-left;
     }
-    
+
     .data-table-responsive .data-table-checkbox {
       @apply justify-start;
     }

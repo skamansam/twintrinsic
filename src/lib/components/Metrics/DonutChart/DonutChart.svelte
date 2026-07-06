@@ -12,8 +12,8 @@
 		title?: string;
 		/** Width of the donut ring (0-1, where 1 is full circle) */
 		innerRadius?: number;
-		/** Callback when a slice is clicked */
-		onsliceclick?: (event: CustomEvent<{ index: number; label: string; value: number }>) => void;
+	/** Callback when a slice is clicked (mouse or keyboard activation) */
+	onsliceclick?: (event: MouseEvent | KeyboardEvent, detail: Readonly<{ index: number; label: string; value: number }>) => void;
 		/** Show legend */
 		showLegend?: boolean;
 		/** Size of the chart in pixels */
@@ -24,9 +24,9 @@
 		data,
 		labels,
 		colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899'],
-		title,
+		title = undefined,
 		innerRadius = 0.6,
-		onsliceclick,
+		onsliceclick = undefined,
 		showLegend = true,
 		size = 300,
 		...rest
@@ -82,17 +82,17 @@
 		};
 	}
 
-	function handleSliceClick(index: number) {
-		onsliceclick?.(
-			new CustomEvent('sliceclick', {
-				detail: { index, label: labels[index], value: data[index] }
-			})
-		);
+	function handleSliceClick(event: MouseEvent | KeyboardEvent, index: number) {
+		onsliceclick?.(event, {
+			index,
+			label: labels[index],
+			value: data[index]
+		});
 	}
 
 	onMount(() => {
 		paths.forEach((path, index) => {
-			path?.addEventListener('click', () => handleSliceClick(index));
+			path?.addEventListener('click', (event) => handleSliceClick(event, index))
 		});
 	});
 </script>
@@ -121,10 +121,10 @@
 				aria-label="{slice.label}: {slice.value} ({slice.percentage}%)"
 				onkeydown={(e) => {
 					if (e.key === 'Enter' || e.key === ' ') {
-						handleSliceClick(index);
+						handleSliceClick(e, index);
 					}
 				}}
-				onclick={() => handleSliceClick(index)}
+				onclick={(e) => handleSliceClick(e, index)}
 			></path>
 		{/each}
 	</svg>

@@ -49,72 +49,89 @@ Usage:
 import { getContext } from "svelte"
 import Icon from "../Icon/Icon.svelte"
 
-const {
-  /** @type {string} - Additional CSS classes */
+import type { Snippet } from "svelte"
+
+/** Rating color variants enumerated by `variantClasses` in this component. */
+type RatingVariant =
+  | "default"
+  | "primary"
+  | "secondary"
+  | "success"
+  | "warning"
+  | "error"
+  | "info"
+
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Current rating value */
+  value?: number
+  /** Minimum rating value */
+  min?: number
+  /** Maximum rating value */
+  max?: number
+  /** Step size (0.5 for half-stars, 1 for whole stars) */
+  step?: number
+  /** Size of the rating icons (sm, md, lg) */
+  size?: "sm" | "md" | "lg"
+  /** Visual style variant */
+  variant?: RatingVariant
+  /** Whether the rating is readonly */
+  readonly?: boolean
+  /** Whether the rating is disabled */
+  disabled?: boolean
+  /** Whether to show the numeric value */
+  showValue?: boolean
+  /** Whether to show hover preview */
+  showPreview?: boolean
+  /** Custom icon name for filled state (e.g., "star", "heart") */
+  icon?: string
+  /** Custom icon name for empty state (e.g., "star", "heart") */
+  emptyIcon?: string
+  /** Name attribute for form submission */
+  name?: string
+  /** Placeholder text hint */
+  placeholder?: string
+  /** ARIA label for accessibility */
+  ariaLabel?: string
+  /** Change event handler */
+  onchange?: (event: CustomEvent<{ value: number }>) => void
+  /** Hover event handler */
+  onhover?: (event: CustomEvent<{ value: number }>) => void
+  /** Custom snippet for filled icon (receives icon size class) */
+  filledIcon?: Snippet<[string]>
+  /** Custom snippet for empty icon (receives icon size class) */
+  emptyIconSnippet?: Snippet<[string]>
+  /** Rating content */
+  children?: Snippet
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {number} - Current rating value */
   value = 0,
-
-  /** @type {number} - Minimum rating value */
   min = 0,
-
-  /** @type {number} - Maximum rating value */
   max = 5,
-
-  /** @type {number} - Step size for ratings (0.5 for half stars, 1 for whole stars) - same as HTML step attribute */
   step = 1,
-
-  /** @type {string} - Size of the rating icons (sm, md, lg) */
   size = "md",
-
-  /** @type {string} - Visual style variant */
   variant = "warning",
-
-  /** @type {boolean} - Whether the rating is readonly - same as HTML readonly attribute */
   readonly = false,
-
-  /** @type {boolean} - Whether the rating is disabled - same as HTML disabled attribute */
   disabled = false,
-
-  /** @type {boolean} - Whether to show the numeric value */
   showValue = false,
-
-  /** @type {boolean} - Whether to show hover preview */
   showPreview = false,
-
-  /** @type {string} - Custom icon name for filled state (e.g., "star", "heart") */
   icon = "tabler:star-filled",
-
-  /** @type {string} - Custom icon name for empty state (e.g., "star", "heart") */
   emptyIcon = "tabler:star",
-
-  /** @type {string} - Name attribute for form submission - same as HTML name attribute */
   name,
-
-  /** @type {string} - Placeholder text hint - same as HTML placeholder attribute */
   placeholder,
-
-  /** @type {string} - ARIA label for accessibility */
   ariaLabel = "Rating",
-
-  /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange,
-
-  /** @type {(event: CustomEvent) => void} - Hover event handler */
   onhover,
-
-  /** @type {Snippet} - Custom snippet for filled icon (receives iconSizeClasses) */
   filledIcon,
-
-  /** @type {Snippet} - Custom snippet for empty icon (receives iconSizeClasses) */
   emptyIconSnippet,
-
   children,
-} = $props()
+}: Props = $props()
 
 // Derived values for reactive prop access in closures
 const derivedValue = $derived(value)

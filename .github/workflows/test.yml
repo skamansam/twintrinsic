@@ -1,0 +1,88 @@
+name: Tests
+
+# Runs the full test matrix on every push to main and on every pull request.
+# Per docs/plans/E2E_TO_STORYBOOK_MIGRATION_PLAN.md § 9.4:
+#   - `unit` — vitest --project=unit (jsdom)
+#   - `build-and-typecheck` — svelte-check, pnpm check:lib, pnpm check:a11y
+#   - `storybook` — vitest --project=storybook (browser-mode Playwright + axe)
+#   - `e2e` — Playwright against the SvelteKit preview on port 5173
+
+on:
+  push:
+    branches: [main]
+  pull_request: {}
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit:
+    name: Unit tests (jsdom)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:unit
+
+  build-and-typecheck:
+    name: Build, type-check, and a11y budget
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm check:lib
+      - run: pnpm check:a11y
+
+  storybook:
+    # vitest --project=storybook runs in browser mode against a real
+    # Chromium binary. The @storybook/addon-a11y addon runs axe-core
+    # against every story at the same time.
+    name: Storybook interaction + a11y tests (Chromium)
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.58.2-noble
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:storybook
+
+  e2e:
+    # Playwright against the SvelteKit preview booted on port 5173.
+    name: E2E docs-site smokes (Chromium)
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.58.2-noble
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:e2e

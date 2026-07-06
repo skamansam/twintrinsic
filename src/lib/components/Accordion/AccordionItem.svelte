@@ -40,11 +40,11 @@ Usage:
   let {
     class: className = "",
     id = crypto.randomUUID(),
-    ariaLabel,
+    ariaLabel = undefined,
     disabled = false,
     showIcon = true,
-    children,
-    header,
+    children = undefined,
+    header = undefined,
   }: Props = $props();
 
   const accordion = getContext<AccordionContext | undefined>("accordion");

@@ -8,8 +8,8 @@
 		color?: string;
 		/** Height in pixels */
 		height?: number;
-		/** Callback when clicked */
-		onclick?: (event: CustomEvent<void>) => void;
+	/** Callback when clicked (mouse or keyboard activation) */
+	onclick?: (event: MouseEvent | KeyboardEvent) => void;
 	}
 
 	let {
@@ -17,7 +17,7 @@
 		label,
 		color = '#3b82f6',
 		height = 40,
-		onclick,
+		onclick = undefined,
 		...rest
 	}: Props = $props();
 
@@ -42,8 +42,8 @@
 			.join(' ')
 	);
 
-	function handleClick() {
-		onclick?.(new CustomEvent('click'));
+	function handleClick(event: MouseEvent | KeyboardEvent) {
+		onclick?.(event);
 	}
 </script>
 
@@ -62,7 +62,7 @@
 		aria-label="{label} trend"
 		onkeydown={(e) => {
 			if (e.key === 'Enter' || e.key === ' ') {
-				handleClick();
+				handleClick(e);
 			}
 		}}
 		onclick={handleClick}

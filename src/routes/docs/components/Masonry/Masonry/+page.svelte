@@ -1,3 +1,7 @@
+<script lang="ts">
+import { CodeBlock, Container, Masonry } from "$lib"
+</script>
+
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
   
@@ -43,9 +47,6 @@
     height: 160px;
   }
 </style>
-<script lang="ts">
-import { CodeBlock, Container, Masonry } from "$lib"
-</script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>Masonry</h1>
@@ -156,14 +157,14 @@ import { CodeBlock, Container, Masonry } from "$lib"
     
     items = [
       ...items,
-      { 
-        id: items.length + 1, 
-        content: \`Item \$\{items.length + 1 \}\`, 
-        height: randomHeight 
+      {
+        id: items.length + 1,
+        content: "Item " + (items.length + 1),
+        height: randomHeight
       }
     ];
   }
-</script>
+<\/script>
 
 <button onclick={addItem}>Add Item</button>
 

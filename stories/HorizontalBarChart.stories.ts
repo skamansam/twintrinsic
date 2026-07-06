@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/svelte';
+import type { Meta, StoryObj } from '@storybook/sveltekit';
 import HorizontalBarChart from '$lib/components/Metrics/HorizontalBarChart/HorizontalBarChart.svelte';
 
 const meta = {
@@ -65,5 +65,22 @@ export const NoGrid: Story = {
 		title: 'Regional Sales',
 		xAxisLabel: 'Sales ($K)',
 		showGrid: false
+	}
+};
+
+export const Interactive: Story = {
+	args: {
+		data: [45, 38, 52, 41, 35],
+		labels: ['Chrome', 'Firefox', 'Safari', 'Edge', 'Other'],
+		title: 'Browser Usage (click a bar)',
+		xAxisLabel: 'Percentage (%)',
+		showGrid: true,
+		onbarclick: (
+			_event: MouseEvent | KeyboardEvent,
+			detail: { index: number; label: string; value: number }
+		) => {
+			// eslint-disable-next-line no-console
+			console.log('Bar clicked:', detail);
+		}
 	}
 };

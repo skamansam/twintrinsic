@@ -3,9 +3,6 @@
 Tabs documentation page
 -->
 
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-</style>
 <script lang="ts">
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
@@ -14,6 +11,10 @@ import TabList from "$lib/components/Tabs/TabList.svelte"
 import TabPanel from "$lib/components/Tabs/TabPanel.svelte"
 import Tabs from "$lib/components/Tabs/Tabs.svelte"
 </script>
+
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>Tabs</h1>
@@ -26,7 +27,7 @@ import Tabs from "$lib/components/Tabs/Tabs.svelte"
   <h2>Usage</h2>
 
   <h3>Basic Tabs</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="tabs-basic">
     <Tabs>
       <TabList>
         <Tab>Tab 1</Tab>
@@ -51,7 +52,7 @@ import Tabs from "$lib/components/Tabs/Tabs.svelte"
 </Tabs>`}</CodeBlock>
 
   <h3>Tab Variants</h3>
-  <div class="space-y-6 p-4 bg-surface rounded-md mb-4">
+  <div class="space-y-6 p-4 bg-surface rounded-md mb-4" data-testid="tabs-variants">
     <div>
       <p class="text-sm text-muted mb-3">Default</p>
       <Tabs variant="default">

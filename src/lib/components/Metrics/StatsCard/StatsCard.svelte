@@ -12,11 +12,11 @@
 		trendValue?: string | number;
 		/** Color theme: primary, secondary, success, danger, warning, info */
 		color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
-		/** Callback when card is clicked */
-		onclick?: (event: CustomEvent<void>) => void;
+	/** Callback when card is clicked (mouse or keyboard activation) */
+	onclick?: (event: MouseEvent | KeyboardEvent) => void;
 	}
 
-	let { label, value, icon, trend, trendValue, color = 'primary', onclick, ...rest }: Props = $props();
+	let { label, value, icon = undefined, trend = undefined, trendValue = undefined, color = 'primary', onclick = undefined, ...rest }: Props = $props();
 
 	const colorMap: Record<string, { bg: string; text: string; border: string }> = {
 		primary: {
@@ -53,8 +53,8 @@
 
 	const colorClasses = $derived(colorMap[color]);
 
-	function handleClick() {
-		onclick?.(new CustomEvent('click'));
+	function handleClick(event: MouseEvent | KeyboardEvent) {
+		onclick?.(event);
 	}
 </script>
 
@@ -65,7 +65,7 @@
 	aria-label="{label}: {value}"
 	onkeydown={(e) => {
 		if (e.key === 'Enter' || e.key === ' ') {
-			handleClick();
+			handleClick(e);
 		}
 	}}
 	onclick={handleClick}

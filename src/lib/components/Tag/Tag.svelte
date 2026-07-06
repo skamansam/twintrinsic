@@ -15,51 +15,72 @@
  * <Tag variant="warning" dismissible ondismiss={() => handleDismiss()}>Warning</Tag>
  * ```
  */
-const {
-  /** @type {string} - Additional CSS classes */
+import type { Snippet } from "svelte"
+
+/** Tag visual variants enumerated by the lookup dictionaries in this component. */
+type TagVariant =
+  | "default"
+  | "primary"
+  | "secondary"
+  | "success"
+  | "warning"
+  | "error"
+  | "info"
+
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Visual style variant */
+  variant?: TagVariant
+  /** Size of the tag (sm, md, lg) */
+  size?: "sm" | "md" | "lg"
+  /** Icon to display (HTML or SVG string) */
+  icon?: string
+  /** Whether the tag is dismissible */
+  dismissible?: boolean
+  /** Whether to show the tag as an outline */
+  outline?: boolean
+  /** Whether to show the tag as a pill */
+  pill?: boolean
+  /** Whether the tag is clickable */
+  clickable?: boolean
+  /** URL for the tag (makes it a link) */
+  href?: string
+  /**
+   * Anchor target. Inlined as `string` to match the HTML `<a target>`
+   * specification, which accepts any string (including named frames like
+   * `"my-iframe"`) — not just the four standard keywords.
+   */
+  target?: string
+  /** ARIA label for the dismiss button */
+  dismissAriaLabel?: string
+  /** Custom dismiss icon (HTML or SVG string) */
+  dismissIcon?: string
+  /** Dismiss event handler */
+  ondismiss?: (event: CustomEvent) => void
+  /** Tag content */
+  children?: Snippet
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - Visual style variant */
   variant = "default",
-
-  /** @type {string} - Size of the tag (sm, md, lg) */
   size = "md",
-
-  /** @type {string} - Icon to display (HTML or SVG string) */
   icon,
-
-  /** @type {boolean} - Whether the tag is dismissible */
   dismissible = false,
-
-  /** @type {boolean} - Whether to show the tag as an outline */
   outline = false,
-
-  /** @type {boolean} - Whether to show the tag as a pill */
   pill = false,
-
-  /** @type {boolean} - Whether the tag is clickable */
   clickable = false,
-
-  /** @type {string} - URL for the tag (makes it a link) */
   href,
-
-  /** @type {string} - Link target (_blank, _self, etc.) */
   target,
-
-  /** @type {string} - ARIA label for the dismiss button */
   dismissAriaLabel = "Dismiss",
-
-  /** @type {string} - Custom dismiss icon (HTML or SVG string) */
   dismissIcon,
-
-  /** @type {(event: CustomEvent) => void} - Dismiss event handler */
   ondismiss,
-
   children,
-} = $props()
+}: Props = $props()
 
 // Determine variant classes
 const variantClasses = $derived(

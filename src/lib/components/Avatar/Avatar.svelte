@@ -47,22 +47,22 @@ const {
   id = crypto.randomUUID(),
 
   /** @type {string} - Image source URL */
-  src,
+  src = undefined,
 
   /** @type {string} - Alt text for the image */
-  alt,
+  alt = undefined,
 
   /** @type {string} - User name for generating initials */
-  name,
+  name = undefined,
 
   /** @type {string} - Fallback text when image fails to load or no src provided */
-  fallback,
+  fallback = undefined,
 
   /** @type {string} - Gravatar email address */
-  gravatarEmail,
+  gravatarEmail = undefined,
 
   /** @type {string} - Icon name to display (e.g., "user", "star") */
-  icon,
+  icon = undefined,
 
   /** @type {string} - Size of the avatar (xs, sm, md, lg, xl) */
   size = "md",
@@ -71,16 +71,16 @@ const {
   shape = "circle",
 
   /** @type {"online" | "offline" | "away" | "busy" | undefined} - Status indicator (online, offline, away, busy) */
-  status,
+  status = undefined,
 
   /** @type {string} - Icon name for status indicator (e.g., "check", "x", "clock") */
-  statusIcon,
+  statusIcon = undefined,
 
   /** @type {string} - Background color for text avatars (CSS color value) */
-  bgColor,
+  bgColor = undefined,
 
   /** @type {string} - Badge text to display in top-right corner */
-  badge,
+  badge = undefined,
 
   /** @type {"default" | "primary" | "secondary" | "success" | "warning" | "error" | "info"} - Badge variant */
   badgeVariant = "primary",
@@ -92,7 +92,7 @@ const {
   shadowed = false,
 
   /** @type {Function} - Custom function to generate initials */
-  initialsGenerator,
+  initialsGenerator = undefined,
 } = $props()
 
 // Component state

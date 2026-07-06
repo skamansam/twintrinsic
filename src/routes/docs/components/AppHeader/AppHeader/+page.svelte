@@ -24,7 +24,7 @@ import Container from "$lib/components/Container/Container.svelte"
   <h2>Examples</h2>
 
   <h3>Basic Header</h3>
-  <div class="not-prose mb-8 -mx-4 sm:-mx-6">
+  <div class="not-prose mb-8 -mx-4 sm:-mx-6" data-testid="app-header-basic">
     <AppHeader
       brand="My App"
       navItems={[
@@ -45,7 +45,7 @@ import Container from "$lib/components/Container/Container.svelte"
 />`}</CodeBlock>
 
   <h3>With Logo</h3>
-  <div class="not-prose mb-8 -mx-4 sm:-mx-6">
+  <div class="not-prose mb-8 -mx-4 sm:-mx-6" data-testid="app-header-with-logo">
     <AppHeader
       brand={{
         name: 'My App',
@@ -72,7 +72,7 @@ import Container from "$lib/components/Container/Container.svelte"
 />`}</CodeBlock>
 
   <h3>Full Featured</h3>
-  <div class="not-prose mb-8 -mx-4 sm:-mx-6">
+  <div class="not-prose mb-8 -mx-4 sm:-mx-6" data-testid="app-header-full-featured">
     <AppHeader
       brand={{
         name: 'My App',

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/svelte';
+import type { Meta, StoryObj } from '@storybook/sveltekit';
 import StatsCard from '$lib/components/Metrics/StatsCard/StatsCard.svelte';
 
 const meta = {

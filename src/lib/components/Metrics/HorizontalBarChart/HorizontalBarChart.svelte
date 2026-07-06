@@ -12,8 +12,8 @@
 		xAxisLabel?: string;
 		/** Show grid lines */
 		showGrid?: boolean;
-		/** Callback when a bar is clicked */
-		onbarclick?: (event: CustomEvent<{ index: number; label: string; value: number }>) => void;
+	/** Callback when a bar is clicked (mouse or keyboard activation) */
+	onbarclick?: (event: MouseEvent | KeyboardEvent, detail: Readonly<{ index: number; label: string; value: number }>) => void;
 		/** Size of the chart in pixels */
 		width?: number;
 		height?: number;
@@ -23,10 +23,10 @@
 		data,
 		labels,
 		colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899'],
-		title,
-		xAxisLabel,
+		title = undefined,
+		xAxisLabel = undefined,
 		showGrid = true,
-		onbarclick,
+		onbarclick = undefined,
 		width = 500,
 		height = 300,
 		...rest
@@ -44,12 +44,12 @@
 		return padding.left + (value / maxValue) * chartWidth;
 	}
 
-	function handleBarClick(index: number) {
-		onbarclick?.(
-			new CustomEvent('barclick', {
-				detail: { index, label: labels[index], value: data[index] }
-			})
-		);
+	function handleBarClick(event: MouseEvent | KeyboardEvent, index: number) {
+		onbarclick?.(event, {
+			index,
+			label: labels[index],
+			value: data[index]
+		});
 	}
 </script>
 
@@ -166,10 +166,10 @@
 				aria-label="{labels[index]}: {value}"
 				onkeydown={(e) => {
 					if (e.key === 'Enter' || e.key === ' ') {
-						handleBarClick(index);
+						handleBarClick(e, index);
 					}
 				}}
-				onclick={() => handleBarClick(index)}
+				onclick={(e) => handleBarClick(e, index)}
 			></rect>
 
 			<!-- Value label -->

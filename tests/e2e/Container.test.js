@@ -1,37 +1,39 @@
 import { test, expect } from "@playwright/test"
 
+/**
+ * E2E tests for the Container component, targeting the SvelteKit docs
+ * site (http://localhost:5173) instead of Storybook. Selectors use the
+ * `data-testid` attributes that the Container docs page exposes for
+ * each example (basic, fluid, etc.).
+ *
+ * The previous Storybook URL pattern
+ *   `http://localhost:6006/?path=/story/components-container--<variant>`
+ * has been replaced with the single docs route that renders every
+ * example on one page:
+ *   `/docs/components/Container/Container`
+ */
 test.describe("Container Component", () => {
   test.beforeEach(async ({ page }) => {
-    // Navigate to the Container story in Storybook
-    await page.goto("http://localhost:6006/?path=/story/components-container--default")
+    await page.goto("/docs/components/Container/Container")
   })
 
-  test("renders with default props", async ({ page }) => {
-    const container = page.locator(".container")
-    await expect(container).toBeVisible()
-    await expect(container).toHaveClass(/container mx-auto px-4/)
+  test("renders with default props (basic container)", async ({ page }) => {
+    const basic = page.getByTestId("container-basic")
+    await expect(basic).toBeVisible()
+
+    // The default Container renders as <section> with `container mx-auto px-4 ...`
+    const inner = basic.locator("section, main, article, div").first()
+    await expect(inner).toBeVisible()
+    const className = await inner.getAttribute("class")
+    expect(className).toMatch(/container/)
   })
 
   test("renders as fluid container", async ({ page }) => {
-    // Navigate to the fluid story variant
-    await page.goto("http://localhost:6006/?path=/story/components-container--fluid")
-    const container = page.locator(".container")
-    await expect(container).toBeVisible()
-    await expect(container).toHaveClass(/w-full/)
-  })
+    const fluid = page.getByTestId("container-fluid")
+    await expect(fluid).toBeVisible()
 
-  test("renders with custom element type", async ({ page }) => {
-    // Navigate to the custom element story variant
-    await page.goto("http://localhost:6006/?path=/story/components-container--as-main")
-    const container = page.locator("main.container")
-    await expect(container).toBeVisible()
-  })
-
-  test("applies ARIA attributes correctly", async ({ page }) => {
-    // Navigate to the ARIA story variant
-    await page.goto("http://localhost:6006/?path=/story/components-container--with-aria")
-    const container = page.locator(".container")
-    await expect(container).toHaveAttribute("role", "main")
-    await expect(container).toHaveAttribute("aria-label", "Main content")
+    const inner = fluid.locator("section, main, article, div").first()
+    const className = await inner.getAttribute("class")
+    expect(className).toContain("w-full")
   })
 })

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/svelte';
+import type { Meta, StoryObj } from '@storybook/sveltekit';
 import DonutChart from '$lib/components/Metrics/DonutChart/DonutChart.svelte';
 
 const meta = {
@@ -54,5 +54,22 @@ export const LargeSize: Story = {
 		labels: ['North', 'South', 'East', 'West'],
 		title: 'Regional Distribution',
 		size: 400
+	}
+};
+
+export const Interactive: Story = {
+	args: {
+		data: [30, 25, 20, 15, 10],
+		labels: ['Product A', 'Product B', 'Product C', 'Product D', 'Product E'],
+		title: 'Sales Distribution (click a slice)',
+		showLegend: true,
+		size: 300,
+		onsliceclick: (
+			_event: MouseEvent | KeyboardEvent,
+			detail: { index: number; label: string; value: number }
+		) => {
+			// eslint-disable-next-line no-console
+			console.log('Slice clicked:', detail);
+		}
 	}
 };

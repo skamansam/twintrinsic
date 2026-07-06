@@ -25,14 +25,14 @@ import Icon from "$lib/components/Icon/Icon.svelte"
   <h2>Usage</h2>
 
   <h3>Basic Badge</h3>
-  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="badge-basic">
     <Badge>New</Badge>
   </div>
 
   <CodeBlock language="svelte">{`<Badge>New</Badge>`}</CodeBlock>
 
   <h3>Variants</h3>
-  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="badge-variants">
     <Badge variant="default">Default</Badge>
     <Badge variant="primary">Primary</Badge>
     <Badge variant="secondary">Secondary</Badge>
@@ -51,7 +51,7 @@ import Icon from "$lib/components/Icon/Icon.svelte"
 <Badge variant="info">Info</Badge>`}</CodeBlock>
 
   <h3>Sizes</h3>
-  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="badge-sizes">
     <Badge size="sm">Small</Badge>
     <Badge size="md">Medium</Badge>
     <Badge size="lg">Large</Badge>
@@ -62,7 +62,7 @@ import Icon from "$lib/components/Icon/Icon.svelte"
 <Badge size="lg">Large</Badge>`}</CodeBlock>
 
   <h3>Pill Shape</h3>
-  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="badge-pill">
     <Badge pill>Pill Badge</Badge>
     <Badge variant="primary" pill>Primary Pill</Badge>
   </div>
@@ -71,7 +71,7 @@ import Icon from "$lib/components/Icon/Icon.svelte"
 <Badge variant="primary" pill>Primary Pill</Badge>`}</CodeBlock>
 
   <h3>Outline Style</h3>
-  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="badge-outline">
     <Badge outline>Outline</Badge>
     <Badge variant="primary" outline>Primary</Badge>
     <Badge variant="success" outline>Success</Badge>
@@ -82,7 +82,7 @@ import Icon from "$lib/components/Icon/Icon.svelte"
 <Badge variant="success" outline>Success</Badge>`}</CodeBlock>
 
   <h3>Dot Indicators</h3>
-  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="badge-dot">
     <div class="flex items-center gap-1">
       <Badge variant="success" dot></Badge>
       <span>Online</span>
@@ -111,7 +111,7 @@ import Icon from "$lib/components/Icon/Icon.svelte"
 </div>`}</CodeBlock>
 
   <h3>Pulse Animation</h3>
-  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="badge-pulse">
     <Badge variant="primary" pulse>Pulse</Badge>
     <Badge variant="error" dot pulse></Badge>
   </div>
@@ -120,7 +120,7 @@ import Icon from "$lib/components/Icon/Icon.svelte"
 <Badge variant="error" dot pulse></Badge>`}</CodeBlock>
 
   <h3>Overlay Position</h3>
-  <div class="flex items-center gap-8 p-4 bg-surface rounded-md mb-4">
+  <div class="flex items-center gap-8 p-4 bg-surface rounded-md mb-4" data-testid="badge-overlay">
     <div class="relative inline-block">
       <div class="w-10 h-10 bg-muted/20 rounded"></div>
       <Badge variant="primary" overlay position="top-right">5</Badge>
@@ -149,7 +149,7 @@ import Icon from "$lib/components/Icon/Icon.svelte"
 </div>`}</CodeBlock>
 
   <h3>Long Text Overlay Positions</h3>
-  <div class="flex items-center gap-8 p-4 bg-surface rounded-md mb-4">
+  <div class="flex items-center gap-8 p-4 bg-surface rounded-md mb-4" data-testid="badge-overlay-long">
     <div class="relative inline-block">
       <div class="w-10 h-10 bg-muted/20 rounded"></div>
       <Badge variant="primary" overlay inline position="top-right">5,100,234,439,927</Badge>

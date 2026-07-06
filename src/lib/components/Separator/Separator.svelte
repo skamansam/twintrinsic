@@ -22,15 +22,15 @@ const {
   class: className = "",
 
   /** @type {string} - ARIA label */
-  ariaLabel,
+  ariaLabel = undefined,
 
   /** @type {string} - Color variant */
   color = "default",
 
   /** @type {"div" | "hr"} - HTML element to render */
-  as,
+  as = undefined,
 
-  children,
+  children = undefined,
 } = $props()
 
 // Color variants mapping

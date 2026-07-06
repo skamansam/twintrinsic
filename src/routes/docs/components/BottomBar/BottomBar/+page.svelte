@@ -35,11 +35,11 @@ onMount(() => {
   <h2>Examples</h2>
 
   <h3>Basic BottomBar</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="bottombar-basic">
     <div class="h-[400px] bg-surface relative">
       {#if showExamples}
         <BottomBar>
-          <svelte:fragment slot="header">Details</svelte:fragment>
+          {#snippet header()}Details{/snippet}
           <div class="p-4">
             <h3 class="text-lg font-medium mb-2">Project Information</h3>
             <div class="space-y-2">
@@ -54,7 +54,7 @@ onMount(() => {
   </div>
 
   <CodeBlock language="svelte">{`<BottomBar>
-  <svelte:fragment slot="header">Details</svelte:fragment>
+  {#snippet header()}Details{/snippet}
   <div class="p-4">
     <h3 class="text-lg font-medium mb-2">Project Information</h3>
     <div class="space-y-2">
@@ -66,18 +66,18 @@ onMount(() => {
 </BottomBar>`}</CodeBlock>
 
   <h3>Console Example</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="bottombar-console">
     <div class="h-[400px] bg-surface relative">
       {#if showExamples}
         <BottomBar height="20rem">
-          <svelte:fragment slot="header">
+          {#snippet header()}
             <div class="flex items-center gap-2">
               <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293 1.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L7.586 10 5.293 7.707a1 1 0 010-1.414zM11 12a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
               </svg>
               Console
             </div>
-          </svelte:fragment>
+          {/snippet}
           <div class="font-mono text-sm p-4 space-y-2">
             <p class="text-success-500">✓ Build completed successfully</p>
             <p class="text-warning-500">⚠ Unused variable detected</p>

@@ -62,13 +62,13 @@ let {
   centered = true,
   showCloseButton = true,
   closeButtonLabel = "Close modal",
-  ariaLabel,
-  ariaDescription,
-  onopen,
-  onclose,
-  children,
-  header,
-  footer,
+  ariaLabel = undefined,
+  ariaDescription = undefined,
+  onopen = undefined,
+  onclose = undefined,
+  children = undefined,
+  header = undefined,
+  footer = undefined,
 }: Props = $props()
 
 // Modal state. We initialize from the `open` prop to avoid a one-tick

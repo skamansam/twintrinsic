@@ -32,70 +32,77 @@ Usage:
 import { getContext } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
 
-const {
-  /** @type {string} - Additional CSS classes */
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Input name */
+  name?: string
+  /** Input value */
+  value?: number
+  /** Placeholder text */
+  placeholder?: string
+  /** Minimum allowed value */
+  min?: number
+  /** Maximum allowed value */
+  max?: number
+  /** Step increment/decrement amount */
+  step?: number
+  /** Number of decimal places to display */
+  decimalPlaces?: number
+  /** Text to display before the number */
+  prefix?: string
+  /** Text to display after the number */
+  suffix?: string
+  /** Whether to show increment/decrement buttons */
+  showButtons?: boolean
+  /** Whether to arrange buttons vertically */
+  verticalButtons?: boolean
+  /** Whether the input is required */
+  required?: boolean
+  /** Whether the input is disabled */
+  disabled?: boolean
+  /** Whether the input is readonly */
+  readonly?: boolean
+  /** Size of the input (sm, md, lg) */
+  size?: "sm" | "md" | "lg"
+  /** ARIA label for accessibility */
+  ariaLabel?: string
+  /** Change event handler */
+  onchange?: (event: CustomEvent<{ value: number }>) => void
+  /** Input event handler */
+  oninput?: (event: CustomEvent<{ value: number }>) => void
+  /** Focus event handler */
+  onfocus?: (event: FocusEvent) => void
+  /** Blur event handler */
+  onblur?: (event: FocusEvent) => void
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - Input name */
   name,
-
-  /** @type {number} - Input value */
   value = 0,
-
-  /** @type {string} - Placeholder text */
   placeholder = "",
-
-  /** @type {number} - Minimum allowed value */
   min,
-
-  /** @type {number} - Maximum allowed value */
   max,
-
-  /** @type {number} - Step increment/decrement amount */
   step = 1,
-
-  /** @type {number} - Number of decimal places to display */
   decimalPlaces,
-
-  /** @type {string} - Text to display before the number */
   prefix,
-
-  /** @type {string} - Text to display after the number */
   suffix,
-
-  /** @type {boolean} - Whether to show increment/decrement buttons */
   showButtons = true,
-
-  /** @type {boolean} - Whether to arrange buttons vertically */
   verticalButtons = false,
-
-  /** @type {boolean} - Whether the input is required */
   required = false,
-
-  /** @type {boolean} - Whether the input is disabled */
   disabled = false,
-
-  /** @type {boolean} - Whether the input is readonly */
   readonly = false,
-
-  /** @type {string} - Size of the input (sm, md, lg) */
   size = "md",
-
-  /** @type {string} - ARIA label for accessibility */
   ariaLabel,
-
-  /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange,
-  /** @type {(event: CustomEvent) => void} - Input event handler */
   oninput,
-  /** @type {(event: Event) => void} - Focus event handler */
   onfocus,
-  /** @type {(event: Event) => void} - Blur event handler */
   onblur,
-} = $props()
+}: Props = $props()
 
 // Get form context if available
 const formContext = getContext<FormContext | undefined>("form")

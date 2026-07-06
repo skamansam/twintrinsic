@@ -81,11 +81,11 @@ const components = [
               class="block group"
             >
               <Panel>
-                <svelte:fragment slot="header">
+                {#snippet header()}
                   <h3 class="text-lg font-medium group-hover:text-primary-500">
                     {component.name}
                   </h3>
-                </svelte:fragment>
+                {/snippet}
                 <p class="text-muted text-sm">
                   {component.description}
                 </p>

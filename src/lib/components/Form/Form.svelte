@@ -61,10 +61,10 @@ let {
   layout = "vertical",
   disabled = false,
   loading = false,
-  onsubmit,
-  onchange,
-  onerror,
-  children,
+  onsubmit = undefined,
+  onchange = undefined,
+  onerror = undefined,
+  children = undefined,
 }: Props = $props()
 
 // Form state

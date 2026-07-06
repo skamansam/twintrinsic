@@ -1,0 +1,2646 @@
+
+> twintrinsic@0.0.1 check /home/sam/workspace-other/twintrinsic
+> svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: /home/sam/workspace-other/twintrinsic
+Getting Svelte diagnostics...
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/examples/game-map/genie-mapData.js:946:21
+Error: Object literal may only specify known properties, and '"id"' does not exist in type '{ name: string; avatar?: string | undefined; href?: string | undefined; }'. 
+                window.user = {
+                    "id": 143471,
+                    "role": "user",
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/examples/game-map/genie-mapData.js:41026:17
+Error: Type 'null' is not assignable to type 'string | undefined'. 
+                window.isMini = false;
+                window.partner = null;
+                window.embedType = null;
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/examples/game-map/genie-mapData.js:41027:17
+Error: Type 'null' is not assignable to type 'string | undefined'. 
+                window.partner = null;
+                window.embedType = null;
+                window.needsVerification = false;
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/examples/game-map/genie-mapData.js:41033:21
+Error: Object literal may only specify known properties, and '"ign_slug"' does not exist in type '{ id: number; title: string; slug: string; }'. 
+                    "slug": "fallout-4",
+                    "ign_slug": "fallout-4",
+                    "mapgenie_release_date": "2021-04-24T00:00:00.000000Z",
+
+/home/sam/workspace-other/twintrinsic/src/lib/components/DataTable/DataTable.svelte:261:43
+Error: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type. (ts)
+
+      return currentSortOrder === "asc" ? valueA - valueB : valueB - valueA
+    })
+
+/home/sam/workspace-other/twintrinsic/src/lib/components/DataTable/DataTable.svelte:261:52
+Error: The right-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type. (ts)
+
+      return currentSortOrder === "asc" ? valueA - valueB : valueB - valueA
+    })
+
+/home/sam/workspace-other/twintrinsic/src/lib/components/DataTable/DataTable.svelte:261:61
+Error: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type. (ts)
+
+      return currentSortOrder === "asc" ? valueA - valueB : valueB - valueA
+    })
+
+/home/sam/workspace-other/twintrinsic/src/lib/components/DataTable/DataTable.svelte:261:70
+Error: The right-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type. (ts)
+
+      return currentSortOrder === "asc" ? valueA - valueB : valueB - valueA
+    })
+
+/home/sam/workspace-other/twintrinsic/src/lib/components/DataTable/DataTable.svelte:429:25
+Error: This expression is not callable.
+  Type 'never' has no call signatures. (ts)
+  if (rowClass && typeof rowClass === "function") {
+    const customClass = rowClass(row, index)
+    if (customClass) {
+
+/home/sam/workspace-other/twintrinsic/src/lib/components/Form/AutoComplete.svelte:83:3
+Error: Type 'string' is not assignable to type 'TItem | TItem[]'. (ts)
+  valueField = "value",
+  value = "",
+  minLength = 1,
+
+/home/sam/workspace-other/twintrinsic/src/lib/components/Form/AutoComplete.svelte:193:54
+Error: Argument of type 'TItem | TItem[]' is not assignable to parameter of type 'TItem'.
+  'TItem' could be instantiated with an arbitrary type which could be unrelated to 'TItem | TItem[]'. (ts)
+    selectedItems = derivedMultiple ? (Array.isArray(value) ? value : [value]) : value
+    inputValue = derivedMultiple ? "" : getItemLabel(value)
+  }
+
+/home/sam/workspace-other/twintrinsic/src/lib/components/Form/Radio.svelte:117:14
+Error: Argument of type 'CustomEvent<{ checked: boolean; value: string | undefined; }>' is not assignable to parameter of type 'CustomEvent<{ checked: boolean; value: string; }>'.
+  Type '{ checked: boolean; value: string | undefined; }' is not assignable to type '{ checked: boolean; value: string; }'.
+    Types of property 'value' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'. (ts)
+
+  onchange?.(new CustomEvent("change", { detail: { checked: isChecked, value } }))
+}
+
+/home/sam/workspace-other/twintrinsic/src/lib/components/Metrics/DonutChart/DonutChart.svelte:95:42
+Error: Expected 2 arguments, but got 1. (ts)
+		paths.forEach((path, index) => {
+			path?.addEventListener('click', () => handleSliceClick(index));
+		});
+
+/home/sam/workspace-other/twintrinsic/src/lib/components/Metrics/MetricGrid/MetricGrid.svelte:52:4
+Error: Type '((event: MouseEvent) => void) | undefined' is not assignable to type '((event: KeyboardEvent | MouseEvent) => void) | undefined'.
+  Type '(event: MouseEvent) => void' is not assignable to type '(event: KeyboardEvent | MouseEvent) => void'.
+    Types of parameters 'event' and 'event' are incompatible.
+      Type 'KeyboardEvent | MouseEvent' is not assignable to type 'MouseEvent'.
+        Type 'KeyboardEvent' is missing the following properties from type 'MouseEvent': button, buttons, clientX, clientY, and 14 more. (ts)
+			color={item.color}
+			onclick={item.onclick}
+		/>
+
+/home/sam/workspace-other/twintrinsic/src/routes/+page.svelte:118:9
+Error: '$$_redaeHppA4.$$slot_def' is of type 'unknown'. (ts)
+      >
+        <div slot="logo" class="flex items-center gap-2">
+          <TwintrinsicLogo size="2rem" class="text-primary-500" />
+
+/home/sam/workspace-other/twintrinsic/src/routes/+page.svelte:128:11
+Error: '$$_lenaP4.$$slot_def' is of type 'unknown'. (ts)
+        <Panel>
+          <svelte:fragment slot="header">
+            {component.name}
+
+/home/sam/workspace-other/twintrinsic/src/routes/+page.svelte:132:11
+Error: '$$_lenaP4.$$slot_def' is of type 'unknown'. (ts)
+          <p class="text-muted">{component.description}</p>
+          <svelte:fragment slot="footer">
+            <a
+
+/home/sam/workspace-other/twintrinsic/src/routes/demo/paraglide/+page.svelte:2:27
+Error: Cannot find module '$lib/paraglide/runtime' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { setLocale } from "$lib/paraglide/runtime"
+import { page } from "$app/state"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/+layout.svelte:7:49
+Error: Cannot find module '$lib' or its corresponding type declarations. (js)
+import { page } from "$app/stores"
+import { App, Separator, TwintrinsicLogo } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/+layout.svelte:184:16
+Error: Parameter 'size' implicitly has an 'any' type. (js)
+
+{#snippet logo(size)}
+  <TwintrinsicLogo {size}/>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/+page.svelte:6:49
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { CodeBlock, Container, Separator } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/+page.svelte:84:17
+Error: '$$_lenaP5.$$slot_def' is of type 'unknown'. (ts)
+              <Panel>
+                <svelte:fragment slot="header">
+                  <h3 class="text-lg font-medium group-hover:text-primary-500">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Accordion/Accordion/+page.svelte:29:5
+Error: Object literal may only specify known properties, and '"title"' does not exist in type 'Props'. (ts)
+  <CodeBlock
+    title="Basic Usage"
+    code={`
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Accordion/Accordion/+page.svelte:62:9
+Error: '$$_metInoidroccA3.$$slot_def' is of type 'unknown'. (ts)
+      <AccordionItem>
+        <svelte:fragment slot="header">Section 1</svelte:fragment>
+        <div class="p-4">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Accordion/Accordion/+page.svelte:68:9
+Error: '$$_metInoidroccA3.$$slot_def' is of type 'unknown'. (ts)
+      <AccordionItem>
+        <svelte:fragment slot="header">Section 2</svelte:fragment>
+        <div class="p-4">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Accordion/Accordion/+page.svelte:74:9
+Error: '$$_metInoidroccA3.$$slot_def' is of type 'unknown'. (ts)
+      <AccordionItem>
+        <svelte:fragment slot="header">Section 3</svelte:fragment>
+        <div class="p-4">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Accordion/Accordion/+page.svelte:86:9
+Error: '$$_metInoidroccA3.$$slot_def' is of type 'unknown'. (ts)
+      <AccordionItem>
+        <svelte:fragment slot="header">Multiple 1</svelte:fragment>
+        <div class="p-4">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Accordion/Accordion/+page.svelte:92:9
+Error: '$$_metInoidroccA3.$$slot_def' is of type 'unknown'. (ts)
+      <AccordionItem>
+        <svelte:fragment slot="header">Multiple 2</svelte:fragment>
+        <div class="p-4">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Accordion/Accordion/+page.svelte:104:9
+Error: '$$_metInoidroccA3.$$slot_def' is of type 'unknown'. (ts)
+      <AccordionItem>
+        <svelte:fragment slot="header">No Border 1</svelte:fragment>
+        <div class="p-4">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Accordion/Accordion/+page.svelte:110:9
+Error: '$$_metInoidroccA3.$$slot_def' is of type 'unknown'. (ts)
+      <AccordionItem>
+        <svelte:fragment slot="header">No Border 2</svelte:fragment>
+        <div class="p-4">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Accordion/Accordion/+page.svelte:122:9
+Error: '$$_metInoidroccA3.$$slot_def' is of type 'unknown'. (ts)
+      <AccordionItem>
+        <svelte:fragment slot="header">Collapsed 1</svelte:fragment>
+        <div class="p-4">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Accordion/Accordion/+page.svelte:128:9
+Error: '$$_metInoidroccA3.$$slot_def' is of type 'unknown'. (ts)
+      <AccordionItem>
+        <svelte:fragment slot="header">Collapsed 2</svelte:fragment>
+        <div class="p-4">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/App/App/+page.svelte:10:43
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { App, CodeBlock, Container } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/BottomBar/BottomBar/+page.svelte:42:11
+Error: '$$_raBmottoB3.$$slot_def' is of type 'unknown'. (ts)
+        <BottomBar>
+          <svelte:fragment slot="header">Details</svelte:fragment>
+          <div class="p-4">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/BottomBar/BottomBar/+page.svelte:73:11
+Error: '$$_raBmottoB3.$$slot_def' is of type 'unknown'. (ts)
+        <BottomBar height="20rem">
+          <svelte:fragment slot="header">
+            <div class="flex items-center gap-2">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Breadcrumb/Breadcrumb/+page.svelte:10:66
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { Breadcrumb, BreadcrumbItem, CodeBlock, Container } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Card/Card/+page.svelte:10:33
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { Card, CodeBlock } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Carousel/Carousel/+page.svelte:25:7
+Error: '$$_lesuoraC2.$$slot_def' is of type 'unknown'. (ts)
+    <Carousel>
+      <div slot="items">
+        <CarouselItem>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Carousel/Carousel/+page.svelte:68:7
+Error: '$$_lesuoraC2.$$slot_def' is of type 'unknown'. (ts)
+    <Carousel autoplay interval={5000}>
+      <div slot="items">
+        <CarouselItem>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Carousel/Carousel/+page.svelte:99:7
+Error: '$$_lesuoraC2.$$slot_def' is of type 'unknown'. (ts)
+    <Carousel transition="fade">
+      <div slot="items">
+        <CarouselItem>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Carousel/Carousel/+page.svelte:130:7
+Error: '$$_lesuoraC2.$$slot_def' is of type 'unknown'. (ts)
+    <Carousel showIndicators={false}>
+      <div slot="items">
+        <CarouselItem>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Carousel/Carousel/+page.svelte:161:7
+Error: '$$_lesuoraC2.$$slot_def' is of type 'unknown'. (ts)
+    <Carousel>
+      <div slot="items">
+        <CarouselItem>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Chip/Chip/+page.svelte:10:44
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { Chip, CodeBlock, Container } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeBlock/CodeBlock/+page.svelte:5:9
+Error: '>' expected. (ts)
+-->
+<script lang="ts">
+import { PropsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeBlock/CodeBlock/+page.svelte:5:13
+Error: ';' expected. (ts)
+-->
+<script lang="ts">
+import { PropsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeBlock/CodeBlock/+page.svelte:6:1
+Error: Expression expected. (ts)
+<script lang="ts">
+import { PropsTable } from "$lib/docs/index.js"
+import { CodeBlock } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeBlock/CodeBlock/+page.svelte:8:2
+Error: Type expected. (ts)
+import { CodeBlock } from "$lib/index.js"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeBlock/CodeBlock/+page.svelte:5:2
+Error: Cannot find name 'script'. (ts)
+-->
+<script lang="ts">
+import { PropsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeBlock/CodeBlock/+page.svelte:5:9
+Error: Cannot find name 'lang'. (ts)
+-->
+<script lang="ts">
+import { PropsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeBlock/CodeBlock/+page.svelte:6:28
+Error: Cannot find module '$lib/docs/index.js' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { PropsTable } from "$lib/docs/index.js"
+import { CodeBlock } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeBlock/CodeBlock/+page.svelte:7:27
+Error: Cannot find module '$lib/index.js' or its corresponding type declarations. (ts)
+import { PropsTable } from "$lib/docs/index.js"
+import { CodeBlock } from "$lib/index.js"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeBlockSpeed/CodeBlockSpeed/+page.svelte:5:9
+Error: '>' expected. (ts)
+-->
+<script lang="ts">
+	import { CodeBlock, CodeBlockSpeed } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeBlockSpeed/CodeBlockSpeed/+page.svelte:5:13
+Error: ';' expected. (ts)
+-->
+<script lang="ts">
+	import { CodeBlock, CodeBlockSpeed } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeBlockSpeed/CodeBlockSpeed/+page.svelte:6:2
+Error: Expression expected. (ts)
+<script lang="ts">
+	import { CodeBlock, CodeBlockSpeed } from '$lib';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeBlockSpeed/CodeBlockSpeed/+page.svelte:7:2
+Error: Type expected. (ts)
+	import { CodeBlock, CodeBlockSpeed } from '$lib';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeBlockSpeed/CodeBlockSpeed/+page.svelte:5:2
+Error: Cannot find name 'script'. (ts)
+-->
+<script lang="ts">
+	import { CodeBlock, CodeBlockSpeed } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeBlockSpeed/CodeBlockSpeed/+page.svelte:5:9
+Error: Cannot find name 'lang'. (ts)
+-->
+<script lang="ts">
+	import { CodeBlock, CodeBlockSpeed } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeBlockSpeed/CodeBlockSpeed/+page.svelte:6:44
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+	import { CodeBlock, CodeBlockSpeed } from '$lib';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeEditor/CodeEditor/+page.svelte:62:3
+Warn: This element is implicitly closed by the following `</section>`, which can cause an unexpected DOM structure. Add an explicit `</div>` to avoid surprises.
+https://svelte.dev/e/element_implicitly_closed (svelte)
+
+		<div class="space-y-8">
+			<div>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeEditor/CodeEditor/+page.svelte:1:1
+Error: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists. (js)
+<script>
+	import CodeBlock from '$lib/components/CodeBlock/CodeBlock.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeEditor/CodeEditor/+page.svelte:1:1
+Error: Cannot use JSX unless the '--jsx' flag is provided. (js)
+<script>
+	import CodeBlock from '$lib/components/CodeBlock/CodeBlock.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeEditor/CodeEditor/+page.svelte:4:1
+Error: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists. (js)
+	import CodeEditor from '$lib/components/CodeEditor/CodeEditor.svelte';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeEditor/CodeEditor/+page.svelte:44:4
+Error: Cannot find name 'CodeBlock'. (js)
+		<h2 class="text-2xl font-bold mb-4">Basic Usage</h2>
+		<CodeBlock
+			code={`<script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeEditor/CodeEditor/+page.svelte:254:6
+Error: Cannot find name 'CodeBlock'. (js)
+				</p>
+				<CodeBlock code="cdnSource='esm.sh'" language="javascript" />
+			</div>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeEditor/CodeEditor/+page.svelte:261:6
+Error: Cannot find name 'CodeBlock'. (js)
+				</p>
+				<CodeBlock code="cdnSource='jsdelivr'" language="javascript" />
+			</div>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/CodeEditor/CodeEditor/+page.svelte:268:6
+Error: Cannot find name 'CodeBlock'. (js)
+				</p>
+				<CodeBlock code="cdnSource='unpkg'" language="javascript" />
+			</div>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Container/Container/+page.svelte:10:38
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { CodeBlock, Container } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/DataTable/DataTable/+page.svelte:5:9
+Error: '>' expected. (ts)
+-->
+<script lang="ts">
+import { CodeBlock, Container, DataTable } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/DataTable/DataTable/+page.svelte:5:13
+Error: ';' expected. (ts)
+-->
+<script lang="ts">
+import { CodeBlock, Container, DataTable } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/DataTable/DataTable/+page.svelte:6:1
+Error: Expression expected. (ts)
+<script lang="ts">
+import { CodeBlock, Container, DataTable } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/DataTable/DataTable/+page.svelte:91:2
+Error: Type expected. (ts)
+];
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/DataTable/DataTable/+page.svelte:5:2
+Error: Cannot find name 'script'. (ts)
+-->
+<script lang="ts">
+import { CodeBlock, Container, DataTable } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/DataTable/DataTable/+page.svelte:5:9
+Error: Cannot find name 'lang'. (ts)
+-->
+<script lang="ts">
+import { CodeBlock, Container, DataTable } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/DataTable/DataTable/+page.svelte:6:49
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { CodeBlock, Container, DataTable } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/DataTable/DataTable/+page.svelte:54:16
+Error: Parameter 'value' implicitly has an 'any' type. (ts)
+    filterable: true,
+    template: (value) => {
+      const color =
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/DataTable/DataTable/+page.svelte:73:16
+Error: Parameter 'value' implicitly has an 'any' type. (ts)
+    filterable: true,
+    template: (value) => "$" + value.toFixed(2),
+  },
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/DataTable/DataTable/+page.svelte:80:16
+Error: Parameter 'value' implicitly has an 'any' type. (ts)
+    filterable: true,
+    template: (value) => {
+      const color =
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/AutoComplete/+page.svelte:73:7
+Error: Object literal may only specify known properties, and 'render' does not exist in type '(item: { label: string; value: string; avatar: string; }) => string'. (ts)
+    itemTemplate={{
+      render: ({ item }) => `
+        <div class="flex items-center gap-2">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/AutoComplete/+page.svelte:73:18
+Error: Binding element 'item' implicitly has an 'any' type. (ts)
+    itemTemplate={{
+      render: ({ item }) => `
+        <div class="flex items-center gap-2">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Combobox/+page.svelte:6:48
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { CodeBlock, Combobox, Container } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Dropdown/+page.svelte:130:5
+Error: Object literal may only specify known properties, and '"optionIcon"' does not exist in type '$$ComponentProps'. (ts)
+    placeholder="Select a country"
+    optionIcon="icon"
+  />
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Dropdown/+page.svelte:164:5
+Error: Object literal may only specify known properties, and '"optionLabel"' does not exist in type '$$ComponentProps'. (ts)
+    placeholder="Select a category"
+    optionLabel="name"
+    optionValue="id"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/FileUpload/+page.svelte:6:50
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { CodeBlock, Container, FileUpload } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/FileUpload/+page.svelte:40:18
+Error: Parameter 'e' implicitly has an 'any' type. (ts)
+      maxSize={2097152}
+      onchange={(e) => console.log(e.detail.files)}
+    />
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/FileUpload/+page.svelte:92:17
+Error: Parameter 'e' implicitly has an 'any' type. (ts)
+      browseLabel="Select Images"
+      onerror={(e) => console.log(e.detail.errors)}
+    />
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/FloatLabel/+page.svelte:44:15
+Error: Type '{ name: string; rows: number; }' is not assignable to type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; } & Record<...>'.
+  Type '{ name: string; rows: number; }' is missing the following properties from type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; }': id, minlength, maxlength, autocomplete, ariaLabel (ts)
+    <FloatLabel label="Message">
+      <Textarea name="message" rows={3} />
+    </FloatLabel>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:6:9
+Error: '>' expected. (ts)
+
+<script lang="ts">
+import { Button, Checkbox, Container, Form, FormField, Input } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:6:13
+Error: ';' expected. (ts)
+
+<script lang="ts">
+import { Button, Checkbox, Container, Form, FormField, Input } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:7:1
+Error: Expression expected. (ts)
+<script lang="ts">
+import { Button, Checkbox, Container, Form, FormField, Input } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:8:2
+Error: Type expected. (ts)
+import { Button, Checkbox, Container, Form, FormField, Input } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:374:7
+Error: Variable 'formApi' implicitly has type 'any' in some locations where its type cannot be determined. (ts)
+  <CodeBlock language="svelte">{`<script>
+  let formApi;
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:376:28
+Error: Parameter 'event' implicitly has an 'any' type. (ts)
+
+  function handleFormReady(event) {
+    formApi = event.detail.form;
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:381:5
+Error: Variable 'formApi' implicitly has an 'any' type. (ts)
+  function resetForm() {
+    formApi.reset();
+  }
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:385:21
+Error: Variable 'formApi' implicitly has an 'any' type. (ts)
+  function validateForm() {
+    const isValid = formApi.validate();
+    console.log('Form is valid:', isValid);
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:390:5
+Error: Variable 'formApi' implicitly has an 'any' type. (ts)
+  function setFormValues() {
+    formApi.setValues({
+      username: 'johndoe',
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:397:20
+Error: Variable 'formApi' implicitly has an 'any' type. (ts)
+  function getFormValues() {
+    const values = formApi.getValues();
+    console.log('Form values:', values);
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:402:5
+Error: Variable 'formApi' implicitly has an 'any' type. (ts)
+  function setFormErrors() {
+    formApi.setErrors({
+      username: 'Username already taken'
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:408:5
+Error: Variable 'formApi' implicitly has an 'any' type. (ts)
+  function clearFormErrors() {
+    formApi.clearErrors();
+  }
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:6:2
+Error: Cannot find name 'script'. (ts)
+
+<script lang="ts">
+import { Button, Checkbox, Container, Form, FormField, Input } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:6:9
+Error: Cannot find name 'lang'. (ts)
+
+<script lang="ts">
+import { Button, Checkbox, Container, Form, FormField, Input } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:7:69
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { Button, Checkbox, Container, Form, FormField, Input } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:46:4
+Error: Cannot find name 'CodeBlock'. (ts)
+
+  <CodeBlock language="svelte">{`<Form onsubmit={handleSubmit}>
+  <FormField label="Username" name="username" required>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:62:12
+Error: Cannot find name 'CodeBlock'. (ts)
+  </div>
+</Form>`}</CodeBlock>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:81:4
+Error: Cannot find name 'CodeBlock'. (ts)
+
+  <CodeBlock language="svelte">{`<Form layout="horizontal">
+  <FormField label="First Name" name="firstName">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:93:12
+Error: Cannot find name 'CodeBlock'. (ts)
+  </div>
+</Form>`}</CodeBlock>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:116:4
+Error: Cannot find name 'CodeBlock'. (ts)
+
+  <CodeBlock language="svelte">{`<Form validate oninvalid={handleInvalid} onsubmit={handleSubmit}>
+  <FormField label="Username" name="username" required helpText="Username must be at least 3 characters">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:132:12
+Error: Cannot find name 'CodeBlock'. (ts)
+  </div>
+</Form>`}</CodeBlock>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:167:4
+Error: Cannot find name 'CodeBlock'. (ts)
+
+  <CodeBlock language="svelte">{`<!-- Disabled Form -->
+<Form disabled>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:195:12
+Error: Cannot find name 'CodeBlock'. (ts)
+  </div>
+</Form>`}</CodeBlock>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:351:21
+Error: Cannot find name 'data'. (ts)
+        <td><code>submit</code></td>
+        <td><code>{ data, formData, form }</code></td>
+        <td>Fired when the form is submitted and validation passes</td>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:351:21
+Error: Left side of comma operator is unused and has no side effects. (ts)
+        <td><code>submit</code></td>
+        <td><code>{ data, formData, form }</code></td>
+        <td>Fired when the form is submitted and validation passes</td>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:351:21
+Error: Left side of comma operator is unused and has no side effects. (ts)
+        <td><code>submit</code></td>
+        <td><code>{ data, formData, form }</code></td>
+        <td>Fired when the form is submitted and validation passes</td>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:351:27
+Error: Cannot find name 'formData'. (ts)
+        <td><code>submit</code></td>
+        <td><code>{ data, formData, form }</code></td>
+        <td>Fired when the form is submitted and validation passes</td>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:351:37
+Error: Cannot find name 'form'. (ts)
+        <td><code>submit</code></td>
+        <td><code>{ data, formData, form }</code></td>
+        <td>Fired when the form is submitted and validation passes</td>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:356:21
+Error: Cannot find name 'errors'. (ts)
+        <td><code>invalid</code></td>
+        <td><code>{ errors }</code></td>
+        <td>Fired when the form is submitted but validation fails</td>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:361:21
+Error: Cannot find name 'form'. (ts)
+        <td><code>ready</code></td>
+        <td><code>{ form }</code></td>
+        <td>Fired when the form is initialized with the form API</td>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:373:4
+Error: Cannot find name 'CodeBlock'. (ts)
+
+  <CodeBlock language="svelte">{`<script>
+  let formApi;
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Form/+page.svelte:414:12
+Error: Cannot find name 'CodeBlock'. (ts)
+  <!-- Form fields -->
+</Form>`}</CodeBlock>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/FormField/+page.svelte:40:15
+Error: Type '{ name: string; rows: number; }' is not assignable to type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; } & Record<...>'.
+  Type '{ name: string; rows: number; }' is missing the following properties from type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; }': id, minlength, maxlength, autocomplete, ariaLabel (ts)
+    <FormField label="Message">
+      <Textarea name="message" rows={3} />
+    </FormField>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/InvalidState/+page.svelte:5:9
+Error: '>' expected. (ts)
+-->
+<script lang="ts">
+import { InvalidState, TextInput, FormField, CodeBlock } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/InvalidState/+page.svelte:5:13
+Error: ';' expected. (ts)
+-->
+<script lang="ts">
+import { InvalidState, TextInput, FormField, CodeBlock } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/InvalidState/+page.svelte:6:1
+Error: Expression expected. (ts)
+<script lang="ts">
+import { InvalidState, TextInput, FormField, CodeBlock } from "$lib"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/InvalidState/+page.svelte:8:2
+Error: Type expected. (ts)
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/InvalidState/+page.svelte:168:25
+Error: Parameter 'values' implicitly has an 'any' type. (ts)
+  
+  function validateForm(values) {
+    errors = {};
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/InvalidState/+page.svelte:172:14
+Error: Property 'email' does not exist on type '{}'. (ts)
+    if (!values.email) {
+      errors.email = "Email is required";
+    } else if (!/^[^@]+@[^@]+\.[^@]+$/.test(values.email)) {
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/InvalidState/+page.svelte:174:14
+Error: Property 'email' does not exist on type '{}'. (ts)
+    } else if (!/^[^@]+@[^@]+\.[^@]+$/.test(values.email)) {
+      errors.email = "Please enter a valid email address";
+    }
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/InvalidState/+page.svelte:178:14
+Error: Property 'password' does not exist on type '{}'. (ts)
+    if (!values.password) {
+      errors.password = "Password is required";
+    } else if (values.password.length < 8) {
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/InvalidState/+page.svelte:180:14
+Error: Property 'password' does not exist on type '{}'. (ts)
+    } else if (values.password.length < 8) {
+      errors.password = "Password must be at least 8 characters long";
+    }
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/InvalidState/+page.svelte:5:2
+Error: Cannot find name 'script'. (ts)
+-->
+<script lang="ts">
+import { InvalidState, TextInput, FormField, CodeBlock } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/InvalidState/+page.svelte:5:9
+Error: Cannot find name 'lang'. (ts)
+-->
+<script lang="ts">
+import { InvalidState, TextInput, FormField, CodeBlock } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/InvalidState/+page.svelte:6:63
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { InvalidState, TextInput, FormField, CodeBlock } from "$lib"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/InvalidState/+page.svelte:7:41
+Error: Cannot find module '$lib/docs/index.js' or its corresponding type declarations. (ts)
+import { InvalidState, TextInput, FormField, CodeBlock } from "$lib"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Knob/+page.svelte:44:21
+Error: Cannot find name 'value'. (ts)
+    showValue={true}
+    valueTemplate="{value}%" 
+  />
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Knob/+page.svelte:183:23
+Error: Cannot find name 'value'. (ts)
+      showValue={true}
+      valueTemplate="{value}°C"
+    />
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Listbox/+page.svelte:5:9
+Error: '>' expected. (ts)
+-->
+<script lang="ts">
+import { Listbox, FormField, CodeBlock } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Listbox/+page.svelte:5:13
+Error: ';' expected. (ts)
+-->
+<script lang="ts">
+import { Listbox, FormField, CodeBlock } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Listbox/+page.svelte:6:1
+Error: Expression expected. (ts)
+<script lang="ts">
+import { Listbox, FormField, CodeBlock } from "$lib/index.js"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Listbox/+page.svelte:63:2
+Error: Unterminated regular expression literal. (ts)
+let selectedFruits = ["Apple", "Grape"]
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Listbox/+page.svelte:5:2
+Error: Cannot find name 'script'. (ts)
+-->
+<script lang="ts">
+import { Listbox, FormField, CodeBlock } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Listbox/+page.svelte:5:9
+Error: Cannot find name 'lang'. (ts)
+-->
+<script lang="ts">
+import { Listbox, FormField, CodeBlock } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Listbox/+page.svelte:6:47
+Error: Cannot find module '$lib/index.js' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { Listbox, FormField, CodeBlock } from "$lib/index.js"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Listbox/+page.svelte:7:41
+Error: Cannot find module '$lib/docs/index.js' or its corresponding type declarations. (ts)
+import { Listbox, FormField, CodeBlock } from "$lib/index.js"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Listbox/+page.svelte:62:22
+Error: Operator '<' cannot be applied to types 'string[]' and 'RegExp'. (ts)
+let selectedUsers = [1, 3]
+let selectedFruits = ["Apple", "Grape"]
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/NumberInput/+page.svelte:5:9
+Error: '>' expected. (ts)
+-->
+<script lang="ts">
+import { NumberInput, FormField, CodeBlock } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/NumberInput/+page.svelte:5:13
+Error: ';' expected. (ts)
+-->
+<script lang="ts">
+import { NumberInput, FormField, CodeBlock } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/NumberInput/+page.svelte:6:1
+Error: Expression expected. (ts)
+<script lang="ts">
+import { NumberInput, FormField, CodeBlock } from "$lib/index.js"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/NumberInput/+page.svelte:14:2
+Error: Unterminated regular expression literal. (ts)
+let temperature = $state(22.5)
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/NumberInput/+page.svelte:5:2
+Error: Cannot find name 'script'. (ts)
+-->
+<script lang="ts">
+import { NumberInput, FormField, CodeBlock } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/NumberInput/+page.svelte:5:9
+Error: Cannot find name 'lang'. (ts)
+-->
+<script lang="ts">
+import { NumberInput, FormField, CodeBlock } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/NumberInput/+page.svelte:6:51
+Error: Cannot find module '$lib/index.js' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { NumberInput, FormField, CodeBlock } from "$lib/index.js"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/NumberInput/+page.svelte:7:41
+Error: Cannot find module '$lib/docs/index.js' or its corresponding type declarations. (ts)
+import { NumberInput, FormField, CodeBlock } from "$lib/index.js"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/NumberInput/+page.svelte:13:19
+Error: Operator '<' cannot be applied to types 'number' and 'RegExp'. (ts)
+let percentage = $state(75)
+let temperature = $state(22.5)
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Radio/+page.svelte:5:9
+Error: '>' expected. (ts)
+-->
+<script lang="ts">
+import { Radio, FormField, CodeBlock } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Radio/+page.svelte:5:13
+Error: ';' expected. (ts)
+-->
+<script lang="ts">
+import { Radio, FormField, CodeBlock } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Radio/+page.svelte:6:1
+Error: Expression expected. (ts)
+<script lang="ts">
+import { Radio, FormField, CodeBlock } from "$lib"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Radio/+page.svelte:13:2
+Error: Unterminated regular expression literal. (ts)
+let fruit = $state("apple")
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Radio/+page.svelte:5:2
+Error: Cannot find name 'script'. (ts)
+-->
+<script lang="ts">
+import { Radio, FormField, CodeBlock } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Radio/+page.svelte:5:9
+Error: Cannot find name 'lang'. (ts)
+-->
+<script lang="ts">
+import { Radio, FormField, CodeBlock } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Radio/+page.svelte:6:45
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { Radio, FormField, CodeBlock } from "$lib"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Radio/+page.svelte:7:41
+Error: Cannot find module '$lib/docs/index.js' or its corresponding type declarations. (ts)
+import { Radio, FormField, CodeBlock } from "$lib"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Radio/+page.svelte:12:13
+Error: Operator '<' cannot be applied to types 'string' and 'RegExp'. (ts)
+let size = $state("md")
+let fruit = $state("apple")
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Radio/+page.svelte:89:62
+Error: This comparison appears to be unintentional because the types 'boolean' and 'string' have no overlap. (ts)
+  <div class="flex gap-4">
+    <Radio name="fruit" value="apple" label="Apple" checked={fruit === 'apple'} onchange={() => fruit = 'apple'} />
+    <Radio name="fruit" value="banana" label="Banana" checked={fruit === 'banana'} onchange={() => fruit = 'banana'} />
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Radio/+page.svelte:89:97
+Error: Type 'string' is not assignable to type 'boolean'. (ts)
+  <div class="flex gap-4">
+    <Radio name="fruit" value="apple" label="Apple" checked={fruit === 'apple'} onchange={() => fruit = 'apple'} />
+    <Radio name="fruit" value="banana" label="Banana" checked={fruit === 'banana'} onchange={() => fruit = 'banana'} />
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Radio/+page.svelte:90:64
+Error: This comparison appears to be unintentional because the types 'boolean' and 'string' have no overlap. (ts)
+    <Radio name="fruit" value="apple" label="Apple" checked={fruit === 'apple'} onchange={() => fruit = 'apple'} />
+    <Radio name="fruit" value="banana" label="Banana" checked={fruit === 'banana'} onchange={() => fruit = 'banana'} />
+    <Radio name="fruit" value="cherry" label="Cherry" checked={fruit === 'cherry'} onchange={() => fruit = 'cherry'} />
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Radio/+page.svelte:90:100
+Error: Type 'string' is not assignable to type 'boolean'. (ts)
+    <Radio name="fruit" value="apple" label="Apple" checked={fruit === 'apple'} onchange={() => fruit = 'apple'} />
+    <Radio name="fruit" value="banana" label="Banana" checked={fruit === 'banana'} onchange={() => fruit = 'banana'} />
+    <Radio name="fruit" value="cherry" label="Cherry" checked={fruit === 'cherry'} onchange={() => fruit = 'cherry'} />
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Radio/+page.svelte:91:64
+Error: This comparison appears to be unintentional because the types 'boolean' and 'string' have no overlap. (ts)
+    <Radio name="fruit" value="banana" label="Banana" checked={fruit === 'banana'} onchange={() => fruit = 'banana'} />
+    <Radio name="fruit" value="cherry" label="Cherry" checked={fruit === 'cherry'} onchange={() => fruit = 'cherry'} />
+  </div>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Radio/+page.svelte:91:100
+Error: Type 'string' is not assignable to type 'boolean'. (ts)
+    <Radio name="fruit" value="banana" label="Banana" checked={fruit === 'banana'} onchange={() => fruit = 'banana'} />
+    <Radio name="fruit" value="cherry" label="Cherry" checked={fruit === 'cherry'} onchange={() => fruit = 'cherry'} />
+  </div>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Rating/+page.svelte:5:9
+Error: '>' expected. (ts)
+-->
+<script lang="ts">
+import { EventsTable, PropsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Rating/+page.svelte:5:13
+Error: ';' expected. (ts)
+-->
+<script lang="ts">
+import { EventsTable, PropsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Rating/+page.svelte:6:1
+Error: Expression expected. (ts)
+<script lang="ts">
+import { EventsTable, PropsTable } from "$lib/docs/index.js"
+import { CodeBlock, Rating } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Rating/+page.svelte:23:2
+Error: Type expected. (ts)
+}
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Rating/+page.svelte:219:24
+Error: Parameter 'event' implicitly has an 'any' type. (ts)
+
+  function handleHover(event) {
+    hoverRating = event.detail.value
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Rating/+page.svelte:5:2
+Error: Cannot find name 'script'. (ts)
+-->
+<script lang="ts">
+import { EventsTable, PropsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Rating/+page.svelte:5:9
+Error: Cannot find name 'lang'. (ts)
+-->
+<script lang="ts">
+import { EventsTable, PropsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Rating/+page.svelte:6:41
+Error: Cannot find module '$lib/docs/index.js' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { EventsTable, PropsTable } from "$lib/docs/index.js"
+import { CodeBlock, Rating } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Rating/+page.svelte:7:35
+Error: Cannot find module '$lib/index.js' or its corresponding type declarations. (ts)
+import { EventsTable, PropsTable } from "$lib/docs/index.js"
+import { CodeBlock, Rating } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/SelectGroup/+page.svelte:5:9
+Error: '>' expected. (ts)
+-->
+<script lang="ts">
+import { Select, SelectGroup, FormField, CodeBlock } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/SelectGroup/+page.svelte:5:13
+Error: ';' expected. (ts)
+-->
+<script lang="ts">
+import { Select, SelectGroup, FormField, CodeBlock } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/SelectGroup/+page.svelte:6:1
+Error: Expression expected. (ts)
+<script lang="ts">
+import { Select, SelectGroup, FormField, CodeBlock } from "$lib/index.js"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/SelectGroup/+page.svelte:34:2
+Error: Unterminated regular expression literal. (ts)
+let selectedCountry = ""
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/SelectGroup/+page.svelte:5:2
+Error: Cannot find name 'script'. (ts)
+-->
+<script lang="ts">
+import { Select, SelectGroup, FormField, CodeBlock } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/SelectGroup/+page.svelte:5:9
+Error: Cannot find name 'lang'. (ts)
+-->
+<script lang="ts">
+import { Select, SelectGroup, FormField, CodeBlock } from "$lib/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/SelectGroup/+page.svelte:6:59
+Error: Cannot find module '$lib/index.js' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { Select, SelectGroup, FormField, CodeBlock } from "$lib/index.js"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/SelectGroup/+page.svelte:7:41
+Error: Cannot find module '$lib/docs/index.js' or its corresponding type declarations. (ts)
+import { Select, SelectGroup, FormField, CodeBlock } from "$lib/index.js"
+import { PropsTable, EventsTable } from "$lib/docs/index.js"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/SelectGroup/+page.svelte:33:23
+Error: Operator '<' cannot be applied to types 'string' and 'RegExp'. (ts)
+// Selected values for examples
+let selectedCountry = ""
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Slider/+page.svelte:7:46
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { CodeBlock, Container, Slider } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Slider/+page.svelte:178:22
+Error: Cannot find name 'value'. (ts)
+      showValue
+      valueFormat="${value}%"
+    />
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Slider/+page.svelte:265:21
+Error: Cannot find name 'value'. (ts)
+        <td><code>string</code></td>
+        <td><code>"{value}"</code></td>
+        <td>Format for displayed value</td>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Textarea/+page.svelte:22:11
+Error: Type '{ placeholder: string; rows: number; }' is not assignable to type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; } & Record<...>'.
+  Type '{ placeholder: string; rows: number; }' is missing the following properties from type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; }': id, name, minlength, maxlength, and 2 more. (js)
+<div class="example">
+  <Textarea 
+    placeholder="Enter your message here"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Textarea/+page.svelte:36:11
+Error: Type '{ value: string; rows: number; }' is not assignable to type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; } & Record<...>'.
+  Type '{ value: string; rows: number; }' is missing the following properties from type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; }': id, name, minlength, maxlength, and 2 more. (js)
+<div class="example">
+  <Textarea 
+    value="This is a pre-filled textarea with some initial content."
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Textarea/+page.svelte:50:11
+Error: Type '{ placeholder: string; autoResize: true; rows: number; }' is not assignable to type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; } & Record<...>'.
+  Type '{ placeholder: string; autoResize: true; rows: number; }' is missing the following properties from type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; }': id, name, minlength, maxlength, and 2 more. (js)
+<div class="example">
+  <Textarea 
+    placeholder="This textarea will grow as you type..."
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Textarea/+page.svelte:66:11
+Error: Type '{ value: string; disabled: true; rows: number; }' is not assignable to type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; } & Record<...>'.
+  Type '{ value: string; disabled: true; rows: number; }' is missing the following properties from type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; }': id, name, minlength, maxlength, and 2 more. (js)
+<div class="example">
+  <Textarea 
+    value="This textarea is disabled and cannot be edited."
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Textarea/+page.svelte:82:11
+Error: Type '{ value: string; readonly: true; rows: number; }' is not assignable to type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; } & Record<...>'.
+  Type '{ value: string; readonly: true; rows: number; }' is missing the following properties from type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; }': id, name, minlength, maxlength, and 2 more. (js)
+<div class="example">
+  <Textarea 
+    value="This textarea is read-only but can still be focused and copied."
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Textarea/+page.svelte:98:11
+Error: Type '{ placeholder: string; maxlength: string; rows: number; }' is not assignable to type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; } & Record<...>'.
+  Type '{ placeholder: string; maxlength: string; rows: number; }' is missing the following properties from type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; }': id, name, minlength, autocomplete, ariaLabel (js)
+<div class="example">
+  <Textarea 
+    placeholder="Maximum 100 characters allowed"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Form/Textarea/+page.svelte:114:11
+Error: Type '{ placeholder: string; required: true; rows: number; }' is not assignable to type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; } & Record<...>'.
+  Type '{ placeholder: string; required: true; rows: number; }' is missing the following properties from type '{ class?: string | undefined; id: any; name: any; placeholder?: string | undefined; value?: string | undefined; rows?: number | undefined; required?: boolean | undefined; disabled?: boolean | undefined; ... 9 more ...; onblur?: any; }': id, name, minlength, maxlength, and 2 more. (js)
+<div class="example">
+  <Textarea 
+    placeholder="This field is required"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Icon/Icon/+page.svelte:9:9
+Error: '>' expected. (ts)
+</style>
+<script lang="ts">
+import { CodeBlock, Container, Icon, iconConfig, Select, setIconset, TextInput } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Icon/Icon/+page.svelte:9:13
+Error: ';' expected. (ts)
+</style>
+<script lang="ts">
+import { CodeBlock, Container, Icon, iconConfig, Select, setIconset, TextInput } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Icon/Icon/+page.svelte:10:1
+Error: Expression expected. (ts)
+<script lang="ts">
+import { CodeBlock, Container, Icon, iconConfig, Select, setIconset, TextInput } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Icon/Icon/+page.svelte:53:2
+Error: Type expected. (ts)
+}
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Icon/Icon/+page.svelte:9:2
+Error: Cannot find name 'script'. (ts)
+</style>
+<script lang="ts">
+import { CodeBlock, Container, Icon, iconConfig, Select, setIconset, TextInput } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Icon/Icon/+page.svelte:9:9
+Error: Cannot find name 'lang'. (ts)
+</style>
+<script lang="ts">
+import { CodeBlock, Container, Icon, iconConfig, Select, setIconset, TextInput } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Icon/Icon/+page.svelte:10:87
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { CodeBlock, Container, Icon, iconConfig, Select, setIconset, TextInput } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Icon/Icon/+page.svelte:34:44
+Error: Parameter 'config' implicitly has an 'any' type. (ts)
+$effect(() => {
+  const unsubscribe = iconConfig.subscribe(config => {
+    currentIconset = config.defaultIconset
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Icon/IconifyIcon/IconifyIcon/+page.svelte:9:9
+Error: '>' expected. (ts)
+</style>
+<script lang="ts">
+import { CodeBlock, Container, setIconset } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Icon/IconifyIcon/IconifyIcon/+page.svelte:9:13
+Error: ';' expected. (ts)
+</style>
+<script lang="ts">
+import { CodeBlock, Container, setIconset } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Icon/IconifyIcon/IconifyIcon/+page.svelte:10:1
+Error: Expression expected. (ts)
+<script lang="ts">
+import { CodeBlock, Container, setIconset } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Icon/IconifyIcon/IconifyIcon/+page.svelte:11:2
+Error: Type expected. (ts)
+import { CodeBlock, Container, setIconset } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Icon/IconifyIcon/IconifyIcon/+page.svelte:38:12
+Error: Module '"twintrinsic"' has no exported member 'IconifyIcon'. (ts)
+  <CodeBlock language="svelte">{`<script>
+  import { IconifyIcon } from 'twintrinsic'
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Icon/IconifyIcon/IconifyIcon/+page.svelte:9:2
+Error: Cannot find name 'script'. (ts)
+</style>
+<script lang="ts">
+import { CodeBlock, Container, setIconset } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Icon/IconifyIcon/IconifyIcon/+page.svelte:9:9
+Error: Cannot find name 'lang'. (ts)
+</style>
+<script lang="ts">
+import { CodeBlock, Container, setIconset } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Icon/IconifyIcon/IconifyIcon/+page.svelte:10:50
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { CodeBlock, Container, setIconset } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Lazy/LazyPanel/+page.svelte:6:38
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { CodeBlock, LazyPanel } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Map/Map/+page.svelte:5:9
+Error: '>' expected. (ts)
+-->
+<script lang="ts">
+	import { onMount } from 'svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Map/Map/+page.svelte:5:13
+Error: ';' expected. (ts)
+-->
+<script lang="ts">
+	import { onMount } from 'svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Map/Map/+page.svelte:6:2
+Error: Expression expected. (ts)
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { CodeBlock, Container, Table } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Map/Map/+page.svelte:15:2
+Error: Type expected. (ts)
+
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Map/Map/+page.svelte:214:23
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+	<CodeBlock language="svelte">{`<script>
+  import { Map } from '$lib';
+  import { onMount } from 'svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Map/Map/+page.svelte:224:32
+Error: Property 'ImageOverlay' does not exist on type '{ default: typeof import("leaflet", { with: { "resolution-mode": "import" } }); }'. (ts)
+    const imageUrl = 'https://staticdelivery.nexusmods.com/mods/1151/images/92456/92456-1742822281-187495018.png';
+    const imageOverlay = new L.ImageOverlay(imageUrl, imageBounds);
+    imageOverlay.addTo(mapInstance);
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Map/Map/+page.svelte:5:2
+Error: Cannot find name 'script'. (ts)
+-->
+<script lang="ts">
+	import { onMount } from 'svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Map/Map/+page.svelte:5:9
+Error: Cannot find name 'lang'. (ts)
+-->
+<script lang="ts">
+	import { onMount } from 'svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Map/Map/+page.svelte:7:46
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+	import { onMount } from 'svelte';
+	import { CodeBlock, Container, Table } from '$lib';
+	import MapComponent from '$lib/components/Map/Map.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Map/Map/+page.svelte:8:27
+Error: Cannot find module '$lib/components/Map/Map.svelte' or its corresponding type declarations. (ts)
+	import { CodeBlock, Container, Table } from '$lib';
+	import MapComponent from '$lib/components/Map/Map.svelte';
+	import CustomMapImage from "./fallout4-pipboy-highres.webp";
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Map/Map/+page.svelte:160:14
+Error: Parameter 'event' implicitly has an 'any' type. (ts)
+			zoom={13}
+			onclick={(event) => {
+				console.log('Marker created at:', event.detail);
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Masonry/Masonry/+page.svelte:2:47
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { CodeBlock, Container, Masonry } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Menu/Menu/+page.svelte:25:7
+Error: '$$_uneM2.$$slot_def' is of type 'unknown'. (ts)
+    <Menu>
+      <Button slot="trigger">Open Menu</Button>
+      <MenuItem>Option 1</MenuItem>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Menu/Menu/+page.svelte:26:8
+Error: Property 'ariaLabel' is missing in type '{ children: () => any; }' but required in type '$$ComponentProps'. (ts)
+      <Button slot="trigger">Open Menu</Button>
+      <MenuItem>Option 1</MenuItem>
+      <MenuItem>Option 2</MenuItem>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Menu/Menu/+page.svelte:27:8
+Error: Property 'ariaLabel' is missing in type '{ children: () => any; }' but required in type '$$ComponentProps'. (ts)
+      <MenuItem>Option 1</MenuItem>
+      <MenuItem>Option 2</MenuItem>
+      <MenuItem>Option 3</MenuItem>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Menu/Menu/+page.svelte:28:8
+Error: Property 'ariaLabel' is missing in type '{ children: () => any; }' but required in type '$$ComponentProps'. (ts)
+      <MenuItem>Option 2</MenuItem>
+      <MenuItem>Option 3</MenuItem>
+    </Menu>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Menu/Menu/+page.svelte:42:7
+Error: '$$_uneM2.$$slot_def' is of type 'unknown'. (ts)
+    <Menu>
+      <Button slot="trigger">Actions</Button>
+      <MenuItem>Edit</MenuItem>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Menu/Menu/+page.svelte:43:8
+Error: Property 'ariaLabel' is missing in type '{ children: () => any; }' but required in type '$$ComponentProps'. (ts)
+      <Button slot="trigger">Actions</Button>
+      <MenuItem>Edit</MenuItem>
+      <MenuItem>Copy</MenuItem>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Menu/Menu/+page.svelte:44:8
+Error: Property 'ariaLabel' is missing in type '{ children: () => any; }' but required in type '$$ComponentProps'. (ts)
+      <MenuItem>Edit</MenuItem>
+      <MenuItem>Copy</MenuItem>
+      <MenuItem divider>Delete</MenuItem>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Menu/Menu/+page.svelte:45:17
+Error: Object literal may only specify known properties, and '"divider"' does not exist in type '$$ComponentProps'. (ts)
+      <MenuItem>Copy</MenuItem>
+      <MenuItem divider>Delete</MenuItem>
+    </Menu>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Menu/Menu/+page.svelte:59:7
+Error: '$$_uneM2.$$slot_def' is of type 'unknown'. (ts)
+    <Menu>
+      <Button slot="trigger">More</Button>
+      <MenuItem icon="edit">Edit</MenuItem>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Menu/Menu/+page.svelte:60:17
+Error: Object literal may only specify known properties, and '"icon"' does not exist in type '$$ComponentProps'. (ts)
+      <Button slot="trigger">More</Button>
+      <MenuItem icon="edit">Edit</MenuItem>
+      <MenuItem icon="copy">Copy</MenuItem>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Menu/Menu/+page.svelte:61:17
+Error: Object literal may only specify known properties, and '"icon"' does not exist in type '$$ComponentProps'. (ts)
+      <MenuItem icon="edit">Edit</MenuItem>
+      <MenuItem icon="copy">Copy</MenuItem>
+      <MenuItem icon="trash">Delete</MenuItem>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Menu/Menu/+page.svelte:62:17
+Error: Object literal may only specify known properties, and '"icon"' does not exist in type '$$ComponentProps'. (ts)
+      <MenuItem icon="copy">Copy</MenuItem>
+      <MenuItem icon="trash">Delete</MenuItem>
+    </Menu>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/AreaChart/+page.svelte:2:28
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+	import { AreaChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/BarChart/+page.svelte:1:9
+Error: '>' expected. (ts)
+<script lang="ts">
+	import { BarChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/BarChart/+page.svelte:1:13
+Error: ';' expected. (ts)
+<script lang="ts">
+	import { BarChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/BarChart/+page.svelte:2:2
+Error: Expression expected. (ts)
+<script lang="ts">
+	import { BarChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/BarChart/+page.svelte:27:2
+Error: Type expected. (ts)
+	const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/BarChart/+page.svelte:57:28
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
+  import { BarChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/BarChart/+page.svelte:1:2
+Error: Cannot find name 'script'. (ts)
+<script lang="ts">
+	import { BarChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/BarChart/+page.svelte:1:9
+Error: Cannot find name 'lang'. (ts)
+<script lang="ts">
+	import { BarChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/BarChart/+page.svelte:2:27
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+	import { BarChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/BarChart/+page.svelte:3:24
+Error: Cannot find module '$lib/components/Container/Container.svelte' or its corresponding type declarations. (ts)
+	import { BarChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/DonutChart/+page.svelte:1:9
+Error: '>' expected. (ts)
+<script lang="ts">
+	import { DonutChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/DonutChart/+page.svelte:1:13
+Error: ';' expected. (ts)
+<script lang="ts">
+	import { DonutChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/DonutChart/+page.svelte:2:2
+Error: Expression expected. (ts)
+<script lang="ts">
+	import { DonutChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/DonutChart/+page.svelte:8:2
+Error: Type expected. (ts)
+	const customColors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6'];
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/DonutChart/+page.svelte:37:30
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
+  import { DonutChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/DonutChart/+page.svelte:1:2
+Error: Cannot find name 'script'. (ts)
+<script lang="ts">
+	import { DonutChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/DonutChart/+page.svelte:1:9
+Error: Cannot find name 'lang'. (ts)
+<script lang="ts">
+	import { DonutChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/DonutChart/+page.svelte:2:29
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+	import { DonutChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/DonutChart/+page.svelte:3:24
+Error: Cannot find module '$lib/components/Container/Container.svelte' or its corresponding type declarations. (ts)
+	import { DonutChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/GaugeChart/+page.svelte:1:9
+Error: '>' expected. (ts)
+<script lang="ts">
+	import { GaugeChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/GaugeChart/+page.svelte:1:13
+Error: ';' expected. (ts)
+<script lang="ts">
+	import { GaugeChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/GaugeChart/+page.svelte:2:2
+Error: Expression expected. (ts)
+<script lang="ts">
+	import { GaugeChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/GaugeChart/+page.svelte:4:2
+Error: Type expected. (ts)
+	import Container from '$lib/components/Container/Container.svelte';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/GaugeChart/+page.svelte:36:30
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
+  import { GaugeChart } from '$lib';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/GaugeChart/+page.svelte:1:2
+Error: Cannot find name 'script'. (ts)
+<script lang="ts">
+	import { GaugeChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/GaugeChart/+page.svelte:1:9
+Error: Cannot find name 'lang'. (ts)
+<script lang="ts">
+	import { GaugeChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/GaugeChart/+page.svelte:2:29
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+	import { GaugeChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/GaugeChart/+page.svelte:3:24
+Error: Cannot find module '$lib/components/Container/Container.svelte' or its corresponding type declarations. (ts)
+	import { GaugeChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/HorizontalBarChart/+page.svelte:1:9
+Error: '>' expected. (ts)
+<script lang="ts">
+	import { HorizontalBarChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/HorizontalBarChart/+page.svelte:1:13
+Error: ';' expected. (ts)
+<script lang="ts">
+	import { HorizontalBarChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/HorizontalBarChart/+page.svelte:2:2
+Error: Expression expected. (ts)
+<script lang="ts">
+	import { HorizontalBarChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/HorizontalBarChart/+page.svelte:7:2
+Error: Type expected. (ts)
+	const labels = ['Chrome', 'Firefox', 'Safari', 'Edge', 'Other'];
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/HorizontalBarChart/+page.svelte:35:38
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
+  import { HorizontalBarChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/HorizontalBarChart/+page.svelte:1:2
+Error: Cannot find name 'script'. (ts)
+<script lang="ts">
+	import { HorizontalBarChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/HorizontalBarChart/+page.svelte:1:9
+Error: Cannot find name 'lang'. (ts)
+<script lang="ts">
+	import { HorizontalBarChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/HorizontalBarChart/+page.svelte:2:37
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+	import { HorizontalBarChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/HorizontalBarChart/+page.svelte:3:24
+Error: Cannot find module '$lib/components/Container/Container.svelte' or its corresponding type declarations. (ts)
+	import { HorizontalBarChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/KPICard/+page.svelte:1:9
+Error: '>' expected. (ts)
+<script lang="ts">
+	import { KPICard } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/KPICard/+page.svelte:1:13
+Error: ';' expected. (ts)
+<script lang="ts">
+	import { KPICard } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/KPICard/+page.svelte:2:2
+Error: Expression expected. (ts)
+<script lang="ts">
+	import { KPICard } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/KPICard/+page.svelte:4:2
+Error: Type expected. (ts)
+	import Container from '$lib/components/Container/Container.svelte';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/KPICard/+page.svelte:32:27
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
+  import { KPICard } from '$lib';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/KPICard/+page.svelte:1:2
+Error: Cannot find name 'script'. (ts)
+<script lang="ts">
+	import { KPICard } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/KPICard/+page.svelte:1:9
+Error: Cannot find name 'lang'. (ts)
+<script lang="ts">
+	import { KPICard } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/KPICard/+page.svelte:2:26
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+	import { KPICard } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/KPICard/+page.svelte:3:24
+Error: Cannot find module '$lib/components/Container/Container.svelte' or its corresponding type declarations. (ts)
+	import { KPICard } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/LineChart/+page.svelte:1:9
+Error: '>' expected. (ts)
+<script lang="ts">
+	import { LineChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/LineChart/+page.svelte:1:13
+Error: ';' expected. (ts)
+<script lang="ts">
+	import { LineChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/LineChart/+page.svelte:2:2
+Error: Expression expected. (ts)
+<script lang="ts">
+	import { LineChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/LineChart/+page.svelte:27:2
+Error: Type expected. (ts)
+	const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/LineChart/+page.svelte:57:29
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
+  import { LineChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/LineChart/+page.svelte:1:2
+Error: Cannot find name 'script'. (ts)
+<script lang="ts">
+	import { LineChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/LineChart/+page.svelte:1:9
+Error: Cannot find name 'lang'. (ts)
+<script lang="ts">
+	import { LineChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/LineChart/+page.svelte:2:28
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+	import { LineChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/LineChart/+page.svelte:3:24
+Error: Cannot find module '$lib/components/Container/Container.svelte' or its corresponding type declarations. (ts)
+	import { LineChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricGrid/+page.svelte:1:9
+Error: '>' expected. (ts)
+<script lang="ts">
+	import { MetricGrid } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricGrid/+page.svelte:1:13
+Error: ';' expected. (ts)
+<script lang="ts">
+	import { MetricGrid } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricGrid/+page.svelte:2:2
+Error: Expression expected. (ts)
+<script lang="ts">
+	import { MetricGrid } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricGrid/+page.svelte:11:2
+Error: Type expected. (ts)
+	];
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricGrid/+page.svelte:38:30
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
+  import { MetricGrid } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricGrid/+page.svelte:1:2
+Error: Cannot find name 'script'. (ts)
+<script lang="ts">
+	import { MetricGrid } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricGrid/+page.svelte:1:9
+Error: Cannot find name 'lang'. (ts)
+<script lang="ts">
+	import { MetricGrid } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricGrid/+page.svelte:2:29
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+	import { MetricGrid } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricGrid/+page.svelte:3:24
+Error: Cannot find module '$lib/components/Container/Container.svelte' or its corresponding type declarations. (ts)
+	import { MetricGrid } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricTrend/+page.svelte:1:9
+Error: '>' expected. (ts)
+<script lang="ts">
+	import { MetricTrend } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricTrend/+page.svelte:1:13
+Error: ';' expected. (ts)
+<script lang="ts">
+	import { MetricTrend } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricTrend/+page.svelte:2:2
+Error: Expression expected. (ts)
+<script lang="ts">
+	import { MetricTrend } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricTrend/+page.svelte:4:2
+Error: Type expected. (ts)
+	import Container from '$lib/components/Container/Container.svelte';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricTrend/+page.svelte:33:31
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
+  import { MetricTrend } from '$lib';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricTrend/+page.svelte:1:2
+Error: Cannot find name 'script'. (ts)
+<script lang="ts">
+	import { MetricTrend } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricTrend/+page.svelte:1:9
+Error: Cannot find name 'lang'. (ts)
+<script lang="ts">
+	import { MetricTrend } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricTrend/+page.svelte:2:30
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+	import { MetricTrend } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/MetricTrend/+page.svelte:3:24
+Error: Cannot find module '$lib/components/Container/Container.svelte' or its corresponding type declarations. (ts)
+	import { MetricTrend } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/PieChart/+page.svelte:1:9
+Error: '>' expected. (ts)
+<script lang="ts">
+	import { PieChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/PieChart/+page.svelte:1:13
+Error: ';' expected. (ts)
+<script lang="ts">
+	import { PieChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/PieChart/+page.svelte:2:2
+Error: Expression expected. (ts)
+<script lang="ts">
+	import { PieChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/PieChart/+page.svelte:7:2
+Error: Type expected. (ts)
+	const browserLabels = ['Chrome', 'Firefox', 'Safari', 'Edge'];
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/PieChart/+page.svelte:36:28
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
+  import { PieChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/PieChart/+page.svelte:1:2
+Error: Cannot find name 'script'. (ts)
+<script lang="ts">
+	import { PieChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/PieChart/+page.svelte:1:9
+Error: Cannot find name 'lang'. (ts)
+<script lang="ts">
+	import { PieChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/PieChart/+page.svelte:2:27
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+	import { PieChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/PieChart/+page.svelte:3:24
+Error: Cannot find module '$lib/components/Container/Container.svelte' or its corresponding type declarations. (ts)
+	import { PieChart } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/ProgressMetric/+page.svelte:1:9
+Error: '>' expected. (ts)
+<script lang="ts">
+	import { ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/ProgressMetric/+page.svelte:1:13
+Error: ';' expected. (ts)
+<script lang="ts">
+	import { ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/ProgressMetric/+page.svelte:2:2
+Error: Expression expected. (ts)
+<script lang="ts">
+	import { ProgressMetric } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/ProgressMetric/+page.svelte:4:2
+Error: Type expected. (ts)
+	import Container from '$lib/components/Container/Container.svelte';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/ProgressMetric/+page.svelte:34:34
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
+  import { ProgressMetric } from '$lib';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/ProgressMetric/+page.svelte:1:2
+Error: Cannot find name 'script'. (ts)
+<script lang="ts">
+	import { ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/ProgressMetric/+page.svelte:1:9
+Error: Cannot find name 'lang'. (ts)
+<script lang="ts">
+	import { ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/ProgressMetric/+page.svelte:2:33
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+	import { ProgressMetric } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/ProgressMetric/+page.svelte:3:24
+Error: Cannot find module '$lib/components/Container/Container.svelte' or its corresponding type declarations. (ts)
+	import { ProgressMetric } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/StatsCard/+page.svelte:1:9
+Error: '>' expected. (ts)
+<script lang="ts">
+	import { StatsCard } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/StatsCard/+page.svelte:1:13
+Error: ';' expected. (ts)
+<script lang="ts">
+	import { StatsCard } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/StatsCard/+page.svelte:2:2
+Error: Expression expected. (ts)
+<script lang="ts">
+	import { StatsCard } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/StatsCard/+page.svelte:4:2
+Error: Type expected. (ts)
+	import Container from '$lib/components/Container/Container.svelte';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/StatsCard/+page.svelte:32:29
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
+  import { StatsCard } from '$lib';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/StatsCard/+page.svelte:1:2
+Error: Cannot find name 'script'. (ts)
+<script lang="ts">
+	import { StatsCard } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/StatsCard/+page.svelte:1:9
+Error: Cannot find name 'lang'. (ts)
+<script lang="ts">
+	import { StatsCard } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/StatsCard/+page.svelte:2:28
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+	import { StatsCard } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/StatsCard/+page.svelte:3:24
+Error: Cannot find module '$lib/components/Container/Container.svelte' or its corresponding type declarations. (ts)
+	import { StatsCard } from '$lib';
+	import Container from '$lib/components/Container/Container.svelte';
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/examples/+page.svelte:1:9
+Error: '>' expected. (ts)
+<script lang="ts">
+	import { AreaChart, BarChart, DonutChart, GaugeChart, KPICard, LineChart, MetricGrid, ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/examples/+page.svelte:1:13
+Error: ';' expected. (ts)
+<script lang="ts">
+	import { AreaChart, BarChart, DonutChart, GaugeChart, KPICard, LineChart, MetricGrid, ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/examples/+page.svelte:2:2
+Error: Expression expected. (ts)
+<script lang="ts">
+	import { AreaChart, BarChart, DonutChart, GaugeChart, KPICard, LineChart, MetricGrid, ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/examples/+page.svelte:98:2
+Error: Type expected. (ts)
+	];
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/examples/+page.svelte:257:52
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+			<pre class="text-gray-100 text-sm"><code>{`<script lang="ts">
+  import { MetricGrid, BarChart, DonutChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/examples/+page.svelte:1:2
+Error: Cannot find name 'script'. (ts)
+<script lang="ts">
+	import { AreaChart, BarChart, DonutChart, GaugeChart, KPICard, LineChart, MetricGrid, ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/examples/+page.svelte:1:9
+Error: Cannot find name 'lang'. (ts)
+<script lang="ts">
+	import { AreaChart, BarChart, DonutChart, GaugeChart, KPICard, LineChart, MetricGrid, ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Metrics/examples/+page.svelte:2:110
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+	import { AreaChart, BarChart, DonutChart, GaugeChart, KPICard, LineChart, MetricGrid, ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:1:9
+Error: '>' expected. (ts)
+<script lang="ts">
+import { writable } from "svelte/store"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:1:13
+Error: ';' expected. (ts)
+<script lang="ts">
+import { writable } from "svelte/store"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:2:1
+Error: Expression expected. (ts)
+<script lang="ts">
+import { writable } from "svelte/store"
+import { Button, Container, Modal } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:8:2
+Error: Unterminated regular expression literal. (ts)
+let showScrollableModal = writable(false)
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:1:2
+Error: Cannot find name 'script'. (ts)
+<script lang="ts">
+import { writable } from "svelte/store"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:1:9
+Error: Cannot find name 'lang'. (ts)
+<script lang="ts">
+import { writable } from "svelte/store"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:3:42
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+import { writable } from "svelte/store"
+import { Button, Container, Modal } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:7:27
+Error: Operator '<' cannot be applied to types 'Writable<boolean>' and 'RegExp'. (ts)
+let showSizedModal = writable(false)
+let showScrollableModal = writable(false)
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:30:16
+Error: Cannot find name '$showBasicModal'. (ts)
+
+  <Modal open={$showBasicModal} onclose={() => showBasicModal.set(false)}>
+    {#snippet header()}
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:45:4
+Error: Cannot find name 'CodeBlock'. (ts)
+
+  <CodeBlock language="svelte">{`<script>
+  import Modal from "$lib/components/Modal/Modal.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:65:13
+Error: Cannot find name 'CodeBlock'. (ts)
+  </svelte:fragment>
+</Modal>`}</CodeBlock>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:74:16
+Error: Cannot find name '$showSizedModal'. (ts)
+
+  <Modal open={$showSizedModal} onclose={() => showSizedModal.set(false)} size="lg">
+    {#snippet header()}
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:84:4
+Error: Cannot find name 'CodeBlock'. (ts)
+
+  <CodeBlock language="svelte">{`<Modal open={true} size="sm"><!-- Small modal --></Modal>
+<Modal open={true} size="md"><!-- Medium modal (default) --></Modal>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:88:70
+Error: Cannot find name 'CodeBlock'. (ts)
+<Modal open={true} size="xl"><!-- Extra large modal --></Modal>
+<Modal open={true} size="full"><!-- Full screen modal --></Modal>`}</CodeBlock>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:92:48
+Error: Property 'set' does not exist on type 'boolean'. (ts)
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="modal-scrollable">
+    <Button onclick={() => showScrollableModal.set(true)}>
+      Open Scrollable Modal
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:97:16
+Error: Cannot find name '$showScrollableModal'. (ts)
+
+  <Modal open={$showScrollableModal} onclose={() => showScrollableModal.set(false)}>
+    {#snippet header()}
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:97:73
+Error: Property 'set' does not exist on type 'boolean'. (ts)
+
+  <Modal open={$showScrollableModal} onclose={() => showScrollableModal.set(false)}>
+    {#snippet header()}
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:108:50
+Error: Property 'set' does not exist on type 'boolean'. (ts)
+    {#snippet footer()}
+      <Button onclick={() => showScrollableModal.set(false)}>Close</Button>
+    {/snippet}
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:112:4
+Error: Cannot find name 'CodeBlock'. (ts)
+
+  <CodeBlock language="svelte">{`<Modal open={true}>
+  <svelte:fragment slot="header">
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Modal/Modal/+page.svelte:121:13
+Error: Cannot find name 'CodeBlock'. (ts)
+  </svelte:fragment>
+</Modal>`}</CodeBlock>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Panel/Panel/+page.svelte:6:45
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { CodeBlock, Container, Panel } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Progress/Progress/+page.svelte:5:48
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { CodeBlock, Container, Progress } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Progress/Progress/+page.svelte:104:16
+Error: Parameter 'v' implicitly has an 'any' type. (ts)
+      showValue
+      format={(v) => `${Math.round(v * 100)}%`}
+    />
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Separator/Separator/+page.svelte:6:49
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { CodeBlock, Container, Separator } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Skeleton/Skeleton/+page.svelte:5:48
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { CodeBlock, Container, Skeleton } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Splitter/Splitter/+page.svelte:9:9
+Error: '>' expected. (ts)
+</style>
+<script lang="ts">
+import { Splitter, CodeBlock, Container } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Splitter/Splitter/+page.svelte:9:13
+Error: ';' expected. (ts)
+</style>
+<script lang="ts">
+import { Splitter, CodeBlock, Container } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Splitter/Splitter/+page.svelte:10:1
+Error: Expression expected. (ts)
+<script lang="ts">
+import { Splitter, CodeBlock, Container } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Splitter/Splitter/+page.svelte:11:2
+Error: Type expected. (ts)
+import { Splitter, CodeBlock, Container } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Splitter/Splitter/+page.svelte:9:2
+Error: Cannot find name 'script'. (ts)
+</style>
+<script lang="ts">
+import { Splitter, CodeBlock, Container } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Splitter/Splitter/+page.svelte:9:9
+Error: Cannot find name 'lang'. (ts)
+</style>
+<script lang="ts">
+import { Splitter, CodeBlock, Container } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Splitter/Splitter/+page.svelte:10:48
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { Splitter, CodeBlock, Container } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Stepper/Stepper/+page.svelte:6:60
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { CodeBlock, Container, Stepper, StepperStep } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Table/Table/+page.svelte:6:45
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+import { getContext } from "svelte"
+import { CodeBlock, Container, Table } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tabs/Tabs/+page.svelte:33:10
+Error: Type '{ children: () => any; }' is missing the following properties from type '$$ComponentProps': id, icon (ts)
+      <TabList>
+        <Tab>Tab 1</Tab>
+        <Tab>Tab 2</Tab>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tabs/Tabs/+page.svelte:34:10
+Error: Type '{ children: () => any; }' is missing the following properties from type '$$ComponentProps': id, icon (ts)
+        <Tab>Tab 1</Tab>
+        <Tab>Tab 2</Tab>
+        <Tab>Tab 3</Tab>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tabs/Tabs/+page.svelte:35:10
+Error: Type '{ children: () => any; }' is missing the following properties from type '$$ComponentProps': id, icon (ts)
+        <Tab>Tab 2</Tab>
+        <Tab>Tab 3</Tab>
+      </TabList>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tabs/Tabs/+page.svelte:60:12
+Error: Type '{ children: () => any; }' is missing the following properties from type '$$ComponentProps': id, icon (ts)
+        <TabList>
+          <Tab>Default 1</Tab>
+          <Tab>Default 2</Tab>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tabs/Tabs/+page.svelte:61:12
+Error: Type '{ children: () => any; }' is missing the following properties from type '$$ComponentProps': id, icon (ts)
+          <Tab>Default 1</Tab>
+          <Tab>Default 2</Tab>
+        </TabList>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tabs/Tabs/+page.svelte:71:12
+Error: Type '{ children: () => any; }' is missing the following properties from type '$$ComponentProps': id, icon (ts)
+        <TabList>
+          <Tab>Underline 1</Tab>
+          <Tab>Underline 2</Tab>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tabs/Tabs/+page.svelte:72:12
+Error: Type '{ children: () => any; }' is missing the following properties from type '$$ComponentProps': id, icon (ts)
+          <Tab>Underline 1</Tab>
+          <Tab>Underline 2</Tab>
+        </TabList>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tabs/Tabs/+page.svelte:82:12
+Error: Type '{ children: () => any; }' is missing the following properties from type '$$ComponentProps': id, icon (ts)
+        <TabList>
+          <Tab>Pills 1</Tab>
+          <Tab>Pills 2</Tab>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tabs/Tabs/+page.svelte:83:12
+Error: Type '{ children: () => any; }' is missing the following properties from type '$$ComponentProps': id, icon (ts)
+          <Tab>Pills 1</Tab>
+          <Tab>Pills 2</Tab>
+        </TabList>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tabs/Tabs/+page.svelte:93:12
+Error: Type '{ children: () => any; }' is missing the following properties from type '$$ComponentProps': id, icon (ts)
+        <TabList>
+          <Tab>Enclosed 1</Tab>
+          <Tab>Enclosed 2</Tab>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tabs/Tabs/+page.svelte:94:12
+Error: Type '{ children: () => any; }' is missing the following properties from type '$$ComponentProps': id, icon (ts)
+          <Tab>Enclosed 1</Tab>
+          <Tab>Enclosed 2</Tab>
+        </TabList>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tag/Tag/+page.svelte:119:6
+Error: Property 'ondismiss' is missing in type '{ children: () => any; }' but required in type '$$ComponentProps'. (ts)
+  <div class="not-prose mb-8" data-testid="tag-group">
+    <TagGroup>
+      <Tag>JavaScript</Tag>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tag/Tag/+page.svelte:136:6
+Error: Property 'ondismiss' is missing in type '{ children: () => any; items: string[]; variant: string; dismissible: true; }' but required in type '$$ComponentProps'. (ts)
+  <div class="not-prose mb-8" data-testid="tag-group-dynamic">
+    <TagGroup 
+      items={['JavaScript', 'TypeScript', 'Svelte', 'React']}
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tag/Tag/+page.svelte:140:15
+Error: '$$_puorGgaT2.$$slot_def' is of type 'unknown'. (ts)
+      dismissible
+      let:item
+    >
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/ThemeToggle/ThemeToggle/+page.svelte:5:9
+Error: '>' expected. (ts)
+
+<script lang="ts">
+import Button from "$lib/components/Button/Button.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/ThemeToggle/ThemeToggle/+page.svelte:5:13
+Error: ';' expected. (ts)
+
+<script lang="ts">
+import Button from "$lib/components/Button/Button.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/ThemeToggle/ThemeToggle/+page.svelte:6:1
+Error: Expression expected. (ts)
+<script lang="ts">
+import Button from "$lib/components/Button/Button.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/ThemeToggle/ThemeToggle/+page.svelte:11:2
+Error: Type expected. (ts)
+import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/ThemeToggle/ThemeToggle/+page.svelte:5:2
+Error: Cannot find name 'script'. (ts)
+
+<script lang="ts">
+import Button from "$lib/components/Button/Button.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/ThemeToggle/ThemeToggle/+page.svelte:5:9
+Error: Cannot find name 'lang'. (ts)
+
+<script lang="ts">
+import Button from "$lib/components/Button/Button.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/ThemeToggle/ThemeToggle/+page.svelte:7:23
+Error: Cannot find module '$lib/components/CodeBlock/CodeBlock.svelte' or its corresponding type declarations. (ts)
+import Button from "$lib/components/Button/Button.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/ThemeToggle/ThemeToggle/+page.svelte:8:23
+Error: Cannot find module '$lib/components/Container/Container.svelte' or its corresponding type declarations. (ts)
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import Panel from "$lib/components/Panel/Panel.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Toast/Toast/+page.svelte:4:9
+Error: '>' expected. (ts)
+</style>
+<script lang="ts">
+import { Button, CodeBlock, Container, Toast } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Toast/Toast/+page.svelte:4:13
+Error: ';' expected. (ts)
+</style>
+<script lang="ts">
+import { Button, CodeBlock, Container, Toast } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Toast/Toast/+page.svelte:5:1
+Error: Expression expected. (ts)
+<script lang="ts">
+import { Button, CodeBlock, Container, Toast } from "$lib"
+import { toastStore } from "$lib/components/Toast/toastStore"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Toast/Toast/+page.svelte:7:2
+Error: Type expected. (ts)
+import { toastStore } from "$lib/components/Toast/toastStore"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Toast/Toast/+page.svelte:27:30
+Error: Cannot find module '$lib/components/Toast/toastStore' or its corresponding type declarations. (ts)
+  <CodeBlock language="svelte">{`<script>
+  import { toastStore } from "$lib/components/Toast/toastStore"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Toast/Toast/+page.svelte:4:2
+Error: Cannot find name 'script'. (ts)
+</style>
+<script lang="ts">
+import { Button, CodeBlock, Container, Toast } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Toast/Toast/+page.svelte:4:9
+Error: Cannot find name 'lang'. (ts)
+</style>
+<script lang="ts">
+import { Button, CodeBlock, Container, Toast } from "$lib"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Toast/Toast/+page.svelte:5:53
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { Button, CodeBlock, Container, Toast } from "$lib"
+import { toastStore } from "$lib/components/Toast/toastStore"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Toast/Toast/+page.svelte:6:28
+Error: Cannot find module '$lib/components/Toast/toastStore' or its corresponding type declarations. (ts)
+import { Button, CodeBlock, Container, Toast } from "$lib"
+import { toastStore } from "$lib/components/Toast/toastStore"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tooltip/Tooltip/+page.svelte:23:14
+Error: Object literal may only specify known properties, and '"text"' does not exist in type '$$ComponentProps'. (ts)
+  <div class="p-4 bg-surface rounded-md mb-4">
+    <Tooltip text="This is a helpful tooltip">
+      <Button>Hover me</Button>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tooltip/Tooltip/+page.svelte:34:14
+Error: Object literal may only specify known properties, and '"text"' does not exist in type '$$ComponentProps'. (ts)
+  <div class="flex gap-4 p-4 bg-surface rounded-md mb-4">
+    <Tooltip text="Top tooltip" position="top">
+      <Button>Top</Button>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tooltip/Tooltip/+page.svelte:37:14
+Error: Object literal may only specify known properties, and '"text"' does not exist in type '$$ComponentProps'. (ts)
+    </Tooltip>
+    <Tooltip text="Right tooltip" position="right">
+      <Button>Right</Button>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tooltip/Tooltip/+page.svelte:40:14
+Error: Object literal may only specify known properties, and '"text"' does not exist in type '$$ComponentProps'. (ts)
+    </Tooltip>
+    <Tooltip text="Bottom tooltip" position="bottom">
+      <Button>Bottom</Button>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tooltip/Tooltip/+page.svelte:43:14
+Error: Object literal may only specify known properties, and '"text"' does not exist in type '$$ComponentProps'. (ts)
+    </Tooltip>
+    <Tooltip text="Left tooltip" position="left">
+      <Button>Left</Button>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/Tree/Tree/+page.svelte:6:54
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+import { CodeBlock, Container, Tree, TreeNode } from "$lib"
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/TreeMenu/TreeMenu/+page.svelte:1:9
+Error: '>' expected. (ts)
+<script lang="ts">
+  import type { MenuItem } from '$lib/components/TreeMenu/TreeMenu.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/TreeMenu/TreeMenu/+page.svelte:1:13
+Error: ';' expected. (ts)
+<script lang="ts">
+  import type { MenuItem } from '$lib/components/TreeMenu/TreeMenu.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/TreeMenu/TreeMenu/+page.svelte:2:3
+Error: Expression expected. (ts)
+<script lang="ts">
+  import type { MenuItem } from '$lib/components/TreeMenu/TreeMenu.svelte';
+  import TreeMenu from '$lib/components/TreeMenu/TreeMenu.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/TreeMenu/TreeMenu/+page.svelte:40:2
+Error: Type expected. (ts)
+  ];
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/TreeMenu/TreeMenu/+page.svelte:74:7
+Error: Object literal may only specify known properties, and 'title' does not exist in type '{ $on?(type: string, callback: (e: any) => void): () => void; $set?(props: Partial<$$ComponentProps>): void; }'. (ts)
+  const items: MenuItem[] = [
+    { title: 'Home', icon: 'home', link: '/' },
+    { title: 'About', icon: 'info', link: '/about' },
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/TreeMenu/TreeMenu/+page.svelte:75:7
+Error: Object literal may only specify known properties, and 'title' does not exist in type '{ $on?(type: string, callback: (e: any) => void): () => void; $set?(props: Partial<$$ComponentProps>): void; }'. (ts)
+    { title: 'Home', icon: 'home', link: '/' },
+    { title: 'About', icon: 'info', link: '/about' },
+    { title: 'Settings', icon: 'settings', link: '/settings', separator: true },
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/TreeMenu/TreeMenu/+page.svelte:76:7
+Error: Object literal may only specify known properties, and 'title' does not exist in type '{ $on?(type: string, callback: (e: any) => void): () => void; $set?(props: Partial<$$ComponentProps>): void; }'. (ts)
+    { title: 'About', icon: 'info', link: '/about' },
+    { title: 'Settings', icon: 'settings', link: '/settings', separator: true },
+  ];
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/TreeMenu/TreeMenu/+page.svelte:1:2
+Error: Cannot find name 'script'. (ts)
+<script lang="ts">
+  import type { MenuItem } from '$lib/components/TreeMenu/TreeMenu.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/TreeMenu/TreeMenu/+page.svelte:1:9
+Error: Cannot find name 'lang'. (ts)
+<script lang="ts">
+  import type { MenuItem } from '$lib/components/TreeMenu/TreeMenu.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/TreeMenu/TreeMenu/+page.svelte:2:33
+Error: Cannot find module '$lib/components/TreeMenu/TreeMenu.svelte' or its corresponding type declarations. (ts)
+<script lang="ts">
+  import type { MenuItem } from '$lib/components/TreeMenu/TreeMenu.svelte';
+  import TreeMenu from '$lib/components/TreeMenu/TreeMenu.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/components/TreeMenu/TreeMenu/+page.svelte:3:24
+Error: Cannot find module '$lib/components/TreeMenu/TreeMenu.svelte' or its corresponding type declarations. (ts)
+  import type { MenuItem } from '$lib/components/TreeMenu/TreeMenu.svelte';
+  import TreeMenu from '$lib/components/TreeMenu/TreeMenu.svelte';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/examples/dashboard/+page.svelte:2:110
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+	import { AreaChart, BarChart, DonutChart, GaugeChart, KPICard, LineChart, MetricGrid, ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/examples/dashboard/guide/+page.svelte:1:9
+Error: '>' expected. (ts)
+<script lang="ts">
+	import { AreaChart, BarChart, DonutChart, GaugeChart, KPICard, LineChart, MetricGrid, ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/examples/dashboard/guide/+page.svelte:1:13
+Error: ';' expected. (ts)
+<script lang="ts">
+	import { AreaChart, BarChart, DonutChart, GaugeChart, KPICard, LineChart, MetricGrid, ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/examples/dashboard/guide/+page.svelte:2:2
+Error: Expression expected. (ts)
+<script lang="ts">
+	import { AreaChart, BarChart, DonutChart, GaugeChart, KPICard, LineChart, MetricGrid, ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/examples/dashboard/guide/+page.svelte:98:2
+Error: Type expected. (ts)
+	];
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/examples/dashboard/guide/+page.svelte:257:52
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+			<pre class="text-gray-100 text-sm"><code>{`<script lang="ts">
+  import { MetricGrid, BarChart, DonutChart } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/examples/dashboard/guide/+page.svelte:1:2
+Error: Cannot find name 'script'. (ts)
+<script lang="ts">
+	import { AreaChart, BarChart, DonutChart, GaugeChart, KPICard, LineChart, MetricGrid, ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/examples/dashboard/guide/+page.svelte:1:9
+Error: Cannot find name 'lang'. (ts)
+<script lang="ts">
+	import { AreaChart, BarChart, DonutChart, GaugeChart, KPICard, LineChart, MetricGrid, ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/examples/dashboard/guide/+page.svelte:2:110
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+<script lang="ts">
+	import { AreaChart, BarChart, DonutChart, GaugeChart, KPICard, LineChart, MetricGrid, ProgressMetric } from '$lib';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/examples/game-map/+page.svelte:7:61
+Error: Cannot find module '$lib' or its corresponding type declarations. (ts)
+	import { onMount } from 'svelte';
+	import { CodeEditor, Container, Map as MapComponent } from '$lib';
+	import fallout4Locations from './fallout4-locations.json';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/examples/game-map/+page.svelte:8:32
+Error: Importing a JSON file into an ECMAScript module requires a 'type: "json"' import attribute when 'module' is set to 'NodeNext'. (ts)
+	import { CodeEditor, Container, Map as MapComponent } from '$lib';
+	import fallout4Locations from './fallout4-locations.json';
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/examples/game-map/+page.svelte:252:18
+Error: Parameter 'value' implicitly has an 'any' type. (ts)
+						language="json"
+						onchange={(value) => {
+							jsonContent = value;
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:5:9
+Error: '>' expected. (ts)
+-->
+<script lang="ts">
+import Button from "$lib/components/Button/Button.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:5:13
+Error: ';' expected. (ts)
+-->
+<script lang="ts">
+import Button from "$lib/components/Button/Button.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:6:1
+Error: Expression expected. (ts)
+<script lang="ts">
+import Button from "$lib/components/Button/Button.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:97:2
+Error: Unterminated regular expression literal. (ts)
+]
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:5:2
+Error: Cannot find name 'script'. (ts)
+-->
+<script lang="ts">
+import Button from "$lib/components/Button/Button.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:5:9
+Error: Cannot find name 'lang'. (ts)
+-->
+<script lang="ts">
+import Button from "$lib/components/Button/Button.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:6:20
+Error: Cannot find module '$lib/components/Button/Button.svelte' or its corresponding type declarations. (ts)
+<script lang="ts">
+import Button from "$lib/components/Button/Button.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:7:23
+Error: Cannot find module '$lib/components/CodeBlock/CodeBlock.svelte' or its corresponding type declarations. (ts)
+import Button from "$lib/components/Button/Button.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:8:23
+Error: Cannot find module '$lib/components/Container/Container.svelte' or its corresponding type declarations. (ts)
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import Panel from "$lib/components/Panel/Panel.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:9:19
+Error: Cannot find module '$lib/components/Panel/Panel.svelte' or its corresponding type declarations. (ts)
+import Container from "$lib/components/Container/Container.svelte"
+import Panel from "$lib/components/Panel/Panel.svelte"
+import Separator from "$lib/components/Separator/Separator.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:10:23
+Error: Cannot find module '$lib/components/Separator/Separator.svelte' or its corresponding type declarations. (ts)
+import Panel from "$lib/components/Panel/Panel.svelte"
+import Separator from "$lib/components/Separator/Separator.svelte"
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:16:23
+Error: Parameter 'colorName' implicitly has an 'any' type. (ts)
+// Helper function to determine if text should be light or dark based on background
+function getTextColor(colorName, shade) {
+  // Generally, shades 500+ need light text
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:16:34
+Error: Parameter 'shade' implicitly has an 'any' type. (ts)
+// Helper function to determine if text should be light or dark based on background
+function getTextColor(colorName, shade) {
+  // Generally, shades 500+ need light text
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:89:24
+Error: Operator '<' cannot be applied to types '{ color: string; label: string; }[]' and 'RegExp'. (ts)
+// Button examples with different colors
+const buttonExamples = [
+  { color: "primary", label: "Primary" },
+  { color: "secondary", label: "Secondary" },
+  { color: "success", label: "Success" },
+  { color: "warning", label: "Warning" },
+  { color: "error", label: "Error" },
+  { color: "info", label: "Info" },
+]
+</script>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:220:12
+Error: Argument of type 'boolean' is not assignable to parameter of type 'ArrayLike<unknown> | Iterable<unknown> | null | undefined'. (ts)
+  <div class="flex flex-wrap gap-2 not-prose mb-8">
+    {#each buttonExamples as button}
+      <Button color={button.color}>{button.label}</Button>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:221:22
+Error: 'button' is of type 'unknown'. (ts)
+    {#each buttonExamples as button}
+      <Button color={button.color}>{button.label}</Button>
+    {/each}
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:221:37
+Error: 'button' is of type 'unknown'. (ts)
+    {#each buttonExamples as button}
+      <Button color={button.color}>{button.label}</Button>
+    {/each}
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:225:12
+Error: Argument of type 'boolean' is not assignable to parameter of type 'ArrayLike<unknown> | Iterable<unknown> | null | undefined'. (ts)
+  <div class="flex flex-wrap gap-2 not-prose mb-8">
+    {#each buttonExamples as button}
+      <Button color={button.color} variant="outline">{button.label}</Button>
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:226:22
+Error: 'button' is of type 'unknown'. (ts)
+    {#each buttonExamples as button}
+      <Button color={button.color} variant="outline">{button.label}</Button>
+    {/each}
+
+/home/sam/workspace-other/twintrinsic/src/routes/docs/theming/+page.svelte:226:55
+Error: 'button' is of type 'unknown'. (ts)
+    {#each buttonExamples as button}
+      <Button color={button.color} variant="outline">{button.label}</Button>
+    {/each}
+
+====================================
+svelte-check found 457 errors and 1 warning in 77 files
+ ELIFECYCLE  Command failed with exit code 1.

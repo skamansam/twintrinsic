@@ -273,30 +273,30 @@ const productColumns = [
     { field: 'id', header: 'ID', sortable: true },
     { field: 'name', header: 'Product Name', sortable: true, filterable: true },
     { field: 'category', header: 'Category', sortable: true, filterable: true },
-    { 
-      field: 'price', 
-      header: 'Price', 
-      sortable: true, 
+    {
+      field: 'price',
+      header: 'Price',
+      sortable: true,
       filterable: true,
-      template: (value) => \`\${value.toFixed(2)}\`
+      template: (value) => "$" + value.toFixed(2)
     },
-    { 
-      field: 'stock', 
-      header: 'Stock', 
-      sortable: true, 
+    {
+      field: 'stock',
+      header: 'Stock',
+      sortable: true,
       filterable: true,
       template: (value) => {
-        const color = value > 50 ? 'bg-success-100 text-success-800' : 
-                      value > 20 ? 'bg-warning-100 text-warning-800' : 
+        const color = value > 50 ? 'bg-success-100 text-success-800' :
+                      value > 20 ? 'bg-warning-100 text-warning-800' :
                       'bg-error-100 text-error-800';
-        return \`<span class="px-2 py-1 rounded-full text-xs font-medium \${color}">\${value} units</span>\`;
+        return "<span class='px-2 py-1 rounded-full text-xs font-medium " + color + "'>" + value + " units</span>";
       }
     }
-  ];</script>
+  ];
+<\/script>
 
-
-<DataTable 
-  data={products} 
+<DataTable
+  data={products}
   columns={columns}
   sortable
   filterable

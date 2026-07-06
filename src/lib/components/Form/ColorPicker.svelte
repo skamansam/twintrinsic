@@ -52,7 +52,7 @@ let {
   disabled = false,
   error = "",
   class: className = "",
-  onchange,
+  onchange = undefined,
 }: Props = $props()
 
 let showPicker = $state(false)

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/svelte';
+import type { Meta, StoryObj } from '@storybook/sveltekit';
 import LineChart from '$lib/components/Metrics/LineChart/LineChart.svelte';
 
 const meta = {
@@ -78,5 +78,31 @@ export const NoGrid: Story = {
 		yAxisLabel: '°C',
 		showGrid: false,
 		showLegend: true
+	}
+};
+
+export const Interactive: Story = {
+	args: {
+		series: [
+			{
+				label: 'Sales',
+				data: [10, 15, 12, 18, 22, 20, 25],
+				color: '#3b82f6'
+			}
+		],
+		labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+		title: 'Weekly Sales (click a point)',
+		yAxisLabel: 'Sales ($)',
+		showGrid: true,
+		showLegend: true,
+		// New two-arg signature: first arg is the DOM event (MouseEvent | KeyboardEvent),
+		// second arg is the typed chart detail (or omit for fewer-arg handlers).
+		onpointclick: (
+			_event: MouseEvent | KeyboardEvent,
+			detail: { seriesIndex: number; pointIndex: number; value: number }
+		) => {
+			// eslint-disable-next-line no-console
+			console.log('Point clicked:', detail);
+		}
 	}
 };

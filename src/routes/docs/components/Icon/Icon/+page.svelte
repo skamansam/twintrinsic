@@ -59,7 +59,7 @@ function handleCustomIconset() {
     The Icon component is a wrapper around the Iconify SVG icon library that integrates with Twintrinsic's global icon management system. It allows you to use over 275,000 icons from 200+ icon sets with a single default iconset configuration.
   </p>
 
-  <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark">
+  <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark" data-testid="icon-iconset-changer">
     <div class="flex items-center justify-between mb-4">
       <h3 class="text-sm font-semibold">Change Global Iconset</h3>
       <div class="text-sm">
@@ -146,7 +146,7 @@ function handleCustomIconset() {
 <Icon name="settings" />
 <Icon name="star" />`}</CodeBlock>
 
-  <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark">
+  <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark" data-testid="icon-basic">
     <h3 class="text-sm font-semibold mb-4">Demo: Basic Icons</h3>
     <div class="flex gap-4 items-center text-2xl">
       <Icon name="home" />
@@ -167,7 +167,7 @@ function handleCustomIconset() {
 <Icon name="star" iconset="fa" />
 <Icon name="heart" iconset="heroicons" />`}</CodeBlock>
 
-  <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark">
+  <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark" data-testid="icon-different-iconsets">
     <h3 class="text-sm font-semibold mb-4">Demo: Different Iconsets</h3>
     <div class="flex gap-6 items-center flex-wrap text-2xl">
       <div class="flex flex-col items-center gap-2">
@@ -211,7 +211,7 @@ function handleCustomIconset() {
   class="hover:scale-110 transition-transform"
 />`}</CodeBlock>
 
-  <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark">
+  <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark" data-testid="icon-styled">
     <h3 class="text-sm font-semibold mb-4">Demo: Styled Icons</h3>
     <div class="flex gap-6 items-center flex-wrap">
       <div class="flex flex-col items-center gap-2">
@@ -245,7 +245,7 @@ function handleCustomIconset() {
 <Icon name="arrow-left" hFlip={true} />
 <Icon name="arrow-up" vFlip={true} />`}</CodeBlock>
 
-  <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark">
+  <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark" data-testid="icon-transformations">
     <h3 class="text-sm font-semibold mb-4">Demo: Transformations</h3>
     <div class="flex gap-6 items-center flex-wrap text-2xl">
       <div class="flex flex-col items-center gap-2">

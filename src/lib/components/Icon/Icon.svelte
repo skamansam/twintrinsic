@@ -54,16 +54,16 @@ interface Props {
 
 let {
   name,
-  iconset,
-  color,
-  width,
-  height,
-  hFlip,
-  vFlip,
-  rotate,
+  iconset = undefined,
+  color = undefined,
+  width = undefined,
+  height = undefined,
+  hFlip = undefined,
+  vFlip = undefined,
+  rotate = undefined,
   class: className = '',
-  inline,
-  onLoad,
+  inline = undefined,
+  onLoad = undefined,
 }: Props = $props()
 
 // Subscribe to the global iconset configuration

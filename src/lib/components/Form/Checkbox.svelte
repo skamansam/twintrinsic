@@ -23,7 +23,7 @@ import { getContext } from "svelte"
 
 const {
   /** @type {string} - Label text */
-  label,
+  label = undefined,
   /** @type {string} - Description text */
   description = "",
   /** @type {boolean} - Whether the checkbox is checked */
@@ -43,7 +43,7 @@ const {
   /** @type {string} - Additional CSS classes */
   class: className = "",
   /** @type {(event: CustomEvent) => void} - Change event handler */
-  onchange,
+  onchange = undefined,
 } = $props()
 
 let checkboxEl: HTMLInputElement | undefined = $state()

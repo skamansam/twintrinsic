@@ -19,16 +19,16 @@ const {
   class: className = "",
 
   /** @type {string} - HTML id for accessibility */
-  id,
+  id = undefined,
 
   /** @type {string} - Input name */
-  name,
+  name = undefined,
 
   /** @type {Array} - Options to display */
   options = [],
 
   /** @type {any} - Selected value(s) */
-  value,
+  value = undefined,
 
   /** @type {string} - Placeholder text */
   placeholder = "Select an option",
@@ -55,18 +55,18 @@ const {
   clearable = false,
 
   /** @type {string} - ARIA label for accessibility */
-  ariaLabel,
+  ariaLabel = undefined,
 
   /** @type {(event: CustomEvent) => void} - Change event handler */
-  onchange,
+  onchange = undefined,
   /** @type {(event: CustomEvent) => void} - Clear event handler */
-  onclear,
+  onclear = undefined,
   /** @type {(event: CustomEvent) => void} - Open event handler */
-  onopen,
+  onopen = undefined,
   /** @type {(event: CustomEvent) => void} - Close event handler */
-  onclose,
+  onclose = undefined,
   /** @type {(event: CustomEvent) => void} - Filter event handler */
-  onfilter,
+  onfilter = undefined,
 } = $props()
 </script>
 

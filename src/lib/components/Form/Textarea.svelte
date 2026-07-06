@@ -35,10 +35,10 @@ let {
   autocomplete,
   autoResize = false,
   ariaLabel,
-  oninput,
-  onchange,
-  onfocus,
-  onblur,
+  oninput = undefined,
+  onchange = undefined,
+  onfocus = undefined,
+  onblur = undefined,
   ...restProps
 } = $props()
 

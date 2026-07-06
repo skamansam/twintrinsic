@@ -22,11 +22,13 @@ import { CodeBlock, Container } from "$lib"
   <h2>Usage</h2>
 
   <h3>Basic Container</h3>
-  <Container class="bg-surface p-4 mb-8">
-    <div class="bg-primary-100 dark:bg-primary-800 p-4 rounded">
-      <p>Content in a basic container</p>
-    </div>
-  </Container>
+  <div data-testid="container-basic">
+    <Container class="bg-surface p-4 mb-8">
+      <div class="bg-primary-100 dark:bg-primary-800 p-4 rounded">
+        <p>Content in a basic container</p>
+      </div>
+    </Container>
+  </div>
 
   <CodeBlock language="svelte">{`<Container>
   <div class="bg-primary-100 dark:bg-primary-800 p-4 rounded">
@@ -35,11 +37,13 @@ import { CodeBlock, Container } from "$lib"
 </Container>`}</CodeBlock>
 
   <h3>Fluid Container</h3>
-  <Container fluid class="bg-surface p-4 mb-8">
-    <div class="bg-primary-100 dark:bg-primary-800 p-4 rounded">
-      <p>Content in a fluid container</p>
-    </div>
-  </Container>
+  <div data-testid="container-fluid">
+    <Container fluid class="bg-surface p-4 mb-8">
+      <div class="bg-primary-100 dark:bg-primary-800 p-4 rounded">
+        <p>Content in a fluid container</p>
+      </div>
+    </Container>
+  </div>
 
   <CodeBlock language="svelte">{`<Container fluid>
   <div class="bg-primary-100 dark:bg-primary-800 p-4 rounded">

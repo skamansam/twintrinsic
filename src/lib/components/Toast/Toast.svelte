@@ -27,14 +27,38 @@
   import { fade, fly } from 'svelte/transition';
   import { toastStore } from './toastStore.js';
 
-  const {
+/** Toast container positions enumerated by `positionClasses` in this component. */
+  type ToastPosition =
+    | 'top-right'
+    | 'top-left'
+    | 'bottom-right'
+    | 'bottom-left'
+    | 'top-center'
+    | 'bottom-center'
+
+  interface Props {
+    /** Additional CSS classes */
+    class?: string
+    /** Position of the toast container */
+    position?: ToastPosition
+    /** Maximum number of toasts to show */
+    maxToasts?: number
+    /** Default duration (ms) before a toast auto-dismisses */
+    duration?: number
+    /** Whether the toast is dismissible via click */
+    dismissible?: boolean
+    /** Whether to pause the auto-dismiss timer on hover */
+    pauseOnHover?: boolean
+  }
+
+  let {
     class: className = '',
     position = 'bottom-right',
     maxToasts = 5,
     duration = 5000,
     dismissible = true,
-    pauseOnHover = true
-  } = $props();
+    pauseOnHover = true,
+  }: Props = $props();
 
   // Component state
   interface Toast {

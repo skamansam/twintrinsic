@@ -42,7 +42,7 @@ let {
   keepAlive = true,
   animated = true,
   animationDuration = 200,
-  children,
+  children = undefined,
 }: Props = $props()
 
 // Get tabs context

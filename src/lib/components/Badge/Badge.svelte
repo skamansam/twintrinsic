@@ -55,7 +55,7 @@ const {
   /** @type {boolean} - Whether badge is inline (absolute positioning) or takes up space */
   inline = true,
 
-  children,
+  children = undefined,
 } = $props()
 
 // Determine if badge should be hidden

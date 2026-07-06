@@ -8,7 +8,7 @@
 		trend?: 'up' | 'down';
 		trendValue?: string | number;
 		color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
-		onclick?: (event: CustomEvent<void>) => void;
+		onclick?: (event: MouseEvent | KeyboardEvent) => void;
 	}
 
 	interface Props {

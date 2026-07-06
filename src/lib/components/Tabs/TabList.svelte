@@ -24,9 +24,9 @@ const {
   class: className = "",
 
   /** @type {string} - ARIA label for the tablist */
-  ariaLabel,
+  ariaLabel = undefined,
 
-  children,
+  children = undefined,
 } = $props()
 
 // Get tabs context

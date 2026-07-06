@@ -82,15 +82,15 @@ const {
   nextAriaLabel = "Next slide",
 
   /** @type {string} - Custom previous arrow icon */
-  prevIcon,
+  prevIcon = undefined,
 
   /** @type {string} - Custom next arrow icon */
-  nextIcon,
+  nextIcon = undefined,
 
   /** @type {(event: CustomEvent) => void} - Change event handler */
-  onchange,
+  onchange = undefined,
 
-  items,
+  items = undefined,
 } = $props()
 
 // Component state

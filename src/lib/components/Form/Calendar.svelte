@@ -38,22 +38,43 @@ function safeSlide(node: Element, params?: { duration?: number }) {
   return slide(node as HTMLElement, params)
 }
 
-const {
-  /** @type {string} - Field name for form registration */
+interface Props {
+  /** Field name for form registration */
+  name?: string
+  /** Selected date or date range */
+  value?: Date | [Date, Date] | Date[] | null
+  /** Whether to allow range selection */
+  range?: boolean
+  /** Minimum selectable date */
+  minDate?: Date | null
+  /** Maximum selectable date */
+  maxDate?: Date | null
+  /** Whether to show week numbers */
+  showWeekNumbers?: boolean
+  /** Custom day names */
+  dayNames?: string[]
+  /** Custom month names */
+  monthNames?: string[]
+  /** Input label */
+  label?: string
+  /** Date format for display */
+  format?: string
+  /** Whether the calendar is disabled */
+  disabled?: boolean
+  /** Additional CSS classes */
+  class?: string
+  /** Select event handler */
+  onselect?: (event: CustomEvent<{ date?: Date; start?: Date; end?: Date | null }>) => void
+}
+
+let {
   name,
-  /** @type {Date | [Date, Date] | null} - Selected date or date range */
   value = null,
-  /** @type {boolean} - Whether to allow range selection */
   range = false,
-  /** @type {Date | null} - Minimum selectable date */
   minDate = null,
-  /** @type {Date | null} - Maximum selectable date */
   maxDate = null,
-  /** @type {boolean} - Whether to show week numbers */
   showWeekNumbers = false,
-  /** @type {string[]} - Custom day names */
   dayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-  /** @type {string[]} - Custom month names */
   monthNames = [
     "January",
     "February",
@@ -68,17 +89,12 @@ const {
     "November",
     "December",
   ],
-  /** @type {string} - Input label */
   label = "Date",
-  /** @type {string} - Date format for display */
   format = "MM/dd/yyyy",
-  /** @type {boolean} - Whether the calendar is disabled */
   disabled = false,
-  /** @type {string} - Additional CSS classes */
   class: className = "",
-  /** @type {(event: CustomEvent) => void} - Select event handler */
   onselect,
-} = $props()
+}: Props = $props()
 
 let currentMonth = $state(new Date())
 let hoverDate: Date | null = $state(null)

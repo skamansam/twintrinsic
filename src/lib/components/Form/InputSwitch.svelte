@@ -20,39 +20,45 @@ Usage:
 import { getContext } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
 
-const {
-  /** @type {string} - Additional CSS classes */
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Input name */
+  name?: string
+  /** Label text */
+  label?: string
+  /** Whether the switch is checked */
+  checked?: boolean
+  /** Whether the switch is required */
+  required?: boolean
+  /** Whether the switch is disabled */
+  disabled?: boolean
+  /** Size of the switch (sm, md, lg) */
+  size?: "sm" | "md" | "lg"
+  /** ARIA label for accessibility */
+  ariaLabel?: string
+  /** Change event handler */
+  onchange?: (event: CustomEvent<{ checked: boolean }>) => void
+  /** Additional props passed through to the underlying input */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - Input name */
   name,
-
-  /** @type {string} - Label text */
   label,
-
-  /** @type {boolean} - Whether the switch is checked */
   checked = false,
-
-  /** @type {boolean} - Whether the switch is required */
   required = false,
-
-  /** @type {boolean} - Whether the switch is disabled */
   disabled = false,
-
-  /** @type {string} - Size of the switch (sm, md, lg) */
   size = "md",
-
-  /** @type {string} - ARIA label for accessibility */
   ariaLabel,
-
-  /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange,
-
   ...restProps
-} = $props()
+}: Props = $props()
 
 // Get form context if available
 const formContext = getContext<FormContext | undefined>("form")

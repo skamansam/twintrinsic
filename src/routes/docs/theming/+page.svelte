@@ -2,7 +2,7 @@
 @component
 Theming documentation page
 -->
-<script>
+<script lang="ts">
 import Button from "$lib/components/Button/Button.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"

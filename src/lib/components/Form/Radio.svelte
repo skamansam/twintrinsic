@@ -25,40 +25,48 @@ Usage:
 import { getContext } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
 
-const {
-  /** @type {string} - Additional CSS classes */
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Radio name (for grouping) */
+  name?: string
+  /** Radio value */
+  value?: string
+  /** Label text */
+  label?: string
+  /** Whether the radio is checked */
+  checked?: boolean
+  /** Whether the radio is required */
+  required?: boolean
+  /** Whether the radio is disabled */
+  disabled?: boolean
+  /** Size of the radio (sm, md, lg) */
+  size?: "sm" | "md" | "lg"
+  /** ARIA label for accessibility */
+  ariaLabel?: string
+  /** Change event handler */
+  onchange?: (event: CustomEvent<{ checked: boolean; value: string }>) => void
+  /** Additional props passed through to the underlying input */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - Radio name (for grouping) */
   name,
-
-  /** @type {string} - Radio value */
   value,
-
-  /** @type {string} - Label text */
   label,
-
-  /** @type {boolean} - Whether the radio is checked */
   checked = false,
-
-  /** @type {boolean} - Whether the radio is required */
   required = false,
-
-  /** @type {boolean} - Whether the radio is disabled */
   disabled = false,
-
-  /** @type {string} - Size of the radio (sm, md, lg) */
   size = "md",
-
-  /** @type {string} - ARIA label for accessibility */
   ariaLabel,
-  /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange,
   ...restProps
-} = $props()
+}: Props = $props()
 
 // Get form context if available
 const formContext = getContext<FormContext | undefined>("form")
@@ -106,7 +114,7 @@ function handleChange(event: Event): void {
     fieldApi.setValue(value)
   }
 
-  onchange?.(new CustomEvent("change", { detail: { checked: isChecked, value } }))
+  onchange?.(new CustomEvent("change", { detail: { checked: isChecked, value: value ?? "" } }))
 }
 
 // Determine radio size classes

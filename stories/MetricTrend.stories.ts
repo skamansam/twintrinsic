@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/svelte';
+import type { Meta, StoryObj } from '@storybook/sveltekit';
 import MetricTrend from '$lib/components/Metrics/MetricTrend/MetricTrend.svelte';
 
 const meta = {

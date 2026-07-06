@@ -45,8 +45,8 @@ let {
   keepRendered = true,
   showLoading = false,
   delay = 0,
-  children,
-  placeholder,
+  children = undefined,
+  placeholder = undefined,
 }: Props = $props()
 
 // State

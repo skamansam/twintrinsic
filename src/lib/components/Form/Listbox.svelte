@@ -5,93 +5,98 @@ Provides accessible keyboard navigation, filtering, and customization options.
 
 Usage:
 ```svelte
-<Listbox 
-  name="users" 
-  options={users} 
-  optionLabel="name" 
-  optionValue="id" 
+<Listbox
+  name="users"
+  options={users}
+  optionLabel="name"
+  optionValue="id"
 />
 
-<Listbox 
-  name="colors" 
-  options={colors} 
-  multiple 
-  filter 
+<Listbox
+  name="colors"
+  options={colors}
+  multiple
+  filter
 />
 
 <FormField label="Select a category">
-  <Listbox 
-    name="category" 
-    options={categories} 
-    optionIcon="icon" 
+  <Listbox
+    name="category"
+    options={categories}
+    optionIcon="icon"
   />
 </FormField>
 ```
 -->
-<script lang="ts">
+<script lang="ts" generics="TOption extends string | Record<string, unknown> = string | Record<string, unknown>">
 import { getContext, onMount } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
 
-const {
-  /** @type {string} - Additional CSS classes */
+interface Props<TOption extends string | Record<string, unknown> = string | Record<string, unknown>> {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Input name */
+  name?: string
+  /** Options to display (strings or objects) */
+  options?: TOption[]
+  /** Selected value(s). Object for single selection, array for multiple. */
+  value?: TOption | TOption[] | null
+  /** Whether multiple selection is allowed */
+  multiple?: boolean
+  /** Property name for option label */
+  optionLabel?: string
+  /** Property name for option value */
+  optionValue?: string
+  /** Property name for option icon */
+  optionIcon?: string
+  /** Whether the listbox is disabled */
+  disabled?: boolean
+  /** Whether the listbox is required */
+  required?: boolean
+  /** Whether to filter options by typing */
+  filter?: boolean
+  /** Placeholder for filter input */
+  filterPlaceholder?: string
+  /** Maximum height of the listbox */
+  maxHeight?: number
+  /** Whether to show a checkbox for multiple selection */
+  showCheckbox?: boolean
+  /** ARIA label for accessibility */
+  ariaLabel?: string
+  /** Change event handler */
+  onchange?: (event: CustomEvent<{ value: TOption | TOption[] | null }>) => void
+  /** Filter event handler */
+  onfilter?: (event: CustomEvent<{ filter: string }>) => void
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - Input name */
   name,
-
-  /** @type {Array} - Options to display */
   options = [],
-
-  /** @type {any} - Selected value(s) */
-  value,
-
-  /** @type {boolean} - Whether multiple selection is allowed */
+  value = null,
   multiple = false,
-
-  /** @type {string} - Property name for option label */
   optionLabel = "label",
-
-  /** @type {string} - Property name for option value */
   optionValue = "value",
-
-  /** @type {string} - Property name for option icon */
   optionIcon,
-
-  /** @type {boolean} - Whether the listbox is disabled */
   disabled = false,
-
-  /** @type {boolean} - Whether the listbox is required */
   required = false,
-
-  /** @type {boolean} - Whether to filter options by typing */
   filter = false,
-
-  /** @type {string} - Placeholder for filter input */
   filterPlaceholder = "Search...",
-
-  /** @type {number} - Maximum height of the listbox */
   maxHeight = 300,
-
-  /** @type {boolean} - Whether to show a checkbox for multiple selection */
   showCheckbox = true,
-
-  /** @type {string} - ARIA label for accessibility */
   ariaLabel,
-
-  /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange,
-  /** @type {(event: CustomEvent) => void} - Filter event handler */
   onfilter,
-} = $props()
+}: Props<TOption> = $props()
 
 // Get form context if available
 const formContext = getContext<FormContext | undefined>("form")
 
 // Component state
-let selectedValues: unknown[] | unknown | null = $state()
+let selectedValues: TOption[] | TOption | null = $state<TOption[] | TOption | null>(null)
 let filterValue = $state("")
 let highlightedIndex = $state(0)
 let listboxElement: HTMLElement | undefined = $state()
@@ -109,7 +114,7 @@ $effect(() => {
 // Update value when form field changes
 $effect(() => {
   if (fieldApi) {
-    const formValue = fieldApi.getValue() as unknown[] | unknown | null | undefined
+    const formValue = fieldApi.getValue() as TOption[] | TOption | null | undefined
     if (formValue !== undefined && formValue !== null && JSON.stringify(formValue) !== JSON.stringify(selectedValues)) {
       selectedValues = formValue
     }
@@ -118,7 +123,7 @@ $effect(() => {
 
 // Initialize selected values from prop
 $effect(() => {
-  if (value !== undefined) {
+  if (value !== undefined && value !== null) {
     selectedValues = value
   }
 })
@@ -131,10 +136,8 @@ const effectiveDisabled = $derived(
 
 /**
  * Gets the display label for an option
- * @param {Object|string} option - Option to get label for
- * @returns {string} - Display label
  */
-function getOptionLabel(option: unknown): string {
+function getOptionLabel(option: TOption): string {
   if (!option) return ""
 
   if (typeof option === "object") {
@@ -146,10 +149,8 @@ function getOptionLabel(option: unknown): string {
 
 /**
  * Gets the value for an option
- * @param {Object|string} option - Option to get value for
- * @returns {any} - Option value
  */
-function getOptionValue(option: unknown): unknown {
+function getOptionValue(option: TOption): unknown {
   if (!option) return null
 
   if (typeof option === "object") {
@@ -160,11 +161,9 @@ function getOptionValue(option: unknown): unknown {
 }
 
 /**
- * Gets the icon for an option
- * @param {Object} option - Option to get icon for
- * @returns {string} - Icon HTML
+ * Gets the icon for an option (object-string containing HTML)
  */
-function getOptionIcon(option: unknown): unknown {
+function getOptionIcon(option: TOption): unknown {
   if (!option || !optionIcon || typeof option !== "object") return null
 
   return (option as Record<string, unknown>)[optionIcon]
@@ -172,30 +171,33 @@ function getOptionIcon(option: unknown): unknown {
 
 /**
  * Checks if an option is selected
- * @param {Object|string} option - Option to check
- * @returns {boolean} - Whether the option is selected
  */
-function isOptionSelected(option: unknown): boolean {
+function isOptionSelected(option: TOption): boolean {
   const value = getOptionValue(option)
 
   if (multiple) {
     return (
       Array.isArray(selectedValues) &&
-      selectedValues.some((v) => (typeof v === "object" ? (v as Record<string, unknown>)[optionValue] === value : v === value))
+      selectedValues.some((v) =>
+        typeof v === "object"
+          ? (v as Record<string, unknown>)[optionValue] === value
+          : v === value
+      )
     )
   }
 
   return (
     selectedValues === value ||
-    (typeof selectedValues === "object" && selectedValues !== null && (selectedValues as Record<string, unknown>)[optionValue] === value)
+    (typeof selectedValues === "object" &&
+      selectedValues !== null &&
+      (selectedValues as Record<string, unknown>)[optionValue] === value)
   )
 }
 
 /**
  * Filters options based on input value
- * @returns {Array} - Filtered options
  */
-function filterOptions(): unknown[] {
+function filterOptions(): TOption[] {
   if (!filter || !filterValue) return options
 
   return options.filter((option) => {
@@ -206,9 +208,8 @@ function filterOptions(): unknown[] {
 
 /**
  * Selects an option
- * @param {Object|string} option - Option to select
  */
-function selectOption(option: unknown): void {
+function selectOption(option: TOption): void {
   if (effectiveDisabled) return
 
   const value = getOptionValue(option)
@@ -217,17 +218,19 @@ function selectOption(option: unknown): void {
     if (isOptionSelected(option)) {
       // Remove from selection
       selectedValues = Array.isArray(selectedValues)
-        ? selectedValues.filter((v) =>
-            typeof v === "object" ? v[optionValue] !== value : v !== value
-          )
-        : []
+        ? (selectedValues.filter((v) =>
+            typeof v === "object" ? (v as Record<string, unknown>)[optionValue] !== value : v !== value
+          ) as TOption[])
+        : ([] as TOption[])
     } else {
       // Add to selection
-      selectedValues = Array.isArray(selectedValues) ? [...selectedValues, value] : [value]
+      selectedValues = Array.isArray(selectedValues)
+        ? ([...selectedValues, value] as unknown as TOption)
+        : ([value] as unknown as TOption)
     }
   } else {
     // Single selection
-    selectedValues = value
+    selectedValues = option
   }
 
   // Update form field if available
@@ -240,7 +243,6 @@ function selectOption(option: unknown): void {
 
 /**
  * Handles keydown events
- * @param {KeyboardEvent} event - Keydown event
  */
 function handleKeydown(event: KeyboardEvent): void {
   if (effectiveDisabled) return
@@ -328,7 +330,6 @@ function scrollOptionIntoView(): void {
 
 /**
  * Handles filter input
- * @param {Event} event - Input event
  */
 function handleFilterInput(event: Event): void {
   filterValue = (event.target as HTMLInputElement).value
@@ -366,7 +367,7 @@ const filteredOptions = $derived(filterOptions())
       />
     </div>
   {/if}
-  
+
   <div
     id="{id}-listbox"
     class="listbox"
@@ -384,7 +385,7 @@ const filteredOptions = $derived(filterOptions())
         {#each filteredOptions as option, index}
           {@const isHighlighted = index === highlightedIndex}
           {@const isSelected = isOptionSelected(option)}
-          
+
           <li
             class="
               listbox-option
@@ -414,13 +415,13 @@ const filteredOptions = $derived(filterOptions())
                   {/if}
                 </div>
               {/if}
-              
+
               {#if optionIcon && getOptionIcon(option)}
                 <div class="listbox-option-icon">
                   {@html getOptionIcon(option)}
                 </div>
               {/if}
-              
+
               <div class="listbox-option-label">
                 {getOptionLabel(option)}
               </div>
@@ -432,7 +433,7 @@ const filteredOptions = $derived(filterOptions())
       <div class="listbox-empty">No options available</div>
     {/if}
   </div>
-  
+
   <!-- Hidden input for form submission -->
   <input
     type="hidden"
@@ -446,15 +447,15 @@ const filteredOptions = $derived(filterOptions())
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";
-  
+
   .listbox-container {
     @apply w-full;
   }
-  
+
   .listbox-filter {
     @apply mb-2;
   }
-  
+
   .listbox-filter-input {
     @apply w-full px-3 py-2;
     @apply bg-background dark:bg-background;
@@ -464,7 +465,7 @@ const filteredOptions = $derived(filterOptions())
     @apply disabled:opacity-50 disabled:cursor-not-allowed;
     @apply transition-colors duration-200;
   }
-  
+
   .listbox {
     @apply w-full overflow-y-auto;
     @apply bg-background dark:bg-background;
@@ -472,55 +473,55 @@ const filteredOptions = $derived(filterOptions())
     @apply focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400;
     @apply transition-colors duration-200;
   }
-  
+
   .listbox[aria-disabled="true"] {
     @apply opacity-50 cursor-not-allowed;
   }
-  
+
   .listbox-options {
     @apply py-1;
   }
-  
+
   .listbox-option {
     @apply px-3 py-2 cursor-pointer;
     @apply text-text dark:text-text;
     @apply hover:bg-hover dark:hover:bg-hover;
     @apply transition-colors duration-150;
   }
-  
+
   .listbox-option-content {
     @apply flex items-center gap-2;
   }
-  
+
   .listbox-option-highlighted {
     @apply bg-hover dark:bg-hover;
   }
-  
+
   .listbox-option-selected {
     @apply bg-primary-50 dark:bg-primary-900/20;
     @apply text-primary-700 dark:text-primary-300;
   }
-  
+
   .listbox-checkbox {
     @apply w-4 h-4 flex-shrink-0;
     @apply border border-border dark:border-border rounded;
     @apply flex items-center justify-center;
     @apply bg-background dark:bg-background;
   }
-  
+
   .listbox-option-selected .listbox-checkbox {
     @apply bg-primary-500 dark:bg-primary-400 border-primary-500 dark:border-primary-400;
     @apply text-white dark:text-white;
   }
-  
+
   .listbox-option-icon {
     @apply flex-shrink-0 w-5 h-5;
   }
-  
+
   .listbox-option-label {
     @apply flex-grow truncate;
   }
-  
+
   .listbox-empty {
     @apply px-3 py-4 text-muted dark:text-muted text-center;
   }

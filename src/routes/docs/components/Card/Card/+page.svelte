@@ -27,14 +27,14 @@ import { Card, CodeBlock } from "$lib"
     title="Basic Usage"
     code={`
 <Card>
-  <svelte:fragment slot="header">Card Title</svelte:fragment>
+  {#snippet header()}Card Title{/snippet}
   <p>Card content goes here</p>
 </Card>
 
 <Card hoverable>
-  <svelte:fragment slot="media">
+  {#snippet media()}
     <img src="image.jpg" alt="Card image" />
-  </svelte:fragment>
+  {/snippet}
   <h3>Title</h3>
   <p>Content with hover effect</p>
 </Card>
@@ -44,9 +44,9 @@ import { Card, CodeBlock } from "$lib"
   <h2>Examples</h2>
 
   <h3>Basic Card</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="card-basic">
     <Card>
-      <svelte:fragment slot="header">Basic Example</svelte:fragment>
+      {#snippet header()}Basic Example{/snippet}
       <div class="p-4">
         <p>A simple card with header and content.</p>
       </div>
@@ -54,16 +54,16 @@ import { Card, CodeBlock } from "$lib"
   </div>
 
   <h3>Card with Media</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="card-with-media">
     <Card hoverable>
-      <svelte:fragment slot="media">
+      {#snippet media()}
         <img
           src="https://picsum.photos/600/300"
           alt="Sample landscape"
           class="w-full h-48 object-cover"
         />
-      </svelte:fragment>
-      <svelte:fragment slot="header">Media Card</svelte:fragment>
+      {/snippet}
+      {#snippet header()}Media Card{/snippet}
       <div class="p-4">
         <p>A card with media content and hover effect.</p>
       </div>
@@ -71,19 +71,19 @@ import { Card, CodeBlock } from "$lib"
   </div>
 
   <h3>Card with Footer</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="card-with-footer">
     <Card>
-      <svelte:fragment slot="header">Footer Example</svelte:fragment>
+      {#snippet header()}Footer Example{/snippet}
       <div class="p-4">
         <p>A card with a footer containing actions.</p>
       </div>
-      <svelte:fragment slot="footer">
+      {#snippet footer()}
         <div class="flex justify-end space-x-2">
           <button class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark">
             Action
           </button>
         </div>
-      </svelte:fragment>
+      {/snippet}
     </Card>
   </div>
 

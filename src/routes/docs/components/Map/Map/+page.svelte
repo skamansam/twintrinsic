@@ -34,7 +34,7 @@ Map documentation page
 	</ul>
 
 	<h2>Basic Usage</h2>
-	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200">
+	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200" data-testid="map-basic">
 		<MapComponent center={[-25.2637, -57.5759]} zoom={13} />
 	</div>
 
@@ -46,7 +46,7 @@ Map documentation page
 
 	<h2>Custom Center and Zoom</h2>
 	<p>Set a custom center location and initial zoom level:</p>
-	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200">
+	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200" data-testid="map-custom-center">
 		<MapComponent center={[-25.2637, -57.5759]} zoom={12} />
 	</div>
 
@@ -58,7 +58,7 @@ Map documentation page
 
 	<h2>Different Tile Layers</h2>
 	<p>Use different tile layer providers:</p>
-	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200">
+	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200" data-testid="map-tile-layer">
 		<MapComponent
 			center={[-25.2637, -57.5759]}
 			zoom={13}
@@ -80,7 +80,7 @@ Map documentation page
 
 	<h2>Without Controls</h2>
 	<p>Disable zoom or attribution controls:</p>
-	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200">
+	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200" data-testid="map-no-controls">
 		<MapComponent center={[-25.2637, -57.5759]} zoom={13} zoomControl={false} attributionControl={false} />
 	</div>
 
@@ -97,7 +97,7 @@ Map documentation page
 
 	<h2>Custom Map Image</h2>
 	<p>Use a custom static image as a map with pixel-based coordinates:</p>
-	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200">
+	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200" data-testid="map-custom-image">
 		<MapComponent
 			useSimpleCRS={true}
 			customImage={customImageURL}
@@ -122,7 +122,7 @@ Map documentation page
 
 	<h2>Custom Markers</h2>
 	<p>Add custom markers to the map with a custom image background using pixel coordinates:</p>
-	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200">
+	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200" data-testid="map-custom-markers">
 		<MapComponent
 			bind:this={customMarkersRef}
 			useSimpleCRS={true}
@@ -153,7 +153,7 @@ Map documentation page
 
 	<h2>Interactive Marker Creation</h2>
 	<p>Click on the map to create new markers:</p>
-	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200">
+	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200" data-testid="map-interactive">
 		<MapComponent 
 			center={[-25.2637, -57.5759]} 
 			zoom={13}
@@ -179,7 +179,7 @@ Map documentation page
       const L = await import('leaflet');
       const marker = new L.Marker([lat, lng]);
       marker.addTo(mapInstance);
-      marker.bindPopup(\`Marker at \${lat.toFixed(4)}, \${lng.toFixed(4)}\`);
+      marker.bindPopup(` + '\`Marker at \${lat.toFixed(4)}, \${lng.toFixed(4)}\`' + `);
     });
   }
 </script>
@@ -200,7 +200,7 @@ Map documentation page
 
 	<h2>Custom Image Map with Simple CRS</h2>
 	<p>Use a custom image as a map with pixel-based coordinates and constrained bounds:</p>
-	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200">
+	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200" data-testid="map-simple-crs">
 		<MapComponent
 			useSimpleCRS={true}
 			imageWidth={1024}

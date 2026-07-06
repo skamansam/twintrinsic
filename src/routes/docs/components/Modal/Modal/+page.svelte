@@ -1,6 +1,3 @@
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-</style>
 <script lang="ts">
 import { writable } from "svelte/store"
 import { Button, Container, Modal } from "$lib"
@@ -9,6 +6,10 @@ let showBasicModal = writable(false)
 let showSizedModal = writable(false)
 let showScrollableModal = writable(false)
 </script>
+
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>Modal</h1>
@@ -20,25 +21,25 @@ let showScrollableModal = writable(false)
   <h2>Usage</h2>
 
   <h3>Basic Modal</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
-    <Button on:click={() => showBasicModal.set(true)}>
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="modal-basic">
+    <Button onclick={() => showBasicModal.set(true)}>
       Open Modal
     </Button>
   </div>
 
-  <Modal open={$showBasicModal} on:close={() => showBasicModal.set(false)}>
-    <svelte:fragment slot="header">
+  <Modal open={$showBasicModal} onclose={() => showBasicModal.set(false)}>
+    {#snippet header()}
       Welcome to Modal
-    </svelte:fragment>
+    {/snippet}
     <p>This is a basic modal dialog. Click outside or press Escape to close it.</p>
-    <svelte:fragment slot="footer">
-      <Button variant="outline" on:click={() => showBasicModal.set(false)}>
+    {#snippet footer()}
+      <Button variant="outline" onclick={() => showBasicModal.set(false)}>
         Cancel
       </Button>
-      <Button variant="primary" on:click={() => showBasicModal.set(false)}>
+      <Button variant="primary" onclick={() => showBasicModal.set(false)}>
         Confirm
       </Button>
-    </svelte:fragment>
+    {/snippet}
   </Modal>
 
   <CodeBlock language="svelte">{`<script>
@@ -64,20 +65,20 @@ let showScrollableModal = writable(false)
 </Modal>`}</CodeBlock>
 
   <h3>Modal Sizes</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
-    <Button on:click={() => showSizedModal.set(true)}>
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="modal-sizes">
+    <Button onclick={() => showSizedModal.set(true)}>
       Open Sized Modal
     </Button>
   </div>
 
-  <Modal open={$showSizedModal} on:close={() => showSizedModal.set(false)} size="lg">
-    <svelte:fragment slot="header">
+  <Modal open={$showSizedModal} onclose={() => showSizedModal.set(false)} size="lg">
+    {#snippet header()}
       Large Modal
-    </svelte:fragment>
+    {/snippet}
     <p>This is a large modal with more space for content.</p>
-    <svelte:fragment slot="footer">
-      <Button on:click={() => showSizedModal.set(false)}>Close</Button>
-    </svelte:fragment>
+    {#snippet footer()}
+      <Button onclick={() => showSizedModal.set(false)}>Close</Button>
+    {/snippet}
   </Modal>
 
   <CodeBlock language="svelte">{`<Modal open={true} size="sm"><!-- Small modal --></Modal>
@@ -87,25 +88,25 @@ let showScrollableModal = writable(false)
 <Modal open={true} size="full"><!-- Full screen modal --></Modal>`}</CodeBlock>
 
   <h3>Scrollable Modal</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
-    <Button on:click={() => showScrollableModal.set(true)}>
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="modal-scrollable">
+    <Button onclick={() => showScrollableModal.set(true)}>
       Open Scrollable Modal
     </Button>
   </div>
 
-  <Modal open={$showScrollableModal} on:close={() => showScrollableModal.set(false)}>
-    <svelte:fragment slot="header">
+  <Modal open={$showScrollableModal} onclose={() => showScrollableModal.set(false)}>
+    {#snippet header()}
       Long Content Modal
-    </svelte:fragment>
+    {/snippet}
     <div class="space-y-4">
       <p>This modal contains scrollable content when it exceeds the available height.</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
       <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
     </div>
-    <svelte:fragment slot="footer">
-      <Button on:click={() => showScrollableModal.set(false)}>Close</Button>
-    </svelte:fragment>
+    {#snippet footer()}
+      <Button onclick={() => showScrollableModal.set(false)}>Close</Button>
+    {/snippet}
   </Modal>
 
   <CodeBlock language="svelte">{`<Modal open={true}>

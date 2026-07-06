@@ -1,22 +1,30 @@
 <!--
 @component
-Documentation site layout with left navigation and header
+Documentation site layout with left navigation and header.
 -->
-<script>
-import { page } from "$app/stores"
+<script lang="ts">
+import { page } from "$app/state"
 import { App, Separator, TwintrinsicLogo } from "$lib"
 
-let { children } = $props();
+let { children } = $props()
 
 const siteLinks = [
-  { label: "Getting Started", href: "/docs", current: $page.url.pathname === "/docs" },
+  { label: "Getting Started", href: "/docs", current: page.url.pathname === "/docs" },
   {
     label: "Components",
     href: "/docs/components",
-    current: $page.url.pathname.startsWith("/docs/components"),
+    current: page.url.pathname.startsWith("/docs/components"),
   },
-  { label: "Theming", href: "/docs/theming", current: $page.url.pathname === "/docs/theming" },
-  { label: "Completion", href: "/docs/completion", current: $page.url.pathname === "/docs/completion" },
+  {
+    label: "Theming",
+    href: "/docs/theming",
+    current: page.url.pathname === "/docs/theming",
+  },
+  {
+    label: "Completion",
+    href: "/docs/completion",
+    current: page.url.pathname === "/docs/completion",
+  },
 ]
 
 let leftSidebarExpanded = $state(false)
@@ -181,8 +189,8 @@ const themeColors = [
 ]
 </script>
 
-{#snippet logo(size)}
-  <TwintrinsicLogo {size}/>
+{#snippet logo(size: number)}
+  <TwintrinsicLogo {size} />
 {/snippet}
 
 <App
@@ -191,15 +199,14 @@ const themeColors = [
   brand={{
     name: 'Twintrinsic',
     href: '/',
-    logo
+    logo,
   }}
   {siteMenu}
   {siteLinks}
 >
   {@render children?.()}
 </App>
-  
-  <style lang="postcss">
-    @reference '$lib/twintrinsic.css';
 
-  </style>
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>

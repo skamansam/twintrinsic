@@ -1,5 +1,34 @@
+<!--
+@component
+Menu - A dropdown menu component with a trigger button and a popup content area.
+
+Usage:
+```svelte
+<Menu>
+  {#snippet trigger()}<Button>Open Menu</Button>{/snippet}
+  {#snippet content()}
+    <MenuItem>Option 1</MenuItem>
+    <MenuItem>Option 2</MenuItem>
+    <MenuItem>Option 3</MenuItem>
+  {/snippet}
+</Menu>
+```
+-->
 <script lang="ts">
-import { setContext } from "svelte";
+import type { Snippet } from "svelte"
+
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** ARIA label */
+  ariaLabel?: string
+  /** Trigger button content (rendered inside the toggle button) */
+  trigger?: Snippet
+  /** Popup menu content (rendered inside the popup panel) */
+  content?: Snippet
+}
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -10,8 +39,10 @@ const {
 
   /** @type {string} - ARIA label */
   ariaLabel = "Menu",
-  children,
-} = $props()
+
+  trigger = undefined,
+  content = undefined,
+}: Props = $props()
 
 let isOpen = $state(false)
 
@@ -21,33 +52,33 @@ function toggleMenu() {
 </script>
 
 <div class="menu {className}" {id}>
-  <button 
-    type="button" 
+  <button
+    type="button"
     class="menu-trigger"
     {id}
-    aria-haspopup="true" 
+    aria-haspopup="true"
     aria-expanded={isOpen}
     aria-label={ariaLabel}
     onclick={toggleMenu}
   >
-    {@render children?.('trigger')}
+    {@render trigger?.()}
   </button>
 
   {#if isOpen}
-    <div 
-      class="menu-content" 
-      role="menu" 
-      aria-orientation="vertical" 
+    <div
+      class="menu-content"
+      role="menu"
+      aria-orientation="vertical"
       aria-labelledby={id}
     >
-      {@render children?.('content')}
+      {@render content?.()}
     </div>
   {/if}
 </div>
 
 <style lang="postcss">
   @reference "../../../twintrinsic.css";
-  
+
   .menu {
     @apply relative inline-block;
   }

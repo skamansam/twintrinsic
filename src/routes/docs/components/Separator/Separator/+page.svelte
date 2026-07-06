@@ -18,7 +18,7 @@ import { CodeBlock, Container, Separator } from "$lib"
   <h2>Examples</h2>
 
   <h3>Basic Separator</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="separator-basic">
     <p class="mb-4">Content above</p>
     <Separator />
     <p class="mt-4">Content below</p>
@@ -27,14 +27,14 @@ import { CodeBlock, Container, Separator } from "$lib"
   <CodeBlock language="svelte">{`<Separator />`}</CodeBlock>
 
   <h3>With Text</h3>
-  <div class="not-prose mb-8 max-w-sm">
+  <div class="not-prose mb-8 max-w-sm" data-testid="separator-with-text">
     <Separator>or</Separator>
   </div>
 
   <CodeBlock language="svelte">{`<Separator>or</Separator>`}</CodeBlock>
 
   <h3>With Icon and Text</h3>
-  <div class="not-prose mb-8 max-w-sm">
+  <div class="not-prose mb-8 max-w-sm" data-testid="separator-with-icon">
     <Separator>
       <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -44,7 +44,7 @@ import { CodeBlock, Container, Separator } from "$lib"
   </div>
 
   <h3>Vertical Separator</h3>
-  <div class="not-prose mb-8 h-32 flex items-center">
+  <div class="not-prose mb-8 h-32 flex items-center" data-testid="separator-vertical">
     <span>Left content</span>
     <Separator vertical />
     <span>Right content</span>
@@ -57,7 +57,7 @@ import { CodeBlock, Container, Separator } from "$lib"
 </div>`}</CodeBlock>
 
   <h3>Color Variants</h3>
-  <div class="not-prose mb-8 space-y-4">
+  <div class="not-prose mb-8 space-y-4" data-testid="separator-color-variants">
     <Separator color="default">Default</Separator>
     <Separator color="primary">Primary</Separator>
     <Separator color="success">Success</Separator>

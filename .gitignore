@@ -1,4 +1,9 @@
-test-results
+# Playwright test artifacts (canonical defaults from @playwright/test)
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/blob-report/
+
 node_modules
 
 # Output

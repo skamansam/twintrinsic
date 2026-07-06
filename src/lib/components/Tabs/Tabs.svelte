@@ -21,39 +21,46 @@
  */
 import { setContext } from "svelte"
 
-const {
-  /** @type {string} - Additional CSS classes */
+import type { Snippet } from "svelte"
+
+interface Props {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Index of the initially selected tab */
+  defaultIndex?: number
+  /** Tab variant (default, underline, pills, enclosed) */
+  variant?: "default" | "underline" | "pills" | "enclosed"
+  /** Tab size (sm, md, lg) */
+  size?: "sm" | "md" | "lg"
+  /** Whether to make tabs take full width */
+  fullWidth?: boolean
+  /** Whether to center the tabs */
+  centered?: boolean
+  /** Whether tabs are disabled */
+  disabled?: boolean
+  /** ARIA label for the tablist */
+  ariaLabel?: string
+  /** Change event handler */
+  onchange?: (event: CustomEvent) => void
+  /** Tabs/TabList/TabPanel children */
+  children?: Snippet
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {number} - Index of the initially selected tab */
   defaultIndex = 0,
-
-  /** @type {string} - Tab variant (default, underline, pills, enclosed) */
   variant = "default",
-
-  /** @type {string} - Tab size (sm, md, lg) */
   size = "md",
-
-  /** @type {boolean} - Whether to make tabs take full width */
   fullWidth = false,
-
-  /** @type {boolean} - Whether to center the tabs */
   centered = false,
-
-  /** @type {boolean} - Whether tabs are disabled */
   disabled = false,
-
-  /** @type {string} - ARIA label for the tablist */
   ariaLabel = "Tabs",
-
-  /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange,
-
   children,
-} = $props()
+}: Props = $props()
 
 // Tabs state
 let selectedIndex = $state(0)

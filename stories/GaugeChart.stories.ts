@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/svelte';
+import type { Meta, StoryObj } from '@storybook/sveltekit';
 import GaugeChart from '$lib/components/Metrics/GaugeChart/GaugeChart.svelte';
 
 const meta = {

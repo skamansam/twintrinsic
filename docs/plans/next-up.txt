@@ -1,0 +1,254 @@
+ACTIVE PLAN: docs/plans/E2E_TO_STORYBOOK_MIGRATION_PLAN.md
+
+# Phase A — Scaffolding (DONE)
+
+All items from § 10.1 are complete:
+
+1. ✅ `data-testid="<component>-<variant>"` — convention applied to Avatar +
+   Container + an initial batch (Tag, Progress, Accordion, Sidebar, Button,
+   Tabs, Card, AppHeader, BottomBar, Badge, Breadcrumb, Carousel,
+   CodeEditor, Icon, Map, Menu, Modal, Panel, Separator, Skeleton,
+   Splitter). Phase A still owes data-testid for the rest of the docs
+   pages (§ 5.3) — that's Phase A.5 / Phase C scope, file-by-file.
+2. ✅ `tests/e2e/CodeBlockSpeed.test.js` — typo fixed (§ 9.1); all 14
+   `codeblockspeeed` references in the test file replaced with
+   `codeblockspeed`. Repo-wide check: zero remaining in active code;
+   intentional mentions remain only in `docs/plans/*` files documenting
+   the § 9.1 rename rationale. The 4 stale Playwright error-context
+   dumps that referenced the pre-fix misspelling were cleaned up via
+   `git clean -fdx test-results/`, and `test-results/` (plus the rest of
+   the canonical Playwright artifacts) was added to `.gitignore`.
+3. ✅ `tests/e2e/ThemeToggle.test.js` deleted; `themetoggle.test.ts`
+   renamed → `tests/e2e/ThemeToggle.test.ts` with corrected URL casing
+   + 6 docs-smoke tests (§ 9.2). Component behavior migration to story
+   `play` functions happens in Phase C.
+4. ✅ `@storybook/addon-a11y` installed (`^10.4.6`, pnpm bumped storybook
+   core to satisfy the peer-dep), registered in `.storybook/main.ts`,
+   configured in `.storybook/preview.ts` (§ 9.3).
+5. ✅ `.github/workflows/test.yml` created with parallel `unit`,
+   `build-and-typecheck`, `storybook`, `e2e` jobs (§ 9.4).
+   `.github/workflows/publish.yml` now chain-gates `publish.needs: test`
+   on a `test` job that re-runs `pnpm check` / `pnpm check:lib` /
+   `pnpm check:a11y` / `pnpm test:unit` on the same SHA before tagging.
+
+## Acceptance § 11 status
+
+- [x] No `codeblockspeeed` in `tests/`, `src/`, `stories/`, or
+      `.storybook/`. Intentional references remain only in three
+      `docs/plans/*` files documenting the § 9.1 rename rationale.
+      Stale `test-results/` Playwright error-context dumps removed
+      and `test-results/` added to `.gitignore` (canonical Playwright
+      convention).
+- [x] Exactly one `tests/e2e/ThemeToggle.test.ts` with corrected URL casing.
+- [x] `@storybook/addon-a11y` listed in `.storybook/main.ts` addons.
+- [x] `.github/workflows/test.yml` exists; runs `unit`, `storybook`,
+      `e2e` jobs on every PR.
+- [x] `publish.yml` requires `test` job success.
+- [⏳] `pnpm test:storybook` succeeds end-to-end — still failing with
+      "Failed to connect to the browser session [chromium] within the
+      timeout". Blocked on either (a) deleting the now-redundant
+      `.storybook/vitest.setup.ts` or (b) adding `--no-sandbox` to
+      `@vitest/browser-playwright`'s chromium launchOptions. MUST be
+      resolved before proceeding to Phase B + `play`-function work.
+- [⏳] `pnpm test:e2e` succeeds — unverified locally; pre-publish run
+      will execute in CI. Playwright container has the right binaries.
+- [x] `pnpm check:a11y` 0 warnings.
+- [⏳] Pre-existing `pnpm check` errors in `src/routes/docs/*`,
+      `src/lib/components/Metrics/*`, and `tests/unit/*` (Svelte 5
+      `mount(...) is not available on the server`) are unrelated to the
+      Phase A scope; they remain open under the historical
+      `docs/plans/TYPE_ERRORS_PLAN.md` and don't block this migration.
+
+### `pnpm check` remediation — July batch (DONE)
+- [x] Strategic high-leverage batch: added `interface Props` to 14 lib
+      components (Tag, Tabs, Toast, DataTable, Switch, Radio,
+      RadioGroup, InputSwitch, Calendar, Rating, NumberInput,
+      AutoComplete, Listbox, FileUpload).
+- [x] `src/lib/**` errors dropped from 214 → **0**. `pnpm check` total
+      dropped from 1,370 (Jun 11 baseline, scribe note) → **457** (–7
+      net). Remaining 457 errors are concentrated in docs pages
+      (`src/routes/docs/**`) and unit tests (`tests/unit/**`).
+
+# Next up — Phase A.5 acceptance gate
+
+**Blocker for Phase B:** `pnpm test:storybook` must execute end-to-end
+on a single simple story before we trust the harness to host
+`play`-function assertions.
+
+Proposed fix path (try in order):
+1. Delete `.storybook/vitest.setup.ts` — its only contents
+   (`setProjectAnnotations([preview])` + `beforeAll(project.beforeAll)`)
+   are what `@storybook/addon-vitest` 10.3+ applies automatically. The
+   dep already emits a warning saying so.
+2. If still failing, add `launchOptions: { args: ["--no-sandbox"] }` to
+   the `playwright({})` provider in `vitest.config.ts` (Linux/CI
+   invariant for headless Chromium).
+3. Re-run `pnpm test:storybook --run -t "Avatar/Default"` (one
+   story, render-only). If the test session connects and renders,
+   Phase B is unblocked.
+
+Run `pnpm test:storybook --run -t "Avatar/Default"` once the above is
+applied. If the connection completes and the test passes, proceed to
+Phase B (add the remaining 17 stories' `play` functions in
+`stories/Avatar.stories.ts`). Audit each story against avatar's
+actual emitter — already confirmed by the Phase B pilot round.
+
+Resolved decisions (§ 9): see the plan file for rationale.
+
+## Side-channel: docs/typecheck remediation (Phase 8 partial)
+
+- ✅ Phase 6 — literal-union tightening on 9 lib components (done).
+- ✅ Phase 7 — generic types for DataTable / AutoComplete / Listbox (done).
+- ⏳ Phase 8 — strategic batch on `tests/unit/**` + `src/routes/docs/**`
+  parse/prop issues. **Partial** in this round:
+  - **DataTable.svelte sort arithmetic** — `valueA - valueB` on
+    `unknown` (TRow) → coerce via `Number()` + `Number.isFinite`
+    guard returning 0 (stable order) on non-finite operands.
+    Removed 4 of 5 sort errors (the 5th was the column definition
+    unused-var that the existing refactor in Phase 7 cleared). Code
+    review: PASS, no HIGH/MEDIUM, two LOW notes.
+  - **Baseline:** 457 errors. **Now:** 453 errors (–4 net).
+  - **`src/lib/**` errors:** still 0.
+  - **`tests/unit/**` errors:** 0 (premise of this batch was wrong —
+    no Svelte-5 mount errors live there in the current snapshot).
+
+**Remaining 453 errors** are in `src/routes/docs/**` and require a
+separate, larger batch (Phase 8.5) to clear. The blockers, in
+priority order:
+
+1. **Slot→Snippet migration** in 10+ docs pages (Accordion,
+   BottomBar, Carousel, Menu, Panel, etc.). Each unfixed slot
+   causes 1 cascades of `$$_name.$$slot_def` errors.
+2. **`src/routes/docs/+layout.svelte`** has `<script>` (no
+   `lang="ts"`) and imports from `$app/stores` (Svelte 4 path).
+   Should be migrated to `lang="ts"` + `$app/state`.
+3. ✅ **MenuItem API** — DONE this batch: extended `Props` with
+   `divider?: boolean` and `icon?: string`. MenuItem now imports
+   `Icon` and renders `<Icon>` before children with direct Tailwind
+   utilities; `.menu-item.divider` gets `border-b border-border`.
+4. ✅ **AutoComplete `itemTemplate` shape** — DONE this batch:
+   added `ItemTemplateValue<TItem>` union accepting both the
+   function form and the docs render-object `{ render: ({item}) ... }`.
+   New `renderItemTemplate` dispatcher handles null/function/object
+   shapes. JSDoc carries an explicit XSS-via-`{@html}` security note.
+5. **FormField / FloatLabel "missing required props"** — the
+   Snippet-based FormField passes a `ChildProps` to its child, but
+   docs use regular Svelte components as children. Either revert
+   FormField to a slot-style API or rewrite all docs to call
+   `{@render children?.(childProps)}` explicitly.
+6. **Knob / Slider `valueTemplate` template literals** — `{value}`
+   references in unescaped string samples are parsed as
+   identifiers (`Cannot find name 'value'`).
+7. **`genie-mapData.js` typed-window shape** — augment the Window
+   global or add `// @ts-expect-error` casts on the demo data.
+
+This is ≥ 50 file edits and a couple of architectural decisions
+(FormField slot-vs-snippet, +layout.svelte migration). Worth scoping
+as its own focused PR — recommended next session.
+
+### Phase 8.5 partial — verified results
+
+- MenuItem + AutoComplete changes: 0 errors under
+  `src/lib/components/Menu/Menu/MenuItem.svelte` and
+  `src/lib/components/Form/AutoComplete.svelte`.
+- Cascade clears: `src/routes/docs/components/Menu/**` 0 errors,
+  `src/routes/docs/components/Form/AutoComplete/**` 0 errors.
+- `pnpm check`: **451 errors / 1 warning** (delta **-6** from 457).
+- `src/lib/**` errors: **0** (still).
+- Code review: two passes. All MEDIUMs resolved; final LOW applied
+  (XSS JSDoc phrasing tightened, DOMPurify mention dropped).
+  No HIGH concerns.
+
+### Phase 8.5 cleanup batch — verified results
+
+Four small surgical edits to clear the last 5 lib leftovers (Radio,
+AutoComplete, MetricGrid, DonutChart). Each was a 1-2 line fix with a
+two-pass code review (HIGH/MEDIUMs cleaned up; final LOW applied:
+DonutChart redundant `as MouseEvent` removed). `pnpm check`:
+**447 errors / 1 warning** (delta **-4** from 451). **`src/lib/**`
+errors: 0 — LIBRARY IS FULLY CLEAN.** Remaining 447 errors are
+entirely in `src/routes/docs/**`. Next batch is docs-only:
+slot→snippet migration in 10+ docs pages (Accordion, BottomBar,
+Carousel, Menu, Panel), `+layout.svelte` lang/ts + $app/state
+migration, FormField/FloatLabel API, Knob/Slider template literals,
+`genie-mapData.js` window-shape casts.
+
+### Phase 8.5 slot→snippet migration (DONE) — actual results
+
+**Result was modest: 447 → 430 (–17 net), not the –200 to –300 estimate.**
+The slot→snippet migration was largely cosmetic because the lib
+components were already snippet-based; the docs were the legacy holdout.
+Reaching zero requires tackling the OTHER error categories (Form/Form
+malformed `<script>`, $lib resolution, etc.), not just slots.
+
+**Pass 1 — lib structural edits (4 files):**
+- `Menu/Menu.svelte` — replaced the awkward `children<'trigger'|'content'>`
+  discriminator with two named snippet props (`trigger?: Snippet`,
+  `content?: Snippet`).
+- `Card/Card.svelte` — added `media?: Snippet` prop next to the existing
+  `image?: string` prop. `media` snippet takes precedence when both are
+  passed. Unblocked docs `<svelte:fragment slot="media">` migration.
+- `Lazy/LazyPanel.svelte` — created (file was missing — docs imported
+  `LazyPanel` from `$lib` but no lib file existed). Implementation:
+  IntersectionObserver swaps `loading` snippet for `children` on first
+  visibility; forwards `id` to inner `<Panel {id}>`. Note: `id` is on
+  the inner Panel ONLY (outer sentinel div has no id) to avoid
+  duplicate-id DOM violation.
+- `src/routes/docs/+layout.svelte` — modernized: `lang="ts"`,
+  `$app/stores` → `$app/state`, dropped `$` prefix from `page.url.pathname`,
+  `{#snippet logo(size: number)}` typed snippet block.
+
+**Pass 2 — docs mass migration (9 files):**
+- Python script applied two transformations:
+  - `<svelte:fragment slot="X">` → `{#snippet X()}` and `</svelte:fragment>` → `{/snippet}` (text substitution)
+  - `<TAG slot="Y">...</TAG>` (state machine) → `{#snippet Y()}...{/snippet}`
+- Files migrated: Accordion, BottomBar, Card, Carousel, Menu, Panel, App,
+  `components/+page`, LazyPanel docs. All migrated files verified 0
+  errors in pnpm check strict count.
+
+**Pass 3 — reviewer follow-ons:**
+- `Card.svelte` JSDoc — the original 30-line `<!-- @component … -->`
+  comment had a nested `<!-- Image-only media via prop -->` inside an
+  outer HTML comment, which prematurely closed the outer comment and
+  leaked `<Card image=…>` into the parser (the real cause of "Cannot
+  find name 'Card'"). Replaced with a short HTML comment listing the
+  snippet props.
+- `LazyPanel` id — removed `{id}` from the outer sentinel `<div>` to
+  avoid DOM duplicate-id; the inner `<Panel>` still receives the id.
+- Menu docs Button wrapper — initially re-added the `<Button>` tags
+  inside the trigger snippets; the code-reviewer correctly flagged
+  this as a nested-button HTML violation (Menu's own `<button class="menu-trigger">`
+  already wraps the trigger). Reverted to plain text in all 5 places
+  (3 inline triggers + 2 CodeBlock template strings). Removed the now-unused
+  `Button` import from the Menu docs script.
+
+**Verification (post-batch):**
+- `pnpm check`: **430 errors / 1 warning** (was 447 / 1; delta **-17**).
+  Not the -200 to -300 originally estimated — the slot migration was
+  largely cosmetic; the bulk of the remaining errors are in OTHER
+  categories.
+- `src/lib/**` errors: **0** (unchanged — library is fully clean).
+- Per-file strict count for all 13 changed files (4 lib + 9 docs +
+  layout): **all 0**.
+- Code review: three passes (initial → follow-on Menu Button → final).
+  All HIGH and MEDIUM concerns resolved.
+
+**Remaining 430 errors** are NOT slot-related. Top error files:
+
+| Errors | File |
+| ------ | ---- |
+| 32 | `src/routes/docs/components/Form/Form/+page.svelte` |
+| 20 | `src/routes/docs/theming/+page.svelte` |
+| 20 | `src/routes/docs/components/Modal/Modal/+page.svelte` |
+| 15 | `src/routes/docs/components/Form/Radio/+page.svelte` |
+| 13 | `src/routes/docs/components/Form/InvalidState/+page.svelte` |
+| 12 | `src/routes/docs/components/Menu/Menu/+page.svelte` |
+| 11 | `src/routes/docs/components/TreeMenu/TreeMenu/+page.svelte` |
+| 11 | `src/routes/docs/components/Tabs/Tabs/+page.svelte` |
+| 11 | `src/routes/docs/components/Map/Map/+page.svelte` |
+| 10 | `src/routes/docs/components/DataTable/DataTable/+page.svelte` |
+
+Top categories: "Cannot find module '$lib'" (59), the 32 four-way errors
+in `Form/Form/+page.svelte` ("Expression expected / Cannot find name
+'script' / '>' expected / ';' expected" — likely a single malformed
+`<script>` tag), "Type expected" (26), "Cannot find name 'CodeBlock'" (20).

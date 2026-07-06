@@ -33,7 +33,7 @@ const {
   /** @type {string} - Icon position (left or right) */
   iconPosition = "left",
 
-  children,
+  children = undefined,
 } = $props()
 
 // Get tabs context

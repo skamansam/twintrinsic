@@ -43,8 +43,8 @@ Usage:
     allowMultiple = false,
     defaultExpanded = 0,
     bordered = true,
-    onchange,
-    children,
+    onchange = undefined,
+    children = undefined,
   }: Props = $props();
 
   const groupName = crypto.randomUUID();

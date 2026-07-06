@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/svelte';
+import type { Meta, StoryObj } from '@storybook/sveltekit';
 import MapComponent from '$lib/components/Map/Map.svelte';
 
 const meta = {

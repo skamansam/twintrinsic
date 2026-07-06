@@ -64,9 +64,9 @@ const {
   ariaLabel,
 
   /** @type {(event: CustomEvent) => void} - Change event handler */
-  onchange,
+  onchange = undefined,
   /** @type {(event: CustomEvent) => void} - Input event handler */
-  oninput,
+  oninput = undefined,
 } = $props()
 
 let inputElement: HTMLInputElement | undefined = $state()

@@ -20,9 +20,9 @@ import Container from "$lib/components/Container/Container.svelte"
   <h2>Examples</h2>
 
   <h3>Basic Carousel</h3>
-  <div class="not-prose mb-8 max-w-2xl">
+  <div class="not-prose mb-8 max-w-2xl" data-testid="carousel-basic">
     <Carousel>
-      <div slot="items">
+      {#snippet items()}
         <CarouselItem>
           <div class="h-64 bg-primary-100 dark:bg-primary-900 flex items-center justify-center rounded-lg">
             <h2 class="text-2xl font-bold">Slide 1</h2>
@@ -38,12 +38,12 @@ import Container from "$lib/components/Container/Container.svelte"
             <h2 class="text-2xl font-bold">Slide 3</h2>
           </div>
         </CarouselItem>
-      </div>
+      {/snippet}
     </Carousel>
   </div>
 
   <CodeBlock language="svelte">{`<Carousel>
-  <div slot="items">
+  {#snippet items()}
     <CarouselItem>
       <div class="h-64 bg-primary-100 dark:bg-primary-900 flex items-center justify-center rounded-lg">
         <h2 class="text-2xl font-bold">Slide 1</h2>
@@ -59,13 +59,13 @@ import Container from "$lib/components/Container/Container.svelte"
         <h2 class="text-2xl font-bold">Slide 3</h2>
       </div>
     </CarouselItem>
-  </div>
+  {/snippet}
 </Carousel>`}</CodeBlock>
 
   <h3>Autoplay Carousel</h3>
-  <div class="not-prose mb-8 max-w-2xl">
+  <div class="not-prose mb-8 max-w-2xl" data-testid="carousel-autoplay">
     <Carousel autoplay interval={5000}>
-      <div slot="items">
+      {#snippet items()}
         <CarouselItem>
           <div class="h-64 bg-primary-100 dark:bg-primary-900 flex items-center justify-center rounded-lg">
             <h2 class="text-2xl font-bold">Slide 1</h2>
@@ -81,22 +81,22 @@ import Container from "$lib/components/Container/Container.svelte"
             <h2 class="text-2xl font-bold">Slide 3</h2>
           </div>
         </CarouselItem>
-      </div>
+      {/snippet}
     </Carousel>
   </div>
 
   <CodeBlock language="svelte">{`<Carousel autoplay interval={5000}>
-  <div slot="items">
+  {#snippet items()}
     <CarouselItem><!-- content --></CarouselItem>
     <CarouselItem><!-- content --></CarouselItem>
     <CarouselItem><!-- content --></CarouselItem>
-  </div>
+  {/snippet}
 </Carousel>`}</CodeBlock>
 
   <h3>Fade Transition</h3>
-  <div class="not-prose mb-8 max-w-2xl">
+  <div class="not-prose mb-8 max-w-2xl" data-testid="carousel-fade">
     <Carousel transition="fade">
-      <div slot="items">
+      {#snippet items()}
         <CarouselItem>
           <div class="h-64 bg-primary-100 dark:bg-primary-900 flex items-center justify-center rounded-lg">
             <h2 class="text-2xl font-bold">Slide 1</h2>
@@ -112,22 +112,22 @@ import Container from "$lib/components/Container/Container.svelte"
             <h2 class="text-2xl font-bold">Slide 3</h2>
           </div>
         </CarouselItem>
-      </div>
+      {/snippet}
     </Carousel>
   </div>
 
   <CodeBlock language="svelte">{`<Carousel transition="fade">
-  <div slot="items">
+  {#snippet items()}
     <CarouselItem><!-- content --></CarouselItem>
     <CarouselItem><!-- content --></CarouselItem>
     <CarouselItem><!-- content --></CarouselItem>
-  </div>
+  {/snippet}
 </Carousel>`}</CodeBlock>
 
   <h3>Without Indicators</h3>
-  <div class="not-prose mb-8 max-w-2xl">
+  <div class="not-prose mb-8 max-w-2xl" data-testid="carousel-no-indicators">
     <Carousel showIndicators={false}>
-      <div slot="items">
+      {#snippet items()}
         <CarouselItem>
           <div class="h-64 bg-primary-100 dark:bg-primary-900 flex items-center justify-center rounded-lg">
             <h2 class="text-2xl font-bold">Slide 1</h2>
@@ -143,22 +143,22 @@ import Container from "$lib/components/Container/Container.svelte"
             <h2 class="text-2xl font-bold">Slide 3</h2>
           </div>
         </CarouselItem>
-      </div>
+      {/snippet}
     </Carousel>
   </div>
 
   <CodeBlock language="svelte">{`<Carousel showIndicators={false}>
-  <div slot="items">
+  {#snippet items()}
     <CarouselItem><!-- content --></CarouselItem>
     <CarouselItem><!-- content --></CarouselItem>
     <CarouselItem><!-- content --></CarouselItem>
-  </div>
+  {/snippet}
 </Carousel>`}</CodeBlock>
 
   <h3>Image Carousel</h3>
-  <div class="not-prose mb-8 max-w-2xl">
+  <div class="not-prose mb-8 max-w-2xl" data-testid="carousel-images">
     <Carousel>
-      <div slot="items">
+      {#snippet items()}
         <CarouselItem>
           <img 
             src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" 
@@ -180,12 +180,12 @@ import Container from "$lib/components/Container/Container.svelte"
             class="w-full h-64 object-cover rounded-lg"
           />
         </CarouselItem>
-      </div>
+      {/snippet}
     </Carousel>
   </div>
 
   <CodeBlock language="svelte">{`<Carousel>
-  <div slot="items">
+  {#snippet items()}
     <CarouselItem>
       <img 
         src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" 
@@ -207,7 +207,7 @@ import Container from "$lib/components/Container/Container.svelte"
         class="w-full h-64 object-cover rounded-lg"
       />
     </CarouselItem>
-  </div>
+  {/snippet}
 </Carousel>`}</CodeBlock>
 
   <h2>Carousel Props</h2>

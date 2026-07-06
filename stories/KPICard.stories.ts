@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/svelte';
+import type { Meta, StoryObj } from '@storybook/sveltekit';
 import KPICard from '$lib/components/Metrics/KPICard/KPICard.svelte';
 
 const meta = {

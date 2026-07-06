@@ -31,7 +31,7 @@ onMount(() => {
   <h2>Examples</h2>
 
   <h3>Basic Sidebar</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="sidebar-basic">
     <div class="h-[400px] bg-surface relative">
       {#if showExamples}
         <Sidebar>
@@ -58,7 +58,7 @@ onMount(() => {
 </Sidebar>`}</CodeBlock>
 
   <h3>Right-positioned Sidebar</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="sidebar-right">
     <div class="h-[400px] bg-surface relative">
       {#if showExamples}
         <Sidebar position="right">

@@ -1,8 +1,11 @@
+// This file has been automatically migrated to valid ESM format by Storybook.
 import type { StorybookConfig } from "@storybook/sveltekit";
 import { defineMain } from "@storybook/sveltekit/node";
-import path from "path";
+import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import type { UserConfig } from "vite";
+
+const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -16,7 +19,9 @@ export default defineMain({
     "@storybook/addon-svelte-csf",
     "@chromatic-com/storybook",
     "@storybook/addon-docs",
+    "@storybook/addon-a11y",
     "@storybook/addon-mcp",
+    "@storybook/addon-vitest",
   ],
   async viteFinal(config, { configType }) {
     const { mergeConfig } = await import("vite");

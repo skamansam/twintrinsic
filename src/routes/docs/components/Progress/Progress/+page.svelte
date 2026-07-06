@@ -16,21 +16,21 @@ import { CodeBlock, Container, Progress } from "$lib"
   <h2>Usage</h2>
 
   <h3>Basic Progress</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="progress-basic">
     <Progress value={75} />
   </div>
 
   <CodeBlock language="svelte">{`<Progress value={75} />`}</CodeBlock>
 
   <h3>Progress with Value Display</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="progress-with-value">
     <Progress value={42} showValue />
   </div>
 
   <CodeBlock language="svelte">{`<Progress value={42} showValue />`}</CodeBlock>
 
   <h3>Progress Variants</h3>
-  <div class="p-4 bg-surface rounded-md mb-4 space-y-4">
+  <div class="p-4 bg-surface rounded-md mb-4 space-y-4" data-testid="progress-variants">
     <div>
       <p class="text-sm font-medium mb-2">Primary</p>
       <Progress value={60} variant="primary" />
@@ -55,7 +55,7 @@ import { CodeBlock, Container, Progress } from "$lib"
 <Progress value={30} variant="error" />`}</CodeBlock>
 
   <h3>Progress Sizes</h3>
-  <div class="p-4 bg-surface rounded-md mb-4 space-y-4">
+  <div class="p-4 bg-surface rounded-md mb-4 space-y-4" data-testid="progress-sizes">
     <div>
       <p class="text-sm font-medium mb-2">Small</p>
       <Progress value={70} size="sm" />
@@ -75,28 +75,28 @@ import { CodeBlock, Container, Progress } from "$lib"
 <Progress value={70} size="lg" />`}</CodeBlock>
 
   <h3>Striped Progress</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="progress-striped">
     <Progress value={65} striped />
   </div>
 
   <CodeBlock language="svelte">{`<Progress value={65} striped />`}</CodeBlock>
 
   <h3>Animated Progress</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="progress-animated">
     <Progress value={65} striped animated />
   </div>
 
   <CodeBlock language="svelte">{`<Progress value={65} striped animated />`}</CodeBlock>
 
   <h3>Indeterminate Progress</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="progress-indeterminate">
     <Progress indeterminate />
   </div>
 
   <CodeBlock language="svelte">{`<Progress indeterminate />`}</CodeBlock>
 
   <h3>Custom Format</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="progress-custom-format">
     <Progress 
       value={0.8} 
       max={1} 
