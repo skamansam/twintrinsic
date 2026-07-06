@@ -389,3 +389,51 @@ E. **5 originally-failing `$lib/docs/index.js` sites → `$lib` barrel.** Files:
 
 **Lesson learned (RE the failed mid-round heredoc revert).** A bash-heredoc `<<'PY'` Python script with raw-string regex `\$lib` didn't actually match in the corrective round because of how the escapes propagated through bash → Python raw-string → re. After that round was abandoned, the clean approach was: `git checkout -- .`, then re-apply each fix via direct str_replace tool calls (exact-string match, no regex), then validate. The direct str_replace recipe is reliable and is the recommended pattern for future bulk scripts that would otherwise hit similar escaping pitfalls.
 
+
+### Phase 9.4 — lib Props (DONE — `4c3c48e`); docs sweep REVERTED, deferred to Phase 9.4b
+
+**Goal.** Add explicit `interface Props` to `Tree`, `TreeNode`, `Chip` to harden public API surface and silence missing-property cascades. (Initial scope also included a 36-file docs CodeBlock barrel consolidation; that part of the work was reverted due to a +51 baseline regression and is deferred to Phase 9.4b.)
+
+**Approach (user-approved Shape A transient).** Apply Shape A (drop `module`/`moduleResolution` NodeNext from `tsconfig.json`) locally to unmask the latent type errors. Fix per file using Card/Avatar/Tag-style type-Props conventions. **Revert Shape A via `git checkout -- tsconfig.json` BEFORE commit** — only per-file fixes go into the commit.
+
+**Files committed — lib only (3):**
+
+1. `src/lib/components/Tree/Tree.svelte` — added `expandAll?: boolean` to the existing 9-prop `interface Props`. The docs site already passes `expandAll` to `<Tree expandAll>` in `src/routes/docs/components/Tree/Tree/+page.svelte`; without the prop declaration, downstream consumers tripped the missing-property check under Shape A unmasking. Additive change; no behavioral risk for previous callers.
+
+2. `src/lib/components/Tree/TreeNode.svelte` — added a brand-new `interface Props { class, id, key, label, icon, expanded, selected, disabled, leaf, level, labelRender, ontoggle, onselect, children }` (13 props). Imports `import type { Snippet } from "svelte"`. Recursion goes through `const Self = TreeNode as unknown as Component<Record<string, unknown>>` — the sole Svelte 5 pattern for recursion with partial-prop pass-through. Inline JSDoc block justifies the loose typing so future maintainers don't try to "fix" it without context.
+
+3. `src/lib/components/Chip/Chip.svelte` — the leading `/** @component Chip - A compact element ... Usage: ... */` JSDoc was preserved intact. Added a new 16-prop `interface Props { class, id, variant, size, icon, avatar, removable, clickable, disabled, selected, outline, removeAriaLabel, removeIcon, onremove, onclick, children }` to harden the public API. Per-prop JSDoc comments carried over on each member. Destructuring uses `= undefined` defaults for `onremove`/`onclick`/`children` to match the Avatar/Card visual convention for optional callback + snippet props.
+
+**Files REVERTED — NOT committed (36 total):**
+
+The docs CodeBlock barrel-consolidation sweep (22 Form/* + Modal in round 1, 13 theming/Accordion/AppHeader/Avatar/Badge/BottomBar/Button/Carousel/Menu/Sidebar/Tabs/Tag/Tooltip in round 2, plus the `CodeBlock/+page.svelte` duplicate-line dedup) was applied during the sweep, then **fully reverted** via `git checkout -- src/routes/` because:
+
+- Under Shape A transient: pnpm check dropped from 363 → claimed -13 to -112 (mid-cycle, noisy).
+- After Shape A revert (baseline = Shape B NodeNext): pnpm check went **363 → 414 (+51 regression)**, pnpm check:lib stayed 0.
+- The +51 regression was unattributed; reverting the docs sweep restored the lib-only 363 baseline cleanly.
+- The docs sweep is deferred to **Phase 9.4b** with explicit regression-attribution strategy (per file diff against the saved `/tmp/check-p94-baseline.txt`).
+
+**Verification.**
+- `pnpm check` (baseline Shape B): **363 errors** (`Phase 9.5 baseline 363 → net 0 errors cleared this round`; the lib Props additions are STABILIZING, NO -13 net improvement was actually achievable under baseline because Tree/TreeNode/Chip were not regressors in the first place).
+- `pnpm check:lib`: **0 / 0** (constraint preserved).
+- `src/lib/**` errors: **0** (constraint preserved).
+- Tsconfig drift check: clean (no diff vs HEAD; Shape A fully reverted before commit).
+- Stories consumer check: `stories/Tree.stories.svelte` uses `<Tree expandAll>` and `<TreeNode label=...>` with props our new interfaces accept; Chip has no Storybook story (docs-only consumer).
+- Working tree at commit: 3 files modified (the 3 lib files only). Commit `4c3c48e` on `origin/main`, in sync with remote.
+
+**Commit:** `4c3c48e fix(lib): Phase 9.4 — explicit interface Props on Tree, TreeNode, Chip`
+
+**Lesson learned (RE the +51 regression).** When sweeping edits discover a +N baseline regression, **bisect across the sweep** to identify the regressor before scoping down. Bash heredocs with escaped regex inside shell+Python+re conventions are unstable; **diff two `pnpm check` log files (clean vs regressed) directly** — svelte-check's output already names the file paths and that's enough to bisect. Identify regressors by file BEFORE applying any revert. Whenever a Phase introduces a regression under Shape B baseline, scope down to ONLY the changes that are clean under both Shape A and Shape B. Defer the rest to a per-file follow-up batch.
+
+**Open Phase 9.4b items.**
+
+- Re-apply the docs CodeBlock barrel consolidation **per file**, NOT in bulk. Use Approach C from the thinker plan: diff `/tmp/check-p94-baseline.txt` (414) vs `/tmp/check-p95-final2.txt` (363) to find files that went UP in error count under Shape B baseline; those files are transient impurities that must be reverted individually, NOT in bulk.
+- Keep the actual barrel conversion only for files that test clean individually; revert or refactor the rest.
+- Other Phase 9.4b scope items already declared in earlier planner notes (FormField `ChildProps` migration, Knob/Slider `{value}` template-literal escape, `genie-mapData.js` window-shape casts) are still in scope but not regressors of THIS batch.
+
+**Reviewer feedback (acknowledged, not addressed in this commit).**
+
+* HIGH: Consumer verification of stories was partial in this round (Tree expandAll + TreeNode label/icon/expanded spot-checked; Chip has no story). A future batch should run `pnpm check` filtered to `stories/` or grep every story against the new interfaces.
+* HIGH: TreeNode's `Self as unknown as Component<Record<string, unknown>>` would benefit from an inline `// @ts-expect-error Svelte 5 recursion has no clean partial-props type` annotation. The JSDoc justification is present; the `@ts-expect-error` would surface the warning if a future Svelte version provides a better type.
+* MEDIUM: Chip.svelte leading JSDoc-style `@component` block — verify byte-for-byte losslessness with `git show HEAD:` diff (visually verified by reading lines 1-15 of the working copy, which matches HEAD content).
+* LOW: Commit title `fix(lib):` is appropriate for this round (additive Props for cascade resolution); future purely-additive commits should use `feat(lib):`.
