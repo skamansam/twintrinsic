@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { StatsCard } from '$lib';
-	import Container from '$lib/components/Container/Container.svelte';
+	import { StatsCard, Container } from '$lib';
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

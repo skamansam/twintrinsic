@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { MetricGrid } from '$lib';
-	import Container from '$lib/components/Container/Container.svelte';
+	import { MetricGrid, Container } from '$lib';
 
 	const items = [
 		{ label: 'Total Revenue', value: '$45,231.89', color: 'primary' },

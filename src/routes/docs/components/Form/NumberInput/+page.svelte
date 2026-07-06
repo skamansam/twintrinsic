@@ -4,7 +4,7 @@ Documentation page for the NumberInput component.
 -->
 <script lang="ts">
 import { NumberInput, FormField, CodeBlock } from "$lib/index.js"
-import { PropsTable, EventsTable } from "$lib/docs/index.js"
+import { PropsTable, EventsTable } from "$lib"
 
 // Sample values for examples
 let quantity = $state(1)

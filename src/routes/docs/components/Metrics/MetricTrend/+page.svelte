@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { MetricTrend } from '$lib';
-	import Container from '$lib/components/Container/Container.svelte';
+	import { MetricTrend, Container } from '$lib';
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

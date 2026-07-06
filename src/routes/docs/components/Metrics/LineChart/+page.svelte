@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { LineChart } from '$lib';
-	import Container from '$lib/components/Container/Container.svelte';
+	import { LineChart, Container } from '$lib';
 
 	const singleSeries = [
 		{

@@ -3,7 +3,7 @@
 Documentation page for the Rating component.
 -->
 <script lang="ts">
-import { EventsTable, PropsTable } from "$lib/docs/index.js"
+import { EventsTable, PropsTable } from "$lib"
 import { CodeBlock, Rating } from "$lib/index.js"
 
 let hoverRating = $state(0)

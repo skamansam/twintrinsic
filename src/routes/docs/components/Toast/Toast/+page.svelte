@@ -3,7 +3,7 @@
 </style>
 <script lang="ts">
 import { Button, CodeBlock, Container, Toast } from "$lib"
-import { toastStore } from "$lib/components/Toast/toastStore"
+import { toastStore } from "$lib/components/Toast/toastStore.js"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -24,7 +24,7 @@ import { toastStore } from "$lib/components/Toast/toastStore"
   </div>
 
   <CodeBlock language="svelte">{`<script>
-  import { toastStore } from "$lib/components/Toast/toastStore"
+  import { toastStore } from "$lib/components/Toast/toastStore.js"
 </script>
 
 <button onclick={() => toastStore.add({ message: "This is a toast" })}>

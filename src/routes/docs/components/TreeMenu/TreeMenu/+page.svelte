@@ -1,14 +1,13 @@
 <script lang="ts">
-  import type { MenuItem } from '$lib/components/TreeMenu/TreeMenu.svelte';
-  import TreeMenu from '$lib/components/TreeMenu/TreeMenu.svelte';
+  import { TreeMenu, type TreeMenuItem } from "$lib";
 
-  const basicItems: MenuItem[] = [
+  const basicItems: TreeMenuItem[] = [
     { title: 'Home', icon: 'home', link: '/' },
     { title: 'About', icon: 'info', link: '/about' },
     { title: 'Settings', icon: 'settings', link: '/settings', separator: true },
   ];
 
-  const nestedItems: MenuItem[] = [
+  const nestedItems: TreeMenuItem[] = [
     {
       title: 'File',
       icon: 'folder',
@@ -28,7 +27,7 @@
     },
   ];
 
-  const actionItems: MenuItem[] = [
+  const actionItems: TreeMenuItem[] = [
     {
       title: 'Actions',
       children: [
@@ -70,7 +69,7 @@
     <pre><code>{`<script lang="ts">
   import { TreeMenu, type MenuItem } from 'twintrinsic';
 
-  const items: MenuItem[] = [
+  const items: TreeMenuItem[] = [
     { title: 'Home', icon: 'home', link: '/' },
     { title: 'About', icon: 'info', link: '/about' },
     { title: 'Settings', icon: 'settings', link: '/settings', separator: true },
@@ -86,7 +85,7 @@
     <div class="example">
       <TreeMenu items={nestedItems} />
     </div>
-    <pre><code>{`const items: MenuItem[] = [
+    <pre><code>{`const items: TreeMenuItem[] = [
   {
     title: 'File',
     icon: 'folder',
@@ -105,7 +104,7 @@
     <div class="example">
       <TreeMenu items={actionItems} />
     </div>
-    <pre><code>{`const items: MenuItem[] = [
+    <pre><code>{`const items: TreeMenuItem[] = [
   {
     title: 'Actions',
     children: [

@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { PieChart } from '$lib';
-	import Container from '$lib/components/Container/Container.svelte';
+	import { PieChart, Container } from '$lib';
 
 	const browserData = [35, 25, 20, 20];
 	const browserLabels = ['Chrome', 'Firefox', 'Safari', 'Edge'];

@@ -3,7 +3,7 @@
 Documentation page for the CodeBlock component.
 -->
 <script lang="ts">
-import { PropsTable } from "$lib/docs/index.js"
+import { PropsTable } from "$lib"
 import { CodeBlock } from "$lib/index.js"
 </script>
 

@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { BarChart } from '$lib';
-	import Container from '$lib/components/Container/Container.svelte';
+	import { BarChart, Container } from '$lib';
 
 	const singleSeries = [
 		{

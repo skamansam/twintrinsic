@@ -252,3 +252,105 @@ Top categories: "Cannot find module '$lib'" (59), the 32 four-way errors
 in `Form/Form/+page.svelte` ("Expression expected / Cannot find name
 'script' / '>' expected / ';' expected" — likely a single malformed
 `<script>` tag), "Type expected" (26), "Cannot find name 'CodeBlock'" (20).
+
+### Phase 9.2 — `$lib` resolution structural fix (ATTEMPTED, REVERTED)
+
+**Goal.** Clear 60 "Cannot find module '$lib'" errors with one structural change
+(no per-file edits), as the user requested.
+
+**Round 1 — `tsconfig.json`: drop `module: \"NodeNext\"` + `moduleResolution: \"NodeNext\"`.**
+Let SvelteKit's generated `.svelte-kit/tsconfig.json` flow through (it has
+`paths: { \"$lib\": [\"../src/lib\"], \"$lib/*\": [\"../src/lib/*\"] }` +
+`module: \"esnext\"` + `moduleResolution: \"bundler\"`). `tsconfig.lib.json`
+untouched (library publish still uses NodeNext).
+
+**Result:** REGRESSION. `pnpm check` 413 → **500 (+87)**. `pnpm check:lib`: 0.
+- `$lib` errors: 60 → **9** (the resolution part worked — 51 cleared)
+- But 144 NEW errors surfaced across many files. The new error classes:
+  - **31× "Cannot find name 'script'" + 31× "Cannot find name 'lang'" + 31×
+    "Expression expected" + 31× "> expected" + 31× "; expected"** — same
+    Phase 9.1 `<script>`-in-CodeBlock 4-way cascade now triggering in 5+
+    *additional* docs files (Tree 1→45, Chip 1→28, Stepper 1→17,
+    Form/Slider 3→17, Skeleton 1→10, Form/Combobox 1→8). These are real
+    occurrences of the Phase 9.1 bug at scale, NOT a fixable config issue.
+  - **25× "Type '{ label: string; }' is not assignable..." + 18× "Type
+    '{ children: () => any; }' is missing properties"** — real previously-
+    masked type errors surfaced because `any` propagation stopped once
+    `$lib` resolved. (Masking mechanic: when TS can't resolve `$lib`, it
+    types imported symbols as `any`, which silences downstream type
+    checking across the file.)
+  - **13× "Cannot find module '$lib/components/Container/Container.svelte'"
+    + 7× `'${'$'}lib/docs/index.js'`** — explicit path imports that the
+    generic `$lib` mapping doesn't reach (need `.js`/no-extension cleanup).
+  - **16× "Cannot find name 'CodeBlock'"** — types that previously were
+    `any` now properly resolve (because `$lib` resolves), exposing that
+    the docs import `CodeBlock` from a path that no longer matches
+    actual exports after the Phase 8.5 Card `media` snippet refactor.
+
+**Round 2 — `verbatimModuleSyntax: false`.**
+Thinker recommended to soften the type-import rule flowing from
+`.svelte-kit/tsconfig.json`. Applied: 500 → **500** (zero impact).
+Conclusion: the new errors are not primarily V/S strictness.
+
+**REVERT.** `git checkout -- tsconfig.json` — back to baseline `pnpm check`
+413 / `pnpm check:lib` 0 working tree clean. No diff. Code-reviewer:
+no HIGH, 2 MEDIUM (`tsconfig.json` overrides are now documented in commit
+history only — could be reinforced with a comment), 4 LOW (forward-compat
+risk if SvelteKit 3 changes generated tsconfig template).
+
+**Lesson learned.** A single tsconfig change CAN'T clear the 60 `$lib`
+errors because it unmasks a much deeper latent problem set:
+1. Per-file `<script>`-in-CodeBlock instances (5+ additional files
+   beyond Form/+page.svelte) — fixed by Phase 9.1-style `\u003C` escapes,
+   done in a Phase 9.3 bulk pass.
+2. Per-file type-repair cases — 25× "is not assignable" + 18× "missing
+   properties" + 16× "Cannot find name 'CodeBlock'" — fixed in a per-file
+   sweep (Phase 9.4).
+3. Explicit-path `$lib/components/.../*.svelte` and `$lib/docs/*.js`
+   imports — fixed via path normalization (Phase 9.5).
+
+Then, and only then, re-attempt the structural `$lib` resolution fix
+(round 1) — by which point the +87 surfacing will be zero or small.
+
+**Recommended next batch (Phase 9.3 onward).**
+### Phase 9.3 — bulk `\u003C`-escape, 4-file pass (DONE — `8f6e98a`)
+
+Bulk-applied the Phase 9.1 escape pattern across 4 high-density docs
+files using a Python helper that anchors the substitution on each file's
+real `<script lang="ts">` block boundary (so the file's own script/style
+tags are preserved). Touched:
+
+- `src/routes/docs/theming/+page.svelte`               (3 escapes)
+- `src/routes/docs/components/Map/Map/+page.svelte`    (16 escapes)
+- `src/routes/docs/components/Form/Radio/+page.svelte` (7 escapes)
+- `src/routes/docs/components/Form/InvalidState/+page.svelte` (3 escapes)
+
+**Result: `pnpm check` 413 → 363 (−50). `pnpm check:lib`: 0. `src/lib/**`: 0.**
+Cumulative with Phase 9.1: **−64** across 5 files.
+
+Still untouched (12 same-bug candidates with **lower** error counts —
+Phase 9.3b):
+- Form/Slider (3 errors), Stepper (3), Tag/TagGroup (??),
+  Form/Combobox (3), Form/Listbox (3), Form/Rating (3),
+  Form/SelectGroup (3), Form/NumberInput (3), Skeleton (3),
+  Tree/Chip (1 each), CodeEditor (7), CodeBlockSpeed (7).
+
+- **Phase 9.3 — bulk `\u003C`-escape for the same `<script>`-in-CodeBlock
+  bug across the 5 newly-discovered files** (Tree, Chip, Stepper,
+  Form/Slider, Skeleton, Form/Combobox, Form/NumberInput, Form/Radio,
+  Form/Listbox, Form/InvalidState, Form/Rating, Form/SelectGroup,
+  CodeEditor, CodeBlockSpeed, Map, theming — total 16 candidates beyond
+  Form/+page.svelte). Expect drop ~ +200 to +250 in the `pnpm check` total
+  under the existing broken `$lib` resolution.
+- **Phase 9.4 — per-file type assignment + missing-property errors** —
+  likely Card media-snippet consumers (Card, App, etc.), Form/Slider,
+  and Tag/Avatar files where the `Props` interface from Phase 8.5 didn't
+  fully flow.
+- **Phase 9.5 — explicit-path `$lib/components/.../X.svelte` and
+  `$lib/docs/.../*.js` cleanup** — `find` for `\\\$lib/components.*\\.svelte`
+  and `/!\/docs/` to identify the ~20 docs files.
+- **Phase 9.6 — re-attempt the structural `$lib` resolution fix** (drop
+  `module`/`moduleResolution` NodeNext from `tsconfig.json`). By this
+  point the underlying latent bug set should be empty, so the +87
+  regression won't materialize.
+

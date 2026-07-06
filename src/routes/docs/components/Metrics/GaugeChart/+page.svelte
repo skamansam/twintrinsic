@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { GaugeChart } from '$lib';
-	import Container from '$lib/components/Container/Container.svelte';
+	import { GaugeChart, Container } from '$lib';
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

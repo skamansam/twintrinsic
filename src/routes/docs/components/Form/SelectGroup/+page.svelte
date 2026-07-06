@@ -4,7 +4,7 @@ Documentation page for the SelectGroup component.
 -->
 <script lang="ts">
 import { Select, SelectGroup, FormField, CodeBlock } from "$lib/index.js"
-import { PropsTable, EventsTable } from "$lib/docs/index.js"
+import { PropsTable, EventsTable } from "$lib"
 
 // Sample data for examples
 const europeanCountries = [

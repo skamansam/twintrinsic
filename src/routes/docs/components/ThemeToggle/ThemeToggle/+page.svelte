@@ -3,11 +3,7 @@
 </style>
 
 <script lang="ts">
-import Button from "$lib/components/Button/Button.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Container from "$lib/components/Container/Container.svelte"
-import Panel from "$lib/components/Panel/Panel.svelte"
-import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
+import { Button, CodeBlock, Container, Panel, ThemeToggle } from "$lib"
 </script>
 
 <Container class="prose dark:prose-invert max-w-4xl">

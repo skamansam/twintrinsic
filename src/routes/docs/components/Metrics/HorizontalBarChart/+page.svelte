@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { HorizontalBarChart } from '$lib';
-	import Container from '$lib/components/Container/Container.svelte';
+	import { HorizontalBarChart, Container } from '$lib';
 
 	const data = [45, 38, 52, 41, 35];
 	const labels = ['Chrome', 'Firefox', 'Safari', 'Edge', 'Other'];
