@@ -354,3 +354,38 @@ Phase 9.3b):
   point the underlying latent bug set should be empty, so the +87
   regression won't materialize.
 
+### Phase 9.5 — explicit-path imports via `$lib` barrel (DONE — `83b3423`)
+
+**Goal.** Clear 22 specific Phase 9.5 errors: 17× `Cannot find module '$lib/components/.../X.svelte'` + 5× `Cannot find module '$lib/docs/index.js'`.
+
+**Approach (thinker rec.).** Convert Svelte-component deep imports to `$lib` barrel (already exported from `src/lib/index.ts`). Convert failing `$lib/docs/index.js` sites to `$lib` barrel (since `src/lib/index.ts` re-exports `PropsTable` and `EventsTable` from `./docs/index.js`). Add `.js` extension to `toastStore` import (mandatory under `module: "NodeNext"`).
+
+**Files modified: 20**
+
+A. **12 Metrics/* + AreaChart** — merged Container deep import into the existing `import { BarChart } from '$lib';` line per file. Tab-indented. WIN: cleared 12 `$lib/components/Container/Container.svelte` errors.
+
+B. **ThemeToggle** — 5 deep imports consolidated into one `import { Button, CodeBlock, Container, Panel, ThemeToggle } from "$lib"`. WIN: cleared the 2 remaining `ThemeToggle` failures (Container + CodeBlock).
+
+C. **Toast** — `toastStore.ts`/`.js` coexistence: import path now `"$lib/components/Toast/toastStore.js"` (NodeNext-mandated). `allowMultiple: true` because the same line appears in L6 + inside a `<CodeBlock language="svelte">{\`…\`}</CodeBlock>` template literal on L27. WIN: cleared `toastStore` failure.
+
+D. **TreeMenu** — barrel-converted + type rename `MenuItem` → `TreeMenuItem` (reviewer-flagged: `src/lib/index.ts` re-exports `type MenuItem as TreeMenuItem`, so `MenuItem` does not exist on `$lib`). 4 sites updated: 1 import line + 3 type annotations (`const basicItems: MenuItem[]` / `nestedItems` / `actionItems` → all `TreeMenuItem[]`). The `MenuItem[] ` pattern-with-trailing-space also rewrote docs sample strings (desirable — they now reflect the published API name).
+
+E. **5 originally-failing `$lib/docs/index.js` sites → `$lib` barrel.** Files: `CodeBlock/CodeBlock/+page.svelte` (`PropsTable` alone, unique), Form/{Listbox, NumberInput, SelectGroup} (`PropsTable, EventsTable`), Form/Rating (`EventsTable, PropsTable` — note reversed order). WIN: cleared 5 failures.
+
+**Verification.**
+- `pnpm check`: **363 → 350 (Δ -13)** — 22 specific errors cleared; ~9 latent type errors surfaced from `$lib` lineage now resolving cleanly + from the TreeMenu rename touching `<pre>` doc samples.
+- `pnpm check:lib`: **0** (constraint preserved).
+- `src/lib/**`: **0** (constraint preserved).
+- All 22 `Cannot find module '$lib/...'` errors that described the Phase 9.5 fix scope: **0** (verified post-fix).
+- All 20 touched files: **0 errors** (verified per-file strict count in `/tmp/check-p95-final2.txt`).
+- Working tree clean. Commit `83b3423` on `origin/main`.
+
+**Why -13 not -22.** The 22 targeted errors all went to 0, but ~9 new errors surfaced as previously-masked bug bites exposed. The 9 are class-(3)/(4) from the Phase 9.2 diagnostic — real type errors, missing-property errors, and `Cannot find name 'CodeBlock'` references that surfaced because `$lib` no longer silently falls back to `any` propagation. These are deferred to Phase 9.7 (per-file type sweep).
+
+**Reviewer feedback (open MEDIUMs/LOWs not addressed in this commit):**
+- The 4 Form/* + CodeBlock/* files now mix pre-existing `$lib/index.js` (Svelte component imports) with the new `$lib` (PropsTable+EventsTable barrel). Consistency would prefer picking one convention per file in a follow-up.
+- TreeMenu `<pre><code>` reader-facing docs samples (~L70–100) still reference `type MenuItem` from `'twintrinsic'` — only the JS-code-in-docs IS typechecked by templates if those samples are actual Svelte code, but ours are template-literal contents so they don't trip svelte-check. Follow-up to update reader text-only for accuracy.
+- `src/lib/components/Toast/toastStore.ts` is effectively dead code (every consumer routes through `.js`). Pre-existing in HEAD; flagged for deletion in a small follow-up.
+
+**Lesson learned (RE the failed mid-round heredoc revert).** A bash-heredoc `<<'PY'` Python script with raw-string regex `\$lib` didn't actually match in the corrective round because of how the escapes propagated through bash → Python raw-string → re. After that round was abandoned, the clean approach was: `git checkout -- .`, then re-apply each fix via direct str_replace tool calls (exact-string match, no regex), then validate. The direct str_replace recipe is reliable and is the recommended pattern for future bulk scripts that would otherwise hit similar escaping pitfalls.
+
