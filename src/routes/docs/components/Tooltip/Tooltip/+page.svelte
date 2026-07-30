@@ -1,10 +1,9 @@
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-</style>
 <script lang="ts">
 import { Button, CodeBlock, Container, Tooltip } from "$lib"
 </script>
-
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>Tooltip</h1>
   

@@ -1,11 +1,9 @@
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-</style>
-
 <script lang="ts">
 import { Button, CodeBlock, Container, Panel, ThemeToggle } from "$lib"
 </script>
-
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
 <Container class="prose dark:prose-invert max-w-4xl">
   <h1>ThemeToggle</h1>
   <p>

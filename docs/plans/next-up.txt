@@ -437,3 +437,41 @@ The docs CodeBlock barrel-consolidation sweep (22 Form/* + Modal in round 1, 13 
 * HIGH: TreeNode's `Self as unknown as Component<Record<string, unknown>>` would benefit from an inline `// @ts-expect-error Svelte 5 recursion has no clean partial-props type` annotation. The JSDoc justification is present; the `@ts-expect-error` would surface the warning if a future Svelte version provides a better type.
 * MEDIUM: Chip.svelte leading JSDoc-style `@component` block — verify byte-for-byte losslessness with `git show HEAD:` diff (visually verified by reading lines 1-15 of the working copy, which matches HEAD content).
 * LOW: Commit title `fix(lib):` is appropriate for this round (additive Props for cascade resolution); future purely-additive commits should use `feat(lib):`.
+
+### Phase 9.4b — full barrel import consolidation, 14 docs files (DONE)
+
+**Commit:** a6f5b5a
+
+**What changed.** Converted all deep `import X from "$lib/components/X/X.svelte"` imports to single barrel `import { X, Y, Z } from "$lib"` in 14 docs files that previously imported CodeBlock via deep path.
+
+**Root cause fix.** The `Cannot find module '$lib'` error occurred when a script block had BOTH bare `$lib` imports AND deep `$lib/components/.../...svelte` imports under NodeNext resolution. By converting ALL imports to barrel, the mixed-resolution conflict is eliminated.
+
+**Validation.**
+- pnpm check: 332 errors (−18 from Phase 9.4 baseline of 350; −31 from Phase 9.5 baseline of 363)
+- pnpm check:lib: 0 errors, 0 warnings
+- No regressions
+
+**Files:** 14 files, +14/−53 lines
+
+**Key lesson:** Under NodeNext module resolution, bare `$lib` and deep `$lib/components/X/X.svelte` imports cannot coexist in the same `<script lang="ts">` block. The fix is to consolidate all imports through the barrel.
+
+### Phase 9.5 — barrel-ify remaining Container.svelte deep imports (DONE)
+
+**Commit:** 486f5cd
+
+**What changed.** Converted the last 3 source files with deep `import X from "$lib/components/X/X.svelte"` to barrel `import { X } from "$lib"`.
+
+- `src/routes/+page.svelte`: 6 deep imports → barrel (AppHeader, Container, Panel, Separator, ThemeToggle, TwintrinsicLogo)
+- `src/routes/docs/components/+page.svelte`: 3 deep imports → barrel (Container, Panel, Separator)
+- `src/routes/docs/completion/+page.svelte`: 2 deep imports → barrel (Container, Separator)
+
+**What was NOT changed (with rationale).**
+- `$lib/docs/index.js` imports (~41 files) were left as-is. These already have `.js` extensions which are NodeNext-compatible — no fix needed. A bulk conversion attempt caused a +39 regression (mixed-resolution `Cannot find module '$lib'` errors) and was reverted.
+- `stories/Container.stories.js` — story file outside src/ scope, no typecheck impact.
+- Masonry/Modal files had deep imports only in CodeBlock string content (example code), not actual imports.
+
+**Validation.**
+- pnpm check: 332 errors (0 delta from baseline)
+- pnpm check:lib: 0 errors, 0 warnings
+
+**Key lesson.** NodeNext resolution is strict about mixing `$lib` (bare path) and `$lib/index.js` (wildcard path) in the same file. Converting `$lib/docs/index.js` → `$lib` in files that already had `$lib/index.js` imports caused cascading failures. Leave `.js`-extension imports alone.

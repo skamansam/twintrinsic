@@ -1,11 +1,10 @@
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-</style>
 <script lang="ts">
 import { getContext } from "svelte"
 import { CodeBlock, Container, Table } from "$lib"
 </script>
-
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>Table</h1>
   

@@ -1,3 +1,6 @@
+<script lang="ts">
+import { AppHeader, CodeBlock, Container } from "$lib"
+</script>
 <!--
 @component
 AppHeader documentation page
@@ -6,10 +9,6 @@ AppHeader documentation page
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
-<script lang="ts">
-import { AppHeader, CodeBlock, Container } from "$lib"
-</script>
-
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>AppHeader</h1>
   

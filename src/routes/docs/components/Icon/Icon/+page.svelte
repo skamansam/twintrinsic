@@ -1,11 +1,3 @@
-<!--
-@component
-Icon documentation page
--->
-
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-</style>
 <script lang="ts">
 import { CodeBlock, Container, Icon, iconConfig, Select, setIconset, TextInput } from "$lib"
 
@@ -51,7 +43,14 @@ function handleCustomIconset() {
   }
 }
 </script>
+<!--
+@component
+Icon documentation page
+-->
 
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>Icon</h1>
   

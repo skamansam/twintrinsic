@@ -1,3 +1,6 @@
+<script lang="ts">
+import { Button, CodeBlock, Container } from "$lib"
+</script>
 <!--
 @component
 Button documentation page
@@ -6,10 +9,6 @@ Button documentation page
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
-<script lang="ts">
-import { Button, CodeBlock, Container } from "$lib"
-</script>
-
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>Button</h1>
   

@@ -1,11 +1,10 @@
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-</style>
 <script lang="ts">
 import { Button, CodeBlock, Container, Toast } from "$lib"
 import { toastStore } from "$lib/components/Toast/toastStore.js"
 </script>
-
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>Toast</h1>
   

@@ -1,3 +1,6 @@
+<script lang="ts">
+import { CodeBlock, Container } from "$lib"
+</script>
 <!--
 @component
 Container documentation page
@@ -6,10 +9,6 @@ Container documentation page
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
-<script lang="ts">
-import { CodeBlock, Container } from "$lib"
-</script>
-
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>Container</h1>
   

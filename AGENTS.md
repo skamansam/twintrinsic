@@ -376,6 +376,57 @@ pnpm format           # Format with Biome
 - **Test Coverage**: Changes without tests will not be accepted
 - **Documentation**: Changes without documentation updates will not be accepted
 
+## NodeNext Module Resolution
+
+This project uses `"module": "NodeNext"` in `tsconfig.json`, which imposes strict module resolution rules. Two important consequences affect how `$lib` imports must be structured:
+
+### 1. Separate path entries
+
+`$lib` and `$lib/*` are separate path entries in `tsconfig.json`. A bare `import { X } from "$lib"` resolves via `"$lib": ["../src/lib"]`, while `import Y from "$lib/components/Y/Y.svelte"` resolves via `"$lib/*": ["../src/lib/*"]`. These are **different resolution paths** in TypeScript's eyes.
+
+### 2. Mixed-resolution failure (critical)
+
+Having **both** a bare `$lib` import AND a deep `$lib/components/.../...svelte` or `$lib/index.js` import in the **same `<script>` block** causes TypeScript to fail with:
+
+```
+Cannot find module '$lib' or its corresponding type declarations.
+```
+
+This applies to any pair of:
+- `import { X } from "$lib"` + `import Y from "$lib/components/Y/Y.svelte"`
+- `import { X } from "$lib"` + `import Y from "$lib/index.js"`
+
+The root cause is that NodeNext's strict resolution doesn't reconcile the bare path (`$lib`) and the wildcard path (`$lib/*`) when they coexist.
+
+> **Note:** If you see `Cannot find module '$lib'` errors after import changes, first run `pnpm svelte-kit sync` to regenerate `.svelte-kit/tsconfig.json`. A stale cache can produce false positives."
+
+### 3. The fix: consolidate to barrel
+
+When a file needs imports from `$lib`, convert **ALL** of them to a single barrel import:
+
+```typescript
+// ❌ DON'T — mixed resolution (will fail)
+import { Button } from "$lib"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+
+// ✅ DO — single barrel import
+import { Button, CodeBlock } from "$lib"
+```
+
+### 4. `.js` extension imports are fine
+
+Imports with the `.js` extension (e.g., `import { PropsTable } from "$lib/docs/index.js"`) are **already NodeNext-compatible** — TypeScript resolves `.js` → `.ts` under NodeNext. These do NOT need to be converted to bare `$lib` and doing so can trigger the mixed-resolution failure if the file also imports from `$lib/index.js`.
+
+### 5. Barrel verification
+
+Before converting a deep import to a barrel import, verify the component is actually re-exported from `src/lib/index.ts`:
+
+```bash
+grep -n 'YourComponent' src/lib/index.ts
+```
+
+All public components should be exported there. If one is missing, add the export first.
+
 ## Troubleshooting
 
 ### Tests Not Running

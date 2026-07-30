@@ -1,11 +1,3 @@
-<!--
-@component
-BottomBar documentation page
--->
-
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-</style>
 <script lang="ts">
 import { onMount } from "svelte"
 import { BottomBar, CodeBlock, Container, Panel } from "$lib"
@@ -19,7 +11,14 @@ onMount(() => {
   }, 100)
 })
 </script>
+<!--
+@component
+BottomBar documentation page
+-->
 
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>BottomBar</h1>
   

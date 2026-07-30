@@ -1,3 +1,6 @@
+<script lang="ts">
+import { CodeBlock, Container, setIconset } from "$lib"
+</script>
 <!--
 @component
 IconifyIcon documentation page
@@ -6,10 +9,6 @@ IconifyIcon documentation page
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
-<script lang="ts">
-import { CodeBlock, Container, setIconset } from "$lib"
-</script>
-
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>IconifyIcon</h1>
   

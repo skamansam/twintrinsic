@@ -1,3 +1,6 @@
+<script lang="ts">
+import { Card, CodeBlock } from "$lib"
+</script>
 <!--
 @component
 Documentation page for the Card component
@@ -6,10 +9,6 @@ Documentation page for the Card component
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
-<script lang="ts">
-import { Card, CodeBlock } from "$lib"
-</script>
-
 <article class="prose dark:prose-invert max-w-none">
   <h1>Card</h1>
   <p>

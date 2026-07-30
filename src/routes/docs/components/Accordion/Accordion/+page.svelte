@@ -1,3 +1,6 @@
+<script lang="ts">
+import { Accordion, AccordionItem, CodeBlock } from "$lib"
+</script>
 <!--
 @component
 Documentation page for the Accordion component
@@ -6,10 +9,6 @@ Documentation page for the Accordion component
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
-<script lang="ts">
-import { Accordion, AccordionItem, CodeBlock } from "$lib"
-</script>
-
 <article class="prose dark:prose-invert max-w-none">
   <h1>Accordion</h1>
   <p>
