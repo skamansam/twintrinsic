@@ -3,8 +3,7 @@
 Completion and development process documentation
 -->
 <script lang="ts">
-import Container from "$lib/components/Container/Container.svelte"
-import Separator from "$lib/components/Separator/Separator.svelte"
+import { Container, Separator } from "$lib"
 
 let { children } = $props()
 

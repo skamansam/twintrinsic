@@ -1,11 +1,6 @@
 <script lang="ts">
 import { fade, fly } from "svelte/transition"
-import AppHeader from "$lib/components/AppHeader/AppHeader.svelte"
-import Container from "$lib/components/Container/Container.svelte"
-import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte"
-import Panel from "$lib/components/Panel/Panel.svelte"
-import Separator from "$lib/components/Separator/Separator.svelte"
-import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
+import { AppHeader, Container, Panel, Separator, ThemeToggle, TwintrinsicLogo } from "$lib"
 
 const features = [
   {
