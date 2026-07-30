@@ -7,9 +7,7 @@ Button documentation page
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import Button from "$lib/components/Button/Button.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Container from "$lib/components/Container/Container.svelte"
+import { Button, CodeBlock, Container } from "$lib"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

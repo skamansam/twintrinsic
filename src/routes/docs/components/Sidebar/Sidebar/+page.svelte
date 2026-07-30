@@ -4,10 +4,7 @@ Sidebar documentation page
 -->
 <script lang="ts">
 import { onMount } from "svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Container from "$lib/components/Container/Container.svelte"
-import Panel from "$lib/components/Panel/Panel.svelte"
-import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
+import { CodeBlock, Container, Panel, Sidebar } from "$lib"
 
 let showExamples = $state(false)
 

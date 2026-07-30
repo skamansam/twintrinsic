@@ -1,6 +1,5 @@
 <script>
-	import CodeBlock from '$lib/components/CodeBlock/CodeBlock.svelte';
-	import CodeEditor from '$lib/components/CodeEditor/CodeEditor.svelte';
+import { CodeBlock, CodeEditor } from '$lib';
 </script>
 
 <div class="space-y-8">

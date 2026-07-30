@@ -3,10 +3,7 @@
 Tag documentation page
 -->
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Container from "$lib/components/Container/Container.svelte"
-import Tag from "$lib/components/Tag/Tag.svelte"
-import TagGroup from "$lib/components/Tag/TagGroup.svelte"
+import { CodeBlock, Container, Tag, TagGroup } from "$lib"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

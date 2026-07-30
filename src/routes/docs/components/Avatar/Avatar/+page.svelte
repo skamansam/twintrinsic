@@ -7,9 +7,7 @@ Avatar documentation page
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import Avatar from "$lib/components/Avatar/Avatar.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Container from "$lib/components/Container/Container.svelte"
+import { Avatar, CodeBlock, Container } from "$lib"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

@@ -8,10 +8,7 @@ BottomBar documentation page
 </style>
 <script lang="ts">
 import { onMount } from "svelte"
-import BottomBar from "$lib/components/BottomBar/BottomBar.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Container from "$lib/components/Container/Container.svelte"
-import Panel from "$lib/components/Panel/Panel.svelte"
+import { BottomBar, CodeBlock, Container, Panel } from "$lib"
 
 let showExamples = $state(false)
 

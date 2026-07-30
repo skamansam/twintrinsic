@@ -7,10 +7,7 @@ Badge documentation page
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import Badge from "$lib/components/Badge/Badge.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Container from "$lib/components/Container/Container.svelte"
-import Icon from "$lib/components/Icon/Icon.svelte"
+import { Badge, CodeBlock, Container, Icon } from "$lib"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

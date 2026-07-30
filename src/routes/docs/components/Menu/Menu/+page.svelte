@@ -2,10 +2,7 @@
   @reference '$lib/twintrinsic.css';
 </style>
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Container from "$lib/components/Container/Container.svelte"
-import Menu from "$lib/components/Menu/Menu/Menu.svelte"
-import MenuItem from "$lib/components/Menu/Menu/MenuItem.svelte"
+import { CodeBlock, Container, Menu, MenuItem } from "$lib"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
