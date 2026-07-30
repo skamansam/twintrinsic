@@ -50,6 +50,8 @@ interface Props {
   pluginSource?: "unpkg" | "esm.sh" | "jsdelivr" | string
   /** List of plugin names (e.g., "autoloader") or full paths to load */
   plugins?: string[]
+  /** Optional title shown in the code header */
+  title?: string
   /** The code to display */
   children?: Snippet
 }
@@ -59,6 +61,7 @@ let {
   class: className = "",
   pluginSource = "unpkg",
   plugins = [],
+  title,
   children
 }: Props = $props()
 
@@ -66,7 +69,6 @@ let code = $state("")
 let copied = $state(false)
 let copyTimeout: ReturnType<typeof setTimeout> | undefined = $state()
 let codeElement: HTMLElement | undefined = $state()
-
 
 /**
  * Get CDN URL for a plugin

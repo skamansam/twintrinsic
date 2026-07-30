@@ -63,6 +63,18 @@ const {
   /** @type {string} - ARIA label for accessibility */
   ariaLabel,
 
+  /** @type {boolean} - Whether to show tick marks */
+  showTicks = false,
+
+  /** @type {number[]} - Custom tick values */
+  tickValues = [],
+
+  /** @type {boolean} - Whether to show tooltips on hover/drag */
+  showTooltip = false,
+
+  /** @type {string} - Orientation (horizontal, vertical) */
+  orientation = "horizontal",
+
   /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange = undefined,
   /** @type {(event: CustomEvent) => void} - Input event handler */
