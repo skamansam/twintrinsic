@@ -38,8 +38,11 @@ const {
   /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
 
-  /** @type {string} - Step title */
+  /** @type {string} - Step title (use `title` or `label`) */
   title,
+
+  /** @type {string} - Step label (alias for title) */
+  label,
 
   /** @type {string} - Step subtitle or description */
   subtitle,
@@ -203,7 +206,7 @@ function handleClick(): void {
     
     <div class="stepper-step-label">
       <span class="stepper-step-title">
-        {title}
+        {title || label}
         {#if optional}
           <span class="stepper-step-optional">(optional)</span>
         {/if}
