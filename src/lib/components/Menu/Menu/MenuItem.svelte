@@ -1,10 +1,10 @@
 <script lang="ts">
 import { getContext, type Component } from "svelte";
 import Icon from "../../Icon/Icon.svelte";
-import MenuItem from "./MenuItem.svelte";
+import MenuItemSelf from "./MenuItem.svelte";
 
 /** Self-reference for recursive children (typed loosely to allow partial props) */
-const Self = MenuItem as unknown as Component<{ value: Record<string, unknown> }>;
+const Self = MenuItemSelf as unknown as Component<{ value: Record<string, unknown> }>;
 
 const {
   /** @type {string} - Additional CSS classes */

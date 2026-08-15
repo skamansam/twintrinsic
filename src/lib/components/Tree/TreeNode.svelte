@@ -23,7 +23,7 @@ Usage:
 -->
 <script lang="ts">
 import { getContext, type Component, type Snippet } from "svelte"
-import TreeNode from "./TreeNode.svelte"
+import TreeNodeSelf from "./TreeNode.svelte"
 
 /**
  * Self-reference for recursive children. Typed loosely because Svelte 5
@@ -31,7 +31,7 @@ import TreeNode from "./TreeNode.svelte"
  * props are validated by the parent's `interface Props`; this alias only
  * exists so the JSX/HTML shape of TreeNode is preserved through recursion.
  */
-const Self = TreeNode as unknown as Component<Record<string, unknown>>;
+const Self = TreeNodeSelf as unknown as Component<Record<string, unknown>>;
 
 interface Props {
   /** Additional CSS classes */

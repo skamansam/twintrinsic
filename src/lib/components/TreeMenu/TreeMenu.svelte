@@ -44,7 +44,7 @@ Provides semantic, accessible tree navigation with minimal JavaScript.
 
 <script lang="ts">
   import Icon from "../Icon/Icon.svelte"
-  import TreeMenu from "./TreeMenu.svelte"
+  import TreeMenuSelf from "./TreeMenu.svelte"
 
   interface Props {
     items?: MenuItem[];
@@ -110,7 +110,7 @@ Provides semantic, accessible tree navigation with minimal JavaScript.
             </span>
           </summary>
           <div class="tree-menu-children" role="menu">
-            <TreeMenu items={item.children} />
+            <TreeMenuSelf items={item.children} />
           </div>
         </details>
       {:else if item.link}
