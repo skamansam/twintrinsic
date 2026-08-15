@@ -193,3 +193,50 @@
     ],
   }}
 />
+
+<Story
+  name="Deep Recursion"
+  args={{
+    items: [
+      {
+        title: 'File',
+        icon: 'folder',
+        children: [
+          {
+            label: 'New',
+            children: [
+              {
+                label: 'Project',
+                children: [
+                  { label: 'Svelte App', link: '/new/svelte' },
+                  { label: 'Static Site', link: '/new/static' },
+                ],
+              },
+              { label: 'Document', link: '/new/document' },
+            ],
+          },
+          {
+            label: 'Open',
+            children: [
+              { label: 'Recent', link: '/open/recent' },
+              { label: 'From Disk', link: '/open/disk' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Edit',
+        icon: 'edit',
+        children: [
+          { label: 'Undo' },
+          { label: 'Redo' },
+        ],
+      },
+      {
+        title: 'Help',
+        icon: 'info',
+        link: '/help',
+      },
+    ],
+  }}
+/>
