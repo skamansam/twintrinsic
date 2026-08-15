@@ -41,24 +41,24 @@
     },
     "./twintrinsic.css": "./dist/twintrinsic.css",
     "./components/Accordion": {
-      "types": "./dist/components/components/Accordion/Accordion.svelte.d.ts",
-      "svelte": "./dist/components/components/Accordion/Accordion.svelte",
-      "default": "./dist/components/components/Accordion/Accordion.svelte"
+      "types": "./dist/components/Accordion/Accordion.svelte.d.ts",
+      "svelte": "./dist/components/Accordion/Accordion.svelte",
+      "default": "./dist/components/Accordion/Accordion.svelte"
     },
     "./components/AccordionItem": {
-      "types": "./dist/components/components/Accordion/AccordionItem.svelte.d.ts",
-      "svelte": "./dist/components/components/Accordion/AccordionItem.svelte",
-      "default": "./dist/components/components/Accordion/AccordionItem.svelte"
+      "types": "./dist/components/Accordion/AccordionItem.svelte.d.ts",
+      "svelte": "./dist/components/Accordion/AccordionItem.svelte",
+      "default": "./dist/components/Accordion/AccordionItem.svelte"
     },
     "./components/App": {
-      "types": "./dist/components/components/App/App.svelte.d.ts",
-      "svelte": "./dist/components/components/App/App.svelte",
-      "default": "./dist/components/components/App/App.svelte"
+      "types": "./dist/components/App/App.svelte.d.ts",
+      "svelte": "./dist/components/App/App.svelte",
+      "default": "./dist/components/App/App.svelte"
     },
     "./components/AppHeader": {
-      "types": "./dist/components/components/AppHeader/AppHeader.svelte.d.ts",
-      "svelte": "./dist/components/components/AppHeader/AppHeader.svelte",
-      "default": "./dist/components/components/AppHeader/AppHeader.svelte"
+      "types": "./dist/components/AppHeader/AppHeader.svelte.d.ts",
+      "svelte": "./dist/components/AppHeader/AppHeader.svelte",
+      "default": "./dist/components/AppHeader/AppHeader.svelte"
     },
     "./components/AreaChart": {
       "types": "./dist/components/Metrics/AreaChart/AreaChart.svelte.d.ts",
@@ -66,24 +66,24 @@
       "default": "./dist/components/Metrics/AreaChart/AreaChart.svelte"
     },
     "./components/AutoComplete": {
-      "types": "./dist/components/components/Form/AutoComplete.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/AutoComplete.svelte",
-      "default": "./dist/components/components/Form/AutoComplete.svelte"
+      "types": "./dist/components/Form/AutoComplete.svelte.d.ts",
+      "svelte": "./dist/components/Form/AutoComplete.svelte",
+      "default": "./dist/components/Form/AutoComplete.svelte"
     },
     "./components/Avatar": {
-      "types": "./dist/components/components/Avatar/Avatar.svelte.d.ts",
-      "svelte": "./dist/components/components/Avatar/Avatar.svelte",
-      "default": "./dist/components/components/Avatar/Avatar.svelte"
+      "types": "./dist/components/Avatar/Avatar.svelte.d.ts",
+      "svelte": "./dist/components/Avatar/Avatar.svelte",
+      "default": "./dist/components/Avatar/Avatar.svelte"
     },
     "./components/AvatarGroup": {
-      "types": "./dist/components/components/Avatar/AvatarGroup.svelte.d.ts",
-      "svelte": "./dist/components/components/Avatar/AvatarGroup.svelte",
-      "default": "./dist/components/components/Avatar/AvatarGroup.svelte"
+      "types": "./dist/components/Avatar/AvatarGroup.svelte.d.ts",
+      "svelte": "./dist/components/Avatar/AvatarGroup.svelte",
+      "default": "./dist/components/Avatar/AvatarGroup.svelte"
     },
     "./components/Badge": {
-      "types": "./dist/components/components/Badge/Badge.svelte.d.ts",
-      "svelte": "./dist/components/components/Badge/Badge.svelte",
-      "default": "./dist/components/components/Badge/Badge.svelte"
+      "types": "./dist/components/Badge/Badge.svelte.d.ts",
+      "svelte": "./dist/components/Badge/Badge.svelte",
+      "default": "./dist/components/Badge/Badge.svelte"
     },
     "./components/BarChart": {
       "types": "./dist/components/Metrics/BarChart/BarChart.svelte.d.ts",
@@ -91,99 +91,99 @@
       "default": "./dist/components/Metrics/BarChart/BarChart.svelte"
     },
     "./components/BottomBar": {
-      "types": "./dist/components/components/BottomBar/BottomBar.svelte.d.ts",
-      "svelte": "./dist/components/components/BottomBar/BottomBar.svelte",
-      "default": "./dist/components/components/BottomBar/BottomBar.svelte"
+      "types": "./dist/components/BottomBar/BottomBar.svelte.d.ts",
+      "svelte": "./dist/components/BottomBar/BottomBar.svelte",
+      "default": "./dist/components/BottomBar/BottomBar.svelte"
     },
     "./components/Breadcrumb": {
-      "types": "./dist/components/components/Breadcrumb/Breadcrumb.svelte.d.ts",
-      "svelte": "./dist/components/components/Breadcrumb/Breadcrumb.svelte",
-      "default": "./dist/components/components/Breadcrumb/Breadcrumb.svelte"
+      "types": "./dist/components/Breadcrumb/Breadcrumb.svelte.d.ts",
+      "svelte": "./dist/components/Breadcrumb/Breadcrumb.svelte",
+      "default": "./dist/components/Breadcrumb/Breadcrumb.svelte"
     },
     "./components/BreadcrumbItem": {
-      "types": "./dist/components/components/Breadcrumb/BreadcrumbItem.svelte.d.ts",
-      "svelte": "./dist/components/components/Breadcrumb/BreadcrumbItem.svelte",
-      "default": "./dist/components/components/Breadcrumb/BreadcrumbItem.svelte"
+      "types": "./dist/components/Breadcrumb/BreadcrumbItem.svelte.d.ts",
+      "svelte": "./dist/components/Breadcrumb/BreadcrumbItem.svelte",
+      "default": "./dist/components/Breadcrumb/BreadcrumbItem.svelte"
     },
     "./components/Button": {
-      "types": "./dist/components/components/Button/Button.svelte.d.ts",
-      "svelte": "./dist/components/components/Button/Button.svelte",
-      "default": "./dist/components/components/Button/Button.svelte"
+      "types": "./dist/components/Button/Button.svelte.d.ts",
+      "svelte": "./dist/components/Button/Button.svelte",
+      "default": "./dist/components/Button/Button.svelte"
     },
     "./components/ButtonGroup": {
-      "types": "./dist/components/components/Button/ButtonGroup.svelte.d.ts",
-      "svelte": "./dist/components/components/Button/ButtonGroup.svelte",
-      "default": "./dist/components/components/Button/ButtonGroup.svelte"
+      "types": "./dist/components/Button/ButtonGroup.svelte.d.ts",
+      "svelte": "./dist/components/Button/ButtonGroup.svelte",
+      "default": "./dist/components/Button/ButtonGroup.svelte"
     },
     "./components/Calendar": {
-      "types": "./dist/components/components/Form/Calendar.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/Calendar.svelte",
-      "default": "./dist/components/components/Form/Calendar.svelte"
+      "types": "./dist/components/Form/Calendar.svelte.d.ts",
+      "svelte": "./dist/components/Form/Calendar.svelte",
+      "default": "./dist/components/Form/Calendar.svelte"
     },
     "./components/Card": {
-      "types": "./dist/components/components/Card/Card.svelte.d.ts",
-      "svelte": "./dist/components/components/Card/Card.svelte",
-      "default": "./dist/components/components/Card/Card.svelte"
+      "types": "./dist/components/Card/Card.svelte.d.ts",
+      "svelte": "./dist/components/Card/Card.svelte",
+      "default": "./dist/components/Card/Card.svelte"
     },
     "./components/Carousel": {
-      "types": "./dist/components/components/Carousel/Carousel.svelte.d.ts",
-      "svelte": "./dist/components/components/Carousel/Carousel.svelte",
-      "default": "./dist/components/components/Carousel/Carousel.svelte"
+      "types": "./dist/components/Carousel/Carousel.svelte.d.ts",
+      "svelte": "./dist/components/Carousel/Carousel.svelte",
+      "default": "./dist/components/Carousel/Carousel.svelte"
     },
     "./components/CarouselItem": {
-      "types": "./dist/components/components/Carousel/CarouselItem.svelte.d.ts",
-      "svelte": "./dist/components/components/Carousel/CarouselItem.svelte",
-      "default": "./dist/components/components/Carousel/CarouselItem.svelte"
+      "types": "./dist/components/Carousel/CarouselItem.svelte.d.ts",
+      "svelte": "./dist/components/Carousel/CarouselItem.svelte",
+      "default": "./dist/components/Carousel/CarouselItem.svelte"
     },
     "./components/Checkbox": {
-      "types": "./dist/components/components/Form/Checkbox.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/Checkbox.svelte",
-      "default": "./dist/components/components/Form/Checkbox.svelte"
+      "types": "./dist/components/Form/Checkbox.svelte.d.ts",
+      "svelte": "./dist/components/Form/Checkbox.svelte",
+      "default": "./dist/components/Form/Checkbox.svelte"
     },
     "./components/Chip": {
-      "types": "./dist/components/components/Chip/Chip.svelte.d.ts",
-      "svelte": "./dist/components/components/Chip/Chip.svelte",
-      "default": "./dist/components/components/Chip/Chip.svelte"
+      "types": "./dist/components/Chip/Chip.svelte.d.ts",
+      "svelte": "./dist/components/Chip/Chip.svelte",
+      "default": "./dist/components/Chip/Chip.svelte"
     },
     "./components/ChipGroup": {
-      "types": "./dist/components/components/Chip/ChipGroup.svelte.d.ts",
-      "svelte": "./dist/components/components/Chip/ChipGroup.svelte",
-      "default": "./dist/components/components/Chip/ChipGroup.svelte"
+      "types": "./dist/components/Chip/ChipGroup.svelte.d.ts",
+      "svelte": "./dist/components/Chip/ChipGroup.svelte",
+      "default": "./dist/components/Chip/ChipGroup.svelte"
     },
     "./components/CodeBlock": {
-      "types": "./dist/components/components/CodeBlock/CodeBlock.svelte.d.ts",
-      "svelte": "./dist/components/components/CodeBlock/CodeBlock.svelte",
-      "default": "./dist/components/components/CodeBlock/CodeBlock.svelte"
+      "types": "./dist/components/CodeBlock/CodeBlock.svelte.d.ts",
+      "svelte": "./dist/components/CodeBlock/CodeBlock.svelte",
+      "default": "./dist/components/CodeBlock/CodeBlock.svelte"
     },
     "./components/CodeBlockSpeed": {
-      "types": "./dist/components/components/CodeBlockSpeed/CodeBlockSpeed.svelte.d.ts",
-      "svelte": "./dist/components/components/CodeBlockSpeed/CodeBlockSpeed.svelte",
-      "default": "./dist/components/components/CodeBlockSpeed/CodeBlockSpeed.svelte"
+      "types": "./dist/components/CodeBlockSpeed/CodeBlockSpeed.svelte.d.ts",
+      "svelte": "./dist/components/CodeBlockSpeed/CodeBlockSpeed.svelte",
+      "default": "./dist/components/CodeBlockSpeed/CodeBlockSpeed.svelte"
     },
     "./components/CodeEditor": {
-      "types": "./dist/components/components/CodeEditor/CodeEditor.svelte.d.ts",
-      "svelte": "./dist/components/components/CodeEditor/CodeEditor.svelte",
-      "default": "./dist/components/components/CodeEditor/CodeEditor.svelte"
+      "types": "./dist/components/CodeEditor/CodeEditor.svelte.d.ts",
+      "svelte": "./dist/components/CodeEditor/CodeEditor.svelte",
+      "default": "./dist/components/CodeEditor/CodeEditor.svelte"
     },
     "./components/ColorPicker": {
-      "types": "./dist/components/components/Form/ColorPicker.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/ColorPicker.svelte",
-      "default": "./dist/components/components/Form/ColorPicker.svelte"
+      "types": "./dist/components/Form/ColorPicker.svelte.d.ts",
+      "svelte": "./dist/components/Form/ColorPicker.svelte",
+      "default": "./dist/components/Form/ColorPicker.svelte"
     },
     "./components/Combobox": {
-      "types": "./dist/components/components/Form/Combobox.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/Combobox.svelte",
-      "default": "./dist/components/components/Form/Combobox.svelte"
+      "types": "./dist/components/Form/Combobox.svelte.d.ts",
+      "svelte": "./dist/components/Form/Combobox.svelte",
+      "default": "./dist/components/Form/Combobox.svelte"
     },
     "./components/Container": {
-      "types": "./dist/components/components/Container/Container.svelte.d.ts",
-      "svelte": "./dist/components/components/Container/Container.svelte",
-      "default": "./dist/components/components/Container/Container.svelte"
+      "types": "./dist/components/Container/Container.svelte.d.ts",
+      "svelte": "./dist/components/Container/Container.svelte",
+      "default": "./dist/components/Container/Container.svelte"
     },
     "./components/DataTable": {
-      "types": "./dist/components/components/DataTable/DataTable.svelte.d.ts",
-      "svelte": "./dist/components/components/DataTable/DataTable.svelte",
-      "default": "./dist/components/components/DataTable/DataTable.svelte"
+      "types": "./dist/components/DataTable/DataTable.svelte.d.ts",
+      "svelte": "./dist/components/DataTable/DataTable.svelte",
+      "default": "./dist/components/DataTable/DataTable.svelte"
     },
     "./components/DonutChart": {
       "types": "./dist/components/Metrics/DonutChart/DonutChart.svelte.d.ts",
@@ -191,9 +191,9 @@
       "default": "./dist/components/Metrics/DonutChart/DonutChart.svelte"
     },
     "./components/Dropdown": {
-      "types": "./dist/components/components/Form/Dropdown.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/Dropdown.svelte",
-      "default": "./dist/components/components/Form/Dropdown.svelte"
+      "types": "./dist/components/Form/Dropdown.svelte.d.ts",
+      "svelte": "./dist/components/Form/Dropdown.svelte",
+      "default": "./dist/components/Form/Dropdown.svelte"
     },
     "./docs/EventsTable": {
       "types": "./dist/docs/EventsTable.svelte.d.ts",
@@ -201,29 +201,29 @@
       "default": "./dist/docs/EventsTable.svelte"
     },
     "./components/FileUpload": {
-      "types": "./dist/components/components/Form/FileUpload.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/FileUpload.svelte",
-      "default": "./dist/components/components/Form/FileUpload.svelte"
+      "types": "./dist/components/Form/FileUpload.svelte.d.ts",
+      "svelte": "./dist/components/Form/FileUpload.svelte",
+      "default": "./dist/components/Form/FileUpload.svelte"
     },
     "./components/FloatLabel": {
-      "types": "./dist/components/components/Form/FloatLabel.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/FloatLabel.svelte",
-      "default": "./dist/components/components/Form/FloatLabel.svelte"
+      "types": "./dist/components/Form/FloatLabel.svelte.d.ts",
+      "svelte": "./dist/components/Form/FloatLabel.svelte",
+      "default": "./dist/components/Form/FloatLabel.svelte"
     },
     "./components/Footer": {
-      "types": "./dist/components/components/Footer/Footer.svelte.d.ts",
-      "svelte": "./dist/components/components/Footer/Footer.svelte",
-      "default": "./dist/components/components/Footer/Footer.svelte"
+      "types": "./dist/components/Footer/Footer.svelte.d.ts",
+      "svelte": "./dist/components/Footer/Footer.svelte",
+      "default": "./dist/components/Footer/Footer.svelte"
     },
     "./components/Form": {
-      "types": "./dist/components/components/Form/Form.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/Form.svelte",
-      "default": "./dist/components/components/Form/Form.svelte"
+      "types": "./dist/components/Form/Form.svelte.d.ts",
+      "svelte": "./dist/components/Form/Form.svelte",
+      "default": "./dist/components/Form/Form.svelte"
     },
     "./components/FormField": {
-      "types": "./dist/components/components/Form/FormField.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/FormField.svelte",
-      "default": "./dist/components/components/Form/FormField.svelte"
+      "types": "./dist/components/Form/FormField.svelte.d.ts",
+      "svelte": "./dist/components/Form/FormField.svelte",
+      "default": "./dist/components/Form/FormField.svelte"
     },
     "./components/GaugeChart": {
       "types": "./dist/components/Metrics/GaugeChart/GaugeChart.svelte.d.ts",
@@ -231,9 +231,9 @@
       "default": "./dist/components/Metrics/GaugeChart/GaugeChart.svelte"
     },
     "./components/Hero": {
-      "types": "./dist/components/components/Panel/Hero/Hero.svelte.d.ts",
-      "svelte": "./dist/components/components/Panel/Hero/Hero.svelte",
-      "default": "./dist/components/components/Panel/Hero/Hero.svelte"
+      "types": "./dist/components/Panel/Hero/Hero.svelte.d.ts",
+      "svelte": "./dist/components/Panel/Hero/Hero.svelte",
+      "default": "./dist/components/Panel/Hero/Hero.svelte"
     },
     "./components/HorizontalBarChart": {
       "types": "./dist/components/Metrics/HorizontalBarChart/HorizontalBarChart.svelte.d.ts",
@@ -241,24 +241,24 @@
       "default": "./dist/components/Metrics/HorizontalBarChart/HorizontalBarChart.svelte"
     },
     "./components/Icon": {
-      "types": "./dist/components/components/Icon/Icon.svelte.d.ts",
-      "svelte": "./dist/components/components/Icon/Icon.svelte",
-      "default": "./dist/components/components/Icon/Icon.svelte"
+      "types": "./dist/components/Icon/Icon.svelte.d.ts",
+      "svelte": "./dist/components/Icon/Icon.svelte",
+      "default": "./dist/components/Icon/Icon.svelte"
     },
     "./components/Input": {
-      "types": "./dist/components/components/Form/Input.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/Input.svelte",
-      "default": "./dist/components/components/Form/Input.svelte"
+      "types": "./dist/components/Form/Input.svelte.d.ts",
+      "svelte": "./dist/components/Form/Input.svelte",
+      "default": "./dist/components/Form/Input.svelte"
     },
     "./components/InputSwitch": {
-      "types": "./dist/components/components/Form/InputSwitch.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/InputSwitch.svelte",
-      "default": "./dist/components/components/Form/InputSwitch.svelte"
+      "types": "./dist/components/Form/InputSwitch.svelte.d.ts",
+      "svelte": "./dist/components/Form/InputSwitch.svelte",
+      "default": "./dist/components/Form/InputSwitch.svelte"
     },
     "./components/InvalidState": {
-      "types": "./dist/components/components/Form/InvalidState.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/InvalidState.svelte",
-      "default": "./dist/components/components/Form/InvalidState.svelte"
+      "types": "./dist/components/Form/InvalidState.svelte.d.ts",
+      "svelte": "./dist/components/Form/InvalidState.svelte",
+      "default": "./dist/components/Form/InvalidState.svelte"
     },
     "./components/KPICard": {
       "types": "./dist/components/Metrics/KPICard/KPICard.svelte.d.ts",
@@ -266,19 +266,19 @@
       "default": "./dist/components/Metrics/KPICard/KPICard.svelte"
     },
     "./components/Knob": {
-      "types": "./dist/components/components/Form/Knob.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/Knob.svelte",
-      "default": "./dist/components/components/Form/Knob.svelte"
+      "types": "./dist/components/Form/Knob.svelte.d.ts",
+      "svelte": "./dist/components/Form/Knob.svelte",
+      "default": "./dist/components/Form/Knob.svelte"
     },
     "./components/Lazy": {
-      "types": "./dist/components/components/Lazy/Lazy.svelte.d.ts",
-      "svelte": "./dist/components/components/Lazy/Lazy.svelte",
-      "default": "./dist/components/components/Lazy/Lazy.svelte"
+      "types": "./dist/components/Lazy/Lazy.svelte.d.ts",
+      "svelte": "./dist/components/Lazy/Lazy.svelte",
+      "default": "./dist/components/Lazy/Lazy.svelte"
     },
     "./components/LazyPanel": {
-      "types": "./dist/components/components/Panel/LazyPanel.svelte.d.ts",
-      "svelte": "./dist/components/components/Panel/LazyPanel.svelte",
-      "default": "./dist/components/components/Panel/LazyPanel.svelte"
+      "types": "./dist/components/Panel/LazyPanel.svelte.d.ts",
+      "svelte": "./dist/components/Panel/LazyPanel.svelte",
+      "default": "./dist/components/Panel/LazyPanel.svelte"
     },
     "./components/LineChart": {
       "types": "./dist/components/Metrics/LineChart/LineChart.svelte.d.ts",
@@ -286,34 +286,34 @@
       "default": "./dist/components/Metrics/LineChart/LineChart.svelte"
     },
     "./components/ListInput": {
-      "types": "./dist/components/components/Form/ListInput.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/ListInput.svelte",
-      "default": "./dist/components/components/Form/ListInput.svelte"
+      "types": "./dist/components/Form/ListInput.svelte.d.ts",
+      "svelte": "./dist/components/Form/ListInput.svelte",
+      "default": "./dist/components/Form/ListInput.svelte"
     },
     "./components/Listbox": {
-      "types": "./dist/components/components/Form/Listbox.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/Listbox.svelte",
-      "default": "./dist/components/components/Form/Listbox.svelte"
+      "types": "./dist/components/Form/Listbox.svelte.d.ts",
+      "svelte": "./dist/components/Form/Listbox.svelte",
+      "default": "./dist/components/Form/Listbox.svelte"
     },
     "./components/Map": {
-      "types": "./dist/components/components/Map/Map.svelte.d.ts",
-      "svelte": "./dist/components/components/Map/Map.svelte",
-      "default": "./dist/components/components/Map/Map.svelte"
+      "types": "./dist/components/Map/Map.svelte.d.ts",
+      "svelte": "./dist/components/Map/Map.svelte",
+      "default": "./dist/components/Map/Map.svelte"
     },
     "./components/Masonry": {
-      "types": "./dist/components/components/Masonry/Masonry.svelte.d.ts",
-      "svelte": "./dist/components/components/Masonry/Masonry.svelte",
-      "default": "./dist/components/components/Masonry/Masonry.svelte"
+      "types": "./dist/components/Masonry/Masonry.svelte.d.ts",
+      "svelte": "./dist/components/Masonry/Masonry.svelte",
+      "default": "./dist/components/Masonry/Masonry.svelte"
     },
     "./components/Menu": {
-      "types": "./dist/components/components/Menu/Menu/Menu.svelte.d.ts",
-      "svelte": "./dist/components/components/Menu/Menu/Menu.svelte",
-      "default": "./dist/components/components/Menu/Menu/Menu.svelte"
+      "types": "./dist/components/Menu/Menu/Menu.svelte.d.ts",
+      "svelte": "./dist/components/Menu/Menu/Menu.svelte",
+      "default": "./dist/components/Menu/Menu/Menu.svelte"
     },
     "./components/MenuItem": {
-      "types": "./dist/components/components/Menu/Menu/MenuItem.svelte.d.ts",
-      "svelte": "./dist/components/components/Menu/Menu/MenuItem.svelte",
-      "default": "./dist/components/components/Menu/Menu/MenuItem.svelte"
+      "types": "./dist/components/Menu/Menu/MenuItem.svelte.d.ts",
+      "svelte": "./dist/components/Menu/Menu/MenuItem.svelte",
+      "default": "./dist/components/Menu/Menu/MenuItem.svelte"
     },
     "./components/MetricGrid": {
       "types": "./dist/components/Metrics/MetricGrid/MetricGrid.svelte.d.ts",
@@ -326,19 +326,19 @@
       "default": "./dist/components/Metrics/MetricTrend/MetricTrend.svelte"
     },
     "./components/Modal": {
-      "types": "./dist/components/components/Modal/Modal.svelte.d.ts",
-      "svelte": "./dist/components/components/Modal/Modal.svelte",
-      "default": "./dist/components/components/Modal/Modal.svelte"
+      "types": "./dist/components/Modal/Modal.svelte.d.ts",
+      "svelte": "./dist/components/Modal/Modal.svelte",
+      "default": "./dist/components/Modal/Modal.svelte"
     },
     "./components/NumberInput": {
-      "types": "./dist/components/components/Form/NumberInput.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/NumberInput.svelte",
-      "default": "./dist/components/components/Form/NumberInput.svelte"
+      "types": "./dist/components/Form/NumberInput.svelte.d.ts",
+      "svelte": "./dist/components/Form/NumberInput.svelte",
+      "default": "./dist/components/Form/NumberInput.svelte"
     },
     "./components/Panel": {
-      "types": "./dist/components/components/Panel/Panel.svelte.d.ts",
-      "svelte": "./dist/components/components/Panel/Panel.svelte",
-      "default": "./dist/components/components/Panel/Panel.svelte"
+      "types": "./dist/components/Panel/Panel.svelte.d.ts",
+      "svelte": "./dist/components/Panel/Panel.svelte",
+      "default": "./dist/components/Panel/Panel.svelte"
     },
     "./components/PieChart": {
       "types": "./dist/components/Metrics/PieChart/PieChart.svelte.d.ts",
@@ -346,9 +346,9 @@
       "default": "./dist/components/Metrics/PieChart/PieChart.svelte"
     },
     "./components/Progress": {
-      "types": "./dist/components/components/Progress/Progress.svelte.d.ts",
-      "svelte": "./dist/components/components/Progress/Progress.svelte",
-      "default": "./dist/components/components/Progress/Progress.svelte"
+      "types": "./dist/components/Progress/Progress.svelte.d.ts",
+      "svelte": "./dist/components/Progress/Progress.svelte",
+      "default": "./dist/components/Progress/Progress.svelte"
     },
     "./components/ProgressMetric": {
       "types": "./dist/components/Metrics/ProgressMetric/ProgressMetric.svelte.d.ts",
@@ -361,59 +361,59 @@
       "default": "./dist/docs/PropsTable.svelte"
     },
     "./components/Radio": {
-      "types": "./dist/components/components/Form/Radio.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/Radio.svelte",
-      "default": "./dist/components/components/Form/Radio.svelte"
+      "types": "./dist/components/Form/Radio.svelte.d.ts",
+      "svelte": "./dist/components/Form/Radio.svelte",
+      "default": "./dist/components/Form/Radio.svelte"
     },
     "./components/RadioGroup": {
-      "types": "./dist/components/components/Form/RadioGroup.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/RadioGroup.svelte",
-      "default": "./dist/components/components/Form/RadioGroup.svelte"
+      "types": "./dist/components/Form/RadioGroup.svelte.d.ts",
+      "svelte": "./dist/components/Form/RadioGroup.svelte",
+      "default": "./dist/components/Form/RadioGroup.svelte"
     },
     "./components/Rating": {
-      "types": "./dist/components/components/Form/Rating.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/Rating.svelte",
-      "default": "./dist/components/components/Form/Rating.svelte"
+      "types": "./dist/components/Form/Rating.svelte.d.ts",
+      "svelte": "./dist/components/Form/Rating.svelte",
+      "default": "./dist/components/Form/Rating.svelte"
     },
     "./components/Section": {
-      "types": "./dist/components/components/Section/Section.svelte.d.ts",
-      "svelte": "./dist/components/components/Section/Section.svelte",
-      "default": "./dist/components/components/Section/Section.svelte"
+      "types": "./dist/components/Section/Section.svelte.d.ts",
+      "svelte": "./dist/components/Section/Section.svelte",
+      "default": "./dist/components/Section/Section.svelte"
     },
     "./components/Select": {
-      "types": "./dist/components/components/Form/Select.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/Select.svelte",
-      "default": "./dist/components/components/Form/Select.svelte"
+      "types": "./dist/components/Form/Select.svelte.d.ts",
+      "svelte": "./dist/components/Form/Select.svelte",
+      "default": "./dist/components/Form/Select.svelte"
     },
     "./components/SelectGroup": {
-      "types": "./dist/components/components/Form/SelectGroup.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/SelectGroup.svelte",
-      "default": "./dist/components/components/Form/SelectGroup.svelte"
+      "types": "./dist/components/Form/SelectGroup.svelte.d.ts",
+      "svelte": "./dist/components/Form/SelectGroup.svelte",
+      "default": "./dist/components/Form/SelectGroup.svelte"
     },
     "./components/Separator": {
-      "types": "./dist/components/components/Separator/Separator.svelte.d.ts",
-      "svelte": "./dist/components/components/Separator/Separator.svelte",
-      "default": "./dist/components/components/Separator/Separator.svelte"
+      "types": "./dist/components/Separator/Separator.svelte.d.ts",
+      "svelte": "./dist/components/Separator/Separator.svelte",
+      "default": "./dist/components/Separator/Separator.svelte"
     },
     "./components/Sidebar": {
-      "types": "./dist/components/components/Sidebar/Sidebar.svelte.d.ts",
-      "svelte": "./dist/components/components/Sidebar/Sidebar.svelte",
-      "default": "./dist/components/components/Sidebar/Sidebar.svelte"
+      "types": "./dist/components/Sidebar/Sidebar.svelte.d.ts",
+      "svelte": "./dist/components/Sidebar/Sidebar.svelte",
+      "default": "./dist/components/Sidebar/Sidebar.svelte"
     },
     "./components/Skeleton": {
-      "types": "./dist/components/components/Skeleton/Skeleton.svelte.d.ts",
-      "svelte": "./dist/components/components/Skeleton/Skeleton.svelte",
-      "default": "./dist/components/components/Skeleton/Skeleton.svelte"
+      "types": "./dist/components/Skeleton/Skeleton.svelte.d.ts",
+      "svelte": "./dist/components/Skeleton/Skeleton.svelte",
+      "default": "./dist/components/Skeleton/Skeleton.svelte"
     },
     "./components/Slider": {
-      "types": "./dist/components/components/Form/Slider.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/Slider.svelte",
-      "default": "./dist/components/components/Form/Slider.svelte"
+      "types": "./dist/components/Form/Slider.svelte.d.ts",
+      "svelte": "./dist/components/Form/Slider.svelte",
+      "default": "./dist/components/Form/Slider.svelte"
     },
     "./components/Splitter": {
-      "types": "./dist/components/components/Splitter/Splitter.svelte.d.ts",
-      "svelte": "./dist/components/components/Splitter/Splitter.svelte",
-      "default": "./dist/components/components/Splitter/Splitter.svelte"
+      "types": "./dist/components/Splitter/Splitter.svelte.d.ts",
+      "svelte": "./dist/components/Splitter/Splitter.svelte",
+      "default": "./dist/components/Splitter/Splitter.svelte"
     },
     "./components/StatsCard": {
       "types": "./dist/components/Metrics/StatsCard/StatsCard.svelte.d.ts",
@@ -421,119 +421,119 @@
       "default": "./dist/components/Metrics/StatsCard/StatsCard.svelte"
     },
     "./components/Stepper": {
-      "types": "./dist/components/components/Stepper/Stepper.svelte.d.ts",
-      "svelte": "./dist/components/components/Stepper/Stepper.svelte",
-      "default": "./dist/components/components/Stepper/Stepper.svelte"
+      "types": "./dist/components/Stepper/Stepper.svelte.d.ts",
+      "svelte": "./dist/components/Stepper/Stepper.svelte",
+      "default": "./dist/components/Stepper/Stepper.svelte"
     },
     "./components/StepperStep": {
-      "types": "./dist/components/components/Stepper/StepperStep.svelte.d.ts",
-      "svelte": "./dist/components/components/Stepper/StepperStep.svelte",
-      "default": "./dist/components/components/Stepper/StepperStep.svelte"
+      "types": "./dist/components/Stepper/StepperStep.svelte.d.ts",
+      "svelte": "./dist/components/Stepper/StepperStep.svelte",
+      "default": "./dist/components/Stepper/StepperStep.svelte"
     },
     "./components/Switch": {
-      "types": "./dist/components/components/Form/Switch.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/Switch.svelte",
-      "default": "./dist/components/components/Form/Switch.svelte"
+      "types": "./dist/components/Form/Switch.svelte.d.ts",
+      "svelte": "./dist/components/Form/Switch.svelte",
+      "default": "./dist/components/Form/Switch.svelte"
     },
     "./components/Tab": {
-      "types": "./dist/components/components/Tabs/Tab.svelte.d.ts",
-      "svelte": "./dist/components/components/Tabs/Tab.svelte",
-      "default": "./dist/components/components/Tabs/Tab.svelte"
+      "types": "./dist/components/Tabs/Tab.svelte.d.ts",
+      "svelte": "./dist/components/Tabs/Tab.svelte",
+      "default": "./dist/components/Tabs/Tab.svelte"
     },
     "./components/TabList": {
-      "types": "./dist/components/components/Tabs/TabList.svelte.d.ts",
-      "svelte": "./dist/components/components/Tabs/TabList.svelte",
-      "default": "./dist/components/components/Tabs/TabList.svelte"
+      "types": "./dist/components/Tabs/TabList.svelte.d.ts",
+      "svelte": "./dist/components/Tabs/TabList.svelte",
+      "default": "./dist/components/Tabs/TabList.svelte"
     },
     "./components/TabPanel": {
-      "types": "./dist/components/components/Tabs/TabPanel.svelte.d.ts",
-      "svelte": "./dist/components/components/Tabs/TabPanel.svelte",
-      "default": "./dist/components/components/Tabs/TabPanel.svelte"
+      "types": "./dist/components/Tabs/TabPanel.svelte.d.ts",
+      "svelte": "./dist/components/Tabs/TabPanel.svelte",
+      "default": "./dist/components/Tabs/TabPanel.svelte"
     },
     "./components/Table": {
-      "types": "./dist/components/components/Table/Table.svelte.d.ts",
-      "svelte": "./dist/components/components/Table/Table.svelte",
-      "default": "./dist/components/components/Table/Table.svelte"
+      "types": "./dist/components/Table/Table.svelte.d.ts",
+      "svelte": "./dist/components/Table/Table.svelte",
+      "default": "./dist/components/Table/Table.svelte"
     },
     "./components/TableBody": {
-      "types": "./dist/components/components/Table/TableBody.svelte.d.ts",
-      "svelte": "./dist/components/components/Table/TableBody.svelte",
-      "default": "./dist/components/components/Table/TableBody.svelte"
+      "types": "./dist/components/Table/TableBody.svelte.d.ts",
+      "svelte": "./dist/components/Table/TableBody.svelte",
+      "default": "./dist/components/Table/TableBody.svelte"
     },
     "./components/TableCell": {
-      "types": "./dist/components/components/Table/TableCell.svelte.d.ts",
-      "svelte": "./dist/components/components/Table/TableCell.svelte",
-      "default": "./dist/components/components/Table/TableCell.svelte"
+      "types": "./dist/components/Table/TableCell.svelte.d.ts",
+      "svelte": "./dist/components/Table/TableCell.svelte",
+      "default": "./dist/components/Table/TableCell.svelte"
     },
     "./components/TableHead": {
-      "types": "./dist/components/components/Table/TableHead.svelte.d.ts",
-      "svelte": "./dist/components/components/Table/TableHead.svelte",
-      "default": "./dist/components/components/Table/TableHead.svelte"
+      "types": "./dist/components/Table/TableHead.svelte.d.ts",
+      "svelte": "./dist/components/Table/TableHead.svelte",
+      "default": "./dist/components/Table/TableHead.svelte"
     },
     "./components/TableHeader": {
-      "types": "./dist/components/components/Table/TableHeader.svelte.d.ts",
-      "svelte": "./dist/components/components/Table/TableHeader.svelte",
-      "default": "./dist/components/components/Table/TableHeader.svelte"
+      "types": "./dist/components/Table/TableHeader.svelte.d.ts",
+      "svelte": "./dist/components/Table/TableHeader.svelte",
+      "default": "./dist/components/Table/TableHeader.svelte"
     },
     "./components/TableRow": {
-      "types": "./dist/components/components/Table/TableRow.svelte.d.ts",
-      "svelte": "./dist/components/components/Table/TableRow.svelte",
-      "default": "./dist/components/components/Table/TableRow.svelte"
+      "types": "./dist/components/Table/TableRow.svelte.d.ts",
+      "svelte": "./dist/components/Table/TableRow.svelte",
+      "default": "./dist/components/Table/TableRow.svelte"
     },
     "./components/Tabs": {
-      "types": "./dist/components/components/Tabs/Tabs.svelte.d.ts",
-      "svelte": "./dist/components/components/Tabs/Tabs.svelte",
-      "default": "./dist/components/components/Tabs/Tabs.svelte"
+      "types": "./dist/components/Tabs/Tabs.svelte.d.ts",
+      "svelte": "./dist/components/Tabs/Tabs.svelte",
+      "default": "./dist/components/Tabs/Tabs.svelte"
     },
     "./components/Tag": {
-      "types": "./dist/components/components/Tag/Tag.svelte.d.ts",
-      "svelte": "./dist/components/components/Tag/Tag.svelte",
-      "default": "./dist/components/components/Tag/Tag.svelte"
+      "types": "./dist/components/Tag/Tag.svelte.d.ts",
+      "svelte": "./dist/components/Tag/Tag.svelte",
+      "default": "./dist/components/Tag/Tag.svelte"
     },
     "./components/TagGroup": {
-      "types": "./dist/components/components/Tag/TagGroup.svelte.d.ts",
-      "svelte": "./dist/components/components/Tag/TagGroup.svelte",
-      "default": "./dist/components/components/Tag/TagGroup.svelte"
+      "types": "./dist/components/Tag/TagGroup.svelte.d.ts",
+      "svelte": "./dist/components/Tag/TagGroup.svelte",
+      "default": "./dist/components/Tag/TagGroup.svelte"
     },
     "./components/TextInput": {
-      "types": "./dist/components/components/Form/TextInput.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/TextInput.svelte",
-      "default": "./dist/components/components/Form/TextInput.svelte"
+      "types": "./dist/components/Form/TextInput.svelte.d.ts",
+      "svelte": "./dist/components/Form/TextInput.svelte",
+      "default": "./dist/components/Form/TextInput.svelte"
     },
     "./components/Textarea": {
-      "types": "./dist/components/components/Form/Textarea.svelte.d.ts",
-      "svelte": "./dist/components/components/Form/Textarea.svelte",
-      "default": "./dist/components/components/Form/Textarea.svelte"
+      "types": "./dist/components/Form/Textarea.svelte.d.ts",
+      "svelte": "./dist/components/Form/Textarea.svelte",
+      "default": "./dist/components/Form/Textarea.svelte"
     },
     "./components/ThemeToggle": {
-      "types": "./dist/components/components/ThemeToggle/ThemeToggle.svelte.d.ts",
-      "svelte": "./dist/components/components/ThemeToggle/ThemeToggle.svelte",
-      "default": "./dist/components/components/ThemeToggle/ThemeToggle.svelte"
+      "types": "./dist/components/ThemeToggle/ThemeToggle.svelte.d.ts",
+      "svelte": "./dist/components/ThemeToggle/ThemeToggle.svelte",
+      "default": "./dist/components/ThemeToggle/ThemeToggle.svelte"
     },
     "./components/Timeline": {
-      "types": "./dist/components/components/Timeline/Timeline.svelte.d.ts",
-      "svelte": "./dist/components/components/Timeline/Timeline.svelte",
-      "default": "./dist/components/components/Timeline/Timeline.svelte"
+      "types": "./dist/components/Timeline/Timeline.svelte.d.ts",
+      "svelte": "./dist/components/Timeline/Timeline.svelte",
+      "default": "./dist/components/Timeline/Timeline.svelte"
     },
     "./components/TimelineItem": {
-      "types": "./dist/components/components/Timeline/TimelineItem.svelte.d.ts",
-      "svelte": "./dist/components/components/Timeline/TimelineItem.svelte",
-      "default": "./dist/components/components/Timeline/TimelineItem.svelte"
+      "types": "./dist/components/Timeline/TimelineItem.svelte.d.ts",
+      "svelte": "./dist/components/Timeline/TimelineItem.svelte",
+      "default": "./dist/components/Timeline/TimelineItem.svelte"
     },
     "./components/Toast": {
-      "types": "./dist/components/components/Toast/Toast.svelte.d.ts",
-      "svelte": "./dist/components/components/Toast/Toast.svelte",
-      "default": "./dist/components/components/Toast/Toast.svelte"
+      "types": "./dist/components/Toast/Toast.svelte.d.ts",
+      "svelte": "./dist/components/Toast/Toast.svelte",
+      "default": "./dist/components/Toast/Toast.svelte"
     },
     "./components/Tooltip": {
-      "types": "./dist/components/components/Tooltip/Tooltip.svelte.d.ts",
-      "svelte": "./dist/components/components/Tooltip/Tooltip.svelte",
-      "default": "./dist/components/components/Tooltip/Tooltip.svelte"
+      "types": "./dist/components/Tooltip/Tooltip.svelte.d.ts",
+      "svelte": "./dist/components/Tooltip/Tooltip.svelte",
+      "default": "./dist/components/Tooltip/Tooltip.svelte"
     },
     "./components/Tree": {
-      "types": "./dist/components/components/Tree/Tree.svelte.d.ts",
-      "svelte": "./dist/components/components/Tree/Tree.svelte",
-      "default": "./dist/components/components/Tree/Tree.svelte"
+      "types": "./dist/components/Tree/Tree.svelte.d.ts",
+      "svelte": "./dist/components/Tree/Tree.svelte",
+      "default": "./dist/components/Tree/Tree.svelte"
     },
     "./components/TreeMenu": {
       "types": "./dist/components/TreeMenu/TreeMenu.svelte.d.ts",
@@ -541,14 +541,14 @@
       "default": "./dist/components/TreeMenu/TreeMenu.svelte"
     },
     "./components/TreeNode": {
-      "types": "./dist/components/components/Tree/TreeNode.svelte.d.ts",
-      "svelte": "./dist/components/components/Tree/TreeNode.svelte",
-      "default": "./dist/components/components/Tree/TreeNode.svelte"
+      "types": "./dist/components/Tree/TreeNode.svelte.d.ts",
+      "svelte": "./dist/components/Tree/TreeNode.svelte",
+      "default": "./dist/components/Tree/TreeNode.svelte"
     },
     "./components/TwintrinsicLogo": {
-      "types": "./dist/components/components/icons/TwintrinsicLogo.svelte.d.ts",
-      "svelte": "./dist/components/components/icons/TwintrinsicLogo.svelte",
-      "default": "./dist/components/components/icons/TwintrinsicLogo.svelte"
+      "types": "./dist/components/icons/TwintrinsicLogo.svelte.d.ts",
+      "svelte": "./dist/components/icons/TwintrinsicLogo.svelte",
+      "default": "./dist/components/icons/TwintrinsicLogo.svelte"
     },
     "./helpers/detectLanguage": {
       "types": "./dist/helpers/detectLanguage.d.ts",
