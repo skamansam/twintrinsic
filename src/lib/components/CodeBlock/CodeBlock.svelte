@@ -34,12 +34,35 @@ Usage:
 ```
 -->
 <script lang="ts">
+// Must be imported before `prismjs`: it intercepts the `window.Prism` global
+// assignment so `Prism.manual = true` is set before Prism's UMD bootstrap
+// schedules its automatic DOM scan (which would fetch grammars from a
+// relative `components/` path and 404). See prism-guard.ts.
+import "./prism-guard.js";
 import Prism from "prismjs";
 import { onDestroy, onMount } from "svelte";
 import type { Snippet } from "svelte";
 import { detectLanguage } from "../../helpers/detectLanguage.js"
-// import "prism-svelte";
 import "prismjs/plugins/autoloader/prism-autoloader";
+
+// `Prism.manual` disables Prism's automatic DOM scan (`highlightAll` on
+// load). This library highlights explicitly via `Prism.highlight()` in
+// `highlightCode`, so the auto-scan is redundant — and because it runs
+// before this component's `onMount`, it would use the autoloader's
+// unresolved relative `'components/'` path and 404 against the page URL.
+// (This is the standard Prism + SPA integration pattern.)
+Prism.manual = true;
+
+// The autoloader infers its `languages_path` from `document.currentScript`,
+// which is `null` when the plugin is imported as an ES module (as opposed to
+// a classic <script> tag). That leaves the plugin's relative `'components/'`
+// default, which resolves against the current page URL and 404s (e.g.
+// `/docs/components/CodeBlock/components/prism-bash.min.js`). Pin it to an
+// absolute CDN path so on-demand grammar fetches resolve correctly. Per-call
+// `pluginSource` handling in `highlightCode` still overrides this default.
+if (Prism.plugins?.autoloader) {
+  Prism.plugins.autoloader.languages_path = "https://unpkg.com/prismjs@1/components/";
+}
 
 interface Props {
   /** The language for syntax highlighting */
@@ -134,6 +157,14 @@ function getLanguagesPath(pluginSource: string): string {
 
 // Initialize plugins and highlight code
 onMount(async () => {
+  // Pre-load the Svelte grammar from the installed package. `prismjs` ships no
+  // `svelte` component (the autoloader would 404 on it), and `prism-svelte` is
+  // ESM-only and registers itself on the *global* `Prism` object, so expose the
+  // module instance as a global before importing it.
+  if (!Prism.languages.svelte) {
+    (globalThis as { Prism?: typeof Prism }).Prism = Prism;
+    await import("prism-svelte");
+  }
   if (plugins.length > 0) {
     await loadPlugins(plugins);
   }
@@ -141,23 +172,17 @@ onMount(async () => {
 })
 
 /**
- * determine the path to the language components based on the plugin source.
+ * Determine the path to the language components based on the plugin source.
+ *
+ * The Svelte grammar is pre-loaded from the installed `prism-svelte` package
+ * in `onMount` (see above), so `language="svelte"` never reaches this
+ * function's loader branch — the `isFullPath` result is only used for
+ * genuinely custom full-path plugin sources.
+ *
  * @param {string} language - The language to determine the path for
  * @returns {[string, boolean]} The path to the language components and whether to use minified files
  */
 function determineComponentsDirectory(language: string): [string, boolean] {
-  if(language === "svelte") {
-    switch (pluginSource) {
-      case "esm.sh":
-        return ["https://esm.sh/prism-svelte", true]
-      case "jsdelivr":
-        return ["https://cdn.jsdelivr.net/npm/prism-svelte", true]
-      case "unpkg":
-        return ["https://unpkg.com/prism-svelte", true]
-      default:
-        return [getLanguagesPath(pluginSource), false];
-    }
-  }
   return [getLanguagesPath(pluginSource), false];
 }
 
@@ -204,7 +229,13 @@ async function highlightCode(): Promise<void> {
     const grammar = Prism.languages[detectedLang]
     if (grammar) {
       const highlighted = Prism.highlight(code, grammar, detectedLang)
-      codeElement.innerHTML = highlighted
+      // Guard against async-unmount: `highlightCode` awaits plugin/grammar
+      // loading, so `codeElement` can be nulled by Svelte teardown in the
+      // meantime (surfaces as an unhandled rejection in the storybook
+      // browser runner when a story unmounts mid-load).
+      if (codeElement) {
+        codeElement.innerHTML = highlighted
+      }
     }
   }
 }

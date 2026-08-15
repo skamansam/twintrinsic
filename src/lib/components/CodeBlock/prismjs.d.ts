@@ -17,6 +17,13 @@ declare module "prismjs" {
 
   /** The Prism instance with the surface we use. */
   const Prism: {
+    /**
+     * When `true`, Prism will not automatically scan the DOM for
+     * `code.language-*` elements on load (i.e. `highlightAll` is suppressed).
+     * CodeBlock sets this because it highlights explicitly and the autoloader
+     * would otherwise fetch grammars from a relative `components/` path.
+     */
+    manual: boolean;
     /** Map of loaded language name → grammar. */
     languages: Record<string, Grammar | undefined>;
     /** Map of loaded plugin name → plugin instance. */
@@ -50,3 +57,11 @@ declare module "prismjs" {
  * itself on `Prism.plugins.autoloader`). Declare the module with no exports.
  */
 declare module "prismjs/plugins/autoloader/prism-autoloader";
+
+/**
+ * `prism-svelte` is a plain ESM side-effect module: it registers
+ * `Prism.languages.svelte` on the global `Prism` object and exports nothing.
+ * It is dynamically imported by `CodeBlock.svelte` after the Prism instance
+ * has been exposed as a global.
+ */
+declare module "prism-svelte";
