@@ -249,6 +249,28 @@ $effect(() => {
 onchange?.(new CustomEvent("change", { detail: value }));
 ```
 
+### Shared Helpers (`src/lib/helpers/`)
+
+Label/value extraction and group-remove dispatch are shared utilities in
+`src/lib/helpers/`, not per-component copies:
+
+- `getItemLabel(item, labelField)` / `getItemValue(item, valueField)` — the
+  Form select family and the group components (Listbox, Combobox,
+  AutoComplete, TagGroup, ChipGroup) MUST route label/value extraction
+  through these helpers. No local `getOptionLabel` / `getOptionValue`
+  helpers; field props are passed explicitly (e.g.
+  `getItemLabel(option, optionLabel)`).
+- `getItemValue` is a deliberate **no-guard passthrough** — falsy items are
+  returned as-is. Do not add `if (!item) return null` guards.
+- `dispatchGroupRemove(onremove, item, index)` — the shared
+  `CustomEvent("remove", { detail: { item, index } })` dispatch used by
+  TagGroup/ChipGroup.
+- `detectLanguage(content)` — code-sample language sniffing for CodeBlock.
+
+Verification: `grep -rn 'getOptionLabel\|getOptionValue' src/` must return
+zero. The helpers are re-exported from `src/lib/index.ts` and documented on
+the docs site's Utilities page (`/docs/utilities`).
+
 ### Tailwind CSS
 
 - Use Tailwind utility classes in markup
@@ -445,12 +467,33 @@ grep -n 'YourComponent' src/lib/index.ts
 
 All public components should be exported there. If one is missing, add the export first.
 
+## Shared Helpers Cross-Reference
+
+See the **"Shared Helpers"** subsection under Code Standards for the
+conventions. The helpers live in `src/lib/helpers/` (per-file modules:
+`itemLabel.ts`, `itemValue.ts`, `groupRemove.ts`, `detectLanguage.ts`) and
+are re-exported from the package root (`src/lib/index.ts`) plus subpath
+exports (`twintrinsic/helpers/getItemLabel`). Component code imports them
+**relatively** (`../../helpers/itemLabel.js`); non-component code uses deep
+`$lib/helpers/*.js` paths.
+
 ## Troubleshooting
 
 ### Tests Not Running
 - Ensure Storybook is running on port 6006: `pnpm storybook`
 - Ensure preview server is running on port 4173: `pnpm build && pnpm preview`
 - Check `playwright.config.ts` for correct test directories
+- **Unit tests throw `lifecycle_function_unavailable`?** This is a resolution
+  hazard, not a Svelte bug: Svelte 5's `exports` map exposes no `import` /
+  `svelte` condition for `.`, so Node's ESM loader and Vite's SSR resolver
+  pick the server entry (`src/index-server.js`) where `mount()` throws. The
+  unit project in `vitest.config.ts` pins the bare `svelte` specifier to
+  `node_modules/svelte/src/index-client.js` (regex `^svelte$` — subpath
+  exports keep resolving through the real package) and inlines the
+  `@testing-library/svelte` chain so it resolves through Vite's resolver.
+  Do NOT remove that alias/inline block; do NOT add `svelte` to
+  `resolve.conditions` (it would *replace* the default condition set and
+  reintroduce the server-entry resolution).
 
 ### Type Errors
 - Run `pnpm check` to see all type errors
