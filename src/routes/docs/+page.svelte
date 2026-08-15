@@ -26,12 +26,49 @@ let { children } = $props()
   <h2>Installation</h2>
   <CodeBlock language="bash">{`npm install twintrinsic`}</CodeBlock>
 
-  <h2>Usage</h2>
-  <CodeBlock language="javascript">{`// In your app.css
-@import 'twintrinsic/styles.css';
+  <h3>Required Tailwind setup</h3>
+  <p>
+    Twintrinsic is styled with Tailwind CSS v4. The library's theme file
+    (<code>twintrinsic/twintrinsic.css</code>) imports <code>tailwindcss</code>
+    and declares the official <code>@tailwindcss/forms</code> and
+    <code>@tailwindcss/typography</code> plugins via <code>@plugin</code>, so
+    consumer apps must install those packages (they are not bundled):
+  </p>
+  <CodeBlock language="bash">{`npm install -D tailwindcss @tailwindcss/vite @tailwindcss/forms @tailwindcss/typography`}</CodeBlock>
 
-// In your component
-import { Container, AppHeader } from 'twintrinsic';`}</CodeBlock>
+  <p>
+    Then wire up the Tailwind Vite plugin. Components use
+    <code>lang="postcss"</code> styles with <code>@reference</code>, so the
+    Svelte plugin needs its preprocessor:
+  </p>
+  <CodeBlock language="javascript">{`// vite.config.js
+import { defineConfig } from 'vite';
+import { svelte, vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import tailwindcss from '@tailwindcss/vite';
+
+export default defineConfig({
+  plugins: [
+    tailwindcss(),
+    svelte({ preprocess: vitePreprocess() }),
+  ],
+});`}</CodeBlock>
+
+  <h2>Usage</h2>
+  <p>
+    Import the library CSS once, then import components from the root barrel
+    or from subpath exports (deep imports keep your bundle small):
+  </p>
+  <CodeBlock language="javascript">{`// In your app entry
+import 'twintrinsic/twintrinsic.css';
+
+// Root barrel - named imports
+import { Container, AppHeader } from 'twintrinsic';
+
+// Component subpaths - default imports
+import Button from 'twintrinsic/components/Button';
+
+// Helper subpaths - named imports (getItemLabel, getItemValue, ...)
+import { getItemLabel } from 'twintrinsic/helpers/getItemLabel';`}</CodeBlock>
 
   <h2>Features</h2>
   <ul>

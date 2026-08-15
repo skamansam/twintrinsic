@@ -23,6 +23,11 @@ const siteLinks = [
     current: page.url.pathname === "/docs/theming",
   },
   {
+    label: "Utilities",
+    href: "/docs/utilities",
+    current: page.url.pathname === "/docs/utilities",
+  },
+  {
     label: "Completion",
     href: "/docs/completion",
     current: page.url.pathname === "/docs/completion",
@@ -176,6 +181,10 @@ const siteMenu = [
       { title: "ThemeToggle", link: "/docs/components/ThemeToggle/ThemeToggle" },
     ],
   },
+  {
+    title: "APIs",
+    children: [{ title: "Utilities", link: "/docs/utilities" }],
+  },
 ]
 
 // Theme colors for the right sidebar
@@ -191,8 +200,8 @@ const themeColors = [
 ]
 </script>
 
-{#snippet logo(size: number)}
-  <TwintrinsicLogo {size} />
+{#snippet logo()}
+  <TwintrinsicLogo size="2rem" />
 {/snippet}
 
 <App

@@ -98,10 +98,15 @@ const components = [
   <!-- Example Components -->
   <div class="mt-16 grid grid-cols-1 gap-8" transition:fade={{ duration: 500, delay: 200 }} data-theme>
     <div class="bg-surface/50 backdrop-blur-sm border-y border-border">
+      {#snippet logo(size: number)}
+        <TwintrinsicLogo size="2rem" class="text-primary-500" />
+        <span class="font-semibold">Twintrinsic</span>
+      {/snippet}
       <AppHeader
         brand={{
           name: 'Twintrinsic',
-          href: '/'
+          href: '/',
+          logo
         }}
         class="relative"
         showSearch
@@ -114,29 +119,24 @@ const components = [
           { label: 'Components', href: '/docs/components' },
           { label: 'Documentation', href: '/docs' }
         ]}
-      >
-        <div slot="logo" class="flex items-center gap-2">
-          <TwintrinsicLogo size="2rem" class="text-primary-500" />
-          <span class="font-semibold">Twintrinsic</span>
-        </div>
-      </AppHeader>
+      />
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {#each components.slice(0, 3) as component}
         <Panel>
-          <svelte:fragment slot="header">
+          {#snippet header()}
             {component.name}
-          </svelte:fragment>
+          {/snippet}
           <p class="text-muted">{component.description}</p>
-          <svelte:fragment slot="footer">
+          {#snippet footer()}
             <a
               href="/docs/components/{component.name.toLowerCase()}"
               class="text-sm text-primary-500 hover:text-primary-600 font-medium"
             >
               Learn more →
             </a>
-          </svelte:fragment>
+          {/snippet}
         </Panel>
       {/each}
     </div>
