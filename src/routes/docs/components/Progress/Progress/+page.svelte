@@ -102,7 +102,7 @@ import Progress from "$lib/components/Progress/Progress.svelte"
       value={0.8} 
       max={1} 
       showValue
-      format={(v) => `${Math.round(v * 100)}%`}
+      format={(v: number) => `${Math.round(v * 100)}%`}
     />
   </div>
 

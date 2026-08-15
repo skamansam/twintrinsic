@@ -24,9 +24,7 @@ Documentation page for the Accordion component
     making it easier for users to find and focus on specific information.
   </p>
 
-  <CodeBlock
-    title="Basic Usage"
-    code={`
+  <CodeBlock title="Basic Usage">{`
 <Accordion>
   <AccordionItem>
     {#snippet header()}Section 1{/snippet}
@@ -50,7 +48,7 @@ Documentation page for the Accordion component
   </AccordionItem>
 </Accordion>
     `}
-  />
+  </CodeBlock>
 
   <h2>Examples</h2>
 

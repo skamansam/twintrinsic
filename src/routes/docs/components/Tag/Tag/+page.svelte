@@ -137,9 +137,10 @@ import TagGroup from "$lib/components/Tag/TagGroup.svelte"
       items={['JavaScript', 'TypeScript', 'Svelte', 'React']} 
       variant="primary"
       dismissible
-      let:item
     >
-      <Tag>{item}</Tag>
+      {#snippet itemTemplate(item: string)}
+        <Tag dismissible>{item}</Tag>
+      {/snippet}
     </TagGroup>
   </div>
 
@@ -147,10 +148,11 @@ import TagGroup from "$lib/components/Tag/TagGroup.svelte"
   items={['JavaScript', 'TypeScript', 'Svelte', 'React']} 
   variant="primary"
   dismissible
-  let:item
   ondismiss={(e) => handleDismiss(e.detail)}
 >
-  <Tag>{item}</Tag>
+  {#snippet itemTemplate(item)}
+    <Tag dismissible>{item}</Tag>
+  {/snippet}
 </TagGroup>`}</CodeBlock>
 
   <h2>Tag Props</h2>
@@ -294,9 +296,21 @@ import TagGroup from "$lib/components/Tag/TagGroup.svelte"
       </tr>
       <tr>
         <td><code>items</code></td>
-        <td><code>Array</code></td>
+        <td><code>(string \| Record&lt;string, unknown&gt;)[]</code></td>
         <td><code>[]</code></td>
         <td>Items to render as tags</td>
+      </tr>
+      <tr>
+        <td><code>labelField</code></td>
+        <td><code>string</code></td>
+        <td><code>"label"</code></td>
+        <td>Field used to derive the label when <code>items</code> are objects</td>
+      </tr>
+      <tr>
+        <td><code>itemTemplate</code></td>
+        <td><code>Snippet</code></td>
+        <td><code>undefined</code></td>
+        <td>Snippet rendered per item, receiving <code>(item, index)</code></td>
       </tr>
       <tr>
         <td><code>ariaLabel</code></td>

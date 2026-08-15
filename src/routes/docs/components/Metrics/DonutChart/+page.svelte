@@ -33,12 +33,12 @@
 		<DonutChart data={defaultData} labels={defaultLabels} size={300} />
 	</div>
 
-	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import DonutChart from '$lib/components/Metrics/DonutChart/DonutChart.svelte'
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`\u003Cscript>
+  import { DonutChart } from '$lib';
 
   const data = [30, 25, 20, 15, 10];
   const labels = ['Product A', 'Product B', 'Product C', 'Product D', 'Product E'];
-</script>
+\u003C/script>
 
 <DonutChart {data} {labels} size={300} />`}</code></pre>
 

@@ -23,9 +23,7 @@ Documentation page for the Card component
     They support various configurations including media sections, headers, and footers.
   </p>
 
-  <CodeBlock
-    title="Basic Usage"
-    code={`
+  <CodeBlock title="Basic Usage">{`
 <Card>
   {#snippet header()}Card Title{/snippet}
   <p>Card content goes here</p>
@@ -39,7 +37,7 @@ Documentation page for the Card component
   <p>Content with hover effect</p>
 </Card>
     `}
-  />
+  </CodeBlock>
 
   <h2>Examples</h2>
 

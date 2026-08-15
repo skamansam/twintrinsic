@@ -31,12 +31,12 @@
 		<HorizontalBarChart {data} {labels} title="Browser Usage" width={600} height={250} />
 	</div>
 
-	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import HorizontalBarChart from '$lib/components/Metrics/HorizontalBarChart/HorizontalBarChart.svelte'
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`\u003Cscript>
+  import { HorizontalBarChart } from '$lib';
 
   const data = [45, 38, 52, 41, 35];
   const labels = ['Chrome', 'Firefox', 'Safari', 'Edge', 'Other'];
-</script>
+\u003C/script>
 
 <HorizontalBarChart {data} {labels} title="Browser Usage" width={600} height={250} />`}</code></pre>
 

@@ -23,9 +23,9 @@ Splitter documentation page
     The Splitter component divides the available space into two panels with a draggable divider between them.
   </p>
 
-  <CodeBlock language="svelte">{`<script>
+  <CodeBlock language="svelte">{`\u003Cscript>
   import { Splitter } from 'twintrinsic';
-</script>
+\u003C/script>
 
 <Splitter orientation="horizontal" initialSize={50}>
   {#snippet first()}

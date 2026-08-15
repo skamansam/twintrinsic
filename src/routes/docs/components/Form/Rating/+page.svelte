@@ -206,7 +206,7 @@ function handleHover(event: CustomEvent<{ value: number }>) {
   </div>
 </div>
 <CodeBlock>
-  {`<script>
+  {`\u003Cscript>
   let hoverRating = $state(0)
 
   const ratingLabels = {
@@ -221,7 +221,7 @@ function handleHover(event: CustomEvent<{ value: number }>) {
   function handleHover(event) {
     hoverRating = event.detail.value
   }
-</script>
+\u003C/script>
 
 <Rating 
   value={3} 

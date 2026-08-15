@@ -69,13 +69,14 @@ const countries = [
       optionLabel="name"
       optionValue="code"
       placeholder="Select a country"
-      let:option
     >
-      <div class="flex items-center">
-        <span class="mr-2 text-lg">{option.flag}</span>
-        <span>{option.name}</span>
-        <span class="ml-2 text-xs text-muted">({option.code})</span>
-      </div>
+      {#snippet optionTemplate(option: { flag: string; name: string; code: string })}
+        <div class="flex items-center">
+          <span class="mr-2 text-lg">{option.flag}</span>
+          <span>{option.name}</span>
+          <span class="ml-2 text-xs text-muted">({option.code})</span>
+        </div>
+      {/snippet}
     </Combobox>
   </div>
 
@@ -83,15 +84,15 @@ const countries = [
   options={countries}
   optionLabel="name"
   optionValue="code"
-  placeholder="Select a country"
-  let:option
->
-  <div class="flex items-center">
-    <span class="mr-2 text-lg">{option.flag}</span>
-    <span>{option.name}</span>
-    <span class="ml-2 text-xs text-muted">({option.code})</span>
-  </div>
-</Combobox>`}</CodeBlock>
+  placeholder="Select a country">
+      {#snippet optionTemplate(option: { flag: string; name: string; code: string })}
+        <div class="flex items-center">
+          <span class="mr-2 text-lg">{option.flag}</span>
+          <span>{option.name}</span>
+          <span class="ml-2 text-xs text-muted">({option.code})</span>
+        </div>
+      {/snippet}
+    </Combobox>`}</CodeBlock>
 
   <h3>Disabled State</h3>
   <div class="not-prose mb-8 max-w-md">

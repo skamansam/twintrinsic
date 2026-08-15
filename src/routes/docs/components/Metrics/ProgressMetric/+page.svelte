@@ -30,9 +30,9 @@
 		</div>
 	</div>
 
-	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import ProgressMetric from '$lib/components/Metrics/ProgressMetric/ProgressMetric.svelte'
-</script>
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`\u003Cscript>
+  import { ProgressMetric } from '$lib';
+\u003C/script>
 
 <ProgressMetric
   label="CPU Usage"

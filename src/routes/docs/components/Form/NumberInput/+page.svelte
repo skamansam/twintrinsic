@@ -37,9 +37,9 @@ let temperature = $state(22.5)
   />
 </div>
 <CodeBlock>
-  {`<script>
+  {`\u003Cscript>
   let quantity = 1
-</script>
+\u003C/script>
 
 <NumberInput 
   name="quantity" 
@@ -61,9 +61,9 @@ let temperature = $state(22.5)
   />
 </div>
 <CodeBlock>
-  {`<script>
+  {`\u003Cscript>
   let price = 29.99
-</script>
+\u003C/script>
 
 <NumberInput 
   name="price" 
@@ -85,9 +85,9 @@ let temperature = $state(22.5)
   />
 </div>
 <CodeBlock>
-  {`<script>
+  {`\u003Cscript>
   let percentage = 75
-</script>
+\u003C/script>
 
 <NumberInput 
   name="percentage" 
@@ -110,9 +110,9 @@ let temperature = $state(22.5)
   />
 </div>
 <CodeBlock>
-  {`<script>
+  {`\u003Cscript>
   let temperature = 22.5
-</script>
+\u003C/script>
 
 <NumberInput 
   name="temperature" 

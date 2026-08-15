@@ -72,7 +72,7 @@ let selectedCountry = ""
   <p class="text-sm text-muted mt-2">Selected country: {selectedCountry || 'None'}</p>
 </div>
 <CodeBlock>
-  {`<script>
+  {`\u003Cscript>
   const europeanCountries = [
     { value: 'fr', label: 'France' },
     { value: 'de', label: 'Germany' },
@@ -96,7 +96,7 @@ let selectedCountry = ""
   ]
 
   let selectedCountry = ''
-</script>
+\u003C/script>
 
 <Select 
   label="Select a country" 

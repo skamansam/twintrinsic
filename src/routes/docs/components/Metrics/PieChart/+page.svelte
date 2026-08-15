@@ -32,12 +32,12 @@
 		<PieChart data={browserData} labels={browserLabels} size={300} />
 	</div>
 
-	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import PieChart from '$lib/components/Metrics/PieChart/PieChart.svelte'
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`\u003Cscript>
+  import { PieChart } from '$lib';
 
   const data = [35, 25, 20, 20];
   const labels = ['Chrome', 'Firefox', 'Safari', 'Edge'];
-</script>
+\u003C/script>
 
 <PieChart {data} {labels} size={300} />`}</code></pre>
 

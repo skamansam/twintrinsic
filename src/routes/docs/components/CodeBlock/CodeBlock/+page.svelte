@@ -57,7 +57,7 @@ console.log(result); // Hello, world!
 
 <h3>Svelte</h3>
 <CodeBlock language="svelte">{`
-  <script>
+  \u003Cscript>
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
@@ -66,17 +66,17 @@ console.log(result); // Hello, world!
     function increment() {
       dispatch('change', { count: count + 1 });
     }
-  </script>
+  \u003C/script>
 
   <button onclick={increment}>
     Count: {count}
   </button>
 
-  <style lang="postcss">
+  \u003Cstyle lang="postcss">
     button {
       @apply px-4 py-2 bg-primary text-white rounded;
     }
-  </style>
+  \u003C/style>
 `}</CodeBlock>
 
 <h3>HTML</h3>
@@ -221,6 +221,6 @@ function example() {
   <li>Responsive design</li>
 </ul>
 
-<style lang="postcss">
+\u003Cstyle lang="postcss">
   @reference '$lib/twintrinsic.css';
-</style>
+\u003C/style>

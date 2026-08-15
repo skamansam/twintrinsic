@@ -1,3 +1,4 @@
+// @ts-nocheck
 
 
             const MARKER_SPRITE_POSITIONS_V3 = {

@@ -260,10 +260,8 @@
 			Here's how to build a dashboard with Metrics components:
 		</p>
 		<div class="bg-gray-900 dark:bg-gray-950 rounded-lg p-6 overflow-x-auto">
-			<pre class="text-gray-100 text-sm"><code>{`<script lang="ts">
-  import MetricGrid from '$lib/components/Metrics/MetricGrid/MetricGrid.svelte'
-  import BarChart from '$lib/components/Metrics/BarChart/BarChart.svelte'
-  import DonutChart from '$lib/components/Metrics/DonutChart/DonutChart.svelte'
+			<pre class="text-gray-100 text-sm"><code>{`\u003Cscript lang="ts">
+  import { MetricGrid, BarChart, DonutChart } from '$lib';
 
   const statsCards = [
     {
@@ -286,7 +284,7 @@
     ],
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
   };
-</script>
+\u003C/script>
 
 <!-- Key Metrics -->
 <MetricGrid columns={4} gap="md" items={statsCards} />

@@ -32,9 +32,9 @@
 		<GaugeChart value={75} min={0} max={100} label="Performance Score" unit="%" color="primary" />
 	</div>
 
-	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import GaugeChart from '$lib/components/Metrics/GaugeChart/GaugeChart.svelte'
-</script>
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`\u003Cscript>
+  import { GaugeChart } from '$lib';
+\u003C/script>
 
 <GaugeChart
   value={75}

@@ -37,21 +37,21 @@ const skills = [
 
 const categories = [
   {
-    name: "Frontend",
-    id: "frontend",
-    items: [
-      { name: "HTML", id: "html" },
-      { name: "CSS", id: "css" },
-      { name: "JavaScript", id: "js" },
+    label: "Frontend",
+    value: "frontend",
+    children: [
+      { label: "HTML", value: "html" },
+      { label: "CSS", value: "css" },
+      { label: "JavaScript", value: "js" },
     ],
   },
   {
-    name: "Backend",
-    id: "backend",
-    items: [
-      { name: "Node.js", id: "node" },
-      { name: "Python", id: "python" },
-      { name: "Java", id: "java" },
+    label: "Backend",
+    value: "backend",
+    children: [
+      { label: "Node.js", value: "node" },
+      { label: "Python", value: "python" },
+      { label: "Java", value: "java" },
     ],
   },
 ]
@@ -129,7 +129,6 @@ const categories = [
   <Dropdown 
     options={countries}
     placeholder="Select a country"
-    optionIcon="icon"
   />
 </div>
 <CodeBlock>
@@ -163,29 +162,27 @@ const categories = [
   <Dropdown 
     options={categories}
     placeholder="Select a category"
-    optionLabel="name"
-    optionValue="id"
-    optionChildren="items"
+    optionChildren="children"
   />
 </div>
 <CodeBlock>
   {`const categories = [
   { 
-    name: 'Frontend', 
-    id: 'frontend',
-    items: [
-      { name: 'HTML', id: 'html' },
-      { name: 'CSS', id: 'css' },
-      { name: 'JavaScript', id: 'js' }
+    label: 'Frontend', 
+    value: 'frontend',
+    children: [
+      { label: 'HTML', value: 'html' },
+      { label: 'CSS', value: 'css' },
+      { label: 'JavaScript', value: 'js' }
     ]
   },
   { 
-    name: 'Backend', 
-    id: 'backend',
-    items: [
-      { name: 'Node.js', id: 'node' },
-      { name: 'Python', id: 'python' },
-      { name: 'Java', id: 'java' }
+    label: 'Backend', 
+    value: 'backend',
+    children: [
+      { label: 'Node.js', value: 'node' },
+      { label: 'Python', value: 'python' },
+      { label: 'Java', value: 'java' }
     ]
   }
 ]
@@ -193,9 +190,7 @@ const categories = [
 <Dropdown 
   options={categories}
   placeholder="Select a category"
-  optionLabel="name"
-  optionValue="id"
-  optionChildren="items"
+  optionChildren="children"
 />`}
 </CodeBlock>
 

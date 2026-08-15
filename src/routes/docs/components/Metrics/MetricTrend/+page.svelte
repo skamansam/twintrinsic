@@ -29,9 +29,9 @@
 		<MetricTrend label="Sales Trend" data={[10, 15, 12, 18, 22, 20, 25]} color="#10b981" />
 	</div>
 
-	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import MetricTrend from '$lib/components/Metrics/MetricTrend/MetricTrend.svelte'
-</script>
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`\u003Cscript>
+  import { MetricTrend } from '$lib';
+\u003C/script>
 
 <MetricTrend
   label="Sales Trend"

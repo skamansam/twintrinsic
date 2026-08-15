@@ -35,8 +35,8 @@ $effect(() => {
   return unsubscribe
 })
 
-function handleIconsetChange(e: CustomEvent<{ value: string }>) {
-  selectedIconset = e.detail.value
+function handleIconsetChange(e: CustomEvent<{ value: string | string[] | undefined }>) {
+  selectedIconset = String(e.detail.value ?? '')
   customIconset = ''
   console.log('Setting iconset to:', selectedIconset)
   setIconset(selectedIconset)
@@ -130,21 +130,21 @@ Icon documentation page
     First, set the default iconset in your app root or layout:
   </p>
 
-  <CodeBlock language="svelte">{`<script>
+  <CodeBlock language="svelte">{`\u003Cscript>
   import { setIconset } from 'twintrinsic'
   
   // Set globally once - all Icon components will use this
   setIconset('mdi-light')
-</script>`}</CodeBlock>
+\u003C/script>`}</CodeBlock>
 
   <h2>Basic Usage</h2>
   <p>
     Once the default iconset is set, use Icon with just the icon name:
   </p>
 
-  <CodeBlock language="svelte">{`<script>
+  <CodeBlock language="svelte">{`\u003Cscript>
   import { Icon } from 'twintrinsic'
-</script>
+\u003C/script>
 
 <!-- Uses default iconset (mdi-light) -->
 <Icon name="home" />

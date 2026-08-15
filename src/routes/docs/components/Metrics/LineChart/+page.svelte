@@ -53,8 +53,8 @@
 		<LineChart series={singleSeries} {labels} title="Weekly Sales" width={600} height={300} />
 	</div>
 
-	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import LineChart from '$lib/components/Metrics/LineChart/LineChart.svelte'
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`\u003Cscript>
+  import { LineChart } from '$lib';
 
   const series = [
     {
@@ -64,7 +64,7 @@
     }
   ];
   const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-</script>
+\u003C/script>
 
 <LineChart {series} {labels} title="Weekly Sales" width={600} height={300} />`}</code></pre>
 

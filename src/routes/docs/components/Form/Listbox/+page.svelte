@@ -60,8 +60,8 @@ const fruits = [
 ]
 
 // Selected values for examples
-let selectedColor = "blue"
-let selectedUsers = [1, 3]
+let selectedColor = { label: "Blue", value: "blue" }
+let selectedUsers = [users[1], users[3]]
 let selectedFruits = ["Apple", "Grape"]
 </script>
 
@@ -83,7 +83,7 @@ let selectedFruits = ["Apple", "Grape"]
   />
 </div>
 <CodeBlock>
-  {`<script>
+  {`\u003Cscript>
   const colors = [
     { label: 'Red', value: 'red' },
     { label: 'Green', value: 'green' },
@@ -93,7 +93,7 @@ let selectedFruits = ["Apple", "Grape"]
   ]
   
   let selectedColor = 'blue'
-</script>
+\u003C/script>
 
 <Listbox 
   name="color" 
@@ -114,7 +114,7 @@ let selectedFruits = ["Apple", "Grape"]
   />
 </div>
 <CodeBlock>
-  {`<script>
+  {`\u003Cscript>
   const users = [
     { name: 'Alice Johnson', id: 1 },
     { name: 'Bob Smith', id: 2 },
@@ -124,7 +124,7 @@ let selectedFruits = ["Apple", "Grape"]
   ]
   
   let selectedUsers = [1, 3]
-</script>
+\u003C/script>
 
 <Listbox 
   name="users" 
@@ -148,11 +148,11 @@ let selectedFruits = ["Apple", "Grape"]
   />
 </div>
 <CodeBlock>
-  {`<script>
+  {`\u003Cscript>
   const fruits = ['Apple', 'Banana', 'Cherry', 'Date', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange']
   
   let selectedFruits = ['Apple', 'Grape']
-</script>
+\u003C/script>
 
 <Listbox 
   name="fruits" 
@@ -175,7 +175,7 @@ let selectedFruits = ["Apple", "Grape"]
   />
 </div>
 <CodeBlock>
-  {`<script>
+  {`\u003Cscript>
   const users = [
     { 
       name: 'Alice Johnson', 
@@ -184,7 +184,7 @@ let selectedFruits = ["Apple", "Grape"]
     },
     // Other users...
   ]
-</script>
+\u003C/script>
 
 <Listbox 
   name="users-with-icons" 

@@ -3,12 +3,12 @@
 Documentation page for the InvalidState component.
 -->
 <script lang="ts">
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import FormField from "$lib/components/Form/FormField.svelte"
 import InvalidState from "$lib/components/Form/InvalidState.svelte"
 import TextInput from "$lib/components/Form/TextInput.svelte"
-import FormField from "$lib/components/Form/FormField.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
 import EventsTable from "$lib/docs/EventsTable.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
 </script>
 
 <h1>InvalidState</h1>
@@ -233,4 +233,4 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
   .props-table td {
     @apply py-2 px-4 border-b border-border dark:border-border text-text dark:text-text;
   }
-\u003C/style>
+</style>

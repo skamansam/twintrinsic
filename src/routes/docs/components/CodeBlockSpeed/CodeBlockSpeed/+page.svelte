@@ -44,9 +44,9 @@ CodeBlockSpeed documentation page
 		<h2 class="text-2xl font-bold mb-4">Basic Usage</h2>
 		<CodeBlock language="svelte">
 			{`
-<script>
+\u003Cscript>
 	import { CodeBlockSpeed } from 'twintrinsic';
-</script>
+\u003C/script>
 
 <CodeBlockSpeed language="javascript">
 	const greeting = 'Hello, Speed Highlight!';
@@ -224,15 +224,12 @@ console.log(greeting);`}
 			(in milliseconds) it takes for Speed Highlight to syntax highlight the code. This is useful for performance
 			monitoring and benchmarking.
 		</p>
-		<CodeBlock
-			language="svelte"
-			code={`<CodeBlockSpeed 
+		<CodeBlock language="svelte">{`<CodeBlockSpeed 
   language="javascript" 
   showRenderTime={true}
 >
   const greeting = "Hello, Speed Highlight!";
-</CodeBlockSpeed>`}
-		/>
+</CodeBlockSpeed>`}</CodeBlock>
 		<p class="text-gray-700 dark:text-gray-300 mt-4">
 			The rendering time appears as a badge in the code block header, showing the exact duration of the syntax
 			highlighting operation.
@@ -254,14 +251,11 @@ console.log(greeting);`}
 			<li>Svelte detection for script tags and reactive declarations</li>
 			<li>Bash detection for shell commands</li>
 		</ul>
-		<CodeBlock
-			language="svelte"
-			code={`<!-- Auto-detection will identify this as JavaScript -->
+		<CodeBlock language="svelte">{`<!-- Auto-detection will identify this as JavaScript -->
 <CodeBlockSpeed>
   const greeting = "Hello, World!";
   console.log(greeting);
-</CodeBlockSpeed>`}
-		/>
+</CodeBlockSpeed>`}</CodeBlock>
 	</section>
 
 	<section>

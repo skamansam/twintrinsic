@@ -21,43 +21,53 @@ import MenuItem from "$lib/components/Menu/Menu/MenuItem.svelte"
   <div class="p-4 bg-surface rounded-md mb-4" data-testid="menu-basic">
     <Menu>
       {#snippet trigger()}Open Menu{/snippet}
-      <MenuItem>Option 1</MenuItem>
-      <MenuItem>Option 2</MenuItem>
-      <MenuItem>Option 3</MenuItem>
+      {#snippet content()}
+        <MenuItem>Option 1</MenuItem>
+        <MenuItem>Option 2</MenuItem>
+        <MenuItem>Option 3</MenuItem>
+      {/snippet}
     </Menu>
   </div>
 
   <CodeBlock language="svelte">{`<Menu>
   {#snippet trigger()}Open Menu{/snippet}
-  <MenuItem>Option 1</MenuItem>
-  <MenuItem>Option 2</MenuItem>
-  <MenuItem>Option 3</MenuItem>
+  {#snippet content()}
+    <MenuItem>Option 1</MenuItem>
+    <MenuItem>Option 2</MenuItem>
+    <MenuItem>Option 3</MenuItem>
+  {/snippet}
 </Menu>`}</CodeBlock>
 
   <h3>Menu with Dividers</h3>
   <div class="p-4 bg-surface rounded-md mb-4" data-testid="menu-dividers">
     <Menu>
       {#snippet trigger()}Actions{/snippet}
-      <MenuItem>Edit</MenuItem>
-      <MenuItem>Copy</MenuItem>
-      <MenuItem divider>Delete</MenuItem>
+      {#snippet content()}
+        <MenuItem>Edit</MenuItem>
+        <MenuItem>Copy</MenuItem>
+        <MenuItem divider>Delete</MenuItem>
+      {/snippet}
     </Menu>
   </div>
 
   <CodeBlock language="svelte">{`<Menu>
   {#snippet trigger()}Actions{/snippet}
-  <MenuItem>Edit</MenuItem>
-  <MenuItem>Copy</MenuItem>
-  <MenuItem divider>Delete</MenuItem>
+  {#snippet content()}
+    <MenuItem>Edit</MenuItem>
+    <MenuItem>Copy</MenuItem>
+    <MenuItem divider>Delete</MenuItem>
+  {/snippet}
 </Menu>`}</CodeBlock>
 
   <h3>Menu with Icons</h3>
   <div class="p-4 bg-surface rounded-md mb-4" data-testid="menu-icons">
     <Menu>
       {#snippet trigger()}More{/snippet}
-      <MenuItem icon="edit">Edit</MenuItem>
-      <MenuItem icon="copy">Copy</MenuItem>
-      <MenuItem icon="trash">Delete</MenuItem>
+      {#snippet content()}
+        <MenuItem icon="edit">Edit</MenuItem>
+        <MenuItem icon="copy">Copy</MenuItem>
+        <MenuItem icon="trash">Delete</MenuItem>
+      {/snippet}
     </Menu>
   </div>
 

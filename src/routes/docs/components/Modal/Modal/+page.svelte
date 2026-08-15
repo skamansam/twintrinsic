@@ -1,6 +1,7 @@
 <script lang="ts">
 import { writable } from "svelte/store"
 import Button from "$lib/components/Button/Button.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Modal from "$lib/components/Modal/Modal.svelte"
 
@@ -44,12 +45,12 @@ let showScrollableModal = writable(false)
     {/snippet}
   </Modal>
 
-  <CodeBlock language="svelte">{`<script>
+  <CodeBlock language="svelte">{`\u003Cscript>
   import Modal from "$lib/components/Modal/Modal.svelte"
   import Button from "$lib/components/Button/Button.svelte"
   
   let open = false
-</script>
+\u003C/script>
 
 <Button on:click={() => open = true}>
   Open Modal

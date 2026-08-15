@@ -19,7 +19,7 @@ import Tooltip from "$lib/components/Tooltip/Tooltip.svelte"
 
   <h3>Basic Tooltip</h3>
   <div class="p-4 bg-surface rounded-md mb-4">
-    <Tooltip text="This is a helpful tooltip">
+    <Tooltip content="This is a helpful tooltip">
       <Button>Hover me</Button>
     </Tooltip>
   </div>
@@ -30,16 +30,16 @@ import Tooltip from "$lib/components/Tooltip/Tooltip.svelte"
 
   <h3>Tooltip Positions</h3>
   <div class="flex gap-4 p-4 bg-surface rounded-md mb-4">
-    <Tooltip text="Top tooltip" position="top">
+    <Tooltip content="Top tooltip" position="top">
       <Button>Top</Button>
     </Tooltip>
-    <Tooltip text="Right tooltip" position="right">
+    <Tooltip content="Right tooltip" position="right">
       <Button>Right</Button>
     </Tooltip>
-    <Tooltip text="Bottom tooltip" position="bottom">
+    <Tooltip content="Bottom tooltip" position="bottom">
       <Button>Bottom</Button>
     </Tooltip>
-    <Tooltip text="Left tooltip" position="left">
+    <Tooltip content="Left tooltip" position="left">
       <Button>Left</Button>
     </Tooltip>
   </div>

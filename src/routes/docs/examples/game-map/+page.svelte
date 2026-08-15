@@ -155,7 +155,7 @@ Game Map Example - Interactive map with markers, popups, and editing
 		return typeObj?.icon || '📍';
 	}
 
-	function popupContent(marker: GameMarker, isEditing: boolean): string {
+	function popupContent(marker: Record<string, any>, isEditing: boolean): string {
 		if (isEditing) {
 			return `
 				<div class="p-3 min-w-56">
@@ -249,11 +249,11 @@ Game Map Example - Interactive map with markers, popups, and editing
 				{/if}
 				<div class="flex-1 overflow-hidden rounded border border-gray-300 dark:border-gray-600">
 					<CodeEditor
-						value={jsonContent}
+						code={jsonContent}
 						language="json"
-						onchange={(value) => {
-							jsonContent = value;
-							updateMarkersFromJson(value);
+						onchange={(e) => {
+							jsonContent = e.detail;
+							updateMarkersFromJson(e.detail);
 						}}
 						height="100%"
 					/>

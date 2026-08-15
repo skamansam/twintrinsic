@@ -28,9 +28,9 @@
 		<StatsCard label="Total Revenue" value="$124,532.89" color="primary" />
 	</div>
 
-	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import StatsCard from '$lib/components/Metrics/StatsCard/StatsCard.svelte'
-</script>
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`\u003Cscript>
+  import { StatsCard } from '$lib';
+\u003C/script>
 
 <StatsCard label="Total Revenue" value="$124,532.89" color="primary" />`}</code></pre>
 

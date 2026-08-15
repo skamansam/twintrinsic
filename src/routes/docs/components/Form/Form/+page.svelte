@@ -6,6 +6,7 @@ Form documentation page
 <script lang="ts">
 import Button from "$lib/components/Button/Button.svelte"
 import Checkbox from "$lib/components/Form/Checkbox.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Form from "$lib/components/Form/Form.svelte"
 import FormField from "$lib/components/Form/FormField.svelte"
@@ -101,7 +102,7 @@ import Input from "$lib/components/Form/Input.svelte"
   <div class="p-4 bg-surface rounded-md mb-4">
     <Form validate>
       <FormField label="Username" name="username" required helpText="Username must be at least 3 characters">
-        <Input placeholder="Enter username" minlength="3" />
+        <Input placeholder="Enter username" minlength={3} />
       </FormField>
       
       <FormField label="Email" name="email" required>
@@ -109,7 +110,7 @@ import Input from "$lib/components/Form/Input.svelte"
       </FormField>
       
       <FormField label="Password" name="password" required helpText="Password must be at least 8 characters">
-        <Input type="password" placeholder="Enter password" minlength="8" />
+        <Input type="password" placeholder="Enter password" minlength={8} />
       </FormField>
       
       <div class="mt-4">
@@ -353,17 +354,17 @@ import Input from "$lib/components/Form/Input.svelte"
     <tbody>
       <tr>
         <td><code>submit</code></td>
-        <td><code>{ data, formData, form }</code></td>
+        <td><code>{"{ data, formData, form }"}</code></td>
         <td>Fired when the form is submitted and validation passes</td>
       </tr>
       <tr>
         <td><code>invalid</code></td>
-        <td><code>{ errors }</code></td>
+        <td><code>{"{ errors }"}</code></td>
         <td>Fired when the form is submitted but validation fails</td>
       </tr>
       <tr>
         <td><code>ready</code></td>
-        <td><code>{ form }</code></td>
+        <td><code>{"{ form }"}</code></td>
         <td>Fired when the form is initialized with the form API</td>
       </tr>
     </tbody>

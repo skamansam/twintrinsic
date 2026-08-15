@@ -67,7 +67,7 @@
     <div class="example">
       <TreeMenu items={basicItems} />
     </div>
-    <pre><code>{`<script lang="ts">
+    <pre><code>{`\u003Cscript lang="ts">
   import { TreeMenu, type MenuItem } from 'twintrinsic';
 
   const items: TreeMenuItem[] = [
@@ -75,7 +75,7 @@
     { title: 'About', icon: 'info', link: '/about' },
     { title: 'Settings', icon: 'settings', link: '/settings', separator: true },
   ];
-</script>
+\u003C/script>
 
 <TreeMenu {items} />`}</code></pre>
   </section>

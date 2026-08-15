@@ -28,9 +28,9 @@
 		<KPICard label="Q4 Sales Target" value={95000} target={100000} unit="$" color="success" />
 	</div>
 
-	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import KPICard from '$lib/components/Metrics/KPICard/KPICard.svelte'
-</script>
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`\u003Cscript>
+  import { KPICard } from '$lib';
+\u003C/script>
 
 <KPICard
   label="Q4 Sales Target"

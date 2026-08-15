@@ -142,13 +142,13 @@ import StepperStep from "$lib/components/Stepper/StepperStep.svelte"
   <h3>Non-Linear Stepper</h3>
   <div class="not-prose mb-8 max-w-3xl">
     <Stepper linear={false}>
-      <StepperStep label="Account" optional="Optional">
+      <StepperStep label="Account" optional>
         <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
           <h3 class="text-lg font-medium">Account Setup</h3>
           <p class="mt-2">Create your account or sign in.</p>
         </div>
       </StepperStep>
-      <StepperStep label="Profile" optional="Optional">
+      <StepperStep label="Profile" optional>
         <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
           <h3 class="text-lg font-medium">Profile Information</h3>
           <p class="mt-2">Tell us about yourself.</p>
@@ -170,10 +170,10 @@ import StepperStep from "$lib/components/Stepper/StepperStep.svelte"
   </div>
 
   <CodeBlock language="svelte">{`<Stepper linear={false}>
-  <StepperStep label="Account" optional="Optional">
+  <StepperStep label="Account" optional>
     <!-- Step content -->
   </StepperStep>
-  <StepperStep label="Profile" optional="Optional">
+  <StepperStep label="Profile" optional>
     <!-- Step content -->
   </StepperStep>
   <StepperStep label="Preferences">

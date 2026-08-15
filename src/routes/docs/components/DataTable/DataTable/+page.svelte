@@ -53,7 +53,7 @@ const userColumns = [
     header: "Status",
     sortable: true,
     filterable: true,
-    template: (value) => {
+    template: (value: unknown) => {
       const color =
         value === "Active"
           ? "bg-success-100 text-success-800 dark:bg-success-900 dark:text-success-200"
@@ -72,18 +72,18 @@ const productColumns = [
     header: "Price",
     sortable: true,
     filterable: true,
-    template: (value) => "$" + value.toFixed(2),
+    template: (value: unknown) => "$" + (value as number).toFixed(2),
   },
   {
     field: "stock",
     header: "Stock",
     sortable: true,
     filterable: true,
-    template: (value) => {
+    template: (value: unknown) => {
       const color =
-        value > 50
+        (value as number) > 50
           ? "bg-success-100 text-success-800 dark:bg-success-900 dark:text-success-200"
-          : value > 20
+          : (value as number) > 20
             ? "bg-warning-100 text-warning-800 dark:bg-warning-900 dark:text-warning-200"
             : "bg-error-100 text-error-800 dark:bg-error-900 dark:text-error-200";
       return `<span class="px-2 py-1 rounded-full text-xs font-medium ${color}">${value} units</span>`;
@@ -111,7 +111,7 @@ const productColumns = [
     />
   </div>
 
-  <CodeBlock language="svelte">{`<script>
+  <CodeBlock language="svelte">{`\u003Cscript>
   const users = [
     { id: 1, name: "John Doe", email: "john.doe@example.com", role: "Admin", status: "Active" },
     { id: 2, name: "Jane Smith", email: "jane.smith@example.com", role: "Editor", status: "Active" },
@@ -125,7 +125,7 @@ const productColumns = [
     { field: 'role', header: 'Role', sortable: true, filterable: true },
     { field: 'status', header: 'Status', sortable: true, filterable: true }
   ];
-</script>
+\u003C/script>
 
 <DataTable 
   data={users} 
@@ -155,10 +155,8 @@ const productColumns = [
       data={users} 
       columns={userColumns}
       pageable
-      rowsPerPage={2}
-      rowsPerPageOptions={[2, 5, 10]}
-      showRowsPerPage
-      showPagination
+      pageSize={2}
+      pageSizeOptions={[2, 5, 10]}
     />
   </div>
 
@@ -166,10 +164,8 @@ const productColumns = [
   data={users} 
   columns={columns}
   pageable
-  rowsPerPage={5}
-  rowsPerPageOptions={[5, 10, 25]}
-  showRowsPerPage
-  showPagination
+  pageSize={5}
+  pageSizeOptions={[5, 10, 25]}
 />`}</CodeBlock>
 
   <h3>Selectable Rows</h3>
@@ -212,14 +208,14 @@ const productColumns = [
     <DataTable 
       data={users} 
       columns={userColumns}
-      dense
+      compact
     />
   </div>
 
   <CodeBlock language="svelte">{`<DataTable 
   data={users} 
   columns={columns}
-  dense
+  compact
 />`}</CodeBlock>
 
   <h3>Loading State</h3>
@@ -228,7 +224,6 @@ const productColumns = [
       data={[]}
       columns={userColumns}
       loading
-      loadingText="Fetching user data..."
     />
   </div>
 
@@ -236,7 +231,6 @@ const productColumns = [
   data={[]}
   columns={columns}
   loading
-  loadingText="Fetching user data..."
 />`}</CodeBlock>
 
   <h3>Empty State</h3>
@@ -244,14 +238,14 @@ const productColumns = [
     <DataTable 
       data={[]}
       columns={userColumns}
-      emptyText="No users found"
+      emptyMessage="No users found"
     />
   </div>
 
   <CodeBlock language="svelte">{`<DataTable 
   data={[]}
   columns={columns}
-  emptyText="No users found"
+  emptyMessage="No users found"
 />`}</CodeBlock>
 
   <h3>Custom Templates</h3>
@@ -264,7 +258,7 @@ const productColumns = [
     />
   </div>
 
-  <CodeBlock language="svelte">{`<script>
+  <CodeBlock language="svelte">{`\u003Cscript>
   const products = [
     { id: 1, name: "Laptop", category: "Electronics", price: 1299.99, stock: 45 },
     { id: 2, name: "Smartphone", category: "Electronics", price: 899.99, stock: 120 },
@@ -310,8 +304,6 @@ const productColumns = [
       data={products} 
       columns={productColumns}
       class="border border-primary-200 dark:border-primary-800 rounded-lg overflow-hidden"
-      headerClass="bg-primary-50 dark:bg-primary-900 text-primary-900 dark:text-primary-100"
-      rowClass="hover:bg-primary-50 dark:hover:bg-primary-900/30"
       sortable
       filterable
     />
@@ -381,28 +373,16 @@ const productColumns = [
         <td>Whether to allow multiple row selection</td>
       </tr>
       <tr>
-        <td><code>rowsPerPage</code></td>
+        <td><code>pageSize</code></td>
         <td><code>number</code></td>
         <td><code>10</code></td>
         <td>Number of rows per page</td>
       </tr>
       <tr>
-        <td><code>rowsPerPageOptions</code></td>
+        <td><code>pageSizeOptions</code></td>
         <td><code>Array</code></td>
-        <td><code>[5, 10, 25, 50]</code></td>
+        <td><code>[5, 10, 20, 50, 100]</code></td>
         <td>Options for rows per page</td>
-      </tr>
-      <tr>
-        <td><code>showRowsPerPage</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to show rows per page selector</td>
-      </tr>
-      <tr>
-        <td><code>showPagination</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to show pagination controls</td>
       </tr>
       <tr>
         <td><code>showHeader</code></td>
@@ -429,7 +409,7 @@ const productColumns = [
         <td>Whether to show borders between cells</td>
       </tr>
       <tr>
-        <td><code>dense</code></td>
+        <td><code>compact</code></td>
         <td><code>boolean</code></td>
         <td><code>false</code></td>
         <td>Whether to use a more compact layout</td>
@@ -441,16 +421,10 @@ const productColumns = [
         <td>Whether the table is in a loading state</td>
       </tr>
       <tr>
-        <td><code>emptyText</code></td>
+        <td><code>emptyMessage</code></td>
         <td><code>string</code></td>
         <td><code>"No data available"</code></td>
         <td>Text to display when there is no data</td>
-      </tr>
-      <tr>
-        <td><code>loadingText</code></td>
-        <td><code>string</code></td>
-        <td><code>"Loading data..."</code></td>
-        <td>Text to display during loading</td>
       </tr>
       <tr>
         <td><code>class</code></td>
@@ -587,8 +561,8 @@ const productColumns = [
         <td>Fired when the current page changes</td>
       </tr>
       <tr>
-        <td><code>rowsPerPageChange</code></td>
-        <td><code>{`{ rowsPerPage: number }`}</code></td>
+        <td><code>pageSizeChange</code></td>
+        <td><code>{`{ pageSize: number }`}</code></td>
         <td>Fired when rows per page changes</td>
       </tr>
       <tr>
@@ -621,17 +595,17 @@ const productColumns = [
       </tr>
       <tr>
         <td><code>empty</code></td>
-        <td><code>{`{ emptyText: string }`}</code></td>
+        <td><code>{`{ emptyMessage: string }`}</code></td>
         <td>Custom empty state</td>
       </tr>
       <tr>
         <td><code>loading</code></td>
-        <td><code>{`{ loadingText: string }`}</code></td>
+        <td><code>{`{ loading: boolean }`}</code></td>
         <td>Custom loading state</td>
       </tr>
       <tr>
         <td><code>pagination</code></td>
-        <td><code>{`{ page: number, totalPages: number, totalItems: number, rowsPerPage: number }`}</code></td>
+        <td><code>{`{ page: number, pageSize: number }`}</code></td>
         <td>Custom pagination controls</td>
       </tr>
       <tr>

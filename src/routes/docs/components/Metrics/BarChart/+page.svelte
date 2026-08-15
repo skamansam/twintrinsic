@@ -53,8 +53,8 @@
 		<BarChart series={singleSeries} {labels} title="Monthly Revenue" width={600} height={300} />
 	</div>
 
-	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import BarChart from '$lib/components/Metrics/BarChart/BarChart.svelte'
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`\u003Cscript>
+  import { BarChart } from '$lib';
 
   const series = [
     {
@@ -64,7 +64,7 @@
     }
   ];
   const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-</script>
+\u003C/script>
 
 <BarChart {series} {labels} title="Monthly Revenue" width={600} height={300} />`}</code></pre>
 

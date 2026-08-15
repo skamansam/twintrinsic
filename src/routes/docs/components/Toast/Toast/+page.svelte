@@ -25,9 +25,9 @@ import { toastStore } from "$lib/components/Toast/toastStore.js"
     </Button>
   </div>
 
-  <CodeBlock language="svelte">{`<script>
+  <CodeBlock language="svelte">{`\u003Cscript>
   import { toastStore } from "$lib/components/Toast/toastStore.js"
-</script>
+\u003C/script>
 
 <button onclick={() => toastStore.add({ message: "This is a toast" })}>
   Show Toast
@@ -71,16 +71,16 @@ toastStore.add({ message: "Info message", variant: "info" })`}</CodeBlock>
 
   <h3>Toast Positions</h3>
   <div class="flex flex-wrap gap-4 p-4 bg-surface rounded-md mb-4">
-    <Button on:click={() => toastStore.add({ message: "Top Right", position: "top-right" })}>
+    <Button onclick={() => toastStore.add({ message: "Top Right" })}>
       Top Right
     </Button>
-    <Button on:click={() => toastStore.add({ message: "Top Left", position: "top-left" })}>
+    <Button onclick={() => toastStore.add({ message: "Top Left" })}>
       Top Left
     </Button>
-    <Button on:click={() => toastStore.add({ message: "Bottom Right", position: "bottom-right" })}>
+    <Button onclick={() => toastStore.add({ message: "Bottom Right" })}>
       Bottom Right
     </Button>
-    <Button on:click={() => toastStore.add({ message: "Bottom Left", position: "bottom-left" })}>
+    <Button onclick={() => toastStore.add({ message: "Bottom Left" })}>
       Bottom Left
     </Button>
   </div>

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import CodeBlock from '$lib/components/CodeBlock/CodeBlock.svelte'
 import CodeEditor from '$lib/components/CodeEditor/CodeEditor.svelte'
 </script>
@@ -41,19 +41,16 @@ import CodeEditor from '$lib/components/CodeEditor/CodeEditor.svelte'
 
 	<section>
 		<h2 class="text-2xl font-bold mb-4">Basic Usage</h2>
-		<CodeBlock
-			code={`<script>
+		<CodeBlock language="svelte">{`\u003Cscript>
   import { CodeEditor } from 'twintrinsic';
-</script>
+\u003C/script>
 
 <CodeEditor
   code="const greeting = 'Hello, World!';"
   language="javascript"
   theme="light"
   height="400px"
-/>`}
-			language="svelte"
-		/>
+/>`}</CodeBlock>
 	</section>
 
 	<section>
@@ -139,6 +136,7 @@ const user: User = {
 					height="300px"
 				/>
 			</div>
+		</div>
 		</div>
 	</section>
 
@@ -251,21 +249,21 @@ const user: User = {
 				<p class="text-gray-600 dark:text-gray-400 text-sm">
 					Fast and reliable ESM CDN. Recommended for most use cases.
 				</p>
-				<CodeBlock code="cdnSource='esm.sh'" language="javascript" />
+				<CodeBlock language="javascript">{`cdnSource='esm.sh'`}</CodeBlock>
 			</div>
 			<div>
 				<h3 class="font-semibold mb-2">jsdelivr</h3>
 				<p class="text-gray-600 dark:text-gray-400 text-sm">
 					Popular CDN with global distribution and good performance.
 				</p>
-				<CodeBlock code="cdnSource='jsdelivr'" language="javascript" />
+				<CodeBlock language="javascript">{`cdnSource='jsdelivr'`}</CodeBlock>
 			</div>
 			<div>
 				<h3 class="font-semibold mb-2">unpkg</h3>
 				<p class="text-gray-600 dark:text-gray-400 text-sm">
 					Fast, global content delivery network for npm packages.
 				</p>
-				<CodeBlock code="cdnSource='unpkg'" language="javascript" />
+				<CodeBlock language="javascript">{`cdnSource='unpkg'`}</CodeBlock>
 			</div>
 		</div>
 	</section>

@@ -13,7 +13,7 @@ const colorScales = ["primary", "secondary", "success", "warning", "error", "inf
 const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
 
 // Helper function to determine if text should be light or dark based on background
-function getTextColor(colorName, shade) {
+function getTextColor(colorName: string, shade: number) {
   // Generally, shades 500+ need light text
   return shade >= 500 ? "text-white" : "text-text"
 }
@@ -94,6 +94,25 @@ const buttonExamples = [
   { color: "error", label: "Error" },
   { color: "info", label: "Info" },
 ]
+
+// Static Tailwind class map (kept literal so the JIT can generate them)
+const buttonColorClasses: Record<string, string> = {
+  primary: "bg-primary-500 text-white hover:bg-primary-600",
+  secondary: "bg-secondary-500 text-white hover:bg-secondary-600",
+  success: "bg-success-500 text-white hover:bg-success-600",
+  warning: "bg-warning-500 text-white hover:bg-warning-600",
+  error: "bg-error-500 text-white hover:bg-error-600",
+  info: "bg-info-500 text-white hover:bg-info-600",
+}
+
+const buttonOutlineClasses: Record<string, string> = {
+  primary: "border-primary-500 text-primary-600 hover:bg-primary-50",
+  secondary: "border-secondary-500 text-secondary-600 hover:bg-secondary-50",
+  success: "border-success-500 text-success-600 hover:bg-success-50",
+  warning: "border-warning-500 text-warning-600 hover:bg-warning-50",
+  error: "border-error-500 text-error-600 hover:bg-error-50",
+  info: "border-info-500 text-info-600 hover:bg-info-50",
+}
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -218,12 +237,12 @@ var(--color-${color}-500)
   </p>
   <div class="flex flex-wrap gap-2 not-prose mb-8">
     {#each buttonExamples as button}
-      <Button color={button.color}>{button.label}</Button>
+      <Button class={buttonColorClasses[button.color]}>{button.label}</Button>
     {/each}
   </div>
   <div class="flex flex-wrap gap-2 not-prose mb-8">
     {#each buttonExamples as button}
-      <Button color={button.color} variant="outline">{button.label}</Button>
+      <Button class={buttonOutlineClasses[button.color]} variant="outline">{button.label}</Button>
     {/each}
   </div>
 

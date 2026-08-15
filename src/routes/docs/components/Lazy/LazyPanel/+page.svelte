@@ -22,14 +22,15 @@ import LazyPanel from "$lib/components/Panel/LazyPanel.svelte"
 
   <CodeBlock
     title="Basic Usage"
-    code={`
+  >
+    {`
 <LazyPanel>
   {#snippet header()}Lazy Content{/snippet}
   {#snippet loading()}Loading...{/snippet}
   <ExpensiveComponent />
 </LazyPanel>
     `}
-  />
+  </CodeBlock>
 
   <h2>Examples</h2>
 

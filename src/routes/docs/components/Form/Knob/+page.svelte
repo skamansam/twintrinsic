@@ -44,7 +44,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
     name="progress" 
     value={75} 
     showValue={true}
-    valueTemplate="{value}%" 
+    valueTemplate={"{value}%"} 
   />
 </div>
 <CodeBlock>
@@ -183,7 +183,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
       max={30} 
       step={0.5} 
       showValue={true}
-      valueTemplate="{value}°C"
+      valueTemplate={"{value}°C"}
     />
   </FormField>
 </div>

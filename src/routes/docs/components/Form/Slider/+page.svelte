@@ -35,7 +35,7 @@ import Slider from "$lib/components/Form/Slider.svelte"
   <h3>Range Slider</h3>
   <div class="not-prose mb-8 max-w-xl">
     <Slider 
-      value={[20, 80]} 
+      value={80} 
       min={0} 
       max={100} 
     />
@@ -136,7 +136,7 @@ import Slider from "$lib/components/Form/Slider.svelte"
       orientation="vertical"
     />
     <Slider 
-      value={[30, 70]} 
+      value={70} 
       min={0} 
       max={100} 
       orientation="vertical"
@@ -177,7 +177,7 @@ import Slider from "$lib/components/Form/Slider.svelte"
       min={0} 
       max={100} 
       showValue
-      valueFormat="${value}%"
+      valueFormat={"{value}%"}
     />
   </div>
 
@@ -264,7 +264,7 @@ import Slider from "$lib/components/Form/Slider.svelte"
       <tr>
         <td><code>valueFormat</code></td>
         <td><code>string</code></td>
-        <td><code>"{value}"</code></td>
+        <td><code>{"{value}"}</code></td>
         <td>Format for displayed value</td>
       </tr>
       <tr>

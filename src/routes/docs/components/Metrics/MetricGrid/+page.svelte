@@ -2,7 +2,7 @@
 	import MetricGrid from '$lib/components/Metrics/MetricGrid/MetricGrid.svelte'
 	import Container from '$lib/components/Container/Container.svelte'
 
-	const items = [
+	const items: Array<{ label: string; value: string; color: 'primary' | 'success' | 'warning' | 'info' }> = [
 		{ label: 'Total Revenue', value: '$45,231.89', color: 'primary' },
 		{ label: 'Total Users', value: '2,543', color: 'success' },
 		{ label: 'Conversion Rate', value: '4.8%', color: 'warning' },
@@ -34,8 +34,8 @@
 		<MetricGrid {items} columns={4} gap="md" />
 	</div>
 
-	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import MetricGrid from '$lib/components/Metrics/MetricGrid/MetricGrid.svelte'
+	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`\u003Cscript>
+  import { MetricGrid } from '$lib';
 
   const items = [
     { label: 'Total Revenue', value: '$45,231.89', color: 'primary' },
@@ -43,7 +43,7 @@
     { label: 'Conversion Rate', value: '4.8%', color: 'warning' },
     { label: 'Active Sessions', value: '542', color: 'info' }
   ];
-</script>
+\u003C/script>
 
 <MetricGrid {items} columns={4} gap="md" />`}</code></pre>
 
