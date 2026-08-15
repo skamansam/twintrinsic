@@ -1,5 +1,7 @@
 <script lang="ts">
 import type { Snippet } from "svelte"
+import { getItemLabel } from "../../helpers/itemLabel.js"
+import { getItemValue } from "../../helpers/itemValue.js"
 
 interface Props {
   class?: string
@@ -45,26 +47,12 @@ $effect(() => {
   selectedValue = value
 })
 
-const getOptionLabel = (option: unknown): string => {
-  if (typeof option === "object" && option !== null) {
-    return ((option as Record<string, unknown>)[optionLabel]?.toString() || "")
-  }
-  return option?.toString() || ""
-}
-
-const getOptionValue = (option: unknown): unknown => {
-  if (typeof option === "object" && option !== null) {
-    return (option as Record<string, unknown>)[optionValue]
-  }
-  return option
-}
-
 const filteredOptions = $derived.by(() => {
   if (!searchable || !searchValue) {
     return options
   }
   return options.filter((option) =>
-    getOptionLabel(option).toLowerCase().includes(searchValue.toLowerCase())
+    getItemLabel(option, optionLabel).toLowerCase().includes(searchValue.toLowerCase())
   )
 })
 
@@ -89,7 +77,7 @@ const handleInputChange = (e: Event): void => {
 }
 
 const handleOptionClick = (option: unknown): void => {
-  const newValue = getOptionValue(option)
+  const newValue = getItemValue(option, optionValue)
   selectedValue = newValue
   isOpen = false
   searchValue = ""
@@ -142,8 +130,8 @@ const selectedLabel = $derived.by(() => {
   if (selectedValue === null || selectedValue === undefined) {
     return placeholder
   }
-  const selected = options.find((opt) => getOptionValue(opt) === selectedValue)
-  return selected ? getOptionLabel(selected) : placeholder
+  const selected = options.find((opt) => getItemValue(opt, optionValue) === selectedValue)
+  return selected ? getItemLabel(selected, optionLabel) : placeholder
 })
 
 /** Stable id for the listbox dropdown; referenced by aria-controls and the dropdown's own id. */
@@ -279,7 +267,7 @@ const listboxId = $derived(`${id}-listbox`)
         <div
           class="combobox-option"
           class:highlighted={index === highlightedIndex}
-          class:selected={getOptionValue(option) === value}
+          class:selected={getItemValue(option, optionValue) === value}
           onclick={() => handleOptionClick(option)}
           onkeydown={(e) => {
             if (e.key === "Enter") {
@@ -287,13 +275,13 @@ const listboxId = $derived(`${id}-listbox`)
             }
           }}
           role="option"
-          aria-selected={getOptionValue(option) === value}
+          aria-selected={getItemValue(option, optionValue) === value}
           tabindex="-1"
         >
           {#if children}
             {@render children(option)}
           {:else}
-            {getOptionLabel(option)}
+            {getItemLabel(option, optionLabel)}
           {/if}
         </div>
       {/each}

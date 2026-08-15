@@ -114,6 +114,13 @@ export {
   type MenuItem as TreeMenuItem,
 } from "./components/TreeMenu/TreeMenu.svelte";
 export { EventsTable, PropsTable } from "./docs/index.js";
+// Shared Helpers
+export {
+  detectLanguage,
+  dispatchGroupRemove,
+  getItemLabel,
+  getItemValue,
+} from "./helpers/index.js";
 // Icon Manager
 export {
   type IconConfig,

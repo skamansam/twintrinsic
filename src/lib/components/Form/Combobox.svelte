@@ -36,6 +36,8 @@ Usage:
 -->
 <script lang="ts">
 import { getContext, tick } from "svelte"
+import { getItemLabel } from "../../helpers/itemLabel.js"
+import { getItemValue } from "../../helpers/itemValue.js"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -45,7 +47,7 @@ const {
   id = crypto.randomUUID(),
 
   /** @type {string} - Name attribute for the input */
-  name,
+  name = undefined,
 
   /** @type {Array} - Options to display in the dropdown */
   options = [],
@@ -90,23 +92,23 @@ const {
   maxHeight = 250,
 
   /** @type {string} - ARIA label for the combobox */
-  ariaLabel,
+  ariaLabel = undefined,
 
   /** @type {Function} - Custom filter function */
-  filter,
+  filter = undefined,
 
   /** @type {Function} - Custom template for options */
-  optionTemplate,
+  optionTemplate = undefined,
 
   /** @type {Function} - Custom template for selected value */
-  valueTemplate,
+  valueTemplate = undefined,
 
   /** @type {(event: CustomEvent) => void} - Change event handler */
-  onchange,
+  onchange = undefined,
   /** @type {(event: CustomEvent) => void} - Input event handler */
-  oninput,
+  oninput = undefined,
 
-  option,
+  option = undefined,
 } = $props()
 
 // Component state
@@ -124,7 +126,7 @@ $effect(() => {
   if (value !== undefined && value !== null) {
     const opt = findOptionByValue(value)
     selectedOption = opt
-    inputValue = opt ? getOptionLabel(opt) : ""
+    inputValue = opt ? getItemLabel(opt, optionLabel) : ""
   } else {
     selectedOption = null
     if (!isOpen) {
@@ -158,40 +160,7 @@ $effect(() => {
 function findOptionByValue(value: unknown): unknown {
   if (value === null || value === undefined) return null
 
-  return options.find((option) => {
-    const optionValue = getOptionValue(option)
-    return optionValue === value
-  })
-}
-
-/**
- * Gets the label for an option
- * @param {Object|string} option - Option to get label for
- * @returns {string} - Option label
- */
-function getOptionLabel(option: unknown): string {
-  if (!option) return ""
-
-  if (typeof option === "string" || typeof option === "number") {
-    return String(option)
-  }
-
-  return ((option as Record<string, unknown>)[optionLabel]?.toString() || "")
-}
-
-/**
- * Gets the value for an option
- * @param {Object|string} option - Option to get value for
- * @returns {any} - Option value
- */
-function getOptionValue(option: unknown): unknown {
-  if (!option) return null
-
-  if (typeof option === "string" || typeof option === "number") {
-    return option
-  }
-
-  return (option as Record<string, unknown>)[optionValue]
+  return options.find((option) => getItemValue(option, optionValue) === value)
 }
 
 /**
@@ -207,7 +176,7 @@ function filterOptions(query: string): unknown[] {
   }
 
   return options.filter((option) => {
-    const label = getOptionLabel(option).toLowerCase()
+    const label = getItemLabel(option, optionLabel).toLowerCase()
     return label.includes(query.toLowerCase())
   })
 }
@@ -240,7 +209,7 @@ function handleBlur(event: Event): void {
       if (!selectedOption) {
         inputValue = ""
       } else {
-        inputValue = getOptionLabel(selectedOption)
+        inputValue = getItemLabel(selectedOption, optionLabel)
       }
     }
   }, 100)
@@ -310,7 +279,7 @@ async function handleKeydown(event: KeyboardEvent): Promise<void> {
       if (isOpen) {
         closeDropdown()
         // Reset input value to selected option
-        inputValue = selectedOption ? getOptionLabel(selectedOption) : ""
+        inputValue = selectedOption ? getItemLabel(selectedOption, optionLabel) : ""
       }
       break
 
@@ -318,7 +287,7 @@ async function handleKeydown(event: KeyboardEvent): Promise<void> {
       if (isOpen) {
         closeDropdown()
         // Reset input value to selected option
-        inputValue = selectedOption ? getOptionLabel(selectedOption) : ""
+        inputValue = selectedOption ? getItemLabel(selectedOption, optionLabel) : ""
       }
       break
   }
@@ -375,10 +344,10 @@ function closeDropdown(): void {
  */
 function selectOption(option: unknown): void {
   selectedOption = option
-  inputValue = getOptionLabel(option)
+  inputValue = getItemLabel(option, optionLabel)
   closeDropdown()
 
-  const value = getOptionValue(option)
+  const value = getItemValue(option, optionValue)
   onchange?.(new CustomEvent("change", { detail: { value, option } }))
   oninput?.(new CustomEvent("input", { detail: { value, option } }))
 }
@@ -506,11 +475,11 @@ function toggleDropdown(): void {
             class="
               combobox-option
               {i === highlightedIndex ? 'combobox-option-highlighted' : ''}
-              {selectedOption && getOptionValue(selectedOption) === getOptionValue(opt) ? 'combobox-option-selected' : ''}
+              {selectedOption && getItemValue(selectedOption, optionValue) === getItemValue(opt, optionValue) ? 'combobox-option-selected' : ''}
             "
             role="option"
             tabindex="-1"
-            aria-selected={selectedOption !== null && selectedOption !== undefined && getOptionValue(selectedOption) === getOptionValue(opt)}
+            aria-selected={selectedOption !== null && selectedOption !== undefined && getItemValue(selectedOption, optionValue) === getItemValue(opt, optionValue)}
             data-index={i}
             onclick={() => selectOption(opt)}
             onmouseenter={() => highlightedIndex = i}
@@ -526,7 +495,7 @@ function toggleDropdown(): void {
             {:else if option}
               {@render option?.({ option: opt })}
             {:else}
-              {getOptionLabel(opt)}
+              {getItemLabel(opt, optionLabel)}
             {/if}
           </div>
         {/each}

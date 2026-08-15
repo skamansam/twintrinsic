@@ -30,6 +30,8 @@ Usage:
 -->
 <script lang="ts" generics="TOption extends string | Record<string, unknown> = string | Record<string, unknown>">
 import { getContext, onMount } from "svelte"
+import { getItemLabel } from "../../helpers/itemLabel.js"
+import { getItemValue } from "../../helpers/itemValue.js"
 import type { FormContext, FormFieldApi } from "./formContext.js"
 
 interface Props<TOption extends string | Record<string, unknown> = string | Record<string, unknown>> {
@@ -135,32 +137,6 @@ const effectiveDisabled = $derived(
 )
 
 /**
- * Gets the display label for an option
- */
-function getOptionLabel(option: TOption): string {
-  if (!option) return ""
-
-  if (typeof option === "object") {
-    return (option as Record<string, unknown>)[optionLabel]?.toString() || ""
-  }
-
-  return option.toString()
-}
-
-/**
- * Gets the value for an option
- */
-function getOptionValue(option: TOption): unknown {
-  if (!option) return null
-
-  if (typeof option === "object") {
-    return (option as Record<string, unknown>)[optionValue]
-  }
-
-  return option
-}
-
-/**
  * Gets the icon for an option (object-string containing HTML)
  */
 function getOptionIcon(option: TOption): unknown {
@@ -173,16 +149,12 @@ function getOptionIcon(option: TOption): unknown {
  * Checks if an option is selected
  */
 function isOptionSelected(option: TOption): boolean {
-  const value = getOptionValue(option)
+  const value = getItemValue(option, optionValue)
 
   if (multiple) {
     return (
       Array.isArray(selectedValues) &&
-      selectedValues.some((v) =>
-        typeof v === "object"
-          ? (v as Record<string, unknown>)[optionValue] === value
-          : v === value
-      )
+      selectedValues.some((v) => getItemValue(v, optionValue) === value)
     )
   }
 
@@ -190,7 +162,7 @@ function isOptionSelected(option: TOption): boolean {
     selectedValues === value ||
     (typeof selectedValues === "object" &&
       selectedValues !== null &&
-      (selectedValues as Record<string, unknown>)[optionValue] === value)
+      getItemValue(selectedValues, optionValue) === value)
   )
 }
 
@@ -201,7 +173,7 @@ function filterOptions(): TOption[] {
   if (!filter || !filterValue) return options
 
   return options.filter((option) => {
-    const label = getOptionLabel(option).toLowerCase()
+    const label = getItemLabel(option, optionLabel).toLowerCase()
     return label.includes(filterValue.toLowerCase())
   })
 }
@@ -212,14 +184,14 @@ function filterOptions(): TOption[] {
 function selectOption(option: TOption): void {
   if (effectiveDisabled) return
 
-  const value = getOptionValue(option)
+  const value = getItemValue(option, optionValue)
 
   if (multiple) {
     if (isOptionSelected(option)) {
       // Remove from selection
       selectedValues = Array.isArray(selectedValues)
         ? (selectedValues.filter((v) =>
-            typeof v === "object" ? (v as Record<string, unknown>)[optionValue] !== value : v !== value
+            getItemValue(v, optionValue) !== value
           ) as TOption[])
         : ([] as TOption[])
     } else {
@@ -294,7 +266,7 @@ function handleKeydown(event: KeyboardEvent): void {
         const char = event.key.toLowerCase()
         const matchingIndex = filteredOptions.findIndex(
           (option, index) =>
-            index > highlightedIndex && getOptionLabel(option).toLowerCase().startsWith(char)
+            index > highlightedIndex && getItemLabel(option, optionLabel).toLowerCase().startsWith(char)
         )
 
         if (matchingIndex !== -1) {
@@ -303,7 +275,7 @@ function handleKeydown(event: KeyboardEvent): void {
         } else {
           // Try from the beginning
           const firstMatchingIndex = filteredOptions.findIndex((option) =>
-            getOptionLabel(option).toLowerCase().startsWith(char)
+            getItemLabel(option, optionLabel).toLowerCase().startsWith(char)
           )
 
           if (firstMatchingIndex !== -1) {
@@ -423,7 +395,7 @@ const filteredOptions = $derived(filterOptions())
               {/if}
 
               <div class="listbox-option-label">
-                {getOptionLabel(option)}
+                {getItemLabel(option, optionLabel)}
               </div>
             </div>
           </li>

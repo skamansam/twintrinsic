@@ -24,8 +24,10 @@ Usage:
 <script lang="ts" generics="TItem extends string | Record<string, unknown> = string | Record<string, unknown>">
 import { getContext } from "svelte"
 import { slide } from "svelte/transition"
-import Input from "./Input.svelte"
+import { getItemLabel } from "../../helpers/itemLabel.js"
+import { getItemValue } from "../../helpers/itemValue.js"
 import type { FormContext, FormFieldApi } from "./formContext.js"
+import Input from "./Input.svelte"
 
 /**
  * Shape consumers can use to override the suggestion-item rendering.
@@ -169,7 +171,7 @@ $effect(() => {
       const b = typeof currentSingle === "object" && currentSingle !== null ? JSON.stringify(currentSingle) : currentSingle
       if (a !== b) {
         selectedItems = formValue as TItem
-        inputValue = getItemLabel(formValue as TItem)
+        inputValue = getItemLabel(formValue as TItem, labelField)
       }
     }
   }
@@ -206,7 +208,7 @@ let searchTimeout: ReturnType<typeof setTimeout> | undefined = $state()
 $effect(() => {
   if (!fieldApi && value) {
     selectedItems = derivedMultiple ? (Array.isArray(value) ? value : [value]) : value
-    inputValue = derivedMultiple ? "" : (Array.isArray(value) ? getItemLabel(value[0] as TItem) : getItemLabel(value))
+    inputValue = derivedMultiple ? "" : (Array.isArray(value) ? (value.length > 0 ? getItemLabel(value[0], labelField) : "") : getItemLabel(value, labelField))
   }
 })
 
@@ -237,7 +239,7 @@ function search(query: string): void {
     suggestions = filter(items, query)
   } else {
     suggestions = items.filter((item: TItem): boolean => {
-      const label = getItemLabel(item).toLowerCase()
+      const label = getItemLabel(item, labelField).toLowerCase()
       return label.includes(query.toLowerCase())
     })
   }
@@ -245,18 +247,6 @@ function search(query: string): void {
   suggestions = suggestions.slice(0, maxItems)
   showSuggestions = true
   highlightedIndex = -1
-}
-
-// Get label for an item
-function getItemLabel(item: TItem): string {
-  if (!item) return ""
-  return typeof item === "object" ? ((item as Record<string, unknown>)[labelField]?.toString() || "") : item.toString()
-}
-
-// Get value for an item (string for primitives, item[valueField] for objects)
-function getItemValue(item: TItem): unknown {
-  if (!item) return ""
-  return typeof item === "object" ? (item as Record<string, unknown>)[valueField] : item
 }
 
 // Handle item selection
@@ -267,25 +257,25 @@ function selectItem(item: TItem): void {
 			selectedItems = [] as TItem[]
 		}
 
-    const value = getItemValue(item)
-    const exists = (selectedItems as TItem[]).some((i) => getItemValue(i) === value)
+    const value = getItemValue(item, valueField)
+    const exists = (selectedItems as TItem[]).some((i) => getItemValue(i, valueField) === value)
 
     if (!exists) {
       selectedItems = [...(selectedItems as TItem[]), item]
       // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
       // module-scope has `this: void`
       onselect?.(new CustomEvent("select", { detail: { items: selectedItems } }))
-      fieldApi?.setValue((selectedItems as TItem[]).map((i) => getItemValue(i)))
+      fieldApi?.setValue((selectedItems as TItem[]).map((i) => getItemValue(i, valueField)))
     }
 
     inputValue = ""
   } else {
     selectedItems = item
-    inputValue = getItemLabel(item)
+    inputValue = getItemLabel(item, labelField)
     // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
     // module-scope has `this: void`
     onselect?.(new CustomEvent("select", { detail: { item } }))
-    fieldApi?.setValue(getItemValue(item))
+    fieldApi?.setValue(getItemValue(item, valueField))
   }
 
   showSuggestions = false
@@ -297,15 +287,15 @@ function removeItem(item: TItem): void {
   if (!derivedMultiple) return
   if (!Array.isArray(selectedItems)) return
 
-  const value = getItemValue(item)
-  selectedItems = (selectedItems as TItem[]).filter((i) => getItemValue(i) !== value)
+  const value = getItemValue(item, valueField)
+  selectedItems = (selectedItems as TItem[]).filter((i) => getItemValue(i, valueField) !== value)
   // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
   // module-scope has `this: void`
   onremove?.(new CustomEvent("remove", { detail: { item } }))
   // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
   // module-scope has `this: void`
   onselect?.(new CustomEvent("select", { detail: { items: selectedItems } }))
-  fieldApi?.setValue((selectedItems as TItem[]).map((i) => getItemValue(i)))
+  fieldApi?.setValue((selectedItems as TItem[]).map((i) => getItemValue(i, valueField)))
 }
 
 /**
@@ -397,7 +387,7 @@ function highlightText(text: string, query: string): string {
  */
 function renderItemTemplate(item: TItem): string {
   if (ItemTemplate === null) {
-    return highlightText(getItemLabel(item), inputValue)
+    return highlightText(getItemLabel(item, labelField), inputValue)
   }
   if (typeof ItemTemplate === "function") {
     return ItemTemplate(item)
@@ -424,13 +414,13 @@ function renderItemTemplate(item: TItem): string {
     <div class="autocomplete-chips" aria-label="Selected items">
       {#each selectedItems as item}
         <div class="autocomplete-chip">
-          <span>{getItemLabel(item)}</span>
+          <span>{getItemLabel(item, labelField)}</span>
           <button
             type="button"
             class="autocomplete-chip-remove"
             onclick={() => removeItem(item)}
             disabled={effectiveDisabled}
-            aria-label="Remove {getItemLabel(item)}"
+            aria-label="Remove {getItemLabel(item, labelField)}"
           >
             <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
               <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
@@ -466,7 +456,7 @@ function renderItemTemplate(item: TItem): string {
             {#if ItemTemplate}
               {@html renderItemTemplate(item)}
             {:else}
-              {@html highlightText(getItemLabel(item), inputValue)}
+              {@html highlightText(getItemLabel(item, labelField), inputValue)}
             {/if}
           </div>
         {/each}
