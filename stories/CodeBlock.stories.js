@@ -215,6 +215,11 @@ npm test`,
 export const AutoDetect = {
   render: () => ({
     Component: CodeBlock,
+    // `props` must be present — the SB10 Svelte renderer crashes on
+    // `Object.entries(undefined)` when a render-return omits it.
+    props: {
+      language: "",
+    },
     slots: {
       default: `// Language will be auto-detected as JavaScript
 function add(a, b) {

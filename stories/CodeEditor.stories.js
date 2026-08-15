@@ -114,7 +114,14 @@ export const Dracula = {
 	},
 };
 
-export const JSON = {
+// Named `Json` (not `JSON`, which would shadow the global and cause a TDZ
+// ReferenceError in the args initializer below) and given an explicit
+// `name` so the sidebar label stays "JSON". Storybook derives the story ID
+// from the export name, so `Json` sanitizes to `json`, preserving the
+// `components-codeeditor--json` URL that tests/e2e/CodeEditor.test.js
+// references.
+export const Json = {
+	name: 'JSON',
 	args: {
 		code: JSON.stringify(
 			{

@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect } from "storybook/test"
 import Tag from "$lib/components/Tag/Tag.svelte"
 import TagGroup from "$lib/components/Tag/TagGroup.svelte"
 
@@ -167,15 +168,29 @@ const codeIcon =
   </div>
 </Story>
 
-<Story name="Dynamic Tags">
-  <div>
-    <TagGroup 
-      items={['JavaScript', 'TypeScript', 'Svelte', 'React', 'Vue']} 
-      variant="primary"
-      dismissible
-      let:item
-    >
-      <Tag>{item}</Tag>
-    </TagGroup>
-  </div>
+<Story
+  name="Dynamic Tags"
+  play={async ({ canvas }) => {
+    // Exercises the Svelte 5 `itemTemplate` snippet API end-to-end. The
+    // snippet renders `pill` Tags; the default fallback (no snippet) does
+    // NOT pass `pill`, so asserting the `.tag` wrapper has `tag-pill`
+    // proves the snippet path actually rendered (not the fallback).
+    // `canvas` is a scoped Testing Library query object (no `.container`
+    // in this addon-vitest setup), so queries walk up from found elements.
+    for (const label of ["JavaScript", "TypeScript", "Svelte", "React", "Vue"]) {
+      const tag = canvas.getByText(label).closest(".tag");
+      await expect(tag).toHaveClass("tag-pill");
+    }
+    await expect(canvas.getAllByRole("button").length).toBeGreaterThanOrEqual(5);
+  }}
+>
+  <TagGroup
+    items={['JavaScript', 'TypeScript', 'Svelte', 'React', 'Vue']}
+    variant="primary"
+    dismissible
+  >
+    {#snippet itemTemplate(item)}
+      <Tag dismissible pill>{item}</Tag>
+    {/snippet}
+  </TagGroup>
 </Story>

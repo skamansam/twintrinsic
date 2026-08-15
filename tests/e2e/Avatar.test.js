@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test"
 /**
  * Smoke tests for the Avatar docs page. Component-level behavior
  * (size/shape/status classes, gravatar URL format, fallback initials,
- * aria-labels, etc.) is verified in stories/Avatar.stories.ts via
+ * aria-labels, etc.) is verified in stories/Avatar.stories.svelte via
  * Storybook play functions under `pnpm test:storybook`. This file
  * only guarantees that the docs site still renders the Avatar
  * landing page and exposes the `data-testid` hooks the wider Playwright
