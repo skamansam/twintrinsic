@@ -887,3 +887,21 @@ The docs CodeBlock barrel-consolidation sweep (22 Form/* + Modal in round 1, 13 
 - `pnpm test:unit`: 98 files / 439 passed / 2 skipped — exit 0
 
 **Docs updated:** `AGENTS.md` "NodeNext Module Resolution" section rewritten as "Module Resolution (site vs. lib)" to document the split and warn against re-adding NodeNext to the root config.
+
+### Phase 9.7c — subpath export audit: doubled-prefix bug + self-import d.ts conflicts (DONE)
+
+**Prompt:** audit all subpath exports for type availability (module-script types reachable via `twintrinsic/components/...`).
+
+**Bug 1 (critical): every component subpath target was broken.** All 87 `./components/*` entries in `package.json` pointed at `./dist/components/components/<Name>/...` (doubled `components/`), while the real layout is `./dist/components/<Name>/...`. Introduced by the surgical-commit generator in `7d9f49c`; the pre-commit consumer test only passed because it ran against the pre-commit (correct) exports. Net effect: `twintrinsic/components/Button` and friends were unresolvable in the published package.
+- Fix: regenerated the 87 targets from `src/lib/index.ts` barrel paths (source of truth, also resolves Card/Combobox/LazyPanel basename collisions), keeping the committed subpath keys.
+- Validated: 0/325 missing targets; `publint` clean ("All good!").
+
+**Bug 2: TS2440 in generated `.d.ts` for recursive components.** `MenuItem.svelte`, `TreeNode.svelte`, `TreeMenu.svelte` self-import (`import X from "./X.svelte"`) for Svelte 5 recursion (no `svelte:self` in Svelte 5). svelte-package carries the self-import into the `.d.ts`, colliding with the component's own `declare const`/`type` → `Import declaration conflicts with local declaration` under `skipLibCheck: false`.
+- Fix: alias the self-import (`import TreeMenuSelf from "./TreeMenu.svelte"`); generated d.ts is now clean.
+
+**Consumer proof (the audit's value):** packed tarball → scratch project → `tsc --noEmit` with `skipLibCheck: false` (checks library d.ts too) importing:
+- 8 module-script types: `ColumnDef` (DataTable), `SidebarProps`, `BottomBarProps`, `MenuItem` (TreeMenu), `PanelProps`, `InputProps`, `ItemTemplateValue` (AutoComplete), `AppProps`
+- component default imports (Button, DataTable, PropsTable, EventsTable), root barrel (Accordion, Container, helpers), helper subpaths (getItemLabel, getItemValue, dispatchGroupRemove, detectLanguage), stores (iconConfig, setIconset, setIconColor, setIconSize, updateIconConfig, IconConfig)
+- **Result: exit 0.**
+
+**Lesson:** a passing `pnpm pack`/build does not validate the exports map — add a target-existence check + consumer `tsc` to the publish path (or at least re-run before tagging).
