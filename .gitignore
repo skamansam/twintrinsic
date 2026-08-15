@@ -35,3 +35,5 @@ src/lib/paraglide
 *storybook.log
 .npmrc
 static/storybook
+# Exports validation (scripts/validate-exports.mjs) temporary check files
+.tmp-exports-check/

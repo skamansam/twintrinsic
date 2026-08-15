@@ -28,6 +28,7 @@ jobs:
       - run: pnpm check
       - run: pnpm check:lib
       - run: pnpm check:a11y
+      - run: pnpm validate:exports
       - run: pnpm test:unit
 
   publish:

@@ -12,6 +12,7 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "check:lib": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.lib.json",
+    "validate:exports": "node scripts/validate-exports.mjs",
     "check:a11y": "bash scripts/check-a11y.sh",
     "format": "biome format --write .",
     "lint": "biome lint .",
