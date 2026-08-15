@@ -3,8 +3,10 @@
 Documentation page for the ColorPicker component.
 -->
 <script lang="ts">
-import { EventsTable, PropsTable } from "$lib/docs/index.js"
-import { CodeBlock, ColorPicker } from "$lib/index.js"
+import EventsTable from "$lib/docs/EventsTable.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import ColorPicker from "$lib/components/Form/ColorPicker.svelte"
 </script>
 
 <h1>ColorPicker</h1>

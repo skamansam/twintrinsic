@@ -1,6 +1,8 @@
 <script lang="ts">
 import { writable } from "svelte/store"
-import { Button, Container, Modal } from "$lib"
+import Button from "$lib/components/Button/Button.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import Modal from "$lib/components/Modal/Modal.svelte"
 
 let showBasicModal = writable(false)
 let showSizedModal = writable(false)

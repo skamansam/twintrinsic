@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { MetricTrend, Container } from '$lib';
+	import MetricTrend from '$lib/components/Metrics/MetricTrend/MetricTrend.svelte'
+	import Container from '$lib/components/Container/Container.svelte'
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -29,7 +30,7 @@
 	</div>
 
 	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import { MetricTrend } from '$lib';
+  import MetricTrend from '$lib/components/Metrics/MetricTrend/MetricTrend.svelte'
 </script>
 
 <MetricTrend

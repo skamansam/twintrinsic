@@ -3,7 +3,11 @@
 Theming documentation page
 -->
 <script lang="ts">
-import { Button, CodeBlock, Container, Panel, Separator } from "$lib"
+import Button from "$lib/components/Button/Button.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import Panel from "$lib/components/Panel/Panel.svelte"
+import Separator from "$lib/components/Separator/Separator.svelte"
 
 const colorScales = ["primary", "secondary", "success", "warning", "error", "info"]
 const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]

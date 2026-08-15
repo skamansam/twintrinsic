@@ -1,5 +1,7 @@
 <script lang="ts">
-import { Accordion, AccordionItem, CodeBlock } from "$lib"
+import Accordion from "$lib/components/Accordion/Accordion.svelte"
+import AccordionItem from "$lib/components/Accordion/AccordionItem.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 <!--
 @component

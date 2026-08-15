@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { HorizontalBarChart, Container } from '$lib';
+	import HorizontalBarChart from '$lib/components/Metrics/HorizontalBarChart/HorizontalBarChart.svelte'
+	import Container from '$lib/components/Container/Container.svelte'
 
 	const data = [45, 38, 52, 41, 35];
 	const labels = ['Chrome', 'Firefox', 'Safari', 'Edge', 'Other'];
@@ -31,7 +32,7 @@
 	</div>
 
 	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import { HorizontalBarChart } from '$lib';
+  import HorizontalBarChart from '$lib/components/Metrics/HorizontalBarChart/HorizontalBarChart.svelte'
 
   const data = [45, 38, 52, 41, 35];
   const labels = ['Chrome', 'Firefox', 'Safari', 'Edge', 'Other'];

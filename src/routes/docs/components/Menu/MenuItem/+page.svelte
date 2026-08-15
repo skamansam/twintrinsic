@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { PropsTable } from "$lib/docs/index.js"
-	import { Menu, MenuItem } from "$lib/index.js"
+	import PropsTable from "$lib/docs/PropsTable.svelte"
+	import Menu from "$lib/components/Menu/Menu/Menu.svelte"
+	import MenuItem from "$lib/components/Menu/Menu/MenuItem.svelte"
 </script>
 
 <h1>MenuItem</h1>

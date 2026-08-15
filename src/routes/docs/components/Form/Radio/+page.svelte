@@ -3,8 +3,11 @@
 Documentation page for the Radio component.
 -->
 <script lang="ts">
-import { Radio, FormField, CodeBlock } from "$lib"
-import { PropsTable, EventsTable } from "$lib/docs/index.js"
+import Radio from "$lib/components/Form/Radio.svelte"
+import FormField from "$lib/components/Form/FormField.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/docs/EventsTable.svelte"
 
 // Sample data for examples
 let theme = $state("light")

@@ -3,7 +3,10 @@
 Stepper documentation page
 -->
 <script lang="ts">
-import { CodeBlock, Container, Stepper, StepperStep } from "$lib"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import Stepper from "$lib/components/Stepper/Stepper.svelte"
+import StepperStep from "$lib/components/Stepper/StepperStep.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

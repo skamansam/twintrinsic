@@ -1,5 +1,6 @@
 <script lang="ts">
-import { Card, CodeBlock } from "$lib"
+import Card from "$lib/components/Card/Card.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 <!--
 @component

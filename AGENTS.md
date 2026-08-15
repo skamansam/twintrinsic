@@ -11,6 +11,24 @@ This document provides instructions for LLM agents working on the Twintrinsic co
 - Make everything accessible and add the proper ARIA labels where necessary
 - All CSS should use Tailwind classes and `@reference` the Tailwind CSS file where possible
 
+### Import Style
+
+Per the Phase 9.7 decision (de-barrel-ify), the project's own code does NOT
+use barrel imports — the source file behind every symbol should be visible
+at the import site.
+
+- **Inside `src/lib/components/`**: components import each other and the
+  helpers **relatively** (e.g. `../../helpers/itemLabel.js`).
+- **Outside `src/lib/components/`** (routes, docs pages, actions, stores):
+  use deep `$lib/...` paths (e.g. `$lib/components/Button/Button.svelte`),
+  never the bare `$lib` barrel. This includes `src/routes/` docs pages.
+- **The barrel `src/lib/index.ts` stays** as the public API entry for
+  library consumers, alongside the subpath `exports` in `package.json`
+  (`twintrinsic/components/Button`, `twintrinsic/helpers/getItemLabel`, …).
+- Example code inside docs `<CodeBlock>` template literals is reader-facing
+  content: it may show `import { X } from "twintrinsic"` for illustration
+  and must NOT be rewritten by import sweeps.
+
 ## Documentation Guidelines
 
 - Use JSDoc comments where necessary

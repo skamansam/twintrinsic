@@ -3,7 +3,9 @@
 Components overview page
 -->
 <script lang="ts">
-import { Container, Panel, Separator } from "$lib"
+import Container from "$lib/components/Container/Container.svelte"
+import Panel from "$lib/components/Panel/Panel.svelte"
+import Separator from "$lib/components/Separator/Separator.svelte"
 
 const components = [
   {

@@ -4,7 +4,9 @@ Documentation site layout with left navigation and header.
 -->
 <script lang="ts">
 import { page } from "$app/state"
-import { App, Separator, TwintrinsicLogo } from "$lib"
+import App from "$lib/components/App/App.svelte"
+import Separator from "$lib/components/Separator/Separator.svelte"
+import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte"
 
 let { children } = $props()
 

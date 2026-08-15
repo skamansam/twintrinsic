@@ -3,8 +3,11 @@
 Documentation page for the InputSwitch component.
 -->
 <script lang="ts">
-import { InputSwitch, FormField, CodeBlock } from "$lib/index.js"
-import { PropsTable, EventsTable } from "$lib/docs/index.js"
+import InputSwitch from "$lib/components/Form/InputSwitch.svelte"
+import FormField from "$lib/components/Form/FormField.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/docs/EventsTable.svelte"
 </script>
 
 <h1>InputSwitch</h1>

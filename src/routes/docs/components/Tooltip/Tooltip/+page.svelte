@@ -1,5 +1,8 @@
 <script lang="ts">
-import { Button, CodeBlock, Container, Tooltip } from "$lib"
+import Button from "$lib/components/Button/Button.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import Tooltip from "$lib/components/Tooltip/Tooltip.svelte"
 </script>
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';

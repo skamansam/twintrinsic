@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { StatsCard, Container } from '$lib';
+	import StatsCard from '$lib/components/Metrics/StatsCard/StatsCard.svelte'
+	import Container from '$lib/components/Container/Container.svelte'
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -28,7 +29,7 @@
 	</div>
 
 	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import { StatsCard } from '$lib';
+  import StatsCard from '$lib/components/Metrics/StatsCard/StatsCard.svelte'
 </script>
 
 <StatsCard label="Total Revenue" value="$124,532.89" color="primary" />`}</code></pre>

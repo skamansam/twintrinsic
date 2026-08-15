@@ -1,5 +1,7 @@
 <script lang="ts">
-import { CodeBlock, Container, Progress } from "$lib"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import Progress from "$lib/components/Progress/Progress.svelte"
 </script>
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';

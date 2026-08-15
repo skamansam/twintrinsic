@@ -1,5 +1,5 @@
 <script lang="ts">
-import { PropsTable } from "$lib/docs/index.js"
+import PropsTable from "$lib/docs/PropsTable.svelte"
 </script>
 
 <h1>Tab</h1>

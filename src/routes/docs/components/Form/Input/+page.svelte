@@ -3,8 +3,10 @@
 Documentation page for the Input component.
 -->
 <script lang="ts">
-import { Input, CodeBlock } from "$lib/index.js"
-import { PropsTable, EventsTable } from "$lib/docs/index.js"
+import Input from "$lib/components/Form/Input.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/docs/EventsTable.svelte"
 </script>
 
 <h1>Input</h1>

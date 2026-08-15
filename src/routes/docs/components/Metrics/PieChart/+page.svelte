@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { PieChart, Container } from '$lib';
+	import PieChart from '$lib/components/Metrics/PieChart/PieChart.svelte'
+	import Container from '$lib/components/Container/Container.svelte'
 
 	const browserData = [35, 25, 20, 20];
 	const browserLabels = ['Chrome', 'Firefox', 'Safari', 'Edge'];
@@ -32,7 +33,7 @@
 	</div>
 
 	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import { PieChart } from '$lib';
+  import PieChart from '$lib/components/Metrics/PieChart/PieChart.svelte'
 
   const data = [35, 25, 20, 20];
   const labels = ['Chrome', 'Firefox', 'Safari', 'Edge'];

@@ -3,8 +3,10 @@
 Documentation page for the AutoComplete component.
 -->
 <script lang="ts">
-import { AutoComplete, CodeBlock } from "$lib/index.js"
-import { PropsTable, EventsTable } from "$lib/docs/index.js"
+import AutoComplete from "$lib/components/Form/AutoComplete.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/docs/EventsTable.svelte"
 
 const countries = [
   { label: "United States", value: "US" },

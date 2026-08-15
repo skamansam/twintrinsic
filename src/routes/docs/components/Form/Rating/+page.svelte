@@ -3,8 +3,10 @@
 Documentation page for the Rating component.
 -->
 <script lang="ts">
-import { EventsTable, PropsTable } from "$lib"
-import { CodeBlock, Rating } from "$lib/index.js"
+import EventsTable from "$lib/docs/EventsTable.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Rating from "$lib/components/Form/Rating.svelte"
 
 let hoverRating = $state(0)
 

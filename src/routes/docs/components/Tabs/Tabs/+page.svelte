@@ -4,7 +4,12 @@ Tabs documentation page
 -->
 
 <script lang="ts">
-import { CodeBlock, Container, Tab, TabList, TabPanel, Tabs } from "$lib"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import Tab from "$lib/components/Tabs/Tab.svelte"
+import TabList from "$lib/components/Tabs/TabList.svelte"
+import TabPanel from "$lib/components/Tabs/TabPanel.svelte"
+import Tabs from "$lib/components/Tabs/Tabs.svelte"
 </script>
 
 <style lang="postcss">

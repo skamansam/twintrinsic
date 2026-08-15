@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { AreaChart, BarChart, DonutChart, GaugeChart, KPICard, LineChart, MetricGrid, ProgressMetric } from '$lib';
+	import AreaChart from '$lib/components/Metrics/AreaChart/AreaChart.svelte'
+	import BarChart from '$lib/components/Metrics/BarChart/BarChart.svelte'
+	import DonutChart from '$lib/components/Metrics/DonutChart/DonutChart.svelte'
+	import GaugeChart from '$lib/components/Metrics/GaugeChart/GaugeChart.svelte'
+	import KPICard from '$lib/components/Metrics/KPICard/KPICard.svelte'
+	import LineChart from '$lib/components/Metrics/LineChart/LineChart.svelte'
+	import MetricGrid from '$lib/components/Metrics/MetricGrid/MetricGrid.svelte'
+	import ProgressMetric from '$lib/components/Metrics/ProgressMetric/ProgressMetric.svelte'
 
 	// Sample data for the dashboard
 	const salesData = {

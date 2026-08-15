@@ -1,5 +1,8 @@
 <script lang="ts">
-import { Breadcrumb, BreadcrumbItem, CodeBlock, Container } from "$lib"
+import Breadcrumb from "$lib/components/Breadcrumb/Breadcrumb.svelte"
+import BreadcrumbItem from "$lib/components/Breadcrumb/BreadcrumbItem.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 <!--
 @component

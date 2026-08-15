@@ -1,5 +1,7 @@
 <script lang="ts">
-import { CodeBlock, Container, Masonry } from "$lib"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import Masonry from "$lib/components/Masonry/Masonry.svelte"
 </script>
 
 <style lang="postcss">

@@ -3,7 +3,8 @@
 Documentation page for the LazyPanel component
 -->
 <script lang="ts">
-import { CodeBlock, LazyPanel } from "$lib"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import LazyPanel from "$lib/components/Panel/LazyPanel.svelte"
 </script>
 
 <article class="prose dark:prose-invert max-w-none">

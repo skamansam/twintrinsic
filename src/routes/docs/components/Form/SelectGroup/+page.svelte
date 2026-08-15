@@ -3,8 +3,12 @@
 Documentation page for the SelectGroup component.
 -->
 <script lang="ts">
-import { Select, SelectGroup, FormField, CodeBlock } from "$lib/index.js"
-import { PropsTable, EventsTable } from "$lib"
+import Select from "$lib/components/Form/Select.svelte"
+import SelectGroup from "$lib/components/Form/SelectGroup.svelte"
+import FormField from "$lib/components/Form/FormField.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/docs/EventsTable.svelte"
 
 // Sample data for examples
 const europeanCountries = [

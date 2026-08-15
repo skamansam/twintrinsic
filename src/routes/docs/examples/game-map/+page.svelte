@@ -4,7 +4,9 @@ Game Map Example - Interactive map with markers, popups, and editing
 -->
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { CodeEditor, Container, Map as MapComponent } from '$lib';
+	import CodeEditor from '$lib/components/CodeEditor/CodeEditor.svelte'
+	import Container from '$lib/components/Container/Container.svelte'
+	import MapComponent from '$lib/components/Map/Map.svelte'
 	import fallout4Locations from './fallout4-locations.json';
 
 	interface GameMarker {

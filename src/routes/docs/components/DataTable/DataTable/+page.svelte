@@ -3,7 +3,9 @@
 DataTable documentation page
 -->
 <script lang="ts">
-import { CodeBlock, Container, DataTable } from "$lib"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import DataTable from "$lib/components/DataTable/DataTable.svelte"
 
 // Sample data for examples
 const users = [

@@ -1,5 +1,8 @@
 <script lang="ts">
-import { Badge, CodeBlock, Container, Icon } from "$lib"
+import Badge from "$lib/components/Badge/Badge.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import Icon from "$lib/components/Icon/Icon.svelte"
 </script>
 <!--
 @component

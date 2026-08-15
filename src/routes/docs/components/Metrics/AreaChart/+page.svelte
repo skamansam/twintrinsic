@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { AreaChart, Container } from '$lib';
+	import AreaChart from '$lib/components/Metrics/AreaChart/AreaChart.svelte'
+	import Container from '$lib/components/Container/Container.svelte'
 
 	const singleSeries = [
 		{

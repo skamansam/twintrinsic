@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { DonutChart, Container } from '$lib';
+	import DonutChart from '$lib/components/Metrics/DonutChart/DonutChart.svelte'
+	import Container from '$lib/components/Container/Container.svelte'
 
 	const defaultData = [30, 25, 20, 15, 10];
 	const defaultLabels = ['Product A', 'Product B', 'Product C', 'Product D', 'Product E'];
@@ -33,7 +34,7 @@
 	</div>
 
 	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import { DonutChart } from '$lib';
+  import DonutChart from '$lib/components/Metrics/DonutChart/DonutChart.svelte'
 
   const data = [30, 25, 20, 15, 10];
   const labels = ['Product A', 'Product B', 'Product C', 'Product D', 'Product E'];

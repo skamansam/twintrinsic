@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { BarChart, Container } from '$lib';
+	import BarChart from '$lib/components/Metrics/BarChart/BarChart.svelte'
+	import Container from '$lib/components/Container/Container.svelte'
 
 	const singleSeries = [
 		{
@@ -53,7 +54,7 @@
 	</div>
 
 	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import { BarChart } from '$lib';
+  import BarChart from '$lib/components/Metrics/BarChart/BarChart.svelte'
 
   const series = [
     {

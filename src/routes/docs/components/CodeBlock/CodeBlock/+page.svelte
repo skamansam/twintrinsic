@@ -3,7 +3,8 @@
 Documentation page for the CodeBlock component.
 -->
 <script lang="ts">
-import { CodeBlock, PropsTable } from "$lib"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
 </script>
 
 <h1>CodeBlock</h1>

@@ -3,8 +3,10 @@
 Documentation page for the Select component.
 -->
 <script lang="ts">
-import { Select, CodeBlock } from "$lib/index.js"
-import { PropsTable, EventsTable } from "$lib/docs/index.js"
+import Select from "$lib/components/Form/Select.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/docs/EventsTable.svelte"
 
 const countries = [
   { value: "us", label: "United States" },

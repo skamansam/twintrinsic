@@ -3,8 +3,10 @@
 Documentation page for the Checkbox component.
 -->
 <script lang="ts">
-import { Checkbox, CodeBlock } from "$lib/index.js"
-import { PropsTable, EventsTable } from "$lib/docs/index.js"
+import Checkbox from "$lib/components/Form/Checkbox.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/docs/EventsTable.svelte"
 </script>
 
 <h1>Checkbox</h1>

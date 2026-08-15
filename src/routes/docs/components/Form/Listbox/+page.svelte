@@ -3,8 +3,11 @@
 Documentation page for the Listbox component.
 -->
 <script lang="ts">
-import { Listbox, FormField, CodeBlock } from "$lib/index.js"
-import { PropsTable, EventsTable } from "$lib"
+import Listbox from "$lib/components/Form/Listbox.svelte"
+import FormField from "$lib/components/Form/FormField.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/docs/EventsTable.svelte"
 
 // Sample data for examples
 const colors = [

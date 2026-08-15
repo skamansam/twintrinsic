@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { ProgressMetric, Container } from '$lib';
+	import ProgressMetric from '$lib/components/Metrics/ProgressMetric/ProgressMetric.svelte'
+	import Container from '$lib/components/Container/Container.svelte'
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -30,7 +31,7 @@
 	</div>
 
 	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import { ProgressMetric } from '$lib';
+  import ProgressMetric from '$lib/components/Metrics/ProgressMetric/ProgressMetric.svelte'
 </script>
 
 <ProgressMetric

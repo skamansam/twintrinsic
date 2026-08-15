@@ -3,7 +3,9 @@
 FileUpload documentation page
 -->
 <script lang="ts">
-import { CodeBlock, Container, FileUpload } from "$lib"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import FileUpload from "$lib/components/Form/FileUpload.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">

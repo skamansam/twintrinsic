@@ -1,6 +1,8 @@
 <script lang="ts">
 import { getContext } from "svelte"
-import { CodeBlock, Container, Table } from "$lib"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import Table from "$lib/components/Table/Table.svelte"
 </script>
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';

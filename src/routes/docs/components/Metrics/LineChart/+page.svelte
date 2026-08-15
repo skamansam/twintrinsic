@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { LineChart, Container } from '$lib';
+	import LineChart from '$lib/components/Metrics/LineChart/LineChart.svelte'
+	import Container from '$lib/components/Container/Container.svelte'
 
 	const singleSeries = [
 		{
@@ -53,7 +54,7 @@
 	</div>
 
 	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import { LineChart } from '$lib';
+  import LineChart from '$lib/components/Metrics/LineChart/LineChart.svelte'
 
   const series = [
     {

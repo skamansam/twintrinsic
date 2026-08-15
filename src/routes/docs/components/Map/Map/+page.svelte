@@ -4,7 +4,9 @@ Map documentation page
 -->
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { CodeBlock, Container, Table } from '$lib';
+	import CodeBlock from '$lib/components/CodeBlock/CodeBlock.svelte'
+	import Container from '$lib/components/Container/Container.svelte'
+	import Table from '$lib/components/Table/Table.svelte'
 	import MapComponent from '$lib/components/Map/Map.svelte';
 	import CustomMapImage from "./fallout4-pipboy-highres.webp";
 

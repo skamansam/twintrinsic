@@ -1,5 +1,7 @@
 <script lang="ts">
-import { Splitter, CodeBlock, Container } from "$lib"
+import Splitter from "$lib/components/Splitter/Splitter.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 <!--
 @component

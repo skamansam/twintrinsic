@@ -1,5 +1,7 @@
 <script lang="ts">
-import { CodeBlock, Container, setIconset } from "$lib"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import { setIconset } from "$lib/stores/iconManager.js"
 </script>
 <!--
 @component

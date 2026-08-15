@@ -3,8 +3,13 @@
 Documentation page for the FloatLabel component.
 -->
 <script lang="ts">
-import { FloatLabel, TextInput, Textarea, Select, CodeBlock } from "$lib/index.js"
-import { PropsTable, EventsTable } from "$lib/docs/index.js"
+import FloatLabel from "$lib/components/Form/FloatLabel.svelte"
+import TextInput from "$lib/components/Form/TextInput.svelte"
+import Textarea from "$lib/components/Form/Textarea.svelte"
+import Select from "$lib/components/Form/Select.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/docs/EventsTable.svelte"
 </script>
 
 <h1>FloatLabel</h1>

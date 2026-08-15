@@ -3,8 +3,10 @@
 Documentation page for the Dropdown component.
 -->
 <script lang="ts">
-import { Dropdown, CodeBlock } from "$lib/index.js"
-import { PropsTable, EventsTable } from "$lib/docs/index.js"
+import Dropdown from "$lib/components/Form/Dropdown.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/docs/EventsTable.svelte"
 
 // Sample data for examples
 const countries = [

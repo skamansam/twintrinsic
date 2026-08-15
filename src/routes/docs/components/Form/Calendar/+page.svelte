@@ -3,8 +3,10 @@
 Documentation page for the Calendar component.
 -->
 <script lang="ts">
-import { Calendar, CodeBlock } from "$lib/index.js"
-import { PropsTable, EventsTable } from "$lib/docs/index.js"
+import Calendar from "$lib/components/Form/Calendar.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/docs/EventsTable.svelte"
 </script>
 
 <h1>Calendar</h1>

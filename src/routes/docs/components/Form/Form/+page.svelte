@@ -4,7 +4,12 @@ Form documentation page
 -->
 
 <script lang="ts">
-import { Button, Checkbox, Container, Form, FormField, Input } from "$lib"
+import Button from "$lib/components/Button/Button.svelte"
+import Checkbox from "$lib/components/Form/Checkbox.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import Form from "$lib/components/Form/Form.svelte"
+import FormField from "$lib/components/Form/FormField.svelte"
+import Input from "$lib/components/Form/Input.svelte"
 </script>
 
 <style lang="postcss">

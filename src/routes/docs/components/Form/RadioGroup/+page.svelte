@@ -3,8 +3,11 @@
 Documentation page for the RadioGroup component.
 -->
 <script lang="ts">
-import { RadioGroup, Radio, CodeBlock } from "$lib/index.js"
-import { PropsTable, EventsTable } from "$lib/docs/index.js"
+import RadioGroup from "$lib/components/Form/RadioGroup.svelte"
+import Radio from "$lib/components/Form/Radio.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/docs/EventsTable.svelte"
 </script>
 
 <h1>RadioGroup</h1>

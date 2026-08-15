@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { TreeMenu, type TreeMenuItem } from "$lib";
+  import TreeMenu from "$lib/components/TreeMenu/TreeMenu.svelte"
+  import type { MenuItem as TreeMenuItem } from "$lib/components/TreeMenu/TreeMenu.svelte"
 
   const basicItems: TreeMenuItem[] = [
     { title: 'Home', icon: 'home', link: '/' },

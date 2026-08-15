@@ -3,8 +3,10 @@
 Documentation page for the Textarea component.
 -->
 <script>
-import { Textarea, CodeBlock } from "$lib/index.js"
-import { PropsTable, EventsTable } from "$lib/docs/index.js"
+import Textarea from "$lib/components/Form/Textarea.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/docs/EventsTable.svelte"
 </script>
 
 <h1>Textarea</h1>

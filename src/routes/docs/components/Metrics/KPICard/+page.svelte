@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { KPICard, Container } from '$lib';
+	import KPICard from '$lib/components/Metrics/KPICard/KPICard.svelte'
+	import Container from '$lib/components/Container/Container.svelte'
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -28,7 +29,7 @@
 	</div>
 
 	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import { KPICard } from '$lib';
+  import KPICard from '$lib/components/Metrics/KPICard/KPICard.svelte'
 </script>
 
 <KPICard

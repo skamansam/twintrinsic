@@ -3,8 +3,12 @@
 Documentation page for the InvalidState component.
 -->
 <script lang="ts">
-import { InvalidState, TextInput, FormField, CodeBlock } from "$lib"
-import { PropsTable, EventsTable } from "$lib/docs/index.js"
+import InvalidState from "$lib/components/Form/InvalidState.svelte"
+import TextInput from "$lib/components/Form/TextInput.svelte"
+import FormField from "$lib/components/Form/FormField.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/docs/EventsTable.svelte"
 </script>
 
 <h1>InvalidState</h1>

@@ -1,5 +1,7 @@
 <script lang="ts">
-import { Chip, CodeBlock, Container } from "$lib"
+import Chip from "$lib/components/Chip/Chip.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 <!--
 @component

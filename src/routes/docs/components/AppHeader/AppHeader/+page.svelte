@@ -1,5 +1,7 @@
 <script lang="ts">
-import { AppHeader, CodeBlock, Container } from "$lib"
+import AppHeader from "$lib/components/AppHeader/AppHeader.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 <!--
 @component

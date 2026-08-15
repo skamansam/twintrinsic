@@ -3,8 +3,10 @@
 Documentation page for the Switch component.
 -->
 <script>
-import { Switch, CodeBlock } from "$lib/index.js"
-import { PropsTable, EventsTable } from "$lib/docs/index.js"
+import Switch from "$lib/components/Form/Switch.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/docs/EventsTable.svelte"
 </script>
 
 <h1>Switch</h1>

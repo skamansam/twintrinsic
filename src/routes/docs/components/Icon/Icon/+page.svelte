@@ -1,5 +1,11 @@
 <script lang="ts">
-import { CodeBlock, Container, Icon, iconConfig, Select, setIconset, TextInput } from "$lib"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import Icon from "$lib/components/Icon/Icon.svelte"
+import { iconConfig } from "$lib/stores/iconManager.js"
+import Select from "$lib/components/Form/Select.svelte"
+import { setIconset } from "$lib/stores/iconManager.js"
+import TextInput from "$lib/components/Form/TextInput.svelte"
 
 setIconset('tabler')
 

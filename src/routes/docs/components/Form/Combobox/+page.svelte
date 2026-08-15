@@ -3,7 +3,9 @@
 Combobox documentation page
 -->
 <script lang="ts">
-import { CodeBlock, Combobox, Container } from "$lib"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Combobox from "$lib/components/Form/Combobox.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 
 // Sample data for examples
 const fruits = ["Apple", "Banana", "Cherry", "Date", "Elderberry", "Fig", "Grape", "Honeydew"]

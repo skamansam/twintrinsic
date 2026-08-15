@@ -3,7 +3,8 @@
 CodeBlockSpeed documentation page
 -->
 <script lang="ts">
-	import { CodeBlock, CodeBlockSpeed } from '$lib';
+	import CodeBlock from '$lib/components/CodeBlock/CodeBlock.svelte'
+	import CodeBlockSpeed from '$lib/components/CodeBlockSpeed/CodeBlockSpeed.svelte'
 </script>
 
 <div class="space-y-8">

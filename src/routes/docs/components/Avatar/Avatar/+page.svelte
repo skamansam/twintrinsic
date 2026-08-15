@@ -1,5 +1,7 @@
 <script lang="ts">
-import { Avatar, CodeBlock, Container } from "$lib"
+import Avatar from "$lib/components/Avatar/Avatar.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 <!--
 @component

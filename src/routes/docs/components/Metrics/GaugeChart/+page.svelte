@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { GaugeChart, Container } from '$lib';
+	import GaugeChart from '$lib/components/Metrics/GaugeChart/GaugeChart.svelte'
+	import Container from '$lib/components/Container/Container.svelte'
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -32,7 +33,7 @@
 	</div>
 
 	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<script>
-  import { GaugeChart } from '$lib';
+  import GaugeChart from '$lib/components/Metrics/GaugeChart/GaugeChart.svelte'
 </script>
 
 <GaugeChart

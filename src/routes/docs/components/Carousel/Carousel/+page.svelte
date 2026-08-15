@@ -3,7 +3,10 @@
 Carousel documentation page
 -->
 <script lang="ts">
-import { Carousel, CarouselItem, CodeBlock, Container } from "$lib"
+import Carousel from "$lib/components/Carousel/Carousel.svelte"
+import CarouselItem from "$lib/components/Carousel/CarouselItem.svelte"
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
