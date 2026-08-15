@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" generics="TItem extends string | Record<string, unknown> = string | Record<string, unknown>">
 /**
  * @component
  * TagGroup - A component for managing multiple Tag components.
@@ -18,84 +18,81 @@
  *   <Tag>Svelte</Tag>
  * </TagGroup>
  *
- * <TagGroup 
- *   items={['Red', 'Green', 'Blue']} 
- *   let:item 
+ * <TagGroup
+ *   items={['Red', 'Green', 'Blue']}
  *   ondismiss={(e) => handleDismiss(e.detail)}
  * >
- *   <Tag dismissible>{item}</Tag>
+ *   {#snippet itemTemplate(item)}
+ *     <Tag dismissible>{item}</Tag>
+ *   {/snippet}
  * </TagGroup>
  * ```
  */
-import { setContext, type Component } from "svelte"
+import type { Snippet } from "svelte"
+import { dispatchGroupRemove } from "../../helpers/groupRemove.js"
+import { getItemLabel } from "../../helpers/itemLabel.js"
+import Tag from "./Tag.svelte"
 
-const {
-  /** @type {string} - Additional CSS classes */
+interface Props<TItem extends string | Record<string, unknown>> {
+  /** Additional CSS classes */
+  class?: string
+  /** HTML id for accessibility */
+  id?: string
+  /** Visual style variant passed to all tags */
+  variant?: "default" | "primary" | "secondary" | "success" | "warning" | "error" | "info"
+  /** Size passed to all tags (sm, md, lg) */
+  size?: "sm" | "md" | "lg"
+  /** Whether all tags are dismissible */
+  dismissible?: boolean
+  /** Whether all tags are outlines */
+  outline?: boolean
+  /** Whether all tags are pills */
+  pill?: boolean
+  /** Whether all tags are clickable */
+  clickable?: boolean
+  /** Direction of the tag group (horizontal, vertical) */
+  direction?: "horizontal" | "vertical"
+  /** Items to render as tags */
+  items?: TItem[]
+  /** Field used to derive the label when items are objects */
+  labelField?: string
+  /**
+   * Snippet rendered per item. Receives the item and its index,
+   * e.g. `{#snippet itemTemplate(item)}<Tag>{item}</Tag>{/snippet}`.
+   */
+  itemTemplate?: Snippet<[TItem, number]>
+  /** ARIA label for the tag group */
+  ariaLabel?: string
+  /** Dismiss event handler */
+  ondismiss?: (event: CustomEvent<{ item: TItem; index: number }>) => void
+  /** Static tag content (rendered when `items` is empty) */
+  children?: Snippet
+}
+
+let {
   class: className = "",
-
-  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
-
-  /** @type {string} - Visual style variant passed to all tags */
   variant = "default",
-
-  /** @type {string} - Size passed to all tags (sm, md, lg) */
   size = "md",
-
-  /** @type {boolean} - Whether all tags are dismissible */
   dismissible = false,
-
-  /** @type {boolean} - Whether all tags are outlines */
   outline = false,
-
-  /** @type {boolean} - Whether all tags are pills */
   pill = false,
-
-  /** @type {boolean} - Whether all tags are clickable */
   clickable = false,
-
-  /** @type {string} - Direction of the tag group (horizontal, vertical) */
   direction = "horizontal",
-
-  /** @type {Array} - Items to render as tags */
   items = [],
-
-  /** @type {string} - ARIA label for the tag group */
+  labelField = "label",
+  itemTemplate,
   ariaLabel = "Tag group",
-
-  /** @type {(event: CustomEvent) => void} - Dismiss event handler */
   ondismiss,
-
   children,
-} = $props()
-
-/** @type {Component | null} */
-let ItemTemplate: Component | null = $state(null)
-$effect(() => {
-	ItemTemplate = (children?.item ?? null) as Component | null
-})
-
-// Provide context for child tags (wrapped in getters so prop changes propagate)
-$effect(() => {
-  setContext("tagGroup", {
-    get variant() { return variant },
-    get size() { return size },
-    get dismissible() { return dismissible },
-    get outline() { return outline },
-    get pill() { return pill },
-    get clickable() { return clickable },
-  })
-})
+}: Props<TItem> = $props()
 
 /**
- * Handles removing a tag
- * @param {number} index - Index of the tag to remove
+ * Handles dismissing a tag
+ * @param index - Index of the tag to dismiss
  */
 function handleDismiss(index: number): void {
-  if (items.length > 0) {
-    const removedItem = items[index]
-    ondismiss?.(new CustomEvent("dismiss", { detail: { item: removedItem, index } }))
-  }
+  dispatchGroupRemove(items, index, "dismiss", ondismiss)
 }
 </script>
 
@@ -112,21 +109,20 @@ function handleDismiss(index: number): void {
   {#if items.length > 0}
     {#each items as item, index}
       <div class="tag-group-item">
-        {#if ItemTemplate}
-          {@const ItemCtor = ItemTemplate}
-          <ItemCtor
-            {item}
-            {index}
-            variant={variant}
-            size={size}
-            dismissible={dismissible}
-            outline={outline}
-            pill={pill}
-            clickable={clickable}
-            ondismiss={() => handleDismiss(index)}
-          />
+        {#if itemTemplate}
+          {@render itemTemplate(item, index)}
         {:else}
-          {@render children?.()}
+          <Tag
+            {variant}
+            {size}
+            {dismissible}
+            {outline}
+            {pill}
+            {clickable}
+            ondismiss={() => handleDismiss(index)}
+          >
+            {getItemLabel(item, labelField)}
+          </Tag>
         {/if}
       </div>
     {/each}
@@ -137,20 +133,20 @@ function handleDismiss(index: number): void {
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";
-  
+
   .tag-group {
     @apply flex flex-wrap;
     @apply gap-2;
   }
-  
+
   .tag-group-horizontal {
     @apply flex-row;
   }
-  
+
   .tag-group-vertical {
     @apply flex-col;
   }
-  
+
   .tag-group-item {
     @apply flex-none;
   }

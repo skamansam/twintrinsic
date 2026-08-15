@@ -1,6 +1,6 @@
 # Build Warnings Summary
 
-Total warnings: 18
+Total warnings: 17
 
 ## Current Warnings (from latest build)
 
@@ -9,9 +9,6 @@ Total warnings: 18
 
 ### src/lib/components/Tabs/TabPanel.svelte (1 warning)
 - Line 80:16 - This reference only captures the initial value of `id`. Did you mean to reference it inside a closure instead?
-
-### src/lib/components/Tag/TagGroup.svelte (1 warning)
-- Line 109:8 - `<svelte:component>` is deprecated in runes mode — components are dynamic by default
 
 ### src/lib/components/Tag/Tag.svelte (1 warning)
 - Line 176:2 - noninteractive element cannot have nonnegative tabIndex value
@@ -43,11 +40,11 @@ Total warnings: 18
 
 ## Summary
 
-**Warnings Fixed**: 438 (from 456 to 18)
-**Remaining**: 18 warnings across 11 files
+**Warnings Fixed**: 439 (from 456 to 17)
+**Remaining**: 17 warnings across 10 files
 
 ### Categories of Remaining Warnings:
 1. **state_referenced_locally** (6 warnings) - Props captured in closures
 2. **Accessibility Issues** (8 warnings) - ARIA roles, tabindex, keyboard handlers
-3. **Deprecated Patterns** (2 warnings) - `<svelte:component>` and `<svelte:self>`
+3. **Deprecated Patterns** (1 warning) - `<svelte:self>`
 4. **Other** (2 warnings) - Redundant roles, unsupported ARIA attributes
