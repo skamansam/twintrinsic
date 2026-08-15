@@ -32,7 +32,7 @@ Usage:
 /**
  * Public column definition for `DataTable`. Declared in `<script module>` so
  * consumers can import it cross-file:
- *   `import type { ColumnDef } from "$lib/components/DataTable/DataTable.svelte"`
+ *   `import type { ColumnDef } from "twintrinsic/components/DataTable"`
  */
 export interface ColumnDef<TRow extends Record<string, unknown> = Record<string, unknown>> {
   field: string
