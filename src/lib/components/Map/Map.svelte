@@ -191,7 +191,13 @@ import 'leaflet/dist/leaflet.css';
 	}
 
 async function initializeMap() {
-	if (!mapContainer) return undefined;
+	// Capture the element reference synchronously: the dynamic `import`
+	// below yields to the event loop, and if the component unmounts in the
+	// meantime (e.g. the storybook browser runner tearing down a story)
+	// Svelte nulls the `bind:this` ref, making Leaflet throw
+	// "Map container not found" as an unhandled rejection.
+	const container = mapContainer;
+	if (!container) return undefined;
 
 		// Dynamically import leaflet to avoid type issues
 		const leafletModule = await import('leaflet');
@@ -218,7 +224,7 @@ async function initializeMap() {
 		}
 
 		// biome-ignore lint/suspicious/noExplicitAny: Leaflet types not fully available in alpha
-		map = new (leaflet as any).Map(mapContainer, mapOptions);
+		map = new (leaflet as any).Map(container, mapOptions);
 
 		// Set max bounds if using simple CRS or custom image
 		if (isCustomImageMode && imageHeight && imageWidth) {

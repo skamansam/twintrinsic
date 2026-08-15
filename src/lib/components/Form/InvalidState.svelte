@@ -23,7 +23,7 @@ const {
   class: className = "",
 
   /** @type {string} - Error message to display */
-  message,
+  message = undefined,
 
   /** @type {string} - Icon name to display */
   icon = "alert-circle",
@@ -34,7 +34,7 @@ const {
   /** @type {boolean} - Whether to animate the message */
   animated = true,
 
-  children,
+  children = undefined,
 } = $props()
 </script>
 

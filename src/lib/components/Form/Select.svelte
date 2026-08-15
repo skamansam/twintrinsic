@@ -76,30 +76,32 @@ interface SelectProps {
   onclose?: (event: CustomEvent<void>) => void
   /** Filter event handler */
   onfilter?: (event: CustomEvent<{ query: string }>) => void
+  /** Custom option children (e.g. `<SelectGroup>`/`<option>` snippets) */
+  children?: import("svelte").Snippet
 }
-
-const {
+let {
   label = "",
-  id,
-  name,
+  id = undefined,
+  name = undefined,
   options = [],
-  value,
+  value = $bindable(),
   multiple = false,
   placeholder = "Select...",
   disabled = false,
   error = "",
   required = false,
-  optionChildren,
+  optionChildren = undefined,
   filter = false,
   size = "md",
   clearable = false,
-  ariaLabel,
+  ariaLabel = undefined,
   class: className = "",
-  onchange,
-  onclear,
-  onopen,
-  onclose,
-  onfilter,
+  onchange = undefined,
+  onclear = undefined,
+  onopen = undefined,
+  onclose = undefined,
+  onfilter = undefined,
+  children = undefined,
 }: SelectProps = $props()
 
 // Component state
@@ -124,6 +126,10 @@ $effect(() => {
 function handleChange(event: Event): void {
   const target = event.target as HTMLSelectElement
   selectedValue = multiple ? Array.from(target.selectedOptions, (o) => o.value) : target.value
+  // `value` is `$bindable()`: assign back so the parent's `bind:value`
+  // updates on user interaction (writing the prop is also what keeps the
+  // internal `selectedValue` in sync via the effect above).
+  value = selectedValue
   onchange?.(new CustomEvent("change", { detail: { value: selectedValue } }))
 }
 
@@ -151,25 +157,29 @@ function handleChange(event: Event): void {
       aria-describedby={error ? 'select-error' : undefined}
       class="select-input"
     >
-      {#if !selectedValue && !multiple}
-        <option value="">{placeholder}</option>
-      {/if}
-      
-      {#each options as option}          
-        {#if option.children}
-          <optgroup label={option.label}>
-            {#each option.children as child}
-              <option value={child.value}>
-                {child.label}
-              </option>
-            {/each}
-          </optgroup>
-        {:else}
-          <option value={option.value}>
-            {option.label}
-          </option>
+      {#if children}
+        {@render children?.()}
+      {:else}
+        {#if !selectedValue && !multiple}
+          <option value="">{placeholder}</option>
         {/if}
-      {/each}
+        
+        {#each options as option}          
+          {#if option.children}
+            <optgroup label={option.label}>
+              {#each option.children as child}
+                <option value={child.value}>
+                  {child.label}
+                </option>
+              {/each}
+            </optgroup>
+          {:else}
+            <option value={option.value}>
+              {option.label}
+            </option>
+          {/if}
+        {/each}
+      {/if}
     </select>
   </label>
   

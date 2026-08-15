@@ -66,6 +66,10 @@ export type InputProps = {
   class?: string
   /** Input mask pattern */
   mask?: string
+  /** Minimum length validation */
+  minlength?: number
+  /** Maximum length validation */
+  maxlength?: number
   /** ARIA description */
   ariaDescription?: string
   /** Focus event handler */
@@ -122,6 +126,10 @@ const {
   class: className = "",
   /** @type {string} - Input mask pattern */
   mask = "",
+  /** @type {number} - Minimum length validation */
+  minlength = undefined,
+  /** @type {number} - Maximum length validation */
+  maxlength = undefined,
   /** @type {string} - ARIA description */
   ariaDescription = "",
   /** @type {(event: Event) => void} - Focus event handler */
@@ -275,6 +283,8 @@ const inputClasses = $derived(`
       {disabled}
       {readonly}
       {required}
+      {minlength}
+      {maxlength}
       aria-invalid={!!error}
       aria-describedby={error || helpText ? `${id}-description` : undefined}
       onfocus={handleFocus}

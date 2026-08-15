@@ -39,16 +39,16 @@ const {
   id = crypto.randomUUID(),
 
   /** @type {string} - Step title (use `title` or `label`) */
-  title,
+  title = undefined,
 
   /** @type {string} - Step label (alias for title) */
-  label,
+  label = undefined,
 
   /** @type {string} - Step subtitle or description */
-  subtitle,
+  subtitle = undefined,
 
   /** @type {string} - Custom icon (HTML or SVG string) */
-  icon,
+  icon = undefined,
 
   /** @type {boolean} - Whether the step is optional */
   optional = false,
@@ -69,9 +69,9 @@ const {
   expanded = false,
 
   /** @type {Function} - Click handler for the step */
-  onClick,
+  onClick = undefined,
 
-  children,
+  children = undefined,
 } = $props()
 
 // Get stepper context

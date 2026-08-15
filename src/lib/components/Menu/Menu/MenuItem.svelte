@@ -14,7 +14,7 @@ const {
   id = crypto.randomUUID(),
 
   /** @type {string} - ARIA label */
-  ariaLabel,
+  ariaLabel = undefined,
 
   /** @type {string} - Link href */
   href = "#",
@@ -32,12 +32,12 @@ const {
   divider = false,
 
   /** @type {string} - Icon name to render before the menu item text */
-  icon,
+  icon = undefined,
 
   /** @type {any} - Value associated with this menu item */
   value = {},
 
-  children,
+  children = undefined,
 } = $props()
 
 // Use $state for values that need to be modified

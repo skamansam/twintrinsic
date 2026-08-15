@@ -58,10 +58,10 @@ const {
   valueFormat = "{value}",
 
   /** @type {string} - Name attribute for form submission */
-  name,
+  name = undefined,
 
   /** @type {string} - ARIA label for accessibility */
-  ariaLabel,
+  ariaLabel = undefined,
 
   /** @type {boolean} - Whether to show tick marks */
   showTicks = false,

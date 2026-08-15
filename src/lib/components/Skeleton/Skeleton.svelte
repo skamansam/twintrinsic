@@ -35,10 +35,10 @@ const {
   width = "100%",
 
   /** @type {string|number} - Height of the skeleton */
-  height,
+  height = undefined,
 
   /** @type {string|number} - Size for circle and square variants (sets both width and height) */
-  size,
+  size = undefined,
 
   /** @type {number} - Number of lines for text variant */
   lines = 1,

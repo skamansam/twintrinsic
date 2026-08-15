@@ -53,12 +53,12 @@ const {
   responsive = true,
 
   /** @type {string} - Caption for the table (for accessibility) */
-  caption,
+  caption = undefined,
 
   /** @type {string} - ARIA description for the table */
-  ariaDescription,
+  ariaDescription = undefined,
 
-  children,
+  children = undefined,
 } = $props()
 
 // Provide context for child components

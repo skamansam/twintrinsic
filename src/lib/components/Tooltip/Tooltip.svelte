@@ -31,11 +31,11 @@ const {
   arrow = true,
   offset = 8,
   showOnFocus = true,
-  ariaDescription,
-  onshow,
-  onhide,
-  children,
-  tooltipContent,
+  ariaDescription = undefined,
+  onshow = undefined,
+  onhide = undefined,
+  children = undefined,
+  tooltipContent = undefined,
 } = $props()
 
 // Tooltip state

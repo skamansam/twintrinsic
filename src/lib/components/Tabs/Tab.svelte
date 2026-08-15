@@ -22,13 +22,13 @@ const {
   class: className = "",
 
   /** @type {string} - HTML id for accessibility */
-  id,
+  id = undefined,
 
   /** @type {boolean} - Whether the tab is disabled */
   disabled = false,
 
   /** @type {string} - Icon to display (HTML or SVG string) */
-  icon,
+  icon = undefined,
 
   /** @type {string} - Icon position (left or right) */
   iconPosition = "left",
