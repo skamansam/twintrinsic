@@ -44,20 +44,24 @@ All items from § 10.1 are complete:
 - [x] `.github/workflows/test.yml` exists; runs `unit`, `storybook`,
       `e2e` jobs on every PR.
 - [x] `publish.yml` requires `test` job success.
-- [⏳] `pnpm test:storybook` succeeds end-to-end — still failing with
-      "Failed to connect to the browser session [chromium] within the
-      timeout". Blocked on either (a) deleting the now-redundant
-      `.storybook/vitest.setup.ts` or (b) adding `--no-sandbox` to
-      `@vitest/browser-playwright`'s chromium launchOptions. MUST be
-      resolved before proceeding to Phase B + `play`-function work.
+- [x] `pnpm test:storybook` succeeds end-to-end — **282/282 tests, exit 0**
+      (45/45 files). The browser harness is fully working. See the
+      "Storybook browser harness — gotchas" section below for the root
+      causes that were fixed to get here (svelte plugin missing in the
+      browser server, `$lib`/`@iconify/svelte` aliases, `asChild` on
+      composition stories, async-unmount null-ref guards, cold-cache
+      flakiness).
 - [⏳] `pnpm test:e2e` succeeds — unverified locally; pre-publish run
       will execute in CI. Playwright container has the right binaries.
 - [x] `pnpm check:a11y` 0 warnings.
-- [⏳] Pre-existing `pnpm check` errors in `src/routes/docs/*`,
-      `src/lib/components/Metrics/*`, and `tests/unit/*` (Svelte 5
-      `mount(...) is not available on the server`) are unrelated to the
-      Phase A scope; they remain open under the historical
-      `docs/plans/TYPE_ERRORS_PLAN.md` and don't block this migration.
+- [x] Unit-test harness fixed (see "Unit-test harness — FIXED" below): the
+      Svelte 5 `mount(...) is not available on the server` crash that made
+      every `tests/unit/*.test.ts` fail is resolved. `pnpm test:unit` is now
+      green end-to-end.
+- [⏳] Pre-existing `pnpm check` errors in `src/routes/docs/*` and
+      `src/lib/components/Metrics/*` are unrelated to the Phase A scope;
+      they remain open under the historical `docs/plans/TYPE_ERRORS_PLAN.md`
+      and don't block this migration.
 
 ### `pnpm check` remediation — July batch (DONE)
 - [x] Strategic high-leverage batch: added `interface Props` to 14 lib
@@ -69,29 +73,317 @@ All items from § 10.1 are complete:
       net). Remaining 457 errors are concentrated in docs pages
       (`src/routes/docs/**`) and unit tests (`tests/unit/**`).
 
-# Next up — Phase A.5 acceptance gate
+# Unit-test harness — FIXED (`lifecycle_function_unavailable` resolved)
 
-**Blocker for Phase B:** `pnpm test:storybook` must execute end-to-end
-on a single simple story before we trust the harness to host
-`play`-function assertions.
+**Symptom.** Every `tests/unit/*.test.ts` failed at mount with Svelte's
+`lifecycle_function_unavailable: mount(...) is not available on the server`
+(untouched `Badge.test.ts` failed identically), so the `createRawSnippet`
+coverage in `TagGroup.test.ts` / `ChipGroup.test.ts` was unverifiable.
 
-Proposed fix path (try in order):
-1. Delete `.storybook/vitest.setup.ts` — its only contents
-   (`setProjectAnnotations([preview])` + `beforeAll(project.beforeAll)`)
-   are what `@storybook/addon-vitest` 10.3+ applies automatically. The
-   dep already emits a warning saying so.
-2. If still failing, add `launchOptions: { args: ["--no-sandbox"] }` to
-   the `playwright({})` provider in `vitest.config.ts` (Linux/CI
-   invariant for headless Chromium).
-3. Re-run `pnpm test:storybook --run -t "Avatar/Default"` (one
-   story, render-only). If the test session connects and renders,
-   Phase B is unblocked.
+**Root cause.** Svelte 5.56's `exports` map for `.` exposes only `types` /
+`worker` / `browser` / `default` conditions — there is NO `import` or `svelte`
+condition. Under the unit project's SSR-style resolution (Vite's default
+conditions omit `browser`) and via Node's native ESM loader for externalized
+deps, the bare `svelte` specifier resolves to `src/index-server.js`, where
+`mount()` throws. `@testing-library/svelte-core` does `import * as Svelte from
+'svelte'` (mount.js / svelte-version.js), so its `render()` always hit the
+server entry. The old `server.deps.inline: ['svelte']` never helped because the
+EXTERNALIZED testing-library chain's own `import 'svelte'` was resolved by
+Node's loader, bypassing Vite entirely.
 
-Run `pnpm test:storybook --run -t "Avatar/Default"` once the above is
-applied. If the connection completes and the test passes, proceed to
-Phase B (add the remaining 17 stories' `play` functions in
-`stories/Avatar.stories.ts`). Audit each story against avatar's
-actual emitter — already confirmed by the Phase B pilot round.
+**Fix (vitest.config.ts, unit project only):**
+1. `resolve.alias: [{ find: /^svelte$/, replacement:
+   node_modules/svelte/src/index-client.js }]` — regex-anchored so
+   `svelte/internal/*` subpath imports (which compiled components rely on)
+   still resolve through the real package; only the bare specifier is pinned
+   to the client entry. Scoped to the unit project — the storybook browser
+   project already resolves the client entry via the `browser` condition and
+   is untouched.
+2. `server.deps.inline` expanded to `['svelte', '@testing-library/svelte',
+   '@testing-library/svelte-core']` — inlining the chain routes its
+   `import 'svelte'` through Vite's resolver where the alias applies.
+
+**Second bug fixed along the way.** `createRawSnippet`'s callback params are
+GETTERS (`Getters<Params>` per the .d.ts — each param is `() => T`). The
+itemTemplate tests' `render: () => \`${index}:${item}\`` stringified the getter
+functions; fixed to `index()` / `item()` in `TagGroup.test.ts` and
+`ChipGroup.test.ts`.
+
+**Result.** `pnpm test:unit`: **95 files passed, 423 passed / 2 skipped (425)**
+— the 2 skips are intentional `it.skip` in `Select.test.ts`. `pnpm check:lib`
+still 0/0. Re-verified the storybook suite is unaffected by the config change.
+
+# Storybook browser harness — DONE (282/282, exit 0)
+
+## What was fixed to get the harness green
+
+1. **`vite-plugin-svelte` absent from the browser server.** Vitest 4
+   projects don't propagate the root `plugins` array, and
+   `@storybook/addon-vitest`'s config hook filters out the framework's
+   own svelte plugin. Fix: add an explicit `svelte({ compilerOptions:
+   { dev: true, css: 'injected' }, inspector: false })` plugin to the
+   storybook project in `vitest.config.ts`. Without it, the addon's
+   setup imports raw `.svelte` renderer files that reach
+   `vite:import-analysis` untransformed ('invalid JS syntax', 39
+   errors).
+2. **`$lib` and `@iconify/svelte` resolution.** The addon runs
+   `.storybook/main.ts`'s `viteFinal` against a bare `{ root }` config,
+   so SvelteKit's aliases are absent. Fix: add both aliases in the
+   `viteFinal` hook (`$lib` → `../src/lib`; `/^@iconify\/svelte$/` →
+   the raw `.svelte` entry, since its exports map exposes only
+   `svelte`/`types` conditions the addon's dep-scan omits).
+3. **`server.fs.allow`.** The vitest browser server runs in
+   middlewareMode on the ROOT vite server, so its fs.allow comes from
+   the root config in `vitest.config.ts` (workspace root + project +
+   stories) — NOT from the project's viteFinal. Without the workspace
+   root, browser client scripts under hoisted `node_modules` 404 and
+   the session times out.
+4. **`asChild` on composition stories.** With `component` set in
+   `defineMeta`, `<Story>` children default to the component's default
+   slot; components with no default snippet (Avatar, Icon) silently
+   drop the markup and render a bare default instance (undefined props
+   → `name.split(':')` TypeErrors). Fix: `asChild` on multi-component
+   stories so children become the static story content.
+5. **Svelte-CSF indexer crash on TS non-null assertions.**
+   `SB_SVELTE_CSF_PARSER_EXTRACT_SVELTE_0009` — `wrapper!.querySelector`
+   in a plain-JS `<script module>` template attribute can't be parsed.
+   Fix: optional chaining (`wrapper?.querySelector`).
+6. **Legacy `render`+`template`/`slots`-string stories.** Storybook 10's
+   Svelte renderer ignores these (renders a bare default component with
+   undefined props → `Object.entries(undefined)` crash). Fix: converted
+   Avatar, Icon, Checkbox, ColorPicker, LazyPanel to Svelte CSF
+   (`defineMeta` + `<Story>` with real markup). Deleted the superseded
+   `.ts`/`.js` files. `CodeBlock.stories.js` AutoDetect got a minimal
+   `props` fix; Page import fixed (`storybook/test`, not
+   `@storybook/test`); CodeEditor `export const JSON` renamed (TDZ).
+7. **Async-unmount null-ref rejections.** Component code that awaited
+   (CodeBlock `highlightCode`, Map `await import('leaflet')`) had the
+   `bind:this` ref nulled by Svelte teardown mid-await → unhandled
+   rejections that failed the CI exit code. Fix: guard
+   (`if (codeElement)`) / capture (`const container = mapContainer`)
+   before use. Tag story's `let:item` removed (Svelte 5
+   `invalid_default_snippet`).
+8. **Cold-cache flakiness.** `rm -rf node_modules/.cache/storybook`
+   forces a deps rebuild race that surfaces 'Vitest failed to find the
+   runner/current suite' on ~10 files. A second (warm-cache) run is
+   green. Do NOT clear that cache before a CI storybook run; CI gets a
+   fresh checkout anyway.
+
+## Follow-ups for future sessions
+
+- ✅ **TagGroup `items` + `let:item` API migrated to a Svelte 5 `itemTemplate`
+  snippet prop (DONE).** `children?.item` named-slot access removed from
+  `TagGroup.svelte`; new typed API: `itemTemplate?: Snippet<[TItem, number]>`
+  with generic `TItem extends string | Record<string, unknown>`, plus a
+  default `<Tag>` fallback rendering `getItemLabel(item)` and a `labelField`
+  prop (default `"label"`) for object items. `ondismiss` detail is now
+  precisely `{ item: TItem; index: number }` (matching what `handleDismiss`
+  dispatches). Consumers updated: `stories/Tag.stories.svelte` Dynamic Tags
+  story (`{#snippet itemTemplate(item: string)}`), docs live example + code
+  block + TagGroup props table (`src/routes/docs/components/Tag/Tag/+page.svelte`),
+  and `tests/unit/TagGroup.test.ts` (6 tests incl. `createRawSnippet` template,
+  ondismiss detail, labelField). WARNINGS.md TagGroup `<svelte:component>`
+  entry removed (18→17; deprecated-patterns category 2→1).
+  **Validation:** `pnpm check:lib` 0/0; `pnpm test:storybook -t Tag` 2 passed
+  exit 0 (proves svelte-csf renders the `{#snippet}` story); `pnpm check` 331
+  (down from 332 baseline — only remaining Tag docs error is the pre-existing
+  `Cannot find module '$lib'`).
+  **Breaking-change notes for consumers:** (1) `items` now requires
+  `string | Record<string, unknown>` elements (numbers/booleans will type-error);
+  (2) when `items` is non-empty, `children` is ignored (only rendered in the
+  empty-items branch) — the old per-item children render was the broken
+  `invalid_default_snippet` path; (3) the `setContext("tagGroup", …)` that
+  TagGroup previously set (and nothing ever consumed — Tag never called
+  `getContext`) was removed; group props propagate to the default fallback
+  Tag explicitly; (4) unit tests now RUN and PASS: `pnpm test:unit -t TagGroup`
+  green (harness fixed, see below). The Dynamic Tags story `play` function
+  (green under `pnpm test:storybook`) also covers the snippet path at runtime
+  via a `pill` discriminator.
+- ✅ **ChipGroup `items` + `let:item` API migrated to a Svelte 5 `itemTemplate`
+  snippet prop (DONE).** Same migration as TagGroup: `children?.item` named-slot
+  access and the self-referential `setContext("chipGroup", …)` (only read by the
+  component's own markup) removed from `ChipGroup.svelte`; new typed API:
+  `itemTemplate?: Snippet<[TItem, number]>` with generic
+  `TItem extends string | Record<string, unknown>`, a default `<Chip>` fallback
+  rendering `getItemLabel(item)`, a `labelField` prop (default `"label"`), and
+  precise `onselect` detail `{ selected: TItem[] }` / `onremove` detail
+  `{ item: TItem; index: number }`. Selection state (`toggleSelection`, multiple)
+  is now a plain internal function instead of going through context.
+  Consumers: NEW `stories/Chip.stories.svelte` (Chip had no story before) with a
+  Dynamic Chips story on `{#snippet itemTemplate(item)}` + play function that
+  discriminates the snippet path via `clickable`/`role="button"` (the fallback
+  only renders clickable chips when the group sets `clickable`/`selectable`);
+  docs live example + code block + props table
+  (`src/routes/docs/components/Chip/ChipGroup/+page.svelte`);
+  `tests/unit/ChipGroup.test.ts` rewritten (7 tests incl. `createRawSnippet`
+  template, onremove detail, labelField, selectable toggle).
+  **Validation:** `pnpm check:lib` 0/0; `pnpm test:storybook -t Chip` passes
+  (storybook browser harness executes the `{#snippet}` story).
+  **Breaking-change notes:** (1) `items` now requires
+  `string | Record<string, unknown>` elements; (2) when `items` is non-empty,
+  `children` is ignored (only rendered in the empty-items branch); (3) the
+  `setContext("chipGroup", …)` context is gone — group props propagate to the
+  default fallback Chip explicitly; (4) **interactive props (`clickable`,
+  `selectable`, `removable`, `selected`) apply ONLY to the default fallback —
+  a custom `itemTemplate` snippet owns the Chip entirely and must apply those
+  props itself** (documented on the `itemTemplate` JSDoc + the docs page;
+  the docs Selectable example now uses the fallback so selection works  out of the box); (5) unit tests now RUN and PASS: `pnpm test:unit -t ChipGroup`
+  green (harness fixed, see below).
+- ✅ **ChipGroup `itemTemplate` widened to `Snippet<[TItem, number, boolean]>`
+  (DONE).** The `itemTemplate` snippet now receives a third arg — a boolean
+  reflecting whether that item is selected in the group, kept in sync with the
+  controlled `selected` prop (`{@render itemTemplate(item, index,
+  selectedItems.includes(item))}`). Snippet chips can render
+  `<Chip selected={selected}>` without tracking selection themselves. This was
+  the flagged "possible future enhancement" from the original migration.
+  Consumers: new `Snippet Selection Chips` story in `stories/Chip.stories.svelte`
+  (play asserts `chip-selected` on the controlled-selected items and its absence
+  on the unselected one; group intentionally NOT `selectable` there — with a
+  custom snippet the consumer owns click handling, and `role="listbox"` on the
+  group alongside snippet `role="button"` chips would violate ARIA); docs page
+  gains a "Dynamic Items Reflecting Selection" example + updated props table
+  (`Snippet<[TItem, number, boolean]>`); `tests/unit/ChipGroup.test.ts` updated
+  (existing custom-template test now asserts `selected` getter = false) + new
+  test asserting the third arg reflects the controlled `selected` prop.
+  **Gotchas found en route:** (1) snippet params bind POSITIONALLY — the first
+  story/demo declared `{#snippet itemTemplate(item, selected)}` (2 params) but
+  the render passes 3 args, so `selected` silently bound to the INDEX (0 for
+  Red → falsy → only Red's chip-selected assertion failed). All snippet sites
+  must declare all 3 params: `(item, index, selected)`. (2) The UPDATE path
+  (controlled `selected` prop change → `$effect` → third arg flips) cannot be
+  unit-tested in jsdom: @testing-library's rerender/$set does not re-trigger
+  Svelte 5 `$effect`s (rerender+tick, rerender+flushSync, fireEvent.click+
+  waitFor, native .click()+waitFor all left the DOM stale). It IS covered by a
+  new `Selection Chips Update` storybook story + `stories/ChipSelectionDemo.svelte`
+  wrapper, which drives the change through a real browser via `$state`.
+  **Backwards-compatible:** existing `{#snippet itemTemplate(item)}` consumers
+  are unaffected (Svelte ignores extra args). TagGroup untouched (no selection
+  state).
+- ✅ **Shared helper consolidation — getItemLabel / dispatchGroupRemove /
+  getItemValue (DONE).** Extracted three duplicated utilities into
+  `src/lib/helpers/` (barrel `src/lib/helpers/index.ts`, NodeNext `.js`-
+  extension imports). **Convention codified in `AGENTS.md` § Code Standards
+  → "Shared Helpers":** the Form select family + group components must route
+  label/value extraction through these helpers — no local `getOptionLabel` /
+  `getOptionValue` helpers; field props passed explicitly; `getItemValue`
+  no-guard passthrough is deliberate; `grep -rn 'getOptionLabel\|getOptionValue'
+  src/` must return zero. Full audit below:
+  1. `itemLabel.ts` — `getItemLabel(item, labelField = "label")`, no-guard
+     `value == null ? "" : String(value)` semantics. Consumers: TagGroup +
+     ChipGroup fallback labels, AutoComplete (8 call sites now pass
+     `labelField` explicitly; empty-array value-init edge case guarded).
+     Unifies the old per-component `?.toString() || ""` label semantics.
+  2. `groupRemove.ts` — `dispatchGroupRemove<TItem>(items, index,
+     eventName: "dismiss" | "remove", handler?)`: resolves `items[index]`
+     and dispatches a `CustomEvent` with `{ item, index }` detail. Consumers:
+     TagGroup `handleDismiss` + ChipGroup `handleRemove` (both delegate).
+  3. `itemValue.ts` — `getItemValue(item: unknown, valueField = "value")`,
+     no-guard passthrough (objects yield `item[valueField]`, primitives
+     as-is). Consumers: AutoComplete (7 sites), Form/Listbox + Form/Combobox
+     (local `getOptionValue` removed).
+  **Falsy-semantics decision (RESOLVED — passthrough wins).** The old
+  per-component `if (!option) return null` guards were inconsistent AND buggy
+  (`getOptionValue(0)` collapsed numeric option `0` → `null`, breaking
+  selection). The shared helper passes falsy primitives (`""`, `0`, `false`,
+  `null`, `undefined`) through unchanged — safe because selection logic
+  compares values symmetrically (both sides run the same helper), and it
+  matches the `getItemLabel` precedent plus the newer
+  `Combobox/Combobox.svelte` (which never had the guard). Decision documented
+  in the `itemValue.ts` JSDoc.
+  **Unit tests:** all three helpers covered — `itemLabel.test.ts` (5),
+  `groupRemove.test.ts` (4), `itemValue.test.ts` (6; pins the passthrough
+  semantics incl. falsy field values).
+  **Validation:** `pnpm check:lib` 0/0; `pnpm test:unit` 97 files / 433 passed
+  exit 0 (full suite; the later-added `itemValue.test.ts` ran 6/6 in
+  isolation); per-component storybook suites green (Tag/Chip 22, AutoComplete
+  10, Combobox 12); `pnpm check` 330 unchanged baseline.
+  **Remaining follow-ups:** none — all three are now DONE, and the optional
+  `getOptionLabel` dedup for the standalone Combobox is also done (see the
+  bullets below).
+- ✅ **`getOptionLabel` dedup — Form/Listbox + Form/Combobox migrated to the
+  shared `getItemLabel` (DONE).** Rather than creating a second label helper,
+  the existing `getItemLabel` was reused — its `value == null ? "" :
+  String(value)` semantics are identical to the old `?.toString() || ""`
+  pattern for all contract-valid inputs (the same unification AutoComplete
+  already went through). `getItemLabel` widened to `item: unknown` (mirroring
+  the `getItemValue` widening) so Combobox's untyped options work. Locals
+  removed: Listbox 4 call sites (filter, type-ahead ×2, template),
+  Combobox 7 call sites (value effect, filter, blur, keydown resets ×2,
+  select, template), all now `getItemLabel(option, optionLabel)`. Grep:
+  0 `getOptionLabel` refs remain. Semantics note: out-of-contract falsy
+  options (`0`/`false`) now render `"0"`/`"false"` instead of `""` — a fix
+  consistent with the deliberate passthrough decision.
+  **Validation:** `pnpm check:lib` 0/0; `pnpm test:unit -t
+  'Listbox|Combobox|getItemLabel'` 12 passed; storybook Combobox 12 passed;
+  `pnpm check` 330 unchanged baseline.
+- ✅ **Listbox inline `[optionValue]` accesses consolidated to `getItemValue`
+  (DONE).** The last remaining inline
+  `(v as Record<string, unknown>)[optionValue]` patterns in
+  `Form/Listbox.svelte` — in `isOptionSelected` (multi-select `.some()` and
+  the single-select object branch) and the `selectOption` removal filter —
+  now call `getItemValue(v, optionValue)` /
+  `getItemValue(selectedValues, optionValue)`. Grep: 0 `[optionValue]` refs
+  remain. Behavior-preserving: the helper's object/primitive branches are
+  exactly what the old inline ternaries did, and the guarded
+  `typeof selectedValues === "object"` sites keep their guard.
+  **Validation:** `pnpm check:lib` 0/0; `pnpm test:unit -t Listbox` green;
+  `pnpm check` 330 unchanged baseline.
+- ✅ **Standalone `Combobox/Combobox.svelte` inline `getOptionValue` migrated
+  to the shared `getItemValue` (DONE).** The newer, separate Combobox (not
+  Form/Combobox) had a local no-guard `getOptionValue` — already the
+  passthrough form, semantically identical to `getItemValue`. Local removed;
+  4 call sites now `getItemValue(option, optionValue)` (handleOptionClick
+  newValue, selectedLabel `options.find`, `class:selected`, `aria-selected`).
+  Import added from `../../helpers/index.js`. Grep: 0 `getOptionValue` refs
+  remain in `src/lib/**`. Behavior-preserving (identical object/primitive
+  branches, same `optionValue` prop default `"value"` as the helper's).
+  **Validation:** `pnpm check:lib` 0/0; `pnpm check` 330 unchanged baseline.
+- ✅ **Docs-site Utilities page + public helper exports (DONE).** Added
+  `src/routes/docs/utilities/+page.svelte` documenting the shared helpers
+  (`getItemLabel`, `getItemValue`, `dispatchGroupRemove`, `detectLanguage`)
+  with import sample + per-helper signature panels + usage CodeBlocks
+  (`\u003C`-escaped per the Phase 9.3 convention). Made the helpers genuinely
+  public: `src/lib/index.ts` now re-exports the helpers barrel
+  (`export { detectLanguage, dispatchGroupRemove, getItemLabel,
+  getItemValue } from "./helpers/index.js"`) — previously they were only
+  reachable via the internal `$lib/helpers/` path, so the docs claim
+  "public exports" is now true. Navigation: top-nav "Utilities" link
+  (`siteLinks`) + "APIs" sidebar group (`siteMenu`) in
+  `src/routes/docs/+layout.svelte`.
+  **Validation:** `pnpm check:lib` 0/0 (the export is clean); biome clean;
+  `pnpm check` 331 — **+1 from the 330 baseline, fully attributed** to the
+  known systemic `Cannot find module '$lib'` error that every docs page
+  importing from the bare `$lib` barrel already hits (untouched theming page
+  has the identical error at the same import line; `pnpm svelte-kit sync`
+  does not clear it — it's the deferred NodeNext mixed-resolution category,
+  not a stale cache). The utilities page itself has exactly 1 error (that
+  same class) and zero parse errors from the `\u003C` escapes.
+  **(Superseded by Phase 9.7 — the bare-`$lib` barrel imports were removed
+  from all docs pages and `pnpm check` is now 0 errors.)**
+- ✅ **Standalone `Combobox/Combobox.svelte` inline `getOptionLabel` migrated
+  to the shared `getItemLabel` (DONE).** The last optional dedup from the
+  shared-helper consolidation — this Combobox's local `getOptionLabel` used
+  the exact `?.toString() || ""` pattern the Form components already migrated
+  off of. Local removed; 3 call sites now `getItemLabel(option, optionLabel)`
+  (filter, `selectedLabel` fallback, option markup) — the `optionLabel` prop
+  passed explicitly so a consumer's custom field name still resolves (no
+  reliance on the helper's `"label"` default), mirroring the Form pattern.
+  Import line extended to `import { getItemLabel, getItemValue } from
+  "../../helpers/index.js"`. Grep: 0 `getOptionLabel` refs remain in
+  `src/lib/**` (verified repo-wide: src/ + stories/). Behavior-preserving
+  for all contract-valid inputs — this Combobox's old local helper had no
+  `!option` guard (unlike Form/Listbox+Combobox), so `0`/`false` primitives
+  already rendered `"0"`/`"false"` before; the only divergence is
+  out-of-contract `null`/`undefined` *options* rendering `"null"`/`"undefined"`
+  instead of `""` (consistent with the deliberate passthrough decision).
+  This closes the final dedup — every Form select component plus the
+  standalone Combobox now uses the shared `getItemLabel`/`getItemValue`.
+  **Validation:** `pnpm check:lib` 0/0; `pnpm check` 330 unchanged baseline.
+- **e2e story-URL references are stale.** `tests/e2e/*.test.js` still
+  hard-code `localhost:6006` URLs (Map, PanelCardSnippets, CodeEditor,
+  Input, Checkbox, ColorPicker, LazyPanel, AppHeader, CodeBlockSpeed…)
+  while `playwright.config.ts` boots the docs preview on 5173. Those
+  are Phase C scope (docs smoke + story `play` ports).
 
 Resolved decisions (§ 9): see the plan file for rationale.
 
@@ -354,6 +646,108 @@ Phase 9.3b):
   point the underlying latent bug set should be empty, so the +87
   regression won't materialize.
 
+### Phase 9.7 — de-barrel-ify: per-file/deep imports everywhere (DONE)
+
+**Goal (user directive).** Reverse the barrel-ification. The user does not
+want barrel imports (`import { X } from "$lib"`) in the project's own code:
+per-file imports make the source file behind every symbol visible. All
+internal component imports must be **relative**; everything outside
+`src/lib/components/` uses **deep `$lib/...` paths**; consumers get the
+package root barrel or **subpath exports**. Research confirmed the standard
+splits exactly this way: a root barrel for the public API is the norm
+(Radix, MUI, Melt UI, Skeleton, shadcn-svelte), while internal code and
+library consumers deep-import (tkdodo's "Please Stop Using Barrel Files";
+MUI's own bundle-size guide recommends deep imports). The barrel-ify was a
+NodeNext mixed-resolution workaround — Phase 9.6 removed NodeNext from the
+root tsconfig, so the workaround is moot and `pnpm check` is clean.
+
+**Changes (117 files in `src/`):**
+
+1. **Docs site (`src/routes/`)** — every `import { X, Y } from "$lib"` /
+   `"$lib/index.js"` / `"$lib/docs/index.js"` in real `<script>` blocks
+   rewritten to per-symbol deep imports: components →
+   `"$lib/components/<Dir>/<File>.svelte"`, helpers →
+   `"$lib/helpers/<file>.js"`, docs tables → `"$lib/docs/PropsTable.svelte"`
+   etc., icon manager → `"$lib/stores/iconManager.js"`, and type exports
+   (`TreeMenuItem`, `IconConfig`) → `import type { ... }`. Example blocks
+   inside `<CodeBlock>` template literals (`\u003C`-escaped) were preserved
+   untouched — the rewrite only operates on real `<script>` blocks.
+2. **Internal components (`src/lib/components/`)** — 7 components that
+   imported the helpers barrel (`../../helpers/index.js`) now import the
+   per-file module **relatively**: `../../helpers/itemLabel.js`,
+   `../../helpers/groupRemove.js`, `../../helpers/detectLanguage.js`.
+3. **`package.json` `exports`** — added **109 subpath entries** so consumers
+   can deep-import: `twintrinsic/components/Button`, …,
+   `twintrinsic/helpers/getItemLabel`, `twintrinsic/stores/iconManager`,
+   `twintrinsic/docs/PropsTable`, plus the existing `.` and
+   `./twintrinsic.css`. Each entry maps `{ types, svelte, default }` to the
+   published **`./dist`** artifact (`.svelte.d.ts` / `.d.ts` for types — see
+   the consumer-verification note below; the initial source-file targets
+   were wrong).
+
+**Validation.** `pnpm check` **0 errors** (1 pre-existing warning),
+`pnpm check:lib` **0/0**, `pnpm test:unit` **459 passed / 2 skipped**.
+
+**Mechanics.** Rewrite was driven by `.tmp-dearrel.py` (deleted after use):
+a `<script>`-block-aware regex pass with a barrel export-name → source-path
+map verified against `src/lib/index.ts`. Three bugs were fixed during the
+sweep: a stray `>` injected after `<script lang="ts">`, trailing-newline
+consumption (`\s*` after the closing quote), and loss of leading indent on
+the first generated line. Lesson: when the pattern must preserve everything
+around it, capture the trailing line-ending as a group and restore it, and
+apply the captured indent to the first output line too.
+
+**Convention (codified in AGENTS.md § Coding Guidelines → Import Style):**
+components import each other relatively; non-component code outside
+`src/lib/components/` imports via deep `$lib/...` paths (never the bare
+`$lib` barrel); the barrel `src/lib/index.ts` remains the public API entry
+for consumers alongside the subpath exports.
+
+### Phase 9.7b — consumer verification of the subpath exports (DONE)
+
+**Goal.** Prove the packed library is actually consumable: `npm pack`,
+install the tarball into a scratch Vite project, build, and render in a real
+browser. Three real publish bugs surfaced and were fixed:
+
+1. **Exports must point at `./dist`, not `./src/lib`.** The initial subpath
+   map targeted source files, but `files: ["dist"]` excludes `src/` from the
+   tarball — `publint` (run by the `prepack` script via `svelte-package`)
+   flagged ~100 "file is not published" errors. Retargeted every entry to the
+   `@sveltejs/package` output: components → `./dist/<Dir>/<File>.svelte`
+   with types `./dist/<Dir>/<File>.svelte.d.ts`; helpers/stores (compiled
+   `.js` + `.d.ts`); root `.` → `./dist/index.js` + `./dist/index.d.ts`.
+   `svelte`/`types` top-level fields updated to match. Publint now clean.
+2. **`@iconify/svelte` moved from devDependencies → dependencies.** It is a
+   runtime import of `Icon.svelte`; devDependencies are not installed in
+   consumer apps, so the packed Button/Icon chain failed to resolve
+   (`Rolldown failed to resolve import "@iconify/svelte"`). Verified no
+   other runtime import is undeclared (scanned all bare imports in `dist`).
+3. **`default` condition added** alongside `types`/`svelte` on every entry
+   so plain-Node/ESM consumers can import the helper modules (plain `.js`)
+   without a bundler resolving the `svelte` condition.
+
+**Consumer proof (end-to-end).** `pnpm add <tarball>` into a scratch Vite +
+Svelte 5 project; `vite build` succeeded (346 modules) and a Playwright
+browser run rendered `<Button>` and logged working helper results:
+`{RootButton: function, SubButton: function, Chip: function,
+getItemLabel: hello, detectLanguage: markup}` — root barrel, component
+subpaths (**default** imports — a `.svelte` subpath exports default only),
+helper subpaths (named), `stores/iconManager` values + types, and
+`twintrinsic/twintrinsic.css` all resolve. Consumers must additionally
+install `tailwindcss` + `@tailwindcss/forms` + `@tailwindcss/typography`
+(the theme file declares the plugins via `@plugin`) — documented on the
+`/docs` page's Installation section.
+
+**Commit.** `7d9f49c` is the surgical de-barrel-ify commit: HEAD + only
+this session's 519-line delta (110 converted files + `package.json` +
+`AGENTS.md`). The ~26k lines of prior uncommitted session work layered in
+the same files stay in the working tree for a separate commit. The committed
+tree itself has 421 `pnpm check` errors vs HEAD's 336 — not a regression:
+HEAD's 80 `Cannot find module '$lib'` errors are gone and ~165 latent docs
+type errors (previously masked by the failed barrel import making components
+`any`) surface instead; both trees fail check, and the working tree remains
+0-error.
+
 ### Phase 9.5 — explicit-path imports via `$lib` barrel (DONE — `83b3423`)
 
 **Goal.** Clear 22 specific Phase 9.5 errors: 17× `Cannot find module '$lib/components/.../X.svelte'` + 5× `Cannot find module '$lib/docs/index.js'`.
@@ -475,3 +869,21 @@ The docs CodeBlock barrel-consolidation sweep (22 Form/* + Modal in round 1, 13 
 - pnpm check:lib: 0 errors, 0 warnings
 
 **Key lesson.** NodeNext resolution is strict about mixing `$lib` (bare path) and `$lib/index.js` (wildcard path) in the same file. Converting `$lib/docs/index.js` → `$lib` in files that already had `$lib/index.js` imports caused cascading failures. Leave `.js`-extension imports alone.
+
+### Phase 9.6 — systemic `$lib` resolution fix + full docs type sweep (DONE)
+
+**Root cause resolved.** The `Cannot find module '$lib'` issue (84 errors across 70 docs files) was caused by the root `tsconfig.json` overriding `module`/`moduleResolution` to **NodeNext**, while SvelteKit's generated `.svelte-kit/tsconfig.json` uses **bundler** resolution. `tsconfig.lib.json` keeps NodeNext independently for npm publishing.
+
+**Fix (architectural):** dropped the `module`/`moduleResolution` override from `tsconfig.json` — the site now inherits bundler resolution (all `$lib` errors → 0), and the lib keeps NodeNext in `tsconfig.lib.json` (`check:lib` stays 0/0). This makes the site/lib resolution split explicit.
+
+**Per-file repair sweep** (unmasked by the fix — previously hidden behind `$lib`-as-`any`):
+- **Component fixes:** `= undefined` defaults added for undefaulted optional props in Table (caption/ariaDescription/children), Textarea (name), Combobox (8 props), InvalidState (message/children), Tooltip (5 props), Menu/MenuItem, Tab, Skeleton, StepperStep, Select (`value = $bindable()` + `children` snippet support so `<SelectGroup>` children work).
+- **Input.svelte:** added `minlength`/`maxlength` props.
+- **Docs fixes:** IconifyIcon page → `Icon` (the real export); CodeBlock `code=` prop → children snippet form (CodeEditor, CodeBlockSpeed, LazyPanel, Accordion, Card); DataTable props aligned to real API (`pageSize`/`pageSizeOptions`/`emptyMessage`/`compact`, typed template callbacks); SelectGroup page children work via new Select children support; Menu page `{#snippet content()}`; Combobox `optionTemplate` snippet; Tooltip `text=`→`content=`; Toast `on:click`→`onclick`, dropped store `position`; Stepper `optional="…"`→`optional`; Slider range arrays→single values; Listbox value shapes; Knob/Slider brace escapes; theming `getTextColor` types + Button `class` color maps; root page AppHeader `brand.logo` snippet + Panel snippets; game-map CodeEditor `code`/`onchange` + popupContent signature; `genie-mapData.js` marked `@ts-nocheck` (orphaned 41k-line data file).
+
+**Validation.**
+- `pnpm check`: **0 errors** (was 331 at session start) — 1 pre-existing warning remains
+- `pnpm check:lib`: 0 errors / 0 warnings
+- `pnpm test:unit`: 98 files / 439 passed / 2 skipped — exit 0
+
+**Docs updated:** `AGENTS.md` "NodeNext Module Resolution" section rewritten as "Module Resolution (site vs. lib)" to document the split and warn against re-adding NodeNext to the root config.

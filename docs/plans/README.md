@@ -54,6 +54,6 @@ Each open question has been resolved with rationale and implementation steps. Li
 
 ## When you start a session
 
-1. Read [`next-up.txt`](./next-up.txt) for the immediate task pointer.
+1. Read [`next-up.md`](./next-up.md) for the immediate task pointer.
 2. If a plan's § 9 has resolved decisions, follow them — do not re-open them.
-3. Update the relevant plan's checklist (§ 5) as you complete work, and refresh the active-plan note in `next-up.txt` if the active plan changes.
+3. Update the relevant plan's checklist (§ 5) as you complete work, and refresh the active-plan note in `next-up.md` if the active plan changes.
