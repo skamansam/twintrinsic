@@ -905,3 +905,18 @@ The docs CodeBlock barrel-consolidation sweep (22 Form/* + Modal in round 1, 13 
 - **Result: exit 0.**
 
 **Lesson:** a passing `pnpm pack`/build does not validate the exports map — add a target-existence check + consumer `tsc` to the publish path (or at least re-run before tagging).
+
+### Phase 9.7d — exports-map validation guard (DONE)
+
+**Prompt:** add an exports-map validation script + CI wiring so the 9.7c regression class can't recur.
+
+**What was added:**
+- `scripts/validate-exports.mjs` (`pnpm validate:exports`): (1) builds `dist/` via svelte-package, (2) asserts every `types`/`svelte`/`default` target exists and lives under `./dist/` (matches `files: ["dist"]` — catches the doubled `components/components/` bug AND a future exports→src/ regression), (3) generates a temp module that namespace-imports all 108 subpaths via self-reference resolution plus the 8 known `<script module>` type exports, then runs `tsc --noEmit` with `skipLibCheck: false` so errors *inside* the library's own `.d.ts` files are caught (TS2440 self-import conflicts, unresolvable imports, missing type exports).
+- Wired into the publish gate: `.github/workflows/publish.yml` `test` job and its mirror `.github/workflows/test.yml` `check` job both run `pnpm validate:exports`.
+- `src/lib/components/Map/leaflet.d.ts` gains `declare module 'leaflet/dist/leaflet.css'` so the Map d.ts's side-effect css import is declared library-side.
+
+**Design notes / gotchas:**
+- Self-reference imports (`import * as X from "twintrinsic/components/Button"`) resolve through the package's own exports map under tsc — no packing/installing needed, runs in ~30s.
+- `declare module "*.css"` must live in its own import-free ambient file (TS2664 if mixed into a module file with imports); mirrors the `vite/client` css declarations real consumers have. Non-css asset imports still fail the check.
+- Ambient `.d.ts` shims shipped by svelte-package (prismjs.d.ts, leaflet.d.ts) are NOT auto-included in consumer programs — only files reached via imports/references are. The prismjs side-effect import resolves because it's a real `.js` path; the `.css` import cannot, hence the ambient declaration.
+- Self-test: injected the historical doubled-prefix bug into `./components/Button` → script fails with per-condition diagnostics, exit 1; restored.
