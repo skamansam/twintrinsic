@@ -1,79 +1,38 @@
-import { expect, test } from "@playwright/test"
+import { expect, test } from "@playwright/test";
+import { waitForHydration } from "./helpers.js";
 
-test.describe("CodeEditor", () => {
-  test("should render the editor", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeeditor--default")
-    const editor = page.locator(".code-editor-wrapper")
-    await expect(editor).toBeVisible()
-  })
+/**
+ * Docs-site smoke tests for the CodeEditor component.
+ *
+ * Component-level behavior (themes, custom height, language support)
+ * is covered by the Storybook vitest suite (`pnpm test:storybook`).
+ *
+ * These tests verify the docs landing page renders the live editor
+ * examples (`data-testid="code-editor-*"` hooks) with a visible
+ * CodeMirror editor wrapper.
+ */
+test.describe("CodeEditor docs page", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto("/docs/components/CodeEditor/CodeEditor");
+    await waitForHydration(page);
+  });
 
-  test("should display code content", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeeditor--default")
-    const editor = page.locator(".code-editor-wrapper")
-    await expect(editor).toBeVisible()
-    const content = await editor.textContent()
-    expect(content).toContain("Hello, CodeMirror")
-  })
-
-  test("should support different languages", async ({ page }) => {
-    const languages = ["default", "python", "html", "json"]
-    for (const lang of languages) {
-      await page.goto(`http://localhost:6006/iframe.html?id=components-codeeditor--${lang}`)
-      const editor = page.locator(".code-editor-wrapper")
-      await expect(editor).toBeVisible()
+  test("renders the docs page with all editor examples", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: "CodeEditor", level: 1 })).toBeVisible();
+    for (const id of [
+      "code-editor-javascript",
+      "code-editor-python",
+      "code-editor-html",
+      "code-editor-one-dark",
+      "code-editor-dracula",
+    ]) {
+      await expect(page.getByTestId(id).locator(".code-editor-wrapper")).toBeVisible();
     }
-  })
+  });
 
-  test("should support dark themes", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeeditor--dark-theme")
-    const editor = page.locator(".code-editor-wrapper")
-    await expect(editor).toBeVisible()
-  })
-
-  test("should support custom height", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeeditor--custom-height")
-    const editor = page.locator(".code-editor-wrapper")
-    const boundingBox = await editor.boundingBox()
-    expect(boundingBox?.height).toBeGreaterThan(500)
-  })
-
-  test("should render with Dracula theme", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeeditor--dracula")
-    const editor = page.locator(".code-editor-wrapper")
-    await expect(editor).toBeVisible()
-  })
-
-  test("should render JSON code", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeeditor--json")
-    const editor = page.locator(".code-editor-wrapper")
-    await expect(editor).toBeVisible()
-    const content = await editor.textContent()
-    expect(content).toContain("CodeEditor")
-  })
-
-  test("should render JSX code", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeeditor--jsx-code")
-    const editor = page.locator(".code-editor-wrapper")
-    await expect(editor).toBeVisible()
-  })
-
-  test("should render Svelte code", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeeditor--svelte-code")
-    const editor = page.locator(".code-editor-wrapper")
-    await expect(editor).toBeVisible()
-  })
-
-  test("should have proper styling", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeeditor--default")
-    const editor = page.locator(".code-editor-wrapper")
-    const styles = await editor.evaluate((el) => {
-      const computed = window.getComputedStyle(el)
-      return {
-        overflow: computed.overflow,
-        border: computed.border,
-      }
-    })
-    expect(styles.overflow).toBe("hidden")
-    expect(styles.border).toBeTruthy()
-  })
-})
+  test("renders a CodeMirror editor with content", async ({ page }) => {
+    const editor = page.getByTestId("code-editor-javascript").locator(".code-editor-wrapper");
+    await expect(editor).toBeVisible();
+    await expect(editor.locator(".cm-editor")).toBeVisible();
+  });
+});

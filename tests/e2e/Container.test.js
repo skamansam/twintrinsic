@@ -1,39 +1,37 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test";
+import { waitForHydration } from "./helpers.js";
 
 /**
- * E2E tests for the Container component, targeting the SvelteKit docs
- * site (http://localhost:5173) instead of Storybook. Selectors use the
- * `data-testid` attributes that the Container docs page exposes for
- * each example (basic, fluid, etc.).
+ * Docs-site tests for the Container component.
  *
- * The previous Storybook URL pattern
- *   `http://localhost:6006/?path=/story/components-container--<variant>`
- * has been replaced with the single docs route that renders every
- * example on one page:
- *   `/docs/components/Container/Container`
+ * Targets `/docs/components/Container/Container`. The examples expose
+ * `data-testid` hooks (`container-basic`, `container-fluid`); a fluid
+ * container renders with full width (no max-width constraint).
  */
-test.describe("Container Component", () => {
+test.describe("Container docs page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/docs/components/Container/Container")
-  })
+    await page.goto("/docs/components/Container/Container");
+    await waitForHydration(page);
+  });
 
-  test("renders with default props (basic container)", async ({ page }) => {
-    const basic = page.getByTestId("container-basic")
-    await expect(basic).toBeVisible()
+  test("renders the docs page heading", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: "Container", level: 1 })).toBeVisible();
+  });
 
-    // The default Container renders as <section> with `container mx-auto px-4 ...`
-    const inner = basic.locator("section, main, article, div").first()
-    await expect(inner).toBeVisible()
-    const className = await inner.getAttribute("class")
-    expect(className).toMatch(/container/)
-  })
+  test("renders content inside the basic container", async ({ page }) => {
+    await expect(page.getByTestId("container-basic")).toContainText("Content in a basic container");
+  });
 
-  test("renders as fluid container", async ({ page }) => {
-    const fluid = page.getByTestId("container-fluid")
-    await expect(fluid).toBeVisible()
+  test("renders content inside the fluid container", async ({ page }) => {
+    await expect(page.getByTestId("container-fluid")).toContainText("Content in a fluid container");
+  });
 
-    const inner = fluid.locator("section, main, article, div").first()
-    const className = await inner.getAttribute("class")
-    expect(className).toContain("w-full")
-  })
-})
+  test("documents the as prop with main landmark example", async ({ page }) => {
+    await expect(
+      page.getByRole("heading", { name: "When to Use Container vs Card vs Panel", level: 2 }),
+    ).toBeVisible();
+    // The comparison table documents each component's semantic element.
+    await expect(page.getByText("Layout wrapper:", { exact: true })).toBeVisible();
+    await expect(page.getByText("No semantic meaning:", { exact: true })).toBeVisible();
+  });
+});

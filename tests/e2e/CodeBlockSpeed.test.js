@@ -1,101 +1,55 @@
-import { expect, test } from "@playwright/test"
+import { expect, test } from "@playwright/test";
+import { waitForHydration } from "./helpers.js";
 
-test.describe("CodeBlockSpeed", () => {
-  test("should render the code block", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeblockspeed--default")
-    const codeBlock = page.locator(".code-block-speed")
-    await expect(codeBlock).toBeVisible()
-  })
+/**
+ * Docs-site smoke tests for the CodeBlockSpeed component.
+ *
+ * Component-level behavior (render-time badge, auto-detection) is
+ * covered by the Storybook vitest suite (`pnpm test:storybook`).
+ *
+ * These tests verify the docs landing page renders the live examples
+ * (`data-testid="codeblockspeed-*"` hooks) and that the code content,
+ * language labels, and copy buttons are present.
+ */
+test.describe("CodeBlockSpeed docs page", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto("/docs/components/CodeBlockSpeed/CodeBlockSpeed");
+    await waitForHydration(page);
+  });
 
-  test("should display language label", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeblockspeed--javascript")
-    const langLabel = page.locator(".code-language")
-    await expect(langLabel).toContainText("js")
-  })
+  test("renders the docs page with all language examples", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: "CodeBlockSpeed", level: 1 })).toBeVisible();
+    for (const id of [
+      "codeblockspeed-js",
+      "codeblockspeed-ts",
+      "codeblockspeed-python",
+      "codeblockspeed-html",
+      "codeblockspeed-css",
+      "codeblockspeed-json",
+      "codeblockspeed-render-time",
+      "codeblockspeed-auto-detect",
+    ]) {
+      // The data-testid lands on the component root via elementProps
+      await expect(page.getByTestId(id)).toBeVisible();
+    }
+  });
 
-  test("should have copy button", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeblockspeed--default")
-    const copyButton = page.locator(".code-copy")
-    await expect(copyButton).toBeVisible()
-  })
+  test("renders the language label", async ({ page }) => {
+    const langLabel = page.getByTestId("codeblockspeed-js").locator(".code-language");
+    await expect(langLabel).toContainText("js");
+  });
 
-  test("should display code content", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeblockspeed--javascript")
-    const codeBlock = page.locator(".code-block-speed")
-    const content = await codeBlock.textContent()
-    expect(content).toContain("fibonacci")
-  })
+  test("renders the highlighted code content", async ({ page }) => {
+    const codeBlock = page.getByTestId("codeblockspeed-js");
+    await expect(codeBlock).toContainText("fibonacci");
+  });
 
-  test("should support TypeScript", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeblockspeed--type-script")
-    const codeBlock = page.locator(".code-block-speed")
-    await expect(codeBlock).toBeVisible()
-  })
+  test("exposes a copy button", async ({ page }) => {
+    await expect(page.getByTestId("codeblockspeed-js").locator(".code-copy")).toBeVisible();
+  });
 
-  test("should support Python", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeblockspeed--python")
-    const codeBlock = page.locator(".code-block-speed")
-    await expect(codeBlock).toBeVisible()
-  })
-
-  test("should support HTML", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeblockspeed--html")
-    const codeBlock = page.locator(".code-block-speed")
-    await expect(codeBlock).toBeVisible()
-  })
-
-  test("should support CSS", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeblockspeed--css")
-    const codeBlock = page.locator(".code-block-speed")
-    await expect(codeBlock).toBeVisible()
-  })
-
-  test("should support JSON", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeblockspeed--json")
-    const codeBlock = page.locator(".code-block-speed")
-    const content = await codeBlock.textContent()
-    expect(content).toContain("CodeBlockSpeed")
-  })
-
-  test("should support Bash", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeblockspeed--bash")
-    const codeBlock = page.locator(".code-block-speed")
-    await expect(codeBlock).toBeVisible()
-  })
-
-  test("should support Markdown", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeblockspeed--markdown")
-    const codeBlock = page.locator(".code-block-speed")
-    await expect(codeBlock).toBeVisible()
-  })
-
-  test("should auto-detect language", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeblockspeed--auto-detect")
-    const codeBlock = page.locator(".code-block-speed")
-    await expect(codeBlock).toBeVisible()
-  })
-
-  test("should have proper styling", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-codeblockspeed--default")
-    const codeBlock = page.locator(".code-block-speed")
-    const styles = await codeBlock.evaluate((el) => {
-      const computed = window.getComputedStyle(el)
-      return {
-        position: computed.position,
-        borderRadius: computed.borderRadius,
-      }
-    })
-    expect(styles.position).toBe("relative")
-  })
-
-  test("should apply custom CSS classes", async ({ page }) => {
-    await page.goto(
-      "http://localhost:6006/iframe.html?id=components-codeblockspeed--with-custom-class"
-    )
-    const codeBlock = page.locator(".code-block-speed")
-    const hasCustomClass = await codeBlock.evaluate((el) => {
-      return el.classList.contains("custom-code-block")
-    })
-    expect(hasCustomClass).toBe(true)
-  })
-})
+  test("auto-detect example renders without an explicit language", async ({ page }) => {
+    const codeBlock = page.getByTestId("codeblockspeed-auto-detect");
+    await expect(codeBlock).toContainText("Hello, Speed Highlight!");
+  });
+});

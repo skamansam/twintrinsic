@@ -1,103 +1,58 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test";
+import { waitForHydration } from "./helpers.js";
 
-test.describe("BottomBar Component", () => {
+/**
+ * Docs-site smoke tests for the BottomBar component.
+ *
+ * Component-level behavior (keyboard toggle, disabled state, docked /
+ * backdrop handling) is covered by the Storybook vitest suite
+ * (`pnpm test:storybook`).
+ *
+ * These tests verify the docs landing page renders the live examples
+ * (`data-testid="bottombar-*"` hooks; the docs page mounts them after
+ * a 100ms delay to avoid a transition glitch, so Playwright waits for
+ * the container to appear) and that the expand/collapse toggle works.
+ */
+test.describe("BottomBar docs page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:6006/?path=/story/components-bottombar--default")
-  })
+    await page.goto("/docs/components/BottomBar/BottomBar");
+    await waitForHydration(page);
+  });
 
-  test("renders with default props", async ({ page }) => {
-    const bottombar = page.locator(".bottombar-container")
-    await expect(bottombar).toBeVisible()
+  test("renders the docs page with all live examples", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: "BottomBar", level: 1 })).toBeVisible();
+    await expect(page.getByTestId("bottombar-basic")).toBeVisible();
+    await expect(page.getByTestId("bottombar-console")).toBeVisible();
+  });
 
-    // Check default height
-    const style = await bottombar.getAttribute("style")
-    expect(style).toContain("--bottombar-height: 16rem")
+  test("renders the bottom bar expanded with content", async ({ page }) => {
+    const example = page.getByTestId("bottombar-basic");
+    const container = example.locator(".bottombar-container");
+    await expect(container).toBeVisible();
 
-    // Check expanded state
-    const content = bottombar.locator('[role="region"]')
-    await expect(content).toBeVisible()
-  })
+    await expect(container.locator(".bottombar")).toHaveClass(/bottombar-expanded/);
+    await expect(container.locator(".bottombar[role='region']")).toBeVisible();
+    await expect(example.getByText("Project Information")).toBeVisible();
+  });
 
-  test("toggles expansion state", async ({ page }) => {
-    const bottombar = page.locator(".bottombar-container")
-    const header = bottombar.locator("button")
+  test("toggles expansion state via the header button", async ({ page }) => {
+    const example = page.getByTestId("bottombar-basic");
+    const container = example.locator(".bottombar-container");
+    await expect(container).toBeVisible();
 
-    // Initial expanded state
-    await expect(bottombar.locator(".bottombar")).toHaveClass(/bottombar-expanded/)
+    // Collapse
+    await container.locator("button").first().click();
+    await expect(container.locator(".bottombar")).toHaveClass(/bottombar-collapsed/);
 
-    // Click to collapse
-    await header.click()
-    await expect(bottombar.locator(".bottombar")).toHaveClass(/bottombar-collapsed/)
+    // Expand again
+    await container.locator("button").first().click();
+    await expect(container.locator(".bottombar")).toHaveClass(/bottombar-expanded/);
+  });
 
-    // Click to expand
-    await header.click()
-    await expect(bottombar.locator(".bottombar")).toHaveClass(/bottombar-expanded/)
-  })
-
-  test("handles keyboard navigation", async ({ page }) => {
-    const bottombar = page.locator(".bottombar-container")
-    const header = bottombar.locator("button")
-
-    // Focus header
-    await header.focus()
-
-    // Press Enter to collapse
-    await page.keyboard.press("Enter")
-    await expect(bottombar.locator(".bottombar")).toHaveClass(/bottombar-collapsed/)
-
-    // Press Space to expand
-    await page.keyboard.press("Space")
-    await expect(bottombar.locator(".bottombar")).toHaveClass(/bottombar-expanded/)
-
-    // Press Escape to collapse
-    await page.keyboard.press("Escape")
-    await expect(bottombar.locator(".bottombar")).toHaveClass(/bottombar-collapsed/)
-  })
-
-  test("shows backdrop on mobile", async ({ page }) => {
-    // Set mobile viewport
-    await page.setViewportSize({ width: 375, height: 667 })
-
-    const bottombar = page.locator(".bottombar-container")
-    const header = bottombar.locator("button")
-
-    // Expand bottombar
-    await header.click()
-
-    // Check backdrop
-    const backdrop = page.locator(".bottombar-backdrop")
-    await expect(backdrop).toBeVisible()
-
-    // Click backdrop to collapse
-    await backdrop.click()
-    await expect(bottombar.locator(".bottombar")).toHaveClass(/bottombar-collapsed/)
-    await expect(backdrop).not.toBeVisible()
-  })
-
-  test("respects disabled state", async ({ page }) => {
-    // Navigate to disabled variant
-    await page.goto("http://localhost:6006/?path=/story/components-bottombar--disabled")
-
-    const bottombar = page.locator(".bottombar-container")
-    const header = bottombar.locator("button")
-
-    await expect(header).toBeDisabled()
-
-    // Try to click - should not toggle
-    await header.click({ force: true })
-    await expect(bottombar.locator(".bottombar")).toHaveClass(/bottombar-expanded/)
-
-    // Try keyboard - should not toggle
-    await page.keyboard.press("Escape")
-    await expect(bottombar.locator(".bottombar")).toHaveClass(/bottombar-expanded/)
-  })
-
-  test("handles docked mode", async ({ page }) => {
-    // Navigate to docked variant
-    await page.goto("http://localhost:6006/?path=/story/components-bottombar--docked")
-
-    const bottombar = page.locator(".bottombar-container")
-    await expect(bottombar).toHaveClass(/bottombar-docked/)
-    await expect(bottombar.locator(".bottombar")).toHaveClass(/fixed/)
-  })
-})
+  test("console example renders its log content", async ({ page }) => {
+    const example = page.getByTestId("bottombar-console");
+    const container = example.locator(".bottombar-container");
+    await expect(container).toBeVisible();
+    await expect(example.getByText("Build completed successfully")).toBeVisible();
+  });
+});

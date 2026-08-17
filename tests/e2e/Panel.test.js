@@ -1,77 +1,67 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test";
+import { waitForHydration } from "./helpers.js";
 
-test.describe("Panel Component", () => {
+/**
+ * Docs-site smoke tests for the Panel component.
+ *
+ * Component-level behavior (keyboard toggle, borderless rendering) is
+ * covered by the Storybook vitest suite (`pnpm test:storybook`).
+ *
+ * These tests verify the docs landing page renders the live examples
+ * (`data-testid="panel-*"` hooks) and that the header button toggles
+ * the content region, including the disabled variant.
+ */
+test.describe("Panel docs page", () => {
   test.beforeEach(async ({ page }) => {
-    // Navigate to the Panel story in Storybook
-    await page.goto("http://localhost:6006/?path=/story/components-panel--default")
-  })
+    await page.goto("/docs/components/Panel/Panel");
+    await waitForHydration(page);
+  });
 
-  test("renders with default props", async ({ page }) => {
-    const panel = page.locator(".panel")
-    await expect(panel).toBeVisible()
-    await expect(panel).toHaveClass(/border border-border/)
+  test("renders the docs page with all live examples", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: "Panel", level: 1 })).toBeVisible();
+    await expect(page.getByTestId("panel-basic")).toBeVisible();
+    await expect(page.getByTestId("panel-custom-header")).toBeVisible();
+    await expect(page.getByTestId("panel-disabled")).toBeVisible();
+    await expect(page.getByTestId("panel-borderless")).toBeVisible();
+  });
 
-    // Check header button
-    const header = panel.locator("button")
-    await expect(header).toBeVisible()
-    await expect(header).toHaveAttribute("aria-expanded", "true")
+  test("basic panel renders expanded with a bordered container", async ({ page }) => {
+    const panel = page.getByTestId("panel-basic").locator(".panel");
+    await expect(panel).toBeVisible();
+    await expect(panel).toHaveClass(/border/);
 
-    // Check content
-    const content = panel.locator('[role="region"]')
-    await expect(content).toBeVisible()
-  })
+    const header = panel.locator("button").first();
+    await expect(header).toHaveAttribute("aria-expanded", "true");
+    await expect(panel.locator('[role="region"]')).toBeVisible();
+  });
 
-  test("toggles content on click", async ({ page }) => {
-    const panel = page.locator(".panel")
-    const header = panel.locator("button")
-    const content = panel.locator('[role="region"]')
+  test("header button toggles the content region", async ({ page }) => {
+    const panel = page.getByTestId("panel-basic").locator(".panel");
+    const header = panel.locator("button").first();
 
-    // Initial state
-    await expect(content).toBeVisible()
-    await expect(header).toHaveAttribute("aria-expanded", "true")
+    await header.click();
+    await expect(header).toHaveAttribute("aria-expanded", "false");
+    await expect(panel.locator('[role="region"]')).not.toBeVisible();
 
-    // Click to collapse
-    await header.click()
-    await expect(content).not.toBeVisible()
-    await expect(header).toHaveAttribute("aria-expanded", "false")
+    await header.click();
+    await expect(header).toHaveAttribute("aria-expanded", "true");
+    await expect(panel.locator('[role="region"]')).toBeVisible();
+  });
 
-    // Click to expand
-    await header.click()
-    await expect(content).toBeVisible()
-    await expect(header).toHaveAttribute("aria-expanded", "true")
-  })
+  test("disabled panel cannot be toggled", async ({ page }) => {
+    const panel = page.getByTestId("panel-disabled").locator(".panel");
+    await expect(panel).toHaveClass(/disabled/);
 
-  test("handles keyboard navigation", async ({ page }) => {
-    const panel = page.locator(".panel")
-    const header = panel.locator("button")
-    const content = panel.locator('[role="region"]')
+    const header = panel.locator("button").first();
+    await expect(header).toBeDisabled();
 
-    // Focus the header
-    await header.focus()
+    await header.click({ force: true });
+    await expect(header).toHaveAttribute("aria-expanded", "true");
+    await expect(panel.locator('[role="region"]')).toBeVisible();
+  });
 
-    // Press Enter to collapse
-    await page.keyboard.press("Enter")
-    await expect(content).not.toBeVisible()
-    await expect(header).toHaveAttribute("aria-expanded", "false")
-
-    // Press Space to expand
-    await page.keyboard.press("Space")
-    await expect(content).toBeVisible()
-    await expect(header).toHaveAttribute("aria-expanded", "true")
-  })
-
-  test("respects disabled state", async ({ page }) => {
-    // Navigate to disabled variant
-    await page.goto("http://localhost:6006/?path=/story/components-panel--disabled")
-
-    const panel = page.locator(".panel")
-    const header = panel.locator("button")
-
-    await expect(panel).toHaveClass(/disabled/)
-    await expect(header).toBeDisabled()
-
-    // Try to click - should not toggle
-    await header.click({ force: true })
-    await expect(panel.locator('[role="region"]')).toBeVisible()
-  })
-})
+  test("borderless panel omits border classes", async ({ page }) => {
+    const panel = page.getByTestId("panel-borderless").locator(".panel");
+    await expect(panel).not.toHaveClass(/border/);
+  });
+});

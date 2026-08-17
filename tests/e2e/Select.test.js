@@ -1,335 +1,95 @@
 import { expect, test } from "@playwright/test";
+import { waitForHydration } from "./helpers.js";
 
-test.describe("Select Component", () => {
+/**
+ * Docs-site smoke tests for the Select component.
+ *
+ * The current Select component renders a native <select> element
+ * (`.select-input` inside `.select-wrapper`). Component-level behavior
+ * (grouped options, multiple selection) is covered by the Storybook
+ * vitest suite (`pnpm test:storybook`).
+ *
+ * These tests verify the docs landing page renders the live examples
+ * (`data-testid="select-*"` hooks) and that the native select controls
+ * work on the page.
+ */
+test.describe("Select docs page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:6006/?path=/story/components-form-select--default");
+    await page.goto("/docs/components/Form/Select");
+    await waitForHydration(page);
   });
 
-  test.describe("Rendering", () => {
-    test("renders with label and placeholder", async ({ page }) => {
-      const select = page.locator(".select");
-      await expect(select).toBeVisible();
-
-      const label = select.locator(".select-label-text");
-      await expect(label).toBeVisible();
-
-      const placeholder = select.locator(".select-placeholder");
-      await expect(placeholder).toBeVisible();
-    });
-
-    test("renders required indicator", async ({ page }) => {
-      const select = page.locator(".select");
-      const required = select.locator(".select-required");
-
-      // Required indicator should be present when required=true
-      const control = select.locator(".select-control");
-      const ariaRequired = await control.getAttribute("aria-required");
-      if (ariaRequired === "true") {
-        await expect(required).toBeVisible();
-      }
-    });
-
-    test("renders with error message", async ({ page }) => {
-      const select = page.locator(".select");
-      const error = select.locator(".select-error-text");
-
-      // Error should be visible if present
-      const errorVisible = await error.isVisible().catch(() => false);
-      if (errorVisible) {
-        await expect(error).toBeVisible();
-      }
-    });
-
-    test("renders disabled state", async ({ page }) => {
-      const select = page.locator(".select");
-      const control = select.locator(".select-control");
-
-      // Check if disabled
-      const tabindex = await control.getAttribute("tabindex");
-      if (tabindex === "-1") {
-        await expect(select).toHaveClass(/select-disabled/);
-      }
-    });
+  test("renders the docs page with all live examples", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: "Select", level: 1 })).toBeVisible();
+    for (const id of [
+      "select-basic",
+      "select-multiple",
+      "select-groups",
+      "select-required",
+      "select-error",
+      "select-disabled",
+    ]) {
+      await expect(page.getByTestId(id)).toBeVisible();
+    }
   });
 
-  test.describe("Popover Interaction", () => {
-    test("opens popover on click", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const menu = page.locator("#select-menu");
-
-      await control.click();
-      await expect(menu).toBeVisible();
-    });
-
-    test("closes popover when clicking option", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const menu = page.locator("#select-menu");
-      const firstOption = page.locator(".select-option").first();
-
-      await control.click();
-      await expect(menu).toBeVisible();
-
-      await firstOption.click();
-
-      // Menu should be hidden after selection
-      await expect(menu).not.toBeVisible();
-    });
-
-    test("closes popover with Escape key", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const menu = page.locator("#select-menu");
-
-      await control.click();
-      await expect(menu).toBeVisible();
-
-      await page.keyboard.press("Escape");
-      await expect(menu).not.toBeVisible();
-    });
-
-    test("toggles popover on multiple clicks", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const menu = page.locator("#select-menu");
-
-      await control.click();
-      await expect(menu).toBeVisible();
-
-      await control.click();
-      await expect(menu).not.toBeVisible();
-
-      await control.click();
-      await expect(menu).toBeVisible();
-    });
+  test("basic select renders label and options", async ({ page }) => {
+    const example = page.getByTestId("select-basic");
+    const select = example.getByLabel("Country");
+    await expect(select).toBeVisible();
+    // `<option>` elements are never "visible" outside an open listbox,
+    // so assert presence/count instead of visibility
+    await expect(select.locator("option", { hasText: "United States" })).toHaveCount(1);
+    await expect(select.locator("option")).toHaveCount(7); // placeholder + 6 countries
   });
 
-  test.describe("Single Selection", () => {
-    test("selects option on click", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const firstOption = page.locator(".select-option").first();
+  test("selecting an option updates the value", async ({ page }) => {
+    const example = page.getByTestId("select-basic");
+    const select = example.getByLabel("Country");
 
-      await control.click();
-      await firstOption.click();
+    await select.selectOption("us");
+    await expect(select).toHaveValue("us");
 
-      // Selected value should be displayed
-      const value = page.locator(".select-value");
-      const text = await value.textContent();
-      expect(text).toBeTruthy();
-      expect(text).not.toContain("Select");
-    });
-
-    test("highlights selected option", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const options = page.locator(".select-option");
-
-      await control.click();
-      await options.first().click();
-
-      // Reopen to verify selection
-      await control.click();
-      const selectedOption = page.locator(".select-option-selected").first();
-      await expect(selectedOption).toBeVisible();
-    });
+    await select.selectOption("fr");
+    await expect(select).toHaveValue("fr");
   });
 
-  test.describe("Keyboard Navigation", () => {
-    test("opens popover with Enter key", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const menu = page.locator("#select-menu");
+  test("multiple example allows multi-selection", async ({ page }) => {
+    const example = page.getByTestId("select-multiple");
+    const select = example.getByLabel("Programming Languages");
+    await expect(select).toHaveAttribute("multiple", "");
 
-      await control.focus();
-      await page.keyboard.press("Enter");
-
-      await expect(menu).toBeVisible();
-    });
-
-    test("opens popover with Space key", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const menu = page.locator("#select-menu");
-
-      await control.focus();
-      await page.keyboard.press(" ");
-
-      await expect(menu).toBeVisible();
-    });
-
-    test("navigates options with arrow keys", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const menu = page.locator("#select-menu");
-
-      await control.focus();
-      await page.keyboard.press("Enter");
-      await expect(menu).toBeVisible();
-
-      // Navigate down
-      await page.keyboard.press("ArrowDown");
-      const highlighted = page.locator(".select-option-highlighted");
-      await expect(highlighted).toBeVisible();
-
-      // Navigate up
-      await page.keyboard.press("ArrowUp");
-      await expect(highlighted).toBeVisible();
-    });
-
-    test("selects option with Enter key", async ({ page }) => {
-      const control = page.locator(".select-control");
-
-      await control.focus();
-      await page.keyboard.press("Enter");
-      await page.keyboard.press("ArrowDown");
-      await page.keyboard.press("Enter");
-
-      // Menu should close after selection
-      const menu = page.locator("#select-menu");
-      await expect(menu).not.toBeVisible();
-    });
-
-    test("closes popover with Escape key", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const menu = page.locator("#select-menu");
-
-      await control.focus();
-      await page.keyboard.press("Enter");
-      await expect(menu).toBeVisible();
-
-      await page.keyboard.press("Escape");
-      await expect(menu).not.toBeVisible();
-    });
+    await select.selectOption(["js", "python"]);
+    await expect(select).toHaveValues(["js", "python"]);
   });
 
-  test.describe("Clear Button", () => {
-    test("shows clear button when value selected", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const firstOption = page.locator(".select-option").first();
-
-      await control.click();
-      await firstOption.click();
-
-      const clearButton = page.locator(".select-clear-button");
-      await expect(clearButton).toBeVisible();
-    });
-
-    test("clears selection on click", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const firstOption = page.locator(".select-option").first();
-
-      await control.click();
-      await firstOption.click();
-
-      const clearButton = page.locator(".select-clear-button");
-      await clearButton.click();
-
-      // Placeholder should be visible again
-      const placeholder = page.locator(".select-placeholder");
-      await expect(placeholder).toBeVisible();
-    });
+  test("groups example renders all grouped options", async ({ page }) => {
+    const example = page.getByTestId("select-groups");
+    const select = example.getByLabel("Programming Language");
+    for (const label of ["JavaScript", "TypeScript", "Python", "Java", "Swift", "Kotlin"]) {
+      // Exact match — `hasText` is a substring filter and "Java" also
+      // matches "JavaScript"
+      await expect(select.locator("option", { hasText: new RegExp(`^${label}$`) })).toHaveCount(1);
+    }
   });
 
-  test.describe("Filtering", () => {
-    test("filters options while typing", async ({ page }) => {
-      // Navigate to filtered story if available
-      const control = page.locator(".select-control");
-      const menu = page.locator("#select-menu");
-
-      await control.click();
-      await expect(menu).toBeVisible();
-
-      // Check if filter input is present
-      const filterInput = page.locator(".select-filter");
-      const hasFilter = await filterInput.isVisible().catch(() => false);
-
-      if (hasFilter) {
-        await filterInput.fill("united");
-
-        const options = page.locator(".select-option");
-        const count = await options.count();
-        expect(count).toBeGreaterThan(0);
-      }
-    });
+  test("required example marks the select required", async ({ page }) => {
+    const example = page.getByTestId("select-required");
+    const select = example.getByLabel("Country");
+    await expect(select).toHaveAttribute("required", "");
+    await expect(example.locator(".select-required")).toBeVisible();
   });
 
-  test.describe("Accessibility", () => {
-    test("has proper ARIA attributes", async ({ page }) => {
-      const control = page.locator(".select-control");
-
-      await expect(control).toHaveAttribute("role", "combobox");
-      await expect(control).toHaveAttribute("aria-haspopup", "listbox");
-
-      const ariaExpanded = await control.getAttribute("aria-expanded");
-      expect(["true", "false"]).toContain(ariaExpanded);
-    });
-
-    test("marks options with aria-selected", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const options = page.locator(".select-option");
-
-      await control.click();
-
-      const firstOption = options.first();
-      const ariaSelected = await firstOption.getAttribute("aria-selected");
-      expect(["true", "false"]).toContain(ariaSelected);
-    });
-
-    test("listbox has proper ARIA attributes", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const menu = page.locator("#select-menu");
-
-      await control.click();
-
-      await expect(menu).toHaveAttribute("role", "listbox");
-    });
-
-    test("error message is linked with aria-describedby", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const error = page.locator(".select-error-text");
-
-      const errorVisible = await error.isVisible().catch(() => false);
-      if (errorVisible) {
-        const describedBy = await control.getAttribute("aria-describedby");
-        expect(describedBy).toBeTruthy();
-      }
-    });
-
-    test("supports keyboard focus", async ({ page }) => {
-      const control = page.locator(".select-control");
-
-      await control.focus();
-      await expect(control).toBeFocused();
-    });
+  test("error example shows the error message", async ({ page }) => {
+    const example = page.getByTestId("select-error");
+    await expect(example.locator(".select-error-text")).toHaveText("Please select a country");
+    const select = example.getByLabel("Country");
+    await expect(select).toHaveAttribute("aria-invalid", "true");
   });
 
-  test.describe("Size Variants", () => {
-    test("renders with different sizes", async ({ page }) => {
-      const control = page.locator(".select-control");
-
-      // Control should be visible regardless of size
-      await expect(control).toBeVisible();
-
-      // Check if size classes are applied
-      const className = await control.getAttribute("class");
-      expect(className).toBeTruthy();
-    });
-  });
-
-  test.describe("Option Display", () => {
-    test("displays all options in dropdown", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const options = page.locator(".select-option");
-
-      await control.click();
-
-      const count = await options.count();
-      expect(count).toBeGreaterThan(0);
-    });
-
-    test("shows empty state when no options", async ({ page }) => {
-      const control = page.locator(".select-control");
-      const empty = page.locator(".select-empty");
-
-      await control.click();
-
-      const emptyVisible = await empty.isVisible().catch(() => false);
-      if (emptyVisible) {
-        await expect(empty).toBeVisible();
-      }
-    });
+  test("disabled example disables the select", async ({ page }) => {
+    const example = page.getByTestId("select-disabled");
+    const select = example.getByLabel("Country");
+    await expect(select).toBeDisabled();
   });
 });

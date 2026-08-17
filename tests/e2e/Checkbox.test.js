@@ -1,167 +1,96 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test";
+import { waitForHydration } from "./helpers.js";
 
-test.describe("Checkbox Component", () => {
+/**
+ * Docs-site smoke tests for the Checkbox component.
+ *
+ * Component-level behavior (indeterminate toggle, disabled states,
+ * keyboard Space toggling, group semantics) is covered by the
+ * Storybook vitest suite (`pnpm test:storybook`).
+ *
+ * These tests verify the docs landing page renders the live examples
+ * (`data-testid="checkbox-*"` hooks) and that basic check/uncheck,
+ * description, required, error, disabled, and group examples behave on
+ * the page.
+ */
+test.describe("Checkbox docs page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:6006/?path=/story/components-form-checkbox--default")
-  })
+    await page.goto("/docs/components/Form/Checkbox");
+    await waitForHydration(page);
+  });
 
-  test("renders with default props", async ({ page }) => {
-    const checkbox = page.locator(".checkbox-container")
-    await expect(checkbox).toBeVisible()
-
-    const label = checkbox.locator(".checkbox-label")
-    await expect(label).toHaveText("Accept terms and conditions")
-
-    const input = checkbox.locator('input[type="checkbox"]')
-    await expect(input).not.toBeChecked()
-  })
-
-  test("handles check/uncheck", async ({ page }) => {
-    const input = page.locator('input[type="checkbox"]')
-
-    // Check
-    await input.check()
-    await expect(input).toBeChecked()
-
-    // Uncheck
-    await input.uncheck()
-    await expect(input).not.toBeChecked()
-  })
-
-  test("shows description", async ({ page }) => {
-    // Navigate to description variant
-    await page.goto("http://localhost:6006/?path=/story/components-form-checkbox--with-description")
-
-    const description = page.locator(".checkbox-description")
-    await expect(description).toBeVisible()
-    await expect(description).toHaveText("Receive updates about new features and announcements")
-  })
-
-  test("handles indeterminate state", async ({ page }) => {
-    // Navigate to indeterminate variant
-    await page.goto("http://localhost:6006/?path=/story/components-form-checkbox--indeterminate")
-
-    const input = page.locator('input[type="checkbox"]')
-    await expect(input).toHaveJSProperty("indeterminate", true)
-
-    // Check that indeterminate icon is shown
-    const control = page.locator(".checkbox-control")
-    await expect(control.locator('path[d*="H6a1"]')).toBeVisible()
-
-    // Click should clear indeterminate and set checked
-    await input.click()
-    await expect(input).toHaveJSProperty("indeterminate", false)
-    await expect(input).toBeChecked()
-  })
-
-  test("shows required indicator", async ({ page }) => {
-    // Navigate to required variant
-    await page.goto("http://localhost:6006/?path=/story/components-form-checkbox--required")
-
-    const input = page.locator('input[type="checkbox"]')
-    await expect(input).toHaveAttribute("required", "")
-
-    const requiredIndicator = page.locator(".checkbox-required")
-    await expect(requiredIndicator).toBeVisible()
-    await expect(requiredIndicator).toHaveText("*")
-  })
-
-  test("shows error state", async ({ page }) => {
-    // Navigate to error variant
-    await page.goto("http://localhost:6006/?path=/story/components-form-checkbox--with-error")
-
-    const checkbox = page.locator(".checkbox")
-    await expect(checkbox).toHaveClass(/checkbox-error/)
-
-    const input = checkbox.locator("input")
-    await expect(input).toHaveAttribute("aria-invalid", "true")
-
-    const errorMessage = page.locator(".checkbox-error-text")
-    await expect(errorMessage).toBeVisible()
-    await expect(errorMessage).toHaveText("You must accept the privacy policy")
-
-    // Error message should be linked to input
-    const errorId = await input.getAttribute("aria-describedby")
-    await expect(errorMessage).toHaveAttribute("id", errorId)
-  })
-
-  test("handles disabled state", async ({ page }) => {
-    // Navigate to disabled variant
-    await page.goto("http://localhost:6006/?path=/story/components-form-checkbox--disabled")
-
-    const checkbox = page.locator(".checkbox")
-    await expect(checkbox).toHaveClass(/checkbox-disabled/)
-
-    const input = checkbox.locator("input")
-    await expect(input).toBeDisabled()
-
-    // Try to click (should not work)
-    await input.click({ force: true })
-    await expect(input).not.toBeChecked()
-  })
-
-  test("handles disabled checked state", async ({ page }) => {
-    // Navigate to disabled checked variant
-    await page.goto("http://localhost:6006/?path=/story/components-form-checkbox--disabled-checked")
-
-    const input = page.locator('input[type="checkbox"]')
-    await expect(input).toBeDisabled()
-    await expect(input).toBeChecked()
-  })
-
-  test("handles value attribute", async ({ page }) => {
-    // Navigate to value variant
-    await page.goto("http://localhost:6006/?path=/story/components-form-checkbox--with-value")
-
-    const input = page.locator('input[type="checkbox"]')
-    await expect(input).toHaveAttribute("value", "option1")
-  })
-
-  test("handles checkbox group", async ({ page }) => {
-    // Navigate to group variant
-    await page.goto("http://localhost:6006/?path=/story/components-form-checkbox--group")
-
-    const checkboxes = page.locator('input[type="checkbox"]')
-    await expect(checkboxes).toHaveCount(3)
-
-    // Check all boxes
-    for (const checkbox of await checkboxes.all()) {
-      await checkbox.check()
-      await expect(checkbox).toBeChecked()
+  test("renders the docs page with all live examples", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: "Checkbox", level: 1 })).toBeVisible();
+    for (const id of [
+      "checkbox-basic",
+      "checkbox-description",
+      "checkbox-indeterminate",
+      "checkbox-required",
+      "checkbox-error",
+      "checkbox-disabled",
+      "checkbox-group",
+    ]) {
+      await expect(page.getByTestId(id)).toBeVisible();
     }
+  });
 
-    // Uncheck middle box
-    await checkboxes.nth(1).uncheck()
-    await expect(checkboxes.nth(0)).toBeChecked()
-    await expect(checkboxes.nth(1)).not.toBeChecked()
-    await expect(checkboxes.nth(2)).toBeChecked()
-  })
+  test("basic checkbox toggles check state", async ({ page }) => {
+    const checkbox = page.getByTestId("checkbox-basic").locator("input[type='checkbox']");
+    await expect(checkbox).not.toBeChecked();
 
-  test("handles keyboard interaction", async ({ page }) => {
-    const input = page.locator('input[type="checkbox"]')
+    await checkbox.check();
+    await expect(checkbox).toBeChecked();
 
-    // Focus with Tab
-    await page.keyboard.press("Tab")
-    await expect(input).toBeFocused()
+    await checkbox.uncheck();
+    await expect(checkbox).not.toBeChecked();
+  });
 
-    // Toggle with Space
-    await page.keyboard.press("Space")
-    await expect(input).toBeChecked()
+  test("description example shows the description text", async ({ page }) => {
+    const example = page.getByTestId("checkbox-description");
+    await expect(example.locator(".checkbox-description")).toHaveText(
+      "Receive updates about new features and announcements",
+    );
+  });
 
-    await page.keyboard.press("Space")
-    await expect(input).not.toBeChecked()
-  })
+  test("indeterminate example sets the indeterminate property", async ({ page }) => {
+    const input = page.getByTestId("checkbox-indeterminate").locator("input[type='checkbox']");
+    await expect(input).toHaveJSProperty("indeterminate", true);
+  });
 
-  test("handles focus styles", async ({ page }) => {
-    const checkbox = page.locator(".checkbox")
-    const control = checkbox.locator(".checkbox-control")
+  test("required example marks the input required", async ({ page }) => {
+    const input = page.getByTestId("checkbox-required").locator("input[type='checkbox']");
+    await expect(input).toHaveAttribute("required", "");
+    await expect(page.getByTestId("checkbox-required").locator(".checkbox-required")).toBeVisible();
+  });
 
-    // Focus with keyboard
-    await page.keyboard.press("Tab")
-    await expect(control).toHaveClass(/ring-2/)
+  test("error example links the error message to the input", async ({ page }) => {
+    const example = page.getByTestId("checkbox-error");
+    const input = example.locator("input[type='checkbox']");
+    await expect(input).toHaveAttribute("aria-invalid", "true");
 
-    // Blur
-    await page.keyboard.press("Tab")
-    await expect(control).not.toHaveClass(/ring-2/)
-  })
-})
+    const error = example.locator(".checkbox-error-text");
+    await expect(error).toBeVisible();
+    await expect(error).toHaveText("You must accept the privacy policy");
+  });
+
+  test("disabled example renders disabled checkboxes", async ({ page }) => {
+    const example = page.getByTestId("checkbox-disabled");
+    const inputs = example.locator("input[type='checkbox']");
+    await expect(inputs).toHaveCount(2);
+    for (const input of await inputs.all()) {
+      await expect(input).toBeDisabled();
+    }
+  });
+
+  test("group example exposes three independent checkboxes", async ({ page }) => {
+    const example = page.getByTestId("checkbox-group");
+    const inputs = example.locator("input[type='checkbox']");
+    await expect(inputs).toHaveCount(3);
+
+    await inputs.nth(0).check();
+    await inputs.nth(2).check();
+    await expect(inputs.nth(0)).toBeChecked();
+    await expect(inputs.nth(1)).not.toBeChecked();
+    await expect(inputs.nth(2)).toBeChecked();
+  });
+});

@@ -1,62 +1,49 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test";
+import { waitForHydration } from "./helpers.js";
 
-test.describe("Card Component", () => {
+/**
+ * Docs-site smoke tests for the Card component.
+ *
+ * The live examples live on `/docs/components/Card/Card` (the
+ * `Panel/Card` docs page is documentation-only). Component-level
+ * behavior (clickable-card keyboard support, media aspect ratio) is
+ * covered by the Storybook vitest suite (`pnpm test:storybook`).
+ *
+ * These tests verify the docs landing page renders the live examples
+ * (`data-testid="card-*"` hooks) with header, media, and footer
+ * content.
+ */
+test.describe("Card docs page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:6006/?path=/story/components-panel-card--default")
-  })
+    await page.goto("/docs/components/Card/Card");
+    await waitForHydration(page);
+  });
 
-  test("renders basic card with header and content", async ({ page }) => {
-    const card = page.locator(".card")
-    await expect(card).toBeVisible()
-    await expect(card).toHaveClass(/bg-surface/)
+  test("renders the docs page with all live examples", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: "Card", level: 1 })).toBeVisible();
+    await expect(page.getByTestId("card-basic")).toBeVisible();
+    await expect(page.getByTestId("card-with-media")).toBeVisible();
+    await expect(page.getByTestId("card-with-footer")).toBeVisible();
+  });
 
-    const header = card.locator("text=Card Title")
-    await expect(header).toBeVisible()
+  test("basic card renders with header and content", async ({ page }) => {
+    const card = page.getByTestId("card-basic").locator(".card");
+    await expect(card).toBeVisible();
+    await expect(card).toHaveClass(/border/);
+    await expect(card.getByText("Basic Example")).toBeVisible();
+  });
 
-    const content = card.locator("text=This is a basic card")
-    await expect(content).toBeVisible()
-  })
+  test("card with media renders an image with alt text", async ({ page }) => {
+    const card = page.getByTestId("card-with-media").locator(".card");
+    const media = card.locator(".card-media img");
+    await expect(media).toBeVisible();
+    await expect(media).toHaveAttribute("alt", "Sample landscape");
+  });
 
-  test("renders card with media", async ({ page }) => {
-    await page.goto("http://localhost:6006/?path=/story/components-panel-card--with-media")
-
-    const card = page.locator(".card")
-    const media = card.locator(".card-media img")
-
-    await expect(media).toBeVisible()
-    await expect(media).toHaveAttribute("alt", "Sample image")
-    await expect(card).toHaveClass(/hover:shadow-lg/)
-  })
-
-  test("renders card with footer", async ({ page }) => {
-    await page.goto("http://localhost:6006/?path=/story/components-panel-card--with-footer")
-
-    const card = page.locator(".card")
-    const footer = card.locator(".card-footer")
-    const button = footer.locator("button")
-
-    await expect(footer).toBeVisible()
-    await expect(button).toBeVisible()
-    await expect(button).toHaveText("Action")
-  })
-
-  test("handles clickable card interactions", async ({ page }) => {
-    await page.goto("http://localhost:6006/?path=/story/components-panel-card--clickable")
-
-    const card = page.locator(".card")
-    await expect(card).toHaveAttribute("role", "button")
-    await expect(card).toHaveClass(/cursor-pointer/)
-
-    // Test keyboard interaction
-    await card.focus()
-    await page.keyboard.press("Enter")
-    // Click event would be tested here in a real app
-
-    await page.keyboard.press("Space")
-    // Click event would be tested here in a real app
-
-    // Test mouse interaction
-    await card.click()
-    // Click event would be tested here in a real app
-  })
-})
+  test("card with footer renders an action button", async ({ page }) => {
+    const card = page.getByTestId("card-with-footer").locator(".card");
+    const button = card.locator(".card-footer button").first();
+    await expect(button).toBeVisible();
+    await expect(button).toHaveText("Action");
+  });
+});

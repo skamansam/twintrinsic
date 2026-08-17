@@ -1,133 +1,84 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from "@playwright/test";
+import { waitForHydration } from "./helpers.js";
 
-test.describe('TreeMenu', () => {
+/**
+ * Docs-site smoke tests for the TreeMenu component.
+ *
+ * Component-level behavior (deep hierarchies, keyboard nav, expanded
+ * state persistence) is covered by the Storybook vitest suite
+ * (`pnpm test:storybook`).
+ *
+ * These tests verify the docs landing page renders the live examples
+ * (`data-testid="treemenu-*"` hooks) and that links, separators,
+ * nested expansion, and action buttons work on the page.
+ */
+test.describe("TreeMenu docs page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:6006/iframe.html?id=components-treemenu--default');
+    await page.goto("/docs/components/TreeMenu/TreeMenu");
+    await waitForHydration(page);
   });
 
-  test('should render menu items', async ({ page }) => {
-    const homeItem = page.locator('text=Home');
-    const aboutItem = page.locator('text=About');
-    const settingsItem = page.locator('text=Settings');
-
-    await expect(homeItem).toBeVisible();
-    await expect(aboutItem).toBeVisible();
-    await expect(settingsItem).toBeVisible();
+  test("renders the docs page with all live examples", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: "TreeMenu", level: 1 })).toBeVisible();
+    await expect(page.getByTestId("treemenu-basic")).toBeVisible();
+    await expect(page.getByTestId("treemenu-nested")).toBeVisible();
+    await expect(page.getByTestId("treemenu-actions")).toBeVisible();
   });
 
-  test('should render links with correct href', async ({ page }) => {
-    const homeLink = page.locator('a:has-text("Home")');
-    const aboutLink = page.locator('a:has-text("About")');
-
-    await expect(homeLink).toHaveAttribute('href', '/');
-    await expect(aboutLink).toHaveAttribute('href', '/about');
-  });
-
-  test('should expand and collapse nested items', async ({ page }) => {
-    await page.goto('http://localhost:6006/iframe.html?id=components-treemenu--with-nested-items');
-
-    const projectsButton = page.locator('button:has-text("Projects")');
-    
-    // Initially, children should not be visible
-    let activeProjects = page.locator('text=Active Projects');
-    await expect(activeProjects).not.toBeVisible();
-
-    // Click to expand
-    await projectsButton.click();
-    await expect(activeProjects).toBeVisible();
-
-    // Click to collapse
-    await projectsButton.click();
-    await expect(activeProjects).not.toBeVisible();
-  });
-
-  test('should handle click actions', async ({ page }) => {
-    await page.goto('http://localhost:6006/iframe.html?id=components-treemenu--with-actions');
-
-    // Set up listener for alert
-    page.on('dialog', dialog => {
-      expect(dialog.message()).toContain('New file');
-      dialog.accept();
-    });
-
-    const newButton = page.locator('button:has-text("New")');
-    await newButton.click();
-  });
-
-  test('should render icons', async ({ page }) => {
-    const homeItem = page.locator('text=Home').locator('..').locator('.sidebar-menu-icon');
-    await expect(homeItem).toBeVisible();
-  });
-
-  test('should render separators', async ({ page }) => {
-    const separators = page.locator('.sidebar-menu-separator');
-    const count = await separators.count();
-    expect(count).toBeGreaterThan(0);
-  });
-
-  test('should apply custom CSS classes', async ({ page }) => {
-    await page.goto('http://localhost:6006/iframe.html?id=components-treemenu--default');
-    
-    const menu = page.locator('.sidebar-menu');
+  test("basic example renders menu items as links", async ({ page }) => {
+    const menu = page.getByTestId("treemenu-basic").locator(".tree-menu");
     await expect(menu).toBeVisible();
+
+    await expect(menu.locator('a[href="/"]')).toContainText("Home");
+    await expect(menu.locator('a[href="/about"]')).toContainText("About");
+    await expect(menu.locator('a[href="/settings"]')).toContainText("Settings");
   });
 
-  test('should handle deeply nested items', async ({ page }) => {
-    await page.goto('http://localhost:6006/iframe.html?id=components-treemenu--complex-hierarchy');
-
-    const questlistsItem = page.locator('text=QuestLists').first();
-    const newQuestItem = page.locator('text=New Quest');
-    const aboutItem = page.locator('text=About QuestLists');
-
-    await expect(questlistsItem).toBeVisible();
-    await expect(newQuestItem).toBeVisible();
-    await expect(aboutItem).toBeVisible();
+  test("basic example renders separators", async ({ page }) => {
+    const separators = page.getByTestId("treemenu-basic").locator(".tree-menu-separator");
+    expect(await separators.count()).toBeGreaterThan(0);
   });
 
-  test('should render text-only items', async ({ page }) => {
-    await page.goto('http://localhost:6006/iframe.html?id=components-treemenu--text-only');
+  test("nested example expands and collapses children", async ({ page }) => {
+    const example = page.getByTestId("treemenu-nested");
 
-    const section1 = page.locator('text=Section 1');
-    const item1 = page.locator('text=Item 1');
-    const section2 = page.locator('text=Section 2');
+    const fileSummary = example.locator(".tree-menu-summary", { hasText: "File" });
+    const newItem = example.getByText("New");
 
-    await expect(section1).toBeVisible();
-    await expect(item1).toBeVisible();
-    await expect(section2).toBeVisible();
+    // Children are collapsed initially
+    await expect(newItem).not.toBeVisible();
+
+    // Expand
+    await fileSummary.click();
+    await expect(newItem).toBeVisible();
+    await expect(example.getByText("Open")).toBeVisible();
+    await expect(example.getByText("Save")).toBeVisible();
+
+    // Collapse again
+    await fileSummary.click();
+    await expect(newItem).not.toBeVisible();
   });
 
-  test('should support keyboard navigation', async ({ page }) => {
-    await page.goto('http://localhost:6006/iframe.html?id=components-treemenu--with-nested-items');
+  test("actions example triggers the item's onClick handler", async ({ page }) => {
+    const example = page.getByTestId("treemenu-actions");
 
-    const projectsButton = page.locator('button:has-text("Projects")');
-    
-    // Focus the button
-    await projectsButton.focus();
-    
-    // Press Enter to expand
-    await page.keyboard.press('Enter');
-    
-    const activeProjects = page.locator('text=Active Projects');
-    await expect(activeProjects).toBeVisible();
-  });
+    // The action items live under a collapsed "Actions" group, so
+    // expand it before interacting with them
+    const actionsSummary = example.locator(".tree-menu-summary", { hasText: "Actions" });
+    await actionsSummary.click();
 
-  test('should maintain expanded state across interactions', async ({ page }) => {
-    await page.goto('http://localhost:6006/iframe.html?id=components-treemenu--with-nested-items');
+    const createButton = example.locator(".tree-menu-item", { hasText: "Create" });
+    await expect(createButton).toBeVisible();
 
-    const projectsButton = page.locator('button:has-text("Projects")');
-    const settingsButton = page.locator('button:has-text("Settings")');
-    
-    // Expand Projects
-    await projectsButton.click();
-    let activeProjects = page.locator('text=Active Projects');
-    await expect(activeProjects).toBeVisible();
-
-    // Expand Settings
-    await settingsButton.click();
-    let profile = page.locator('text=Profile');
-    await expect(profile).toBeVisible();
-
-    // Projects should still be expanded
-    await expect(activeProjects).toBeVisible();
+    // Register the dialog handler BEFORE the click: a native `alert()`
+    // blocks the renderer, so `locator.click()` only completes once the
+    // dialog is dismissed. `waitForEvent` after the click hangs.
+    let dialogMessage = "";
+    page.once("dialog", async (dialog) => {
+      dialogMessage = dialog.message();
+      await dialog.accept();
+    });
+    await createButton.click();
+    expect(dialogMessage).toContain("Create clicked");
   });
 });

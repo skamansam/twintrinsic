@@ -1,103 +1,80 @@
-import { expect, test } from "@playwright/test"
+import { expect, test } from "@playwright/test";
+import { waitForHydration } from "./helpers.js";
 
-test.describe("Accordion Component", () => {
+/**
+ * Docs-site smoke tests for the Accordion component.
+ *
+ * Component-level behavior (single-vs-multiple expansion, keyboard
+ * toggle, disabled items) is covered by the Storybook vitest suite
+ * (`pnpm test:storybook`, every story is a render test plus the
+ * `play`-function interaction tests in stories/Accordion.stories.svelte).
+ *
+ * These tests only verify the docs landing page renders every live
+ * example and that the native disclosure semantics still hold on the
+ * page. They target `/docs/components/Accordion/Accordion` and scope
+ * selectors through the `data-testid` hooks each example block exposes.
+ */
+test.describe("Accordion docs page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:6006/?path=/story/components-accordion--default")
-  })
+    await page.goto("/docs/components/Accordion/Accordion");
+    await waitForHydration(page);
+  });
 
-  test("renders accordion container", async ({ page }) => {
-    const accordion = page.locator(".accordion")
-    await expect(accordion).toBeVisible()
-  })
+  test("renders the docs page with all live examples", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: "Accordion", level: 1 })).toBeVisible();
+    await expect(page.getByTestId("accordion-basic")).toBeVisible();
+    await expect(page.getByTestId("accordion-multiple")).toBeVisible();
+    await expect(page.getByTestId("accordion-no-border")).toBeVisible();
+    await expect(page.getByTestId("accordion-all-collapsed")).toBeVisible();
+  });
 
-  test("accordion has border by default", async ({ page }) => {
-    const accordion = page.locator(".accordion")
-    await expect(accordion).toHaveClass(/border/)
-  })
+  test("basic accordion is bordered and opens the first item by default", async ({ page }) => {
+    const accordion = page.getByTestId("accordion-basic").locator(".accordion");
+    await expect(accordion).toHaveClass(/border/);
 
-  test("first item is expanded by default", async ({ page }) => {
-    const details = page.locator("details.accordion-item")
-    await expect(details.nth(0)).toHaveAttribute("open", "")
-  })
+    const details = accordion.locator("details.accordion-item");
+    await expect(details.nth(0)).toHaveAttribute("open", "");
+    await expect(details.nth(1)).not.toHaveAttribute("open", "");
+  });
 
   test("only one item can be expanded at a time by default", async ({ page }) => {
-    const details = page.locator("details.accordion-item")
-    const summaries = page.locator("details.accordion-item > summary")
+    const accordion = page.getByTestId("accordion-basic").locator(".accordion");
+    const details = accordion.locator("details.accordion-item");
 
-    // First item should already be open
-    await expect(details.nth(0)).toHaveAttribute("open", "")
+    // Second item was not open initially
+    await expect(details.nth(1)).not.toHaveAttribute("open", "");
 
-    // Click second item - first should close
-    await summaries.nth(1).click()
-    await expect(details.nth(1)).toHaveAttribute("open", "")
-    await expect(details.nth(0)).not.toHaveAttribute("open", "")
-  })
+    // Clicking the second item closes the first
+    await details.nth(1).locator("summary").click();
+    await expect(details.nth(1)).toHaveAttribute("open", "");
+    await expect(details.nth(0)).not.toHaveAttribute("open", "");
+  });
 
-  test("allows multiple items to be expanded when allowMultiple=true", async ({ page }) => {
-    await page.goto("http://localhost:6006/?path=/story/components-accordion--allow-multiple")
+  test("allowMultiple keeps several items expanded", async ({ page }) => {
+    const accordion = page.getByTestId("accordion-multiple").locator(".accordion");
+    const details = accordion.locator("details.accordion-item");
 
-    const details = page.locator("details.accordion-item")
-    const summaries = page.locator("details.accordion-item > summary")
+    // First item is expanded by default
+    await expect(details.nth(0)).toHaveAttribute("open", "");
 
-    // Expand first item
-    await summaries.nth(0).click()
-    await expect(details.nth(0)).toHaveAttribute("open", "")
+    // Opening the second item keeps the first open
+    await details.nth(1).locator("summary").click();
+    await expect(details.nth(0)).toHaveAttribute("open", "");
+    await expect(details.nth(1)).toHaveAttribute("open", "");
+  });
 
-    // Expand second item - first should stay open
-    await summaries.nth(1).click()
-    await expect(details.nth(1)).toHaveAttribute("open", "")
-    await expect(details.nth(0)).toHaveAttribute("open", "")
-  })
+  test("accordion without border omits the border classes", async ({ page }) => {
+    const accordion = page.getByTestId("accordion-no-border").locator(".accordion");
+    await expect(accordion).not.toHaveClass(/border/);
+  });
 
-  test("handles keyboard navigation with Enter key", async ({ page }) => {
-    const summaries = page.locator("details.accordion-item > summary")
-    const firstDetails = page.locator("details.accordion-item").nth(0)
+  test("toggles an item with the Enter key", async ({ page }) => {
+    const accordion = page.getByTestId("accordion-basic").locator(".accordion");
+    const summary = accordion.locator("details.accordion-item > summary").nth(1);
 
-    // Focus first summary
-    await summaries.nth(0).focus()
+    await summary.focus();
+    await page.keyboard.press("Enter");
 
-    // Press Enter to expand
-    await page.keyboard.press("Enter")
-    await expect(firstDetails).toHaveAttribute("open", "")
-
-    // Press Enter to collapse
-    await page.keyboard.press("Enter")
-    await expect(firstDetails).not.toHaveAttribute("open", "")
-  })
-
-  test("handles keyboard navigation with Space key", async ({ page }) => {
-    const summaries = page.locator("details.accordion-item > summary")
-    const firstDetails = page.locator("details.accordion-item").nth(0)
-
-    // Focus first summary
-    await summaries.nth(0).focus()
-
-    // Press Space to expand
-    await page.keyboard.press(" ")
-    await expect(firstDetails).toHaveAttribute("open", "")
-
-    // Press Space to collapse
-    await page.keyboard.press(" ")
-    await expect(firstDetails).not.toHaveAttribute("open", "")
-  })
-
-  test("respects disabled state on items", async ({ page }) => {
-    const details = page.locator("details.accordion-item")
-
-    // Disable first item
-    await details.nth(0).evaluate((el) => {
-      el.setAttribute("class", el.getAttribute("class") + " disabled")
-    })
-
-    // Try to click disabled item
-    await details.nth(0).locator("summary").click()
-    await expect(details.nth(0)).not.toHaveAttribute("open", "")
-  })
-
-  test("accordion without border", async ({ page }) => {
-    await page.goto("http://localhost:6006/?path=/story/components-accordion--no-border")
-
-    const accordion = page.locator(".accordion")
-    await expect(accordion).not.toHaveClass(/border/)
-  })
-})
+    await expect(accordion.locator("details.accordion-item").nth(1)).toHaveAttribute("open", "");
+  });
+});

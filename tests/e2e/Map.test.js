@@ -1,33 +1,59 @@
 import { expect, test } from "@playwright/test";
+import { waitForHydration } from "./helpers.js";
 
-test.describe("Map", () => {
-  test("should render the map container", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-map--default");
-    const mapContainer = page.locator(".h-full.w-full");
-    await expect(mapContainer).toBeVisible();
+/**
+ * Docs-site smoke tests for the Map component.
+ *
+ * Leaflet tile rendering is flaky in headless browsers, so per the
+ * E2E migration plan § 9.5 we only assert that each live example on
+ * the docs page mounts a leaflet map container with a non-zero
+ * bounding box — no tile pixel data is checked. Component-level
+ * behavior (custom center/zoom, tile layers, zoom/attribution
+ * controls) is covered by the Storybook vitest suite
+ * (`pnpm test:storybook`).
+ */
+test.describe("Map docs page", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto("/docs/components/Map/Map");
+    await waitForHydration(page);
   });
 
-  test("should render with custom center and zoom", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-map--custom-center");
-    const mapContainer = page.locator(".h-full.w-full");
-    await expect(mapContainer).toBeVisible();
+  test("renders the docs page with all live map examples", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: "Map", level: 1 })).toBeVisible();
+    for (const id of [
+      "map-basic",
+      "map-custom-center",
+      "map-tile-layer",
+      "map-no-controls",
+      "map-custom-image",
+      "map-custom-markers",
+      "map-interactive",
+      "map-simple-crs",
+    ]) {
+      await expect(page.getByTestId(id)).toBeVisible();
+    }
   });
 
-  test("should render with different tile layer", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-map--custom-tile-layer");
-    const mapContainer = page.locator(".h-full.w-full");
-    await expect(mapContainer).toBeVisible();
-  });
-
-  test("should render with zoom controls disabled", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-map--no-zoom-control");
-    const mapContainer = page.locator(".h-full.w-full");
-    await expect(mapContainer).toBeVisible();
-  });
-
-  test("should render with attribution control disabled", async ({ page }) => {
-    await page.goto("http://localhost:6006/iframe.html?id=components-map--no-attribution");
-    const mapContainer = page.locator(".h-full.w-full");
-    await expect(mapContainer).toBeVisible();
+  test("each example mounts a leaflet container with size", async ({ page }) => {
+    const ids = [
+      "map-basic",
+      "map-custom-center",
+      "map-tile-layer",
+      "map-no-controls",
+      "map-custom-image",
+      "map-custom-markers",
+      "map-interactive",
+      "map-simple-crs",
+    ];
+    for (const id of ids) {
+      const container = page.getByTestId(id).locator(".leaflet-container");
+      await expect(container).toBeVisible();
+      const box = await container.boundingBox();
+      expect(box, `${id} map should have a non-zero bounding box`).not.toBeNull();
+      if (box) {
+        expect(box.width).toBeGreaterThan(0);
+        expect(box.height).toBeGreaterThan(0);
+      }
+    }
   });
 });
