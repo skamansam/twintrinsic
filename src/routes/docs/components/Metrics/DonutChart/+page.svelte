@@ -33,7 +33,7 @@ import * as DonutChartModule from "$lib/components/Metrics/DonutChart/DonutChart
 	<h2>Examples</h2>
 
 	<h3>Basic DonutChart</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-basic-donutchart" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<DonutChart data={defaultData} labels={defaultLabels} size={300} />
 	</div>
 
@@ -47,7 +47,7 @@ import * as DonutChartModule from "$lib/components/Metrics/DonutChart/DonutChart
 <DonutChart {data} {labels} size={300} />`}</code></pre>
 
 	<h3>With Title and Legend</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-with-title-and-legend" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<DonutChart
 			data={defaultData}
 			labels={defaultLabels}
@@ -66,7 +66,7 @@ import * as DonutChartModule from "$lib/components/Metrics/DonutChart/DonutChart
 />`}</code></pre>
 
 	<h3>Custom Colors</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-custom-colors" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<DonutChart
 			data={defaultData}
 			labels={defaultLabels}

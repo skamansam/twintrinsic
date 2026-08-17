@@ -53,7 +53,7 @@ import * as BarChartModule from "$lib/components/Metrics/BarChart/BarChart.svelt
 	<h2>Examples</h2>
 
 	<h3>Single Series BarChart</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-single-series-barchart" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<BarChart series={singleSeries} {labels} title="Monthly Revenue" width={600} height={300} />
 	</div>
 
@@ -73,7 +73,7 @@ import * as BarChartModule from "$lib/components/Metrics/BarChart/BarChart.svelt
 <BarChart {series} {labels} title="Monthly Revenue" width={600} height={300} />`}</code></pre>
 
 	<h3>Multiple Series BarChart</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-multiple-series-barchart" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<BarChart
 			series={multipleSeries}
 			labels={['Product A', 'Product B', 'Product C', 'Product D']}

@@ -28,7 +28,7 @@ import * as MetricTrendModule from "$lib/components/Metrics/MetricTrend/MetricTr
 	<h2>Examples</h2>
 
 	<h3>Basic MetricTrend</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-basic-metrictrend" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<MetricTrend label="Sales Trend" data={[10, 15, 12, 18, 22, 20, 25]} color="#10b981" />
 	</div>
 

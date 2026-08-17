@@ -34,15 +34,15 @@ export const propsMetadata = [
   { name: "allowDuplicates", type: "boolean", description: "Whether to allow duplicates", default: "false", optional: true },
   { name: "addOnKeys", type: "string", description: "Character(s) that trigger adding a new item", default: "\"Enter,Tab,Comma\"", optional: true },
   { name: "pasteSeparator", type: "string", description: "Separator for pasting multiple values", default: "\",\"", optional: true },
-  { name: "maxItems", type: "number", description: "Maximum number of items", optional: false },
-  { name: "validator", type: "Function", description: "Validator function for new values", optional: false },
+  { name: "maxItems", type: "number", description: "Maximum number of items", optional: true },
+  { name: "validator", type: "Function", description: "Validator function for new values", optional: true },
   { name: "errorMessage", type: "string", description: "Error message for invalid values", default: "\"Invalid value\"", optional: true },
-  { name: "ariaLabel", type: "string", description: "ARIA label for the input", optional: false },
-  { name: "onchange", type: "(event: CustomEvent) => void", description: "Change event handler", optional: false, eventDetail: "unknown" },
-  { name: "onadd", type: "(event: CustomEvent) => void", description: "Add event handler", optional: false, eventDetail: "unknown" },
-  { name: "onremove", type: "(event: CustomEvent) => void", description: "Remove event handler", optional: false, eventDetail: "unknown" },
-  { name: "onfocus", type: "(event: CustomEvent) => void", description: "Focus event handler", optional: false, eventDetail: "unknown" },
-  { name: "onblur", type: "(event: CustomEvent) => void", description: "Blur event handler", optional: false, eventDetail: "unknown" },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the input", optional: true },
+  { name: "onchange", type: "(event: CustomEvent) => void", description: "Change event handler", optional: true, eventDetail: "unknown" },
+  { name: "onadd", type: "(event: CustomEvent) => void", description: "Add event handler", optional: true, eventDetail: "unknown" },
+  { name: "onremove", type: "(event: CustomEvent) => void", description: "Remove event handler", optional: true, eventDetail: "unknown" },
+  { name: "onfocus", type: "(event: CustomEvent) => void", description: "Focus event handler", optional: true, eventDetail: "unknown" },
+  { name: "onblur", type: "(event: CustomEvent) => void", description: "Blur event handler", optional: true, eventDetail: "unknown" },
 ];
 </script>
 
@@ -82,27 +82,27 @@ const {
   pasteSeparator = ",",
 
   /** @type {number} - Maximum number of items */
-  maxItems,
+  maxItems = undefined,
 
   /** @type {Function} - Validator function for new values */
-  validator,
+  validator = undefined,
 
   /** @type {string} - Error message for invalid values */
   errorMessage = "Invalid value",
 
   /** @type {string} - ARIA label for the input */
-  ariaLabel,
+  ariaLabel = undefined,
 
   /** @type {(event: CustomEvent) => void} - Change event handler */
-  onchange,
+  onchange = undefined,
   /** @type {(event: CustomEvent) => void} - Add event handler */
-  onadd,
+  onadd = undefined,
   /** @type {(event: CustomEvent) => void} - Remove event handler */
-  onremove,
+  onremove = undefined,
   /** @type {(event: CustomEvent) => void} - Focus event handler */
-  onfocus,
+  onfocus = undefined,
   /** @type {(event: CustomEvent) => void} - Blur event handler */
-  onblur,
+  onblur = undefined,
 } = $props()
 
 // Get form context if available
@@ -112,9 +112,11 @@ const formContext = getContext<FormContext | undefined>("form")
 const derivedValues = $derived(values)
 const derivedName = $derived(name)
 
-// Input state
+// Input state — itemValues is initialized from the prop so pre-filled
+// values render on mount (the sync effect below only reacts to prop *changes*).
 let inputValue = $state("")
-let itemValues: string[] = $state([])
+// svelte-ignore state_referenced_locally
+let itemValues: string[] = $state([...(values as string[])])
 let focusedIndex = $state(-1)
 let inputEl: HTMLInputElement | undefined
 let isInvalid = $state(false)
@@ -139,9 +141,16 @@ $effect(() => {
   }
 })
 
-// Update internal values when prop changes
+// Sync internal values only when the `values` prop actually changes.
+// (Capturing the serialized prop here is intentional; this mirrors the
+// NumberInput lastPropValue pattern so user add/remove edits aren't
+// clobbered by the parent's unchanged `values` prop.)
+// svelte-ignore state_referenced_locally
+let lastValuesProp = $state(JSON.stringify(values))
 $effect(() => {
-  if (JSON.stringify(values) !== JSON.stringify(itemValues)) {
+  const serialized = JSON.stringify(values)
+  if (serialized !== lastValuesProp) {
+    lastValuesProp = serialized
     itemValues = [...(values as string[])]
   }
 })

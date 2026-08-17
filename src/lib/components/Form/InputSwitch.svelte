@@ -82,8 +82,10 @@ const formContext = getContext<FormContext | undefined>("form")
 const derivedName = $derived(name)
 const derivedChecked = $derived(checked)
 
-// Switch state
-let isChecked = $state(false)
+// Switch state — initialized from the prop so `checked={true}` renders checked
+// on mount (the sync effect below only reacts to prop *changes*).
+// svelte-ignore state_referenced_locally
+let isChecked = $state(checked)
 
 // Register with form if available
 let fieldApi: FormFieldApi | undefined
@@ -101,12 +103,16 @@ $effect(() => {
 	if (formValue === undefined) return
 	if (formValue === isChecked) return
 	isChecked = !!formValue
-})
-
-// Update internal state when prop changes
+})// Sync internal state only when the `checked` prop actually changes.
+// (Capturing the prop value here is intentional; this mirrors the
+// NumberInput lastPropValue pattern so user toggles aren't clobbered.)
+// svelte-ignore state_referenced_locally
+let lastCheckedProp = $state(checked)
 $effect(() => {
-	if (derivedChecked === isChecked) return
-	isChecked = derivedChecked
+  if (checked !== lastCheckedProp) {
+    lastCheckedProp = checked
+    isChecked = checked
+  }
 })
 
 // Disabled from form context takes precedence over the local prop

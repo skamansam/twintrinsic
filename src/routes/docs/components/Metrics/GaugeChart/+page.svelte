@@ -30,7 +30,7 @@ import * as GaugeChartModule from "$lib/components/Metrics/GaugeChart/GaugeChart
 	<h2>Examples</h2>
 
 	<h3>Basic GaugeChart</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-basic-gaugechart" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<GaugeChart value={75} min={0} max={100} label="Performance Score" unit="%" color="primary" />
 	</div>
 
@@ -48,7 +48,7 @@ import * as GaugeChartModule from "$lib/components/Metrics/GaugeChart/GaugeChart
 />`}</code></pre>
 
 	<h3>With Tic Marks</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-with-tic-marks" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<GaugeChart
 			value={71}
 			min={0}
@@ -62,7 +62,7 @@ import * as GaugeChartModule from "$lib/components/Metrics/GaugeChart/GaugeChart
 	</div>
 
 	<h3>With Color Zones</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-with-color-zones" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<GaugeChart
 			value={71}
 			min={0}
@@ -82,7 +82,7 @@ import * as GaugeChartModule from "$lib/components/Metrics/GaugeChart/GaugeChart
 	</div>
 
 	<h3>Full Circle Gauge</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-full-circle-gauge" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<GaugeChart
 			value={65}
 			min={0}

@@ -25,7 +25,7 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
   <h2>Examples</h2>
 
   <h3>Basic Tree</h3>
-  <div class="not-prose mb-8 max-w-md">
+  <div class="not-prose mb-8 max-w-md" data-testid="tree-basic">
     <Tree>
       <TreeNode label="Root Node">
         <TreeNode label="Child Node 1">
@@ -56,7 +56,7 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
 </Tree>`}</CodeBlock>
 
   <h3>With Icons</h3>
-  <div class="not-prose mb-8 max-w-md">
+  <div class="not-prose mb-8 max-w-md" data-testid="tree-icons">
     <Tree>
       <TreeNode 
         label="Documents" 
@@ -97,7 +97,7 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
 </Tree>`}</CodeBlock>
 
   <h3>Selectable Tree</h3>
-  <div class="not-prose mb-8 max-w-md">
+  <div class="not-prose mb-8 max-w-md" data-testid="tree-selectable">
     <Tree selectable>
       <TreeNode label="Root Node">
         <TreeNode label="Child Node 1">
@@ -128,7 +128,7 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
 </Tree>`}</CodeBlock>
 
   <h3>Multi-Select Tree</h3>
-  <div class="not-prose mb-8 max-w-md">
+  <div class="not-prose mb-8 max-w-md" data-testid="tree-multiselect">
     <Tree selectable multiSelect>
       <TreeNode label="Root Node">
         <TreeNode label="Child Node 1">
@@ -151,7 +151,7 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
 </Tree>`}</CodeBlock>
 
   <h3>With Connecting Lines</h3>
-  <div class="not-prose mb-8 max-w-md">
+  <div class="not-prose mb-8 max-w-md" data-testid="tree-lines">
     <Tree showLines>
       <TreeNode label="Root Node">
         <TreeNode label="Child Node 1">
@@ -174,7 +174,7 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
 </Tree>`}</CodeBlock>
 
   <h3>Expanded By Default</h3>
-  <div class="not-prose mb-8 max-w-md">
+  <div class="not-prose mb-8 max-w-md" data-testid="tree-expanded">
     <Tree expandAll>
       <TreeNode label="Root Node">
         <TreeNode label="Child Node 1">

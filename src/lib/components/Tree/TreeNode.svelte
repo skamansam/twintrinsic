@@ -28,7 +28,7 @@ export const propsMetadata = [
   { name: "key", type: "string", description: "Node key for selection (defaults to id)", default: "id", optional: true },
   { name: "label", type: "string", description: "Node label", optional: true },
   { name: "icon", type: "string", description: "Custom icon (HTML or SVG string)", optional: true },
-  { name: "expanded", type: "boolean", description: "Whether the node is expanded", default: "false", optional: true },
+  { name: "expanded", type: "boolean", description: "Whether the node is expanded (defaults to the tree's `expandAll` setting)", optional: true },
   { name: "selected", type: "boolean", description: "Whether the node is selected", default: "false", optional: true },
   { name: "disabled", type: "boolean", description: "Whether the node is disabled", default: "false", optional: true },
   { name: "leaf", type: "boolean", description: "Whether the node is a leaf (no children)", default: "false", optional: true },
@@ -40,16 +40,7 @@ export const propsMetadata = [
 </script>
 
 <script lang="ts">
-import { type Component, getContext, type Snippet } from "svelte"
-import TreeNodeSelf from "./TreeNode.svelte"
-
-/**
- * Self-reference for recursive children. Typed loosely because Svelte 5
- * has no clean recursion-with-partial-props type. The recursive pass-through
- * props are validated by the parent's `interface Props`; this alias only
- * exists so the JSX/HTML shape of TreeNode is preserved through recursion.
- */
-const Self = TreeNodeSelf as unknown as Component<Record<string, unknown>>;
+import { getContext, type Snippet } from "svelte"
 
 interface Props {
   /** Additional CSS classes */
@@ -62,7 +53,7 @@ interface Props {
   label?: string
   /** Custom icon (HTML or SVG string) */
   icon?: string
-  /** Whether the node is expanded */
+  /** Whether the node is expanded (defaults to the tree's `expandAll` setting) */
   expanded?: boolean
   /** Whether the node is selected */
   selected?: boolean
@@ -88,7 +79,7 @@ const {
   key = id,
   label = undefined,
   icon = undefined,
-  expanded = false,
+  expanded = undefined,
   selected = false,
   disabled = false,
   leaf = false,
@@ -101,16 +92,17 @@ const {
 }: Props = $props()
 
 // Get tree context
-const treeContext = getContext("tree") as { selectable?: boolean; isSelected?: (key: string) => boolean; toggleSelection?: (key: string) => void; showIcons?: boolean; showLines?: boolean } | undefined
+const treeContext = getContext("tree") as { selectable?: boolean; isSelected?: (key: string) => boolean; toggleSelection?: (key: string) => void; showIcons?: boolean; showLines?: boolean; expanded?: boolean } | undefined
 
 // Component state
 let isExpanded = $state(false)
 let isSelected = $state(false)
 let nodeElement: HTMLElement | undefined
 
-// Update expanded state when prop changes
+// Update expanded state when the prop changes, falling back to the tree's
+// `expandAll` context so `<Tree expandAll>` expands every node by default.
 $effect(() => {
-  isExpanded = expanded
+  isExpanded = expanded ?? treeContext?.expanded ?? false
 })
 
 // Update selected state from context or prop
@@ -279,9 +271,7 @@ function handleKeyDown(event: KeyboardEvent): void {
   
   {#if hasChildren && isExpanded}
     <div class="tree-node-children" role="group">
-      <Self {...restProps} level={level + 1}>
-        {@render children?.()}
-      </Self>
+      {@render children?.()}
     </div>
   {/if}
 </div>

@@ -49,7 +49,7 @@ let selectedCountry = ""
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="select-group-basic">
   <Select 
     label="Select a country" 
     bind:value={selectedCountry}
@@ -122,7 +122,7 @@ let selectedCountry = ""
 </CodeBlock>
 
 <h3>Disabled Group</h3>
-<div class="example">
+<div class="example" data-testid="select-group-disabled">
   <Select 
     label="Select a country" 
     bind:value={selectedCountry}
@@ -168,7 +168,7 @@ let selectedCountry = ""
 </CodeBlock>
 
 <h3>With Form Field</h3>
-<div class="example">
+<div class="example" data-testid="select-group-formfield">
   <FormField label="Select a country" required={true}>
     <Select 
       required={true}

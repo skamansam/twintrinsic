@@ -26,7 +26,7 @@ import * as ProgressMetricModule from "$lib/components/Metrics/ProgressMetric/Pr
 	<h2>Examples</h2>
 
 	<h3>Basic ProgressMetric</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8 w-full">
+	<div data-testid="metrics-basic-progressmetric" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8 w-full">
 		<div class="w-full max-w-md">
 			<ProgressMetric label="CPU Usage" value={65} max={100} color="primary" showPercentage={true} />
 		</div>

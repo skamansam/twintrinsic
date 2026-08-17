@@ -53,7 +53,7 @@ import * as LineChartModule from "$lib/components/Metrics/LineChart/LineChart.sv
 	<h2>Examples</h2>
 
 	<h3>Single Series LineChart</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-single-series-linechart" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<LineChart series={singleSeries} {labels} title="Weekly Sales" width={600} height={300} />
 	</div>
 
@@ -73,7 +73,7 @@ import * as LineChartModule from "$lib/components/Metrics/LineChart/LineChart.sv
 <LineChart {series} {labels} title="Weekly Sales" width={600} height={300} />`}</code></pre>
 
 	<h3>Multiple Series LineChart</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-multiple-series-linechart" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<LineChart
 			series={multipleSeries}
 			{labels}

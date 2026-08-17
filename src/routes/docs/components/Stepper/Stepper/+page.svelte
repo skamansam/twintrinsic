@@ -25,7 +25,7 @@ import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
   <h2>Examples</h2>
 
   <h3>Basic Stepper</h3>
-  <div class="not-prose mb-8 max-w-3xl">
+  <div class="not-prose mb-8 max-w-3xl" data-testid="stepper-basic">
     <Stepper>
       <StepperStep label="Step 1">
         <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
@@ -70,7 +70,7 @@ import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
 </Stepper>`}</CodeBlock>
 
   <h3>Vertical Stepper</h3>
-  <div class="not-prose mb-8 max-w-3xl">
+  <div class="not-prose mb-8 max-w-3xl" data-testid="stepper-vertical">
     <Stepper orientation="vertical">
       <StepperStep label="Personal Information">
         <div class="p-4 mt-2 bg-surface dark:bg-surface rounded-lg">
@@ -144,7 +144,7 @@ import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
 </Stepper>`}</CodeBlock>
 
   <h3>Non-Linear Stepper</h3>
-  <div class="not-prose mb-8 max-w-3xl">
+  <div class="not-prose mb-8 max-w-3xl" data-testid="stepper-nonlinear">
     <Stepper linear={false}>
       <StepperStep label="Account" optional>
         <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
@@ -189,7 +189,7 @@ import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
 </Stepper>`}</CodeBlock>
 
   <h3>Alternative Labels</h3>
-  <div class="not-prose mb-8 max-w-3xl">
+  <div class="not-prose mb-8 max-w-3xl" data-testid="stepper-alternative">
     <Stepper alternativeLabels>
       <StepperStep label="Cart">
         <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
@@ -234,7 +234,7 @@ import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
 </Stepper>`}</CodeBlock>
 
   <h3>With Icons</h3>
-  <div class="not-prose mb-8 max-w-3xl">
+  <div class="not-prose mb-8 max-w-3xl" data-testid="stepper-icons">
     <Stepper>
       <StepperStep 
         label="Account" 

@@ -26,7 +26,7 @@ import * as KPICardModule from "$lib/components/Metrics/KPICard/KPICard.svelte"
 	<h2>Examples</h2>
 
 	<h3>Basic KPICard</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-basic-kpicard" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<KPICard label="Q4 Sales Target" value={95000} target={100000} unit="$" color="success" />
 	</div>
 

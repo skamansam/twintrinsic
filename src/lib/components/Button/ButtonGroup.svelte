@@ -22,11 +22,11 @@ Usage:
 export const propsMetadata = [
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
-  { name: "variant", type: "string", description: "Button variant to apply to all children (default, primary, secondary, outline, ghost)", optional: false },
-  { name: "size", type: "string", description: "Button size to apply to all children (xs, sm, md, lg, xl)", optional: false },
+  { name: "variant", type: "string", description: "Button variant to apply to all children (default, primary, secondary, outline, ghost)", optional: true },
+  { name: "size", type: "string", description: "Button size to apply to all children (xs, sm, md, lg, xl)", optional: true },
   { name: "vertical", type: "boolean", description: "Whether the buttons should be arranged vertically", default: "false", optional: true },
   { name: "fullWidth", type: "boolean", description: "Whether the button group should take full width", default: "false", optional: true },
-  { name: "ariaLabel", type: "string", description: "ARIA label for the button group", optional: false },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the button group", optional: true },
 ];
 </script>
 
@@ -41,10 +41,10 @@ const {
   id = crypto.randomUUID(),
 
   /** @type {string} - Button variant to apply to all children (default, primary, secondary, outline, ghost) */
-  variant,
+  variant = undefined,
 
   /** @type {string} - Button size to apply to all children (xs, sm, md, lg, xl) */
-  size,
+  size = undefined,
 
   /** @type {boolean} - Whether the buttons should be arranged vertically */
   vertical = false,
@@ -53,7 +53,7 @@ const {
   fullWidth = false,
 
   /** @type {string} - ARIA label for the button group */
-  ariaLabel,
+  ariaLabel = undefined,
 
   children,
 } = $props()

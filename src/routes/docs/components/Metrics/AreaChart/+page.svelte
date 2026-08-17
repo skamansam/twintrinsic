@@ -51,7 +51,7 @@ import * as AreaChartModule from "$lib/components/Metrics/AreaChart/AreaChart.sv
 	<h2>Examples</h2>
 
 	<h3>Single Series AreaChart</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-single-series-areachart" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<AreaChart series={singleSeries} {labels} title="Website Traffic" width={600} height={300} />
 	</div>
 
@@ -68,7 +68,7 @@ import * as AreaChartModule from "$lib/components/Metrics/AreaChart/AreaChart.sv
 />`}</code></pre>
 
 	<h3>Stacked AreaChart</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-stacked-areachart" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<AreaChart
 			series={multipleSeries}
 			{labels}

@@ -27,7 +27,7 @@ import * as StatsCardModule from "$lib/components/Metrics/StatsCard/StatsCard.sv
 	<h2>Examples</h2>
 
 	<h3>Basic StatsCard</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-basic-statscard" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<StatsCard label="Total Revenue" value="$124,532.89" color="primary" />
 	</div>
 
@@ -38,7 +38,7 @@ import * as StatsCardModule from "$lib/components/Metrics/StatsCard/StatsCard.sv
 <StatsCard label="Total Revenue" value="$124,532.89" color="primary" />`}</code></pre>
 
 	<h3>With Trend Indicator</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-with-trend-indicator" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<StatsCard
 			label="Total Users"
 			value="2,543"

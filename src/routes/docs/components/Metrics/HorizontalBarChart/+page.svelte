@@ -31,7 +31,7 @@ import * as HorizontalBarChartModule from "$lib/components/Metrics/HorizontalBar
 	<h2>Examples</h2>
 
 	<h3>Basic HorizontalBarChart</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-basic-horizontalbarchart" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<HorizontalBarChart {data} {labels} title="Browser Usage" width={600} height={250} />
 	</div>
 

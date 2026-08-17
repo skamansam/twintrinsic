@@ -33,7 +33,7 @@ import * as MetricGridModule from "$lib/components/Metrics/MetricGrid/MetricGrid
 	<h2>Examples</h2>
 
 	<h3>Basic MetricGrid</h3>
-	<div class="not-prose mb-8 bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-basic-metricgrid" class="not-prose mb-8 bg-white dark:bg-gray-900 rounded-lg p-8">
 		<MetricGrid {items} columns={4} gap="md" />
 	</div>
 

@@ -50,7 +50,7 @@ export const propsMetadata = [
 </script>
 
 <script lang="ts">
-import { onMount } from "svelte"
+import { getContext, onMount } from "svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -143,6 +143,14 @@ function handleClick(event: Event): void {
   onclick?.(new CustomEvent("click", { detail: event }))
 }
 
+// Read the buttonGroup context (set by ButtonGroup) for inherited styling.
+const buttonGroupContext = getContext<{ variant?: string; size?: string } | undefined>("buttonGroup")
+
+// Group-provided variant/size take precedence over the button's own values
+// (ButtonGroup's docs: "Button variant to apply to all children").
+const effectiveVariant = $derived(buttonGroupContext?.variant ?? variant)
+const effectiveSize = $derived(buttonGroupContext?.size ?? size)
+
 // Determine if button should render as a link
 const isLink = $derived(!!href && !disabled && !loading)
 
@@ -160,13 +168,13 @@ const variantClasses = $derived(
     ghost:
       "bg-transparent dark:bg-transparent text-text dark:text-text hover:bg-hover dark:hover:bg-hover",
     link: "bg-transparent dark:bg-transparent text-primary-500 dark:text-primary-400 hover:underline p-0 h-auto",
-  }[variant] ||
+  }[effectiveVariant] ||
     "bg-surface dark:bg-surface text-text dark:text-text border border-border dark:border-border hover:bg-hover dark:hover:bg-hover"
 )
 
 // Determine size classes
 const sizeClasses = $derived(
-  variant === "link"
+  effectiveVariant === "link"
     ? ""
     : {
         xs: "text-xs h-6 px-2",
@@ -174,7 +182,7 @@ const sizeClasses = $derived(
         md: "text-base h-10 px-4",
         lg: "text-lg h-12 px-5",
         xl: "text-xl h-14 px-6",
-      }[size] || "text-base h-10 px-4"
+      }[effectiveSize] || "text-base h-10 px-4"
 )
 
 // Determine icon size based on button size
@@ -185,7 +193,7 @@ const iconSize = $derived(
     md: "w-5 h-5",
     lg: "w-6 h-6",
     xl: "w-7 h-7",
-  }[size] || "w-5 h-5"
+  }[effectiveSize] || "w-5 h-5"
 )
 
 // Shared class string for both <a> and <button> renderings

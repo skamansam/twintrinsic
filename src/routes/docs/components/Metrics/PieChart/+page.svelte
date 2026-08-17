@@ -32,7 +32,7 @@ import * as PieChartModule from "$lib/components/Metrics/PieChart/PieChart.svelt
 	<h2>Examples</h2>
 
 	<h3>Basic PieChart</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-basic-piechart" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<PieChart data={browserData} labels={browserLabels} size={300} />
 	</div>
 
@@ -46,7 +46,7 @@ import * as PieChartModule from "$lib/components/Metrics/PieChart/PieChart.svelt
 <PieChart {data} {labels} size={300} />`}</code></pre>
 
 	<h3>With Title and Legend</h3>
-	<div class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
+	<div data-testid="metrics-with-title-and-legend" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
 		<PieChart
 			data={browserData}
 			labels={browserLabels}

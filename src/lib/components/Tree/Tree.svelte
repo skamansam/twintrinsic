@@ -5,7 +5,7 @@ export const propsMetadata = [
   { name: "selectable", type: "boolean", description: "Whether nodes can be selected", default: "false", optional: true },
   { name: "multiSelect", type: "boolean", description: "Whether multiple nodes can be selected at once", default: "false", optional: true },
   { name: "selected", type: "unknown[]", description: "Array of selected node keys (controlled)", default: "[]", optional: true },
-  { name: "expandAll", type: "boolean", description: "Whether to expand all nodes by default", optional: true },
+  { name: "expandAll", type: "boolean", description: "Whether to expand all nodes by default", default: "false", optional: true },
   { name: "showIcons", type: "boolean", description: "Whether to show node icons", default: "true", optional: true },
   { name: "showLines", type: "boolean", description: "Whether to show connecting lines between nodes", default: "true", optional: true },
   { name: "ariaLabel", type: "string", description: "ARIA label for the tree", default: "\"Tree\"", optional: true },
@@ -80,6 +80,7 @@ let {
   selectable = false,
   multiSelect = false,
   selected = [],
+  expandAll = false,
   showIcons = true,
   showLines = true,
   ariaLabel = "Tree",
@@ -101,6 +102,7 @@ setContext("tree", {
   get multiSelect() { return derivedMultiSelect },
   get showIcons() { return showIcons },
   get showLines() { return showLines },
+  get expanded() { return expandAll },
   isSelected: (key: unknown): boolean => selectedNodes.includes(key),
   toggleSelection: (key: unknown): void => {
     if (derivedSelectable) {

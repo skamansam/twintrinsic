@@ -22,7 +22,7 @@ import * as InputSwitchModule from "$lib/components/Form/InputSwitch.svelte"
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="input-switch-basic">
   <InputSwitch label="Enable notifications" />
 </div>
 <CodeBlock>
@@ -30,7 +30,7 @@ import * as InputSwitchModule from "$lib/components/Form/InputSwitch.svelte"
 </CodeBlock>
 
 <h3>With Initial Value</h3>
-<div class="example">
+<div class="example" data-testid="input-switch-initial">
   <InputSwitch 
     label="Dark mode" 
     checked={true}
@@ -44,7 +44,7 @@ import * as InputSwitchModule from "$lib/components/Form/InputSwitch.svelte"
 </CodeBlock>
 
 <h3>Different Sizes</h3>
-<div class="example">
+<div class="example" data-testid="input-switch-sizes">
   <div class="flex flex-col gap-4">
     <InputSwitch 
       label="Small" 
@@ -76,7 +76,7 @@ import * as InputSwitchModule from "$lib/components/Form/InputSwitch.svelte"
 </CodeBlock>
 
 <h3>Disabled State</h3>
-<div class="example">
+<div class="example" data-testid="input-switch-disabled">
   <div class="flex flex-col gap-4">
     <InputSwitch 
       label="Disabled (off)" 
@@ -102,7 +102,7 @@ import * as InputSwitchModule from "$lib/components/Form/InputSwitch.svelte"
 </CodeBlock>
 
 <h3>Required Field</h3>
-<div class="example">
+<div class="example" data-testid="input-switch-required">
   <InputSwitch 
     label="I agree to the terms" 
     required={true}
@@ -116,7 +116,7 @@ import * as InputSwitchModule from "$lib/components/Form/InputSwitch.svelte"
 </CodeBlock>
 
 <h3>Without Label</h3>
-<div class="example">
+<div class="example" data-testid="input-switch-nolabel">
   <div class="flex items-center gap-2">
     <span>Airplane mode</span>
     <InputSwitch ariaLabel="Toggle airplane mode" />
@@ -130,7 +130,7 @@ import * as InputSwitchModule from "$lib/components/Form/InputSwitch.svelte"
 </CodeBlock>
 
 <h3>With Form Field</h3>
-<div class="example">
+<div class="example" data-testid="input-switch-formfield">
   <FormField label="Notification settings">
     <div class="flex flex-col gap-2">
       <InputSwitch label="Email notifications" name="email_notifications" />
