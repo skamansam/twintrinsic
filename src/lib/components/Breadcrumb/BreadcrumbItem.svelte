@@ -14,9 +14,20 @@ Usage:
 <BreadcrumbItem>Current Page</BreadcrumbItem>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "href", type: "string", description: "Link URL (if item is a link)", optional: true },
+  { name: "target", type: "string", description: "Link target (_blank, _self, etc.)", optional: true },
+  { name: "icon", type: "string", description: "Icon name to display", optional: true },
+  { name: "current", type: "boolean", description: "Whether this is the current/active page", default: "false", optional: true },
+  { name: "collapsible", type: "boolean", description: "Whether this item should be hidden when collapsed", default: "true", optional: true },
+];
+</script>
+
 <script lang="ts">
-import { getContext, onMount } from "svelte"
 import type { Snippet } from "svelte"
+import { getContext, onMount } from "svelte"
 import Icon from "../Icon/Icon.svelte"
 import type { BreadcrumbContext } from "./breadcrumbContext.js"
 

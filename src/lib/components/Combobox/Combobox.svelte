@@ -1,22 +1,54 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "name", type: "string", description: "Name attribute for the input", optional: true },
+  { name: "options", type: "unknown[]", description: "Options displayed in the dropdown", default: "[]", optional: true },
+  { name: "value", type: "unknown", description: "Currently selected value", default: "null", optional: true },
+  { name: "placeholder", type: "string", description: "Placeholder text when no option is selected", default: "\"Select an option\"", optional: true },
+  { name: "optionLabel", type: "string", description: "Property name used for option labels", default: "\"label\"", optional: true },
+  { name: "optionValue", type: "string", description: "Property name used for option values", default: "\"value\"", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the combobox is disabled", default: "false", optional: true },
+  { name: "searchable", type: "boolean", description: "Whether to allow filtering options by typing", default: "false", optional: true },
+  { name: "clearable", type: "boolean", description: "Whether to show a clear button when a value is selected", default: "false", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the input", optional: true },
+  { name: "onchange", type: "(event: CustomEvent<{ value: unknown; option: unknown }>) => void", description: "Callback fired when the selection changes", optional: true, eventDetail: "{ value: unknown; option: unknown }" },
+];
+</script>
+
 <script lang="ts">
 import type { Snippet } from "svelte"
 import { getItemLabel } from "../../helpers/itemLabel.js"
 import { getItemValue } from "../../helpers/itemValue.js"
 
 interface Props {
+  /** Additional CSS classes */
   class?: string
+  /** HTML id for accessibility */
   id?: string
+  /** Name attribute for the input */
   name?: string
+  /** Options displayed in the dropdown */
   options?: unknown[]
+  /** Currently selected value */
   value?: unknown
+  /** Placeholder text when no option is selected */
   placeholder?: string
+  /** Property name used for option labels */
   optionLabel?: string
+  /** Property name used for option values */
   optionValue?: string
+  /** Whether the combobox is disabled */
   disabled?: boolean
+  /** Whether to allow filtering options by typing */
   searchable?: boolean
+  /** Whether to show a clear button when a value is selected */
   clearable?: boolean
+  /** ARIA label for the input */
   ariaLabel?: string
+  /** Callback fired when the selection changes */
   onchange?: (event: CustomEvent<{ value: unknown; option: unknown }>) => void
+  /** Snippet that renders each option */
   children?: Snippet<[unknown]>
 }
 

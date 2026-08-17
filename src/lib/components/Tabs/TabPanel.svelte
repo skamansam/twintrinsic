@@ -14,10 +14,21 @@ Usage:
 </TabPanel>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", optional: true },
+  { name: "lazy", type: "boolean", description: "Whether to lazy load panel content", default: "false", optional: true },
+  { name: "keepAlive", type: "boolean", description: "Whether to keep content in DOM when not visible", default: "true", optional: true },
+  { name: "animated", type: "boolean", description: "Whether to animate panel transitions", default: "true", optional: true },
+  { name: "animationDuration", type: "number", description: "Animation duration in ms", default: "200", optional: true },
+];
+</script>
+
 <script lang="ts">
+import type { Snippet } from "svelte"
 import { getContext, onMount } from "svelte"
 import { fade } from "svelte/transition"
-import type { Snippet } from "svelte"
 
 interface Props {
   /** Additional CSS classes */
@@ -57,7 +68,7 @@ if (!tabsContext) {
 
 // Panel state
 let panelElement: HTMLElement | undefined = $state()
-let index = -1
+let index = $state(-1)
 let hasBeenSelected = $state(false)
 
 // Register panel on mount

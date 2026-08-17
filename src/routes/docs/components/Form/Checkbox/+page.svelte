@@ -3,10 +3,11 @@
 Documentation page for the Checkbox component.
 -->
 <script lang="ts">
-import Checkbox from "$lib/components/Form/Checkbox.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
+import Checkbox from "$lib/components/Form/Checkbox.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as CheckboxModule from "$lib/components/Form/Checkbox.svelte"
 </script>
 
 <h1>Checkbox</h1>
@@ -19,7 +20,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="checkbox-basic">
   <Checkbox label="Accept terms and conditions" />
 </div>
 <CodeBlock>
@@ -27,7 +28,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>With Description</h3>
-<div class="example">
+<div class="example" data-testid="checkbox-description">
   <Checkbox
     label="Subscribe to newsletter"
     description="Receive updates about new features and announcements"
@@ -41,7 +42,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Indeterminate State</h3>
-<div class="example">
+<div class="example" data-testid="checkbox-indeterminate">
   <Checkbox
     label="Select all items"
     indeterminate={true}
@@ -57,7 +58,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Required Field</h3>
-<div class="example">
+<div class="example" data-testid="checkbox-required">
   <Checkbox
     label="I agree to the terms"
     required={true}
@@ -71,7 +72,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>With Error</h3>
-<div class="example">
+<div class="example" data-testid="checkbox-error">
   <Checkbox
     label="Accept privacy policy"
     error="You must accept the privacy policy"
@@ -87,7 +88,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Disabled States</h3>
-<div class="example">
+<div class="example" data-testid="checkbox-disabled">
   <div class="flex flex-col gap-4">
     <Checkbox
       label="Unavailable option"
@@ -117,7 +118,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Checkbox Group</h3>
-<div class="example">
+<div class="example" data-testid="checkbox-group">
   <div class="flex flex-col gap-2">
     <Checkbox
       label="Email notifications"
@@ -157,80 +158,10 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'label',
-      type: 'string',
-      description: 'Label text for the checkbox'
-    },
-    {
-      name: 'description',
-      type: 'string',
-      default: '""',
-      description: 'Additional descriptive text'
-    },
-    {
-      name: 'checked',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the checkbox is checked'
-    },
-    {
-      name: 'indeterminate',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the checkbox is in an indeterminate state'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the checkbox is disabled'
-    },
-    {
-      name: 'required',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the checkbox is required'
-    },
-    {
-      name: 'error',
-      type: 'string',
-      default: '""',
-      description: 'Error message to display'
-    },
-    {
-      name: 'name',
-      type: 'string',
-      default: '""',
-      description: 'Name attribute for the input'
-    },
-    {
-      name: 'value',
-      type: 'string',
-      default: '""',
-      description: 'Value attribute for the input'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: '""',
-      description: 'Additional CSS classes'
-    }
-  ]}
-/>
+<PropsTable component={CheckboxModule} />
 
 <h2>Events</h2>
-<EventsTable
-  events={[
-    {
-      name: 'change',
-      type: '{ checked: boolean }',
-      description: 'Fired when the checkbox state changes'
-    }
-  ]}
-/>
+<EventsTable component={CheckboxModule} />
 
 <h2>Accessibility</h2>
 <p>

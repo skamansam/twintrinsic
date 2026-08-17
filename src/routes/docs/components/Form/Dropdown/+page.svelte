@@ -3,10 +3,11 @@
 Documentation page for the Dropdown component.
 -->
 <script lang="ts">
-import Dropdown from "$lib/components/Form/Dropdown.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
+import Dropdown from "$lib/components/Form/Dropdown.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as DropdownModule from "$lib/components/Form/Dropdown.svelte"
 
 // Sample data for examples
 const countries = [
@@ -281,124 +282,10 @@ const categories = [
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'options',
-      type: 'Array',
-      default: '[]',
-      description: 'Options to display in the dropdown'
-    },
-    {
-      name: 'value',
-      type: 'any',
-      description: 'Selected value(s)'
-    },
-    {
-      name: 'placeholder',
-      type: 'string',
-      default: "'Select an option'",
-      description: 'Placeholder text when no option is selected'
-    },
-    {
-      name: 'multiple',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether multiple selection is allowed'
-    },
-    {
-      name: 'optionLabel',
-      type: 'string',
-      default: "'label'",
-      description: 'Property name for option label when using object options'
-    },
-    {
-      name: 'optionValue',
-      type: 'string',
-      default: "'value'",
-      description: 'Property name for option value when using object options'
-    },
-    {
-      name: 'optionIcon',
-      type: 'string',
-      description: 'Property name for option icon when using object options'
-    },
-    {
-      name: 'optionChildren',
-      type: 'string',
-      default: "'items'",
-      description: 'Property name for option children (for cascading dropdowns)'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the dropdown is disabled'
-    },
-    {
-      name: 'required',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the dropdown is required'
-    },
-    {
-      name: 'filter',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether to enable filtering options by typing'
-    },
-    {
-      name: 'size',
-      type: "'sm' | 'md' | 'lg'",
-      default: "'md'",
-      description: 'Size of the dropdown'
-    },
-    {
-      name: 'clearable',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether to show a clear button'
-    },
-    {
-      name: 'name',
-      type: 'string',
-      description: 'Name attribute for form submission'
-    },
-    {
-      name: 'ariaLabel',
-      type: 'string',
-      description: 'ARIA label for accessibility'
-    },
-    {
-      name: 'id',
-      type: 'string',
-      default: 'auto-generated',
-      description: 'HTML id for accessibility'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: "''",
-      description: 'Additional CSS classes'
-    }
-  ]}
-/>
+<PropsTable component={DropdownModule} />
 
 <h2>Events</h2>
-<EventsTable
-  events={[
-    {
-      name: 'change',
-      type: '{ value: any }',
-      description: 'Fired when the selected value changes'
-    },
-    {
-      name: 'clear',
-      type: 'Event',
-      description: 'Fired when the selection is cleared'
-    }
-  ]}
-/>
+<EventsTable component={DropdownModule} />
 
 <h2>Accessibility</h2>
 <p>

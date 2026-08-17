@@ -1,3 +1,11 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "items", type: "StatsCardItem[]", description: "Array of stats card items", optional: false },
+  { name: "columns", type: "number", description: "Number of columns in the grid", default: "4", optional: true },
+  { name: "gap", type: "'sm' | 'md' | 'lg'", description: "Gap between items", default: "'md'", optional: true },
+];
+</script>
+
 <script lang="ts">
 	import StatsCard from '../StatsCard/StatsCard.svelte';
 

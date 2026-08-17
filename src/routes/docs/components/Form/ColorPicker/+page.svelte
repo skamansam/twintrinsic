@@ -3,10 +3,11 @@
 Documentation page for the ColorPicker component.
 -->
 <script lang="ts">
-import EventsTable from "$lib/docs/EventsTable.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import ColorPicker from "$lib/components/Form/ColorPicker.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as ColorPickerModule from "$lib/components/Form/ColorPicker.svelte"
 </script>
 
 <h1>ColorPicker</h1>
@@ -21,7 +22,7 @@ import ColorPicker from "$lib/components/Form/ColorPicker.svelte"
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="colorpicker-basic">
   <ColorPicker label="Color" />
 </div>
 <CodeBlock>
@@ -29,7 +30,7 @@ import ColorPicker from "$lib/components/Form/ColorPicker.svelte"
 </CodeBlock>
 
 <h3>With Initial Value</h3>
-<div class="example">
+<div class="example" data-testid="colorpicker-value">
   <ColorPicker
     label="Color"
     value="#FF0000"
@@ -43,7 +44,7 @@ import ColorPicker from "$lib/components/Form/ColorPicker.svelte"
 </CodeBlock>
 
 <h3>RGB Format</h3>
-<div class="example">
+<div class="example" data-testid="colorpicker-rgb">
   <ColorPicker
     label="Color"
     format="rgb"
@@ -59,7 +60,7 @@ import ColorPicker from "$lib/components/Form/ColorPicker.svelte"
 </CodeBlock>
 
 <h3>With Alpha Channel</h3>
-<div class="example">
+<div class="example" data-testid="colorpicker-rgba">
   <ColorPicker
     label="Color"
     format="rgba"
@@ -77,7 +78,7 @@ import ColorPicker from "$lib/components/Form/ColorPicker.svelte"
 </CodeBlock>
 
 <h3>HSL Format</h3>
-<div class="example">
+<div class="example" data-testid="colorpicker-hsl">
   <ColorPicker
     label="Color"
     format="hsl"
@@ -93,7 +94,7 @@ import ColorPicker from "$lib/components/Form/ColorPicker.svelte"
 </CodeBlock>
 
 <h3>With Error</h3>
-<div class="example">
+<div class="example" data-testid="colorpicker-error">
   <ColorPicker
     label="Color"
     error="Please select a valid color"
@@ -107,7 +108,7 @@ import ColorPicker from "$lib/components/Form/ColorPicker.svelte"
 </CodeBlock>
 
 <h3>Theme Colors</h3>
-<div class="example">
+<div class="example" data-testid="colorpicker-theme">
   <div class="flex flex-col gap-4">
     <ColorPicker
       label="Primary Color"
@@ -135,63 +136,10 @@ import ColorPicker from "$lib/components/Form/ColorPicker.svelte"
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'value',
-      type: 'string',
-      default: "'#000000'",
-      description: 'Color value in current format'
-    },
-    {
-      name: 'format',
-      type: "'hex' | 'rgb' | 'rgba' | 'hsl' | 'hsla'",
-      default: "'hex'",
-      description: 'Color format'
-    },
-    {
-      name: 'showAlpha',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether to show alpha channel'
-    },
-    {
-      name: 'label',
-      type: 'string',
-      default: "'Color'",
-      description: 'Input label'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the picker is disabled'
-    },
-    {
-      name: 'error',
-      type: 'string',
-      default: "''",
-      description: 'Error message'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: "''",
-      description: 'Additional CSS classes'
-    }
-  ]}
-/>
+<PropsTable component={ColorPickerModule} />
 
 <h2>Events</h2>
-<EventsTable
-  events={[
-    {
-      name: 'change',
-      type: '{ value: string }',
-      description: 'Fired when color value changes'
-    }
-  ]}
-/>
+<EventsTable component={ColorPickerModule} />
 
 <h2>Color Formats</h2>
 <p>

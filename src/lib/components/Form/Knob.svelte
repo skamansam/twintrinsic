@@ -32,6 +32,29 @@ Usage:
 </FormField>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "name", type: "string", description: "Input name", optional: true },
+  { name: "value", type: "number", description: "Current value", default: "0", optional: true },
+  { name: "min", type: "number", description: "Minimum value", default: "0", optional: true },
+  { name: "max", type: "number", description: "Maximum value", default: "100", optional: true },
+  { name: "step", type: "number", description: "Step increment", default: "1", optional: true },
+  { name: "size", type: "string", description: "Size of the knob (sm, md, lg, xl)", default: "\"md\"", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the knob is disabled", default: "false", optional: true },
+  { name: "showValue", type: "boolean", description: "Whether to show the current value", default: "false", optional: true },
+  { name: "valueTemplate", type: "string", description: "Template for displaying the value, use {value} as placeholder", default: "\"{value}\"", optional: true },
+  { name: "color", type: "string", description: "Color of the progress arc", optional: true },
+  { name: "thickness", type: "number", description: "Thickness of the progress arc (1-10)", default: "4", optional: true },
+  { name: "showTicks", type: "boolean", description: "Whether to show tick marks", default: "false", optional: true },
+  { name: "oninput", type: "(event: CustomEvent<{ value: number }>) => void", description: "Input event handler", optional: true, eventDetail: "{ value: number }" },
+  { name: "onchange", type: "(event: CustomEvent<{ value: number }>) => void", description: "Change event handler", optional: true, eventDetail: "{ value: number }" },
+  { name: "tickCount", type: "number", description: "Number of tick marks to display", default: "10", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for accessibility", optional: true },
+];
+</script>
+
 <script lang="ts">
 import { getContext, onMount } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
@@ -433,7 +456,9 @@ const fontSizeClasses = $derived(
   aria-valuemin={min}
   aria-valuemax={max}
   aria-valuenow={currentValue}
+  aria-valuetext={`${currentValue}`}
   aria-label={ariaLabel || name}
+  aria-disabled={effectiveDisabled ? 'true' : undefined}
   onkeydown={handleKeydown}
   bind:this={knobElement}
 >

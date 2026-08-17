@@ -18,6 +18,22 @@ Usage:
 />
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "label", type: "string", description: "Label text", optional: true },
+  { name: "description", type: "string", description: "Description text", default: "\"\"", optional: true },
+  { name: "checked", type: "boolean", description: "Whether the checkbox is checked", default: "false", optional: true },
+  { name: "indeterminate", type: "boolean", description: "Whether the checkbox is in an indeterminate state", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the checkbox is disabled", default: "false", optional: true },
+  { name: "required", type: "boolean", description: "Whether the checkbox is required", default: "false", optional: true },
+  { name: "error", type: "string", description: "Error message", default: "\"\"", optional: true },
+  { name: "name", type: "string", description: "Name attribute", default: "\"\"", optional: true },
+  { name: "value", type: "string", description: "Value attribute", default: "\"\"", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "onchange", type: "(event: CustomEvent) => void", description: "Change event handler", optional: true, eventDetail: "unknown" },
+];
+</script>
+
 <script lang="ts">
 import { getContext } from "svelte"
 

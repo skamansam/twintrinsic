@@ -31,6 +31,30 @@ Usage:
 </Carousel>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "activeIndex", type: "number", description: "Index of the active slide (0-based)", default: "0", optional: true },
+  { name: "showArrows", type: "boolean", description: "Whether to show navigation arrows", default: "true", optional: true },
+  { name: "showIndicators", type: "boolean", description: "Whether to show slide indicators", default: "true", optional: true },
+  { name: "autoplay", type: "boolean", description: "Whether to enable autoplay", default: "false", optional: true },
+  { name: "interval", type: "number", description: "Autoplay interval in milliseconds", default: "3000", optional: true },
+  { name: "pauseOnHover", type: "boolean", description: "Whether to pause autoplay on hover", default: "true", optional: true },
+  { name: "circular", type: "boolean", description: "Whether to enable circular navigation", default: "true", optional: true },
+  { name: "swipeable", type: "boolean", description: "Whether to enable swipe gestures on touch devices", default: "true", optional: true },
+  { name: "transition", type: "string", description: "Transition effect (slide, fade)", default: "\"slide\"", optional: true },
+  { name: "transitionDuration", type: "number", description: "Transition duration in milliseconds", default: "300", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the carousel", default: "\"Carousel\"", optional: true },
+  { name: "prevAriaLabel", type: "string", description: "ARIA label for the previous button", default: "\"Previous slide\"", optional: true },
+  { name: "nextAriaLabel", type: "string", description: "ARIA label for the next button", default: "\"Next slide\"", optional: true },
+  { name: "prevIcon", type: "string", description: "Custom previous arrow icon", optional: true },
+  { name: "nextIcon", type: "string", description: "Custom next arrow icon", optional: true },
+  { name: "onchange", type: "(event: CustomEvent) => void", description: "Change event handler", optional: true, eventDetail: "unknown" },
+  { name: "items", type: "import(\"svelte\").Snippet", description: "Snippet rendering the slide items", optional: true },
+];
+</script>
+
 <script lang="ts">
 import { onDestroy, onMount, setContext } from "svelte"
 import type { CarouselContext } from "./carouselContext.js"
@@ -90,6 +114,7 @@ const {
   /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange = undefined,
 
+  /** @type {import("svelte").Snippet} - Snippet rendering the slide items */
   items = undefined,
 } = $props()
 
@@ -103,7 +128,12 @@ let startX = $state(0)
 let currentX = $state(0)
 let carouselElement: HTMLElement | undefined = $state()
 let itemsElement: HTMLElement | undefined = $state()
-let autoplayInterval: ReturnType<typeof setInterval> | undefined = $state()
+// Plain (non-reactive) handle — it must not be `$state` because the autoplay
+// `$effect` below both reads (`clearInterval`) and writes (`setInterval`) it.
+// `setInterval` returns a fresh timer id on every call, so a reactive value
+// would invalidate the effect endlessly and Svelte aborts with
+// `effect_update_depth_exceeded`.
+let autoplayInterval: ReturnType<typeof setInterval> | undefined
 let slideWidth = $state(0)
 let touchStartTime = $state(0)
 
@@ -117,19 +147,24 @@ $effect(() => {
   isPlaying = autoplay
 })
 
-// Provide context for child components
-$effect(() => {
-  const carouselContext: CarouselContext = {
-    registerItem: () => {
-      totalSlides++
-      return totalSlides - 1
-    },
-    currentIndex,
-    transition,
-    transitionDuration,
-  }
-  setContext<CarouselContext>("carousel", carouselContext)
-})
+// Provide context for child components. Called at init (not in `$effect`) so
+// the context is available during server-side rendering.
+const carouselContext: CarouselContext = {
+  registerItem: () => {
+    totalSlides++
+    return totalSlides - 1
+  },
+  get currentIndex() {
+    return currentIndex
+  },
+  get transition() {
+    return transition
+  },
+  get transitionDuration() {
+    return transitionDuration
+  },
+}
+setContext<CarouselContext>("carousel", carouselContext)
 
 // Set up autoplay
 $effect(() => {
@@ -409,7 +444,7 @@ onDestroy(() => {
   }
   
   .carousel-transition-fade .carousel-items {
-    @apply relative;
+    @apply relative h-full;
   }
   
   .carousel-arrows {

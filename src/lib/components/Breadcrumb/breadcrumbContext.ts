@@ -6,9 +6,9 @@
 
 export interface BreadcrumbContext {
   /** Separator character or HTML between items */
-  separator?: string
+  separator?: string;
   /** Whether to collapse middle items when there are too many */
-  collapsible?: boolean
+  collapsible?: boolean;
   /** Maximum number of middle items to show before collapsing */
-  maxVisibleItems?: number
+  maxVisibleItems?: number;
 }

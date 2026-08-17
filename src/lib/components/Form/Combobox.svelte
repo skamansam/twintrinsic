@@ -34,6 +34,35 @@ Usage:
   </div>
 </Combobox>
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "name", type: "string", description: "Name attribute for the input", optional: true },
+  { name: "options", type: "Array", description: "Options to display in the dropdown", default: "[]", optional: true },
+  { name: "value", type: "any", description: "Current value", default: "null", optional: true },
+  { name: "placeholder", type: "string", description: "Placeholder text", default: "\"Select an option\"", optional: true },
+  { name: "optionLabel", type: "string", description: "Property name for option labels", default: "\"label\"", optional: true },
+  { name: "optionValue", type: "string", description: "Property name for option values", default: "\"value\"", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the combobox is disabled", default: "false", optional: true },
+  { name: "readonly", type: "boolean", description: "Whether the combobox is readonly", default: "false", optional: true },
+  { name: "required", type: "boolean", description: "Whether the combobox is required", default: "false", optional: true },
+  { name: "searchable", type: "boolean", description: "Whether to allow searching", default: "true", optional: true },
+  { name: "clearable", type: "boolean", description: "Whether to allow clearing the selection", default: "true", optional: true },
+  { name: "loading", type: "boolean", description: "Whether to show a loading indicator", default: "false", optional: true },
+  { name: "autoSelect", type: "boolean", description: "Whether to automatically select the first option", default: "false", optional: true },
+  { name: "openOnFocus", type: "boolean", description: "Whether to open the dropdown on focus", default: "true", optional: true },
+  { name: "maxHeight", type: "number", description: "Maximum height of the dropdown in pixels", default: "250", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the combobox", optional: true },
+  { name: "filter", type: "Function", description: "Custom filter function", optional: true },
+  { name: "optionTemplate", type: "Function", description: "Custom template for options", optional: true },
+  { name: "valueTemplate", type: "Function", description: "Custom template for selected value", optional: true },
+  { name: "onchange", type: "(event: CustomEvent) => void", description: "Change event handler", optional: true, eventDetail: "unknown" },
+  { name: "oninput", type: "(event: CustomEvent) => void", description: "Input event handler", optional: true, eventDetail: "unknown" },
+  { name: "option", type: "import(\"svelte\").Snippet<[{ option: unknown }]>", description: "Snippet rendering an option", optional: true },
+];
+</script>
+
 <script lang="ts">
 import { getContext, tick } from "svelte"
 import { getItemLabel } from "../../helpers/itemLabel.js"
@@ -108,6 +137,7 @@ const {
   /** @type {(event: CustomEvent) => void} - Input event handler */
   oninput = undefined,
 
+  /** @type {import("svelte").Snippet<[{ option: unknown }]>} - Snippet rendering an option */
   option = undefined,
 } = $props()
 
@@ -121,17 +151,16 @@ let highlightedIndex = $state(-1)
 let filteredOptions: unknown[] = $state([])
 let inputWidth = $state(0)
 
-// Update selected option when value prop changes
+// Update selected option when the value prop changes. The else-branch is
+// intentionally omitted: in uncontrolled mode (no `value` prop) the internal
+// selection must survive the dropdown closing — wiping it here would erase
+// the option the user just clicked (closing the dropdown flips `isOpen`,
+// re-running this effect).
 $effect(() => {
   if (value !== undefined && value !== null) {
     const opt = findOptionByValue(value)
     selectedOption = opt
     inputValue = opt ? getItemLabel(opt, optionLabel) : ""
-  } else {
-    selectedOption = null
-    if (!isOpen) {
-      inputValue = ""
-    }
   }
 })
 

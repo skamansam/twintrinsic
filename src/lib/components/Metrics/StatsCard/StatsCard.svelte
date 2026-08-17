@@ -1,3 +1,15 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "label", type: "string", description: "Card label/title", optional: false },
+  { name: "value", type: "string | number", description: "Metric value", optional: false },
+  { name: "icon", type: "string", description: "Icon component or name", optional: true },
+  { name: "trend", type: "'up' | 'down'", description: "Trend direction: 'up' or 'down'", optional: true },
+  { name: "trendValue", type: "string | number", description: "Trend value (e.g., \"12.5%\")", optional: true },
+  { name: "color", type: "'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info'", description: "Color theme: primary, secondary, success, danger, warning, info", default: "'primary'", optional: true },
+  { name: "onclick", type: "(event: MouseEvent | KeyboardEvent) => void", description: "Callback when card is clicked (mouse or keyboard activation)", optional: true },
+];
+</script>
+
 <script lang="ts">
 	interface Props {
 		/** Card label/title */

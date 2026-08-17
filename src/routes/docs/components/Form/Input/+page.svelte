@@ -3,10 +3,11 @@
 Documentation page for the Input component.
 -->
 <script lang="ts">
-import Input from "$lib/components/Form/Input.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
+import Input from "$lib/components/Form/Input.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as InputModule from "$lib/components/Form/Input.svelte"
 </script>
 
 <h1>Input</h1>
@@ -20,7 +21,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="input-basic">
   <Input label="Username" placeholder="Enter username" />
 </div>
 <CodeBlock>
@@ -28,7 +29,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>With Icons</h3>
-<div class="example">
+<div class="example" data-testid="input-icons">
   <Input
     label="Password"
     type="password"
@@ -48,7 +49,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Floating Label</h3>
-<div class="example">
+<div class="example" data-testid="input-floating">
   <Input
     label="Email"
     type="email"
@@ -66,7 +67,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Validation and Error States</h3>
-<div class="example">
+<div class="example" data-testid="input-error">
   <Input
     label="Email"
     type="email"
@@ -86,7 +87,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Input Masking</h3>
-<div class="example">
+<div class="example" data-testid="input-mask">
   <Input
     label="Phone"
     type="tel"
@@ -104,136 +105,10 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'label',
-      type: 'string',
-      description: 'Label text for the input'
-    },
-    {
-      name: 'type',
-      type: 'string',
-      default: 'text',
-      description: 'HTML input type (text, email, password, etc.)'
-    },
-    {
-      name: 'value',
-      type: 'string',
-      default: '""',
-      description: 'Input value'
-    },
-    {
-      name: 'placeholder',
-      type: 'string',
-      default: '""',
-      description: 'Placeholder text'
-    },
-    {
-      name: 'name',
-      type: 'string',
-      default: '""',
-      description: 'Name attribute for the input'
-    },
-    {
-      name: 'id',
-      type: 'string',
-      default: 'auto',
-      description: 'Unique identifier for the input'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the input is disabled'
-    },
-    {
-      name: 'required',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the input is required'
-    },
-    {
-      name: 'floating',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether to use floating labels'
-    },
-    {
-      name: 'readonly',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the input is readonly'
-    },
-    {
-      name: 'error',
-      type: 'string',
-      default: '""',
-      description: 'Error message to display'
-    },
-    {
-      name: 'helpText',
-      type: 'string',
-      default: '""',
-      description: 'Help text to display below input'
-    },
-    {
-      name: 'leftIcon',
-      type: 'string',
-      default: '""',
-      description: 'Name of icon to display on the left'
-    },
-    {
-      name: 'rightIcon',
-      type: 'string',
-      default: '""',
-      description: 'Name of icon to display on the right'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: '""',
-      description: 'Additional CSS classes'
-    },
-    {
-      name: 'mask',
-      type: 'string',
-      default: '""',
-      description: 'Input mask pattern (# for numbers, A for letters, * for any)'
-    }
-  ]}
-/>
+<PropsTable component={InputModule} />
 
 <h2>Events</h2>
-<EventsTable
-  events={[
-    {
-      name: 'input',
-      type: '{ value: string }',
-      description: 'Fired when input value changes'
-    },
-    {
-      name: 'focus',
-      type: 'void',
-      description: 'Fired when input gains focus'
-    },
-    {
-      name: 'blur',
-      type: 'void',
-      description: 'Fired when input loses focus'
-    },
-    {
-      name: 'leftIconClick',
-      type: 'void',
-      description: 'Fired when left icon is clicked'
-    },
-    {
-      name: 'rightIconClick',
-      type: 'void',
-      description: 'Fired when right icon is clicked'
-    }
-  ]}
-/>
+<EventsTable component={InputModule} />
 
 <h2>Accessibility</h2>
 <p>

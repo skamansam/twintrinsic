@@ -28,6 +28,29 @@ Usage:
 </FormField>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "name", type: "string", description: "Input name", optional: true },
+  { name: "options", type: "TOption[]", description: "Options to display (strings or objects)", default: "[]", optional: true },
+  { name: "value", type: "TOption | TOption[] | null", description: "Selected value(s). Object for single selection, array for multiple.", default: "null", optional: true },
+  { name: "multiple", type: "boolean", description: "Whether multiple selection is allowed", default: "false", optional: true },
+  { name: "optionLabel", type: "string", description: "Property name for option label", default: "\"label\"", optional: true },
+  { name: "optionValue", type: "string", description: "Property name for option value", default: "\"value\"", optional: true },
+  { name: "optionIcon", type: "string", description: "Property name for option icon", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the listbox is disabled", default: "false", optional: true },
+  { name: "required", type: "boolean", description: "Whether the listbox is required", default: "false", optional: true },
+  { name: "filter", type: "boolean", description: "Whether to filter options by typing", default: "false", optional: true },
+  { name: "filterPlaceholder", type: "string", description: "Placeholder for filter input", default: "\"Search...\"", optional: true },
+  { name: "maxHeight", type: "number", description: "Maximum height of the listbox", default: "300", optional: true },
+  { name: "showCheckbox", type: "boolean", description: "Whether to show a checkbox for multiple selection", default: "true", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for accessibility", optional: true },
+  { name: "onchange", type: "(event: CustomEvent<{ value: TOption | TOption[] | null }>) => void", description: "Change event handler", optional: true, eventDetail: "{ value: TOption | TOption[] | null }" },
+  { name: "onfilter", type: "(event: CustomEvent<{ filter: string }>) => void", description: "Filter event handler", optional: true, eventDetail: "{ filter: string }" },
+];
+</script>
+
 <script lang="ts" generics="TOption extends string | Record<string, unknown> = string | Record<string, unknown>">
 import { getContext, onMount } from "svelte"
 import { getItemLabel } from "../../helpers/itemLabel.js"

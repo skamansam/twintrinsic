@@ -25,6 +25,32 @@ Usage:
 />
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "label", type: "string", description: "Input label", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "name", type: "string", description: "Input name", optional: true },
+  { name: "options", type: "SelectOption[]", description: "Options to display", default: "[]", optional: true },
+  { name: "value", type: "string | string[] | undefined", description: "Selected value(s)", default: "$bindable()", optional: true },
+  { name: "multiple", type: "boolean", description: "Whether multiple selection is allowed", default: "false", optional: true },
+  { name: "placeholder", type: "string", description: "Placeholder text", default: "\"Select...\"", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the select is disabled", default: "false", optional: true },
+  { name: "error", type: "string", description: "Error message", default: "\"\"", optional: true },
+  { name: "required", type: "boolean", description: "Whether the field is required", default: "false", optional: true },
+  { name: "optionChildren", type: "string", description: "Property name for option children (for cascading)", optional: true },
+  { name: "filter", type: "boolean", description: "Whether to filter options by typing", default: "false", optional: true },
+  { name: "size", type: "\"sm\" | \"md\" | \"lg\"", description: "Size of the dropdown (sm, md, lg)", default: "\"md\"", optional: true },
+  { name: "clearable", type: "boolean", description: "Whether to show a clear button", default: "false", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for accessibility", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "onchange", type: "(event: CustomEvent<{ value: string | string[] | undefined }>) => void", description: "Change event handler", optional: true, eventDetail: "{ value: string | string[] | undefined }" },
+  { name: "onclear", type: "(event: CustomEvent<void>) => void", description: "Clear event handler", optional: true, eventDetail: "void" },
+  { name: "onopen", type: "(event: CustomEvent<void>) => void", description: "Open event handler", optional: true, eventDetail: "void" },
+  { name: "onclose", type: "(event: CustomEvent<void>) => void", description: "Close event handler", optional: true, eventDetail: "void" },
+  { name: "onfilter", type: "(event: CustomEvent<{ query: string }>) => void", description: "Filter event handler", optional: true, eventDetail: "{ query: string }" },
+];
+</script>
+
 <script lang="ts">
 interface SelectOption {
   label: string
@@ -81,7 +107,7 @@ interface SelectProps {
 }
 let {
   label = "",
-  id = undefined,
+  id = crypto.randomUUID(),
   name = undefined,
   options = [],
   value = $bindable(),
@@ -148,6 +174,7 @@ function handleChange(event: Event): void {
     {/if}
     
     <select
+      {id}
       bind:this={selectElement}
       bind:value={selectedValue}
       onchange={handleChange}

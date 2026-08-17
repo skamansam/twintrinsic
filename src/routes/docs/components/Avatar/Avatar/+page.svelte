@@ -2,6 +2,8 @@
 import Avatar from "$lib/components/Avatar/Avatar.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as AvatarModule from "$lib/components/Avatar/Avatar.svelte"
 </script>
 <!--
 @component
@@ -152,126 +154,7 @@ Avatar documentation page
 <Avatar name="Both" bordered shadowed />`}</CodeBlock>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>src</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Image source URL</td>
-      </tr>
-      <tr>
-        <td><code>alt</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Alt text for the image</td>
-      </tr>
-      <tr>
-        <td><code>name</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>User name for generating initials</td>
-      </tr>
-      <tr>
-        <td><code>fallback</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Fallback text when image fails to load or no src provided</td>
-      </tr>
-      <tr>
-        <td><code>gravatarEmail</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Gravatar email address to generate avatar URL from. Uses SHA-256 hashing with identicon fallback</td>
-      </tr>
-      <tr>
-        <td><code>icon</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Icon name to display (e.g., "user", "star"). Uses tabler iconset</td>
-      </tr>
-      <tr>
-        <td><code>size</code></td>
-        <td><code>"xs" | "sm" | "md" | "lg" | "xl"</code></td>
-        <td><code>"md"</code></td>
-        <td>Size of the avatar</td>
-      </tr>
-      <tr>
-        <td><code>shape</code></td>
-        <td><code>"circle" | "square" | "rounded"</code></td>
-        <td><code>"circle"</code></td>
-        <td>Shape of the avatar</td>
-      </tr>
-      <tr>
-        <td><code>status</code></td>
-        <td><code>"online" | "offline" | "away" | "busy"</code></td>
-        <td><code>undefined</code></td>
-        <td>Status indicator</td>
-      </tr>
-      <tr>
-        <td><code>statusIcon</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Icon name for status indicator. Defaults to check, x, clock, or alert-circle based on status</td>
-      </tr>
-      <tr>
-        <td><code>bgColor</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Background color for text avatars (CSS color value or Tailwind class)</td>
-      </tr>
-      <tr>
-        <td><code>badge</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Badge text to display in top-right corner</td>
-      </tr>
-      <tr>
-        <td><code>badgeVariant</code></td>
-        <td><code>"default" | "primary" | "secondary" | "success" | "warning" | "error" | "info"</code></td>
-        <td><code>"primary"</code></td>
-        <td>Badge variant/color</td>
-      </tr>
-      <tr>
-        <td><code>bordered</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show a border</td>
-      </tr>
-      <tr>
-        <td><code>shadowed</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to add a shadow effect</td>
-      </tr>
-      <tr>
-        <td><code>initialsGenerator</code></td>
-        <td><code>Function</code></td>
-        <td><code>undefined</code></td>
-        <td>Custom function to generate initials</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td><code>crypto.randomUUID()</code></td>
-        <td>HTML id for accessibility</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={AvatarModule} />
 
   <h2>Accessibility</h2>
   <p>

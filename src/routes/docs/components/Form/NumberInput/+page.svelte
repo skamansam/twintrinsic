@@ -3,11 +3,12 @@
 Documentation page for the NumberInput component.
 -->
 <script lang="ts">
-import NumberInput from "$lib/components/Form/NumberInput.svelte"
-import FormField from "$lib/components/Form/FormField.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
+import FormField from "$lib/components/Form/FormField.svelte"
+import NumberInput from "$lib/components/Form/NumberInput.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as NumberInputModule from "$lib/components/Form/NumberInput.svelte"
 
 // Sample values for examples
 let quantity = $state(1)
@@ -27,7 +28,7 @@ let temperature = $state(22.5)
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="numberinput-basic-usage">
   <NumberInput 
     name="quantity" 
     value={quantity} 
@@ -51,7 +52,7 @@ let temperature = $state(22.5)
 </CodeBlock>
 
 <h3>With Currency Prefix</h3>
-<div class="example">
+<div class="example" data-testid="numberinput-currency">
   <NumberInput 
     name="price" 
     value={price} 
@@ -75,7 +76,7 @@ let temperature = $state(22.5)
 </CodeBlock>
 
 <h3>With Percentage Suffix</h3>
-<div class="example">
+<div class="example" data-testid="numberinput-percentage">
   <NumberInput 
     name="percentage" 
     value={percentage} 
@@ -99,7 +100,7 @@ let temperature = $state(22.5)
 </CodeBlock>
 
 <h3>With Vertical Buttons</h3>
-<div class="example">
+<div class="example" data-testid="numberinput-vertical">
   <NumberInput 
     name="temperature" 
     value={temperature} 
@@ -125,7 +126,7 @@ let temperature = $state(22.5)
 </CodeBlock>
 
 <h3>Different Sizes</h3>
-<div class="example">
+<div class="example" data-testid="numberinput-sizes">
   <div class="flex flex-col gap-4">
     <NumberInput 
       name="small" 
@@ -173,7 +174,7 @@ let temperature = $state(22.5)
 </CodeBlock>
 
 <h3>Without Buttons</h3>
-<div class="example">
+<div class="example" data-testid="numberinput-no-buttons">
   <NumberInput 
     name="noButtons" 
     value={50} 
@@ -191,7 +192,7 @@ let temperature = $state(22.5)
 </CodeBlock>
 
 <h3>With Form Field</h3>
-<div class="example">
+<div class="example" data-testid="numberinput-formfield">
   <FormField label="Quantity" required={true}>
     <NumberInput 
       name="quantityRequired" 
@@ -213,7 +214,7 @@ let temperature = $state(22.5)
 </CodeBlock>
 
 <h3>Disabled State</h3>
-<div class="example">
+<div class="example" data-testid="numberinput-disabled-state">
   <NumberInput 
     name="disabled" 
     value={10} 
@@ -229,7 +230,7 @@ let temperature = $state(22.5)
 </CodeBlock>
 
 <h3>Readonly State</h3>
-<div class="example">
+<div class="example" data-testid="numberinput-readonly">
   <NumberInput 
     name="readonly" 
     value={10} 
@@ -245,132 +246,10 @@ let temperature = $state(22.5)
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'name',
-      type: 'string',
-      description: 'Input name for form submission'
-    },
-    {
-      name: 'value',
-      type: 'number',
-      default: '0',
-      description: 'Current numeric value'
-    },
-    {
-      name: 'placeholder',
-      type: 'string',
-      default: "''",
-      description: 'Placeholder text when input is empty'
-    },
-    {
-      name: 'min',
-      type: 'number',
-      description: 'Minimum allowed value'
-    },
-    {
-      name: 'max',
-      type: 'number',
-      description: 'Maximum allowed value'
-    },
-    {
-      name: 'step',
-      type: 'number',
-      default: '1',
-      description: 'Amount to increment/decrement when using buttons or arrow keys'
-    },
-    {
-      name: 'decimalPlaces',
-      type: 'number',
-      description: 'Number of decimal places to display'
-    },
-    {
-      name: 'prefix',
-      type: 'string',
-      description: 'Text to display before the number (e.g., currency symbol)'
-    },
-    {
-      name: 'suffix',
-      type: 'string',
-      description: 'Text to display after the number (e.g., unit of measurement)'
-    },
-    {
-      name: 'showButtons',
-      type: 'boolean',
-      default: 'true',
-      description: 'Whether to show increment/decrement buttons'
-    },
-    {
-      name: 'verticalButtons',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether to arrange buttons vertically instead of horizontally'
-    },
-    {
-      name: 'required',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the input is required in a form'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the input is disabled'
-    },
-    {
-      name: 'readonly',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the input is readonly'
-    },
-    {
-      name: 'size',
-      type: 'string',
-      default: "'md'",
-      description: 'Size of the input (sm, md, lg)'
-    },
-    {
-      name: 'ariaLabel',
-      type: 'string',
-      description: 'ARIA label for accessibility'
-    },
-    {
-      name: 'id',
-      type: 'string',
-      default: 'auto-generated',
-      description: 'HTML id for accessibility'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: "''",
-      description: 'Additional CSS classes'
-    }
-  ]}
-/>
+<PropsTable component={NumberInputModule} />
 
 <h2>Events</h2>
-<EventsTable
-  events={[
-    {
-      name: 'change',
-      type: '{ value: number }',
-      description: 'Fired when the input value changes'
-    },
-    {
-      name: 'focus',
-      type: 'Event',
-      description: 'Fired when the input receives focus'
-    },
-    {
-      name: 'blur',
-      type: 'Event',
-      description: 'Fired when the input loses focus'
-    }
-  ]}
-/>
+<EventsTable component={NumberInputModule} />
 
 <h2>Accessibility</h2>
 <p>

@@ -45,11 +45,37 @@ Usage:
 />
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "value", type: "number", description: "Current rating value", default: "0", optional: true },
+  { name: "min", type: "number", description: "Minimum rating value", default: "0", optional: true },
+  { name: "max", type: "number", description: "Maximum rating value", default: "5", optional: true },
+  { name: "step", type: "number", description: "Step size (0.5 for half-stars, 1 for whole stars)", default: "1", optional: true },
+  { name: "size", type: "\"sm\" | \"md\" | \"lg\"", description: "Size of the rating icons (sm, md, lg)", default: "\"md\"", optional: true },
+  { name: "variant", type: "RatingVariant", description: "Visual style variant", default: "\"warning\"", optional: true },
+  { name: "readonly", type: "boolean", description: "Whether the rating is readonly", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the rating is disabled", default: "false", optional: true },
+  { name: "showValue", type: "boolean", description: "Whether to show the numeric value", default: "false", optional: true },
+  { name: "showPreview", type: "boolean", description: "Whether to show hover preview", default: "false", optional: true },
+  { name: "icon", type: "string", description: "Custom icon name for filled state (e.g., \"star\", \"heart\")", default: "\"tabler:star-filled\"", optional: true },
+  { name: "emptyIcon", type: "string", description: "Custom icon name for empty state (e.g., \"star\", \"heart\")", default: "\"tabler:star\"", optional: true },
+  { name: "name", type: "string", description: "Name attribute for form submission", optional: true },
+  { name: "placeholder", type: "string", description: "Placeholder text hint", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for accessibility", default: "\"Rating\"", optional: true },
+  { name: "onchange", type: "(event: CustomEvent<{ value: number }>) => void", description: "Change event handler", optional: true, eventDetail: "{ value: number }" },
+  { name: "onhover", type: "(event: CustomEvent<{ value: number }>) => void", description: "Hover event handler", optional: true, eventDetail: "{ value: number }" },
+  { name: "filledIcon", type: "Snippet<[string]>", description: "Custom snippet for filled icon (receives icon size class)", optional: true },
+  { name: "emptyIconSnippet", type: "Snippet<[string]>", description: "Custom snippet for empty icon (receives icon size class)", optional: true },
+];
+</script>
+
 <script lang="ts">
-import { getContext } from "svelte"
-import Icon from "../Icon/Icon.svelte"
 
 import type { Snippet } from "svelte"
+import { getContext } from "svelte"
+import Icon from "../Icon/Icon.svelte"
 
 /** Rating color variants enumerated by `variantClasses` in this component. */
 type RatingVariant =
@@ -401,6 +427,10 @@ function handleKeydown(event: KeyboardEvent): void {
 }
 </script>
 
+<!-- The interactive slider role is legitimate ARIA; Svelte's a11y linter
+     doesn't recognize `role="slider"` as interactive, so tabindex is flagged.
+     This matches the APG slider pattern (single tab stop, arrow keys adjust). -->
+<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 <div
   {id}
   class="
@@ -411,6 +441,7 @@ function handleKeydown(event: KeyboardEvent): void {
     {className}
   "
   role={isInteractive ? 'slider' : 'img'}
+  tabindex={isInteractive ? 0 : -1}
   aria-label={ariaLabel}
   aria-valuemin={isInteractive ? min : undefined}
   aria-valuemax={isInteractive ? max : undefined}

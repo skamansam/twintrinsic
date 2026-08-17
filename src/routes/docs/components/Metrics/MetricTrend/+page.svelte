@@ -1,6 +1,9 @@
 <script lang="ts">
-	import MetricTrend from '$lib/components/Metrics/MetricTrend/MetricTrend.svelte'
 	import Container from '$lib/components/Container/Container.svelte'
+	import MetricTrend from '$lib/components/Metrics/MetricTrend/MetricTrend.svelte'
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as MetricTrendModule from "$lib/components/Metrics/MetricTrend/MetricTrend.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -40,60 +43,10 @@
 />`}</code></pre>
 
 	<h2>Props</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Prop</th>
-				<th>Type</th>
-				<th>Default</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><code>label</code></td>
-				<td><code>string</code></td>
-				<td>Required</td>
-				<td>Trend label</td>
-			</tr>
-			<tr>
-				<td><code>data</code></td>
-				<td><code>number[]</code></td>
-				<td>Required</td>
-				<td>Array of data points</td>
-			</tr>
-			<tr>
-				<td><code>color</code></td>
-				<td><code>string</code></td>
-				<td>'#3b82f6'</td>
-				<td>Trend line color</td>
-			</tr>
-			<tr>
-				<td><code>height</code></td>
-				<td><code>number</code></td>
-				<td>40</td>
-				<td>Chart height in pixels</td>
-			</tr>
-		</tbody>
-	</table>
+<PropsTable component={MetricTrendModule} />
 
 	<h2>Events</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Event</th>
-				<th>Detail</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><code>onclick</code></td>
-				<td><code>void</code></td>
-				<td>Fired when trend is clicked</td>
-			</tr>
-		</tbody>
-	</table>
+<EventsTable component={MetricTrendModule} />
 
 	<h2>Best Practices</h2>
 	<ul>

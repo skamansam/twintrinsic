@@ -14,6 +14,16 @@ Usage:
 </Tab>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the tab is disabled", default: "false", optional: true },
+  { name: "icon", type: "string", description: "Icon to display (HTML or SVG string)", optional: true },
+  { name: "iconPosition", type: "string", description: "Icon position (left or right)", default: "\"left\"", optional: true },
+];
+</script>
+
 <script lang="ts">
 import { getContext, onMount } from "svelte"
 
@@ -45,7 +55,7 @@ if (!tabsContext) {
 
 // Tab state
 let tabElement: HTMLButtonElement | undefined
-let index = -1
+let index = $state(-1)
 
 // Register tab on mount
 onMount(() => {

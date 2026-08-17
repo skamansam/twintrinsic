@@ -15,10 +15,30 @@ Usage:
 </Modal>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "open", type: "boolean", description: "Whether the modal is open", default: "false", optional: true },
+  { name: "closeOnOutsideClick", type: "boolean", description: "Whether to close when clicking outside", default: "true", optional: true },
+  { name: "closeOnEscape", type: "boolean", description: "Whether to close when pressing Escape", default: "true", optional: true },
+  { name: "size", type: "string", description: "Size of the modal (sm, md, lg, xl, full)", default: "\"md\"", optional: true },
+  { name: "centered", type: "boolean", description: "Whether to center the modal vertically", default: "true", optional: true },
+  { name: "showCloseButton", type: "boolean", description: "Whether to show a close button in the header", default: "true", optional: true },
+  { name: "closeButtonLabel", type: "string", description: "ARIA label for the close button", default: "\"Close modal\"", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the modal", optional: true },
+  { name: "ariaDescription", type: "string", description: "ARIA description for the modal", optional: true },
+  { name: "onopen", type: "(event: CustomEvent) => void", description: "Open event handler", optional: true, eventDetail: "unknown" },
+  { name: "onclose", type: "(event: CustomEvent<{ reason: string }>) => void", description: "Close event handler", optional: true, eventDetail: "{ reason: string }" },
+  { name: "header", type: "Snippet", description: "Header content rendered at the top of the modal", optional: true },
+  { name: "footer", type: "Snippet", description: "Footer content rendered at the bottom of the modal", optional: true },
+];
+</script>
+
 <script lang="ts">
+import type { Snippet } from "svelte"
 import { onMount } from "svelte"
 import { fade, scale } from "svelte/transition"
-import type { Snippet } from "svelte"
 
 interface Props {
   /** Additional CSS classes */
@@ -48,7 +68,9 @@ interface Props {
   /** Close event handler */
   onclose?: (event: CustomEvent<{ reason: string }>) => void
   children?: Snippet
+  /** Header content rendered at the top of the modal */
   header?: Snippet
+  /** Footer content rendered at the bottom of the modal */
   footer?: Snippet
 }
 
@@ -261,6 +283,7 @@ const sizeClasses = $derived(
       role="dialog"
       aria-modal="true"
       aria-label={ariaLabel}
+      aria-labelledby={!ariaLabel && header ? `${id}-title` : undefined}
       aria-describedby={ariaDescription ? `${id}-description` : undefined}
       tabindex="-1"
       bind:this={modalElement}
@@ -268,7 +291,7 @@ const sizeClasses = $derived(
     >
       {#if header}
         <div class="modal-header">
-          <div class="modal-title">
+          <div class="modal-title" id={`${id}-title`}>
             {@render header()}
           </div>
           

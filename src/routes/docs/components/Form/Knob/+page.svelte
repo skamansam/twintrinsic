@@ -3,11 +3,12 @@
 Documentation page for the Knob component.
 -->
 <script lang="ts">
-import Knob from "$lib/components/Form/Knob.svelte"
-import FormField from "$lib/components/Form/FormField.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
+import FormField from "$lib/components/Form/FormField.svelte"
+import Knob from "$lib/components/Form/Knob.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as KnobModule from "$lib/components/Form/Knob.svelte"
 </script>
 
 <h1>Knob</h1>
@@ -21,7 +22,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="knob-basic-usage">
   <Knob 
     name="volume" 
     value={50} 
@@ -39,7 +40,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>With Value Display</h3>
-<div class="example">
+<div class="example" data-testid="knob-value-display">
   <Knob 
     name="progress" 
     value={75} 
@@ -57,7 +58,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Different Sizes</h3>
-<div class="example">
+<div class="example" data-testid="knob-sizes">
   <div class="flex items-center gap-8">
     <div class="flex flex-col items-center">
       <span class="text-sm mb-2">Small</span>
@@ -89,7 +90,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Custom Color</h3>
-<div class="example">
+<div class="example" data-testid="knob-colors">
   <div class="flex items-center gap-8">
     <Knob 
       value={60}
@@ -121,7 +122,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>With Tick Marks</h3>
-<div class="example">
+<div class="example" data-testid="knob-ticks">
   <Knob 
     value={30}
     showTicks={true}
@@ -137,7 +138,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Custom Thickness</h3>
-<div class="example">
+<div class="example" data-testid="knob-thickness">
   <div class="flex items-center gap-8">
     <Knob 
       value={50}
@@ -160,7 +161,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Disabled State</h3>
-<div class="example">
+<div class="example" data-testid="knob-disabled-state">
   <Knob 
     value={65}
     disabled={true}
@@ -174,7 +175,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>With Form Field</h3>
-<div class="example">
+<div class="example" data-testid="knob-formfield">
   <FormField label="Temperature">
     <Knob 
       name="temperature" 
@@ -202,119 +203,10 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'name',
-      type: 'string',
-      description: 'Input name for form submission'
-    },
-    {
-      name: 'value',
-      type: 'number',
-      default: '0',
-      description: 'Current value'
-    },
-    {
-      name: 'min',
-      type: 'number',
-      default: '0',
-      description: 'Minimum value'
-    },
-    {
-      name: 'max',
-      type: 'number',
-      default: '100',
-      description: 'Maximum value'
-    },
-    {
-      name: 'step',
-      type: 'number',
-      default: '1',
-      description: 'Step increment'
-    },
-    {
-      name: 'size',
-      type: "'sm' | 'md' | 'lg' | 'xl'",
-      default: "'md'",
-      description: 'Size of the knob'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the knob is disabled'
-    },
-    {
-      name: 'showValue',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether to show the current value in the center'
-    },
-    {
-      name: 'valueTemplate',
-      type: 'string',
-      default: "'{value}'",
-      description: 'Template for displaying the value, use {value} as placeholder'
-    },
-    {
-      name: 'color',
-      type: 'string',
-      description: 'Color of the progress arc (CSS color value)'
-    },
-    {
-      name: 'thickness',
-      type: 'number',
-      default: '4',
-      description: 'Thickness of the progress arc (1-10)'
-    },
-    {
-      name: 'showTicks',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether to show tick marks'
-    },
-    {
-      name: 'tickCount',
-      type: 'number',
-      default: '10',
-      description: 'Number of tick marks to display'
-    },
-    {
-      name: 'ariaLabel',
-      type: 'string',
-      description: 'ARIA label for accessibility'
-    },
-    {
-      name: 'id',
-      type: 'string',
-      default: 'auto-generated',
-      description: 'HTML id for accessibility'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: "''",
-      description: 'Additional CSS classes'
-    }
-  ]}
-/>
+<PropsTable component={KnobModule} />
 
 <h2>Events</h2>
-<EventsTable
-  events={[
-    {
-      name: 'input',
-      type: '{ value: number }',
-      description: 'Fired when the value changes during interaction'
-    },
-    {
-      name: 'change',
-      type: '{ value: number }',
-      description: 'Fired when interaction ends (mouseup/touchend)'
-    }
-  ]}
-/>
+<EventsTable component={KnobModule} />
 
 <h2>Accessibility</h2>
 <p>

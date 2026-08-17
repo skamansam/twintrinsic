@@ -2,6 +2,9 @@
 import Chip from "$lib/components/Chip/Chip.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as ChipModule from "$lib/components/Chip/Chip.svelte"
 </script>
 <!--
 @component
@@ -23,14 +26,14 @@ Chip documentation page
   <h2>Usage</h2>
 
   <h3>Basic Chip</h3>
-  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="chip-basic">
     <Chip>Basic Chip</Chip>
   </div>
 
   <CodeBlock language="svelte">{`<Chip>Basic Chip</Chip>`}</CodeBlock>
 
   <h3>Chip Variants</h3>
-  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="chip-variants">
     <Chip variant="default">Default</Chip>
     <Chip variant="primary">Primary</Chip>
     <Chip variant="secondary">Secondary</Chip>
@@ -73,7 +76,7 @@ Chip documentation page
 <Chip size="lg">Large</Chip>`}</CodeBlock>
 
   <h3>Removable Chips</h3>
-  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="chip-removable">
     <Chip removable>Removable</Chip>
     <Chip variant="primary" removable>Primary</Chip>
     <Chip variant="error" removable>Error</Chip>
@@ -84,7 +87,7 @@ Chip documentation page
 <Chip variant="error" removable onremove={() => handleRemove()}>Error</Chip>`}</CodeBlock>
 
   <h3>Clickable Chips</h3>
-  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="chip-clickable">
     <Chip clickable>Clickable</Chip>
     <Chip variant="primary" clickable>Primary</Chip>
     <Chip variant="success" clickable selected>Selected</Chip>
@@ -159,7 +162,7 @@ Chip documentation page
 </Chip>`}</CodeBlock>
 
   <h3>Disabled Chips</h3>
-  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="chip-disabled">
     <Chip disabled>Disabled</Chip>
     <Chip variant="primary" disabled clickable>Disabled Clickable</Chip>
     <Chip variant="error" disabled removable>Disabled Removable</Chip>
@@ -170,119 +173,10 @@ Chip documentation page
 <Chip variant="error" disabled removable>Disabled Removable</Chip>`}</CodeBlock>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>variant</code></td>
-        <td><code>"default" | "primary" | "secondary" | "success" | "warning" | "error" | "info"</code></td>
-        <td><code>"default"</code></td>
-        <td>Visual style variant</td>
-      </tr>
-      <tr>
-        <td><code>size</code></td>
-        <td><code>"sm" | "md" | "lg"</code></td>
-        <td><code>"md"</code></td>
-        <td>Size of the chip</td>
-      </tr>
-      <tr>
-        <td><code>icon</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Icon to display (HTML or SVG string)</td>
-      </tr>
-      <tr>
-        <td><code>avatar</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Avatar to display (HTML or img tag)</td>
-      </tr>
-      <tr>
-        <td><code>removable</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the chip is removable</td>
-      </tr>
-      <tr>
-        <td><code>clickable</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the chip is clickable</td>
-      </tr>
-      <tr>
-        <td><code>disabled</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the chip is disabled</td>
-      </tr>
-      <tr>
-        <td><code>selected</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the chip is selected</td>
-      </tr>
-      <tr>
-        <td><code>outline</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show an outline style</td>
-      </tr>
-      <tr>
-        <td><code>removeAriaLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>"Remove"</code></td>
-        <td>ARIA label for the remove button</td>
-      </tr>
-      <tr>
-        <td><code>removeIcon</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Custom remove icon (HTML or SVG string)</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td><code>crypto.randomUUID()</code></td>
-        <td>HTML id for accessibility</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={ChipModule} />
 
   <h2>Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>click</code></td>
-        <td><code>MouseEvent</code></td>
-        <td>Fired when a clickable chip is clicked (not fired when disabled)</td>
-      </tr>
-      <tr>
-        <td><code>remove</code></td>
-        <td><code>void</code></td>
-        <td>Fired when the remove button is clicked (not fired when disabled)</td>
-      </tr>
-    </tbody>
-  </table>
+<EventsTable component={ChipModule} />
 
   <h2>Accessibility</h2>
   <p>

@@ -141,4 +141,20 @@ detectLanguage("@media (max-width: 600px) { }")    // "css"
 detectLanguage("<div>hello</div>")                  // "markup"
 detectLanguage("key: value")                        // "yaml"`}
   </CodeBlock>
+
+  <Separator>Documentation Tables</Separator>
+
+  <h2>PropsTable & EventsTable</h2>
+
+  <Panel>
+    <p>
+      For rendering component props and events in your own docs, Twintrinsic
+      ships two utility components — <code>PropsTable</code> and
+      <code>EventsTable</code>. They auto-derive their rows from a component
+      module at build time, with an explicit-array fallback. See their dedicated
+      pages for full usage:
+      <a href="/docs/components/PropsTable/PropsTable">PropsTable</a> and
+      <a href="/docs/components/EventsTable/EventsTable">EventsTable</a>.
+    </p>
+  </Panel>
 </Container>

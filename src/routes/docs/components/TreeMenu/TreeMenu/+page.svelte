@@ -1,6 +1,6 @@
 <script lang="ts">
-  import TreeMenu from "$lib/components/TreeMenu/TreeMenu.svelte"
   import type { MenuItem as TreeMenuItem } from "$lib/components/TreeMenu/TreeMenu.svelte"
+  import TreeMenu from "$lib/components/TreeMenu/TreeMenu.svelte"
 
   const basicItems: TreeMenuItem[] = [
     { title: 'Home', icon: 'home', link: '/' },
@@ -37,6 +37,9 @@
       ],
     },
   ];
+
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as TreeMenuModule from "$lib/components/TreeMenu/TreeMenu.svelte"
 </script>
 
 <div class="docs-container">
@@ -64,7 +67,7 @@
   <section>
     <h2>Basic Usage</h2>
     <p>Simple menu with links:</p>
-    <div class="example">
+    <div class="example" data-testid="treemenu-basic">
       <TreeMenu items={basicItems} />
     </div>
     <pre><code>{`\u003Cscript lang="ts">
@@ -83,7 +86,7 @@
   <section>
     <h2>Nested Items</h2>
     <p>Create hierarchical menus with expandable sections:</p>
-    <div class="example">
+    <div class="example" data-testid="treemenu-nested">
       <TreeMenu items={nestedItems} />
     </div>
     <pre><code>{`const items: TreeMenuItem[] = [
@@ -102,7 +105,7 @@
   <section>
     <h2>With Actions</h2>
     <p>Handle click events and custom actions:</p>
-    <div class="example">
+    <div class="example" data-testid="treemenu-actions">
       <TreeMenu items={actionItems} />
     </div>
     <pre><code>{`const items: TreeMenuItem[] = [
@@ -118,30 +121,7 @@
 
   <section>
     <h2>Props</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Prop</th>
-          <th>Type</th>
-          <th>Default</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>items</code></td>
-          <td><code>MenuItem[]</code></td>
-          <td><code>[]</code></td>
-          <td>Array of menu items to render</td>
-        </tr>
-        <tr>
-          <td><code>class</code></td>
-          <td><code>string</code></td>
-          <td><code>""</code></td>
-          <td>Additional CSS classes</td>
-        </tr>
-      </tbody>
-    </table>
+<PropsTable component={TreeMenuModule} />
   </section>
 
   <section>

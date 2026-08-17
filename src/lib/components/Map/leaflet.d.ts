@@ -1,5 +1,5 @@
-declare module 'leaflet' {
-	export * from 'leaflet';
+declare module "leaflet" {
+  export * from "leaflet";
 }
 
 /**
@@ -8,4 +8,4 @@ declare module 'leaflet' {
  * otherwise consumers' typecheckers (skipLibCheck: false) fail with
  * TS2882 on `twintrinsic/components/Map`.
  */
-declare module 'leaflet/dist/leaflet.css';
+declare module "leaflet/dist/leaflet.css";

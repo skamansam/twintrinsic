@@ -6,8 +6,9 @@ Documentation page for the Radio component.
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import FormField from "$lib/components/Form/FormField.svelte"
 import Radio from "$lib/components/Form/Radio.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as RadioModule from "$lib/components/Form/Radio.svelte"
 
 // Sample data for examples
 let theme = $state("light")
@@ -25,7 +26,7 @@ let fruit = $state("apple")
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="radio-basic">
   <Radio 
     name="theme" 
     value="light"
@@ -47,7 +48,7 @@ let fruit = $state("apple")
 </CodeBlock>
 
 <h3>Radio Group</h3>
-<div class="example">
+<div class="example" data-testid="radio-group">
   <div class="flex flex-col gap-2">
     <Radio name="theme-group" value="light" label="Light" checked={theme === 'light'} onchange={() => theme = 'light'} />
     <Radio name="theme-group" value="dark" label="Dark" checked={theme === 'dark'} onchange={() => theme = 'dark'} />
@@ -87,7 +88,7 @@ let fruit = $state("apple")
 </CodeBlock>
 
 <h3>Horizontal Layout</h3>
-<div class="example">
+<div class="example" data-testid="radio-horizontal">
   <div class="flex gap-4">
     <Radio name="fruit" value="apple" label="Apple" checked={fruit === 'apple'} onchange={() => fruit = 'apple'} />
     <Radio name="fruit" value="banana" label="Banana" checked={fruit === 'banana'} onchange={() => fruit = 'banana'} />
@@ -127,7 +128,7 @@ let fruit = $state("apple")
 </CodeBlock>
 
 <h3>Different Sizes</h3>
-<div class="example">
+<div class="example" data-testid="radio-sizes">
   <div class="flex flex-col gap-4">
     <Radio name="size-sm" value="sm" label="Small" size="sm" checked={size === 'sm'} onchange={() => size = 'sm'} />
     <Radio name="size-md" value="md" label="Medium (default)" size="md" checked={size === 'md'} onchange={() => size = 'md'} />
@@ -141,7 +142,7 @@ let fruit = $state("apple")
 </CodeBlock>
 
 <h3>With Form Field</h3>
-<div class="example">
+<div class="example" data-testid="radio-formfield">
   <FormField label="Select theme" required={true}>
     <div class="flex gap-4">
       <Radio name="theme-required" value="light" label="Light" required={true} />
@@ -159,7 +160,7 @@ let fruit = $state("apple")
 </CodeBlock>
 
 <h3>Disabled State</h3>
-<div class="example">
+<div class="example" data-testid="radio-disabled">
   <Radio 
     name="disabled" 
     value="disabled" 
@@ -177,77 +178,10 @@ let fruit = $state("apple")
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'name',
-      type: 'string',
-      description: 'Radio name for grouping radio buttons'
-    },
-    {
-      name: 'value',
-      type: 'string',
-      description: 'Value of the radio button'
-    },
-    {
-      name: 'label',
-      type: 'string',
-      description: 'Label text displayed next to the radio button'
-    },
-    {
-      name: 'checked',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the radio button is checked'
-    },
-    {
-      name: 'required',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the radio button is required in a form'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the radio button is disabled'
-    },
-    {
-      name: 'size',
-      type: 'string',
-      default: "'md'",
-      description: 'Size of the radio button (sm, md, lg)'
-    },
-    {
-      name: 'ariaLabel',
-      type: 'string',
-      description: 'ARIA label for accessibility (defaults to label if not provided)'
-    },
-    {
-      name: 'id',
-      type: 'string',
-      default: 'auto-generated',
-      description: 'HTML id for accessibility'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: "''",
-      description: 'Additional CSS classes'
-    }
-  ]}
-/>
+<PropsTable component={RadioModule} />
 
 <h2>Events</h2>
-<EventsTable
-  events={[
-    {
-      name: 'change',
-      type: '{ checked: boolean, value: string }',
-      description: 'Fired when the radio button is checked or unchecked'
-    }
-  ]}
-/>
+<EventsTable component={RadioModule} />
 
 <h2>Accessibility</h2>
 <p>

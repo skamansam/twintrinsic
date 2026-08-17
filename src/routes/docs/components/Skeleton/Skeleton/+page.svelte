@@ -2,6 +2,8 @@
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Skeleton from "$lib/components/Skeleton/Skeleton.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as SkeletonModule from "$lib/components/Skeleton/Skeleton.svelte"
 </script>
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
@@ -80,72 +82,7 @@ import Skeleton from "$lib/components/Skeleton/Skeleton.svelte"
   <CodeBlock language="svelte">{`<Skeleton width="100%" height="20px" animated={false} />`}</CodeBlock>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>variant</code></td>
-        <td><code>"text" | "rectangle" | "circle" | "rounded"</code></td>
-        <td><code>"rectangle"</code></td>
-        <td>Shape variant of the skeleton</td>
-      </tr>
-      <tr>
-        <td><code>width</code></td>
-        <td><code>string | number</code></td>
-        <td><code>"100%"</code></td>
-        <td>Width of the skeleton</td>
-      </tr>
-      <tr>
-        <td><code>height</code></td>
-        <td><code>string | number</code></td>
-        <td>Varies by variant</td>
-        <td>Height of the skeleton</td>
-      </tr>
-      <tr>
-        <td><code>size</code></td>
-        <td><code>string | number</code></td>
-        <td>Varies by variant</td>
-        <td>Size for circle and square variants (sets both width and height)</td>
-      </tr>
-      <tr>
-        <td><code>lines</code></td>
-        <td><code>number</code></td>
-        <td><code>1</code></td>
-        <td>Number of lines for text variant</td>
-      </tr>
-      <tr>
-        <td><code>animated</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to show the loading animation</td>
-      </tr>
-      <tr>
-        <td><code>ariaLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>"Loading content"</code></td>
-        <td>ARIA label for accessibility</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td><code>crypto.randomUUID()</code></td>
-        <td>HTML id for accessibility</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={SkeletonModule} />
 
   <h2>Accessibility</h2>
   <p>

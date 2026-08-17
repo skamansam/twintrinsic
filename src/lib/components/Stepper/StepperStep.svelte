@@ -27,6 +27,24 @@ Usage:
 </StepperStep>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "title", type: "string", description: "Step title (use `title` or `label`)", optional: true },
+  { name: "label", type: "string", description: "Step label (alias for title)", optional: true },
+  { name: "subtitle", type: "string", description: "Step subtitle or description", optional: true },
+  { name: "icon", type: "string", description: "Custom icon (HTML or SVG string)", optional: true },
+  { name: "optional", type: "boolean", description: "Whether the step is optional", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the step is disabled", default: "false", optional: true },
+  { name: "completed", type: "boolean", description: "Whether the step is completed", default: "false", optional: true },
+  { name: "active", type: "boolean", description: "Whether the step is active", default: "false", optional: true },
+  { name: "error", type: "boolean", description: "Whether the step has an error", default: "false", optional: true },
+  { name: "expanded", type: "boolean", description: "Whether to expand the step content (for vertical orientation)", default: "false", optional: true },
+  { name: "onClick", type: "Function", description: "Click handler for the step", optional: true },
+];
+</script>
+
 <script lang="ts">
 import { getContext, onMount } from "svelte"
 import Icon from "../Icon/Icon.svelte"

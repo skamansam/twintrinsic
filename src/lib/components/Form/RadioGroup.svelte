@@ -16,11 +16,26 @@ Usage:
 </RadioGroup>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "name", type: "string", description: "Radio group name", optional: true },
+  { name: "value", type: "string", description: "Currently selected value", default: "\"\"", optional: true },
+  { name: "legend", type: "string", description: "Legend text for the fieldset", optional: true },
+  { name: "required", type: "boolean", description: "Whether the radio group is required", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the radio group is disabled", default: "false", optional: true },
+  { name: "layout", type: "\"horizontal\" | \"vertical\"", description: "Layout direction (horizontal or vertical)", default: "\"vertical\"", optional: true },
+  { name: "size", type: "\"sm\" | \"md\" | \"lg\"", description: "Size of the radio buttons (sm, md, lg)", default: "\"md\"", optional: true },
+  { name: "onchange", type: "(event: CustomEvent<{ value: string }>) => void", description: "Change event handler", optional: true, eventDetail: "{ value: string }" },
+];
+</script>
+
 <script lang="ts">
-import { getContext, setContext } from "svelte"
-import type { FormContext, FormFieldApi } from "./formContext.js"
 
 import type { Snippet } from "svelte"
+import { getContext, setContext } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
 interface Props {
   /** Additional CSS classes */
@@ -121,16 +136,21 @@ function handleRadioChange(event: CustomEvent): void {
   onchange?.(new CustomEvent("change", { detail: { value: radioValue } }))
 }
 
-// Provide context for child Radio components
-$effect(() => {
-  setContext("radioGroup", {
-    name,
-    selectedValue: () => selectedValue,
-    required,
-    disabled: () => effectiveDisabled,
-    size,
-    onChange: handleRadioChange,
-  })
+// Provide context for child Radio components. Called at init (not in `$effect`)
+// so the context is available during server-side rendering.
+setContext("radioGroup", {
+  get name() {
+    return name
+  },
+  selectedValue: () => selectedValue,
+  get required() {
+    return required
+  },
+  disabled: () => effectiveDisabled,
+  get size() {
+    return size
+  },
+  onChange: handleRadioChange,
 })
 </script>
 

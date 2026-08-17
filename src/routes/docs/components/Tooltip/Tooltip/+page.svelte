@@ -3,6 +3,8 @@ import Button from "$lib/components/Button/Button.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Tooltip from "$lib/components/Tooltip/Tooltip.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as TooltipModule from "$lib/components/Tooltip/Tooltip.svelte"
 </script>
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
@@ -18,7 +20,7 @@ import Tooltip from "$lib/components/Tooltip/Tooltip.svelte"
   <h2>Usage</h2>
 
   <h3>Basic Tooltip</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="tooltip-basic">
     <Tooltip content="This is a helpful tooltip">
       <Button>Hover me</Button>
     </Tooltip>
@@ -29,7 +31,7 @@ import Tooltip from "$lib/components/Tooltip/Tooltip.svelte"
 </Tooltip>`}</CodeBlock>
 
   <h3>Tooltip Positions</h3>
-  <div class="flex gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex gap-4 p-4 bg-surface rounded-md mb-4" data-testid="tooltip-positions">
     <Tooltip content="Top tooltip" position="top">
       <Button>Top</Button>
     </Tooltip>
@@ -45,42 +47,7 @@ import Tooltip from "$lib/components/Tooltip/Tooltip.svelte"
   </div>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>text</code></td>
-        <td><code>string</code></td>
-        <td>Required</td>
-        <td>Tooltip text content</td>
-      </tr>
-      <tr>
-        <td><code>position</code></td>
-        <td><code>"top" | "right" | "bottom" | "left"</code></td>
-        <td><code>"top"</code></td>
-        <td>Tooltip position relative to trigger</td>
-      </tr>
-      <tr>
-        <td><code>delay</code></td>
-        <td><code>number</code></td>
-        <td><code>200</code></td>
-        <td>Delay in milliseconds before showing tooltip</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={TooltipModule} />
 
   <h2>Accessibility</h2>
   <ul>

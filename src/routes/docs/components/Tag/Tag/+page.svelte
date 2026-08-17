@@ -7,6 +7,10 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Tag from "$lib/components/Tag/Tag.svelte"
 import TagGroup from "$lib/components/Tag/TagGroup.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as TagModule from "$lib/components/Tag/Tag.svelte"
+import * as TagGroupModule from "$lib/components/Tag/TagGroup.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -156,217 +160,16 @@ import TagGroup from "$lib/components/Tag/TagGroup.svelte"
 </TagGroup>`}</CodeBlock>
 
   <h2>Tag Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>variant</code></td>
-        <td><code>string</code></td>
-        <td><code>"default"</code></td>
-        <td>Visual style variant (default, primary, secondary, success, warning, error, info)</td>
-      </tr>
-      <tr>
-        <td><code>size</code></td>
-        <td><code>string</code></td>
-        <td><code>"md"</code></td>
-        <td>Size of the tag (sm, md, lg)</td>
-      </tr>
-      <tr>
-        <td><code>icon</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Icon to display (HTML or SVG string)</td>
-      </tr>
-      <tr>
-        <td><code>dismissible</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the tag is dismissible</td>
-      </tr>
-      <tr>
-        <td><code>outline</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show the tag as an outline</td>
-      </tr>
-      <tr>
-        <td><code>pill</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show the tag as a pill</td>
-      </tr>
-      <tr>
-        <td><code>clickable</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the tag is clickable</td>
-      </tr>
-      <tr>
-        <td><code>href</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>URL for the tag (makes it a link)</td>
-      </tr>
-      <tr>
-        <td><code>target</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Link target (_blank, _self, etc.)</td>
-      </tr>
-      <tr>
-        <td><code>dismissAriaLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>"Dismiss"</code></td>
-        <td>ARIA label for the dismiss button</td>
-      </tr>
-      <tr>
-        <td><code>dismissIcon</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Custom dismiss icon (HTML or SVG string)</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-    </tbody>
-  </table>
+  <PropsTable component={TagModule} />
 
   <h2>TagGroup Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>variant</code></td>
-        <td><code>string</code></td>
-        <td><code>"default"</code></td>
-        <td>Visual style variant passed to all tags</td>
-      </tr>
-      <tr>
-        <td><code>size</code></td>
-        <td><code>string</code></td>
-        <td><code>"md"</code></td>
-        <td>Size passed to all tags (sm, md, lg)</td>
-      </tr>
-      <tr>
-        <td><code>dismissible</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether all tags are dismissible</td>
-      </tr>
-      <tr>
-        <td><code>outline</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether all tags are outlines</td>
-      </tr>
-      <tr>
-        <td><code>pill</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether all tags are pills</td>
-      </tr>
-      <tr>
-        <td><code>clickable</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether all tags are clickable</td>
-      </tr>
-      <tr>
-        <td><code>direction</code></td>
-        <td><code>string</code></td>
-        <td><code>"horizontal"</code></td>
-        <td>Direction of the tag group (horizontal, vertical)</td>
-      </tr>
-      <tr>
-        <td><code>items</code></td>
-        <td><code>(string \| Record&lt;string, unknown&gt;)[]</code></td>
-        <td><code>[]</code></td>
-        <td>Items to render as tags</td>
-      </tr>
-      <tr>
-        <td><code>labelField</code></td>
-        <td><code>string</code></td>
-        <td><code>"label"</code></td>
-        <td>Field used to derive the label when <code>items</code> are objects</td>
-      </tr>
-      <tr>
-        <td><code>itemTemplate</code></td>
-        <td><code>Snippet</code></td>
-        <td><code>undefined</code></td>
-        <td>Snippet rendered per item, receiving <code>(item, index)</code></td>
-      </tr>
-      <tr>
-        <td><code>ariaLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>"Tag group"</code></td>
-        <td>ARIA label for the tag group</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-    </tbody>
-  </table>
+  <PropsTable component={TagGroupModule} />
 
   <h2>Tag Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>dismiss</code></td>
-        <td><code>void</code></td>
-        <td>Fired when the dismiss button is clicked</td>
-      </tr>
-      <tr>
-        <td><code>click</code></td>
-        <td><code>MouseEvent</code></td>
-        <td>Fired when a clickable tag is clicked</td>
-      </tr>
-    </tbody>
-  </table>
+  <EventsTable component={TagModule} />
 
   <h2>TagGroup Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>dismiss</code></td>
-        <td><code>{`{ item: any, index: number }`}</code></td>
-        <td>Fired when a tag is dismissed, includes the item and its index</td>
-      </tr>
-    </tbody>
-  </table>
+  <EventsTable component={TagGroupModule} />
 
   <h2>Accessibility</h2>
   <p>

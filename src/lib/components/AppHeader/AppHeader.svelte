@@ -20,6 +20,23 @@ Usage:
 />
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "brand", type: "Brand", description: "Brand display: a string or an object with name, logo, href, and tagline", optional: false },
+  { name: "user", type: "User", description: "Current user object, or null when signed out", default: "null", optional: true },
+  { name: "showSearch", type: "boolean", description: "Whether to show the search input", default: "false", optional: true },
+  { name: "showNotifications", type: "boolean", description: "Whether to show the notifications button", default: "false", optional: true },
+  { name: "themeToggleHidden", type: "boolean", description: "Whether to hide the theme toggle", default: "false", optional: true },
+  { name: "navItems", type: "NavItem[]", description: "Navigation items shown in the header", default: "[]", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "notifications", type: "Snippet", description: "Snippet rendered in the notifications panel", optional: true },
+  { name: "userMenu", type: "Snippet", description: "Snippet rendered in the user menu", optional: true },
+  { name: "onsearch", type: "(payload: { query: string }) => void", description: "Callback fired when the user types in the search input", optional: true },
+  { name: "onsignout", type: "() => void", description: "Callback fired when the user signs out", optional: true },
+];
+</script>
+
 <script lang="ts">
 import type { Snippet } from "svelte";
 import { slide } from "svelte/transition"
@@ -29,17 +46,29 @@ type Brand = string | { name: string; logo?: import("svelte").Snippet<[number]> 
 type User = { name: string; avatar?: string; href?: string } | null
 type NavItem = { label: string; href?: string; current?: boolean }
 interface Props {
+  /** Brand display: a string or an object with name, logo, href, and tagline */
   brand: Brand
+  /** Current user object, or null when signed out */
   user?: User
+  /** Whether to show the search input */
   showSearch?: boolean
+  /** Whether to show the notifications button */
   showNotifications?: boolean
+  /** Whether to hide the theme toggle */
   themeToggleHidden?: boolean
+  /** Navigation items shown in the header */
   navItems?: NavItem[]
+  /** Additional CSS classes */
   class?: string
+  /** HTML id for accessibility */
   id?: string
+  /** Snippet rendered in the notifications panel */
   notifications?: Snippet
+  /** Snippet rendered in the user menu */
   userMenu?: Snippet
+  /** Callback fired when the user types in the search input */
   onsearch?: (payload: { query: string }) => void
+  /** Callback fired when the user signs out */
   onsignout?: () => void
 }
 

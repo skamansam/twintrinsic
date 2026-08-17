@@ -1,7 +1,8 @@
 <script lang="ts">
-	import PropsTable from "$lib/docs/PropsTable.svelte"
 	import Menu from "$lib/components/Menu/Menu/Menu.svelte"
 	import MenuItem from "$lib/components/Menu/Menu/MenuItem.svelte"
+	import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as MenuItemModule from "$lib/components/Menu/Menu/MenuItem.svelte"
 </script>
 
 <h1>MenuItem</h1>
@@ -25,58 +26,7 @@
 <p>Menu items can have nested submenus using the <code>value</code> prop with a <code>children</code> array:</p>
 
 <h2>Props</h2>
-<PropsTable
-	props={[
-		{
-			name: 'href',
-			type: 'string',
-			default: "'#'",
-			description: 'Link href. If provided, renders as an anchor tag; otherwise renders as a button.'
-		},
-		{
-			name: 'active',
-			type: 'boolean',
-			default: 'false',
-			description: 'Whether the menu item is currently active'
-		},
-		{
-			name: 'disabled',
-			type: 'boolean',
-			default: 'false',
-			description: 'Whether the menu item is disabled'
-		},
-		{
-			name: 'initialOpen',
-			type: 'boolean',
-			default: 'false',
-			description: 'Whether the submenu is initially open'
-		},
-		{
-			name: 'ariaLabel',
-			type: 'string',
-			default: "''",
-			description: 'ARIA label for accessibility'
-		},
-		{
-			name: 'id',
-			type: 'string',
-			default: 'crypto.randomUUID()',
-			description: 'HTML id for accessibility'
-		},
-		{
-			name: 'class',
-			type: 'string',
-			default: "''",
-			description: 'Additional CSS classes'
-		},
-		{
-			name: 'value',
-			type: 'any',
-			default: '{}',
-			description: 'Value associated with this menu item. Can include a children array for submenus.'
-		}
-	]}
-/>
+<PropsTable component={MenuItemModule} />
 
 <h2>Slots</h2>
 <p>

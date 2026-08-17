@@ -1,3 +1,14 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "''", optional: true },
+  { name: "position", type: "ToastPosition", description: "Position of the toast container", default: "'bottom-right'", optional: true },
+  { name: "maxToasts", type: "number", description: "Maximum number of toasts to show", default: "5", optional: true },
+  { name: "duration", type: "number", description: "Default duration (ms) before a toast auto-dismisses", default: "5000", optional: true },
+  { name: "dismissible", type: "boolean", description: "Whether the toast is dismissible via click", default: "true", optional: true },
+  { name: "pauseOnHover", type: "boolean", description: "Whether to pause the auto-dismiss timer on hover", default: "true", optional: true },
+];
+</script>
+
 <script lang="ts">
 /**
  * @component

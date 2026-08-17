@@ -1,3 +1,21 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "content", type: "string", description: "Plain-text tooltip content", default: "\"\"", optional: true },
+  { name: "position", type: "string", description: "Position of the tooltip relative to the trigger (top, right, bottom, left)", default: "\"top\"", optional: true },
+  { name: "delay", type: "number", description: "Delay in milliseconds before showing the tooltip", default: "0", optional: true },
+  { name: "duration", type: "number", description: "Time in milliseconds before auto-hiding (0 disables)", default: "0", optional: true },
+  { name: "arrow", type: "boolean", description: "Whether to show the arrow", default: "true", optional: true },
+  { name: "offset", type: "number", description: "Distance in pixels between the tooltip and its trigger", default: "8", optional: true },
+  { name: "showOnFocus", type: "boolean", description: "Whether to show the tooltip when the trigger receives focus", default: "true", optional: true },
+  { name: "ariaDescription", type: "string", description: "ARIA description for the trigger", optional: true },
+  { name: "onshow", type: "(event: CustomEvent) => void", description: "Callback fired when the tooltip is shown", optional: true, eventDetail: "unknown" },
+  { name: "onhide", type: "(event: CustomEvent) => void", description: "Callback fired when the tooltip is hidden", optional: true, eventDetail: "unknown" },
+  { name: "tooltipContent", type: "import(\"svelte\").Snippet", description: "Snippet rendered as the tooltip content (overrides `content`)", optional: true },
+];
+</script>
+
 <script lang="ts">
 /**
  * @component
@@ -22,19 +40,45 @@ import { onMount } from "svelte"
 import { fade } from "svelte/transition"
 
 const {
+  /** @type {string} - Additional CSS classes */
   class: className = "",
+
+  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
+
+  /** @type {string} - Plain-text tooltip content */
   content = "",
+
+  /** @type {string} - Position of the tooltip relative to the trigger (top, right, bottom, left) */
   position = "top",
+
+  /** @type {number} - Delay in milliseconds before showing the tooltip */
   delay = 0,
+
+  /** @type {number} - Time in milliseconds before auto-hiding (0 disables) */
   duration = 0,
+
+  /** @type {boolean} - Whether to show the arrow */
   arrow = true,
+
+  /** @type {number} - Distance in pixels between the tooltip and its trigger */
   offset = 8,
+
+  /** @type {boolean} - Whether to show the tooltip when the trigger receives focus */
   showOnFocus = true,
+
+  /** @type {string} - ARIA description for the trigger */
   ariaDescription = undefined,
+
+  /** @type {(event: CustomEvent) => void} - Callback fired when the tooltip is shown */
   onshow = undefined,
+
+  /** @type {(event: CustomEvent) => void} - Callback fired when the tooltip is hidden */
   onhide = undefined,
+
   children = undefined,
+
+  /** @type {import("svelte").Snippet} - Snippet rendered as the tooltip content (overrides `content`) */
   tooltipContent = undefined,
 } = $props()
 

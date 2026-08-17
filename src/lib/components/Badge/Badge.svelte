@@ -17,6 +17,23 @@ Usage:
 </Button>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "variant", type: "string", description: "Visual style variant", default: "\"default\"", optional: true },
+  { name: "size", type: "string", description: "Size of the badge (sm, md, lg)", default: "\"md\"", optional: true },
+  { name: "dot", type: "boolean", description: "Whether to show as a dot indicator", default: "false", optional: true },
+  { name: "pill", type: "boolean", description: "Whether to show as a pill shape", default: "false", optional: true },
+  { name: "outline", type: "boolean", description: "Whether to show as an outline", default: "false", optional: true },
+  { name: "pulse", type: "boolean", description: "Whether to add a subtle pulse animation", default: "false", optional: true },
+  { name: "hideEmpty", type: "boolean", description: "Whether to hide when content is empty", default: "false", optional: true },
+  { name: "overlay", type: "boolean", description: "Whether to position as an absolute overlay", default: "false", optional: true },
+  { name: "position", type: "string", description: "Position when used as overlay (top-right, top-left, etc.)", default: "\"top-right\"", optional: true },
+  { name: "inline", type: "boolean", description: "Whether badge is inline (absolute positioning) or takes up space", default: "true", optional: true },
+];
+</script>
+
 <script lang="ts">
 const {
   /** @type {string} - Additional CSS classes */

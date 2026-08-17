@@ -1,6 +1,8 @@
 <script lang="ts">
 import CodeBlock from '$lib/components/CodeBlock/CodeBlock.svelte'
 import CodeEditor from '$lib/components/CodeEditor/CodeEditor.svelte'
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as CodeEditorModule from "$lib/components/CodeEditor/CodeEditor.svelte"
 </script>
 
 <div class="space-y-8">
@@ -142,62 +144,7 @@ const user: User = {
 
 	<section>
 		<h2 class="text-2xl font-bold mb-4">Props</h2>
-		<div class="overflow-x-auto">
-			<table class="w-full border-collapse border border-gray-300 dark:border-gray-700">
-				<thead class="bg-gray-100 dark:bg-gray-800">
-					<tr>
-						<th class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">Prop</th>
-						<th class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">Type</th>
-						<th class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">Default</th>
-						<th class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">Description</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">code</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">string</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">''</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2">Initial code content</td>
-					</tr>
-					<tr>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">language</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">string</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">'javascript'</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2">Programming language for syntax highlighting</td>
-					</tr>
-					<tr>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">theme</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">string</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">'light'</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2">Theme name (light, one-dark, dracula, etc.)</td>
-					</tr>
-					<tr>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">height</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">string</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">'400px'</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2">Height of the editor</td>
-					</tr>
-					<tr>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">cdnSource</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">string</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">'esm.sh'</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2">CDN source for loading extensions (jsdelivr, esm.sh, unpkg)</td>
-					</tr>
-					<tr>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">extensions</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">string[]</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">[]</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2">Array of extension URLs to load dynamically</td>
-					</tr>
-					<tr>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">onchange</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">function</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">undefined</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2">Callback when code changes</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+  <PropsTable component={CodeEditorModule} />
 	</section>
 
 	<section>

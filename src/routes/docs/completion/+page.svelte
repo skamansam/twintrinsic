@@ -9,27 +9,27 @@ import Separator from "$lib/components/Separator/Separator.svelte"
 let { children } = $props()
 
 const components = [
-  // Core
-  { name: "App", category: "Core", updated: false, apis: [
+  // App
+  { name: "App", category: "App", updated: false, apis: [
     { name: "CSS custom properties", implemented: false },
   ]},
   
-  // Layout
-  { name: "Card", category: "Layout", updated: false, apis: [
+  // Basic
+  { name: "Card", category: "Basic", updated: false, apis: [
     { name: "Semantic HTML <article>", implemented: false },
   ]},
-  { name: "Container", category: "Layout", updated: false, apis: [
+  { name: "Container", category: "Basic", updated: false, apis: [
     { name: "Responsive design", implemented: false },
     { name: "CSS Grid", implemented: false },
   ]},
-  { name: "Panel", category: "Layout", updated: false, apis: [
+  { name: "Panel", category: "Basic", updated: false, apis: [
     { name: "HTML Details element", implemented: false },
     { name: "CSS animations", implemented: false },
   ]},
-  { name: "Separator", category: "Layout", updated: false, apis: [
+  { name: "Separator", category: "Basic", updated: false, apis: [
     { name: "HTML <hr> element", implemented: false },
   ]},
-  { name: "Sidebar", category: "Layout", updated: false, apis: [
+  { name: "Sidebar", category: "App", updated: false, apis: [
     { name: "CSS Grid", implemented: false },
     { name: "Media queries", implemented: false },
   ]},
@@ -38,11 +38,11 @@ const components = [
   { name: "Accordion", category: "Navigation", updated: false, apis: [
     { name: "<details> + <summary> elements", implemented: false },
   ]},
-  { name: "AppHeader", category: "Navigation", updated: false, apis: [
+  { name: "AppHeader", category: "App", updated: false, apis: [
     { name: "Semantic HTML nav", implemented: false },
     { name: "Flexbox layout", implemented: false },
   ]},
-  { name: "BottomBar", category: "Navigation", updated: false, apis: [
+  { name: "BottomBar", category: "App", updated: false, apis: [
     { name: "Fixed positioning", implemented: false },
     { name: "CSS variables", implemented: false },
   ]},

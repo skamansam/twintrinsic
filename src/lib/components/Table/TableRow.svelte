@@ -1,3 +1,14 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "selected", type: "boolean", description: "Whether the row is selected", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the row is disabled", default: "false", optional: true },
+  { name: "clickable", type: "boolean", description: "Whether the row is clickable", default: "false", optional: true },
+  { name: "data", type: "any", description: "Data associated with the row", optional: false },
+  { name: "onclick", type: "(event: CustomEvent) => void", description: "Click event handler", optional: false, eventDetail: "unknown" },
+];
+</script>
+
 <script lang="ts">
 /**
  * @component

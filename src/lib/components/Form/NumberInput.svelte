@@ -28,6 +28,33 @@ Usage:
 />
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "name", type: "string", description: "Input name", optional: true },
+  { name: "value", type: "number", description: "Input value", default: "0", optional: true },
+  { name: "placeholder", type: "string", description: "Placeholder text", default: "\"\"", optional: true },
+  { name: "min", type: "number", description: "Minimum allowed value", optional: true },
+  { name: "max", type: "number", description: "Maximum allowed value", optional: true },
+  { name: "step", type: "number", description: "Step increment/decrement amount", default: "1", optional: true },
+  { name: "decimalPlaces", type: "number", description: "Number of decimal places to display", optional: true },
+  { name: "prefix", type: "string", description: "Text to display before the number", optional: true },
+  { name: "suffix", type: "string", description: "Text to display after the number", optional: true },
+  { name: "showButtons", type: "boolean", description: "Whether to show increment/decrement buttons", default: "true", optional: true },
+  { name: "verticalButtons", type: "boolean", description: "Whether to arrange buttons vertically", default: "false", optional: true },
+  { name: "required", type: "boolean", description: "Whether the input is required", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the input is disabled", default: "false", optional: true },
+  { name: "readonly", type: "boolean", description: "Whether the input is readonly", default: "false", optional: true },
+  { name: "size", type: "\"sm\" | \"md\" | \"lg\"", description: "Size of the input (sm, md, lg)", default: "\"md\"", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for accessibility", optional: true },
+  { name: "onchange", type: "(event: CustomEvent<{ value: number }>) => void", description: "Change event handler", optional: true, eventDetail: "{ value: number }" },
+  { name: "oninput", type: "(event: CustomEvent<{ value: number }>) => void", description: "Input event handler", optional: true, eventDetail: "{ value: number }" },
+  { name: "onfocus", type: "(event: FocusEvent) => void", description: "Focus event handler", optional: true },
+  { name: "onblur", type: "(event: FocusEvent) => void", description: "Blur event handler", optional: true },
+];
+</script>
+
 <script lang="ts">
 import { getContext } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
@@ -141,9 +168,20 @@ $effect(() => {
   }
 })
 
-// Update internal value when prop changes
+// Sync from the prop only when it actually changes from outside. Comparing
+// against `numericValue` directly would fight the increment/decrement buttons:
+// in uncontrolled mode the prop stays constant while `numericValue` moves,
+// so the effect would immediately clobber the user's edit. Track the last
+// observed prop value instead.
+// Snapshot the incoming prop once at init. Only a *change* in the incoming
+// prop should resync the internal value — the `$effect` below handles later
+// changes. (Capturing the prop value here is intentional; this mirrors the
+// ChipGroup selected-prop pattern.)
+// svelte-ignore state_referenced_locally
+let lastPropValue = $state(value)
 $effect(() => {
-  if (value !== numericValue) {
+  if (value !== lastPropValue) {
+    lastPropValue = value
     numericValue = value
     inputValue = formatValue(value)
   }

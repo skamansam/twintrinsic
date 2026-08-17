@@ -1,6 +1,8 @@
 <script lang="ts">
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as ContainerModule from "$lib/components/Container/Container.svelte"
 </script>
 <!--
 @component
@@ -52,48 +54,7 @@ Container documentation page
 </Container>`}</CodeBlock>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>fluid</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Makes the container full-width</td>
-      </tr>
-      <tr>
-        <td><code>as</code></td>
-        <td><code>"div" | "main" | "section" | "article"</code></td>
-        <td><code>"div"</code></td>
-        <td>HTML element to render</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>role</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>ARIA role</td>
-      </tr>
-      <tr>
-        <td><code>ariaLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>ARIA label</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={ContainerModule} />
 
   <h2>When to Use Container vs Card vs Panel</h2>
   <p>

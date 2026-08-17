@@ -1,3 +1,20 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "title", type: "string", description: "Title of the timeline item", optional: true },
+  { name: "date", type: "string", description: "Subtitle or date of the timeline item", optional: true },
+  { name: "variant", type: "string", description: "Visual style variant", optional: true },
+  { name: "icon", type: "string", description: "Custom icon (HTML or SVG string)", optional: true },
+  { name: "iconBackground", type: "string", description: "Background color for the icon", optional: true },
+  { name: "last", type: "boolean", description: "Whether the item is the last in the timeline", default: "false", optional: true },
+  { name: "completed", type: "boolean", description: "Whether the item is completed", default: "false", optional: true },
+  { name: "active", type: "boolean", description: "Whether the item is currently active", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the item is disabled", default: "false", optional: true },
+  { name: "position", type: "string", description: "Position override for this specific item", optional: true },
+];
+</script>
+
 <script lang="ts">
 /**
  * @component
@@ -38,19 +55,19 @@ const {
   id = crypto.randomUUID(),
 
   /** @type {string} - Title of the timeline item */
-  title,
+  title = undefined,
 
   /** @type {string} - Subtitle or date of the timeline item */
-  date,
+  date = undefined,
 
   /** @type {string} - Visual style variant */
-  variant,
+  variant = undefined,
 
   /** @type {string} - Custom icon (HTML or SVG string) */
-  icon,
+  icon = undefined,
 
   /** @type {string} - Background color for the icon */
-  iconBackground,
+  iconBackground = undefined,
 
   /** @type {boolean} - Whether the item is the last in the timeline */
   last = false,
@@ -65,7 +82,7 @@ const {
   disabled = false,
 
   /** @type {string} - Position override for this specific item */
-  position,
+  position = undefined,
 
   children,
 } = $props()

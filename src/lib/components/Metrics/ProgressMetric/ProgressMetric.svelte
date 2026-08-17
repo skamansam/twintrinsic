@@ -1,3 +1,14 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "label", type: "string", description: "Metric label", optional: false },
+  { name: "value", type: "number", description: "Current value", optional: false },
+  { name: "max", type: "number", description: "Maximum value", optional: false },
+  { name: "color", type: "'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info'", description: "Color theme", default: "'primary'", optional: true },
+  { name: "showPercentage", type: "boolean", description: "Show percentage", default: "true", optional: true },
+  { name: "height", type: "'sm' | 'md' | 'lg'", description: "Height of the progress bar", default: "'md'", optional: true },
+];
+</script>
+
 <script lang="ts">
 	interface Props {
 		/** Metric label */

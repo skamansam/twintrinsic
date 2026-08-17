@@ -12,9 +12,25 @@ Usage:
 </LazyPanel>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "expanded", type: "boolean", description: "Whether the panel is expanded", default: "true", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether to disable the panel controls", default: "false", optional: true },
+  { name: "bordered", type: "boolean", description: "Whether to show a border", default: "true", optional: true },
+  { name: "showIcon", type: "boolean", description: "Whether to show the expand/collapse icon", default: "true", optional: true },
+  { name: "rootMargin", type: "string", description: "Root margin for intersection observer", default: "\"50px\"", optional: true },
+  { name: "threshold", type: "number", description: "Threshold for intersection observer", default: "0", optional: true },
+  { name: "header", type: "Snippet", description: "Header content rendered at the top of the panel", optional: true },
+  { name: "loading", type: "Snippet", description: "Snippet rendered while the content is loading", optional: true },
+];
+</script>
+
 <script lang="ts">
-import { onMount } from "svelte"
 import type { Snippet } from "svelte"
+import { onMount } from "svelte"
 import Panel from "./Panel.svelte"
 
 interface Props {
@@ -37,7 +53,9 @@ interface Props {
   /** Threshold for intersection observer */
   threshold?: number
   children?: Snippet
+  /** Header content rendered at the top of the panel */
   header?: Snippet
+  /** Snippet rendered while the content is loading */
   loading?: Snippet
 }
 

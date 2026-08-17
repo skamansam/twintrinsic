@@ -196,10 +196,10 @@
       "svelte": "./dist/components/Form/Dropdown.svelte",
       "default": "./dist/components/Form/Dropdown.svelte"
     },
-    "./docs/EventsTable": {
-      "types": "./dist/docs/EventsTable.svelte.d.ts",
-      "svelte": "./dist/docs/EventsTable.svelte",
-      "default": "./dist/docs/EventsTable.svelte"
+    "./components/EventsTable": {
+      "types": "./dist/components/EventsTable/EventsTable.svelte.d.ts",
+      "svelte": "./dist/components/EventsTable/EventsTable.svelte",
+      "default": "./dist/components/EventsTable/EventsTable.svelte"
     },
     "./components/FileUpload": {
       "types": "./dist/components/Form/FileUpload.svelte.d.ts",
@@ -356,10 +356,10 @@
       "svelte": "./dist/components/Metrics/ProgressMetric/ProgressMetric.svelte",
       "default": "./dist/components/Metrics/ProgressMetric/ProgressMetric.svelte"
     },
-    "./docs/PropsTable": {
-      "types": "./dist/docs/PropsTable.svelte.d.ts",
-      "svelte": "./dist/docs/PropsTable.svelte",
-      "default": "./dist/docs/PropsTable.svelte"
+    "./components/PropsTable": {
+      "types": "./dist/components/PropsTable/PropsTable.svelte.d.ts",
+      "svelte": "./dist/components/PropsTable/PropsTable.svelte",
+      "default": "./dist/components/PropsTable/PropsTable.svelte"
     },
     "./components/Radio": {
       "types": "./dist/components/Form/Radio.svelte.d.ts",

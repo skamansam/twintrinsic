@@ -1,4 +1,21 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "defaultIndex", type: "number", description: "Index of the initially selected tab", default: "0", optional: true },
+  { name: "variant", type: "\"default\" | \"underline\" | \"pills\" | \"enclosed\"", description: "Tab variant (default, underline, pills, enclosed)", default: "\"default\"", optional: true },
+  { name: "size", type: "\"sm\" | \"md\" | \"lg\"", description: "Tab size (sm, md, lg)", default: "\"md\"", optional: true },
+  { name: "fullWidth", type: "boolean", description: "Whether to make tabs take full width", default: "false", optional: true },
+  { name: "centered", type: "boolean", description: "Whether to center the tabs", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether tabs are disabled", default: "false", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the tablist", default: "\"Tabs\"", optional: true },
+  { name: "onchange", type: "(event: CustomEvent) => void", description: "Change event handler", optional: true, eventDetail: "unknown" },
+];
+</script>
+
 <script lang="ts">
+
+import type { Snippet } from "svelte"
 /**
  * @component
  * Tabs - A component for organizing content into tabbed sections.
@@ -20,8 +37,6 @@
  * ```
  */
 import { setContext } from "svelte"
-
-import type { Snippet } from "svelte"
 
 interface Props {
   /** Additional CSS classes */
@@ -149,20 +164,27 @@ function registerPanel(panelElement: HTMLElement): number {
   return index
 }
 
-// Provide context for child components
-$effect(() => {
-  setContext("tabs", {
-    selectedIndex: () => selectedIndex,
-    registerTab,
-    registerPanel,
-    selectTab,
-    handleKeydown,
-    disabled: () => disabled,
-    variant,
-    size,
-    fullWidth,
-    centered,
-  })
+// Provide context for child components. Called at init (not in `$effect`) so
+// the context is available during server-side rendering.
+setContext("tabs", {
+  selectedIndex: () => selectedIndex,
+  registerTab,
+  registerPanel,
+  selectTab,
+  handleKeydown,
+  disabled: () => disabled,
+  get variant() {
+    return variant
+  },
+  get size() {
+    return size
+  },
+  get fullWidth() {
+    return fullWidth
+  },
+  get centered() {
+    return centered
+  },
 })
 
 // Determine variant classes

@@ -18,9 +18,21 @@ Usage:
 </FloatLabel>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "label", type: "string", description: "Label text", optional: true },
+  { name: "required", type: "boolean", description: "Whether the input is required", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the input is disabled", default: "false", optional: true },
+  { name: "error", type: "string", description: "Error message to display", optional: true },
+  { name: "helpText", type: "string", description: "Help text to display below the input", optional: true },
+];
+</script>
+
 <script lang="ts">
-import { onMount } from "svelte"
 import type { Snippet } from "svelte"
+import { onMount } from "svelte"
 
 interface Props {
   /** Additional CSS classes */
@@ -56,6 +68,22 @@ let inputElement: HTMLElement | undefined = $state()
 let isFocused = $state(false)
 let hasValue = $state(false)
 let isFloating = $state(false)
+
+// The id the label should point at. The child control (e.g. TextInput)
+// generates its own id when none is passed, so we discover it on mount
+// rather than pointing the label at our own synthetic id.
+let labelFor = $state<string | undefined>(undefined)
+
+/**
+ * Discovers the child control's real id so the label can reference it.
+ * @param {HTMLElement} container - The wrapper holding the child control
+ */
+function discoverLabelTarget(container: HTMLElement): void {
+  const input = findInputElement(container)
+  if (input?.id) {
+    labelFor = input.id
+  }
+}
 
 /**
  * Checks if the input has a value
@@ -128,6 +156,8 @@ onMount(() => {
     const input = findInputElement(inputElement)
 
     if (input) {
+      discoverLabelTarget(inputElement)
+
       // Add event listeners
       input.addEventListener("focus", handleFocus)
       input.addEventListener("blur", handleBlur)
@@ -161,7 +191,7 @@ onMount(() => {
   <div class="float-label-container">
     {#if label}
       <label
-        for={id}
+        for={labelFor}
         class="float-label"
       >
         {label}

@@ -54,6 +54,19 @@ export type PanelProps = {
   /** Callback invoked whenever the panel toggles expanded state */
   ontoggle?: (payload: { expanded: boolean }) => void
 }
+
+export const propsMetadata = [
+  { name: "expanded", type: "boolean", description: "Whether the panel is expanded", default: "true", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "ariaLabel", type: "string | null", description: "ARIA label for the header button", default: "null", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether to disable the panel controls", default: "false", optional: true },
+  { name: "bordered", type: "boolean", description: "Whether to show a border", default: "true", optional: true },
+  { name: "showIcon", type: "boolean", description: "Whether to show the expand/collapse icon", default: "true", optional: true },
+  { name: "header", type: "import(\"svelte\").Snippet | null", description: "Slot content for the header", default: "null", optional: true },
+  { name: "footer", type: "import(\"svelte\").Snippet | null", description: "Slot content rendered below the body", default: "null", optional: true },
+  { name: "ontoggle", type: "(payload: { expanded: boolean }) => void", description: "Callback invoked whenever the panel toggles expanded state", optional: true },
+];
 </script>
 
 <script lang="ts">

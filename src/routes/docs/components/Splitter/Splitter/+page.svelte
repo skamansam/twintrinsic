@@ -1,7 +1,9 @@
 <script lang="ts">
-import Splitter from "$lib/components/Splitter/Splitter.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import Splitter from "$lib/components/Splitter/Splitter.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as SplitterModule from "$lib/components/Splitter/Splitter.svelte"
 </script>
 <!--
 @component
@@ -99,66 +101,7 @@ Splitter documentation page
 </Splitter>`}</CodeBlock>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>orientation</code></td>
-        <td><code>"horizontal" | "vertical"</code></td>
-        <td><code>"horizontal"</code></td>
-        <td>Direction of the splitter divider</td>
-      </tr>
-      <tr>
-        <td><code>initialSize</code></td>
-        <td><code>number</code></td>
-        <td><code>50</code></td>
-        <td>Initial size of first panel as percentage (0-100)</td>
-      </tr>
-      <tr>
-        <td><code>minSize</code></td>
-        <td><code>number</code></td>
-        <td><code>20</code></td>
-        <td>Minimum size for first panel as percentage</td>
-      </tr>
-      <tr>
-        <td><code>maxSize</code></td>
-        <td><code>number</code></td>
-        <td><code>80</code></td>
-        <td>Maximum size for first panel as percentage</td>
-      </tr>
-      <tr>
-        <td><code>storageKey</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>localStorage key for persisting resize preference</td>
-      </tr>
-      <tr>
-        <td><code>onresize</code></td>
-        <td><code>(size: number) => void</code></td>
-        <td><code>undefined</code></td>
-        <td>Callback fired when splitter is resized</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td>auto-generated</td>
-        <td>HTML id attribute</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={SplitterModule} />
 
   <h2>Slots</h2>
   <table>

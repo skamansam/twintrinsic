@@ -1,6 +1,6 @@
 <script lang="ts">
-	import MetricGrid from '$lib/components/Metrics/MetricGrid/MetricGrid.svelte'
 	import Container from '$lib/components/Container/Container.svelte'
+	import MetricGrid from '$lib/components/Metrics/MetricGrid/MetricGrid.svelte'
 
 	const items: Array<{ label: string; value: string; color: 'primary' | 'success' | 'warning' | 'info' }> = [
 		{ label: 'Total Revenue', value: '$45,231.89', color: 'primary' },
@@ -8,6 +8,9 @@
 		{ label: 'Conversion Rate', value: '4.8%', color: 'warning' },
 		{ label: 'Active Sessions', value: '542', color: 'info' }
 	];
+
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as MetricGridModule from "$lib/components/Metrics/MetricGrid/MetricGrid.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -48,36 +51,7 @@
 <MetricGrid {items} columns={4} gap="md" />`}</code></pre>
 
 	<h2>Props</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Prop</th>
-				<th>Type</th>
-				<th>Default</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><code>items</code></td>
-				<td><code>StatsCardItem[]</code></td>
-				<td>Required</td>
-				<td>Array of stats card items</td>
-			</tr>
-			<tr>
-				<td><code>columns</code></td>
-				<td><code>number</code></td>
-				<td>4</td>
-				<td>Number of columns in grid</td>
-			</tr>
-			<tr>
-				<td><code>gap</code></td>
-				<td><code>'sm' | 'md' | 'lg'</code></td>
-				<td>'md'</td>
-				<td>Gap between items</td>
-			</tr>
-		</tbody>
-	</table>
+<PropsTable component={MetricGridModule} />
 
 	<h2>Best Practices</h2>
 	<ul>

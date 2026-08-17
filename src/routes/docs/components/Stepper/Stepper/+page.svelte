@@ -7,6 +7,10 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Stepper from "$lib/components/Stepper/Stepper.svelte"
 import StepperStep from "$lib/components/Stepper/StepperStep.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as StepperModule from "$lib/components/Stepper/Stepper.svelte"
+import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -273,170 +277,16 @@ import StepperStep from "$lib/components/Stepper/StepperStep.svelte"
 </Stepper>`}</CodeBlock>
 
   <h2>Stepper Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>activeStep</code></td>
-        <td><code>number</code></td>
-        <td><code>0</code></td>
-        <td>Index of the active step</td>
-      </tr>
-      <tr>
-        <td><code>orientation</code></td>
-        <td><code>string</code></td>
-        <td><code>"horizontal"</code></td>
-        <td>Orientation of the stepper (horizontal, vertical)</td>
-      </tr>
-      <tr>
-        <td><code>size</code></td>
-        <td><code>string</code></td>
-        <td><code>"md"</code></td>
-        <td>Size of the stepper (sm, md, lg)</td>
-      </tr>
-      <tr>
-        <td><code>variant</code></td>
-        <td><code>string</code></td>
-        <td><code>"primary"</code></td>
-        <td>Visual style variant (default, primary, secondary, success, warning, error, info)</td>
-      </tr>
-      <tr>
-        <td><code>linear</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether steps must be completed in sequence</td>
-      </tr>
-      <tr>
-        <td><code>showLabels</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to show step labels</td>
-      </tr>
-      <tr>
-        <td><code>showConnectors</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to show connectors between steps</td>
-      </tr>
-      <tr>
-        <td><code>alternativeLabels</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to place labels below icons</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-    </tbody>
-  </table>
+  <PropsTable component={StepperModule} />
 
   <h2>StepperStep Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>label</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Text label for the step</td>
-      </tr>
-      <tr>
-        <td><code>icon</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Custom icon (HTML or SVG string)</td>
-      </tr>
-      <tr>
-        <td><code>optional</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Optional text to display below the label</td>
-      </tr>
-      <tr>
-        <td><code>completed</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the step is completed</td>
-      </tr>
-      <tr>
-        <td><code>active</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the step is active</td>
-      </tr>
-      <tr>
-        <td><code>disabled</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the step is disabled</td>
-      </tr>
-      <tr>
-        <td><code>error</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the step has an error</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-    </tbody>
-  </table>
+  <PropsTable component={StepperStepModule} />
 
   <h2>Stepper Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>change</code></td>
-        <td><code>{`{ index: number }`}</code></td>
-        <td>Fired when the active step changes</td>
-      </tr>
-    </tbody>
-  </table>
+  <EventsTable component={StepperModule} />
 
   <h2>StepperStep Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>click</code></td>
-        <td><code>{`{ index: number }`}</code></td>
-        <td>Fired when a step is clicked</td>
-      </tr>
-    </tbody>
-  </table>
+  <EventsTable component={StepperStepModule} />
 
   <h2>StepperStep Slots</h2>
   <table>

@@ -24,9 +24,36 @@ Usage:
 </FileUpload>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "name", type: "string", description: "Name attribute for the input", optional: true },
+  { name: "value", type: "File[]", description: "Current value (array of files)", default: "[]", optional: true },
+  { name: "accept", type: "string", description: "Accepted file types (e.g., \"image/*,.pdf\")", optional: true },
+  { name: "multiple", type: "boolean", description: "Whether multiple files can be selected", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the upload is disabled", default: "false", optional: true },
+  { name: "maxFiles", type: "number", description: "Maximum number of files allowed", optional: true },
+  { name: "maxSize", type: "number", description: "Maximum file size in bytes", optional: true },
+  { name: "showPreviews", type: "boolean", description: "Whether to show file previews", default: "true", optional: true },
+  { name: "autoUpload", type: "boolean", description: "Whether to auto upload files", default: "false", optional: true },
+  { name: "uploadUrl", type: "string", description: "Upload URL for auto upload", optional: true },
+  { name: "uploadHeaders", type: "Record<string, string>", description: "Upload headers for auto upload", optional: true },
+  { name: "browseLabel", type: "string", description: "Label for the browse button", default: "\"Browse\"", optional: true },
+  { name: "dropzoneLabel", type: "string", description: "Label for the dropzone", default: "\"Drag files here or click to browse\"", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the file input", default: "\"File upload\"", optional: true },
+  { name: "onchange", type: "(event: CustomEvent<{ files: File[] }>) => void", description: "Change event handler", optional: true, eventDetail: "{ files: File[] }" },
+  { name: "onerror", type: "(event: CustomEvent<{ errors: UploadError[] }>) => void", description: "Error event handler", optional: true, eventDetail: "{ errors: UploadError[] }" },
+  { name: "onprogress", type: "(event: CustomEvent<{ progress: number; files: File[] }>) => void", description: "Progress event handler", optional: true, eventDetail: "{ progress: number; files: File[] }" },
+  { name: "onsuccess", type: "(event: CustomEvent<{ response: unknown; files: File[] }>) => void", description: "Success event handler", optional: true, eventDetail: "{ response: unknown; files: File[] }" },
+  { name: "dropzone", type: "Snippet", description: "Custom dropzone snippet", optional: true },
+  { name: "previews", type: "Snippet<[PreviewsArgs]>", description: "Custom previews snippet", optional: true },
+];
+</script>
+
 <script lang="ts">
-import { onDestroy } from "svelte"
 import type { Snippet } from "svelte"
+import { onDestroy } from "svelte"
 
 interface PreviewsArgs {
   files: File[]

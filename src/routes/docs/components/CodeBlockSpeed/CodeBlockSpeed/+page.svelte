@@ -5,6 +5,8 @@ CodeBlockSpeed documentation page
 <script lang="ts">
 	import CodeBlock from '$lib/components/CodeBlock/CodeBlock.svelte'
 	import CodeBlockSpeed from '$lib/components/CodeBlockSpeed/CodeBlockSpeed.svelte'
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as CodeBlockSpeedModule from "$lib/components/CodeBlockSpeed/CodeBlockSpeed.svelte"
 </script>
 
 <div class="space-y-8">
@@ -62,7 +64,7 @@ CodeBlockSpeed documentation page
 		<div class="space-y-8">
 			<div>
 				<h3 class="text-xl font-semibold mb-3">JavaScript</h3>
-				<CodeBlockSpeed language="js">
+				<CodeBlockSpeed language="js" data-testid="codeblockspeed-js">
 					{`function fibonacci(n) {
   if (n <= 1) return n;
   return fibonacci(n - 1) + fibonacci(n - 2);
@@ -74,7 +76,7 @@ console.log(fibonacci(10));`}
 
 			<div>
 				<h3 class="text-xl font-semibold mb-3">TypeScript</h3>
-				<CodeBlockSpeed language="ts">
+				<CodeBlockSpeed language="ts" data-testid="codeblockspeed-ts">
 					{`interface User {
   id: number;
   name: string;
@@ -91,7 +93,7 @@ const user: User = {
 
 			<div>
 				<h3 class="text-xl font-semibold mb-3">Python</h3>
-				<CodeBlockSpeed language="python">
+				<CodeBlockSpeed language="python" data-testid="codeblockspeed-python">
 					{`def hello_world():
     print("Hello, World!")
 
@@ -102,7 +104,7 @@ if __name__ == "__main__":
 
 			<div>
 				<h3 class="text-xl font-semibold mb-3">HTML</h3>
-				<CodeBlockSpeed language="html">
+				<CodeBlockSpeed language="html" data-testid="codeblockspeed-html">
 					{`<!DOCTYPE html>
 <html>
   <head>
@@ -117,7 +119,7 @@ if __name__ == "__main__":
 
 			<div>
 				<h3 class="text-xl font-semibold mb-3">CSS</h3>
-				<CodeBlockSpeed language="css">
+				<CodeBlockSpeed language="css" data-testid="codeblockspeed-css">
 					{`.container {
   display: flex;
   justify-content: center;
@@ -130,7 +132,7 @@ if __name__ == "__main__":
 
 			<div>
 				<h3 class="text-xl font-semibold mb-3">JSON</h3>
-				<CodeBlockSpeed language="json">
+				<CodeBlockSpeed language="json" data-testid="codeblockspeed-json">
 					{`{
   "name": "CodeBlockSpeed",
   "version": "1.0.0",
@@ -146,7 +148,7 @@ if __name__ == "__main__":
 
 			<div>
 				<h3 class="text-xl font-semibold mb-3">With Rendering Time</h3>
-				<CodeBlockSpeed language="js" showRenderTime={true}>
+				<CodeBlockSpeed language="js" showRenderTime={true} data-testid="codeblockspeed-render-time">
 					{`const greeting = "Hello, Speed Highlight!";
 console.log(greeting);`}
 				</CodeBlockSpeed>
@@ -154,7 +156,7 @@ console.log(greeting);`}
 
 			<div>
 				<h3 class="text-xl font-semibold mb-3">Auto Language Detection</h3>
-				<CodeBlockSpeed>
+				<CodeBlockSpeed data-testid="codeblockspeed-auto-detect">
 					{`const greeting = "Hello, Speed Highlight!";
 console.log(greeting);`}
 				</CodeBlockSpeed>
@@ -164,38 +166,7 @@ console.log(greeting);`}
 
 	<section>
 		<h2 class="text-2xl font-bold mb-4">Props</h2>
-		<div class="overflow-x-auto">
-			<table class="w-full border-collapse border border-gray-300 dark:border-gray-700">
-				<thead class="bg-gray-100 dark:bg-gray-800">
-					<tr>
-						<th class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">Prop</th>
-						<th class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">Type</th>
-						<th class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">Default</th>
-						<th class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">Description</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">language</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">string</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">''</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2">Programming language for syntax highlighting</td>
-					</tr>
-					<tr>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">class</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">string</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">''</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2">Additional CSS classes</td>
-					</tr>
-					<tr>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">showRenderTime</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">boolean</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2 font-mono">false</td>
-						<td class="border border-gray-300 dark:border-gray-700 px-4 py-2">Display syntax highlighting rendering time in milliseconds</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+  <PropsTable component={CodeBlockSpeedModule} />
 	</section>
 
 	<section>

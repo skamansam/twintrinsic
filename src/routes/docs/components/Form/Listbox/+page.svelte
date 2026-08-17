@@ -3,11 +3,12 @@
 Documentation page for the Listbox component.
 -->
 <script lang="ts">
-import Listbox from "$lib/components/Form/Listbox.svelte"
-import FormField from "$lib/components/Form/FormField.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
+import FormField from "$lib/components/Form/FormField.svelte"
+import Listbox from "$lib/components/Form/Listbox.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as ListboxModule from "$lib/components/Form/Listbox.svelte"
 
 // Sample data for examples
 const colors = [
@@ -75,7 +76,7 @@ let selectedFruits = ["Apple", "Grape"]
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="listbox-basic">
   <Listbox 
     name="color" 
     options={colors} 
@@ -103,7 +104,7 @@ let selectedFruits = ["Apple", "Grape"]
 </CodeBlock>
 
 <h3>Multiple Selection</h3>
-<div class="example">
+<div class="example" data-testid="listbox-multiple">
   <Listbox 
     name="users" 
     options={users} 
@@ -137,7 +138,7 @@ let selectedFruits = ["Apple", "Grape"]
 </CodeBlock>
 
 <h3>With Filtering</h3>
-<div class="example">
+<div class="example" data-testid="listbox-filtering">
   <Listbox 
     name="fruits" 
     options={fruits} 
@@ -165,7 +166,7 @@ let selectedFruits = ["Apple", "Grape"]
 </CodeBlock>
 
 <h3>With Icons</h3>
-<div class="example">
+<div class="example" data-testid="listbox-icons">
   <Listbox 
     name="users-with-icons" 
     options={users} 
@@ -196,7 +197,7 @@ let selectedFruits = ["Apple", "Grape"]
 </CodeBlock>
 
 <h3>With Form Field</h3>
-<div class="example">
+<div class="example" data-testid="listbox-formfield">
   <FormField label="Select a color" required={true}>
     <Listbox 
       name="color-required" 
@@ -216,7 +217,7 @@ let selectedFruits = ["Apple", "Grape"]
 </CodeBlock>
 
 <h3>Disabled State</h3>
-<div class="example">
+<div class="example" data-testid="listbox-disabled">
   <Listbox 
     name="color-disabled" 
     options={colors} 
@@ -232,113 +233,10 @@ let selectedFruits = ["Apple", "Grape"]
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'name',
-      type: 'string',
-      description: 'Input name for form submission'
-    },
-    {
-      name: 'options',
-      type: 'Array',
-      default: '[]',
-      description: 'Array of options to display'
-    },
-    {
-      name: 'value',
-      type: 'any',
-      description: 'Selected value(s)'
-    },
-    {
-      name: 'multiple',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether multiple selection is allowed'
-    },
-    {
-      name: 'optionLabel',
-      type: 'string',
-      default: "'label'",
-      description: 'Property name for option label when options are objects'
-    },
-    {
-      name: 'optionValue',
-      type: 'string',
-      default: "'value'",
-      description: 'Property name for option value when options are objects'
-    },
-    {
-      name: 'optionIcon',
-      type: 'string',
-      description: 'Property name for option icon when options are objects'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the listbox is disabled'
-    },
-    {
-      name: 'required',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the listbox is required'
-    },
-    {
-      name: 'filter',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether to enable filtering options by typing'
-    },
-    {
-      name: 'filterPlaceholder',
-      type: 'string',
-      default: "'Search...'",
-      description: 'Placeholder text for the filter input'
-    },
-    {
-      name: 'maxHeight',
-      type: 'number',
-      default: '300',
-      description: 'Maximum height of the listbox in pixels'
-    },
-    {
-      name: 'showCheckbox',
-      type: 'boolean',
-      default: 'true',
-      description: 'Whether to show checkboxes for multiple selection'
-    },
-    {
-      name: 'ariaLabel',
-      type: 'string',
-      description: 'ARIA label for accessibility'
-    },
-    {
-      name: 'id',
-      type: 'string',
-      default: 'auto-generated',
-      description: 'HTML id for accessibility'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: "''",
-      description: 'Additional CSS classes'
-    }
-  ]}
-/>
+<PropsTable component={ListboxModule} />
 
 <h2>Events</h2>
-<EventsTable
-  events={[
-    {
-      name: 'change',
-      type: '{ value: any }',
-      description: 'Fired when the selection changes'
-    }
-  ]}
-/>
+<EventsTable component={ListboxModule} />
 
 <h2>Accessibility</h2>
 <p>

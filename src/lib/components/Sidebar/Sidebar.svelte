@@ -74,6 +74,22 @@ export type SidebarProps = {
   /** Main sidebar content */
   children?: Snippet
 }
+
+export const propsMetadata = [
+  { name: "visible", type: "boolean", description: "Show/hide the sidebar (controlled by parent)", default: "false", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "position", type: "\"left\" | \"right\"", description: "Sidebar position: left or right", default: "\"left\"", optional: true },
+  { name: "width", type: "string", description: "Width of the sidebar on desktop (default: \"16rem\")", default: "\"16rem\"", optional: true },
+  { name: "collapsedWidth", type: "string", description: "Width of the sidebar on tablet - icon only mode (default: \"4rem\")", default: "\"4rem\"", optional: true },
+  { name: "id", type: "string", description: "Custom element ID (auto-generated if not provided)", default: "crypto.randomUUID()", optional: true },
+  { name: "ariaLabel", type: "string", description: "Accessibility label for the sidebar", optional: true },
+  { name: "disabled", type: "boolean", description: "Disable toggle functionality", default: "false", optional: true },
+  { name: "menu", type: "MenuItem[]", description: "Menu items for SidebarMenu component", optional: true },
+  { name: "onvisibilitychange", type: "(payload: { visible: boolean }) => void", description: "Callback when sidebar visibility changes (mobile)", optional: true },
+  { name: "ontoggle", type: "(payload: { expanded: boolean }) => void", description: "Callback when sidebar is toggled (desktop expand/collapse)", optional: true },
+  { name: "header", type: "Snippet", description: "Header content for the Panel", optional: true },
+  { name: "title", type: "string", description: "Title text for the sidebar header", optional: true },
+];
 </script>
 
 <script lang="ts">
@@ -128,7 +144,6 @@ $effect(() => {
   {id}
   role="complementary"
   aria-label={ariaLabel}
-  aria-hidden={!visible}
 >
   <div
     class="

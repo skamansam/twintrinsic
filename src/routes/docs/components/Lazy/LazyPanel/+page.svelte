@@ -5,6 +5,8 @@ Documentation page for the LazyPanel component
 <script lang="ts">
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import LazyPanel from "$lib/components/Panel/LazyPanel.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as LazyPanelModule from "$lib/components/Panel/LazyPanel.svelte"
 </script>
 
 <article class="prose dark:prose-invert max-w-none">
@@ -35,7 +37,7 @@ import LazyPanel from "$lib/components/Panel/LazyPanel.svelte"
   <h2>Examples</h2>
 
   <h3>Basic LazyPanel</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="lazypanel-basic">
     <LazyPanel>
       {#snippet header()}Basic Example{/snippet}
       {#snippet loading()}Loading content...{/snippet}
@@ -46,7 +48,7 @@ import LazyPanel from "$lib/components/Panel/LazyPanel.svelte"
   </div>
 
   <h3>Custom Loading State</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="lazypanel-custom-loading">
     <LazyPanel>
       {#snippet header()}Custom Loading{/snippet}
       {#snippet loading()}
@@ -62,42 +64,7 @@ import LazyPanel from "$lib/components/Panel/LazyPanel.svelte"
 
   <h2>Props</h2>
   <div class="overflow-x-auto">
-    <table>
-      <thead>
-        <tr>
-          <th>Prop</th>
-          <th>Type</th>
-          <th>Default</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>expanded</code></td>
-          <td><code>boolean</code></td>
-          <td><code>true</code></td>
-          <td>Whether the panel is expanded initially</td>
-        </tr>
-        <tr>
-          <td><code>class</code></td>
-          <td><code>string</code></td>
-          <td><code>''</code></td>
-          <td>Additional CSS classes</td>
-        </tr>
-        <tr>
-          <td><code>rootMargin</code></td>
-          <td><code>string</code></td>
-          <td><code>'50px'</code></td>
-          <td>Root margin for intersection observer</td>
-        </tr>
-        <tr>
-          <td><code>threshold</code></td>
-          <td><code>number</code></td>
-          <td><code>0</code></td>
-          <td>Threshold for intersection observer</td>
-        </tr>
-      </tbody>
-    </table>
+    <PropsTable component={LazyPanelModule} />
   </div>
 
   <h2>Slots</h2>

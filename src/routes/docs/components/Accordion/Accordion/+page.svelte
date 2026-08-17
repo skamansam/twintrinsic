@@ -2,6 +2,10 @@
 import Accordion from "$lib/components/Accordion/Accordion.svelte"
 import AccordionItem from "$lib/components/Accordion/AccordionItem.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as AccordionModule from "$lib/components/Accordion/Accordion.svelte"
+import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.svelte"
 </script>
 <!--
 @component
@@ -134,120 +138,17 @@ Documentation page for the Accordion component
 
   <h3>Accordion</h3>
   <div class="overflow-x-auto">
-    <table>
-      <thead>
-        <tr>
-          <th>Prop</th>
-          <th>Type</th>
-          <th>Default</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>allowMultiple</code></td>
-          <td><code>boolean</code></td>
-          <td><code>false</code></td>
-          <td>Allow multiple items to be expanded simultaneously</td>
-        </tr>
-        <tr>
-          <td><code>bordered</code></td>
-          <td><code>boolean</code></td>
-          <td><code>true</code></td>
-          <td>Add a border around the accordion</td>
-        </tr>
-        <tr>
-          <td><code>defaultExpanded</code></td>
-          <td><code>number | null</code></td>
-          <td><code>0</code></td>
-          <td>Index of initially expanded item (null for all collapsed)</td>
-        </tr>
-        <tr>
-          <td><code>id</code></td>
-          <td><code>string</code></td>
-          <td><code>random UUID</code></td>
-          <td>HTML id for accessibility</td>
-        </tr>
-        <tr>
-          <td><code>class</code></td>
-          <td><code>string</code></td>
-          <td><code>""</code></td>
-          <td>Additional CSS classes</td>
-        </tr>
-        <tr>
-          <td><code>onchange</code></td>
-          <td><code>function</code></td>
-          <td><code>undefined</code></td>
-          <td>Callback fired when expanded items change</td>
-        </tr>
-      </tbody>
-    </table>
+    <PropsTable component={AccordionModule} />
   </div>
 
   <h3>AccordionItem</h3>
   <div class="overflow-x-auto">
-    <table>
-      <thead>
-        <tr>
-          <th>Prop</th>
-          <th>Type</th>
-          <th>Default</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>disabled</code></td>
-          <td><code>boolean</code></td>
-          <td><code>false</code></td>
-          <td>Disable the item from being toggled</td>
-        </tr>
-        <tr>
-          <td><code>showIcon</code></td>
-          <td><code>boolean</code></td>
-          <td><code>true</code></td>
-          <td>Show the expand/collapse icon</td>
-        </tr>
-        <tr>
-          <td><code>ariaLabel</code></td>
-          <td><code>string</code></td>
-          <td><code>undefined</code></td>
-          <td>ARIA label for the header button</td>
-        </tr>
-        <tr>
-          <td><code>id</code></td>
-          <td><code>string</code></td>
-          <td><code>random UUID</code></td>
-          <td>HTML id for accessibility</td>
-        </tr>
-        <tr>
-          <td><code>class</code></td>
-          <td><code>string</code></td>
-          <td><code>""</code></td>
-          <td>Additional CSS classes</td>
-        </tr>
-      </tbody>
-    </table>
+    <PropsTable component={AccordionItemModule} />
   </div>
 
   <h2>Events</h2>
   <div class="overflow-x-auto">
-    <table>
-      <thead>
-        <tr>
-          <th>Event</th>
-          <th>Detail</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>change</code></td>
-          <td><code>expandedItems: number[]</code></td>
-          <td>Fired when the expanded items change</td>
-        </tr>
-      </tbody>
-    </table>
+    <EventsTable component={AccordionModule} />
   </div>
 
   <h2>Best Practices</h2>

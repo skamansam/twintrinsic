@@ -1,6 +1,8 @@
 <script lang="ts">
-	import ProgressMetric from '$lib/components/Metrics/ProgressMetric/ProgressMetric.svelte'
 	import Container from '$lib/components/Container/Container.svelte'
+	import ProgressMetric from '$lib/components/Metrics/ProgressMetric/ProgressMetric.svelte'
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as ProgressMetricModule from "$lib/components/Metrics/ProgressMetric/ProgressMetric.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -43,54 +45,7 @@
 />`}</code></pre>
 
 	<h2>Props</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Prop</th>
-				<th>Type</th>
-				<th>Default</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><code>label</code></td>
-				<td><code>string</code></td>
-				<td>Required</td>
-				<td>Progress label</td>
-			</tr>
-			<tr>
-				<td><code>value</code></td>
-				<td><code>number</code></td>
-				<td>Required</td>
-				<td>Current progress value</td>
-			</tr>
-			<tr>
-				<td><code>max</code></td>
-				<td><code>number</code></td>
-				<td>Required</td>
-				<td>Maximum value</td>
-			</tr>
-			<tr>
-				<td><code>color</code></td>
-				<td><code>string</code></td>
-				<td>'primary'</td>
-				<td>Progress bar color</td>
-			</tr>
-			<tr>
-				<td><code>showPercentage</code></td>
-				<td><code>boolean</code></td>
-				<td>false</td>
-				<td>Show percentage display</td>
-			</tr>
-			<tr>
-				<td><code>height</code></td>
-				<td><code>'sm' | 'md' | 'lg'</code></td>
-				<td>'md'</td>
-				<td>Progress bar height</td>
-			</tr>
-		</tbody>
-	</table>
+<PropsTable component={ProgressMetricModule} />
 
 	<h2>Best Practices</h2>
 	<ul>

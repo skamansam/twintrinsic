@@ -3,10 +3,11 @@
 Documentation page for the AutoComplete component.
 -->
 <script lang="ts">
-import AutoComplete from "$lib/components/Form/AutoComplete.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
+import AutoComplete from "$lib/components/Form/AutoComplete.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as AutoCompleteModule from "$lib/components/Form/AutoComplete.svelte"
 
 const countries = [
   { label: "United States", value: "US" },
@@ -33,7 +34,7 @@ const users = [
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="autocomplete-basic">
   <AutoComplete
     label="Country"
     items={countries}
@@ -49,7 +50,7 @@ const users = [
 </CodeBlock>
 
 <h3>Multiple Selection</h3>
-<div class="example">
+<div class="example" data-testid="autocomplete-multiple">
   <AutoComplete
     label="Countries"
     items={countries}
@@ -67,7 +68,7 @@ const users = [
 </CodeBlock>
 
 <h3>Custom Template</h3>
-<div class="example">
+<div class="example" data-testid="autocomplete-custom-template">
   <AutoComplete
     label="User"
     items={users}
@@ -99,139 +100,10 @@ const users = [
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'label',
-      type: 'string',
-      description: 'Input label'
-    },
-    {
-      name: 'items',
-      type: 'Array<any>',
-      default: '[]',
-      description: 'Array of items to search through'
-    },
-    {
-      name: 'labelField',
-      type: 'string',
-      default: 'label',
-      description: 'Field to use for item labels'
-    },
-    {
-      name: 'valueField',
-      type: 'string',
-      default: 'value',
-      description: 'Field to use for item values'
-    },
-    {
-      name: 'value',
-      type: 'string | Array<string>',
-      description: 'Selected value(s)'
-    },
-    {
-      name: 'minLength',
-      type: 'number',
-      default: '1',
-      description: 'Minimum characters before showing suggestions'
-    },
-    {
-      name: 'delay',
-      type: 'number',
-      default: '150',
-      description: 'Delay in ms before searching'
-    },
-    {
-      name: 'multiple',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether to allow multiple selections'
-    },
-    {
-      name: 'highlight',
-      type: 'boolean',
-      default: 'true',
-      description: 'Whether to highlight matching text'
-    },
-    {
-      name: 'forceSelection',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether to force selection from suggestions'
-    },
-    {
-      name: 'maxItems',
-      type: 'number',
-      default: '10',
-      description: 'Maximum number of suggestions to show'
-    },
-    {
-      name: 'filter',
-      type: 'function',
-      description: 'Custom filter function (items, query) => filteredItems'
-    },
-    {
-      name: 'itemTemplate',
-      type: 'Component',
-      description: 'Custom item template component'
-    },
-    {
-      name: 'emptyMessage',
-      type: 'string',
-      default: 'No results found',
-      description: 'Message to show when no results are found'
-    },
-    {
-      name: 'loadingMessage',
-      type: 'string',
-      default: 'Loading...',
-      description: 'Message to show when loading'
-    },
-    {
-      name: 'loading',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether suggestions are loading'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the input is disabled'
-    }
-  ]}
-/>
+<PropsTable component={AutoCompleteModule} />
 
 <h2>Events</h2>
-<EventsTable
-  events={[
-    {
-      name: 'select',
-      type: '{ item: any } | { items: Array<any> }',
-      description: 'Fired when an item is selected'
-    },
-    {
-      name: 'remove',
-      type: '{ item: any }',
-      description: 'Fired when an item is removed (multiple mode)'
-    },
-    {
-      name: 'input',
-      type: '{ value: string }',
-      description: 'Fired when input value changes'
-    },
-    {
-      name: 'focus',
-      type: 'void',
-      description: 'Fired when input gains focus'
-    },
-    {
-      name: 'blur',
-      type: 'void',
-      description: 'Fired when input loses focus'
-    }
-  ]}
-/>
+<EventsTable component={AutoCompleteModule} />
 
 <h2>Keyboard Navigation</h2>
 <p>

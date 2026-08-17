@@ -21,9 +21,35 @@ Usage:
 </FormField>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "name", type: "string", description: "Radio name (for grouping)", optional: true },
+  { name: "value", type: "string", description: "Radio value", optional: true },
+  { name: "label", type: "string", description: "Label text", optional: true },
+  { name: "checked", type: "boolean", description: "Whether the radio is checked", default: "false", optional: true },
+  { name: "required", type: "boolean", description: "Whether the radio is required", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the radio is disabled", default: "false", optional: true },
+  { name: "size", type: "\"sm\" | \"md\" | \"lg\"", description: "Size of the radio (sm, md, lg)", default: "\"md\"", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for accessibility", optional: true },
+  { name: "onchange", type: "(event: CustomEvent<{ checked: boolean; value: string }>) => void", description: "Change event handler", optional: true, eventDetail: "{ checked: boolean; value: string }" },
+];
+</script>
+
 <script lang="ts">
 import { getContext } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
+
+/** Context provided by the RadioGroup component. */
+interface RadioGroupContext {
+  get name(): string | undefined
+  selectedValue: () => string
+  get required(): boolean
+  disabled: () => boolean
+  get size(): "sm" | "md" | "lg"
+  onChange: (event: CustomEvent<{ checked: boolean; value: string }>) => void
+}
 
 interface Props {
   /** Additional CSS classes */
@@ -71,20 +97,26 @@ let {
 // Get form context if available
 const formContext = getContext<FormContext | undefined>("form")
 
+// Get radio group context if available
+const radioGroup = getContext<RadioGroupContext | undefined>("radioGroup")
+
 // Radio state
 let isChecked = $state(false)
 
+// Effective name: the group's name wins when present
+const effectiveName = $derived(name || radioGroup?.name)
+
 // Update checked state when prop changes
 $effect(() => {
-  isChecked = checked
+  isChecked = checked || (radioGroup?.selectedValue() === value)
 })
 
 // Register with form if available
 let fieldApi: FormFieldApi | undefined
 
 $effect(() => {
-  if (formContext && name) {
-    fieldApi = formContext.registerField(name, checked ? value : undefined)
+  if (formContext && effectiveName) {
+    fieldApi = formContext.registerField(effectiveName, checked ? value : undefined)
   }
 })
 
@@ -99,8 +131,14 @@ $effect(() => {
 // Disabled from form context takes precedence over the local prop
 // (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
 const effectiveDisabled = $derived(
-  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+  disabled ||
+    (fieldApi?.isDisabled() ?? false) ||
+    (formContext?.disabled() ?? false) ||
+    (radioGroup?.disabled() ?? false)
 )
+
+// Size falls back to the group's size
+const effectiveSize = $derived(size || radioGroup?.size)
 
 /**
  * Handles radio change
@@ -114,17 +152,15 @@ function handleChange(event: Event): void {
     fieldApi.setValue(value)
   }
 
-  onchange?.(new CustomEvent("change", { detail: { checked: isChecked, value: value ?? "" } }))
-}
+  const changeEvent = new CustomEvent("change", {
+    detail: { checked: isChecked, value: value ?? "" },
+  })
 
-// Determine radio size classes
-const radioSizeClasses = $derived(
-  {
-    sm: "w-3.5 h-3.5",
-    md: "w-4 h-4",
-    lg: "w-5 h-5",
-  }[size] || "w-4 h-4"
-)
+  // Forward to the group (which updates its own state and fires onchange)
+  radioGroup?.onChange(changeEvent)
+
+  onchange?.(changeEvent)
+}
 
 const labelSizeClasses = $derived(
   {
@@ -142,10 +178,10 @@ const labelSizeClasses = $derived(
     <input
       type="radio"
       {id}
-      {name}
+      name={effectiveName}
       {value}
       checked={isChecked}
-      {required}
+      required={required || (radioGroup?.required ?? false)}
       disabled={effectiveDisabled}
       aria-label={ariaLabel || label}
       class="radio-input"
@@ -153,7 +189,7 @@ const labelSizeClasses = $derived(
       {...restProps}
     />
     
-    <span class="radio-control {radioSizeClasses}" aria-hidden="true">
+    <span class="radio-control {effectiveSize === 'sm' ? 'w-3.5 h-3.5' : effectiveSize === 'lg' ? 'w-5 h-5' : 'w-4 h-4'}" aria-hidden="true">
       <span class="radio-dot"></span>
     </span>
   </div>

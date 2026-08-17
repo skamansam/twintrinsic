@@ -14,6 +14,16 @@ Usage:
 </Container>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "fluid", type: "boolean", description: "If true, container will be full-width", default: "false", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes to apply", default: "\"\"", optional: true },
+  { name: "as", type: "\"main\" | \"section\" | \"article\" | \"div\" | \"header\" | \"footer\" | \"nav\" | \"aside\"", description: "HTML element to render", default: "\"section\"", optional: true },
+  { name: "role", type: "string | null", description: "ARIA role if needed", default: "null", optional: true },
+  { name: "ariaLabel", type: "string | null", description: "ARIA label if needed", default: "null", optional: true },
+];
+</script>
+
 <script lang="ts">
 import type { Snippet } from "svelte"
 

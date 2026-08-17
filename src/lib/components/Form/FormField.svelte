@@ -15,9 +15,24 @@ Usage:
 </FormField>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "name", type: "string", description: "Field name (used for form data)", optional: true },
+  { name: "label", type: "string", description: "Field label", optional: true },
+  { name: "helpText", type: "string", description: "Help text displayed below the field", optional: true },
+  { name: "error", type: "string", description: "Error message to display", optional: true },
+  { name: "required", type: "boolean", description: "Whether the field is required", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the field is disabled", default: "false", optional: true },
+  { name: "hideLabel", type: "boolean", description: "Whether to hide the label visually (still accessible to screen readers)", default: "false", optional: true },
+  { name: "layout", type: "string", description: "Layout direction (vertical or horizontal)", optional: true },
+];
+</script>
+
 <script lang="ts">
-import { getContext } from "svelte"
 import type { Snippet } from "svelte"
+import { getContext, onMount } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
 
 interface ChildProps {
@@ -74,11 +89,20 @@ const formContext = getContext<FormContext | undefined>("form")
 // Use layout from form context if not specified
 const fieldLayout = $derived(layout || (formContext ? formContext.layout : "vertical"))
 
-// Generate unique ID for the field
+// Generate unique ID for the field. The label targets the *actual* child
+// input's id (discovered on mount) rather than a synthetic id, because the
+// child control (e.g. TextInput) generates its own id when none is passed.
 const fieldId = $derived(`${id}-field`)
 const errorId = $derived(`${id}-error`)
 const helpId = $derived(`${id}-help`)
 const fieldName = $derived(name)
+
+// The id the label should point at. Starts as the synthetic fieldId and is
+// corrected to the child input's real id once mounted. (Capturing the
+// derived at init is intentional — `fieldId` never changes afterwards.)
+// svelte-ignore state_referenced_locally
+let labelFor = $state(fieldId)
+let formControlElement: HTMLElement | undefined = $state()
 
 // Track field state
 let fieldError = $state("")
@@ -117,8 +141,59 @@ const effectiveDisabled = $derived(
   disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
 )
 
-// Determine if we should show an error
-const showError = $derived(!!fieldError && touched)
+// Determine if we should show an error. Inside a Form the error appears once
+// the field is touched; standalone (no Form context) the `error` prop should
+// show immediately — otherwise it would never render.
+const showError = $derived(!!fieldError && (formContext ? touched : true))
+
+// Point the label at the real child control once it's in the DOM.
+onMount(() => {
+  const input = formControlElement?.querySelector(
+    "input, select, textarea"
+  ) as HTMLElement | null | undefined
+  if (input?.id) {
+    labelFor = input.id
+  }
+})
+
+// Wire ARIA and disabled state directly onto the child control element. Many
+// consumers pass plain components (e.g. `<TextInput />`) as children, which
+// don't destructure the snippet props above, so the attributes must also be
+// applied to the rendered element to guarantee accessible wiring.
+$effect(() => {
+  const input = formControlElement?.querySelector(
+    "input, select, textarea"
+  ) as (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) | null | undefined
+  if (!input) return
+
+  if (showError) {
+    input.setAttribute("aria-invalid", "true")
+  } else {
+    input.removeAttribute("aria-invalid")
+  }
+
+  if (required) {
+    input.setAttribute("aria-required", "true")
+  } else {
+    input.removeAttribute("aria-required")
+  }
+
+  const describedByTargets = [
+    helpText && !showError ? helpId : null,
+    showError ? errorId : null,
+  ].filter(Boolean)
+  if (describedByTargets.length > 0) {
+    input.setAttribute("aria-describedby", describedByTargets.join(" "))
+  } else {
+    input.removeAttribute("aria-describedby")
+  }
+
+  if (effectiveDisabled) {
+    input.setAttribute("disabled", "")
+  } else {
+    input.removeAttribute("disabled")
+  }
+})
 
 // Determine the aria-describedby attribute value
 const describedBy = $derived(
@@ -136,7 +211,7 @@ const describedBy = $derived(
 >
   {#if label}
     <label 
-      for={fieldId}
+      for={labelFor}
       class="form-label {hideLabel ? 'sr-only' : ''}"
     >
       {label}
@@ -148,7 +223,7 @@ const describedBy = $derived(
   {/if}
   
   <div class="form-control-container">
-    <div class="form-control">
+    <div class="form-control" bind:this={formControlElement}>
       <!-- Slot for the actual form control -->
       {@render children?.({
         name: fieldName,

@@ -5,7 +5,9 @@ DataTable documentation page
 <script lang="ts">
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
-import DataTable from "$lib/components/DataTable/DataTable.svelte"
+import DataTable, * as DataTableModule from "$lib/components/DataTable/DataTable.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 
 // Sample data for examples
 const users = [
@@ -104,7 +106,7 @@ const productColumns = [
   <h2>Examples</h2>
 
   <h3>Basic DataTable</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="datatable-basic">
     <DataTable 
       data={users} 
       columns={userColumns}
@@ -133,7 +135,7 @@ const productColumns = [
 />`}</CodeBlock>
 
   <h3>Sortable and Filterable</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="datatable-sortable">
     <DataTable 
       data={users} 
       columns={userColumns}
@@ -150,7 +152,7 @@ const productColumns = [
 />`}</CodeBlock>
 
   <h3>Pagination</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="datatable-pagination">
     <DataTable 
       data={users} 
       columns={userColumns}
@@ -169,7 +171,7 @@ const productColumns = [
 />`}</CodeBlock>
 
   <h3>Selectable Rows</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="datatable-selectable">
     <DataTable 
       data={users} 
       columns={userColumns}
@@ -187,7 +189,7 @@ const productColumns = [
 />`}</CodeBlock>
 
   <h3>Striped and Bordered</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="datatable-striped">
     <DataTable 
       data={users} 
       columns={userColumns}
@@ -204,7 +206,7 @@ const productColumns = [
 />`}</CodeBlock>
 
   <h3>Dense Layout</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="datatable-compact">
     <DataTable 
       data={users} 
       columns={userColumns}
@@ -219,7 +221,7 @@ const productColumns = [
 />`}</CodeBlock>
 
   <h3>Loading State</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="datatable-loading">
     <DataTable 
       data={[]}
       columns={userColumns}
@@ -234,7 +236,7 @@ const productColumns = [
 />`}</CodeBlock>
 
   <h3>Empty State</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="datatable-empty">
     <DataTable 
       data={[]}
       columns={userColumns}
@@ -249,7 +251,7 @@ const productColumns = [
 />`}</CodeBlock>
 
   <h3>Custom Templates</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="datatable-templates">
     <DataTable 
       data={products} 
       columns={productColumns}
@@ -299,7 +301,7 @@ const productColumns = [
 />`}</CodeBlock>
 
   <h3>Custom Styling</h3>
-  <div class="not-prose mb-8">
+  <div class="not-prose mb-8" data-testid="datatable-styling">
     <DataTable 
       data={products} 
       columns={productColumns}
@@ -320,144 +322,7 @@ const productColumns = [
 />`}</CodeBlock>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>data</code></td>
-        <td><code>Array</code></td>
-        <td><code>[]</code></td>
-        <td>Data to display in the table</td>
-      </tr>
-      <tr>
-        <td><code>columns</code></td>
-        <td><code>Array</code></td>
-        <td><code>[]</code></td>
-        <td>Column definitions</td>
-      </tr>
-      <tr>
-        <td><code>sortable</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to enable sorting</td>
-      </tr>
-      <tr>
-        <td><code>filterable</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to enable filtering</td>
-      </tr>
-      <tr>
-        <td><code>pageable</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to enable pagination</td>
-      </tr>
-      <tr>
-        <td><code>selectable</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to enable row selection</td>
-      </tr>
-      <tr>
-        <td><code>multiSelect</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to allow multiple row selection</td>
-      </tr>
-      <tr>
-        <td><code>pageSize</code></td>
-        <td><code>number</code></td>
-        <td><code>10</code></td>
-        <td>Number of rows per page</td>
-      </tr>
-      <tr>
-        <td><code>pageSizeOptions</code></td>
-        <td><code>Array</code></td>
-        <td><code>[5, 10, 20, 50, 100]</code></td>
-        <td>Options for rows per page</td>
-      </tr>
-      <tr>
-        <td><code>showHeader</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to show the table header</td>
-      </tr>
-      <tr>
-        <td><code>showFooter</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to show the table footer</td>
-      </tr>
-      <tr>
-        <td><code>striped</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to use striped rows</td>
-      </tr>
-      <tr>
-        <td><code>bordered</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show borders between cells</td>
-      </tr>
-      <tr>
-        <td><code>compact</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to use a more compact layout</td>
-      </tr>
-      <tr>
-        <td><code>loading</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the table is in a loading state</td>
-      </tr>
-      <tr>
-        <td><code>emptyMessage</code></td>
-        <td><code>string</code></td>
-        <td><code>"No data available"</code></td>
-        <td>Text to display when there is no data</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes for the table container</td>
-      </tr>
-      <tr>
-        <td><code>tableClass</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes for the table element</td>
-      </tr>
-      <tr>
-        <td><code>headerClass</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes for header cells</td>
-      </tr>
-      <tr>
-        <td><code>rowClass</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes for table rows</td>
-      </tr>
-      <tr>
-        <td><code>cellClass</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes for table cells</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={DataTableModule} />
 
   <h2>Column Definition</h2>
   <p>
@@ -531,47 +396,7 @@ const productColumns = [
   </table>
 
   <h2>Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>rowClick</code></td>
-        <td><code>{`{ row: Object, index: number, event: MouseEvent }`}</code></td>
-        <td>Fired when a row is clicked</td>
-      </tr>
-      <tr>
-        <td><code>sort</code></td>
-        <td><code>{`{ field: string, direction: "asc" | "desc" | null }`}</code></td>
-        <td>Fired when sorting changes</td>
-      </tr>
-      <tr>
-        <td><code>filter</code></td>
-        <td><code>{`{ filters: Object }`}</code></td>
-        <td>Fired when filtering changes</td>
-      </tr>
-      <tr>
-        <td><code>pageChange</code></td>
-        <td><code>{`{ page: number }`}</code></td>
-        <td>Fired when the current page changes</td>
-      </tr>
-      <tr>
-        <td><code>pageSizeChange</code></td>
-        <td><code>{`{ pageSize: number }`}</code></td>
-        <td>Fired when rows per page changes</td>
-      </tr>
-      <tr>
-        <td><code>selectionChange</code></td>
-        <td><code>{`{ selection: Array }`}</code></td>
-        <td>Fired when row selection changes</td>
-      </tr>
-    </tbody>
-  </table>
+<EventsTable component={DataTableModule} />
 
   <h2>Slots</h2>
   <table>

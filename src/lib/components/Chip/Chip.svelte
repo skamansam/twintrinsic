@@ -1,3 +1,23 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "variant", type: "string", description: "Visual style variant", default: "\"default\"", optional: true },
+  { name: "size", type: "string", description: "Size of the chip", default: "\"md\"", optional: true },
+  { name: "icon", type: "string", description: "Icon to display (HTML or SVG string)", optional: true },
+  { name: "avatar", type: "string", description: "Avatar to display (HTML or img tag)", optional: true },
+  { name: "removable", type: "boolean", description: "Whether the chip is removable", default: "false", optional: true },
+  { name: "clickable", type: "boolean", description: "Whether the chip is clickable", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the chip is disabled", default: "false", optional: true },
+  { name: "selected", type: "boolean", description: "Whether the chip is selected", default: "false", optional: true },
+  { name: "outline", type: "boolean", description: "Whether to show an outline style", default: "false", optional: true },
+  { name: "removeAriaLabel", type: "string", description: "ARIA label for the remove button", default: "\"Remove\"", optional: true },
+  { name: "removeIcon", type: "string", description: "Custom remove icon (HTML or SVG string)", optional: true },
+  { name: "onremove", type: "(event: CustomEvent) => void", description: "Remove event handler", optional: true, eventDetail: "unknown" },
+  { name: "onclick", type: "(event: CustomEvent) => void", description: "Click event handler", optional: true, eventDetail: "unknown" },
+];
+</script>
+
 <script lang="ts">
 /**
  * @component

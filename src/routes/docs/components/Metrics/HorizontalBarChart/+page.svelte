@@ -1,9 +1,13 @@
 <script lang="ts">
-	import HorizontalBarChart from '$lib/components/Metrics/HorizontalBarChart/HorizontalBarChart.svelte'
 	import Container from '$lib/components/Container/Container.svelte'
+	import HorizontalBarChart from '$lib/components/Metrics/HorizontalBarChart/HorizontalBarChart.svelte'
 
 	const data = [45, 38, 52, 41, 35];
 	const labels = ['Chrome', 'Firefox', 'Safari', 'Edge', 'Other'];
+
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as HorizontalBarChartModule from "$lib/components/Metrics/HorizontalBarChart/HorizontalBarChart.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -41,84 +45,10 @@
 <HorizontalBarChart {data} {labels} title="Browser Usage" width={600} height={250} />`}</code></pre>
 
 	<h2>Props</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Prop</th>
-				<th>Type</th>
-				<th>Default</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><code>data</code></td>
-				<td><code>number[]</code></td>
-				<td>Required</td>
-				<td>Array of numeric values</td>
-			</tr>
-			<tr>
-				<td><code>labels</code></td>
-				<td><code>string[]</code></td>
-				<td>Required</td>
-				<td>Array of category labels</td>
-			</tr>
-			<tr>
-				<td><code>colors</code></td>
-				<td><code>string[]</code></td>
-				<td>Default palette</td>
-				<td>Array of colors</td>
-			</tr>
-			<tr>
-				<td><code>title</code></td>
-				<td><code>string</code></td>
-				<td>undefined</td>
-				<td>Chart title</td>
-			</tr>
-			<tr>
-				<td><code>xAxisLabel</code></td>
-				<td><code>string</code></td>
-				<td>undefined</td>
-				<td>X-axis label</td>
-			</tr>
-			<tr>
-				<td><code>showGrid</code></td>
-				<td><code>boolean</code></td>
-				<td>true</td>
-				<td>Show grid lines</td>
-			</tr>
-			<tr>
-				<td><code>width</code></td>
-				<td><code>number</code></td>
-				<td>500</td>
-				<td>Chart width in pixels</td>
-			</tr>
-			<tr>
-				<td><code>height</code></td>
-				<td><code>number</code></td>
-				<td>300</td>
-				<td>Chart height in pixels</td>
-			</tr>
-		</tbody>
-	</table>
+<PropsTable component={HorizontalBarChartModule} />
 
 	<h2>Events</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Event</th>
-				<th>Detail</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><code>onbarclick</code></td>
-				<td><code>&#123; index: number; label: string; value: number &#125;</code></td>
-				<td>Fired when a bar is clicked</td>
-			</tr>
-		</tbody>
-	</table>
+<EventsTable component={HorizontalBarChartModule} />
 
 	<h2>Best Practices</h2>
 	<ul>

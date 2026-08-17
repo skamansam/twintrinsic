@@ -23,6 +23,23 @@ Usage:
 />
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "value", type: "number", description: "Current value", default: "0", optional: true },
+  { name: "max", type: "number", description: "Maximum value", default: "100", optional: true },
+  { name: "variant", type: "string", description: "Visual style variant", default: "\"primary\"", optional: true },
+  { name: "size", type: "string", description: "Size of the progress bar (sm, md, lg)", default: "\"md\"", optional: true },
+  { name: "showValue", type: "boolean", description: "Whether to show the value as text", default: "false", optional: true },
+  { name: "striped", type: "boolean", description: "Whether to show striped pattern", default: "false", optional: true },
+  { name: "animated", type: "boolean", description: "Whether to animate the stripes", default: "false", optional: true },
+  { name: "indeterminate", type: "boolean", description: "Whether to show indeterminate loading state", default: "false", optional: true },
+  { name: "format", type: "Function", description: "Custom function to format the displayed value", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for accessibility", optional: true },
+];
+</script>
+
 <script lang="ts">
 const {
   /** @type {string} - Additional CSS classes */

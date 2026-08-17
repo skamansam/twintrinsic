@@ -17,6 +17,17 @@ Usage:
 </Accordion>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "allowMultiple", type: "boolean", description: "Whether to allow multiple panels to be open simultaneously", default: "false", optional: true },
+  { name: "defaultExpanded", type: "number | null", description: "Index of the initially expanded item (null for all collapsed)", default: "0", optional: true },
+  { name: "bordered", type: "boolean", description: "Whether to add a border around the accordion", default: "true", optional: true },
+  { name: "onchange", type: "(event: CustomEvent<{ expandedItems: number[] }>) => void", description: "Change event handler", optional: true, eventDetail: "{ expandedItems: number[] }" },
+];
+</script>
+
 <script lang="ts">
   import type { Snippet } from "svelte";
   import { setContext } from "svelte";

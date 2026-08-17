@@ -1,6 +1,8 @@
 <script lang="ts">
-	import AreaChart from '$lib/components/Metrics/AreaChart/AreaChart.svelte'
 	import Container from '$lib/components/Container/Container.svelte'
+	import AreaChart from '$lib/components/Metrics/AreaChart/AreaChart.svelte'
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as AreaChartModule from "$lib/components/Metrics/AreaChart/AreaChart.svelte"
 
 	const singleSeries = [
 		{
@@ -96,77 +98,7 @@
 />`}</code></pre>
 
 	<h2>Props</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Prop</th>
-				<th>Type</th>
-				<th>Default</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><code>series</code></td>
-				<td><code>Series[]</code></td>
-				<td>Required</td>
-				<td>Array of data series</td>
-			</tr>
-			<tr>
-				<td><code>onpointclick</code></td>
-				<td><code>&#123; seriesIndex: number; pointIndex: number; value: number &#125;</code></td>
-				<td>Fired when a data point is clicked</td>
-			</tr>
-			<tr>
-				<td><code>labels</code></td>
-				<td><code>string[]</code></td>
-				<td>Required</td>
-				<td>Array of x-axis labels</td>
-			</tr>
-			<tr>
-				<td><code>title</code></td>
-				<td><code>string</code></td>
-				<td>undefined</td>
-				<td>Chart title</td>
-			</tr>
-			<tr>
-				<td><code>yAxisLabel</code></td>
-				<td><code>string</code></td>
-				<td>undefined</td>
-				<td>Y-axis label</td>
-			</tr>
-			<tr>
-				<td><code>stacked</code></td>
-				<td><code>boolean</code></td>
-				<td>false</td>
-				<td>Stack areas on top of each other</td>
-			</tr>
-			<tr>
-				<td><code>showGrid</code></td>
-				<td><code>boolean</code></td>
-				<td>true</td>
-				<td>Show grid lines</td>
-			</tr>
-			<tr>
-				<td><code>showLegend</code></td>
-				<td><code>boolean</code></td>
-				<td>true</td>
-				<td>Show legend</td>
-			</tr>
-			<tr>
-				<td><code>width</code></td>
-				<td><code>number</code></td>
-				<td>500</td>
-				<td>Chart width in pixels</td>
-			</tr>
-			<tr>
-				<td><code>height</code></td>
-				<td><code>number</code></td>
-				<td>300</td>
-				<td>Chart height in pixels</td>
-			</tr>
-		</tbody>
-	</table>
+<PropsTable component={AreaChartModule} />
 
 	<h2>Best Practices</h2>
 	<ul>

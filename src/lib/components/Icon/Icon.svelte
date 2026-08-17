@@ -22,6 +22,22 @@ Usage:
 <Icon name="settings" color="red" width="24px" />
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "name", type: "string", description: "Icon name without iconset prefix (e.g., \"home\", \"star\")", optional: false },
+  { name: "iconset", type: "string", description: "Override the default iconset for this icon", optional: true },
+  { name: "color", type: "string", description: "Icon color (CSS color value)", optional: true },
+  { name: "width", type: "string | number", description: "Icon width", optional: true },
+  { name: "height", type: "string | number", description: "Icon height", optional: true },
+  { name: "hFlip", type: "boolean", description: "Horizontal flip", optional: true },
+  { name: "vFlip", type: "boolean", description: "Vertical flip", optional: true },
+  { name: "rotate", type: "number | string", description: "Rotation (0, 1, 2, 3 for 0°, 90°, 180°, 270°)", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "''", optional: true },
+  { name: "inline", type: "boolean", description: "Inline display mode", optional: true },
+  { name: "onLoad", type: "() => void", description: "Callback when icon is loaded", optional: true },
+];
+</script>
+
 <script lang="ts">
 import IconifyIcon from '@iconify/svelte'
 

@@ -24,21 +24,44 @@ because `separator` is classified as a non-interactive role. The `role`,
 Svelte action to bypass the false positive. If Svelte updates its role
 classifications, move these attributes back into the template.
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "orientation", type: "\"horizontal\" | \"vertical\"", description: "Direction of the split (horizontal or vertical)", default: "\"horizontal\"", optional: true },
+  { name: "initialSize", type: "number", description: "Initial size of the first panel as a percentage", default: "50", optional: true },
+  { name: "minSize", type: "number", description: "Minimum size of the first panel as a percentage", default: "20", optional: true },
+  { name: "maxSize", type: "number", description: "Maximum size of the first panel as a percentage", default: "80", optional: true },
+  { name: "storageKey", type: "string", description: "localStorage key used to persist the split position", optional: true },
+  { name: "first", type: "Snippet", description: "Snippet for the first (resizable) panel", optional: true },
+  { name: "second", type: "Snippet", description: "Snippet for the second (flex) panel", optional: true },
+  { name: "onresize", type: "(size: number) => void", description: "Callback fired when the split position changes", optional: true },
+];
+</script>
+
 <script lang="ts">
 import { onMount, type Snippet } from "svelte"
 
 interface Props {
+  /** Additional CSS classes */
   class?: string
+  /** HTML id for accessibility */
   id?: string
+  /** Direction of the split (horizontal or vertical) */
   orientation?: "horizontal" | "vertical"
+  /** Initial size of the first panel as a percentage */
   initialSize?: number
+  /** Minimum size of the first panel as a percentage */
   minSize?: number
+  /** Maximum size of the first panel as a percentage */
   maxSize?: number
+  /** localStorage key used to persist the split position */
   storageKey?: string
   /** Snippet for the first (resizable) panel */
   first?: Snippet
   /** Snippet for the second (flex) panel */
   second?: Snippet
+  /** Callback fired when the split position changes */
   onresize?: (size: number) => void
 }
 

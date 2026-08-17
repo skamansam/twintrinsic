@@ -1,3 +1,31 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "type", type: "string", description: "Input type (text, email, password, etc.)", default: "\"text\"", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "startIcon", type: "string", description: "Icon (HTML or SVG string) shown before the input", optional: true },
+  { name: "endIcon", type: "string", description: "Icon (HTML or SVG string) shown after the input", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", optional: true },
+  { name: "name", type: "string", description: "Name attribute for the input", optional: true },
+  { name: "placeholder", type: "string", description: "Placeholder text", default: "\"\"", optional: true },
+  { name: "value", type: "string", description: "Input value", default: "\"\"", optional: true },
+  { name: "required", type: "boolean", description: "Whether the input is required", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the input is disabled", default: "false", optional: true },
+  { name: "readonly", type: "boolean", description: "Whether the input is read-only", default: "false", optional: true },
+  { name: "minlength", type: "number", description: "Minimum number of characters", optional: true },
+  { name: "maxlength", type: "number", description: "Maximum number of characters", optional: true },
+  { name: "pattern", type: "string", description: "Validation pattern", optional: true },
+  { name: "autocomplete", type: "string", description: "Autocomplete hint for the browser", optional: true },
+  { name: "size", type: "string", description: "Size of the input (sm, md, lg)", default: "\"md\"", optional: true },
+  { name: "clearable", type: "boolean", description: "Whether to show a clear button when the input has a value", default: "false", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the input", optional: true },
+  { name: "oninput", type: "(event: CustomEvent<{ value: string }>) => void", description: "Callback fired on input with the current value", optional: true, eventDetail: "{ value: string }" },
+  { name: "onchange", type: "(event: CustomEvent<{ value: string }>) => void", description: "Callback fired on change with the current value", optional: true, eventDetail: "{ value: string }" },
+  { name: "onfocus", type: "(event: FocusEvent) => void", description: "Callback fired when the input receives focus", optional: true },
+  { name: "onblur", type: "(event: FocusEvent) => void", description: "Callback fired when the input loses focus", optional: true },
+  { name: "onclear", type: "() => void", description: "Callback fired when the input is cleared", optional: true },
+];
+</script>
+
 <script lang="ts">
 /**
  * @component
@@ -20,32 +48,55 @@
  * ```
  */
 import { getContext } from "svelte"
-import type { FormContext, FormFieldApi } from "./formContext.js"
 import Icon from "../Icon/Icon.svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
 interface Props {
+  /** Input type (text, email, password, etc.) */
   type?: string
+  /** Additional CSS classes */
   class?: string
+  /** Icon (HTML or SVG string) shown before the input */
   startIcon?: string
+  /** Icon (HTML or SVG string) shown after the input */
   endIcon?: string
+  /** HTML id for accessibility */
   id?: string
+  /** Name attribute for the input */
   name?: string
+  /** Placeholder text */
   placeholder?: string
+  /** Input value */
   value?: string
+  /** Whether the input is required */
   required?: boolean
+  /** Whether the input is disabled */
   disabled?: boolean
+  /** Whether the input is read-only */
   readonly?: boolean
+  /** Minimum number of characters */
   minlength?: number
+  /** Maximum number of characters */
   maxlength?: number
+  /** Validation pattern */
   pattern?: string
+  /** Autocomplete hint for the browser */
   autocomplete?: string
+  /** Size of the input (sm, md, lg) */
   size?: string
+  /** Whether to show a clear button when the input has a value */
   clearable?: boolean
+  /** ARIA label for the input */
   ariaLabel?: string
+  /** Callback fired on input with the current value */
   oninput?: (event: CustomEvent<{ value: string }>) => void
+  /** Callback fired on change with the current value */
   onchange?: (event: CustomEvent<{ value: string }>) => void
+  /** Callback fired when the input receives focus */
   onfocus?: (event: FocusEvent) => void
+  /** Callback fired when the input loses focus */
   onblur?: (event: FocusEvent) => void
+  /** Callback fired when the input is cleared */
   onclear?: () => void
   [key: `data-${string}`]: unknown
   [key: `aria-${string}`]: string | undefined

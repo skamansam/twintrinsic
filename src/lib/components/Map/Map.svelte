@@ -1,3 +1,26 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "center", type: "[number, number]", description: "Center coordinates [latitude, longitude]", default: "[51.505, -0.09]", optional: true },
+  { name: "zoom", type: "number", description: "Initial zoom level", default: "13", optional: true },
+  { name: "minZoom", type: "number", description: "Minimum zoom level", default: "0", optional: true },
+  { name: "maxZoom", type: "number", description: "Maximum zoom level", default: "18", optional: true },
+  { name: "tileUrl", type: "string", description: "Tile layer URL template", default: "'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'", optional: true },
+  { name: "attribution", type: "string", description: "Tile layer attribution", default: "'&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'", optional: true },
+  { name: "zoomControl", type: "boolean", description: "Enable zoom control", default: "true", optional: true },
+  { name: "attributionControl", type: "boolean", description: "Enable attribution control", default: "true", optional: true },
+  { name: "useSimpleCRS", type: "boolean", description: "Use simple CRS for custom image maps (pixel coordinates)", default: "false", optional: true },
+  { name: "customImage", type: "string", description: "Custom image URL (automatically enables simple CRS)", optional: true },
+  { name: "imageWidth", type: "number", description: "Image width in pixels (required if useSimpleCRS or customImage is set)", optional: true },
+  { name: "imageHeight", type: "number", description: "Image height in pixels (required if useSimpleCRS or customImage is set)", optional: true },
+  { name: "markers", type: "Marker[]", description: "Array of markers to display on the map", default: "[]", optional: true },
+  { name: "popupContent", type: "(marker: Marker, isEditing: boolean) => string", description: "Function to render marker popup content - receives marker data and isEditing flag, returns HTML string", optional: true },
+  { name: "onclick", type: "(event: CustomEvent<{ lat: number; lng: number }>) => void", description: "Map click handler", optional: true, eventDetail: "{ lat: number; lng: number }" },
+  { name: "onzoomchange", type: "(event: CustomEvent<{ zoom: number }>) => void", description: "Map zoom change handler", optional: true, eventDetail: "{ zoom: number }" },
+  { name: "onmove", type: "(event: CustomEvent<{ center: [number, number] }>) => void", description: "Map move handler", optional: true, eventDetail: "{ center: [number, number] }" },
+  { name: "onmarkerclick", type: "(event: CustomEvent<Marker>) => void", description: "Marker click handler", optional: true, eventDetail: "Marker" },
+];
+</script>
+
 <script lang="ts">
 import { onMount } from 'svelte';
 // @ts-ignore - CSS side-effect import; no types available for the CSS bundle.

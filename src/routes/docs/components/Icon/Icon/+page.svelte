@@ -1,11 +1,10 @@
 <script lang="ts">
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
-import Icon from "$lib/components/Icon/Icon.svelte"
-import { iconConfig } from "$lib/stores/iconManager.js"
 import Select from "$lib/components/Form/Select.svelte"
-import { setIconset } from "$lib/stores/iconManager.js"
 import TextInput from "$lib/components/Form/TextInput.svelte"
+import Icon from "$lib/components/Icon/Icon.svelte"
+import { iconConfig, setIconset } from "$lib/stores/iconManager.js"
 
 setIconset('tabler')
 
@@ -48,6 +47,9 @@ function handleCustomIconset() {
     setIconset(customIconset.trim())
   }
 }
+
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as IconModule from "$lib/components/Icon/Icon.svelte"
 </script>
 <!--
 @component
@@ -294,84 +296,7 @@ Icon documentation page
   </p>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>name</code></td>
-        <td><code>string</code></td>
-        <td>required</td>
-        <td>Icon name without iconset prefix (e.g., "home", "star")</td>
-      </tr>
-      <tr>
-        <td><code>iconset</code></td>
-        <td><code>string</code></td>
-        <td>default iconset</td>
-        <td>Override the default iconset for this icon</td>
-      </tr>
-      <tr>
-        <td><code>color</code></td>
-        <td><code>string</code></td>
-        <td>inherit</td>
-        <td>CSS color value for the icon</td>
-      </tr>
-      <tr>
-        <td><code>width</code></td>
-        <td><code>string | number</code></td>
-        <td>1em</td>
-        <td>Icon width</td>
-      </tr>
-      <tr>
-        <td><code>height</code></td>
-        <td><code>string | number</code></td>
-        <td>1em</td>
-        <td>Icon height</td>
-      </tr>
-      <tr>
-        <td><code>hFlip</code></td>
-        <td><code>boolean</code></td>
-        <td>false</td>
-        <td>Flip icon horizontally</td>
-      </tr>
-      <tr>
-        <td><code>vFlip</code></td>
-        <td><code>boolean</code></td>
-        <td>false</td>
-        <td>Flip icon vertically</td>
-      </tr>
-      <tr>
-        <td><code>rotate</code></td>
-        <td><code>number | string</code></td>
-        <td>0</td>
-        <td>Rotation: 0, 1, 2, 3 for 0°, 90°, 180°, 270°</td>
-      </tr>
-      <tr>
-        <td><code>inline</code></td>
-        <td><code>boolean</code></td>
-        <td>false</td>
-        <td>Inline display mode</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td>""</td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>onLoad</code></td>
-        <td><code>() => void</code></td>
-        <td>undefined</td>
-        <td>Callback when icon is loaded</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={IconModule} />
 
   <h2>Global Icon Configuration</h2>
   <p>

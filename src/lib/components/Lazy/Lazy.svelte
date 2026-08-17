@@ -14,9 +14,22 @@ Usage:
 </Lazy>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "threshold", type: "number", description: "Threshold for intersection (0-1), where 1 means fully visible", default: "0.1", optional: true },
+  { name: "rootMargin", type: "string", description: "Margin around the root element for intersection detection", default: "\"0px\"", optional: true },
+  { name: "keepRendered", type: "boolean", description: "Whether to keep content rendered after it's been visible once", default: "true", optional: true },
+  { name: "showLoading", type: "boolean", description: "Whether to show a loading indicator while content is loading", default: "false", optional: true },
+  { name: "delay", type: "number", description: "Delay in ms before showing content after it becomes visible", default: "0", optional: true },
+  { name: "placeholder", type: "Snippet", description: "Snippet rendered before the content becomes visible", optional: true },
+];
+</script>
+
 <script lang="ts">
-import { onMount } from "svelte"
 import type { Snippet } from "svelte"
+import { onMount } from "svelte"
 
 interface Props {
   /** Additional CSS classes */
@@ -34,6 +47,7 @@ interface Props {
   /** Delay in ms before showing content after it becomes visible */
   delay?: number
   children?: Snippet
+  /** Snippet rendered before the content becomes visible */
   placeholder?: Snippet
 }
 

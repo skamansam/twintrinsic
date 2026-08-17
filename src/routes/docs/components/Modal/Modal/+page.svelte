@@ -8,6 +8,10 @@ import Modal from "$lib/components/Modal/Modal.svelte"
 let showBasicModal = writable(false)
 let showSizedModal = writable(false)
 let showScrollableModal = writable(false)
+
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as ModalModule from "$lib/components/Modal/Modal.svelte"
 </script>
 
 <style lang="postcss">
@@ -124,107 +128,10 @@ let showScrollableModal = writable(false)
 </Modal>`}</CodeBlock>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>open</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the modal is open</td>
-      </tr>
-      <tr>
-        <td><code>closeOnOutsideClick</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to close when clicking outside the modal</td>
-      </tr>
-      <tr>
-        <td><code>closeOnEscape</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to close when pressing Escape key</td>
-      </tr>
-      <tr>
-        <td><code>size</code></td>
-        <td><code>"sm" | "md" | "lg" | "xl" | "full"</code></td>
-        <td><code>"md"</code></td>
-        <td>Size of the modal</td>
-      </tr>
-      <tr>
-        <td><code>centered</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to center the modal vertically</td>
-      </tr>
-      <tr>
-        <td><code>showCloseButton</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to show a close button in the header</td>
-      </tr>
-      <tr>
-        <td><code>closeButtonLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>"Close modal"</code></td>
-        <td>ARIA label for the close button</td>
-      </tr>
-      <tr>
-        <td><code>ariaLabel</code></td>
-        <td><code>string</code></td>
-        <td>-</td>
-        <td>ARIA label for the modal</td>
-      </tr>
-      <tr>
-        <td><code>ariaDescription</code></td>
-        <td><code>string</code></td>
-        <td>-</td>
-        <td>ARIA description for the modal</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td>auto-generated</td>
-        <td>HTML id for accessibility</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={ModalModule} />
 
   <h2>Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>open</code></td>
-        <td>-</td>
-        <td>Fired when the modal opens</td>
-      </tr>
-      <tr>
-        <td><code>close</code></td>
-        <td>-</td>
-        <td>Fired when the modal closes</td>
-      </tr>
-    </tbody>
-  </table>
+<EventsTable component={ModalModule} />
 
   <h2>Slots</h2>
   <table>

@@ -19,13 +19,26 @@ Footer - A flexible footer component with left, center, and right regions.
 <Footer center={() => <p>Copyright © 2024 QuestLists</p>} />
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "left", type: "Snippet", description: "Left-aligned content snippet", optional: true },
+  { name: "center", type: "Snippet", description: "Center-aligned content snippet", optional: true },
+  { name: "right", type: "Snippet", description: "Right-aligned content snippet", optional: true },
+];
+</script>
+
 <script lang="ts">
   import type { Snippet } from "svelte";
 
   interface Props {
+    /** Additional CSS classes */
     class?: string;
+    /** Left-aligned content snippet */
     left?: Snippet;
+    /** Center-aligned content snippet */
     center?: Snippet;
+    /** Right-aligned content snippet */
     right?: Snippet;
   }
 

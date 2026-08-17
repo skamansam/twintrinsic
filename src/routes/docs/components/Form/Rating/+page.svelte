@@ -3,10 +3,11 @@
 Documentation page for the Rating component.
 -->
 <script lang="ts">
-import EventsTable from "$lib/docs/EventsTable.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Rating from "$lib/components/Form/Rating.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as RatingModule from "$lib/components/Form/Rating.svelte"
 
 let hoverRating = $state(0)
 
@@ -34,7 +35,7 @@ function handleHover(event: CustomEvent<{ value: number }>) {
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="rating-basic-usage">
   <Rating value={3} />
 </div>
 <CodeBlock>
@@ -42,7 +43,7 @@ function handleHover(event: CustomEvent<{ value: number }>) {
 </CodeBlock>
 
 <h3>Half-Star Ratings</h3>
-<div class="example">
+<div class="example" data-testid="rating-half-star">
   <div class="flex flex-col gap-4">
     <div class="flex items-center gap-4">
       <span class="w-32">Default stars:</span>
@@ -85,7 +86,7 @@ function handleHover(event: CustomEvent<{ value: number }>) {
 </CodeBlock>
 
 <h3>Different Sizes</h3>
-<div class="example">
+<div class="example" data-testid="rating-sizes">
   <div class="flex flex-col gap-4">
     <div class="flex items-center gap-4">
       <span class="w-20">Small:</span>
@@ -113,7 +114,7 @@ function handleHover(event: CustomEvent<{ value: number }>) {
 </CodeBlock>
 
 <h3>Color Variants</h3>
-<div class="example">
+<div class="example" data-testid="rating-variants">
   <div class="flex flex-col gap-4">
     <div class="flex items-center">
       <span class="w-20">Default:</span>
@@ -156,7 +157,7 @@ function handleHover(event: CustomEvent<{ value: number }>) {
 </CodeBlock>
 
 <h3>Read-only and Disabled States</h3>
-<div class="example">
+<div class="example" data-testid="rating-states">
   <div class="flex flex-col gap-4">
     <div class="flex items-center">
       <span class="w-20">Read-only:</span>
@@ -174,7 +175,7 @@ function handleHover(event: CustomEvent<{ value: number }>) {
 </CodeBlock>
 
 <h3>With Value Display</h3>
-<div class="example">
+<div class="example" data-testid="rating-value-display">
   <div class="flex flex-col gap-4">
     <div class="flex items-center gap-4">
       <Rating value={4} showValue={true} />
@@ -191,7 +192,7 @@ function handleHover(event: CustomEvent<{ value: number }>) {
 </CodeBlock>
 
 <h3>Hover Callback with Dynamic Content</h3>
-<div class="example">
+<div class="example" data-testid="rating-hover">
   <div class="flex flex-col gap-4">
     <div class="flex items-center gap-4">
       <Rating 
@@ -232,7 +233,7 @@ function handleHover(event: CustomEvent<{ value: number }>) {
 </CodeBlock>
 
 <h3>Custom Maximum</h3>
-<div class="example">
+<div class="example" data-testid="rating-custom-max">
   <div class="flex flex-col gap-4">
     <div class="flex items-center gap-4">
       <span class="w-32">Out of 10:</span>
@@ -251,107 +252,10 @@ function handleHover(event: CustomEvent<{ value: number }>) {
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'value',
-      type: 'number',
-      default: '0',
-      description: 'Current rating value'
-    },
-    {
-      name: 'max',
-      type: 'number',
-      default: '5',
-      description: 'Maximum rating value'
-    },
-    {
-      name: 'precision',
-      type: 'number',
-      default: '1',
-      description: 'Step size for ratings (0.5 for half stars, 1 for whole stars)'
-    },
-    {
-      name: 'size',
-      type: "'sm' | 'md' | 'lg'",
-      default: "'md'",
-      description: 'Size of the rating icons'
-    },
-    {
-      name: 'variant',
-      type: "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'",
-      default: "'warning'",
-      description: 'Visual style variant'
-    },
-    {
-      name: 'readonly',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the rating is readonly'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the rating is disabled'
-    },
-    {
-      name: 'showValue',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether to show the numeric value'
-    },
-    {
-      name: 'icon',
-      type: 'string',
-      description: 'Custom icon for filled state (HTML or SVG string)'
-    },
-    {
-      name: 'emptyIcon',
-      type: 'string',
-      description: 'Custom icon for empty state (HTML or SVG string)'
-    },
-    {
-      name: 'name',
-      type: 'string',
-      description: 'Name attribute for form submission'
-    },
-    {
-      name: 'ariaLabel',
-      type: 'string',
-      default: "'Rating'",
-      description: 'ARIA label for accessibility'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: "''",
-      description: 'Additional CSS classes'
-    },
-    {
-      name: 'id',
-      type: 'string',
-      default: 'auto-generated',
-      description: 'HTML id for accessibility'
-    }
-  ]}
-/>
+<PropsTable component={RatingModule} />
 
 <h2>Events</h2>
-<EventsTable
-  events={[
-    {
-      name: 'change',
-      type: '{ value: number }',
-      description: 'Fired when the rating value changes'
-    },
-    {
-      name: 'hover',
-      type: '{ value: number }',
-      description: 'Fired during hover preview when showPreview is enabled'
-    }
-  ]}
-/>
+<EventsTable component={RatingModule} />
 
 <h2>Accessibility</h2>
 <p>

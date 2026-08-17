@@ -17,6 +17,13 @@ Usage:
 </Select>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "label", type: "string", description: "Group label", optional: false },
+  { name: "disabled", type: "boolean", description: "Whether the group is disabled", default: "false", optional: true },
+];
+</script>
+
 <script lang="ts">
 const {
   /** @type {string} - Group label */

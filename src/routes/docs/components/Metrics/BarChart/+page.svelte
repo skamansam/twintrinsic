@@ -1,6 +1,6 @@
 <script lang="ts">
-	import BarChart from '$lib/components/Metrics/BarChart/BarChart.svelte'
 	import Container from '$lib/components/Container/Container.svelte'
+	import BarChart from '$lib/components/Metrics/BarChart/BarChart.svelte'
 
 	const singleSeries = [
 		{
@@ -24,6 +24,10 @@
 	];
 
 	const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as BarChartModule from "$lib/components/Metrics/BarChart/BarChart.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -97,84 +101,10 @@
 />`}</code></pre>
 
 	<h2>Props</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Prop</th>
-				<th>Type</th>
-				<th>Default</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><code>series</code></td>
-				<td><code>Series[]</code></td>
-				<td>Required</td>
-				<td>Array of data series with label, data, and optional color</td>
-			</tr>
-			<tr>
-				<td><code>labels</code></td>
-				<td><code>string[]</code></td>
-				<td>Required</td>
-				<td>Array of category labels</td>
-			</tr>
-			<tr>
-				<td><code>title</code></td>
-				<td><code>string</code></td>
-				<td>undefined</td>
-				<td>Chart title</td>
-			</tr>
-			<tr>
-				<td><code>yAxisLabel</code></td>
-				<td><code>string</code></td>
-				<td>undefined</td>
-				<td>Y-axis label</td>
-			</tr>
-			<tr>
-				<td><code>showGrid</code></td>
-				<td><code>boolean</code></td>
-				<td>true</td>
-				<td>Show grid lines</td>
-			</tr>
-			<tr>
-				<td><code>showLegend</code></td>
-				<td><code>boolean</code></td>
-				<td>true</td>
-				<td>Show legend</td>
-			</tr>
-			<tr>
-				<td><code>width</code></td>
-				<td><code>number</code></td>
-				<td>500</td>
-				<td>Chart width in pixels</td>
-			</tr>
-			<tr>
-				<td><code>height</code></td>
-				<td><code>number</code></td>
-				<td>300</td>
-				<td>Chart height in pixels</td>
-			</tr>
-		</tbody>
-	</table>
+<PropsTable component={BarChartModule} />
 
 	<h2>Events</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Event</th>
-				<th>Detail</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><code>onbarclick</code></td>
-				<td><code>&#123; seriesIndex: number; barIndex: number; value: number &#125;</code></td>
-				<td>Fired when a bar is clicked</td>
-			</tr>
-		</tbody>
-	</table>
+<EventsTable component={BarChartModule} />
 
 	<h2>Accessibility</h2>
 	<ul>

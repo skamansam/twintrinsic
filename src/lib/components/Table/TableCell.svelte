@@ -1,3 +1,14 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "align", type: "string", description: "Cell alignment (left, center, right)", default: "\"left\"", optional: true },
+  { name: "truncate", type: "boolean", description: "Whether to truncate overflowing text", default: "false", optional: true },
+  { name: "numeric", type: "boolean", description: "Whether the cell contains numeric data", default: "false", optional: true },
+  { name: "colspan", type: "number", description: "Number of columns this cell spans", optional: false },
+  { name: "rowspan", type: "number", description: "Number of rows this cell spans", optional: false },
+];
+</script>
+
 <script lang="ts">
 /**
  * @component

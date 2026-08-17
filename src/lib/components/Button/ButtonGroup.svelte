@@ -18,6 +18,18 @@ Usage:
 </ButtonGroup>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "variant", type: "string", description: "Button variant to apply to all children (default, primary, secondary, outline, ghost)", optional: false },
+  { name: "size", type: "string", description: "Button size to apply to all children (xs, sm, md, lg, xl)", optional: false },
+  { name: "vertical", type: "boolean", description: "Whether the buttons should be arranged vertically", default: "false", optional: true },
+  { name: "fullWidth", type: "boolean", description: "Whether the button group should take full width", default: "false", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the button group", optional: false },
+];
+</script>
+
 <script lang="ts">
 import { setContext } from "svelte"
 

@@ -3,10 +3,11 @@
 Documentation page for the Calendar component.
 -->
 <script lang="ts">
-import Calendar from "$lib/components/Form/Calendar.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
+import Calendar from "$lib/components/Form/Calendar.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as CalendarModule from "$lib/components/Form/Calendar.svelte"
 </script>
 
 <h1>Calendar</h1>
@@ -20,7 +21,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="calendar-basic">
   <Calendar label="Select Date" />
 </div>
 <CodeBlock>
@@ -28,7 +29,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Date Range Selection</h3>
-<div class="example">
+<div class="example" data-testid="calendar-range">
   <Calendar
     label="Date Range"
     range={true}
@@ -44,7 +45,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>With Min/Max Dates</h3>
-<div class="example">
+<div class="example" data-testid="calendar-min-max">
   <Calendar
     label="Date"
     minDate={new Date('2025-04-01')}
@@ -60,7 +61,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>With Week Numbers</h3>
-<div class="example">
+<div class="example" data-testid="calendar-week-numbers">
   <Calendar
     label="Date"
     showWeekNumbers={true}
@@ -74,87 +75,10 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'value',
-      type: 'Date | [Date, Date] | null',
-      default: 'null',
-      description: 'Selected date or date range'
-    },
-    {
-      name: 'range',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether to allow range selection'
-    },
-    {
-      name: 'minDate',
-      type: 'Date | null',
-      default: 'null',
-      description: 'Minimum selectable date'
-    },
-    {
-      name: 'maxDate',
-      type: 'Date | null',
-      default: 'null',
-      description: 'Maximum selectable date'
-    },
-    {
-      name: 'showWeekNumbers',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether to show week numbers'
-    },
-    {
-      name: 'dayNames',
-      type: 'string[]',
-      default: "['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']",
-      description: 'Custom day names'
-    },
-    {
-      name: 'monthNames',
-      type: 'string[]',
-      default: "['January', 'February', ...]",
-      description: 'Custom month names'
-    },
-    {
-      name: 'label',
-      type: 'string',
-      default: "'Date'",
-      description: 'Input label'
-    },
-    {
-      name: 'format',
-      type: 'string',
-      default: "'MM/dd/yyyy'",
-      description: 'Date format for display'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the calendar is disabled'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: "''",
-      description: 'Additional CSS classes'
-    }
-  ]}
-/>
+<PropsTable component={CalendarModule} />
 
 <h2>Events</h2>
-<EventsTable
-  events={[
-    {
-      name: 'select',
-      type: '{ date: Date } | { start: Date, end: Date }',
-      description: 'Fired when a date or range is selected'
-    }
-  ]}
-/>
+<EventsTable component={CalendarModule} />
 
 <h2>Keyboard Navigation</h2>
 <p>

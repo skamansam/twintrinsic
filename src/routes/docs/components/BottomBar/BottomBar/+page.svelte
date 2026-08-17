@@ -4,6 +4,9 @@ import BottomBar from "$lib/components/BottomBar/BottomBar.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Panel from "$lib/components/Panel/Panel.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as BottomBarModule from "$lib/components/BottomBar/BottomBar.svelte"
 
 let showExamples = $state(false)
 
@@ -91,84 +94,10 @@ BottomBar documentation page
   </div>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>expanded</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether the bottom bar is expanded</td>
-      </tr>
-      <tr>
-        <td><code>height</code></td>
-        <td><code>string</code></td>
-        <td><code>"16rem"</code></td>
-        <td>Height of the bottom bar when expanded</td>
-      </tr>
-      <tr>
-        <td><code>disabled</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to disable the bottom bar controls</td>
-      </tr>
-      <tr>
-        <td><code>showBackdrop</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to show a backdrop when expanded on mobile</td>
-      </tr>
-      <tr>
-        <td><code>floatOnMobile</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to float over content on mobile</td>
-      </tr>
-      <tr>
-        <td><code>docked</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to dock to viewport instead of parent</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>ariaLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>ARIA label</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={BottomBarModule} />
 
   <h2>Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>toggle</code></td>
-        <td><code>{`{ expanded: boolean }`}</code></td>
-        <td>Fired when the bottom bar is toggled</td>
-      </tr>
-    </tbody>
-  </table>
+<EventsTable component={BottomBarModule} />
 
   <h2>Slots</h2>
   <table>

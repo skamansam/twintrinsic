@@ -3,12 +3,13 @@
 Documentation page for the SelectGroup component.
 -->
 <script lang="ts">
+import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import FormField from "$lib/components/Form/FormField.svelte"
 import Select from "$lib/components/Form/Select.svelte"
 import SelectGroup from "$lib/components/Form/SelectGroup.svelte"
-import FormField from "$lib/components/Form/FormField.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as SelectGroupModule from "$lib/components/Form/SelectGroup.svelte"
 
 // Sample data for examples
 const europeanCountries = [
@@ -207,26 +208,7 @@ let selectedCountry = ""
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'label',
-      type: 'string',
-      description: 'Group label displayed as a header for the option group'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether all options in the group are disabled'
-    },
-    {
-      name: 'children',
-      type: 'slot',
-      description: 'Option elements to be rendered within the group'
-    }
-  ]}
-/>
+<PropsTable component={SelectGroupModule} />
 
 <h2>Accessibility</h2>
 <p>

@@ -5,8 +5,8 @@ Documentation site layout with left navigation and header.
 <script lang="ts">
 import { page } from "$app/state"
 import App from "$lib/components/App/App.svelte"
-import Separator from "$lib/components/Separator/Separator.svelte"
 import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte"
+import Separator from "$lib/components/Separator/Separator.svelte"
 
 let { children } = $props()
 
@@ -46,29 +46,33 @@ const siteMenu = [
     ],
   },
   {
-    title: "Core",
+    title: "App",
     children: [
       { title: "App", link: "/docs/components/App/App" },
+      { title: "AppHeader", link: "/docs/components/AppHeader/AppHeader" },
+      { title: "BottomBar", link: "/docs/components/BottomBar/BottomBar" },
+      { title: "Footer", link: "/docs/components/Footer/Footer" },
+      { title: "Sidebar", link: "/docs/components/Sidebar/Sidebar" },
+      { title: "ThemeToggle", link: "/docs/components/ThemeToggle/ThemeToggle" },
     ],
   },
   {
-    title: "Layout",
+    title: "Basic",
     children: [
       { title: "Accordion", link: "/docs/components/Accordion/Accordion" },
       { title: "AccordionItem", link: "/docs/components/Accordion/AccordionItem" },
       { title: "Card", link: "/docs/components/Card/Card" },
       { title: "Container", link: "/docs/components/Container/Container" },
+      { title: "Hero", link: "/docs/components/Panel/Hero" },
       { title: "Panel", link: "/docs/components/Panel/Panel" },
+      { title: "Section", link: "/docs/components/Section/Section" },
       { title: "Separator", link: "/docs/components/Separator/Separator" },
-      { title: "Sidebar", link: "/docs/components/Sidebar/Sidebar" },
       { title: "Splitter", link: "/docs/components/Splitter/Splitter" },
     ],
   },
   {
     title: "Navigation",
     children: [
-      { title: "AppHeader", link: "/docs/components/AppHeader/AppHeader" },
-      { title: "BottomBar", link: "/docs/components/BottomBar/BottomBar" },
       { title: "Breadcrumb", link: "/docs/components/Breadcrumb/Breadcrumb" },
       { title: "BreadcrumbItem", link: "/docs/components/Breadcrumb/BreadcrumbItem" },
       { title: "Menu", link: "/docs/components/Menu/Menu" },
@@ -174,11 +178,12 @@ const siteMenu = [
   {
     title: "Utility",
     children: [
+      { title: "EventsTable", link: "/docs/components/EventsTable/EventsTable" },
       { title: "Icon", link: "/docs/components/Icon/Icon" },
       { title: "Lazy", link: "/docs/components/Lazy/Lazy" },
       { title: "LazyPanel", link: "/docs/components/Lazy/LazyPanel" },
       { title: "Masonry", link: "/docs/components/Masonry/Masonry" },
-      { title: "ThemeToggle", link: "/docs/components/ThemeToggle/ThemeToggle" },
+      { title: "PropsTable", link: "/docs/components/PropsTable/PropsTable" },
     ],
   },
   {

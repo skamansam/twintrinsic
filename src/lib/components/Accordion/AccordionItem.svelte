@@ -11,6 +11,17 @@ Usage:
 </AccordionItem>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the header", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether to disable the item controls", default: "false", optional: true },
+  { name: "showIcon", type: "boolean", description: "Whether to show the expand/collapse icon", default: "true", optional: true },
+  { name: "header", type: "Snippet", description: "Header content rendered in the summary", optional: true },
+];
+</script>
+
 <script lang="ts">
   import type { Snippet } from "svelte";
   import { getContext, onMount } from "svelte";
@@ -34,6 +45,7 @@ Usage:
     /** Whether to show the expand/collapse icon */
     showIcon?: boolean;
     children?: Snippet;
+    /** Header content rendered in the summary */
     header?: Snippet;
   }
 

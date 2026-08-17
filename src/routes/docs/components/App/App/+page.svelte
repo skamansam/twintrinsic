@@ -2,6 +2,8 @@
 import App from "$lib/components/App/App.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as AppModule from "$lib/components/App/App.svelte"
 </script>
 <!--
 @component
@@ -44,42 +46,7 @@ App documentation page
 </App>`}</CodeBlock>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>appName</code></td>
-        <td><code>string</code></td>
-        <td><code>"Twintrinsic App"</code></td>
-        <td>Application name used in the document title</td>
-      </tr>
-      <tr>
-        <td><code>darkMode</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Enables dark mode for the application</td>
-      </tr>
-      <tr>
-        <td><code>leftPanelWidth</code></td>
-        <td><code>string</code></td>
-        <td><code>"300px"</code></td>
-        <td>Width of the left panel (sidebar)</td>
-      </tr>
-      <tr>
-        <td><code>rightPanelWidth</code></td>
-        <td><code>string</code></td>
-        <td><code>"300px"</code></td>
-        <td>Width of the right panel</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={AppModule} />
 
   <h2>Slots</h2>
   <table>

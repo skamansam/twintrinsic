@@ -1,3 +1,17 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "data", type: "number[]", description: "Array of numeric values", optional: false },
+  { name: "labels", type: "string[]", description: "Array of labels for each bar", optional: false },
+  { name: "colors", type: "string[]", description: "Array of colors for each bar", default: "['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899']", optional: true },
+  { name: "title", type: "string", description: "Chart title", optional: true },
+  { name: "xAxisLabel", type: "string", description: "X-axis label", optional: true },
+  { name: "showGrid", type: "boolean", description: "Show grid lines", default: "true", optional: true },
+  { name: "onbarclick", type: "(event: MouseEvent | KeyboardEvent, detail: Readonly<{ index: number; label: string; value: number }>) => void", description: "Callback when a bar is clicked (mouse or keyboard activation)", optional: true },
+  { name: "width", type: "number", description: "Size of the chart in pixels", default: "500", optional: true },
+  { name: "height", type: "number", description: "Height of the chart in pixels", default: "300", optional: true },
+];
+</script>
+
 <script lang="ts">
 	interface Props {
 		/** Array of numeric values */
@@ -16,6 +30,7 @@
 	onbarclick?: (event: MouseEvent | KeyboardEvent, detail: Readonly<{ index: number; label: string; value: number }>) => void;
 		/** Size of the chart in pixels */
 		width?: number;
+		/** Height of the chart in pixels */
 		height?: number;
 	}
 

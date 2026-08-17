@@ -6,6 +6,9 @@ Panel documentation page
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Panel from "$lib/components/Panel/Panel.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as PanelModule from "$lib/components/Panel/Panel.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -67,72 +70,10 @@ import Panel from "$lib/components/Panel/Panel.svelte"
   </div>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>expanded</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether the panel is expanded</td>
-      </tr>
-      <tr>
-        <td><code>bordered</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to show a border</td>
-      </tr>
-      <tr>
-        <td><code>disabled</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to disable the panel controls</td>
-      </tr>
-      <tr>
-        <td><code>showIcon</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to show the expand/collapse icon</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>ariaLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>ARIA label for the header button</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={PanelModule} />
 
   <h2>Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>toggle</code></td>
-        <td><code>{`{ expanded: boolean }`}</code></td>
-        <td>Fired when the panel is toggled</td>
-      </tr>
-    </tbody>
-  </table>
+<EventsTable component={PanelModule} />
 
   <h2>Slots</h2>
   <table>

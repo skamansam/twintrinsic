@@ -14,6 +14,16 @@ Usage:
 </Menu>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label", default: "\"Menu\"", optional: true },
+  { name: "trigger", type: "Snippet", description: "Trigger button content (rendered inside the toggle button)", optional: true },
+  { name: "content", type: "Snippet", description: "Popup menu content (rendered inside the popup panel)", optional: true },
+];
+</script>
+
 <script lang="ts">
 import type { Snippet } from "svelte"
 

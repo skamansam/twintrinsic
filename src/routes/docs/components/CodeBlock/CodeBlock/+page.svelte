@@ -4,7 +4,8 @@ Documentation page for the CodeBlock component.
 -->
 <script lang="ts">
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as CodeBlockModule from "$lib/components/CodeBlock/CodeBlock.svelte"
 </script>
 
 <h1>CodeBlock</h1>
@@ -165,34 +166,7 @@ function example() {
 `}</CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'language',
-      type: 'string',
-      default: "''",
-      description: 'Programming language for syntax highlighting. If not provided, will attempt to auto-detect.'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: "''",
-      description: 'Additional CSS classes'
-    },
-    {
-      name: 'pluginSource',
-      type: '"unpkg" | "esm.sh" | "jsdelivr" | string',
-      default: '"unpkg"',
-      description: 'CDN to use for loading language components and plugins. Can also be a custom path to a Prism.js components directory.'
-    },
-    {
-      name: 'plugins',
-      type: 'string[]',
-      default: '[]',
-      description: 'List of Prism.js plugins to load. Can be plugin names (e.g., "autoloader", "line-numbers") or full URLs to custom plugins.'
-    }
-  ]}
-/>
+<PropsTable component={CodeBlockModule} />
 
 <h2>Supported Languages</h2>
 <p>
@@ -221,6 +195,6 @@ function example() {
   <li>Responsive design</li>
 </ul>
 
-\u003Cstyle lang="postcss">
+<style lang="postcss">
   @reference '$lib/twintrinsic.css';
-\u003C/style>
+</style>

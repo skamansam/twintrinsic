@@ -7,6 +7,10 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Tree from "$lib/components/Tree/Tree.svelte"
 import TreeNode from "$lib/components/Tree/TreeNode.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as TreeModule from "$lib/components/Tree/Tree.svelte"
+import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -193,174 +197,16 @@ import TreeNode from "$lib/components/Tree/TreeNode.svelte"
 </Tree>`}</CodeBlock>
 
   <h2>Tree Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>selectable</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether nodes can be selected</td>
-      </tr>
-      <tr>
-        <td><code>multiSelect</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether multiple nodes can be selected</td>
-      </tr>
-      <tr>
-        <td><code>showLines</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show connecting lines between nodes</td>
-      </tr>
-      <tr>
-        <td><code>expandOnSelect</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to expand nodes when selected</td>
-      </tr>
-      <tr>
-        <td><code>expandAll</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to expand all nodes by default</td>
-      </tr>
-      <tr>
-        <td><code>iconSize</code></td>
-        <td><code>string</code></td>
-        <td><code>"md"</code></td>
-        <td>Size of node icons (sm, md, lg)</td>
-      </tr>
-      <tr>
-        <td><code>ariaLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>"Tree"</code></td>
-        <td>ARIA label for the tree</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-    </tbody>
-  </table>
+  <PropsTable component={TreeModule} />
 
   <h2>TreeNode Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>label</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Text label for the node</td>
-      </tr>
-      <tr>
-        <td><code>icon</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Icon to display (HTML or SVG string)</td>
-      </tr>
-      <tr>
-        <td><code>expanded</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the node is expanded</td>
-      </tr>
-      <tr>
-        <td><code>selected</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the node is selected</td>
-      </tr>
-      <tr>
-        <td><code>disabled</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the node is disabled</td>
-      </tr>
-      <tr>
-        <td><code>loading</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the node is loading</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td><code>random UUID</code></td>
-        <td>Unique identifier for the node</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-    </tbody>
-  </table>
+  <PropsTable component={TreeNodeModule} />
 
   <h2>Tree Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>select</code></td>
-        <td><code>{`{ node: TreeNode, selected: boolean, nodes: TreeNode[] }`}</code></td>
-        <td>Fired when a node is selected or deselected</td>
-      </tr>
-      <tr>
-        <td><code>expand</code></td>
-        <td><code>{`{ node: TreeNode, expanded: boolean }`}</code></td>
-        <td>Fired when a node is expanded or collapsed</td>
-      </tr>
-    </tbody>
-  </table>
+  <EventsTable component={TreeModule} />
 
   <h2>TreeNode Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>select</code></td>
-        <td><code>{`{ node: TreeNode, selected: boolean }`}</code></td>
-        <td>Fired when the node is selected or deselected</td>
-      </tr>
-      <tr>
-        <td><code>expand</code></td>
-        <td><code>{`{ node: TreeNode, expanded: boolean }`}</code></td>
-        <td>Fired when the node is expanded or collapsed</td>
-      </tr>
-    </tbody>
-  </table>
+  <EventsTable component={TreeNodeModule} />
 
   <h2>TreeNode Slots</h2>
   <table>

@@ -3,10 +3,11 @@
 Documentation page for the Switch component.
 -->
 <script>
-import Switch from "$lib/components/Form/Switch.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
+import Switch from "$lib/components/Form/Switch.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as SwitchModule from "$lib/components/Form/Switch.svelte"
 </script>
 
 <h1>Switch</h1>
@@ -128,72 +129,10 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'checked',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the switch is checked'
-    },
-    {
-      name: 'label',
-      type: 'string',
-      description: 'Label text for the switch'
-    },
-    {
-      name: 'name',
-      type: 'string',
-      description: 'Name attribute for the input'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the switch is disabled'
-    },
-    {
-      name: 'required',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the switch is required'
-    },
-    {
-      name: 'size',
-      type: "'sm' | 'md' | 'lg'",
-      default: "'md'",
-      description: 'Size of the switch'
-    },
-    {
-      name: 'ariaLabel',
-      type: 'string',
-      description: 'ARIA label for accessibility (used when no visible label is provided)'
-    },
-    {
-      name: 'id',
-      type: 'string',
-      default: 'auto-generated',
-      description: 'HTML id for accessibility'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: "''",
-      description: 'Additional CSS classes'
-    }
-  ]}
-/>
+<PropsTable component={SwitchModule} />
 
 <h2>Events</h2>
-<EventsTable
-  events={[
-    {
-      name: 'change',
-      type: '{ checked: boolean }',
-      description: 'Fired when the switch state changes'
-    }
-  ]}
-/>
+<EventsTable component={SwitchModule} />
 
 <h2>Accessibility</h2>
 <p>

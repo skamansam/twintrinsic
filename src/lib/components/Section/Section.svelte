@@ -24,23 +24,32 @@ Usage:
   We love you and you love we!
 </Section>
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility. Defaults to a random UUID.", default: "crypto.randomUUID()", optional: true },
+  { name: "title", type: "string | Snippet", description: "Section title", default: "\"\"", optional: true },
+  { name: "subtitle", type: "string | Snippet", description: "Optional subtitle or description", default: "\"\"", optional: true },
+];
+</script>
+
 <script lang="ts">
 import type { Snippet } from "svelte";
 
 type Props = {
-  /** @type {string} - Additional CSS classes */
+  /** Additional CSS classes */
   class?: string;
 
-  /** @type {string} - HTML id for accessibility.  Defaults to a random UUID. */
+  /** HTML id for accessibility. Defaults to a random UUID. */
   id?: string;
 
-  /** @type {string | Snippet} - Section title */
+  /** Section title */
   title?: string | Snippet;
 
-  /** @type {string | Snippet} - Optional subtitle or description */
+  /** Optional subtitle or description */
   subtitle?: string | Snippet;
 
-  /** @type {Snippet} - Section content */
+  /** Section content */
   children?: Snippet;
 };
 

@@ -20,6 +20,20 @@ Usage:
 </div>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "variant", type: "string", description: "Shape variant (text, rectangle, circle, rounded)", default: "\"rectangle\"", optional: true },
+  { name: "width", type: "string|number", description: "Width of the skeleton", default: "\"100%\"", optional: true },
+  { name: "height", type: "string|number", description: "Height of the skeleton", optional: true },
+  { name: "size", type: "string|number", description: "Size for circle and square variants (sets both width and height)", optional: true },
+  { name: "lines", type: "number", description: "Number of lines for text variant", default: "1", optional: true },
+  { name: "animated", type: "boolean", description: "Whether to show the animation", default: "true", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for accessibility", default: "\"Loading content\"", optional: true },
+];
+</script>
+
 <script lang="ts">
 const {
   /** @type {string} - Additional CSS classes */

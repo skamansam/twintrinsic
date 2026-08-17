@@ -1,3 +1,13 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "data", type: "number[]", description: "Array of data points", optional: false },
+  { name: "label", type: "string", description: "Label text", optional: false },
+  { name: "color", type: "string", description: "Color of the sparkline", default: "'#3b82f6'", optional: true },
+  { name: "height", type: "number", description: "Height in pixels", default: "40", optional: true },
+  { name: "onclick", type: "(event: MouseEvent | KeyboardEvent) => void", description: "Callback when clicked (mouse or keyboard activation)", optional: true },
+];
+</script>
+
 <script lang="ts">
 	interface Props {
 		/** Array of data points */

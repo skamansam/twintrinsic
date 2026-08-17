@@ -2,6 +2,9 @@
 import AppHeader from "$lib/components/AppHeader/AppHeader.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as AppHeaderModule from "$lib/components/AppHeader/AppHeader.svelte"
 </script>
 <!--
 @component
@@ -93,54 +96,7 @@ AppHeader documentation page
   </div>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>brand</code></td>
-        <td><code>string | BrandInfo</code></td>
-        <td>Required</td>
-        <td>Brand information as string or object with name, logo, and href</td>
-      </tr>
-      <tr>
-        <td><code>user</code></td>
-        <td><code>UserInfo | null</code></td>
-        <td><code>null</code></td>
-        <td>User information with name, avatar, and href</td>
-      </tr>
-      <tr>
-        <td><code>showSearch</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show the search input</td>
-      </tr>
-      <tr>
-        <td><code>showNotifications</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show notifications</td>
-      </tr>
-      <tr>
-        <td><code>navItems</code></td>
-        <td><code>NavItem[]</code></td>
-        <td><code>[]</code></td>
-        <td>Navigation items array</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={AppHeaderModule} />
 
   <h3>Type Definitions</h3>
   <CodeBlock language="typescript">{`interface BrandInfo {
@@ -162,27 +118,7 @@ interface NavItem {
 }`}</CodeBlock>
 
   <h2>Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>search</code></td>
-        <td><code>{`{ query: string }`}</code></td>
-        <td>Fired when search input changes</td>
-      </tr>
-      <tr>
-        <td><code>signout</code></td>
-        <td><code>void</code></td>
-        <td>Fired when sign out is clicked in user menu</td>
-      </tr>
-    </tbody>
-  </table>
+<EventsTable component={AppHeaderModule} />
 
   <h2>Slots</h2>
   <table>

@@ -10,6 +10,8 @@ import Tab from "$lib/components/Tabs/Tab.svelte"
 import TabList from "$lib/components/Tabs/TabList.svelte"
 import TabPanel from "$lib/components/Tabs/TabPanel.svelte"
 import Tabs from "$lib/components/Tabs/Tabs.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as TabsModule from "$lib/components/Tabs/Tabs.svelte"
 </script>
 
 <style lang="postcss">
@@ -100,54 +102,7 @@ import Tabs from "$lib/components/Tabs/Tabs.svelte"
   </div>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>variant</code></td>
-        <td><code>"default" | "underline" | "pills" | "enclosed"</code></td>
-        <td><code>"default"</code></td>
-        <td>Visual style variant</td>
-      </tr>
-      <tr>
-        <td><code>size</code></td>
-        <td><code>"sm" | "md" | "lg"</code></td>
-        <td><code>"md"</code></td>
-        <td>Tab size</td>
-      </tr>
-      <tr>
-        <td><code>fullWidth</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether tabs should take full width</td>
-      </tr>
-      <tr>
-        <td><code>centered</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether tabs should be centered</td>
-      </tr>
-      <tr>
-        <td><code>disabled</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether all tabs are disabled</td>
-      </tr>
-      <tr>
-        <td><code>defaultIndex</code></td>
-        <td><code>number</code></td>
-        <td><code>0</code></td>
-        <td>Index of initially selected tab</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={TabsModule} />
 
   <h2>Keyboard Navigation</h2>
   <ul>

@@ -1,3 +1,26 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", optional: true },
+  { name: "name", type: "string", description: "Name attribute for the textarea", optional: true },
+  { name: "placeholder", type: "string", description: "Placeholder text", default: "\"\"", optional: true },
+  { name: "value", type: "string", description: "Textarea value", default: "\"\"", optional: true },
+  { name: "rows", type: "number", description: "Number of visible rows", default: "3", optional: true },
+  { name: "required", type: "boolean", description: "Whether the textarea is required", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the textarea is disabled", default: "false", optional: true },
+  { name: "readonly", type: "boolean", description: "Whether the textarea is read-only", default: "false", optional: true },
+  { name: "minlength", type: "number", description: "Minimum number of characters", optional: true },
+  { name: "maxlength", type: "number", description: "Maximum number of characters", optional: true },
+  { name: "autocomplete", type: "string", description: "Autocomplete hint for the browser", optional: true },
+  { name: "autoResize", type: "boolean", description: "Whether to auto-resize the textarea to fit its content", default: "false", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the textarea", optional: true },
+  { name: "oninput", type: "(event: CustomEvent<{ value: string }>) => void", description: "Input event handler", optional: true, eventDetail: "{ value: string }" },
+  { name: "onchange", type: "(event: CustomEvent<{ value: string }>) => void", description: "Change event handler", optional: true, eventDetail: "{ value: string }" },
+  { name: "onfocus", type: "(event: FocusEvent) => void", description: "Focus event handler", optional: true },
+  { name: "onblur", type: "(event: FocusEvent) => void", description: "Blur event handler", optional: true },
+];
+</script>
+
 <script lang="ts">
 /**
  * @component
@@ -21,24 +44,60 @@ import { getContext } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
 
 let {
+  /** @type {string} - Additional CSS classes */
   class: className = "",
+
+  /** @type {string} - HTML id for accessibility */
   id = undefined,
+
+  /** @type {string} - Name attribute for the textarea */
   name = undefined,
+
+  /** @type {string} - Placeholder text */
   placeholder = "",
+
+  /** @type {string} - Textarea value */
   value = "",
+
+  /** @type {number} - Number of visible rows */
   rows = 3,
+
+  /** @type {boolean} - Whether the textarea is required */
   required = false,
+
+  /** @type {boolean} - Whether the textarea is disabled */
   disabled = false,
+
+  /** @type {boolean} - Whether the textarea is read-only */
   readonly = false,
+
+  /** @type {number} - Minimum number of characters */
   minlength = undefined,
+
+  /** @type {number} - Maximum number of characters */
   maxlength = undefined,
+
+  /** @type {string} - Autocomplete hint for the browser */
   autocomplete = undefined,
+
+  /** @type {boolean} - Whether to auto-resize the textarea to fit its content */
   autoResize = false,
+
+  /** @type {string} - ARIA label for the textarea */
   ariaLabel = undefined,
+
+  /** @type {(event: CustomEvent<{ value: string }>) => void} - Input event handler */
   oninput = undefined,
+
+  /** @type {(event: CustomEvent<{ value: string }>) => void} - Change event handler */
   onchange = undefined,
+
+  /** @type {(event: FocusEvent) => void} - Focus event handler */
   onfocus = undefined,
+
+  /** @type {(event: FocusEvent) => void} - Blur event handler */
   onblur = undefined,
+
   ...restProps
 } = $props()
 

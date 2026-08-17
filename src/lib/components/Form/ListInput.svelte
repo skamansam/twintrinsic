@@ -22,6 +22,30 @@ Usage:
 </FormField>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "name", type: "string", description: "Input name", optional: false },
+  { name: "placeholder", type: "string", description: "Placeholder text", default: "\"Add item...\"", optional: true },
+  { name: "values", type: "string[]", description: "Array of values", default: "[]", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the input is disabled", default: "false", optional: true },
+  { name: "required", type: "boolean", description: "Whether the input is required", default: "false", optional: true },
+  { name: "allowDuplicates", type: "boolean", description: "Whether to allow duplicates", default: "false", optional: true },
+  { name: "addOnKeys", type: "string", description: "Character(s) that trigger adding a new item", default: "\"Enter,Tab,Comma\"", optional: true },
+  { name: "pasteSeparator", type: "string", description: "Separator for pasting multiple values", default: "\",\"", optional: true },
+  { name: "maxItems", type: "number", description: "Maximum number of items", optional: false },
+  { name: "validator", type: "Function", description: "Validator function for new values", optional: false },
+  { name: "errorMessage", type: "string", description: "Error message for invalid values", default: "\"Invalid value\"", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the input", optional: false },
+  { name: "onchange", type: "(event: CustomEvent) => void", description: "Change event handler", optional: false, eventDetail: "unknown" },
+  { name: "onadd", type: "(event: CustomEvent) => void", description: "Add event handler", optional: false, eventDetail: "unknown" },
+  { name: "onremove", type: "(event: CustomEvent) => void", description: "Remove event handler", optional: false, eventDetail: "unknown" },
+  { name: "onfocus", type: "(event: CustomEvent) => void", description: "Focus event handler", optional: false, eventDetail: "unknown" },
+  { name: "onblur", type: "(event: CustomEvent) => void", description: "Blur event handler", optional: false, eventDetail: "unknown" },
+];
+</script>
+
 <script lang="ts">
 import { getContext } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"

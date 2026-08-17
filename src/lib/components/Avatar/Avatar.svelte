@@ -34,6 +34,29 @@ Usage:
 />
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "src", type: "string", description: "Image source URL", optional: true },
+  { name: "alt", type: "string", description: "Alt text for the image", optional: true },
+  { name: "name", type: "string", description: "User name for generating initials", optional: true },
+  { name: "fallback", type: "string", description: "Fallback text when image fails to load or no src provided", optional: true },
+  { name: "gravatarEmail", type: "string", description: "Gravatar email address", optional: true },
+  { name: "icon", type: "string", description: "Icon name to display (e.g., \"user\", \"star\")", optional: true },
+  { name: "size", type: "string", description: "Size of the avatar (xs, sm, md, lg, xl)", default: "\"md\"", optional: true },
+  { name: "shape", type: "string", description: "Shape of the avatar (circle, square, rounded)", default: "\"circle\"", optional: true },
+  { name: "status", type: "\"online\" | \"offline\" | \"away\" | \"busy\" | undefined", description: "Status indicator (online, offline, away, busy)", optional: true },
+  { name: "statusIcon", type: "string", description: "Icon name for status indicator (e.g., \"check\", \"x\", \"clock\")", optional: true },
+  { name: "bgColor", type: "string", description: "Background color for text avatars (CSS color value)", optional: true },
+  { name: "badge", type: "string", description: "Badge text to display in top-right corner", optional: true },
+  { name: "badgeVariant", type: "\"default\" | \"primary\" | \"secondary\" | \"success\" | \"warning\" | \"error\" | \"info\"", description: "Badge variant", default: "\"primary\"", optional: true },
+  { name: "bordered", type: "boolean", description: "Whether to show a border", default: "false", optional: true },
+  { name: "shadowed", type: "boolean", description: "Whether to add a shadow effect", default: "false", optional: true },
+  { name: "initialsGenerator", type: "Function", description: "Custom function to generate initials", optional: true },
+];
+</script>
+
 <script lang="ts">
 import { onMount } from "svelte"
 import Badge from "../Badge/Badge.svelte"

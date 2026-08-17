@@ -1,6 +1,8 @@
 <script lang="ts">
-	import KPICard from '$lib/components/Metrics/KPICard/KPICard.svelte'
 	import Container from '$lib/components/Container/Container.svelte'
+	import KPICard from '$lib/components/Metrics/KPICard/KPICard.svelte'
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as KPICardModule from "$lib/components/Metrics/KPICard/KPICard.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -41,54 +43,7 @@
 />`}</code></pre>
 
 	<h2>Props</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Prop</th>
-				<th>Type</th>
-				<th>Default</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><code>label</code></td>
-				<td><code>string</code></td>
-				<td>Required</td>
-				<td>KPI label/title</td>
-			</tr>
-			<tr>
-				<td><code>value</code></td>
-				<td><code>number</code></td>
-				<td>Required</td>
-				<td>Current value</td>
-			</tr>
-			<tr>
-				<td><code>target</code></td>
-				<td><code>number</code></td>
-				<td>Required</td>
-				<td>Target value</td>
-			</tr>
-			<tr>
-				<td><code>unit</code></td>
-				<td><code>string</code></td>
-				<td>undefined</td>
-				<td>Unit of measurement</td>
-			</tr>
-			<tr>
-				<td><code>color</code></td>
-				<td><code>string</code></td>
-				<td>'primary'</td>
-				<td>Card color theme</td>
-			</tr>
-			<tr>
-				<td><code>icon</code></td>
-				<td><code>string</code></td>
-				<td>undefined</td>
-				<td>Icon identifier</td>
-			</tr>
-		</tbody>
-	</table>
+<PropsTable component={KPICardModule} />
 
 	<h2>Best Practices</h2>
 	<ul>

@@ -22,6 +22,21 @@ Usage:
   {/each}
 </Masonry>
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "columns", type: "number | Record<string, number>", description: "Number of columns, or a responsive breakpoints object\n(e.g., `{ default: 1, sm: 2, md: 3, lg: 4 }`).", default: "3", optional: true },
+  { name: "gap", type: "number", description: "Gap between items in pixels", default: "16", optional: true },
+  { name: "columnWidth", type: "string", description: "Fixed column width (overrides columns)", optional: true },
+  { name: "centered", type: "boolean", description: "Whether to center the grid", default: "false", optional: true },
+  { name: "animated", type: "boolean", description: "Whether to animate item positions", default: "true", optional: true },
+  { name: "animationDuration", type: "number", description: "Animation duration in milliseconds", default: "300", optional: true },
+  { name: "animationEasing", type: "string", description: "Animation easing function", default: "\"ease-out\"", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the grid", default: "\"Masonry grid\"", optional: true },
+];
+</script>
+
 <script lang="ts">
 import type { Snippet } from "svelte"
 import { onDestroy, onMount } from "svelte"

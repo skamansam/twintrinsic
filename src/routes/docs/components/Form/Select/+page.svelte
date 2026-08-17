@@ -3,10 +3,11 @@
 Documentation page for the Select component.
 -->
 <script lang="ts">
-import Select from "$lib/components/Form/Select.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
+import Select from "$lib/components/Form/Select.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as SelectModule from "$lib/components/Form/Select.svelte"
 
 const countries = [
   { value: "us", label: "United States" },
@@ -62,7 +63,7 @@ const languages = [
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="select-basic">
   <Select
     label="Country"
     options={countries}
@@ -82,7 +83,7 @@ const languages = [
 </CodeBlock>
 
 <h3>Multiple Selection</h3>
-<div class="example">
+<div class="example" data-testid="select-multiple">
   <Select
     label="Programming Languages"
     options={languages}
@@ -100,7 +101,7 @@ const languages = [
 </CodeBlock>
 
 <h3>Option Groups</h3>
-<div class="example">
+<div class="example" data-testid="select-groups">
   <Select
     label="Programming Language"
     options={languages}
@@ -127,7 +128,7 @@ const languages = [
 </CodeBlock>
 
 <h3>Required Field</h3>
-<div class="example">
+<div class="example" data-testid="select-required">
   <Select
     label="Country"
     options={countries}
@@ -145,7 +146,7 @@ const languages = [
 </CodeBlock>
 
 <h3>With Error</h3>
-<div class="example">
+<div class="example" data-testid="select-error">
   <Select
     label="Country"
     options={countries}
@@ -163,7 +164,7 @@ const languages = [
 </CodeBlock>
 
 <h3>Disabled State</h3>
-<div class="example">
+<div class="example" data-testid="select-disabled">
   <Select
     label="Country"
     options={countries}
@@ -181,75 +182,10 @@ const languages = [
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'label',
-      type: 'string',
-      default: "''",
-      description: 'Input label'
-    },
-    {
-      name: 'options',
-      type: 'Array<{ value: string, label: string, group?: string }>',
-      default: '[]',
-      description: 'Options to display in the dropdown'
-    },
-    {
-      name: 'value',
-      type: 'string | string[]',
-      default: "''",
-      description: 'Selected value(s)'
-    },
-    {
-      name: 'multiple',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether multiple selection is allowed'
-    },
-    {
-      name: 'placeholder',
-      type: 'string',
-      default: "'Select...'",
-      description: 'Placeholder text when no option is selected'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the select is disabled'
-    },
-    {
-      name: 'error',
-      type: 'string',
-      default: "''",
-      description: 'Error message'
-    },
-    {
-      name: 'required',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the field is required'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: "''",
-      description: 'Additional CSS classes'
-    }
-  ]}
-/>
+<PropsTable component={SelectModule} />
 
 <h2>Events</h2>
-<EventsTable
-  events={[
-    {
-      name: 'change',
-      type: '{ value: string | string[] }',
-      description: 'Fired when selection changes'
-    }
-  ]}
-/>
+<EventsTable component={SelectModule} />
 
 <h2>Accessibility</h2>
 <p>

@@ -18,6 +18,19 @@ Usage:
 </AvatarGroup>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "size", type: "string", description: "Size of the avatars (xs, sm, md, lg, xl)", default: "\"md\"", optional: true },
+  { name: "max", type: "number", description: "Maximum number of avatars to display", optional: true },
+  { name: "total", type: "number", description: "Total number of avatars (for overflow count)", optional: true },
+  { name: "spacing", type: "number", description: "Spacing between avatars (-8 to 8)", default: "-4", optional: true },
+  { name: "bordered", type: "boolean", description: "Whether to show a border around avatars", default: "true", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the group", default: "\"Avatar group\"", optional: true },
+];
+</script>
+
 <script lang="ts">
 import { setContext } from "svelte"
 
@@ -32,10 +45,10 @@ const {
   size = "md",
 
   /** @type {number} - Maximum number of avatars to display */
-  max,
+  max = undefined,
 
   /** @type {number} - Total number of avatars (for overflow count) */
-  total,
+  total = undefined,
 
   /** @type {number} - Spacing between avatars (-8 to 8) */
   spacing = -4,
@@ -49,12 +62,15 @@ const {
   children,
 } = $props()
 
-// Provide context for child avatars
-$effect(() => {
-  setContext("avatarGroup", {
-    size,
-    bordered,
-  })
+// Provide context for child avatars. Called at init (not in `$effect`) so the
+// context is available during server-side rendering.
+setContext("avatarGroup", {
+  get size() {
+    return size
+  },
+  get bordered() {
+    return bordered
+  },
 })
 
 // Determine spacing class based on the spacing prop

@@ -3,6 +3,8 @@ import Badge from "$lib/components/Badge/Badge.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Icon from "$lib/components/Icon/Icon.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as BadgeModule from "$lib/components/Badge/Badge.svelte"
 </script>
 <!--
 @component
@@ -188,84 +190,7 @@ Badge documentation page
 `}</CodeBlock>
 
 <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>variant</code></td>
-        <td><code>"default" | "primary" | "secondary" | "success" | "warning" | "error" | "info"</code></td>
-        <td><code>"default"</code></td>
-        <td>Visual style variant</td>
-      </tr>
-      <tr>
-        <td><code>size</code></td>
-        <td><code>"sm" | "md" | "lg"</code></td>
-        <td><code>"md"</code></td>
-        <td>Size of the badge</td>
-      </tr>
-      <tr>
-        <td><code>dot</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show as a dot indicator</td>
-      </tr>
-      <tr>
-        <td><code>pill</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show as a pill shape</td>
-      </tr>
-      <tr>
-        <td><code>outline</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show as an outline</td>
-      </tr>
-      <tr>
-        <td><code>pulse</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to add a subtle pulse animation</td>
-      </tr>
-      <tr>
-        <td><code>hideEmpty</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to hide when content is empty</td>
-      </tr>
-      <tr>
-        <td><code>overlay</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to position as an absolute overlay</td>
-      </tr>
-      <tr>
-        <td><code>position</code></td>
-        <td><code>"top-right" | "top-left" | "bottom-right" | "bottom-left"</code></td>
-        <td><code>"top-right"</code></td>
-        <td>Position when used as overlay</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td><code>crypto.randomUUID()</code></td>
-        <td>HTML id for accessibility</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={BadgeModule} />
 
   <h2>Accessibility</h2>
   <p>

@@ -455,7 +455,7 @@ import { Button, CodeBlock } from "$lib"
 
 ### 4. `.js` extension imports are fine
 
-Imports with the `.js` extension (e.g., `import { PropsTable } from "$lib/docs/index.js"`) are **already NodeNext-compatible** — TypeScript resolves `.js` → `.ts` under NodeNext. These do NOT need to be converted to bare `$lib` and doing so can trigger the mixed-resolution failure if the file also imports from `$lib/index.js`.
+Imports with the `.js` extension (e.g., `import { extractProps } from "$lib/helpers/propMetadata.js"`) are **already NodeNext-compatible** — TypeScript resolves `.js` → `.ts` under NodeNext. These do NOT need to be converted to bare `$lib` and doing so can trigger the mixed-resolution failure if the file also imports from `$lib/index.js`.
 
 ### 5. Barrel verification
 

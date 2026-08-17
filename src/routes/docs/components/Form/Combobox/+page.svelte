@@ -4,8 +4,11 @@ Combobox documentation page
 -->
 <script lang="ts">
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Combobox from "$lib/components/Form/Combobox.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import Combobox from "$lib/components/Form/Combobox.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as ComboboxModule from "$lib/components/Form/Combobox.svelte"
 
 // Sample data for examples
 const fruits = ["Apple", "Banana", "Cherry", "Date", "Elderberry", "Fig", "Grape", "Honeydew"]
@@ -31,7 +34,7 @@ const countries = [
   <h2>Examples</h2>
 
   <h3>Basic Combobox</h3>
-  <div class="not-prose mb-8 max-w-md">
+  <div class="not-prose mb-8 max-w-md" data-testid="combobox-basic">
     <Combobox 
       options={fruits}
       placeholder="Select a fruit"
@@ -45,7 +48,7 @@ const countries = [
 />`}</CodeBlock>
 
   <h3>With Object Data</h3>
-  <div class="not-prose mb-8 max-w-md">
+  <div class="not-prose mb-8 max-w-md" data-testid="combobox-object">
     <Combobox 
       options={countries}
       optionLabel="name"
@@ -63,7 +66,7 @@ const countries = [
 />`}</CodeBlock>
 
   <h3>Custom Option Template</h3>
-  <div class="not-prose mb-8 max-w-md">
+  <div class="not-prose mb-8 max-w-md" data-testid="combobox-template">
     <Combobox 
       options={countries}
       optionLabel="name"
@@ -95,7 +98,7 @@ const countries = [
     </Combobox>`}</CodeBlock>
 
   <h3>Disabled State</h3>
-  <div class="not-prose mb-8 max-w-md">
+  <div class="not-prose mb-8 max-w-md" data-testid="combobox-disabled">
     <Combobox 
       options={fruits}
       placeholder="Select a fruit"
@@ -110,7 +113,7 @@ const countries = [
 />`}</CodeBlock>
 
   <h3>Loading State</h3>
-  <div class="not-prose mb-8 max-w-md">
+  <div class="not-prose mb-8 max-w-md" data-testid="combobox-loading">
     <Combobox 
       options={[]}
       placeholder="Loading options..."
@@ -125,7 +128,7 @@ const countries = [
 />`}</CodeBlock>
 
   <h3>With Initial Value</h3>
-  <div class="not-prose mb-8 max-w-md">
+  <div class="not-prose mb-8 max-w-md" data-testid="combobox-initial">
     <Combobox 
       options={fruits}
       placeholder="Select a fruit"
@@ -140,7 +143,7 @@ const countries = [
 />`}</CodeBlock>
 
   <h3>Form Integration</h3>
-  <div class="not-prose mb-8 max-w-md space-y-4">
+  <div class="not-prose mb-8 max-w-md" data-testid="combobox-form">
     <div>
       <label for="fruit-select" class="block text-sm font-medium mb-1">Favorite Fruit</label>
       <Combobox 
@@ -165,155 +168,10 @@ const countries = [
 </div>`}</CodeBlock>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>options</code></td>
-        <td><code>Array</code></td>
-        <td><code>[]</code></td>
-        <td>Options to display in the dropdown</td>
-      </tr>
-      <tr>
-        <td><code>value</code></td>
-        <td><code>any</code></td>
-        <td><code>null</code></td>
-        <td>Current value</td>
-      </tr>
-      <tr>
-        <td><code>placeholder</code></td>
-        <td><code>string</code></td>
-        <td><code>"Select an option"</code></td>
-        <td>Placeholder text</td>
-      </tr>
-      <tr>
-        <td><code>optionLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>"label"</code></td>
-        <td>Property name for option labels</td>
-      </tr>
-      <tr>
-        <td><code>optionValue</code></td>
-        <td><code>string</code></td>
-        <td><code>"value"</code></td>
-        <td>Property name for option values</td>
-      </tr>
-      <tr>
-        <td><code>disabled</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the combobox is disabled</td>
-      </tr>
-      <tr>
-        <td><code>readonly</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the combobox is readonly</td>
-      </tr>
-      <tr>
-        <td><code>required</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the combobox is required</td>
-      </tr>
-      <tr>
-        <td><code>searchable</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to allow searching</td>
-      </tr>
-      <tr>
-        <td><code>clearable</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to allow clearing the selection</td>
-      </tr>
-      <tr>
-        <td><code>loading</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show a loading indicator</td>
-      </tr>
-      <tr>
-        <td><code>autoSelect</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to automatically select the first option</td>
-      </tr>
-      <tr>
-        <td><code>openOnFocus</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to open the dropdown on focus</td>
-      </tr>
-      <tr>
-        <td><code>maxHeight</code></td>
-        <td><code>number</code></td>
-        <td><code>250</code></td>
-        <td>Maximum height of the dropdown in pixels</td>
-      </tr>
-      <tr>
-        <td><code>ariaLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>ARIA label for the combobox</td>
-      </tr>
-      <tr>
-        <td><code>filter</code></td>
-        <td><code>Function</code></td>
-        <td><code>undefined</code></td>
-        <td>Custom filter function</td>
-      </tr>
-      <tr>
-        <td><code>name</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Name attribute for the input</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td><code>random UUID</code></td>
-        <td>HTML id for accessibility</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={ComboboxModule} />
 
   <h2>Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>change</code></td>
-        <td><code>{`{ value: any, option: any }`}</code></td>
-        <td>Fired when the selection changes</td>
-      </tr>
-      <tr>
-        <td><code>input</code></td>
-        <td><code>{`{ value: any, option: any }`}</code></td>
-        <td>Fired when the input value changes</td>
-      </tr>
-    </tbody>
-  </table>
+<EventsTable component={ComboboxModule} />
 
   <h2>Slots</h2>
   <table>

@@ -1,6 +1,8 @@
 <script lang="ts">
-	import GaugeChart from '$lib/components/Metrics/GaugeChart/GaugeChart.svelte'
 	import Container from '$lib/components/Container/Container.svelte'
+	import GaugeChart from '$lib/components/Metrics/GaugeChart/GaugeChart.svelte'
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as GaugeChartModule from "$lib/components/Metrics/GaugeChart/GaugeChart.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -96,84 +98,7 @@
 	</div>
 
 	<h2>Props</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Prop</th>
-				<th>Type</th>
-				<th>Default</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><code>value</code></td>
-				<td><code>number</code></td>
-				<td>Required</td>
-				<td>Current value</td>
-			</tr>
-			<tr>
-				<td><code>min</code></td>
-				<td><code>number</code></td>
-				<td>0</td>
-				<td>Minimum value</td>
-			</tr>
-			<tr>
-				<td><code>max</code></td>
-				<td><code>number</code></td>
-				<td>100</td>
-				<td>Maximum value</td>
-			</tr>
-			<tr>
-				<td><code>label</code></td>
-				<td><code>string</code></td>
-				<td>undefined</td>
-				<td>Gauge label</td>
-			</tr>
-			<tr>
-				<td><code>unit</code></td>
-				<td><code>string</code></td>
-				<td>undefined</td>
-				<td>Unit of measurement</td>
-			</tr>
-			<tr>
-				<td><code>color</code></td>
-				<td><code>string</code></td>
-				<td>'primary'</td>
-				<td>Gauge color theme (primary, secondary, success, danger, warning, info)</td>
-			</tr>
-			<tr>
-				<td><code>size</code></td>
-				<td><code>number</code></td>
-				<td>200</td>
-				<td>Gauge size in pixels</td>
-			</tr>
-			<tr>
-				<td><code>arcStart</code></td>
-				<td><code>number</code></td>
-				<td>0</td>
-				<td>Arc start angle in degrees (0 = horizontal left, 90 = vertical top)</td>
-			</tr>
-			<tr>
-				<td><code>arcEnd</code></td>
-				<td><code>number</code></td>
-				<td>180</td>
-				<td>Arc end angle in degrees</td>
-			</tr>
-			<tr>
-				<td><code>tics</code></td>
-				<td><code>TicConfig</code></td>
-				<td><code>{'{}'}</code></td>
-				<td>Tic mark configuration (show, step, values, showLabels, format)</td>
-			</tr>
-			<tr>
-				<td><code>zones</code></td>
-				<td><code>ColorZone[]</code></td>
-				<td>[]</td>
-				<td>Color zones for value ranges (start, end, color, label)</td>
-			</tr>
-		</tbody>
-	</table>
+<PropsTable component={GaugeChartModule} />
 
 	<h2>Tic Configuration</h2>
 	<p>The <code>tics</code> prop accepts an object with the following properties:</p>

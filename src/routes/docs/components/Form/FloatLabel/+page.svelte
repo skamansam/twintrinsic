@@ -3,13 +3,14 @@
 Documentation page for the FloatLabel component.
 -->
 <script lang="ts">
-import FloatLabel from "$lib/components/Form/FloatLabel.svelte"
-import TextInput from "$lib/components/Form/TextInput.svelte"
-import Textarea from "$lib/components/Form/Textarea.svelte"
-import Select from "$lib/components/Form/Select.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
+import FloatLabel from "$lib/components/Form/FloatLabel.svelte"
+import Select from "$lib/components/Form/Select.svelte"
+import Textarea from "$lib/components/Form/Textarea.svelte"
+import TextInput from "$lib/components/Form/TextInput.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as FloatLabelModule from "$lib/components/Form/FloatLabel.svelte"
 </script>
 
 <h1>FloatLabel</h1>
@@ -23,7 +24,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="floatlabel-basic-usage">
   <FloatLabel label="Username">
     <TextInput name="username" />
   </FloatLabel>
@@ -35,7 +36,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>With Different Input Types</h3>
-<div class="example">
+<div class="example" data-testid="floatlabel-types">
   <div class="flex flex-col gap-4">
     <FloatLabel label="Email">
       <TextInput type="email" name="email" />
@@ -87,7 +88,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Required Field</h3>
-<div class="example">
+<div class="example" data-testid="floatlabel-required">
   <FloatLabel label="Email" required={true}>
     <TextInput type="email" name="email" required={true} />
   </FloatLabel>
@@ -99,7 +100,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>With Error Message</h3>
-<div class="example">
+<div class="example" data-testid="floatlabel-error">
   <FloatLabel 
     label="Email" 
     error="Please enter a valid email address"
@@ -117,7 +118,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>With Help Text</h3>
-<div class="example">
+<div class="example" data-testid="floatlabel-help">
   <FloatLabel 
     label="Password" 
     helpText="Password must be at least 8 characters long"
@@ -135,7 +136,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Disabled State</h3>
-<div class="example">
+<div class="example" data-testid="floatlabel-disabled-state">
   <FloatLabel label="Username" disabled={true}>
     <TextInput name="username" disabled={true} />
   </FloatLabel>
@@ -147,7 +148,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>With Initial Value</h3>
-<div class="example">
+<div class="example" data-testid="floatlabel-initial-value">
   <FloatLabel label="Username">
     <TextInput name="username" value="johndoe" />
   </FloatLabel>
@@ -159,49 +160,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'label',
-      type: 'string',
-      description: 'Label text for the input'
-    },
-    {
-      name: 'required',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the input is required (adds an asterisk)'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the input is disabled'
-    },
-    {
-      name: 'error',
-      type: 'string',
-      description: 'Error message to display below the input'
-    },
-    {
-      name: 'helpText',
-      type: 'string',
-      description: 'Help text to display below the input (not shown when there is an error)'
-    },
-    {
-      name: 'id',
-      type: 'string',
-      default: 'auto-generated',
-      description: 'HTML id for accessibility'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: "''",
-      description: 'Additional CSS classes'
-    }
-  ]}
-/>
+<PropsTable component={FloatLabelModule} />
 
 <h2>Slots</h2>
 <table class="props-table">

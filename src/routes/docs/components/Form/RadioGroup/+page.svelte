@@ -3,11 +3,12 @@
 Documentation page for the RadioGroup component.
 -->
 <script lang="ts">
-import RadioGroup from "$lib/components/Form/RadioGroup.svelte"
-import Radio from "$lib/components/Form/Radio.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
+import Radio from "$lib/components/Form/Radio.svelte"
+import RadioGroup from "$lib/components/Form/RadioGroup.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as RadioGroupModule from "$lib/components/Form/RadioGroup.svelte"
 </script>
 
 <h1>RadioGroup</h1>
@@ -21,7 +22,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="radiogroup-basic">
   <RadioGroup name="theme" legend="Select theme">
     <Radio value="light" label="Light" />
     <Radio value="dark" label="Dark" />
@@ -37,7 +38,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Horizontal Layout</h3>
-<div class="example">
+<div class="example" data-testid="radiogroup-horizontal">
   <RadioGroup name="alignment" legend="Text alignment" layout="horizontal">
     <Radio value="left" label="Left" />
     <Radio value="center" label="Center" />
@@ -53,7 +54,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>With Initial Value</h3>
-<div class="example">
+<div class="example" data-testid="radiogroup-initial">
   <RadioGroup name="size" legend="Size" value="md">
     <Radio value="sm" label="Small" />
     <Radio value="md" label="Medium" />
@@ -69,7 +70,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Different Sizes</h3>
-<div class="example">
+<div class="example" data-testid="radiogroup-sizes">
   <div class="flex flex-col gap-6">
     <RadioGroup name="size-sm" legend="Small" size="sm" layout="horizontal">
       <Radio value="1" label="Option 1" />
@@ -111,7 +112,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Disabled State</h3>
-<div class="example">
+<div class="example" data-testid="radiogroup-disabled">
   <RadioGroup name="disabled-group" legend="Unavailable options" disabled={true}>
     <Radio value="1" label="Option 1" />
     <Radio value="2" label="Option 2" />
@@ -127,73 +128,10 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'name',
-      type: 'string',
-      description: 'Name attribute for the radio group'
-    },
-    {
-      name: 'value',
-      type: 'string',
-      default: "''",
-      description: 'Currently selected value'
-    },
-    {
-      name: 'legend',
-      type: 'string',
-      description: 'Legend text for the fieldset'
-    },
-    {
-      name: 'required',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the radio group is required'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the radio group is disabled'
-    },
-    {
-      name: 'layout',
-      type: "'vertical' | 'horizontal'",
-      default: "'vertical'",
-      description: 'Layout direction of radio buttons'
-    },
-    {
-      name: 'size',
-      type: "'sm' | 'md' | 'lg'",
-      default: "'md'",
-      description: 'Size of the radio buttons'
-    },
-    {
-      name: 'id',
-      type: 'string',
-      default: 'auto-generated',
-      description: 'HTML id for accessibility'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: "''",
-      description: 'Additional CSS classes'
-    }
-  ]}
-/>
+<PropsTable component={RadioGroupModule} />
 
 <h2>Events</h2>
-<EventsTable
-  events={[
-    {
-      name: 'change',
-      type: '{ value: string }',
-      description: 'Fired when a radio button is selected'
-    }
-  ]}
-/>
+<EventsTable component={RadioGroupModule} />
 
 <h2>Accessibility</h2>
 <p>

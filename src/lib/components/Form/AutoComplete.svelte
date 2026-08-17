@@ -21,6 +21,33 @@ Usage:
 />
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "name", type: "string", description: "Field name for form registration", optional: true },
+  { name: "label", type: "string", description: "Input label", optional: true },
+  { name: "items", type: "TItem[]", description: "Array of items to search through (strings or objects)", default: "[]", optional: true },
+  { name: "labelField", type: "string", description: "Field to use for item labels", default: "\"label\"", optional: true },
+  { name: "valueField", type: "string", description: "Field to use for item values", default: "\"value\"", optional: true },
+  { name: "value", type: "TItem | TItem[]", description: "Selected value(s)", default: "\"\" as unknown as TItem", optional: true },
+  { name: "minLength", type: "number", description: "Minimum characters before showing suggestions", default: "1", optional: true },
+  { name: "delay", type: "number", description: "Delay in ms before searching", default: "150", optional: true },
+  { name: "multiple", type: "boolean", description: "Whether to allow multiple selections", default: "false", optional: true },
+  { name: "highlight", type: "boolean", description: "Whether to highlight matching text", default: "true", optional: true },
+  { name: "forceSelection", type: "boolean", description: "Whether to force selection from suggestions", default: "false", optional: true },
+  { name: "maxItems", type: "number", description: "Maximum number of suggestions to show", default: "10", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "filter", type: "((items: TItem[], query: string) => TItem[]) | null", description: "Custom filter function", default: "null", optional: true },
+  { name: "itemTemplate", type: "ItemTemplateValue<TItem> | null", description: "Custom item template (function or { render: ... } object)", default: "null", optional: true },
+  { name: "emptyMessage", type: "string", description: "No results message", default: "\"No results found\"", optional: true },
+  { name: "loadingMessage", type: "string", description: "Loading message", default: "\"Loading...\"", optional: true },
+  { name: "loading", type: "boolean", description: "Whether suggestions are loading", default: "false", optional: true },
+  { name: "placeholder", type: "string", description: "Placeholder text", default: "\"\"", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the input is disabled", default: "false", optional: true },
+  { name: "onselect", type: "(event: CustomEvent<{ item?: TItem; items?: TItem[] }>) => void", description: "Select event handler", optional: true, eventDetail: "{ item?: TItem; items?: TItem[] }" },
+  { name: "onremove", type: "(event: CustomEvent<{ item: TItem }>) => void", description: "Remove event handler", optional: true, eventDetail: "{ item: TItem }" },
+];
+</script>
+
 <script lang="ts" generics="TItem extends string | Record<string, unknown> = string | Record<string, unknown>">
 import { getContext } from "svelte"
 import { slide } from "svelte/transition"

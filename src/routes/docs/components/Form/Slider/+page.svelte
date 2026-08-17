@@ -7,6 +7,9 @@ Slider documentation page
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Slider from "$lib/components/Form/Slider.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as SliderModule from "$lib/components/Form/Slider.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -191,137 +194,10 @@ import Slider from "$lib/components/Form/Slider.svelte"
 />`}</CodeBlock>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>value</code></td>
-        <td><code>number | Array</code></td>
-        <td><code>0</code></td>
-        <td>Current value or range [min, max]</td>
-      </tr>
-      <tr>
-        <td><code>min</code></td>
-        <td><code>number</code></td>
-        <td><code>0</code></td>
-        <td>Minimum value</td>
-      </tr>
-      <tr>
-        <td><code>max</code></td>
-        <td><code>number</code></td>
-        <td><code>100</code></td>
-        <td>Maximum value</td>
-      </tr>
-      <tr>
-        <td><code>step</code></td>
-        <td><code>number</code></td>
-        <td><code>1</code></td>
-        <td>Step size</td>
-      </tr>
-      <tr>
-        <td><code>variant</code></td>
-        <td><code>string</code></td>
-        <td><code>"primary"</code></td>
-        <td>Visual style variant (primary, secondary, success, warning, error, info)</td>
-      </tr>
-      <tr>
-        <td><code>orientation</code></td>
-        <td><code>string</code></td>
-        <td><code>"horizontal"</code></td>
-        <td>Orientation (horizontal, vertical)</td>
-      </tr>
-      <tr>
-        <td><code>disabled</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the slider is disabled</td>
-      </tr>
-      <tr>
-        <td><code>showTicks</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show tick marks</td>
-      </tr>
-      <tr>
-        <td><code>tickValues</code></td>
-        <td><code>Array</code></td>
-        <td><code>[]</code></td>
-        <td>Custom tick values</td>
-      </tr>
-      <tr>
-        <td><code>showValue</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show the current value</td>
-      </tr>
-      <tr>
-        <td><code>valueFormat</code></td>
-        <td><code>string</code></td>
-        <td><code>{"{value}"}</code></td>
-        <td>Format for displayed value</td>
-      </tr>
-      <tr>
-        <td><code>showTooltip</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show tooltips on hover/drag</td>
-      </tr>
-      <tr>
-        <td><code>name</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Name attribute for form submission</td>
-      </tr>
-      <tr>
-        <td><code>ariaLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>ARIA label for accessibility</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td><code>random UUID</code></td>
-        <td>HTML id for accessibility</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={SliderModule} />
 
   <h2>Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>change</code></td>
-        <td><code>{`{ value: number | number[] }`}</code></td>
-        <td>Fired when the slider value changes (on drag end)</td>
-      </tr>
-      <tr>
-        <td><code>input</code></td>
-        <td><code>{`{ value: number | number[] }`}</code></td>
-        <td>Fired continuously during slider drag</td>
-      </tr>
-    </tbody>
-  </table>
+<EventsTable component={SliderModule} />
 
   <h2>Accessibility</h2>
   <p>

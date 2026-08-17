@@ -20,6 +20,35 @@ Usage:
 </Button>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "type", type: "\"button\" | \"submit\" | \"reset\"", description: "Button type (button, submit, reset)", default: "\"button\" as const", optional: true },
+  { name: "variant", type: "string", description: "Button variant (default, primary, secondary, outline, ghost, link)", default: "\"default\"", optional: true },
+  { name: "size", type: "string", description: "Button size (xs, sm, md, lg, xl)", default: "\"md\"", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the button is disabled", default: "false", optional: true },
+  { name: "loading", type: "boolean", description: "Whether the button is in a loading state", default: "false", optional: true },
+  { name: "icon", type: "string", description: "Icon to display (HTML or SVG string)", optional: true },
+  { name: "iconPosition", type: "string", description: "Icon position (left or right)", default: "\"left\"", optional: true },
+  { name: "fullWidth", type: "boolean", description: "Whether the button is full width", default: "false", optional: true },
+  { name: "href", type: "string", description: "Link URL (renders as <a> instead of <button>)", optional: true },
+  { name: "target", type: "string", description: "Link target (_blank, _self, etc.)", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for accessibility", optional: true },
+  { name: "form", type: "string", description: "Form ID that this button is associated with", optional: true },
+  { name: "name", type: "string", description: "Name attribute for form buttons", optional: true },
+  { name: "value", type: "string", description: "Value attribute for form buttons", optional: true },
+  { name: "autofocus", type: "boolean", description: "Whether the button should be autofocused on mount. Implemented via programmatic focus in `onMount` rather than the HTML `autofocus` attribute, to avoid the Svelte a11y_autofocus warning.", default: "false", optional: true },
+  { name: "formmethod", type: "string", description: "Form submission method (post, get, etc.)", optional: true },
+  { name: "formenctype", type: "string", description: "Form submission encoding", optional: true },
+  { name: "formnovalidate", type: "string", description: "Form validation mode", optional: true },
+  { name: "formtarget", type: "string", description: "Form target", optional: true },
+  { name: "rel", type: "string", description: "Relationship attribute for links", optional: true },
+  { name: "download", type: "string", description: "Download attribute for links", optional: true },
+  { name: "onclick", type: "(event: CustomEvent) => void", description: "Click event handler", optional: true, eventDetail: "unknown" },
+];
+</script>
+
 <script lang="ts">
 import { onMount } from "svelte"
 

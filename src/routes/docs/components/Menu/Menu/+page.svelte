@@ -3,6 +3,10 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Menu from "$lib/components/Menu/Menu/Menu.svelte"
 import MenuItem from "$lib/components/Menu/Menu/MenuItem.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as MenuModule from "$lib/components/Menu/Menu/Menu.svelte"
+import * as MenuItemModule from "$lib/components/Menu/Menu/MenuItem.svelte"
 </script>
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
@@ -72,102 +76,13 @@ import MenuItem from "$lib/components/Menu/Menu/MenuItem.svelte"
   </div>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>position</code></td>
-        <td><code>"top" | "bottom" | "left" | "right"</code></td>
-        <td><code>"bottom"</code></td>
-        <td>Menu position relative to trigger</td>
-      </tr>
-      <tr>
-        <td><code>closeOnSelect</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to close menu after selecting an item</td>
-      </tr>
-      <tr>
-        <td><code>disabled</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the menu is disabled</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={MenuModule} />
 
   <h2>MenuItem Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>disabled</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the menu item is disabled</td>
-      </tr>
-      <tr>
-        <td><code>divider</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show a divider after this item</td>
-      </tr>
-      <tr>
-        <td><code>icon</code></td>
-        <td><code>string</code></td>
-        <td>-</td>
-        <td>Icon name to display before text</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={MenuItemModule} />
 
   <h2>Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>select</code></td>
-        <td><code>{{ item: MenuItem }}</code></td>
-        <td>Fired when a menu item is selected</td>
-      </tr>
-      <tr>
-        <td><code>open</code></td>
-        <td>-</td>
-        <td>Fired when menu opens</td>
-      </tr>
-      <tr>
-        <td><code>close</code></td>
-        <td>-</td>
-        <td>Fired when menu closes</td>
-      </tr>
-    </tbody>
-  </table>
+<EventsTable component={MenuModule} />
 
   <h2>Keyboard Navigation</h2>
   <ul>

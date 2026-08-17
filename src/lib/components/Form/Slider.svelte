@@ -25,6 +25,29 @@ Usage:
 />
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "value", type: "number", description: "Current value", default: "0", optional: true },
+  { name: "min", type: "number", description: "Minimum value", default: "0", optional: true },
+  { name: "max", type: "number", description: "Maximum value", default: "100", optional: true },
+  { name: "step", type: "number", description: "Step size", default: "1", optional: true },
+  { name: "variant", type: "string", description: "Visual style variant", default: "\"primary\"", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the slider is disabled", default: "false", optional: true },
+  { name: "showValue", type: "boolean", description: "Whether to show the current value", default: "false", optional: true },
+  { name: "valueFormat", type: "string", description: "Format for displayed value", default: "\"{value}\"", optional: true },
+  { name: "name", type: "string", description: "Name attribute for form submission", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for accessibility", optional: true },
+  { name: "showTicks", type: "boolean", description: "Whether to show tick marks", default: "false", optional: true },
+  { name: "tickValues", type: "number[]", description: "Custom tick values", default: "[]", optional: true },
+  { name: "showTooltip", type: "boolean", description: "Whether to show tooltips on hover/drag", default: "false", optional: true },
+  { name: "orientation", type: "string", description: "Orientation (horizontal, vertical)", default: "\"horizontal\"", optional: true },
+  { name: "onchange", type: "(event: CustomEvent) => void", description: "Change event handler", optional: true, eventDetail: "unknown" },
+  { name: "oninput", type: "(event: CustomEvent) => void", description: "Input event handler", optional: true, eventDetail: "unknown" },
+];
+</script>
+
 <script lang="ts">
 const {
   /** @type {string} - Additional CSS classes */

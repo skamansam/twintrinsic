@@ -18,6 +18,17 @@ Usage:
 </Breadcrumb>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "separator", type: "string", description: "Separator character or HTML between items", default: "\"/\"", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the breadcrumb", default: "\"Breadcrumb\"", optional: true },
+  { name: "collapsible", type: "boolean", description: "Whether to collapse long breadcrumbs with ellipsis", default: "false", optional: true },
+  { name: "maxVisibleItems", type: "number", description: "Maximum visible items when collapsed (excluding first and last)", default: "1", optional: true },
+];
+</script>
+
 <script lang="ts">
 import { setContext } from "svelte"
 import type { BreadcrumbContext } from "./breadcrumbContext.js"
@@ -44,15 +55,20 @@ const {
   children,
 } = $props()
 
-// Provide context for child components
-$effect(() => {
-  const breadcrumbContext: BreadcrumbContext = {
-    separator,
-    collapsible,
-    maxVisibleItems,
-  }
-  setContext<BreadcrumbContext>("breadcrumb", breadcrumbContext)
-})
+// Provide context for child components. Called at init (not in `$effect`) so
+// the context is available during server-side rendering.
+const breadcrumbContext: BreadcrumbContext = {
+  get separator() {
+    return separator
+  },
+  get collapsible() {
+    return collapsible
+  },
+  get maxVisibleItems() {
+    return maxVisibleItems
+  },
+}
+setContext<BreadcrumbContext>("breadcrumb", breadcrumbContext)
 </script>
 
 <nav

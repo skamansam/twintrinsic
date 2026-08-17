@@ -17,9 +17,17 @@ Usage:
 </CarouselItem>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "active", type: "boolean", description: "Whether the item is active", default: "false", optional: true },
+];
+</script>
+
 <script lang="ts">
-import { getContext, onMount } from "svelte"
 import type { Snippet } from "svelte"
+import { getContext, onMount } from "svelte"
 import type { CarouselContext } from "./carouselContext.js"
 
 interface Props {

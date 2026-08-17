@@ -5,7 +5,7 @@
  * @module toastStore
  */
 
-import { writable } from "svelte/store"
+import { writable } from "svelte/store";
 
 /**
  * @typedef {Object} Toast
@@ -29,10 +29,10 @@ import { writable } from "svelte/store"
  */
 function createToastStore() {
   // Create writable store
-  const { subscribe, update } = writable(/** @type {Toast[]} */ ([]))
+  const { subscribe, update } = writable(/** @type {Toast[]} */ ([]));
 
   // Timer map to track toast timeouts
-  const timers = new Map()
+  const timers = new Map();
 
   /**
    * Add a new toast
@@ -47,8 +47,8 @@ function createToastStore() {
    * @returns {string} Toast ID
    */
   function add(toast) {
-    const id = crypto.randomUUID()
-    const duration = toast.duration || 5000
+    const id = crypto.randomUUID();
+    const duration = toast.duration || 5000;
 
     // Create toast object
     const newToast = {
@@ -62,18 +62,18 @@ function createToastStore() {
       progress: toast.progress !== false ? 100 : false,
       closing: false,
       createdAt: Date.now(),
-    }
+    };
 
     // Add toast to store
-    update((toasts) => [newToast, ...toasts])
+    update((toasts) => [newToast, ...toasts]);
 
     // Start timer for auto-removal
     if (duration > 0) {
-      const timer = startTimer(id, duration)
-      timers.set(id, timer)
+      const timer = startTimer(id, duration);
+      timers.set(id, timer);
     }
 
-    return id
+    return id;
   }
 
   /**
@@ -88,16 +88,16 @@ function createToastStore() {
       update((toasts) => {
         return toasts.map((toast) => {
           if (toast.id === id && toast.progress !== false) {
-            const elapsed = Date.now() - toast.createdAt
-            const remaining = Math.max(0, duration - elapsed)
-            const progress = (remaining / duration) * 100
+            const elapsed = Date.now() - toast.createdAt;
+            const remaining = Math.max(0, duration - elapsed);
+            const progress = (remaining / duration) * 100;
 
-            return { ...toast, progress }
+            return { ...toast, progress };
           }
-          return toast
-        })
-      })
-    }, 100)
+          return toast;
+        });
+      });
+    }, 100);
 
     // Timeout for removal
     const timeout = setTimeout(() => {
@@ -105,19 +105,19 @@ function createToastStore() {
       update((toasts) => {
         return toasts.map((toast) => {
           if (toast.id === id) {
-            return { ...toast, closing: true }
+            return { ...toast, closing: true };
           }
-          return toast
-        })
-      })
+          return toast;
+        });
+      });
 
       // Remove after animation completes
       setTimeout(() => {
-        remove(id)
-      }, 200) // Match animation duration
-    }, duration)
+        remove(id);
+      }, 200); // Match animation duration
+    }, duration);
 
-    return { interval, timeout }
+    return { interval, timeout };
   }
 
   /**
@@ -127,14 +127,14 @@ function createToastStore() {
   function remove(id) {
     // Clear timers
     if (timers.has(id)) {
-      const timer = timers.get(id)
-      clearInterval(timer.interval)
-      clearTimeout(timer.timeout)
-      timers.delete(id)
+      const timer = timers.get(id);
+      clearInterval(timer.interval);
+      clearTimeout(timer.timeout);
+      timers.delete(id);
     }
 
     // Remove from store
-    update((toasts) => toasts.filter((toast) => toast.id !== id))
+    update((toasts) => toasts.filter((toast) => toast.id !== id));
   }
 
   /**
@@ -143,26 +143,26 @@ function createToastStore() {
    */
   function pause(id) {
     if (timers.has(id)) {
-      const timer = timers.get(id)
-      clearInterval(timer.interval)
-      clearTimeout(timer.timeout)
+      const timer = timers.get(id);
+      clearInterval(timer.interval);
+      clearTimeout(timer.timeout);
 
       // Store remaining time
       update((toasts) => {
         return toasts.map((toast) => {
           if (toast.id === id) {
-            const elapsed = Date.now() - toast.createdAt
-            const remaining = Math.max(0, toast.duration - elapsed)
+            const elapsed = Date.now() - toast.createdAt;
+            const remaining = Math.max(0, toast.duration - elapsed);
 
             return {
               ...toast,
               remaining,
               paused: true,
-            }
+            };
           }
-          return toast
-        })
-      })
+          return toast;
+        });
+      });
     }
   }
 
@@ -172,15 +172,15 @@ function createToastStore() {
    */
   function resume(id) {
     update((toasts) => {
-      const toastToResume = toasts.find((toast) => toast.id === id && toast.paused)
+      const toastToResume = toasts.find((toast) => toast.id === id && toast.paused);
 
       if (toastToResume) {
         // Update creation time to account for pause
-        const newCreatedAt = Date.now() - (toastToResume.duration - toastToResume.remaining)
+        const newCreatedAt = Date.now() - (toastToResume.duration - toastToResume.remaining);
 
         // Restart timer
-        const timer = startTimer(id, toastToResume.remaining)
-        timers.set(id, timer)
+        const timer = startTimer(id, toastToResume.remaining);
+        timers.set(id, timer);
 
         // Update toast
         return toasts.map((toast) => {
@@ -190,14 +190,14 @@ function createToastStore() {
               createdAt: newCreatedAt,
               paused: false,
               remaining: undefined,
-            }
+            };
           }
-          return toast
-        })
+          return toast;
+        });
       }
 
-      return toasts
-    })
+      return toasts;
+    });
   }
 
   /**
@@ -206,13 +206,13 @@ function createToastStore() {
   function clear() {
     // Clear all timers
     timers.forEach((timer) => {
-      clearInterval(timer.interval)
-      clearTimeout(timer.timeout)
-    })
-    timers.clear()
+      clearInterval(timer.interval);
+      clearTimeout(timer.timeout);
+    });
+    timers.clear();
 
     // Clear store
-    update(() => [])
+    update(() => []);
   }
 
   /**
@@ -226,9 +226,9 @@ function createToastStore() {
     const config =
       typeof message === "string"
         ? { message, title, duration }
-        : { ...message, variant: "success" }
+        : { ...message, variant: "success" };
 
-    return add({ ...config, variant: "success" })
+    return add({ ...config, variant: "success" });
   }
 
   /**
@@ -240,9 +240,9 @@ function createToastStore() {
    */
   function error(message, title, duration) {
     const config =
-      typeof message === "string" ? { message, title, duration } : { ...message, variant: "error" }
+      typeof message === "string" ? { message, title, duration } : { ...message, variant: "error" };
 
-    return add({ ...config, variant: "error" })
+    return add({ ...config, variant: "error" });
   }
 
   /**
@@ -256,9 +256,9 @@ function createToastStore() {
     const config =
       typeof message === "string"
         ? { message, title, duration }
-        : { ...message, variant: "warning" }
+        : { ...message, variant: "warning" };
 
-    return add({ ...config, variant: "warning" })
+    return add({ ...config, variant: "warning" });
   }
 
   /**
@@ -270,9 +270,9 @@ function createToastStore() {
    */
   function info(message, title, duration) {
     const config =
-      typeof message === "string" ? { message, title, duration } : { ...message, variant: "info" }
+      typeof message === "string" ? { message, title, duration } : { ...message, variant: "info" };
 
-    return add({ ...config, variant: "info" })
+    return add({ ...config, variant: "info" });
   }
 
   return {
@@ -286,11 +286,11 @@ function createToastStore() {
     error,
     warning,
     info,
-  }
+  };
 }
 
 // Create and export toast store
-export const toastStore = createToastStore()
+export const toastStore = createToastStore();
 
 // Alias for add method
-export const showToast = toastStore.add
+export const showToast = toastStore.add;

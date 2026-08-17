@@ -1,3 +1,16 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "align", type: "string", description: "Column alignment (left, center, right)", default: "\"left\"", optional: true },
+  { name: "sortable", type: "boolean", description: "Whether the column is sortable", default: "false", optional: true },
+  { name: "sortDirection", type: "string", description: "Sort direction (asc, desc, none)", default: "\"none\"", optional: true },
+  { name: "scope", type: "string", description: "Column scope (col, row)", default: "\"col\"", optional: true },
+  { name: "width", type: "string", description: "Column width (e.g., '200px', '25%')", optional: false },
+  { name: "truncate", type: "boolean", description: "Whether to truncate overflowing text", default: "false", optional: true },
+  { name: "onsort", type: "(event: CustomEvent) => void", description: "Sort event handler", optional: false, eventDetail: "unknown" },
+];
+</script>
+
 <script lang="ts">
 /**
  * @component

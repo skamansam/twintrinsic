@@ -6,6 +6,8 @@ Separator documentation page
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Separator from "$lib/components/Separator/Separator.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as SeparatorModule from "$lib/components/Separator/Separator.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -70,48 +72,7 @@ import Separator from "$lib/components/Separator/Separator.svelte"
   <CodeBlock language="svelte">{`<Separator color="primary">Primary</Separator>`}</CodeBlock>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>vertical</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the separator should be vertical</td>
-      </tr>
-      <tr>
-        <td><code>color</code></td>
-        <td><code>"default" | "primary" | "success" | "warning" | "error"</code></td>
-        <td><code>"default"</code></td>
-        <td>Color variant of the separator</td>
-      </tr>
-      <tr>
-        <td><code>as</code></td>
-        <td><code>"div" | "hr"</code></td>
-        <td><code>hasContent ? "div" : "hr"</code></td>
-        <td>HTML element to render</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>ariaLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>ARIA label</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={SeparatorModule} />
 
   <h2>Slots</h2>
   <table>

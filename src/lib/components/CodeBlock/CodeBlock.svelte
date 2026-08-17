@@ -33,6 +33,16 @@ Usage:
 </CodeBlock>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "language", type: "string", description: "The language for syntax highlighting", default: "\"\"", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "pluginSource", type: "\"unpkg\" | \"esm.sh\" | \"jsdelivr\" | string", description: "CDN to use for autoloader, or custom path to prism components folder", default: "\"unpkg\"", optional: true },
+  { name: "plugins", type: "string[]", description: "List of plugin names (e.g., \"autoloader\") or full paths to load", default: "[]", optional: true },
+  { name: "title", type: "string", description: "Optional title shown in the code header", optional: true },
+];
+</script>
+
 <script lang="ts">
 // Must be imported before `prismjs`: it intercepts the `window.Prism` global
 // assignment so `Prism.manual = true` is set before Prism's UMD bootstrap
@@ -40,8 +50,8 @@ Usage:
 // relative `components/` path and 404). See prism-guard.ts.
 import "./prism-guard.js";
 import Prism from "prismjs";
-import { onDestroy, onMount } from "svelte";
 import type { Snippet } from "svelte";
+import { onDestroy, onMount } from "svelte";
 import { detectLanguage } from "../../helpers/detectLanguage.js"
 import "prismjs/plugins/autoloader/prism-autoloader";
 

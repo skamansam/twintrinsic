@@ -35,10 +35,7 @@ declare module "prismjs" {
          * Eagerly load one or more languages. Calls `callback()` once all
          * requested languages are available (or immediately if cached).
          */
-        loadLanguages: (
-          languages: string | string[],
-          callback?: () => void,
-        ) => void;
+        loadLanguages: (languages: string | string[], callback?: () => void) => void;
       };
       // biome-ignore lint/suspicious/noExplicitAny: other plugins are opaque
       [key: string]: any;

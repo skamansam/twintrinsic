@@ -44,10 +44,26 @@ export type CardProps = {
   /** Whether the card is clickable */
   clickable?: boolean
   children?: Snippet
+  /** Header content rendered at the top of the card */
   header?: Snippet
+  /** Footer content rendered at the bottom of the card */
   footer?: Snippet
+  /** Media content (image, video, etc.) rendered above the card body */
   media?: Snippet
 }
+
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label", optional: true },
+  { name: "hoverable", type: "boolean", description: "Whether to add hover effects", default: "false", optional: true },
+  { name: "shadow", type: "boolean", description: "Whether to add shadow", default: "true", optional: true },
+  { name: "shadowSize", type: "\"none\" | \"sm\" | \"md\" | \"lg\" | \"xl\"", description: "Shadow size when shadow is true", default: "\"md\"", optional: true },
+  { name: "clickable", type: "boolean", description: "Whether the card is clickable", default: "false", optional: true },
+  { name: "header", type: "Snippet", description: "Header content rendered at the top of the card", optional: true },
+  { name: "footer", type: "Snippet", description: "Footer content rendered at the bottom of the card", optional: true },
+  { name: "media", type: "Snippet", description: "Media content (image, video, etc.) rendered above the card body", optional: true },
+];
 </script>
 
 <script lang="ts">

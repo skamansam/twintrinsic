@@ -18,6 +18,23 @@ Usage:
 </Form>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "method", type: "string", description: "Form method (get or post)", default: "\"post\"", optional: true },
+  { name: "action", type: "string", description: "Form action URL", default: "\"\"", optional: true },
+  { name: "validate", type: "boolean", description: "Whether to validate the form on submission", default: "true", optional: true },
+  { name: "useNativeValidation", type: "boolean", description: "Whether to use the browser's built-in validation UI", default: "true", optional: true },
+  { name: "layout", type: "string", description: "Layout direction (vertical or horizontal)", default: "\"vertical\"", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether to disable all form controls", default: "false", optional: true },
+  { name: "loading", type: "boolean", description: "Whether the form is in a loading state", default: "false", optional: true },
+  { name: "onsubmit", type: "(event: CustomEvent<{ data: Record<string, unknown>; formData: FormData; form: HTMLFormElement }>) => void", description: "Submit event handler", optional: true, eventDetail: "{ data: Record<string, unknown" },
+  { name: "onchange", type: "(event: CustomEvent) => void", description: "Change event handler", optional: true, eventDetail: "unknown" },
+  { name: "onerror", type: "(event: CustomEvent<{ errors: Record<string, string> }>) => void", description: "Error event handler", optional: true, eventDetail: "{ errors: Record<string, string" },
+];
+</script>
+
 <script lang="ts">
 import { setContext } from "svelte"
 import type { FormContext } from "./formContext.js"
@@ -210,27 +227,28 @@ function resetForm(): void {
   }
 }
 
-// Provide form context to child components
-$effect(() => {
-  const context: FormContext = {
-    registerField: (name: string, initialValue: unknown) => {
-      if (initialValue !== undefined && formData[name] === undefined) {
-        formData[name] = initialValue
-      }
+// Provide form context to child components. Called at init (not in `$effect`)
+// so the context is available during server-side rendering.
+const context: FormContext = {
+  registerField: (name: string, initialValue: unknown) => {
+    if (initialValue !== undefined && formData[name] === undefined) {
+      formData[name] = initialValue
+    }
 
-      return {
-        getValue: (): unknown => formData[name],
-        setValue: (value: unknown): void => updateField(name, value),
-        getError: () => errors[name],
-        isTouched: () => !!touched[name],
-        isDisabled: () => disabled || loading || isSubmitting,
-      }
-    },
-    layout,
-    disabled: () => disabled || loading || isSubmitting,
-  }
-  setContext<FormContext>("form", context)
-})
+    return {
+      getValue: (): unknown => formData[name],
+      setValue: (value: unknown): void => updateField(name, value),
+      getError: () => errors[name],
+      isTouched: () => !!touched[name],
+      isDisabled: () => disabled || loading || isSubmitting,
+    }
+  },
+  get layout() {
+    return layout
+  },
+  disabled: () => disabled || loading || isSubmitting,
+}
+setContext<FormContext>("form", context)
 
 // Expose form API to parent components
 const formApi = {

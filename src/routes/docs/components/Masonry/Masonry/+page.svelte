@@ -1,7 +1,8 @@
 <script lang="ts">
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
-import Masonry from "$lib/components/Masonry/Masonry.svelte"
+import Masonry, * as MasonryModule from "$lib/components/Masonry/Masonry.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 </script>
 
 <style lang="postcss">
@@ -62,7 +63,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
   <h2>Usage</h2>
 
   <h3>Basic Masonry</h3>
-  <div class="masonry-demo">
+  <div class="masonry-demo" data-testid="masonry-basic">
     <Masonry columns={3} gap={16}>
       <div class="masonry-item item-1">Item 1</div>
       <div class="masonry-item item-2">Item 2</div>
@@ -83,7 +84,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
 </Masonry>`}</CodeBlock>
 
   <h3>Responsive Masonry</h3>
-  <div class="masonry-demo">
+  <div class="masonry-demo" data-testid="masonry-responsive">
     <Masonry 
       columns={{ default: 1, sm: 2, md: 3, lg: 4 }}
       gap={16}
@@ -114,7 +115,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
 </Masonry>`}</CodeBlock>
 
   <h3>Fixed Column Width</h3>
-  <div class="masonry-demo">
+  <div class="masonry-demo" data-testid="masonry-fixed-width">
     <Masonry 
       columnWidth="150px"
       gap={16}
@@ -179,78 +180,7 @@ import Masonry from "$lib/components/Masonry/Masonry.svelte"
 </Masonry>`}</CodeBlock>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>columns</code></td>
-        <td><code>number | Object</code></td>
-        <td><code>3</code></td>
-        <td>Number of columns or responsive breakpoints object</td>
-      </tr>
-      <tr>
-        <td><code>gap</code></td>
-        <td><code>number</code></td>
-        <td><code>16</code></td>
-        <td>Gap between items in pixels</td>
-      </tr>
-      <tr>
-        <td><code>columnWidth</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Fixed column width (overrides columns)</td>
-      </tr>
-      <tr>
-        <td><code>centered</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to center the grid</td>
-      </tr>
-      <tr>
-        <td><code>animated</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to animate item positions</td>
-      </tr>
-      <tr>
-        <td><code>animationDuration</code></td>
-        <td><code>number</code></td>
-        <td><code>300</code></td>
-        <td>Animation duration in milliseconds</td>
-      </tr>
-      <tr>
-        <td><code>animationEasing</code></td>
-        <td><code>string</code></td>
-        <td><code>"ease-out"</code></td>
-        <td>Animation easing function</td>
-      </tr>
-      <tr>
-        <td><code>ariaLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>"Masonry grid"</code></td>
-        <td>ARIA label for the grid</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td><code>crypto.randomUUID()</code></td>
-        <td>HTML id for accessibility</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={MasonryModule} />
 
   <h2>Responsive Breakpoints</h2>
   <p>

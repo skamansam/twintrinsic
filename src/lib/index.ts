@@ -26,6 +26,7 @@ export { default as CodeEditor } from "./components/CodeEditor/CodeEditor.svelte
 // Layout Components
 export { default as Container } from "./components/Container/Container.svelte";
 export { default as DataTable } from "./components/DataTable/DataTable.svelte";
+export { default as EventsTable } from "./components/EventsTable/EventsTable.svelte";
 export { default as Footer } from "./components/Footer/Footer.svelte";
 // Form Components
 export { default as AutoComplete } from "./components/Form/AutoComplete.svelte";
@@ -83,6 +84,7 @@ export { default as Hero } from "./components/Panel/Hero/Hero.svelte";
 export { default as LazyPanel } from "./components/Panel/LazyPanel.svelte";
 export { default as Panel } from "./components/Panel/Panel.svelte";
 export { default as Progress } from "./components/Progress/Progress.svelte";
+export { default as PropsTable } from "./components/PropsTable/PropsTable.svelte";
 export { default as Section } from "./components/Section/Section.svelte";
 export { default as Separator } from "./components/Separator/Separator.svelte";
 export { default as Sidebar } from "./components/Sidebar/Sidebar.svelte";
@@ -113,7 +115,6 @@ export {
   default as TreeMenu,
   type MenuItem as TreeMenuItem,
 } from "./components/TreeMenu/TreeMenu.svelte";
-export { EventsTable, PropsTable } from "./docs/index.js";
 // Shared Helpers
 export {
   detectLanguage,
@@ -121,6 +122,12 @@ export {
   getItemLabel,
   getItemValue,
 } from "./helpers/index.js";
+export type {
+  EventDataHash,
+  PropDataHash,
+  PropDescriptor,
+  PropMetadata,
+} from "./helpers/propMetadata.js";
 // Icon Manager
 export {
   type IconConfig,

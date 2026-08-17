@@ -1,3 +1,19 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "value", type: "number", description: "Current value", optional: false },
+  { name: "min", type: "number", description: "Minimum value", default: "0", optional: true },
+  { name: "max", type: "number", description: "Maximum value", default: "100", optional: true },
+  { name: "label", type: "string", description: "Label text", optional: true },
+  { name: "unit", type: "string", description: "Unit of measurement", optional: true },
+  { name: "color", type: "'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info'", description: "Color theme for needle/center", default: "'primary'", optional: true },
+  { name: "size", type: "number", description: "Size in pixels", default: "200", optional: true },
+  { name: "arcStart", type: "number", description: "Arc start angle in degrees (0 = horizontal left, 90 = vertical top)", default: "0", optional: true },
+  { name: "arcEnd", type: "number", description: "Arc end angle in degrees", default: "180", optional: true },
+  { name: "tics", type: "TicConfig", description: "Tic configuration", default: "{}", optional: true },
+  { name: "zones", type: "ColorZone[]", description: "Color zones for the arc", default: "[]", optional: true },
+];
+</script>
+
 <script lang="ts">
 	interface TicConfig {
 		/** Show tic marks */

@@ -1,3 +1,15 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "label", type: "string", description: "KPI label", optional: false },
+  { name: "value", type: "number", description: "Current value", optional: false },
+  { name: "target", type: "number", description: "Target value", optional: false },
+  { name: "unit", type: "string", description: "Unit of measurement", optional: true },
+  { name: "icon", type: "string", description: "Icon component or name", optional: true },
+  { name: "color", type: "'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info'", description: "Color theme", default: "'primary'", optional: true },
+  { name: "onclick", type: "(event: MouseEvent | KeyboardEvent) => void", description: "Callback when card is clicked (mouse or keyboard activation)", optional: true },
+];
+</script>
+
 <script lang="ts">
 	interface Props {
 		/** KPI label */

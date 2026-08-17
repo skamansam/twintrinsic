@@ -1,3 +1,32 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "darkMode", type: "boolean", description: "Whether dark mode is enabled", default: "false", optional: true },
+  { name: "appName", type: "string", description: "Application name (used as the document title and default brand)", default: "\"Twintrinsic App\"", optional: true },
+  { name: "brand", type: "Brand", description: "Brand display: a string or an object with name, logo, href, and tagline", default: "appName", optional: true },
+  { name: "user", type: "User", description: "Current user object, or null when signed out", default: "null", optional: true },
+  { name: "navItems", type: "NavItem[]", description: "Navigation items shown in the header", default: "[]", optional: true },
+  { name: "siteLinks", type: "NavItem[]", description: "Site-level links (fall back to `navItems` when omitted)", optional: true },
+  { name: "siteMenu", type: "MenuItem[]", description: "Menu items rendered in the left sidebar", optional: true },
+  { name: "showSearch", type: "boolean", description: "Whether to show the search input in the header", default: "false", optional: true },
+  { name: "showNotifications", type: "boolean", description: "Whether to show the notifications button in the header", default: "false", optional: true },
+  { name: "leftSidebarHidden", type: "boolean", description: "Whether to hide the left sidebar", default: "false", optional: true },
+  { name: "rightSidebarHidden", type: "boolean", description: "Whether to hide the right sidebar", default: "false", optional: true },
+  { name: "leftSidebarWidth", type: "string", description: "CSS width of the left sidebar", default: "\"16rem\"", optional: true },
+  { name: "rightSidebarWidth", type: "string", description: "CSS width of the right sidebar", default: "\"auto\"", optional: true },
+  { name: "leftSidebarCollapsedWidth", type: "string", description: "CSS width of the left sidebar when collapsed", default: "\"4rem\"", optional: true },
+  { name: "rightSidebarCollapsedWidth", type: "string", description: "CSS width of the right sidebar when collapsed", default: "\"4rem\"", optional: true },
+  { name: "leftPanel", type: "Snippet | null", description: "Snippet rendered inside the left sidebar", optional: true },
+  { name: "rightPanel", type: "Snippet | null", description: "Snippet rendered inside the right sidebar", optional: true },
+  { name: "header", type: "Snippet | null", description: "Custom header snippet (overrides the default AppHeader)", optional: true },
+  { name: "footer", type: "Snippet | null", description: "Footer snippet rendered below the main content", optional: true },
+  { name: "themeToggleHidden", type: "boolean", description: "Whether to hide the theme toggle in the header", default: "false", optional: true },
+  { name: "onsearch", type: "(payload: { query: string }) => void", description: "Callback fired when the user types in the header search input", optional: true },
+  { name: "onsignout", type: "() => void", description: "Callback fired when the user signs out", optional: true },
+  { name: "onleftSidebarToggle", type: "(payload: { expanded: boolean }) => void", description: "Callback fired when the left sidebar is toggled", optional: true },
+  { name: "onrightSidebarToggle", type: "(payload: { expanded: boolean }) => void", description: "Callback fired when the right sidebar is toggled", optional: true },
+];
+</script>
+
 <script lang="ts">
 import type { Snippet } from "svelte"
 import { setContext } from "svelte"
@@ -10,32 +39,55 @@ type Brand = string | { name: string; logo?: string | Snippet; href?: string; ta
 type User = { name: string; avatar?: string; href?: string; role?: string; email?: string } | null
 
 interface Props {
+  /** Whether dark mode is enabled */
   darkMode?: boolean
+  /** Application name (used as the document title and default brand) */
   appName?: string
+  /** Brand display: a string or an object with name, logo, href, and tagline */
   brand?: Brand
+  /** Current user object, or null when signed out */
   user?: User
+  /** Navigation items shown in the header */
   navItems?: NavItem[]
+  /** Site-level links (fall back to `navItems` when omitted) */
   siteLinks?: NavItem[]
+  /** Menu items rendered in the left sidebar */
   siteMenu?: MenuItem[]
+  /** Whether to show the search input in the header */
   showSearch?: boolean
+  /** Whether to show the notifications button in the header */
   showNotifications?: boolean
+  /** Whether to hide the left sidebar */
   leftSidebarHidden?: boolean
+  /** Whether to hide the right sidebar */
   rightSidebarHidden?: boolean
+  /** CSS width of the left sidebar */
   leftSidebarWidth?: string
+  /** CSS width of the right sidebar */
   rightSidebarWidth?: string
+  /** CSS width of the left sidebar when collapsed */
   leftSidebarCollapsedWidth?: string
+  /** CSS width of the right sidebar when collapsed */
   rightSidebarCollapsedWidth?: string
+  /** Snippet rendered inside the left sidebar */
   leftPanel?: Snippet | null
+  /** Snippet rendered inside the right sidebar */
   rightPanel?: Snippet | null
+  /** Custom header snippet (overrides the default AppHeader) */
   header?: Snippet | null
+  /** Footer snippet rendered below the main content */
   footer?: Snippet | null
+  /** Main content */
   children?: Snippet | null
+  /** Whether to hide the theme toggle in the header */
   themeToggleHidden?: boolean
+  /** Callback fired when the user types in the header search input */
   onsearch?: (payload: { query: string }) => void
+  /** Callback fired when the user signs out */
   onsignout?: () => void
-  // onleftSidebarVisibilityChange?: (payload: { visible: boolean }) => void
-  // onrightSidebarVisibilityChange?: (payload: { visible: boolean }) => void
+  /** Callback fired when the left sidebar is toggled */
   onleftSidebarToggle?: (payload: { expanded: boolean }) => void
+  /** Callback fired when the right sidebar is toggled */
   onrightSidebarToggle?: (payload: { expanded: boolean }) => void
 }
 

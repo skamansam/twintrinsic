@@ -2,7 +2,8 @@
 import { getContext } from "svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
-import Table from "$lib/components/Table/Table.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import Table, * as TableModule from "$lib/components/Table/Table.svelte"
 </script>
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
@@ -18,7 +19,7 @@ import Table from "$lib/components/Table/Table.svelte"
   <h2>Usage</h2>
 
   <h3>Basic Table</h3>
-  <div class="p-4 bg-surface rounded-md mb-4 overflow-x-auto">
+  <div class="p-4 bg-surface rounded-md mb-4 overflow-x-auto" data-testid="table-basic">
     <Table>
       <thead>
         <tr>
@@ -65,7 +66,7 @@ import Table from "$lib/components/Table/Table.svelte"
 </Table>`}</CodeBlock>
 
   <h3>Striped Table</h3>
-  <div class="p-4 bg-surface rounded-md mb-4 overflow-x-auto">
+  <div class="p-4 bg-surface rounded-md mb-4 overflow-x-auto" data-testid="table-striped">
     <Table striped>
       <thead>
         <tr>
@@ -99,7 +100,7 @@ import Table from "$lib/components/Table/Table.svelte"
 </Table>`}</CodeBlock>
 
   <h3>Bordered Table</h3>
-  <div class="p-4 bg-surface rounded-md mb-4 overflow-x-auto">
+  <div class="p-4 bg-surface rounded-md mb-4 overflow-x-auto" data-testid="table-bordered">
     <Table bordered>
       <thead>
         <tr>
@@ -125,7 +126,7 @@ import Table from "$lib/components/Table/Table.svelte"
 </Table>`}</CodeBlock>
 
   <h3>Hoverable Table</h3>
-  <div class="p-4 bg-surface rounded-md mb-4 overflow-x-auto">
+  <div class="p-4 bg-surface rounded-md mb-4 overflow-x-auto" data-testid="table-hoverable">
     <Table hoverable>
       <thead>
         <tr>
@@ -151,7 +152,7 @@ import Table from "$lib/components/Table/Table.svelte"
 </Table>`}</CodeBlock>
 
   <h3>Compact Table</h3>
-  <div class="p-4 bg-surface rounded-md mb-4 overflow-x-auto">
+  <div class="p-4 bg-surface rounded-md mb-4 overflow-x-auto" data-testid="table-compact">
     <Table compact striped>
       <thead>
         <tr>
@@ -180,78 +181,7 @@ import Table from "$lib/components/Table/Table.svelte"
 </Table>`}</CodeBlock>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>bordered</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Add borders to the table and cells</td>
-      </tr>
-      <tr>
-        <td><code>striped</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Alternate row colors for better readability</td>
-      </tr>
-      <tr>
-        <td><code>hoverable</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Highlight rows on hover</td>
-      </tr>
-      <tr>
-        <td><code>compact</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Reduce padding for a more compact layout</td>
-      </tr>
-      <tr>
-        <td><code>fixed</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Use fixed table layout algorithm</td>
-      </tr>
-      <tr>
-        <td><code>responsive</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Enable horizontal scrolling on small screens</td>
-      </tr>
-      <tr>
-        <td><code>caption</code></td>
-        <td><code>string</code></td>
-        <td>-</td>
-        <td>Table caption for accessibility</td>
-      </tr>
-      <tr>
-        <td><code>ariaDescription</code></td>
-        <td><code>string</code></td>
-        <td>-</td>
-        <td>ARIA description for the table</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td>auto-generated</td>
-        <td>HTML id attribute</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={TableModule} />
 
   <h2>Slots</h2>
   <p>The Table component uses the default slot for its content. Use semantic HTML elements:</p>

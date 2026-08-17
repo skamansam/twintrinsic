@@ -24,6 +24,21 @@ Usage:
 </Table>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "bordered", type: "boolean", description: "Whether the table has borders", default: "false", optional: true },
+  { name: "striped", type: "boolean", description: "Whether the table has striped rows", default: "false", optional: true },
+  { name: "hoverable", type: "boolean", description: "Whether the table has hover effects on rows", default: "false", optional: true },
+  { name: "compact", type: "boolean", description: "Whether the table is compact (less padding)", default: "false", optional: true },
+  { name: "fixed", type: "boolean", description: "Whether the table has a fixed layout", default: "false", optional: true },
+  { name: "responsive", type: "boolean", description: "Whether the table is responsive (horizontal scrolling)", default: "true", optional: true },
+  { name: "caption", type: "string", description: "Caption for the table (for accessibility)", optional: true },
+  { name: "ariaDescription", type: "string", description: "ARIA description for the table", optional: true },
+];
+</script>
+
 <script lang="ts">
 import { setContext } from "svelte"
 
@@ -61,14 +76,21 @@ const {
   children = undefined,
 } = $props()
 
-// Provide context for child components
-$effect(() => {
-  setContext("table", {
-    bordered,
-    striped,
-    hoverable,
-    compact,
-  })
+// Provide context for child components. Called at init (not in `$effect`) so
+// the context is available during server-side rendering.
+setContext("table", {
+  get bordered() {
+    return bordered
+  },
+  get striped() {
+    return striped
+  },
+  get hoverable() {
+    return hoverable
+  },
+  get compact() {
+    return compact
+  },
 })
 </script>
 

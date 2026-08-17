@@ -6,9 +6,11 @@ Map documentation page
 	import { onMount } from 'svelte';
 	import CodeBlock from '$lib/components/CodeBlock/CodeBlock.svelte'
 	import Container from '$lib/components/Container/Container.svelte'
-	import Table from '$lib/components/Table/Table.svelte'
 	import MapComponent from '$lib/components/Map/Map.svelte';
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 	import CustomMapImage from "./fallout4-pipboy-highres.webp";
+import * as MapComponentModule from "$lib/components/Map/Map.svelte"
 
 	let customMapImageRef: any;
 	let customMarkersRef: any;
@@ -238,116 +240,10 @@ Map documentation page
 />`}</CodeBlock>
 
 	<h2>Props</h2>
-	<div class="not-prose mb-8 overflow-x-auto">
-		<Table striped>
-			<thead>
-				<tr>
-					<th>Prop</th>
-					<th>Type</th>
-					<th>Default</th>
-					<th>Description</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td><code>center</code></td>
-					<td><code>[number, number]</code></td>
-					<td><code>[51.505, -0.09]</code></td>
-					<td>Center coordinates [latitude, longitude]</td>
-				</tr>
-				<tr>
-					<td><code>zoom</code></td>
-					<td><code>number</code></td>
-					<td><code>13</code></td>
-					<td>Initial zoom level</td>
-				</tr>
-				<tr>
-					<td><code>minZoom</code></td>
-					<td><code>number</code></td>
-					<td><code>0</code></td>
-					<td>Minimum zoom level</td>
-				</tr>
-				<tr>
-					<td><code>maxZoom</code></td>
-					<td><code>number</code></td>
-					<td><code>18</code></td>
-					<td>Maximum zoom level</td>
-				</tr>
-				<tr>
-					<td><code>tileUrl</code></td>
-					<td><code>string</code></td>
-					<td>OpenStreetMap</td>
-					<td>Tile layer URL template</td>
-				</tr>
-				<tr>
-					<td><code>attribution</code></td>
-					<td><code>string</code></td>
-					<td>OpenStreetMap attribution</td>
-					<td>Tile layer attribution text</td>
-				</tr>
-				<tr>
-					<td><code>zoomControl</code></td>
-					<td><code>boolean</code></td>
-					<td><code>true</code></td>
-					<td>Enable zoom control</td>
-				</tr>
-				<tr>
-					<td><code>attributionControl</code></td>
-					<td><code>boolean</code></td>
-					<td><code>true</code></td>
-					<td>Enable attribution control</td>
-				</tr>
-				<tr>
-					<td><code>useSimpleCRS</code></td>
-					<td><code>boolean</code></td>
-					<td><code>false</code></td>
-					<td>Use simple CRS for custom image maps with pixel coordinates</td>
-				</tr>
-				<tr>
-					<td><code>imageWidth</code></td>
-					<td><code>number</code></td>
-					<td>-</td>
-					<td>Image width in pixels (required if useSimpleCRS is true)</td>
-				</tr>
-				<tr>
-					<td><code>imageHeight</code></td>
-					<td><code>number</code></td>
-					<td>-</td>
-					<td>Image height in pixels (required if useSimpleCRS is true)</td>
-				</tr>
-			</tbody>
-		</Table>
-	</div>
+	<PropsTable component={MapComponentModule} />
 
 	<h2>Events</h2>
-	<div class="not-prose mb-8 overflow-x-auto">
-		<Table striped>
-			<thead>
-				<tr>
-					<th>Event</th>
-					<th>Detail</th>
-					<th>Description</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td><code>onclick</code></td>
-					<td><code>&#123; lat: number, lng: number &#125;</code></td>
-					<td>Fired when the map is clicked</td>
-				</tr>
-				<tr>
-					<td><code>onzoomchange</code></td>
-					<td><code>&#123; zoom: number &#125;</code></td>
-					<td>Fired when the zoom level changes</td>
-				</tr>
-				<tr>
-					<td><code>onmove</code></td>
-					<td><code>&#123; center: [number, number] &#125;</code></td>
-					<td>Fired when the map is panned</td>
-				</tr>
-			</tbody>
-		</Table>
-	</div>
+	<EventsTable component={MapComponentModule} />
 
 	<h2>Tile Layer Providers</h2>
 	<p>Popular tile layer providers:</p>

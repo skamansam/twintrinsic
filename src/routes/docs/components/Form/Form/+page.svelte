@@ -5,12 +5,16 @@ Form documentation page
 
 <script lang="ts">
 import Button from "$lib/components/Button/Button.svelte"
-import Checkbox from "$lib/components/Form/Checkbox.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import Checkbox from "$lib/components/Form/Checkbox.svelte"
 import Form from "$lib/components/Form/Form.svelte"
 import FormField from "$lib/components/Form/FormField.svelte"
 import Input from "$lib/components/Form/Input.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as FormModule from "$lib/components/Form/Form.svelte"
+import * as FormFieldModule from "$lib/components/Form/FormField.svelte"
 </script>
 
 <style lang="postcss">
@@ -29,7 +33,7 @@ import Input from "$lib/components/Form/Input.svelte"
   <h2>Usage</h2>
 
   <h3>Basic Form</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="form-basic">
     <Form>
       <FormField label="Username" name="username" required>
         <Input placeholder="Enter username" />
@@ -68,7 +72,7 @@ import Input from "$lib/components/Form/Input.svelte"
 </Form>`}</CodeBlock>
 
   <h3>Horizontal Layout</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="form-horizontal">
     <Form layout="horizontal">
       <FormField label="First Name" name="firstName">
         <Input placeholder="Enter first name" />
@@ -99,7 +103,7 @@ import Input from "$lib/components/Form/Input.svelte"
 </Form>`}</CodeBlock>
 
   <h3>Form with Validation</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="form-validation">
     <Form validate>
       <FormField label="Username" name="username" required helpText="Username must be at least 3 characters">
         <Input placeholder="Enter username" minlength={3} />
@@ -138,7 +142,7 @@ import Input from "$lib/components/Form/Input.svelte"
 </Form>`}</CodeBlock>
 
   <h3>Form States</h3>
-  <div class="p-4 bg-surface rounded-md mb-4">
+  <div class="p-4 bg-surface rounded-md mb-4" data-testid="form-states">
     <Form disabled>
       <FormField label="Username" name="username">
         <Input placeholder="Enter username" />
@@ -201,174 +205,13 @@ import Input from "$lib/components/Form/Input.svelte"
 </Form>`}</CodeBlock>
 
   <h2>Form Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>method</code></td>
-        <td><code>string</code></td>
-        <td><code>"post"</code></td>
-        <td>Form method (get or post)</td>
-      </tr>
-      <tr>
-        <td><code>action</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Form action URL</td>
-      </tr>
-      <tr>
-        <td><code>validate</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to validate the form on submission</td>
-      </tr>
-      <tr>
-        <td><code>useNativeValidation</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to use the browser's built-in validation UI</td>
-      </tr>
-      <tr>
-        <td><code>layout</code></td>
-        <td><code>"vertical" | "horizontal"</code></td>
-        <td><code>"vertical"</code></td>
-        <td>Layout direction</td>
-      </tr>
-      <tr>
-        <td><code>disabled</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to disable all form controls</td>
-      </tr>
-      <tr>
-        <td><code>loading</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the form is in a loading state</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td><code>crypto.randomUUID()</code></td>
-        <td>HTML id for accessibility</td>
-      </tr>
-    </tbody>
-  </table>
+  <PropsTable component={FormModule} />
 
   <h2>FormField Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>name</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Field name (used for form data)</td>
-      </tr>
-      <tr>
-        <td><code>label</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Field label</td>
-      </tr>
-      <tr>
-        <td><code>helpText</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Help text displayed below the field</td>
-      </tr>
-      <tr>
-        <td><code>error</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Error message to display</td>
-      </tr>
-      <tr>
-        <td><code>required</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the field is required</td>
-      </tr>
-      <tr>
-        <td><code>disabled</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the field is disabled</td>
-      </tr>
-      <tr>
-        <td><code>hideLabel</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to hide the label visually (still accessible to screen readers)</td>
-      </tr>
-      <tr>
-        <td><code>layout</code></td>
-        <td><code>"vertical" | "horizontal"</code></td>
-        <td><code>undefined</code></td>
-        <td>Layout direction (overrides form layout)</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td><code>crypto.randomUUID()</code></td>
-        <td>HTML id for accessibility</td>
-      </tr>
-    </tbody>
-  </table>
+  <PropsTable component={FormFieldModule} />
 
   <h2>Form Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>submit</code></td>
-        <td><code>{"{ data, formData, form }"}</code></td>
-        <td>Fired when the form is submitted and validation passes</td>
-      </tr>
-      <tr>
-        <td><code>invalid</code></td>
-        <td><code>{"{ errors }"}</code></td>
-        <td>Fired when the form is submitted but validation fails</td>
-      </tr>
-      <tr>
-        <td><code>ready</code></td>
-        <td><code>{"{ form }"}</code></td>
-        <td>Fired when the form is initialized with the form API</td>
-      </tr>
-    </tbody>
-  </table>
+  <EventsTable component={FormModule} />
 
   <h2>Form API</h2>
   <p>

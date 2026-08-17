@@ -2,6 +2,9 @@
 import Button from "$lib/components/Button/Button.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as ButtonModule from "$lib/components/Button/Button.svelte"
 </script>
 <!--
 @component
@@ -136,114 +139,10 @@ Button documentation page
 <Button href="https://example.com" target="_blank" variant="primary">External Link</Button>`}</CodeBlock>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>type</code></td>
-        <td><code>"button" | "submit" | "reset"</code></td>
-        <td><code>"button"</code></td>
-        <td>Button type (only applies when rendered as a button)</td>
-      </tr>
-      <tr>
-        <td><code>variant</code></td>
-        <td><code>"default" | "primary" | "secondary" | "outline" | "ghost" | "link"</code></td>
-        <td><code>"default"</code></td>
-        <td>Visual style variant</td>
-      </tr>
-      <tr>
-        <td><code>size</code></td>
-        <td><code>"xs" | "sm" | "md" | "lg" | "xl"</code></td>
-        <td><code>"md"</code></td>
-        <td>Button size</td>
-      </tr>
-      <tr>
-        <td><code>disabled</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the button is disabled</td>
-      </tr>
-      <tr>
-        <td><code>loading</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the button is in a loading state</td>
-      </tr>
-      <tr>
-        <td><code>icon</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Icon to display (HTML or SVG string)</td>
-      </tr>
-      <tr>
-        <td><code>iconPosition</code></td>
-        <td><code>"left" | "right"</code></td>
-        <td><code>"left"</code></td>
-        <td>Icon position</td>
-      </tr>
-      <tr>
-        <td><code>fullWidth</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether the button should take up the full width of its container</td>
-      </tr>
-      <tr>
-        <td><code>href</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Link URL (renders as <code>&lt;a&gt;</code> instead of <code>&lt;button&gt;</code>)</td>
-      </tr>
-      <tr>
-        <td><code>target</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Link target (_blank, _self, etc.)</td>
-      </tr>
-      <tr>
-        <td><code>ariaLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>ARIA label for accessibility</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td><code>crypto.randomUUID()</code></td>
-        <td>HTML id for accessibility</td>
-      </tr>
-    </tbody>
-  </table>
+  <PropsTable component={ButtonModule} />
 
   <h2>Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>click</code></td>
-        <td><code>Event</code></td>
-        <td>Fired when the button is clicked (not fired when disabled or loading)</td>
-      </tr>
-    </tbody>
-  </table>
+  <EventsTable component={ButtonModule} />
 
   <h2>Accessibility</h2>
   <p>

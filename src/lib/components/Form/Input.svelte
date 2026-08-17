@@ -78,6 +78,8 @@ export type InputProps = {
   onblur?: (event: FocusEvent) => void
   /** Click event handler on the input field */
   onclick?: (event: MouseEvent) => void
+  /** Mousedown event handler on the input field */
+  onmousedown?: (event: MouseEvent) => void
   /** Keydown event handler on the input field */
   onkeydown?: (event: KeyboardEvent) => void
   /** Input event handler */
@@ -87,6 +89,36 @@ export type InputProps = {
   /** Right icon click handler */
   onrightIconClick?: () => void
 }
+
+export const propsMetadata = [
+  { name: "label", type: "string", description: "Input label text", optional: true },
+  { name: "type", type: "string", description: "Input type (text, email, password, etc.)", default: "\"text\"", optional: true },
+  { name: "value", type: "string", description: "Input value", default: "\"\"", optional: true },
+  { name: "placeholder", type: "string", description: "Placeholder text", default: "\"\"", optional: true },
+  { name: "name", type: "string", description: "Name attribute", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "Id attribute", default: "crypto.randomUUID()", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the input is disabled", default: "false", optional: true },
+  { name: "required", type: "boolean", description: "Whether the input is required", default: "false", optional: true },
+  { name: "floating", type: "boolean", description: "Whether to use floating labels", default: "false", optional: true },
+  { name: "readonly", type: "boolean", description: "Whether the input is readonly", default: "false", optional: true },
+  { name: "error", type: "string", description: "Error message to display", default: "\"\"", optional: true },
+  { name: "helpText", type: "string", description: "Help text to display below input", default: "\"\"", optional: true },
+  { name: "leftIcon", type: "string", description: "Left icon name", default: "\"\"", optional: true },
+  { name: "rightIcon", type: "string", description: "Right icon name", default: "\"\"", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "mask", type: "string", description: "Input mask pattern", default: "\"\"", optional: true },
+  { name: "minlength", type: "number", description: "Minimum length validation", optional: true },
+  { name: "maxlength", type: "number", description: "Maximum length validation", optional: true },
+  { name: "ariaDescription", type: "string", description: "ARIA description", default: "\"\"", optional: true },
+  { name: "onfocus", type: "(event: FocusEvent) => void", description: "Focus event handler", optional: true },
+  { name: "onblur", type: "(event: FocusEvent) => void", description: "Blur event handler", optional: true },
+  { name: "onclick", type: "(event: MouseEvent) => void", description: "Click event handler on the input field", optional: true },
+  { name: "onmousedown", type: "(event: MouseEvent) => void", description: "Mousedown event handler on the input field", optional: true },
+  { name: "onkeydown", type: "(event: KeyboardEvent) => void", description: "Keydown event handler on the input field", optional: true },
+  { name: "oninput", type: "(event: CustomEvent<{ value: string }>) => void", description: "Input event handler", optional: true, eventDetail: "{ value: string }" },
+  { name: "onleftIconClick", type: "() => void", description: "Left icon click handler", optional: true },
+  { name: "onrightIconClick", type: "() => void", description: "Right icon click handler", optional: true },
+];
 </script>
 
 <script lang="ts">
@@ -138,6 +170,8 @@ const {
   onblur,
   /** @type {(event: MouseEvent) => void} - Click event handler on the input field */
   onclick,
+  /** @type {(event: MouseEvent) => void} - Mousedown event handler on the input field */
+  onmousedown,
   /** @type {(event: KeyboardEvent) => void} - Keydown event handler on the input field */
   onkeydown,
   /** @type {(event: CustomEvent) => void} - Input event handler */
@@ -290,6 +324,7 @@ const inputClasses = $derived(`
       onfocus={handleFocus}
       onblur={handleBlur}
       onclick={onclick}
+      onmousedown={onmousedown}
       onkeydown={onkeydown}
       oninput={handleInput}
     />

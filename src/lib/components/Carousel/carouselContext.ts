@@ -6,11 +6,11 @@
 
 export interface CarouselContext {
   /** Registers a new slide and returns its index within the carousel */
-  registerItem: () => number
+  registerItem: () => number;
   /** Currently active slide index (0-based) */
-  currentIndex: number
+  currentIndex: number;
   /** Transition effect name (slide, fade) */
-  transition: string
+  transition: string;
   /** Transition duration in milliseconds */
-  transitionDuration: number
+  transitionDuration: number;
 }

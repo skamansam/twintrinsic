@@ -40,6 +40,12 @@ Provides semantic, accessible tree navigation with minimal JavaScript.
     children?: MenuItem[];
     class?: string;
   }
+
+export const propsMetadata = [
+  { name: "items", type: "MenuItem[]", description: "Menu items to render (supports nested children)", default: "[]", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "showSearch", type: "boolean", description: "Whether to show a search input that filters items", default: "false", optional: true },
+];
 </script>
 
 <script lang="ts">
@@ -47,8 +53,11 @@ Provides semantic, accessible tree navigation with minimal JavaScript.
   import TreeMenuSelf from "./TreeMenu.svelte"
 
   interface Props {
+    /** Menu items to render (supports nested children) */
     items?: MenuItem[];
+    /** Additional CSS classes */
     class?: string;
+    /** Whether to show a search input that filters items */
     showSearch?: boolean;
   }
 

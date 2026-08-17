@@ -13,6 +13,16 @@ Usage:
 </Separator>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "vertical", type: "boolean", description: "Whether the separator should be vertical", default: "false", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label", optional: true },
+  { name: "color", type: "string", description: "Color variant", default: "\"default\"", optional: true },
+  { name: "as", type: "\"div\" | \"hr\"", description: "HTML element to render", optional: true },
+];
+</script>
+
 <script lang="ts">
 const {
   /** @type {boolean} - Whether the separator should be vertical */

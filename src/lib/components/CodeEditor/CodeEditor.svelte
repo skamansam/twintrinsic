@@ -1,3 +1,15 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "code", type: "string", description: "Initial code content", default: "''", optional: true },
+  { name: "language", type: "string", description: "Language to use for syntax highlighting", default: "'javascript'", optional: true },
+  { name: "theme", type: "string", description: "Theme name to apply", default: "'light'", optional: true },
+  { name: "extensions", type: "string[]", description: "Array of extension URLs to load dynamically", default: "[]", optional: true },
+  { name: "cdnSource", type: "'jsdelivr' | 'esm.sh' | 'unpkg'", description: "CDN source for loading extensions", default: "'esm.sh'", optional: true },
+  { name: "onchange", type: "(event: CustomEvent<string>) => void", description: "Callback when code changes", optional: true, eventDetail: "string" },
+  { name: "height", type: "string", description: "Height of the editor", default: "'400px'", optional: true },
+];
+</script>
+
 <script lang="ts">
 	import { EditorState, type Extension, type Transaction } from '@codemirror/state';
 	import { EditorView, highlightActiveLineGutter, lineNumbers } from '@codemirror/view';

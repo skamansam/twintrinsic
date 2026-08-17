@@ -3,6 +3,9 @@ import Chip from "$lib/components/Chip/Chip.svelte"
 import ChipGroup from "$lib/components/Chip/ChipGroup.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as ChipGroupModule from "$lib/components/Chip/ChipGroup.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -111,137 +114,10 @@ import Container from "$lib/components/Container/Container.svelte"
   </p>
 
   <h2>ChipGroup Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>variant</code></td>
-        <td><code>string</code></td>
-        <td><code>"default"</code></td>
-        <td>Visual style variant passed to all chips</td>
-      </tr>
-      <tr>
-        <td><code>size</code></td>
-        <td><code>string</code></td>
-        <td><code>"md"</code></td>
-        <td>Size passed to all chips (sm, md, lg)</td>
-      </tr>
-      <tr>
-        <td><code>removable</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether all chips are removable</td>
-      </tr>
-      <tr>
-        <td><code>clickable</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether all chips are clickable</td>
-      </tr>
-      <tr>
-        <td><code>selectable</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether all chips are selectable (renders a listbox)</td>
-      </tr>
-      <tr>
-        <td><code>multiple</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether multiple chips can be selected</td>
-      </tr>
-      <tr>
-        <td><code>disabled</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether all chips are disabled</td>
-      </tr>
-      <tr>
-        <td><code>outline</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether all chips use outline style</td>
-      </tr>
-      <tr>
-        <td><code>direction</code></td>
-        <td><code>string</code></td>
-        <td><code>"horizontal"</code></td>
-        <td>Direction of the chip group (horizontal, vertical)</td>
-      </tr>
-      <tr>
-        <td><code>items</code></td>
-        <td><code>(string \| Record&lt;string, unknown&gt;)[]</code></td>
-        <td><code>[]</code></td>
-        <td>Items to render as chips</td>
-      </tr>
-      <tr>
-        <td><code>selected</code></td>
-        <td><code>(string \| Record&lt;string, unknown&gt;)[]</code></td>
-        <td><code>[]</code></td>
-        <td>Controlled selected items</td>
-      </tr>
-      <tr>
-        <td><code>labelField</code></td>
-        <td><code>string</code></td>
-        <td><code>"label"</code></td>
-        <td>Field used to derive the label when <code>items</code> are objects</td>
-      </tr>
-      <tr>
-        <td><code>itemTemplate</code></td>
-        <td><code>Snippet&lt;[TItem, number, boolean]&gt;</code></td>
-        <td><code>undefined</code></td>
-        <td>Snippet rendered per item, receiving <code>(item, index, selected)</code> where <code>selected</code> reflects the group's current selection state</td>
-      </tr>
-      <tr>
-        <td><code>ariaLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>"Chip group"</code></td>
-        <td>ARIA label for the chip group</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td><code>crypto.randomUUID()</code></td>
-        <td>HTML id for accessibility</td>
-      </tr>
-    </tbody>
-  </table>
+  <PropsTable component={ChipGroupModule} />
 
   <h2>ChipGroup Events</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Detail</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>select</code></td>
-        <td><code>{`{ selected: TItem[] }`}</code></td>
-        <td>Fired when a chip is selected or deselected</td>
-      </tr>
-      <tr>
-        <td><code>remove</code></td>
-        <td><code>{`{ item: TItem, index: number }`}</code></td>
-        <td>Fired when a chip is removed, includes the item and its index</td>
-      </tr>
-    </tbody>
-  </table>
+  <EventsTable component={ChipGroupModule} />
 
   <h2>Accessibility</h2>
   <p>

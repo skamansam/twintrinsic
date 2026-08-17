@@ -19,6 +19,12 @@ Usage:
 </Table>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+];
+</script>
+
 <script lang="ts">
 const {
   /** @type {string} - Additional CSS classes */

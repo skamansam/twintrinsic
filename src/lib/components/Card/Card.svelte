@@ -6,6 +6,23 @@ Provides a consistent visual style for displaying grouped information.
 Snippets: header, footer, media, children. If both `media` snippet and `image`
 prop are passed, the `media` snippet takes precedence.
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "href", type: "string", description: "Link URL if the card is clickable", optional: true },
+  { name: "image", type: "string", description: "Image URL for card media (simple image-only path)", optional: true },
+  { name: "imageAlt", type: "string", description: "Alt text for the image", default: "\"\"", optional: true },
+  { name: "bordered", type: "boolean", description: "Whether to show a border", default: "true", optional: true },
+  { name: "shadowed", type: "boolean", description: "Whether to add a shadow", default: "false", optional: true },
+  { name: "compact", type: "boolean", description: "Whether to make the card compact (less padding)", default: "false", optional: true },
+  { name: "hoverable", type: "boolean", description: "Whether to add hover effects", default: "false", optional: true },
+  { name: "media", type: "Snippet", description: "Arbitrary media markup", optional: true },
+  { name: "header", type: "Snippet", description: "Card header content", optional: true },
+  { name: "footer", type: "Snippet", description: "Card footer content", optional: true },
+];
+</script>
+
 <script lang="ts">
 import type { Snippet } from "svelte"
 

@@ -2,6 +2,8 @@
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Progress from "$lib/components/Progress/Progress.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as ProgressModule from "$lib/components/Progress/Progress.svelte"
 </script>
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
@@ -114,90 +116,7 @@ import Progress from "$lib/components/Progress/Progress.svelte"
 />`}</CodeBlock>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>value</code></td>
-        <td><code>number</code></td>
-        <td><code>0</code></td>
-        <td>Current progress value</td>
-      </tr>
-      <tr>
-        <td><code>max</code></td>
-        <td><code>number</code></td>
-        <td><code>100</code></td>
-        <td>Maximum progress value</td>
-      </tr>
-      <tr>
-        <td><code>variant</code></td>
-        <td><code>string</code></td>
-        <td><code>"primary"</code></td>
-        <td>Visual style variant (default, primary, secondary, success, warning, error, info)</td>
-      </tr>
-      <tr>
-        <td><code>size</code></td>
-        <td><code>string</code></td>
-        <td><code>"md"</code></td>
-        <td>Size of the progress bar (sm, md, lg)</td>
-      </tr>
-      <tr>
-        <td><code>showValue</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to display the progress value as text</td>
-      </tr>
-      <tr>
-        <td><code>striped</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show a striped pattern</td>
-      </tr>
-      <tr>
-        <td><code>animated</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to animate the striped pattern (requires striped to be true)</td>
-      </tr>
-      <tr>
-        <td><code>indeterminate</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to show an indeterminate loading state (removes the value attribute)</td>
-      </tr>
-      <tr>
-        <td><code>format</code></td>
-        <td><code>Function</code></td>
-        <td>-</td>
-        <td>Custom function to format the displayed value</td>
-      </tr>
-      <tr>
-        <td><code>ariaLabel</code></td>
-        <td><code>string</code></td>
-        <td>-</td>
-        <td>ARIA label for accessibility</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td><code>auto-generated</code></td>
-        <td>HTML id attribute for the progress element</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={ProgressModule} />
 
   <h2>Accessibility</h2>
   <ul>

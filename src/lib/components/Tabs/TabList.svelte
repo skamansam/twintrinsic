@@ -1,3 +1,10 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the tablist", optional: true },
+];
+</script>
+
 <script lang="ts">
 /**
  * @component

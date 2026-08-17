@@ -15,6 +15,16 @@ Usage:
 </FormField>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "message", type: "string", description: "Error message to display", optional: true },
+  { name: "icon", type: "string", description: "Icon name to display", default: "\"alert-circle\"", optional: true },
+  { name: "showIcon", type: "boolean", description: "Whether to show the default icon", default: "true", optional: true },
+  { name: "animated", type: "boolean", description: "Whether to animate the message", default: "true", optional: true },
+];
+</script>
+
 <script lang="ts">
 import Icon from "../Icon/Icon.svelte"
 

@@ -1,6 +1,9 @@
 <script lang="ts">
-	import StatsCard from '$lib/components/Metrics/StatsCard/StatsCard.svelte'
 	import Container from '$lib/components/Container/Container.svelte'
+	import StatsCard from '$lib/components/Metrics/StatsCard/StatsCard.svelte'
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as StatsCardModule from "$lib/components/Metrics/StatsCard/StatsCard.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -54,72 +57,10 @@
 />`}</code></pre>
 
 	<h2>Props</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Prop</th>
-				<th>Type</th>
-				<th>Default</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><code>label</code></td>
-				<td><code>string</code></td>
-				<td>Required</td>
-				<td>Card label/title</td>
-			</tr>
-			<tr>
-				<td><code>value</code></td>
-				<td><code>string | number</code></td>
-				<td>Required</td>
-				<td>Metric value to display</td>
-			</tr>
-			<tr>
-				<td><code>trend</code></td>
-				<td><code>'up' | 'down'</code></td>
-				<td>undefined</td>
-				<td>Trend direction indicator</td>
-			</tr>
-			<tr>
-				<td><code>trendValue</code></td>
-				<td><code>string | number</code></td>
-				<td>undefined</td>
-				<td>Trend value to display</td>
-			</tr>
-			<tr>
-				<td><code>color</code></td>
-				<td><code>string</code></td>
-				<td>'primary'</td>
-				<td>Card color theme</td>
-			</tr>
-			<tr>
-				<td><code>icon</code></td>
-				<td><code>string</code></td>
-				<td>undefined</td>
-				<td>Icon identifier</td>
-			</tr>
-		</tbody>
-	</table>
+<PropsTable component={StatsCardModule} />
 
 	<h2>Events</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Event</th>
-				<th>Detail</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><code>onclick</code></td>
-				<td><code>void</code></td>
-				<td>Fired when card is clicked</td>
-			</tr>
-		</tbody>
-	</table>
+<EventsTable component={StatsCardModule} />
 
 	<h2>Best Practices</h2>
 	<ul>

@@ -1,3 +1,22 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "variant", type: "TagVariant", description: "Visual style variant", default: "\"default\"", optional: true },
+  { name: "size", type: "\"sm\" | \"md\" | \"lg\"", description: "Size of the tag (sm, md, lg)", default: "\"md\"", optional: true },
+  { name: "icon", type: "string", description: "Icon to display (HTML or SVG string)", optional: true },
+  { name: "dismissible", type: "boolean", description: "Whether the tag is dismissible", default: "false", optional: true },
+  { name: "outline", type: "boolean", description: "Whether to show the tag as an outline", default: "false", optional: true },
+  { name: "pill", type: "boolean", description: "Whether to show the tag as a pill", default: "false", optional: true },
+  { name: "clickable", type: "boolean", description: "Whether the tag is clickable", default: "false", optional: true },
+  { name: "href", type: "string", description: "URL for the tag (makes it a link)", optional: true },
+  { name: "target", type: "string", description: "Anchor target. Inlined as `string` to match the HTML `<a target>`\nspecification, which accepts any string (including named frames like\n`\"my-iframe\"`) — not just the four standard keywords.", optional: true },
+  { name: "dismissAriaLabel", type: "string", description: "ARIA label for the dismiss button", default: "\"Dismiss\"", optional: true },
+  { name: "dismissIcon", type: "string", description: "Custom dismiss icon (HTML or SVG string)", optional: true },
+  { name: "ondismiss", type: "(event: CustomEvent) => void", description: "Dismiss event handler", optional: true, eventDetail: "unknown" },
+];
+</script>
+
 <script lang="ts">
 /**
  * @component

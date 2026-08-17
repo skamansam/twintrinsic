@@ -49,6 +49,19 @@ export type BottomBarProps = {
   /** Main content */
   children?: Snippet
 }
+
+export const propsMetadata = [
+  { name: "expanded", type: "boolean", description: "Whether the bottom bar is expanded by default", default: "true", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "height", type: "string", description: "Height of the bottom bar (CSS length value)", default: "\"16rem\"", optional: true },
+  { name: "id", type: "string", description: "Unique ID for the bottom bar", default: "crypto.randomUUID()", optional: true },
+  { name: "ariaLabel", type: "string", description: "Accessible label for the bottom bar", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the bottom bar is disabled", default: "false", optional: true },
+  { name: "floatOnMobile", type: "boolean", description: "Whether the bottom bar floats on mobile (fixed positioning)", default: "true", optional: true },
+  { name: "docked", type: "boolean", description: "Whether the bottom bar is docked to the bottom of the viewport", default: "false", optional: true },
+  { name: "ontoggle", type: "(payload: { expanded: boolean }) => void", description: "Called when the bottom bar is toggled", optional: true },
+  { name: "header", type: "Snippet", description: "Header content", optional: true },
+];
 </script>
 
 <script lang="ts">

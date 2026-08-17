@@ -1,10 +1,14 @@
 <script lang="ts">
-	import DonutChart from '$lib/components/Metrics/DonutChart/DonutChart.svelte'
 	import Container from '$lib/components/Container/Container.svelte'
+	import DonutChart from '$lib/components/Metrics/DonutChart/DonutChart.svelte'
 
 	const defaultData = [30, 25, 20, 15, 10];
 	const defaultLabels = ['Product A', 'Product B', 'Product C', 'Product D', 'Product E'];
 	const customColors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6'];
+
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as DonutChartModule from "$lib/components/Metrics/DonutChart/DonutChart.svelte"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
@@ -83,78 +87,10 @@
 />`}</code></pre>
 
 	<h2>Props</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Prop</th>
-				<th>Type</th>
-				<th>Default</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><code>data</code></td>
-				<td><code>number[]</code></td>
-				<td>Required</td>
-				<td>Array of numeric values for each slice</td>
-			</tr>
-			<tr>
-				<td><code>labels</code></td>
-				<td><code>string[]</code></td>
-				<td>Required</td>
-				<td>Array of labels for each slice</td>
-			</tr>
-			<tr>
-				<td><code>colors</code></td>
-				<td><code>string[]</code></td>
-				<td>Default palette</td>
-				<td>Array of colors (hex or Tailwind class names)</td>
-			</tr>
-			<tr>
-				<td><code>title</code></td>
-				<td><code>string</code></td>
-				<td>undefined</td>
-				<td>Chart title</td>
-			</tr>
-			<tr>
-				<td><code>innerRadius</code></td>
-				<td><code>number</code></td>
-				<td>0.6</td>
-				<td>Width of the donut ring (0-1, where 1 is full circle)</td>
-			</tr>
-			<tr>
-				<td><code>showLegend</code></td>
-				<td><code>boolean</code></td>
-				<td>true</td>
-				<td>Show legend below chart</td>
-			</tr>
-			<tr>
-				<td><code>size</code></td>
-				<td><code>number</code></td>
-				<td>300</td>
-				<td>Size of the chart in pixels</td>
-			</tr>
-		</tbody>
-	</table>
+<PropsTable component={DonutChartModule} />
 
 	<h2>Events</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Event</th>
-				<th>Detail</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><code>onsliceclick</code></td>
-				<td><code>&#123; index: number; label: string; value: number &#125;</code></td>
-				<td>Fired when a slice is clicked</td>
-			</tr>
-		</tbody>
-	</table>
+<EventsTable component={DonutChartModule} />
 
 	<h2>Accessibility</h2>
 	<ul>

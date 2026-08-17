@@ -17,10 +17,24 @@ Usage:
 />
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "name", type: "string", description: "Field name for form registration", optional: true },
+  { name: "value", type: "string", description: "Color value in current format", default: "\"#000000\"", optional: true },
+  { name: "format", type: "\"hex\" | \"rgb\" | \"rgba\" | \"hsl\" | \"hsla\"", description: "Color format", default: "\"hex\"", optional: true },
+  { name: "showAlpha", type: "boolean", description: "Whether to show alpha channel", default: "false", optional: true },
+  { name: "label", type: "string", description: "Input label", default: "\"Color\"", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the picker is disabled", default: "false", optional: true },
+  { name: "error", type: "string", description: "Error message", default: "\"\"", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "onchange", type: "(event: CustomEvent<{ value: string }>) => void", description: "Change event handler", optional: true, eventDetail: "{ value: string }" },
+];
+</script>
+
 <script lang="ts">
 import { getContext } from "svelte"
-import Input from "./Input.svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
+import Input from "./Input.svelte"
 
 interface Props {
   /** Field name for form registration */
@@ -340,6 +354,10 @@ function handleInput(event: CustomEvent): void {
 <div
   class="color-picker {className}"
 >
+  <!-- Only suppress the mousedown while the popover is closed: for an
+       `auto` popover the focus change from clicking the input dismisses
+       it right after it opens. When the popover is already open the
+       input stays focusable so the value can be edited directly. -->
   <Input
     {label}
     disabled={effectiveDisabled}
@@ -347,6 +365,11 @@ function handleInput(event: CustomEvent): void {
     value={inputValue}
     oninput={handleInput}
     onclick={() => pickerPopoverRef?.togglePopover()}
+    onmousedown={(event) => {
+      if (!pickerPopoverRef?.matches(":popover-open")) {
+        event.preventDefault()
+      }
+    }}
     rightIcon="palette"
     onrightIconClick={() => pickerPopoverRef?.togglePopover()}
   />

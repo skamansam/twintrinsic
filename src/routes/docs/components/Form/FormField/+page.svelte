@@ -3,13 +3,14 @@
 Documentation page for the FormField component.
 -->
 <script lang="ts">
-import FormField from "$lib/components/Form/FormField.svelte"
-import TextInput from "$lib/components/Form/TextInput.svelte"
-import Textarea from "$lib/components/Form/Textarea.svelte"
-import Select from "$lib/components/Form/Select.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
+import FormField from "$lib/components/Form/FormField.svelte"
+import Select from "$lib/components/Form/Select.svelte"
+import Textarea from "$lib/components/Form/Textarea.svelte"
+import TextInput from "$lib/components/Form/TextInput.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as FormFieldModule from "$lib/components/Form/FormField.svelte"
 </script>
 
 <h1>FormField</h1>
@@ -23,7 +24,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="formfield-basic-usage">
   <FormField label="Username">
     <TextInput name="username" />
   </FormField>
@@ -35,7 +36,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>With Different Input Types</h3>
-<div class="example">
+<div class="example" data-testid="formfield-types">
   <div class="flex flex-col gap-4">
     <FormField label="Email">
       <TextInput type="email" name="email" />
@@ -79,7 +80,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Required Field</h3>
-<div class="example">
+<div class="example" data-testid="formfield-required">
   <FormField label="Email" required={true}>
     <TextInput type="email" name="email" required={true} />
   </FormField>
@@ -91,7 +92,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>With Help Text</h3>
-<div class="example">
+<div class="example" data-testid="formfield-help">
   <FormField 
     label="Password" 
     helpText="Password must be at least 8 characters long"
@@ -109,7 +110,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>With Error Message</h3>
-<div class="example">
+<div class="example" data-testid="formfield-error">
   <FormField 
     label="Email" 
     error="Please enter a valid email address"
@@ -127,7 +128,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Horizontal Layout</h3>
-<div class="example">
+<div class="example" data-testid="formfield-horizontal">
   <FormField label="Username" layout="horizontal">
     <TextInput name="username" />
   </FormField>
@@ -139,7 +140,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Hidden Label</h3>
-<div class="example">
+<div class="example" data-testid="formfield-hidden-label">
   <FormField 
     label="Search" 
     hideLabel={true}
@@ -159,7 +160,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h3>Disabled State</h3>
-<div class="example">
+<div class="example" data-testid="formfield-disabled-state">
   <FormField label="Username" disabled={true}>
     <TextInput name="username" disabled={true} />
   </FormField>
@@ -171,66 +172,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'label',
-      type: 'string',
-      description: 'Label text for the field'
-    },
-    {
-      name: 'name',
-      type: 'string',
-      description: 'Field name (used for form data and validation)'
-    },
-    {
-      name: 'helpText',
-      type: 'string',
-      description: 'Help text displayed below the field'
-    },
-    {
-      name: 'error',
-      type: 'string',
-      description: 'Error message to display'
-    },
-    {
-      name: 'required',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the field is required (adds an asterisk)'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the field is disabled'
-    },
-    {
-      name: 'hideLabel',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether to hide the label visually (still accessible to screen readers)'
-    },
-    {
-      name: 'layout',
-      type: "'vertical' | 'horizontal'",
-      default: "'vertical'",
-      description: 'Layout direction of the field'
-    },
-    {
-      name: 'id',
-      type: 'string',
-      default: 'auto-generated',
-      description: 'HTML id for accessibility'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: "''",
-      description: 'Additional CSS classes'
-    }
-  ]}
-/>
+<PropsTable component={FormFieldModule} />
 
 <h2>Slots</h2>
 <table class="props-table">

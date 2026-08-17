@@ -1,3 +1,17 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "variant", type: "string", description: "Visual style variant (primary, secondary, success, warning, error, info)", default: "\"primary\"", optional: true },
+  { name: "position", type: "string", description: "Position of the timeline markers (left, right, alternate)", default: "\"left\"", optional: true },
+  { name: "orientation", type: "string", description: "Layout orientation (vertical or horizontal)", default: "\"vertical\"", optional: true },
+  { name: "reverse", type: "boolean", description: "Whether to reverse the order of items", default: "false", optional: true },
+  { name: "connected", type: "boolean", description: "Whether to render the connecting line between items", default: "true", optional: true },
+  { name: "animated", type: "boolean", description: "Whether to animate items into view", default: "false", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the timeline", default: "\"Timeline\"", optional: true },
+];
+</script>
+
 <script lang="ts">
 /**
  * @component
@@ -22,27 +36,54 @@
 import { setContext } from "svelte"
 
 const {
+  /** @type {string} - Additional CSS classes */
   class: className = "",
+
+  /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
+
+  /** @type {string} - Visual style variant (primary, secondary, success, warning, error, info) */
   variant = "primary",
+
+  /** @type {string} - Position of the timeline markers (left, right, alternate) */
   position = "left",
+
+  /** @type {string} - Layout orientation (vertical or horizontal) */
   orientation = "vertical",
+
+  /** @type {boolean} - Whether to reverse the order of items */
   reverse = false,
+
+  /** @type {boolean} - Whether to render the connecting line between items */
   connected = true,
+
+  /** @type {boolean} - Whether to animate items into view */
   animated = false,
+
+  /** @type {string} - ARIA label for the timeline */
   ariaLabel = "Timeline",
+
   children,
 } = $props()
 
-// Provide context for child components
-$effect(() => {
-  setContext("timeline", {
-    variant,
-    position,
-    orientation,
-    connected,
-    animated,
-  })
+// Provide context for child components. Called at init (not in `$effect`) so
+// the context is available during server-side rendering.
+setContext("timeline", {
+  get variant() {
+    return variant
+  },
+  get position() {
+    return position
+  },
+  get orientation() {
+    return orientation
+  },
+  get connected() {
+    return connected
+  },
+  get animated() {
+    return animated
+  },
 })
 </script>
 

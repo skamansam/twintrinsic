@@ -1,3 +1,16 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "data", type: "number[]", description: "Array of numeric values for each slice", optional: false },
+  { name: "labels", type: "string[]", description: "Array of labels for each slice", optional: false },
+  { name: "colors", type: "string[]", description: "Array of colors for each slice (hex or Tailwind class names)", default: "['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899']", optional: true },
+  { name: "title", type: "string", description: "Chart title", optional: true },
+  { name: "innerRadius", type: "number", description: "Width of the donut ring (0-1, where 1 is full circle)", default: "0.6", optional: true },
+  { name: "onsliceclick", type: "(event: MouseEvent | KeyboardEvent, detail: Readonly<{ index: number; label: string; value: number }>) => void", description: "Callback when a slice is clicked (mouse or keyboard activation)", optional: true },
+  { name: "showLegend", type: "boolean", description: "Show legend", default: "true", optional: true },
+  { name: "size", type: "number", description: "Size of the chart in pixels", default: "300", optional: true },
+];
+</script>
+
 <script lang="ts">
 	import { onMount } from 'svelte';
 

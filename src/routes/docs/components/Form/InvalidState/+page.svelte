@@ -7,8 +7,9 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import FormField from "$lib/components/Form/FormField.svelte"
 import InvalidState from "$lib/components/Form/InvalidState.svelte"
 import TextInput from "$lib/components/Form/TextInput.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as InvalidStateModule from "$lib/components/Form/InvalidState.svelte"
 </script>
 
 <h1>InvalidState</h1>
@@ -22,7 +23,7 @@ import PropsTable from "$lib/docs/PropsTable.svelte"
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
+<div class="example" data-testid="invalidstate-basic-usage">
   <InvalidState message="This field is required" />
 </div>
 <CodeBlock>
@@ -30,7 +31,7 @@ import PropsTable from "$lib/docs/PropsTable.svelte"
 </CodeBlock>
 
 <h3>With Form Field</h3>
-<div class="example">
+<div class="example" data-testid="invalidstate-formfield">
   <FormField label="Email">
     <TextInput type="email" name="email" />
     <InvalidState message="Please enter a valid email address" />
@@ -44,7 +45,7 @@ import PropsTable from "$lib/docs/PropsTable.svelte"
 </CodeBlock>
 
 <h3>Without Icon</h3>
-<div class="example">
+<div class="example" data-testid="invalidstate-no-icon">
   <InvalidState 
     message="This field is required" 
     showIcon={false}
@@ -58,7 +59,7 @@ import PropsTable from "$lib/docs/PropsTable.svelte"
 </CodeBlock>
 
 <h3>With Custom Icon</h3>
-<div class="example">
+<div class="example" data-testid="invalidstate-custom-icon">
   <InvalidState 
     message="Password must be at least 8 characters long" 
     icon='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m0 0v2m0-2h2m-2 0H9m3-4V7a3 3 0 00-3-3H9a3 3 0 00-3 3v4m9 0h6m-6 0H9"></path></svg>'
@@ -72,7 +73,7 @@ import PropsTable from "$lib/docs/PropsTable.svelte"
 </CodeBlock>
 
 <h3>With Child Content</h3>
-<div class="example">
+<div class="example" data-testid="invalidstate-children">
   <InvalidState>
     <span>This field is <strong>required</strong> and cannot be left empty.</span>
   </InvalidState>
@@ -84,7 +85,7 @@ import PropsTable from "$lib/docs/PropsTable.svelte"
 </CodeBlock>
 
 <h3>Multiple Error Messages</h3>
-<div class="example">
+<div class="example" data-testid="invalidstate-multiple">
   <div class="flex flex-col gap-1">
     <InvalidState message="Password must be at least 8 characters long" />
     <InvalidState message="Password must include at least one number" />
@@ -100,38 +101,7 @@ import PropsTable from "$lib/docs/PropsTable.svelte"
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'message',
-      type: 'string',
-      description: 'Error message to display'
-    },
-    {
-      name: 'icon',
-      type: 'string',
-      description: 'Custom icon to display (HTML or SVG string)'
-    },
-    {
-      name: 'showIcon',
-      type: 'boolean',
-      default: 'true',
-      description: 'Whether to show the default icon'
-    },
-    {
-      name: 'animated',
-      type: 'boolean',
-      default: 'true',
-      description: 'Whether to animate the message when it appears'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: "''",
-      description: 'Additional CSS classes'
-    }
-  ]}
-/>
+<PropsTable component={InvalidStateModule} />
 
 <h2>Slots</h2>
 <table class="props-table">

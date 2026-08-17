@@ -1,5 +1,20 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label", optional: true },
+  { name: "href", type: "string", description: "Link href", default: "\"#\"", optional: true },
+  { name: "active", type: "boolean", description: "Whether the item is active", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the item is disabled", default: "false", optional: true },
+  { name: "initialOpen", type: "boolean", description: "Whether the submenu is initially open", default: "false", optional: true },
+  { name: "divider", type: "boolean", description: "Whether to show a visual divider below this item", default: "false", optional: true },
+  { name: "icon", type: "string", description: "Icon name to render before the menu item text", optional: true },
+  { name: "value", type: "any", description: "Value associated with this menu item", default: "{}", optional: true },
+];
+</script>
+
 <script lang="ts">
-import { getContext, type Component } from "svelte";
+import { type Component, getContext } from "svelte";
 import Icon from "../../Icon/Icon.svelte";
 import MenuItemSelf from "./MenuItem.svelte";
 

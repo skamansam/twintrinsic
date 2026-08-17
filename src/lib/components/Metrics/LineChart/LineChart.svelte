@@ -1,3 +1,17 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "series", type: "Series[]", description: "Array of data series", optional: false },
+  { name: "labels", type: "string[]", description: "Array of x-axis labels", optional: false },
+  { name: "title", type: "string", description: "Chart title", optional: true },
+  { name: "yAxisLabel", type: "string", description: "Y-axis label", optional: true },
+  { name: "showGrid", type: "boolean", description: "Show grid lines", default: "true", optional: true },
+  { name: "onpointclick", type: "(event: MouseEvent | KeyboardEvent, detail: Readonly<{ seriesIndex: number; pointIndex: number; value: number }>) => void", description: "Callback when a point is clicked (mouse or keyboard activation)", optional: true },
+  { name: "showLegend", type: "boolean", description: "Show legend", default: "true", optional: true },
+  { name: "width", type: "number", description: "Size of the chart in pixels", default: "500", optional: true },
+  { name: "height", type: "number", description: "Height of the chart in pixels", default: "300", optional: true },
+];
+</script>
+
 <script lang="ts">
 	interface Series {
 		label: string;
@@ -22,6 +36,7 @@
 		showLegend?: boolean;
 		/** Size of the chart in pixels */
 		width?: number;
+		/** Height of the chart in pixels */
 		height?: number;
 	}
 

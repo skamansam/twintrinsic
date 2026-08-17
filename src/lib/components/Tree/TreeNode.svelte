@@ -21,8 +21,26 @@ Usage:
 </TreeNode>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "key", type: "string", description: "Node key for selection (defaults to id)", default: "id", optional: true },
+  { name: "label", type: "string", description: "Node label", optional: true },
+  { name: "icon", type: "string", description: "Custom icon (HTML or SVG string)", optional: true },
+  { name: "expanded", type: "boolean", description: "Whether the node is expanded", default: "false", optional: true },
+  { name: "selected", type: "boolean", description: "Whether the node is selected", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the node is disabled", default: "false", optional: true },
+  { name: "leaf", type: "boolean", description: "Whether the node is a leaf (no children)", default: "false", optional: true },
+  { name: "level", type: "number", description: "Indentation level (managed internally)", default: "0", optional: true },
+  { name: "labelRender", type: "Snippet", description: "Custom snippet for rendering the label", optional: true },
+  { name: "ontoggle", type: "(event: CustomEvent) => void", description: "Toggle event handler", optional: true, eventDetail: "unknown" },
+  { name: "onselect", type: "(event: CustomEvent) => void", description: "Select event handler", optional: true, eventDetail: "unknown" },
+];
+</script>
+
 <script lang="ts">
-import { getContext, type Component, type Snippet } from "svelte"
+import { type Component, getContext, type Snippet } from "svelte"
 import TreeNodeSelf from "./TreeNode.svelte"
 
 /**

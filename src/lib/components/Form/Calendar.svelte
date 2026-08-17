@@ -19,11 +19,29 @@ Usage:
 />
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "name", type: "string", description: "Field name for form registration", optional: true },
+  { name: "value", type: "Date | [Date, Date] | Date[] | null", description: "Selected date or date range", default: "null", optional: true },
+  { name: "range", type: "boolean", description: "Whether to allow range selection", default: "false", optional: true },
+  { name: "minDate", type: "Date | null", description: "Minimum selectable date", default: "null", optional: true },
+  { name: "maxDate", type: "Date | null", description: "Maximum selectable date", default: "null", optional: true },
+  { name: "showWeekNumbers", type: "boolean", description: "Whether to show week numbers", default: "false", optional: true },
+  { name: "dayNames", type: "string[]", description: "Custom day names", default: "[\"Su\", \"Mo\", \"Tu\", \"We\", \"Th\", \"Fr\", \"Sa\"]", optional: true },
+  { name: "monthNames", type: "string[]", description: "Custom month names", default: "[\n    \"January\",\n    \"February\",\n    \"March\",\n    \"April\",\n    \"May\",\n    \"June\",\n    \"July\",\n    \"August\",\n    \"September\",\n    \"October\",\n    \"November\",\n    \"December\",\n  ]", optional: true },
+  { name: "label", type: "string", description: "Input label", default: "\"Date\"", optional: true },
+  { name: "format", type: "string", description: "Date format for display", default: "\"MM/dd/yyyy\"", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the calendar is disabled", default: "false", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "onselect", type: "(event: CustomEvent<{ date?: Date; start?: Date; end?: Date | null }>) => void", description: "Select event handler", optional: true, eventDetail: "{ date?: Date; start?: Date; end?: Date | null }" },
+];
+</script>
+
 <script lang="ts">
 import { getContext } from "svelte"
 import { slide } from "svelte/transition"
-import Input from "./Input.svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
+import Input from "./Input.svelte"
 
 /**
  * Safe wrapper around the `slide` transition that no-ops when the Web
@@ -240,7 +258,7 @@ function formatDate(date: Date | null): string {
 
 // Update input value based on selected dates
 function updateInputValue(): void {
-  if (!!range) {
+  if (range) {
     inputValue = startDate && endDate ? `${formatDate(startDate)} - ${formatDate(endDate)}` : ""
   } else {
     inputValue = startDate ? formatDate(startDate) : ""
@@ -251,7 +269,7 @@ function updateInputValue(): void {
 function handleDateSelect(date: Date): void {
   if (effectiveDisabled) return
 
-  if (!!range) {
+  if (range) {
     if (!startDate || (startDate && endDate) || date < startDate) {
       startDate = date
       endDate = null
@@ -287,7 +305,7 @@ function handleDateHover(date: Date | null): void {
 // Check if date is in range
 function isInRange(date: Date | null): boolean {
   if (!date) return false
-  if (!!range) {
+  if (range) {
     if (startDate && !endDate && hoverDate) {
       return date.getTime() >= startDate.getTime() && date.getTime() <= hoverDate.getTime()
     }
@@ -302,7 +320,7 @@ function isInRange(date: Date | null): boolean {
 // Check if date is selected
 function isSelected(date: Date | null): boolean {
   if (!date) return false
-  if (!!range) {
+  if (range) {
     return !!(
       (startDate && date.getTime() === startDate.getTime()) ||
       (endDate && date.getTime() === endDate.getTime())
@@ -371,6 +389,10 @@ function handleKeydown(event: KeyboardEvent): void {
 <div
   class="calendar-container {className}"
 >
+  <!-- Prevent the input click from focusing the readonly field: for an
+       `auto` popover the focus change to an element outside the popover
+       dismisses it immediately after it opens. The picker stays open
+       only when the mousedown doesn't move focus. -->
   <Input
     {label}
     disabled={effectiveDisabled}
@@ -378,6 +400,7 @@ function handleKeydown(event: KeyboardEvent): void {
     readonly
     rightIcon="calendar"
     onclick={() => calendarPopoverRef?.togglePopover()}
+    onmousedown={(event) => event.preventDefault()}
     onrightIconClick={() => calendarPopoverRef?.togglePopover()}
   />
   

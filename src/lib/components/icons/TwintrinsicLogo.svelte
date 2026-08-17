@@ -3,8 +3,21 @@
 A modern, dynamic logo for Twintrinsic that represents Tailwind's utility-first approach
 and the intrinsic nature of web design.
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "size", type: "string", description: "Width and height of the logo (CSS size)", default: "\"3rem\"", optional: true },
+];
+</script>
+
 <script lang="ts">
-const { class: className = "", size = "3rem" } = $props()
+const {
+  /** @type {string} - Additional CSS classes */
+  class: className = "",
+
+  /** @type {string} - Width and height of the logo (CSS size) */
+  size = "3rem",
+} = $props()
 </script>
 
 <svg

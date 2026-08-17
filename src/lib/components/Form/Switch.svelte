@@ -16,6 +16,21 @@ Usage:
 </FormField>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "name", type: "string", description: "Input name", optional: true },
+  { name: "label", type: "string", description: "Label text", optional: true },
+  { name: "checked", type: "boolean", description: "Whether the switch is checked", default: "false", optional: true },
+  { name: "required", type: "boolean", description: "Whether the switch is required", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether the switch is disabled", default: "false", optional: true },
+  { name: "size", type: "\"sm\" | \"md\" | \"lg\"", description: "Size of the switch (sm, md, lg)", default: "\"md\"", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for accessibility", optional: true },
+  { name: "onchange", type: "(event: CustomEvent<{ checked: boolean }>) => void", description: "Change event handler", optional: true, eventDetail: "{ checked: boolean }" },
+];
+</script>
+
 <script lang="ts">
 import { getContext } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"

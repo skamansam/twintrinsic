@@ -12,9 +12,21 @@ Usage:
 </LazyPanel>
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "expanded", type: "boolean", description: "Whether the panel is expanded initially", default: "true", optional: true },
+  { name: "rootMargin", type: "string", description: "Root margin for the intersection observer", default: "\"50px\"", optional: true },
+  { name: "threshold", type: "number", description: "Threshold for the intersection observer", default: "0", optional: true },
+  { name: "header", type: "Snippet", description: "Header content (forwarded to Panel)", optional: true },
+  { name: "loading", type: "Snippet", description: "Loading placeholder rendered until visibility", optional: true },
+];
+</script>
+
 <script lang="ts">
-import { onMount } from "svelte"
 import type { Snippet } from "svelte"
+import { onMount } from "svelte"
 import Panel from "../Panel/Panel.svelte"
 
 interface Props {

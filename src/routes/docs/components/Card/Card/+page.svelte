@@ -1,6 +1,9 @@
 <script lang="ts">
 import Card from "$lib/components/Card/Card.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as CardModule from "$lib/components/Card/Card.svelte"
 </script>
 <!--
 @component
@@ -87,42 +90,7 @@ Documentation page for the Card component
 
   <h2>Props</h2>
   <div class="overflow-x-auto">
-    <table>
-      <thead>
-        <tr>
-          <th>Prop</th>
-          <th>Type</th>
-          <th>Default</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>hoverable</code></td>
-          <td><code>boolean</code></td>
-          <td><code>false</code></td>
-          <td>Adds hover effect to the card</td>
-        </tr>
-        <tr>
-          <td><code>shadow</code></td>
-          <td><code>boolean</code></td>
-          <td><code>true</code></td>
-          <td>Adds shadow to the card</td>
-        </tr>
-        <tr>
-          <td><code>shadowSize</code></td>
-          <td><code>"none" | "sm" | "md" | "lg" | "xl"</code></td>
-          <td><code>"md"</code></td>
-          <td>Size of the shadow when enabled</td>
-        </tr>
-        <tr>
-          <td><code>clickable</code></td>
-          <td><code>boolean</code></td>
-          <td><code>false</code></td>
-          <td>Makes the entire card clickable</td>
-        </tr>
-      </tbody>
-    </table>
+    <PropsTable component={CardModule} />
   </div>
 
   <h2>Slots</h2>
@@ -157,22 +125,7 @@ Documentation page for the Card component
 
   <h2>Events</h2>
   <div class="overflow-x-auto">
-    <table>
-      <thead>
-        <tr>
-          <th>Event</th>
-          <th>Detail</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>click</code></td>
-          <td><code>{`{ originalEvent: Event }`}</code></td>
-          <td>Fired when a clickable card is activated</td>
-        </tr>
-      </tbody>
-    </table>
+    <EventsTable component={CardModule} />
   </div>
 
   <h2>When to Use Card vs Container vs Panel</h2>

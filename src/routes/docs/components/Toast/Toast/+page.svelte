@@ -4,6 +4,8 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Toast from "$lib/components/Toast/Toast.svelte"
 import { toastStore } from "$lib/components/Toast/toastStore.js"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as ToastModule from "$lib/components/Toast/Toast.svelte"
 </script>
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
@@ -19,7 +21,7 @@ import { toastStore } from "$lib/components/Toast/toastStore.js"
   <h2>Usage</h2>
 
   <h3>Basic Toast</h3>
-  <div class="flex flex-wrap gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-wrap gap-4 p-4 bg-surface rounded-md mb-4" data-testid="toast-basic">
     <Button onclick={() => toastStore.add({ message: "This is a toast notification" })}>
       Show Toast
     </Button>
@@ -36,7 +38,7 @@ import { toastStore } from "$lib/components/Toast/toastStore.js"
 <Toast />`}</CodeBlock>
 
   <h3>Toast Variants</h3>
-  <div class="flex flex-wrap gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-wrap gap-4 p-4 bg-surface rounded-md mb-4" data-testid="toast-variants">
     <Button onclick={() => toastStore.add({ message: "Success!", variant: "success" })}>
       Success
     </Button>
@@ -57,7 +59,7 @@ toastStore.add({ message: "Warning!", variant: "warning" })
 toastStore.add({ message: "Info message", variant: "info" })`}</CodeBlock>
 
   <h3>Toast with Title</h3>
-  <div class="flex flex-wrap gap-4 p-4 bg-surface rounded-md mb-4">
+  <div class="flex flex-wrap gap-4 p-4 bg-surface rounded-md mb-4" data-testid="toast-with-title">
     <Button onclick={() => toastStore.add({ title: "Success", message: "Your changes have been saved", variant: "success" })}>
       With Title
     </Button>
@@ -91,54 +93,7 @@ toastStore.add({ message: "Info message", variant: "info" })`}</CodeBlock>
 <Toast position="bottom-left" />`}</CodeBlock>
 
   <h2>Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>position</code></td>
-        <td><code>"top-right" | "top-left" | "bottom-right" | "bottom-left" | "top-center" | "bottom-center"</code></td>
-        <td><code>"bottom-right"</code></td>
-        <td>Position of the toast container</td>
-      </tr>
-      <tr>
-        <td><code>maxToasts</code></td>
-        <td><code>number</code></td>
-        <td><code>5</code></td>
-        <td>Maximum number of toasts to display at once</td>
-      </tr>
-      <tr>
-        <td><code>duration</code></td>
-        <td><code>number</code></td>
-        <td><code>5000</code></td>
-        <td>Default duration in milliseconds before auto-dismiss</td>
-      </tr>
-      <tr>
-        <td><code>dismissible</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether toasts can be dismissed by clicking</td>
-      </tr>
-      <tr>
-        <td><code>pauseOnHover</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether to pause the auto-dismiss timer on hover</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-    </tbody>
-  </table>
+<PropsTable component={ToastModule} />
 
   <h2>Toast Store Methods</h2>
   <table>

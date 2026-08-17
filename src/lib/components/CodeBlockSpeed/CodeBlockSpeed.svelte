@@ -1,9 +1,18 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "code", type: "string", description: "Code content to render when not using snippets", default: "''", optional: true },
+  { name: "language", type: "string", description: "The language for syntax highlighting", default: "''", optional: true },
+  { name: "class", type: "string", description: "Additional CSS classes", default: "''", optional: true },
+  { name: "showRenderTime", type: "boolean", description: "Whether to show rendering time", default: "false", optional: true },
+];
+</script>
+
 <script lang="ts">
-	import { highlightElement } from '@speed-highlight/core';
 	import type { ShjLanguage } from '@speed-highlight/core';
+	import { highlightElement } from '@speed-highlight/core';
 	import { detectLanguage } from '@speed-highlight/core/detect';
-	import { onDestroy, onMount } from 'svelte';
 	import type { Snippet } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	interface Props {
 		/** Code content to render when not using snippets */
@@ -15,6 +24,8 @@
 		/** Whether to show rendering time */
 		showRenderTime?: boolean;
 		children?: Snippet;
+		/** Any remaining props are spread onto the root element (e.g. `data-testid`) */
+		[key: string]: unknown;
 	}
 
 	let {
@@ -23,6 +34,7 @@
 		class: className = '',
 		showRenderTime = false,
 		children,
+		...elementProps
 	}: Props = $props();
 
 	// className is used in the template below
@@ -79,7 +91,7 @@
 	}
 </script>
 
-<div class="code-block-speed {className}">
+<div class="code-block-speed {className}" {...elementProps}>
 	<span class="shj-lang-http shj-oneline" aria-hidden="true" hidden>
 		<span class="shj-syn-kwd"></span>
 	</span>

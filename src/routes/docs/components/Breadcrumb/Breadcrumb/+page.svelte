@@ -3,6 +3,9 @@ import Breadcrumb from "$lib/components/Breadcrumb/Breadcrumb.svelte"
 import BreadcrumbItem from "$lib/components/Breadcrumb/BreadcrumbItem.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as BreadcrumbModule from "$lib/components/Breadcrumb/Breadcrumb.svelte"
+import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem.svelte"
 </script>
 <!--
 @component
@@ -100,104 +103,10 @@ Breadcrumb documentation page
 </Breadcrumb>`}</CodeBlock>
 
   <h2>Breadcrumb Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>separator</code></td>
-        <td><code>string</code></td>
-        <td><code>"/"</code></td>
-        <td>Separator character or HTML between items</td>
-      </tr>
-      <tr>
-        <td><code>ariaLabel</code></td>
-        <td><code>string</code></td>
-        <td><code>"Breadcrumb"</code></td>
-        <td>ARIA label for the breadcrumb</td>
-      </tr>
-      <tr>
-        <td><code>collapsible</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to collapse long breadcrumbs with ellipsis</td>
-      </tr>
-      <tr>
-        <td><code>maxVisibleItems</code></td>
-        <td><code>number</code></td>
-        <td><code>1</code></td>
-        <td>Maximum visible items when collapsed (excluding first and last)</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td><code>string</code></td>
-        <td><code>crypto.randomUUID()</code></td>
-        <td>HTML id for accessibility</td>
-      </tr>
-    </tbody>
-  </table>
+  <PropsTable component={BreadcrumbModule} />
 
   <h2>BreadcrumbItem Props</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>href</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Link URL (if item is a link)</td>
-      </tr>
-      <tr>
-        <td><code>target</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Link target (_blank, _self, etc.)</td>
-      </tr>
-      <tr>
-        <td><code>icon</code></td>
-        <td><code>string</code></td>
-        <td><code>undefined</code></td>
-        <td>Icon to display (HTML or SVG string)</td>
-      </tr>
-      <tr>
-        <td><code>current</code></td>
-        <td><code>boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether this is the current/active page</td>
-      </tr>
-      <tr>
-        <td><code>collapsible</code></td>
-        <td><code>boolean</code></td>
-        <td><code>true</code></td>
-        <td>Whether this item should be hidden when collapsed</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td><code>string</code></td>
-        <td><code>""</code></td>
-        <td>Additional CSS classes</td>
-      </tr>
-    </tbody>
-  </table>
+  <PropsTable component={BreadcrumbItemModule} />
 
   <h2>Accessibility</h2>
   <p>

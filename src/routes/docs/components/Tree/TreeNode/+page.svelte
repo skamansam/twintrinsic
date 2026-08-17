@@ -1,5 +1,5 @@
 <script lang="ts">
-import PropsTable from "$lib/docs/PropsTable.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 </script>
 
 <h1>TreeNode</h1>

@@ -2,11 +2,12 @@
 @component
 Documentation page for the Textarea component.
 -->
-<script>
-import Textarea from "$lib/components/Form/Textarea.svelte"
+<script lang="ts">
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import PropsTable from "$lib/docs/PropsTable.svelte"
-import EventsTable from "$lib/docs/EventsTable.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import Textarea from "$lib/components/Form/Textarea.svelte"
+import * as TextareaModule from "$lib/components/Form/Textarea.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 </script>
 
 <h1>Textarea</h1>
@@ -22,6 +23,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 <h3>Basic Usage</h3>
 <div class="example">
   <Textarea 
+    data-testid="textarea-basic"
     placeholder="Enter your message here"
     rows={3}
   />
@@ -36,6 +38,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 <h3>With Initial Value</h3>
 <div class="example">
   <Textarea 
+    data-testid="textarea-prefilled"
     value="This is a pre-filled textarea with some initial content."
     rows={3}
   />
@@ -50,6 +53,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 <h3>Auto-resize</h3>
 <div class="example">
   <Textarea 
+    data-testid="textarea-autoresize"
     placeholder="This textarea will grow as you type..."
     autoResize={true}
     rows={2}
@@ -66,6 +70,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 <h3>Disabled State</h3>
 <div class="example">
   <Textarea 
+    data-testid="textarea-disabled"
     value="This textarea is disabled and cannot be edited."
     disabled={true}
     rows={3}
@@ -82,6 +87,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 <h3>Read-only State</h3>
 <div class="example">
   <Textarea 
+    data-testid="textarea-readonly"
     value="This textarea is read-only but can still be focused and copied."
     readonly={true}
     rows={3}
@@ -98,6 +104,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 <h3>With Character Limit</h3>
 <div class="example">
   <Textarea 
+    data-testid="textarea-maxlength"
     placeholder="Maximum 100 characters allowed"
     maxlength="100"
     rows={3}
@@ -114,6 +121,7 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 <h3>Required Field</h3>
 <div class="example">
   <Textarea 
+    data-testid="textarea-required"
     placeholder="This field is required"
     required={true}
     rows={3}
@@ -128,115 +136,10 @@ import EventsTable from "$lib/docs/EventsTable.svelte"
 </CodeBlock>
 
 <h2>Props</h2>
-<PropsTable
-  props={[
-    {
-      name: 'value',
-      type: 'string',
-      default: "''",
-      description: 'Textarea value'
-    },
-    {
-      name: 'placeholder',
-      type: 'string',
-      default: "''",
-      description: 'Placeholder text'
-    },
-    {
-      name: 'rows',
-      type: 'number',
-      default: '3',
-      description: 'Number of visible text rows'
-    },
-    {
-      name: 'name',
-      type: 'string',
-      description: 'Name attribute for the textarea'
-    },
-    {
-      name: 'required',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the textarea is required'
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the textarea is disabled'
-    },
-    {
-      name: 'readonly',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether the textarea is read-only'
-    },
-    {
-      name: 'autoResize',
-      type: 'boolean',
-      default: 'false',
-      description: 'Whether to automatically resize based on content'
-    },
-    {
-      name: 'minlength',
-      type: 'string',
-      description: 'Minimum length of text'
-    },
-    {
-      name: 'maxlength',
-      type: 'string',
-      description: 'Maximum length of text'
-    },
-    {
-      name: 'autocomplete',
-      type: 'string',
-      description: 'HTML autocomplete attribute'
-    },
-    {
-      name: 'ariaLabel',
-      type: 'string',
-      description: 'ARIA label for accessibility'
-    },
-    {
-      name: 'id',
-      type: 'string',
-      default: 'auto-generated',
-      description: 'HTML id for accessibility'
-    },
-    {
-      name: 'class',
-      type: 'string',
-      default: "''",
-      description: 'Additional CSS classes'
-    }
-  ]}
-/>
+<PropsTable component={TextareaModule} />
 
 <h2>Events</h2>
-<EventsTable
-  events={[
-    {
-      name: 'input',
-      type: '{ value: string }',
-      description: 'Fired on each keystroke or input'
-    },
-    {
-      name: 'change',
-      type: '{ value: string }',
-      description: 'Fired when the value changes'
-    },
-    {
-      name: 'focus',
-      type: 'Event',
-      description: 'Fired when the textarea gains focus'
-    },
-    {
-      name: 'blur',
-      type: 'Event',
-      description: 'Fired when the textarea loses focus'
-    }
-  ]}
-/>
+<EventsTable component={TextareaModule} />
 
 <h2>Accessibility</h2>
 <p>

@@ -1,3 +1,26 @@
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "variant", type: "\"default\" | \"primary\" | \"secondary\" | \"success\" | \"warning\" | \"error\" | \"info\"", description: "Visual style variant passed to all chips", default: "\"default\"", optional: true },
+  { name: "size", type: "\"sm\" | \"md\" | \"lg\"", description: "Size passed to all chips (sm, md, lg)", default: "\"md\"", optional: true },
+  { name: "removable", type: "boolean", description: "Whether all chips are removable", default: "false", optional: true },
+  { name: "clickable", type: "boolean", description: "Whether all chips are clickable", default: "false", optional: true },
+  { name: "selectable", type: "boolean", description: "Whether all chips are selectable", default: "false", optional: true },
+  { name: "multiple", type: "boolean", description: "Whether multiple chips can be selected", default: "false", optional: true },
+  { name: "disabled", type: "boolean", description: "Whether all chips are disabled", default: "false", optional: true },
+  { name: "outline", type: "boolean", description: "Whether all chips use outline style", default: "false", optional: true },
+  { name: "direction", type: "\"horizontal\" | \"vertical\"", description: "Direction of the chip group (horizontal, vertical)", default: "\"horizontal\"", optional: true },
+  { name: "items", type: "TItem[]", description: "Items to render as chips", default: "[]", optional: true },
+  { name: "selected", type: "TItem[]", description: "Selected items (controlled). Pass a stable reference or omit for\nuncontrolled selection — a fresh array literal each render would\nreset internal toggles.", default: "[]", optional: true },
+  { name: "labelField", type: "string", description: "Field used to derive the label when items are objects", default: "\"label\"", optional: true },
+  { name: "itemTemplate", type: "Snippet<[TItem, number, boolean]>", description: "Snippet rendered per item. Receives the item, its index, and a boolean\nindicating whether that item is currently selected in the group, e.g.\n`{#snippet itemTemplate(item, index, selected)}<Chip selected={selected}>{item}</Chip>{/snippet}`.\nThe selected flag stays in sync with the group's internal selection state\n(and the controlled `selected` prop), so snippet chips can reflect\nselection without tracking it themselves.\n\nNote: group props (`clickable`, `selectable`, `removable`) apply only to\nthe default fallback — a custom snippet owns the Chip entirely and must\napply those interactive props itself.", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the chip group", default: "\"Chip group\"", optional: true },
+  { name: "onselect", type: "(event: CustomEvent<{ selected: TItem[] }>) => void", description: "Select event handler", optional: true, eventDetail: "{ selected: TItem[] }" },
+  { name: "onremove", type: "(event: CustomEvent<{ item: TItem; index: number }>) => void", description: "Remove event handler", optional: true, eventDetail: "{ item: TItem; index: number }" },
+];
+</script>
+
 <script lang="ts" generics="TItem extends string | Record<string, unknown> = string | Record<string, unknown>">
 /**
  * @component

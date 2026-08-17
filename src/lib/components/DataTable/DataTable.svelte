@@ -46,6 +46,41 @@ export interface ColumnDef<TRow extends Record<string, unknown> = Record<string,
   template?: (value: unknown) => string
   formatter?: (value: unknown, row: TRow) => string
 }
+
+export const propsMetadata = [
+  { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "data", type: "TRow[]", description: "Data to display (array of row objects)", default: "[]", optional: true },
+  { name: "columns", type: "ColumnDef<TRow>[]", description: "Column definitions", default: "[]", optional: true },
+  { name: "sortable", type: "boolean", description: "Whether to enable sorting", default: "false", optional: true },
+  { name: "filterable", type: "boolean", description: "Whether to enable filtering", default: "false", optional: true },
+  { name: "pageable", type: "boolean", description: "Whether to enable pagination", default: "false", optional: true },
+  { name: "selectable", type: "boolean", description: "Whether to enable row selection", default: "false", optional: true },
+  { name: "multiSelect", type: "boolean", description: "Whether to enable multiple row selection", default: "false", optional: true },
+  { name: "selected", type: "unknown[]", description: "Selected row keys (values at `keyField` for each selected row)", default: "[]", optional: true },
+  { name: "keyField", type: "string", description: "Key field for row identification", default: "\"id\"", optional: true },
+  { name: "page", type: "number", description: "Current page (1-based)", default: "1", optional: true },
+  { name: "pageSize", type: "number", description: "Number of rows per page", default: "10", optional: true },
+  { name: "pageSizeOptions", type: "number[]", description: "Available page size options", default: "[5, 10, 20, 50, 100]", optional: true },
+  { name: "sortField", type: "string", description: "Field to sort by", optional: true },
+  { name: "sortOrder", type: "\"asc\" | \"desc\"", description: "Sort order", default: "\"asc\"", optional: true },
+  { name: "filters", type: "Record<string, string>", description: "Filter values by field", default: "{}", optional: true },
+  { name: "loading", type: "boolean", description: "Whether to show a loading indicator", default: "false", optional: true },
+  { name: "emptyMessage", type: "string", description: "Text to display when there is no data", default: "\"No data available\"", optional: true },
+  { name: "ariaLabel", type: "string", description: "ARIA label for the table", default: "\"Data table\"", optional: true },
+  { name: "rowClass", type: "(row: TRow, index: number) => string", description: "Custom row class function", optional: true },
+  { name: "cellFormatter", type: "(value: unknown, column: ColumnDef<TRow>, row: TRow) => string", description: "Custom cell formatter", optional: true },
+  { name: "responsive", type: "boolean", description: "Whether to enable responsive mode", default: "true", optional: true },
+  { name: "striped", type: "boolean", description: "Whether to enable striped rows", default: "false", optional: true },
+  { name: "hoverable", type: "boolean", description: "Whether to enable hoverable rows", default: "true", optional: true },
+  { name: "bordered", type: "boolean", description: "Whether to show a border", default: "false", optional: true },
+  { name: "stickyHeader", type: "boolean", description: "Whether to make the header sticky", default: "false", optional: true },
+  { name: "compact", type: "boolean", description: "Whether to enable compact mode", default: "false", optional: true },
+  { name: "onsort", type: "(event: CustomEvent<{ field: string; order: string }>) => void", description: "Sort event handler", optional: true, eventDetail: "{ field: string; order: string }" },
+  { name: "onfilter", type: "(event: CustomEvent<{ filters: Record<string, string> }>) => void", description: "Filter event handler", optional: true, eventDetail: "{ filters: Record<string, string" },
+  { name: "onpage", type: "(event: CustomEvent<{ page: number; pageSize: number }>) => void", description: "Page event handler", optional: true, eventDetail: "{ page: number; pageSize: number }" },
+  { name: "onselect", type: "(event: CustomEvent<{ selected: unknown[] }>) => void", description: "Select event handler", optional: true, eventDetail: "{ selected: unknown[] }" },
+];
 </script>
 
 <script lang="ts" generics="TRow extends Record<string, unknown> = Record<string, unknown>">
@@ -196,26 +231,26 @@ $effect(() => {
 })
 
 // Provide context for child components. Keys stay `unknown` because the row-key
-// type is determined dynamically by `keyField`.
-$effect(() => {
-  setContext("dataTable", {
-    get sortable() { return derivedSortable },
-    get filterable() { return derivedFilterable },
-    get selectable() { return derivedSelectable },
-    get multiSelect() { return multiSelect },
-    get keyField() { return derivedKeyField },
-    getSortField: () => currentSortField,
-    getSortOrder: () => currentSortOrder,
-    getFilters: () => currentFilters,
-    getSelected: () => selectedRows,
-    isSelected: (key: unknown): boolean => selectedRows.includes(key as never),
-    toggleSort: (field: string): void => handleSort(field),
-    setFilter: (field: string, value: string): void => handleFilter(field, value),
-    toggleSelection: (key: unknown): void => toggleRowSelection(key),
+// type is determined dynamically by `keyField`. Called at init (not in `$effect`)
+// so the context is available during server-side rendering.
+setContext("dataTable", {
+  get sortable() { return derivedSortable },
+  get filterable() { return derivedFilterable },
+  get selectable() { return derivedSelectable },
+  get multiSelect() { return multiSelect },
+  get keyField() { return derivedKeyField },
+  getSortField: () => currentSortField,
+  getSortOrder: () => currentSortOrder,
+  getFilters: () => currentFilters,
+  getSelected: () => selectedRows,
+  isSelected: (key: unknown): boolean => selectedRows.includes(key as never),
+  toggleSort: (field: string): void => handleSort(field),
+  setFilter: (field: string, value: string): void => handleFilter(field, value),    toggleSelection: (key: unknown): void => toggleRowSelection(key),
     selectAll: () => toggleSelectAll(),
-    cellFormatter,
+    get cellFormatter() {
+      return cellFormatter
+    },
   })
-})
 
 // Computed values
 const totalRecords = $derived(data.length)
