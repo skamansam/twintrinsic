@@ -6,6 +6,23 @@
 		<link rel="manifest" href="%sveltekit.assets%/manifest.json" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="theme-color" content="#5b21b6" />
+		<meta name="color-scheme" content="light dark" />
+		<script>
+			try {
+				const stored = localStorage.getItem('theme');
+				const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				const isDark = stored ? stored === 'dark' : prefersDark;
+				if (isDark) {
+					document.documentElement.setAttribute('data-theme', 'dark');
+					document.documentElement.classList.add('dark');
+				} else {
+					document.documentElement.removeAttribute('data-theme');
+					document.documentElement.classList.remove('dark');
+				}
+			} catch {
+				/* ignore storage errors */
+			}
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover" data-theme>

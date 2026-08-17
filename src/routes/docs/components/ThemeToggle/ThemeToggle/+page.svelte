@@ -146,6 +146,39 @@ import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
     <li>Real-time theme switching</li>
   </ul>
 
+  <h2>Avoiding the Light-Mode Flash</h2>
+  <p>
+    <code>ThemeToggle</code> is a client-side component, so the page can briefly render in light mode
+    before JavaScript runs and applies the saved or system-preferred theme. To prevent this flash,
+    add an inline initializer to your SvelteKit <code>app.html</code> <strong>before</strong>
+    <code>%sveltekit.head%</code>:
+  </p>
+
+  <CodeBlock language="html">{`<!-- Add this inside the <head> of app.html, before %sveltekit.head% -->
+<meta name="color-scheme" content="light dark" />
+\u003Cscript>
+  try {
+    const stored = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = stored ? stored === 'dark' : prefersDark;
+
+    if (isDark) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      document.documentElement.classList.remove('dark');
+    }
+  } catch {
+    /* ignore storage errors */
+  }
+\u003C/script>`}</CodeBlock>
+
+  <p>
+    This script reads the same <code>localStorage</code> key and system preference as
+    <code>ThemeToggle</code>, applying the dark theme before the first paint.
+  </p>
+
   <h2>Accessibility</h2>
   <p>
     The component follows accessibility best practices:

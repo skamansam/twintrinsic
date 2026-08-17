@@ -142,4 +142,10 @@ import { getItemLabel } from 'twintrinsic/helpers/getItemLabel';`}</CodeBlock>
   --color-text: 243 244 246;          /* Gray 100 */
   --color-muted: 156 163 175;         /* Gray 400 */
 }`}</CodeBlock>
+
+  <p>
+    To avoid a brief flash of light mode on load, see the
+    <a href="/docs/theming" class="text-primary-600 hover:underline">Theming docs</a>
+    for the required <code>app.html</code> initializer.
+  </p>
 </Container>

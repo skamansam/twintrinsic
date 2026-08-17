@@ -379,6 +379,34 @@ var(--color-${color}-500)
 }`}
   </CodeBlock>
 
+  <h2>Avoiding the Light-Mode Flash</h2>
+  <p>
+    Because theme detection happens in client-side JavaScript, the page can briefly render in light
+    mode before <code>ThemeToggle</code> applies the saved or system-preferred theme. To prevent that
+    flash, add this blocking inline script to your SvelteKit <code>app.html</code> <strong>before</strong>
+    <code>%sveltekit.head%</code>:
+  </p>
+
+  <CodeBlock language="html">{`<!-- Add this inside the <head> of app.html, before %sveltekit.head% -->
+<meta name="color-scheme" content="light dark" />
+\u003Cscript>
+  try {
+    const stored = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = stored ? stored === 'dark' : prefersDark;
+
+    if (isDark) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      document.documentElement.classList.remove('dark');
+    }
+  } catch {
+    /* ignore storage errors */
+  }
+\u003C/script>`}</CodeBlock>
+
   <h2>Tailwind Configuration</h2>
   <p>
     The theme is also available through Tailwind CSS utility classes. Here's how to
