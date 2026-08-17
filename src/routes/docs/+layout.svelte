@@ -10,7 +10,7 @@ import Separator from "$lib/components/Separator/Separator.svelte"
 
 let { children } = $props()
 
-const siteLinks = [
+const siteLinks = $derived([
   { label: "Getting Started", href: "/docs", current: page.url.pathname === "/docs" },
   {
     label: "Components",
@@ -32,7 +32,7 @@ const siteLinks = [
     href: "/docs/completion",
     current: page.url.pathname === "/docs/completion",
   },
-]
+])
 
 let leftSidebarExpanded = $state(false)
 
