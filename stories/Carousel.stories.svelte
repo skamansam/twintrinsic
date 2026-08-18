@@ -4,7 +4,7 @@ import Carousel from "$lib/components/Carousel/Carousel.svelte"
 import CarouselItem from "$lib/components/Carousel/CarouselItem.svelte"
 
 const { Story } = defineMeta({
-  title: "Components/Carousel",
+  title: "Data Display/Carousel",
   component: Carousel,
   tags: ["autodocs"],
   argTypes: {
@@ -42,18 +42,21 @@ const { Story } = defineMeta({
     <Carousel>
       <div slot="items">
         <CarouselItem>
-          <div class="h-64 bg-primary-100 dark:bg-primary-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-2xl font-bold">Slide 1</h2>
+          <div class="h-64 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-2xl font-bold">Unlimited projects</h2>
+            <p class="mt-2">Create as many workspaces and boards as you need.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
-          <div class="h-64 bg-secondary-100 dark:bg-secondary-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-2xl font-bold">Slide 2</h2>
+          <div class="h-64 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-2xl font-bold">Real-time collaboration</h2>
+            <p class="mt-2">Invite teammates and edit together, live.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
-          <div class="h-64 bg-success-100 dark:bg-success-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-2xl font-bold">Slide 3</h2>
+          <div class="h-64 bg-success-100 dark:bg-success-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-2xl font-bold">Enterprise-grade security</h2>
+            <p class="mt-2">SOC 2, SSO, and granular role-based access control.</p>
           </div>
         </CarouselItem>
       </div>
@@ -66,18 +69,21 @@ const { Story } = defineMeta({
     <Carousel autoplay interval={5000}>
       <div slot="items">
         <CarouselItem>
-          <div class="h-64 bg-primary-100 dark:bg-primary-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-2xl font-bold">Slide 1</h2>
+          <div class="h-64 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-2xl font-bold">Announcing Acme 3.0</h2>
+            <p class="mt-2">A faster, more accessible platform is here.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
-          <div class="h-64 bg-secondary-100 dark:bg-secondary-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-2xl font-bold">Slide 2</h2>
+          <div class="h-64 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-2xl font-bold">New pricing plans</h2>
+            <p class="mt-2">Save 20% when you switch to yearly billing.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
-          <div class="h-64 bg-success-100 dark:bg-success-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-2xl font-bold">Slide 3</h2>
+          <div class="h-64 bg-success-100 dark:bg-success-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-2xl font-bold">Upcoming webinar</h2>
+            <p class="mt-2">Join us to learn the best workflows for your team.</p>
           </div>
         </CarouselItem>
       </div>
@@ -90,18 +96,21 @@ const { Story } = defineMeta({
     <Carousel transition="fade">
       <div slot="items">
         <CarouselItem>
-          <div class="h-64 bg-primary-100 dark:bg-primary-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-2xl font-bold">Slide 1</h2>
+          <div class="h-64 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-2xl font-bold">Design</h2>
+            <p class="mt-2">Craft pixel-perfect interfaces with our components.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
-          <div class="h-64 bg-secondary-100 dark:bg-secondary-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-2xl font-bold">Slide 2</h2>
+          <div class="h-64 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-2xl font-bold">Build</h2>
+            <p class="mt-2">Ship accessible, semantic components in record time.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
-          <div class="h-64 bg-success-100 dark:bg-success-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-2xl font-bold">Slide 3</h2>
+          <div class="h-64 bg-success-100 dark:bg-success-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-2xl font-bold">Scale</h2>
+            <p class="mt-2">Grow from prototype to production without rewrites.</p>
           </div>
         </CarouselItem>
       </div>
@@ -114,23 +123,23 @@ const { Story } = defineMeta({
     <Carousel>
       <div slot="items">
         <CarouselItem>
-          <img 
-            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" 
-            alt="Landscape 1" 
+          <img
+            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb"
+            alt="Mountain landscape at sunrise"
             class="w-full h-64 object-cover rounded-lg"
           />
         </CarouselItem>
         <CarouselItem>
-          <img 
-            src="https://images.unsplash.com/photo-1511884642898-4c92249e20b6" 
-            alt="Landscape 2" 
+          <img
+            src="https://images.unsplash.com/photo-1511884642898-4c92249e20b6"
+            alt="Forest valley"
             class="w-full h-64 object-cover rounded-lg"
           />
         </CarouselItem>
         <CarouselItem>
-          <img 
-            src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05" 
-            alt="Landscape 3" 
+          <img
+            src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05"
+            alt="Misty green hills"
             class="w-full h-64 object-cover rounded-lg"
           />
         </CarouselItem>

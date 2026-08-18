@@ -3,7 +3,7 @@
   import TreeMenu from '$lib/components/TreeMenu/TreeMenu.svelte';
 
   const { Story } = defineMeta({
-    title: 'Components/TreeMenu',
+    title: "Navigation/TreeMenu",
     component: TreeMenu,
     tags: ['autodocs'],
     argTypes: {
@@ -172,23 +172,23 @@
   args={{
     items: [
       {
-        title: 'Section 1',
+        title: 'Getting Started',
       },
       {
-        title: 'Item 1',
-        link: '#item-1',
+        title: 'Installation',
+        link: '#installation',
       },
       {
-        title: 'Item 2',
-        link: '#item-2',
+        title: 'Quickstart',
+        link: '#quickstart',
       },
       {
-        title: 'Section 2',
+        title: 'Guides',
         separator: true,
       },
       {
-        title: 'Item 3',
-        link: '#item-3',
+        title: 'Theming',
+        link: '#theming',
       },
     ],
   }}

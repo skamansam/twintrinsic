@@ -1,7 +1,7 @@
 import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
 
 export default {
-  title: "Components/ThemeToggle",
+  title: "App/ThemeToggle",
   component: ThemeToggle,
   tags: ["autodocs"],
   parameters: {

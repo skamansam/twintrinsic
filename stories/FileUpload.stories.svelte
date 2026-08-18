@@ -3,7 +3,7 @@ import { defineMeta } from "@storybook/addon-svelte-csf"
 import FileUpload from "$lib/components/Form/FileUpload.svelte"
 
 const { Story } = defineMeta({
-  title: "Components/Form/FileUpload",
+  title: "Form/FileUpload",
   component: FileUpload,
   tags: ["autodocs"],
   argTypes: {

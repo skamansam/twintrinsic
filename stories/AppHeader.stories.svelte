@@ -2,8 +2,10 @@
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import AppHeader from "../src/lib/components/AppHeader/AppHeader.svelte";
 
+  const logo = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%234f46e5'/%3E%3Ctext x='16' y='21' font-family='Arial' font-size='16' font-weight='bold' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E`;
+
   const { Story } = defineMeta({
-    title: "Layout/AppHeader",
+    title: "App/AppHeader",
     component: AppHeader,
     argTypes: {
       brand: {
@@ -40,11 +42,11 @@
 <Story
   name="Default"
   args={{
-    brand: "My App",
+    brand: "Acme Suite",
     navItems: [
       { label: "Home", href: "/", current: true },
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
+      { label: "Projects", href: "/projects" },
+      { label: "Reports", href: "/reports" },
     ],
   }}
 />
@@ -53,14 +55,14 @@
   name="WithLogo"
   args={{
     brand: {
-      name: "My App",
-      logo: "https://via.placeholder.com/32",
+      name: "Acme Suite",
+      logo,
       href: "/",
     },
     navItems: [
       { label: "Home", href: "/", current: true },
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
+      { label: "Projects", href: "/projects" },
+      { label: "Reports", href: "/reports" },
     ],
   }}
 />
@@ -68,12 +70,12 @@
 <Story
   name="WithSearch"
   args={{
-    brand: "My App",
+    brand: "Acme Suite",
     showSearch: true,
     navItems: [
       { label: "Home", href: "/", current: true },
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
+      { label: "Projects", href: "/projects" },
+      { label: "Reports", href: "/reports" },
     ],
   }}
 />
@@ -81,12 +83,12 @@
 <Story
   name="WithNotifications"
   args={{
-    brand: "My App",
+    brand: "Acme Suite",
     showNotifications: true,
     navItems: [
       { label: "Home", href: "/", current: true },
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
+      { label: "Projects", href: "/projects" },
+      { label: "Reports", href: "/reports" },
     ],
   }}
 />
@@ -94,15 +96,15 @@
 <Story
   name="WithUser"
   args={{
-    brand: "My App",
+    brand: "Acme Suite",
     user: {
-      name: "John Doe",
-      avatar: "https://via.placeholder.com/32",
+      name: "Sarah Chen",
+      avatar: logo,
     },
     navItems: [
       { label: "Home", href: "/", current: true },
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
+      { label: "Projects", href: "/projects" },
+      { label: "Reports", href: "/reports" },
     ],
   }}
 />
@@ -111,13 +113,13 @@
   name="FullFeatured"
   args={{
     brand: {
-      name: "My App",
-      logo: "https://via.placeholder.com/32",
+      name: "Acme Suite",
+      logo,
       href: "/",
     },
     user: {
-      name: "John Doe",
-      avatar: "https://via.placeholder.com/32",
+      name: "Sarah Chen",
+      avatar: logo,
     },
     showSearch: true,
     showNotifications: true,

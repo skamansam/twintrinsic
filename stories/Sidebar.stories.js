@@ -1,7 +1,7 @@
 import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
 
 export default {
-  title: "Layout/Sidebar",
+  title: "App/Sidebar",
   component: Sidebar,
   tags: ["autodocs"],
   argTypes: {

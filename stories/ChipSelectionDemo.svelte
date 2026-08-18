@@ -7,7 +7,7 @@
   import Chip from "$lib/components/Chip/Chip.svelte"
   import ChipGroup from "$lib/components/Chip/ChipGroup.svelte"
 
-  let selected: string[] = $state(["Red", "Blue"])
+  let selected: string[] = $state(["React", "Vue"])
 </script>
 
 <div class="flex flex-col gap-4">
@@ -15,12 +15,12 @@
     type="button"
     class="rounded border border-muted px-3 py-1 text-sm"
     data-testid="toggle-selection"
-    onclick={() => (selected = ["Green"])}
+    onclick={() => (selected = ["Svelte"])}
   >
-    Toggle selection to Green
+    Toggle selection to Svelte
   </button>
 
-  <ChipGroup items={["Red", "Green", "Blue"]} selected={selected}>
+  <ChipGroup items={["React", "Svelte", "Vue"]} selected={selected}>
     {#snippet itemTemplate(item, index, selected)}
       <Chip clickable selected={selected}>{item}</Chip>
     {/snippet}

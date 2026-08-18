@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/sveltekit';
 import MapComponent from '$lib/components/Map/Map.svelte';
 
 const meta = {
-	title: 'Components/Map',
+	title: "Data Display/Map",
 	component: MapComponent,
 	tags: ['autodocs'],
 	argTypes: {

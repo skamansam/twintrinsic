@@ -4,7 +4,7 @@
   import MenuItem from "$lib/components/Menu/Menu/MenuItem.svelte"
 
   const { Story } = defineMeta({
-    title: "Components/Menu",
+    title: "Navigation/Menu",
     component: Menu,
     tags: ["autodocs"],
     argTypes: {
@@ -16,12 +16,12 @@
 
 <Story name="Basic">
   <div class="p-8">
-    <Menu>
-      {#snippet trigger()}Open Menu{/snippet}
+    <Menu ariaLabel="Account menu">
+      {#snippet trigger()}Account{/snippet}
       {#snippet content()}
-        <MenuItem>Option 1</MenuItem>
-        <MenuItem>Option 2</MenuItem>
-        <MenuItem>Option 3</MenuItem>
+        <MenuItem>Profile</MenuItem>
+        <MenuItem>Billing</MenuItem>
+        <MenuItem>Sign out</MenuItem>
       {/snippet}
     </Menu>
   </div>
@@ -32,9 +32,9 @@
     <Menu ariaLabel="File actions">
       {#snippet trigger()}Actions{/snippet}
       {#snippet content()}
-        <MenuItem icon="home">Home</MenuItem>
-        <MenuItem icon="settings">Settings</MenuItem>
-        <MenuItem icon="info" divider>About</MenuItem>
+        <MenuItem icon="edit">Rename</MenuItem>
+        <MenuItem icon="copy">Duplicate</MenuItem>
+        <MenuItem icon="delete" divider>Move to trash</MenuItem>
       {/snippet}
     </Menu>
   </div>

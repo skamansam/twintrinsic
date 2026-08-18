@@ -5,7 +5,7 @@ import Tag from "$lib/components/Tag/Tag.svelte"
 import TagGroup from "$lib/components/Tag/TagGroup.svelte"
 
 const { Story } = defineMeta({
-  title: "Components/Tag",
+  title: "Data Display/Tag",
   component: Tag,
   tags: ["autodocs"],
   argTypes: {
@@ -134,7 +134,7 @@ const codeIcon =
 
 <Story name="Tag Group">
   <div class="space-y-4">
-    <TagGroup>
+    <TagGroup ariaLabel="Languages">
       <Tag>JavaScript</Tag>
       <Tag>TypeScript</Tag>
       <Tag>Svelte</Tag>
@@ -142,28 +142,28 @@ const codeIcon =
       <Tag>Vue</Tag>
     </TagGroup>
     
-    <TagGroup variant="primary">
-      <Tag>Primary 1</Tag>
-      <Tag>Primary 2</Tag>
-      <Tag>Primary 3</Tag>
+    <TagGroup variant="primary" ariaLabel="Project status">
+      <Tag>Planning</Tag>
+      <Tag>In progress</Tag>
+      <Tag>Shipped</Tag>
     </TagGroup>
     
-    <TagGroup variant="success" pill>
-      <Tag>Success 1</Tag>
-      <Tag>Success 2</Tag>
-      <Tag>Success 3</Tag>
+    <TagGroup variant="success" pill ariaLabel="Deployment">
+      <Tag>Staging</Tag>
+      <Tag>Production</Tag>
+      <Tag>Rolling back</Tag>
     </TagGroup>
     
-    <TagGroup variant="info" outline>
-      <Tag>Info 1</Tag>
-      <Tag>Info 2</Tag>
-      <Tag>Info 3</Tag>
+    <TagGroup variant="info" outline ariaLabel="Labels">
+      <Tag>Bug</Tag>
+      <Tag>Feature</Tag>
+      <Tag>Enhancement</Tag>
     </TagGroup>
     
-    <TagGroup direction="vertical">
-      <Tag variant="primary">Vertical 1</Tag>
-      <Tag variant="secondary">Vertical 2</Tag>
-      <Tag variant="success">Vertical 3</Tag>
+    <TagGroup direction="vertical" ariaLabel="Priorities">
+      <Tag variant="primary">High priority</Tag>
+      <Tag variant="secondary">Medium priority</Tag>
+      <Tag variant="success">Low priority</Tag>
     </TagGroup>
   </div>
 </Story>

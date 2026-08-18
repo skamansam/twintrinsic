@@ -3,7 +3,7 @@ import { defineMeta } from "@storybook/addon-svelte-csf"
 import Combobox from "$lib/components/Form/Combobox.svelte"
 
 const { Story } = defineMeta({
-  title: "Components/Form/Combobox",
+  title: "Form/Combobox",
   component: Combobox,
   tags: ["autodocs"],
   argTypes: {
@@ -39,25 +39,25 @@ const { Story } = defineMeta({
 })
 
 // Sample data for the combobox
-const fruits = [
-  "Apple",
-  "Banana",
-  "Cherry",
-  "Date",
-  "Elderberry",
-  "Fig",
-  "Grape",
-  "Honeydew",
-  "Kiwi",
-  "Lemon",
-  "Mango",
-  "Orange",
-  "Papaya",
-  "Quince",
-  "Raspberry",
-  "Strawberry",
-  "Tangerine",
-  "Watermelon",
+const cities = [
+  "New York",
+  "Los Angeles",
+  "Chicago",
+  "Houston",
+  "Phoenix",
+  "Philadelphia",
+  "San Antonio",
+  "San Diego",
+  "Dallas",
+  "Austin",
+  "Seattle",
+  "Denver",
+  "Miami",
+  "Boston",
+  "Atlanta",
+  "Portland",
+  "Nashville",
+  "Minneapolis",
 ]
 
 const countries = [
@@ -79,20 +79,20 @@ const countries = [
 ]
 
 const users = [
-  { id: 1, name: "John Doe", email: "john.doe@example.com", role: "Admin" },
-  { id: 2, name: "Jane Smith", email: "jane.smith@example.com", role: "Editor" },
-  { id: 3, name: "Bob Johnson", email: "bob.johnson@example.com", role: "Viewer" },
-  { id: 4, name: "Alice Williams", email: "alice.williams@example.com", role: "Editor" },
-  { id: 5, name: "Charlie Brown", email: "charlie.brown@example.com", role: "Viewer" },
-  { id: 6, name: "Diana Miller", email: "diana.miller@example.com", role: "Admin" },
+  { id: 1, name: "Sarah Chen", email: "sarah.chen@acme.io", role: "Admin" },
+  { id: 2, name: "Marcus Webb", email: "marcus.webb@acme.io", role: "Editor" },
+  { id: 3, name: "Priya Patel", email: "priya.patel@acme.io", role: "Viewer" },
+  { id: 4, name: "Diego Ramírez", email: "diego.ramirez@acme.io", role: "Editor" },
+  { id: 5, name: "Emma Lindqvist", email: "emma.lindqvist@acme.io", role: "Viewer" },
+  { id: 6, name: "James Okafor", email: "james.okafor@acme.io", role: "Admin" },
 ]
 </script>
 
 <Story name="Basic">
   <div class="w-full max-w-md mx-auto">
     <Combobox 
-      options={fruits}
-      placeholder="Select a fruit"
+      options={cities}
+      placeholder="Select a city"
     />
   </div>
 </Story>
@@ -129,8 +129,8 @@ const users = [
 <Story name="Disabled">
   <div class="w-full max-w-md mx-auto">
     <Combobox 
-      options={fruits}
-      placeholder="Select a fruit"
+      options={cities}
+      placeholder="Select a city"
       disabled
     />
   </div>
@@ -139,9 +139,9 @@ const users = [
 <Story name="Readonly">
   <div class="w-full max-w-md mx-auto">
     <Combobox 
-      options={fruits}
-      placeholder="Select a fruit"
-      value="Apple"
+      options={cities}
+      placeholder="Select a city"
+      value="New York"
       readonly
     />
   </div>
@@ -150,7 +150,7 @@ const users = [
 <Story name="Loading">
   <div class="w-full max-w-md mx-auto">
     <Combobox 
-      options={fruits}
+      options={cities}
       placeholder="Loading options..."
       loading
     />
@@ -160,8 +160,8 @@ const users = [
 <Story name="Non-Searchable">
   <div class="w-full max-w-md mx-auto">
     <Combobox 
-      options={fruits}
-      placeholder="Select a fruit"
+      options={cities}
+      placeholder="Select a city"
       searchable={false}
     />
   </div>
@@ -170,8 +170,8 @@ const users = [
 <Story name="Non-Clearable">
   <div class="w-full max-w-md mx-auto">
     <Combobox 
-      options={fruits}
-      placeholder="Select a fruit"
+      options={cities}
+      placeholder="Select a city"
       clearable={false}
     />
   </div>
@@ -180,8 +180,8 @@ const users = [
 <Story name="Auto-Select First">
   <div class="w-full max-w-md mx-auto">
     <Combobox 
-      options={fruits}
-      placeholder="Select a fruit"
+      options={cities}
+      placeholder="Select a city"
       autoSelect
     />
   </div>
@@ -190,9 +190,9 @@ const users = [
 <Story name="With Initial Value">
   <div class="w-full max-w-md mx-auto">
     <Combobox 
-      options={fruits}
-      placeholder="Select a fruit"
-      value="Banana"
+      options={cities}
+      placeholder="Select a city"
+      value="Chicago"
     />
   </div>
 </Story>
@@ -212,12 +212,12 @@ const users = [
 <Story name="Form Integration">
   <div class="w-full max-w-md mx-auto space-y-4">
     <div>
-      <label for="fruit-select" class="block text-sm font-medium mb-1">Favorite Fruit</label>
+      <label for="city-select" class="block text-sm font-medium mb-1">Billing City</label>
       <Combobox 
-        id="fruit-select"
-        name="fruit"
-        options={fruits}
-        placeholder="Select a fruit"
+        id="city-select"
+        name="city"
+        options={cities}
+        placeholder="Select a city"
         required
       />
     </div>
@@ -239,7 +239,7 @@ const users = [
       type="button" 
       class="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
     >
-      Submit
+      Continue to payment
     </button>
   </div>
 </Story>

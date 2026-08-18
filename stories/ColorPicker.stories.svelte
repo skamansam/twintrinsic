@@ -3,7 +3,7 @@
   import ColorPicker from "../src/lib/components/Form/ColorPicker.svelte";
 
   const { Story } = defineMeta({
-    title: "Components/Form/ColorPicker",
+    title: "Form/ColorPicker",
     component: ColorPicker,
     argTypes: {
       value: { control: "text" },

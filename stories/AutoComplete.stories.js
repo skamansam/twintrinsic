@@ -14,11 +14,11 @@ const countries = [
 ]
 
 const users = [
-  { label: "John Doe", value: "1", avatar: "https://i.pravatar.cc/40?u=1" },
-  { label: "Jane Smith", value: "2", avatar: "https://i.pravatar.cc/40?u=2" },
-  { label: "Bob Johnson", value: "3", avatar: "https://i.pravatar.cc/40?u=3" },
-  { label: "Alice Brown", value: "4", avatar: "https://i.pravatar.cc/40?u=4" },
-  { label: "Charlie Wilson", value: "5", avatar: "https://i.pravatar.cc/40?u=5" },
+  { label: "Sarah Chen", value: "1", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=faces" },
+  { label: "Marcus Webb", value: "2", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=faces" },
+  { label: "Priya Patel", value: "3", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=faces" },
+  { label: "Diego Ramírez", value: "4", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=faces" },
+  { label: "Emma Lindqvist", value: "5", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=faces" },
 ]
 
 const UserTemplate = {
@@ -31,7 +31,7 @@ const UserTemplate = {
 }
 
 export default {
-  title: "Components/Form/AutoComplete",
+  title: "Form/AutoComplete",
   component: AutoComplete,
   argTypes: {
     label: { control: "text" },

@@ -5,7 +5,7 @@ import FormField from "$lib/components/Form/FormField.svelte"
 import InputSwitch from "$lib/components/Form/InputSwitch.svelte"
 
 const { Story } = defineMeta({
-  title: "Components/Form/InputSwitch",
+  title: "Form/InputSwitch",
   component: InputSwitch,
   tags: ["autodocs"],
   argTypes: {

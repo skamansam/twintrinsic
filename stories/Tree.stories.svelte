@@ -4,7 +4,7 @@ import Tree from "$lib/components/Tree/Tree.svelte"
 import TreeNode from "$lib/components/Tree/TreeNode.svelte"
 
 const { Story } = defineMeta({
-  title: "Components/Tree",
+  title: "Data Display/Tree",
   component: Tree,
   tags: ["autodocs"],
   argTypes: {
@@ -75,16 +75,17 @@ const fileSystemData = [
 <Story name="Basic">
   <div class="w-full max-w-md">
     <Tree>
-      <TreeNode label="Root Node">
-        <TreeNode label="Child Node 1">
-          <TreeNode label="Grandchild 1.1" />
-          <TreeNode label="Grandchild 1.2" />
+      <TreeNode label="Acme Website">
+        <TreeNode label="Pages">
+          <TreeNode label="Home" />
+          <TreeNode label="Pricing" />
+          <TreeNode label="Contact" />
         </TreeNode>
-        <TreeNode label="Child Node 2">
-          <TreeNode label="Grandchild 2.1" />
-          <TreeNode label="Grandchild 2.2" />
+        <TreeNode label="Blog">
+          <TreeNode label="2026" />
+          <TreeNode label="2025" />
         </TreeNode>
-        <TreeNode label="Child Node 3" />
+        <TreeNode label="Assets" />
       </TreeNode>
     </Tree>
   </div>
@@ -127,16 +128,12 @@ const fileSystemData = [
 <Story name="Selectable">
   <div class="w-full max-w-md">
     <Tree selectable>
-      <TreeNode label="Root Node">
-        <TreeNode label="Child Node 1">
-          <TreeNode label="Grandchild 1.1" />
-          <TreeNode label="Grandchild 1.2" />
+      <TreeNode label="Acme Website">
+        <TreeNode label="Pages">
+          <TreeNode label="Home" />
+          <TreeNode label="Pricing" />
         </TreeNode>
-        <TreeNode label="Child Node 2">
-          <TreeNode label="Grandchild 2.1" />
-          <TreeNode label="Grandchild 2.2" />
-        </TreeNode>
-        <TreeNode label="Child Node 3" />
+        <TreeNode label="Blog" />
       </TreeNode>
     </Tree>
   </div>
@@ -145,16 +142,12 @@ const fileSystemData = [
 <Story name="Multi-Select">
   <div class="w-full max-w-md">
     <Tree selectable multiSelect>
-      <TreeNode label="Root Node">
-        <TreeNode label="Child Node 1">
-          <TreeNode label="Grandchild 1.1" />
-          <TreeNode label="Grandchild 1.2" />
+      <TreeNode label="Acme Website">
+        <TreeNode label="Pages">
+          <TreeNode label="Home" />
+          <TreeNode label="Pricing" />
         </TreeNode>
-        <TreeNode label="Child Node 2">
-          <TreeNode label="Grandchild 2.1" />
-          <TreeNode label="Grandchild 2.2" />
-        </TreeNode>
-        <TreeNode label="Child Node 3" />
+        <TreeNode label="Blog" />
       </TreeNode>
     </Tree>
   </div>

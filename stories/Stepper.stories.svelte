@@ -4,7 +4,7 @@ import Stepper from "$lib/components/Stepper/Stepper.svelte"
 import StepperStep from "$lib/components/Stepper/StepperStep.svelte"
 
 const { Story } = defineMeta({
-  title: "Components/Stepper",
+  title: "Feedback/Stepper",
   component: Stepper,
   tags: ["autodocs"],
   argTypes: {
@@ -42,22 +42,22 @@ const { Story } = defineMeta({
 <Story name="Basic">
   <div class="w-full max-w-3xl mx-auto">
     <Stepper>
-      <StepperStep label="Step 1">
+      <StepperStep label="Shipping">
         <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Step 1 Content</h3>
-          <p class="mt-2">This is the content for step 1. You can put any content here.</p>
+          <h3 class="text-lg font-medium">Shipping Address</h3>
+          <p class="mt-2">We'll send your order to the address you provide here.</p>
         </div>
       </StepperStep>
-      <StepperStep label="Step 2">
+      <StepperStep label="Payment">
         <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Step 2 Content</h3>
-          <p class="mt-2">This is the content for step 2. You can put any content here.</p>
+          <h3 class="text-lg font-medium">Payment Method</h3>
+          <p class="mt-2">Your card details are encrypted and never stored on our servers.</p>
         </div>
       </StepperStep>
-      <StepperStep label="Step 3">
+      <StepperStep label="Review">
         <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Step 3 Content</h3>
-          <p class="mt-2">This is the content for step 3. You can put any content here.</p>
+          <h3 class="text-lg font-medium">Review Your Order</h3>
+          <p class="mt-2">Double-check your items and shipping details before placing the order.</p>
         </div>
       </StepperStep>
     </Stepper>
@@ -112,8 +112,8 @@ const { Story } = defineMeta({
           <div class="mt-4 space-y-4">
             <div class="p-3 bg-background dark:bg-background rounded-md">
               <h4 class="font-medium">Personal Information</h4>
-              <p class="text-sm text-muted dark:text-muted mt-1">John Doe</p>
-              <p class="text-sm text-muted dark:text-muted">john.doe@example.com</p>
+              <p class="text-sm text-muted dark:text-muted mt-1">Sarah Chen</p>
+              <p class="text-sm text-muted dark:text-muted">sarah.chen@acme.io</p>
             </div>
             <div class="p-3 bg-background dark:bg-background rounded-md">
               <h4 class="font-medium">Address</h4>

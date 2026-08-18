@@ -1,7 +1,7 @@
 import Calendar from "$lib/components/Form/Calendar.svelte"
 
 export default {
-  title: "Components/Form/Calendar",
+  title: "Form/Calendar",
   component: Calendar,
   argTypes: {
     value: { control: "date" },

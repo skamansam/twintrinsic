@@ -6,7 +6,7 @@ import ChipGroup from "$lib/components/Chip/ChipGroup.svelte"
 import ChipSelectionDemo from "./ChipSelectionDemo.svelte"
 
 const { Story } = defineMeta({
-  title: "Components/Chip",
+  title: "Data Display/Chip",
   component: Chip,
   tags: ["autodocs"],
   argTypes: {
@@ -108,7 +108,7 @@ const infoIcon =
 
 <Story name="Chip Group">
   <div class="space-y-4">
-    <ChipGroup>
+    <ChipGroup ariaLabel="Languages">
       <Chip>JavaScript</Chip>
       <Chip>TypeScript</Chip>
       <Chip>Svelte</Chip>
@@ -116,22 +116,22 @@ const infoIcon =
       <Chip>Vue</Chip>
     </ChipGroup>
 
-    <ChipGroup variant="primary">
-      <Chip>Primary 1</Chip>
-      <Chip>Primary 2</Chip>
-      <Chip>Primary 3</Chip>
+    <ChipGroup variant="primary" ariaLabel="Project status">
+      <Chip>Planning</Chip>
+      <Chip>In progress</Chip>
+      <Chip>Blocked</Chip>
     </ChipGroup>
 
-    <ChipGroup variant="success" outline>
-      <Chip>Success 1</Chip>
-      <Chip>Success 2</Chip>
-      <Chip>Success 3</Chip>
+    <ChipGroup variant="success" outline ariaLabel="Deployment">
+      <Chip>Staging</Chip>
+      <Chip>Production</Chip>
+      <Chip>Rolling back</Chip>
     </ChipGroup>
 
-    <ChipGroup variant="info" direction="vertical">
-      <Chip variant="primary">Vertical 1</Chip>
-      <Chip variant="secondary">Vertical 2</Chip>
-      <Chip variant="success">Vertical 3</Chip>
+    <ChipGroup variant="info" direction="vertical" ariaLabel="Priorities">
+      <Chip variant="primary">High priority</Chip>
+      <Chip variant="secondary">Medium priority</Chip>
+      <Chip variant="success">Low priority</Chip>
     </ChipGroup>
   </div>
 </Story>
@@ -146,13 +146,13 @@ const infoIcon =
     // proves this is the fallback path, not the snippet path.
     // variant="secondary" propagation is exercised but not asserted
     // (class assertions would be brittle).
-    for (const label of ["Red", "Green", "Blue"]) {
+    for (const label of ["Frontend", "Backend", "DevOps"]) {
       const chip = canvas.getByText(label).closest(".chip");
       await expect(chip).not.toHaveAttribute("role", "button");
     }
   }}
 >
-  <ChipGroup items={["Red", "Green", "Blue"]} variant="secondary">
+  <ChipGroup items={["Frontend", "Backend", "DevOps"]} variant="secondary">
   </ChipGroup>
 </Story>
 
@@ -160,20 +160,20 @@ const infoIcon =
   name="Snippet Selection Chips"
   play={async ({ canvas }) => {
     // The third `itemTemplate` arg reflects the group's selection state, so a
-    // snippet chip can render `selected={selected}` without tracking it. Red
-    // and Blue are selected via the controlled `selected` prop; Green is not.
+    // snippet chip can render `selected={selected}` without tracking it.
+    // React and Vue are selected via the controlled `selected` prop; Svelte is not.
     // (The group is intentionally NOT selectable here: with a custom snippet
     // the consumer owns click handling, and adding role="listbox" on the
     // group while snippet chips use role="button" would violate ARIA.)
-    for (const label of ["Red", "Blue"]) {
+    for (const label of ["React", "Vue"]) {
       const chip = canvas.getByText(label).closest(".chip");
       await expect(chip).toHaveClass("chip-selected");
     }
-    const green = canvas.getByText("Green").closest(".chip");
-    await expect(green).not.toHaveClass("chip-selected");
+    const svelte = canvas.getByText("Svelte").closest(".chip");
+    await expect(svelte).not.toHaveClass("chip-selected");
   }}
 >
-  <ChipGroup items={["Red", "Green", "Blue"]} selected={["Red", "Blue"]}>
+  <ChipGroup items={["React", "Svelte", "Vue"]} selected={["React", "Vue"]}>
     {#snippet itemTemplate(item, index, selected)}
       <Chip clickable selected={selected}>{item}</Chip>
     {/snippet}
@@ -187,15 +187,15 @@ const infoIcon =
     // real browser. jsdom + @testing-library cannot re-trigger $effects via
     // rerender/$set, so this story drives the change through a wrapper that
     // holds `selected` in $state and re-renders ChipGroup with the new prop.
-    const green = canvas.getByText("Green").closest(".chip");
-    await expect(green).not.toHaveClass("chip-selected");
+    const svelte = canvas.getByText("Svelte").closest(".chip");
+    await expect(svelte).not.toHaveClass("chip-selected");
 
     await canvas.getByTestId("toggle-selection").click();
 
-    // Green is now the only selected item; Red and Blue were deselected.
-    await expect(green).toHaveClass("chip-selected");
-    const red = canvas.getByText("Red").closest(".chip");
-    await expect(red).not.toHaveClass("chip-selected");
+    // Svelte is now the only selected item; React and Vue were deselected.
+    await expect(svelte).toHaveClass("chip-selected");
+    const react = canvas.getByText("React").closest(".chip");
+    await expect(react).not.toHaveClass("chip-selected");
   }}
 >
   <ChipSelectionDemo />
@@ -209,7 +209,7 @@ const infoIcon =
     // only renders clickable when the group sets `clickable` or `selectable`
     // (neither is set here), so asserting each `.chip` has role="button"
     // proves the snippet path actually rendered (not the fallback).
-    for (const label of ["Red", "Green", "Blue", "Yellow", "Purple"]) {
+    for (const label of ["Design", "Engineering", "Product", "Marketing", "Support"]) {
       const chip = canvas.getByText(label).closest(".chip");
       await expect(chip).toHaveAttribute("role", "button");
       await expect(chip).toHaveClass("chip-clickable");
@@ -220,7 +220,7 @@ const infoIcon =
   }}
 >
   <ChipGroup
-    items={["Red", "Green", "Blue", "Yellow", "Purple"]}
+    items={["Design", "Engineering", "Product", "Marketing", "Support"]}
     variant="primary"
     removable
   >

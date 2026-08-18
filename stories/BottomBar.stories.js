@@ -1,7 +1,7 @@
 import BottomBar from "$lib/components/BottomBar/BottomBar.svelte"
 
 export default {
-  title: "Layout/BottomBar",
+  title: "App/BottomBar",
   component: BottomBar,
   tags: ["autodocs"],
   argTypes: {
@@ -66,7 +66,7 @@ export const Default = {
             <div class="space-y-2">
               <p>Created: April 6, 2025</p>
               <p>Status: In Progress</p>
-              <p>Owner: John Doe</p>
+              <p>Owner: Sarah Chen</p>
             </div>
           </div>
         </BottomBar>

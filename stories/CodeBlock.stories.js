@@ -1,7 +1,7 @@
 import { CodeBlock } from "$lib/components/CodeBlock"
 
 export default {
-  title: "Components/CodeBlock",
+  title: "Data Display/CodeBlock",
   component: CodeBlock,
   argTypes: {
     language: {

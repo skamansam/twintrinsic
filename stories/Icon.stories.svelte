@@ -3,7 +3,7 @@
   import Icon from "../src/lib/components/Icon/Icon.svelte";
 
   const { Story } = defineMeta({
-    title: "Components/Icon",
+    title: "Utility/Icon",
     component: Icon,
     argTypes: {
       name: {

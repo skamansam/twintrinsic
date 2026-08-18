@@ -3,7 +3,7 @@
   import Checkbox from "../src/lib/components/Form/Checkbox.svelte";
 
   const { Story } = defineMeta({
-    title: "Components/Form/Checkbox",
+    title: "Form/Checkbox",
     component: Checkbox,
     argTypes: {
       label: { control: "text" },

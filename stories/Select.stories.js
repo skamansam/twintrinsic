@@ -1,7 +1,7 @@
 import Select from "$lib/components/Form/Select.svelte"
 
 export default {
-  title: "Components/Form/Select",
+  title: "Form/Select",
   component: Select,
   argTypes: {
     label: { control: "text" },

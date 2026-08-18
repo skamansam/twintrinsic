@@ -1,7 +1,7 @@
 import CodeEditor from '$lib/components/CodeEditor/CodeEditor.svelte';
 
 const meta = {
-	title: 'Components/CodeEditor',
+	title: "Data Display/CodeEditor",
 	component: CodeEditor,
 	tags: ['autodocs'],
 	argTypes: {

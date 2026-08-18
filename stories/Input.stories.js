@@ -1,7 +1,7 @@
 import Input from "$lib/components/Form/Input.svelte"
 
 export default {
-  title: "Components/Form/Input",
+  title: "Form/Input",
   component: Input,
   argTypes: {
     label: { control: "text" },

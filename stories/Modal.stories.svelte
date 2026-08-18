@@ -1,0 +1,89 @@
+<script module>
+import { defineMeta } from "@storybook/addon-svelte-csf"
+import Modal from "$lib/components/Modal/Modal.svelte"
+import Button from "$lib/components/Button/Button.svelte"
+
+let modalOpen = $state(false)
+
+const { Story } = defineMeta({
+  title: "Feedback/Modal",
+  component: Modal,
+  tags: ["autodocs"],
+  argTypes: {
+    size: { control: { type: "select" }, options: ["sm", "md", "lg", "xl", "full"] },
+    centered: { control: "boolean" },
+    closeOnOutsideClick: { control: "boolean" },
+    closeOnEscape: { control: "boolean" },
+    showCloseButton: { control: "boolean" },
+  },
+  args: { size: "md", centered: true, showCloseButton: true },
+})
+</script>
+
+<Story name="Confirm Delete">
+  <button onclick={() => (modalOpen = true)} class="px-4 py-2 bg-error-500 text-white rounded">
+    Delete project
+  </button>
+  <Modal open={modalOpen} onclose={() => (modalOpen = false)} ariaLabel="Delete project">
+    <svelte:fragment slot="header">Delete "Website Redesign"?</svelte:fragment>
+    <p>
+      This will permanently delete the project and all of its 23 tasks, 4 milestones, and attached files.
+      This action cannot be undone.
+    </p>
+    <svelte:fragment slot="footer">
+      <Button variant="outline" onclick={() => (modalOpen = false)}>Cancel</Button>
+      <Button variant="outline" class="text-error-500" onclick={() => (modalOpen = false)}>Delete project</Button>
+    </svelte:fragment>
+  </Modal>
+</Story>
+
+<Story name="Invite Team Member">
+  <button onclick={() => (modalOpen = true)} class="px-4 py-2 bg-primary-500 text-white rounded">
+    Invite teammate
+  </button>
+  <Modal open={modalOpen} onclose={() => (modalOpen = false)} ariaLabel="Invite team member" size="sm">
+    <svelte:fragment slot="header">Invite a teammate</svelte:fragment>
+    <form class="space-y-3" onsubmit={(e) => { e.preventDefault(); modalOpen = false }}>
+      <label class="block">
+        <span class="block text-sm font-medium mb-1">Email address</span>
+        <input
+          type="email"
+          required
+          placeholder="teammate@company.com"
+          class="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+        />
+      </label>
+      <label class="block">
+        <span class="block text-sm font-medium mb-1">Role</span>
+        <select class="w-full rounded-md border border-border bg-background px-3 py-2 text-sm">
+          <option>Member</option>
+          <option>Admin</option>
+          <option>Viewer</option>
+        </select>
+      </label>
+      <div class="flex justify-end gap-2 pt-2">
+        <Button variant="outline" type="button" onclick={() => (modalOpen = false)}>Cancel</Button>
+        <Button variant="primary" type="submit">Send invite</Button>
+      </div>
+    </form>
+  </Modal>
+</Story>
+
+<Story name="Sizes">
+  <div class="flex gap-2">
+    {#each ["sm", "md", "lg", "xl"] as size}
+      <Modal open={true} {size} ariaLabel="{size} modal">
+        <svelte:fragment slot="header">Checkout summary ({size})</svelte:fragment>
+        <p>Your order qualifies for free shipping. Review the items in your cart before continuing.</p>
+      </Modal>
+    {/each}
+  </div>
+</Story>
+
+<Story name="Without Close Button" args={{ showCloseButton: false, open: true, ariaLabel: "No close button" }}>
+  <svelte:fragment slot="header">Accept the terms to continue</svelte:fragment>
+  <p>This modal has no close button — you must use the action area below to dismiss it.</p>
+  <svelte:fragment slot="footer">
+    <Button variant="primary" onclick={() => (modalOpen = false)}>I agree</Button>
+  </svelte:fragment>
+</Story>

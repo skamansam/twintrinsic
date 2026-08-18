@@ -3,7 +3,7 @@
   import LazyPanel from "../src/lib/components/Panel/LazyPanel.svelte";
 
   const { Story } = defineMeta({
-    title: "Components/Panel/LazyPanel",
+    title: "Utility/LazyPanel",
     component: LazyPanel,
     argTypes: {
       expanded: { control: "boolean" },
@@ -18,20 +18,20 @@
 
 <Story name="Default">
   <LazyPanel>
-    <svelte:fragment slot="header">Lazy Content</svelte:fragment>
+    <svelte:fragment slot="header">Billing FAQ</svelte:fragment>
     <svelte:fragment slot="loading">
-      <div class="p-4">Loading...</div>
+      <div class="p-4">Loading FAQ…</div>
     </svelte:fragment>
     <div class="p-4">
-      <p>This content was loaded lazily when the panel became visible.</p>
-      <p>Scroll down to see more lazy panels.</p>
+      <p>How do upgrades work? Upgrades take effect immediately and are prorated.</p>
+      <p class="mt-2">Scroll the FAQ list below to see more panels load lazily.</p>
     </div>
   </LazyPanel>
 </Story>
 
 <Story name="With Custom Loading">
   <LazyPanel>
-    <svelte:fragment slot="header">Custom Loading State</svelte:fragment>
+    <svelte:fragment slot="header">Account Settings</svelte:fragment>
     <svelte:fragment slot="loading">
       <div class="p-4 flex items-center justify-center">
         <div
@@ -40,7 +40,7 @@
       </div>
     </svelte:fragment>
     <div class="p-4">
-      <p>Content loaded!</p>
+      <p>Manage your profile, notifications, and security preferences.</p>
     </div>
   </LazyPanel>
 </Story>
@@ -49,13 +49,12 @@
   <div class="space-y-4">
     {#each Array(5) as _, i}
       <LazyPanel>
-        <svelte:fragment slot="header">Panel {i + 1}</svelte:fragment>
+        <svelte:fragment slot="header">Help section {i + 1}</svelte:fragment>
         <svelte:fragment slot="loading">
-          <div class="p-4">Loading panel {i + 1}...</div>
+          <div class="p-4">Loading section {i + 1}…</div>
         </svelte:fragment>
         <div class="p-4">
-          <p>Content for panel {i + 1} has loaded!</p>
-          <p>This content was loaded because you scrolled down to it.</p>
+          <p>This help article content loaded when you scrolled to it.</p>
         </div>
       </LazyPanel>
     {/each}

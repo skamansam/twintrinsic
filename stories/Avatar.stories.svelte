@@ -2,9 +2,10 @@
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect, within } from "storybook/test";
   import Avatar from "../src/lib/components/Avatar/Avatar.svelte";
+  import AvatarGroup from "../src/lib/components/Avatar/AvatarGroup.svelte";
 
   const { Story } = defineMeta({
-    title: "Components/Avatar",
+    title: "Data Display/Avatar",
     component: Avatar,
     tags: ["autodocs"],
     argTypes: {
@@ -76,9 +77,9 @@
 
 <Story
   name="Basic Image"
-  args={{ src: "https://i.pravatar.cc/300?img=1", alt: "User Avatar" }}
+  args={{ src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop&crop=faces", alt: "Sarah Chen" }}
   play={async ({ canvas }) => {
-    const avatar = await canvas.findByRole("img", { name: /user avatar/i });
+    const avatar = await canvas.findByRole("img", { name: /sarah chen/i });
     await expect(avatar).toBeInTheDocument();
     await expect(avatar.tagName).toBe("IMG");
     const src = avatar.getAttribute("src");
@@ -93,22 +94,22 @@
 
 <Story
   name="With Initials"
-  args={{ name: "John Doe" }}
+  args={{ name: "Marcus Webb" }}
   play={async ({ canvas }) => {
-    const wrapper = (await canvas.findByLabelText("John Doe")).closest(".avatar");
+    const wrapper = (await canvas.findByLabelText("Marcus Webb")).closest(".avatar");
     await expect(wrapper).not.toBeNull();
     const fallback = wrapper?.querySelector(".avatar-fallback");
     await expect(fallback).not.toBeNull();
     // Default initialsGenerator: first letter of first + last name.
-    await expect(fallback?.textContent?.trim()).toBe("JD");
+    await expect(fallback?.textContent?.trim()).toBe("MW");
   }}
 />
 
 <Story
   name="With Fallback"
-  args={{ fallback: "JD", bgColor: "bg-primary-600" }}
+  args={{ fallback: "MW", bgColor: "bg-primary-600" }}
   play={async ({ canvas }) => {
-    const fallback = await canvas.findByText("JD");
+    const fallback = await canvas.findByText("MW");
     await expect(fallback).toBeInTheDocument();
     const wrapper = fallback.closest(".avatar");
     await expect(wrapper).toHaveClass("rounded-full");
@@ -320,3 +321,39 @@
     await expect(status).toHaveClass(/bg-success-500/);
   }}
 />
+
+<Story
+  name="Group"
+  asChild
+  play={async ({ canvas }) => {
+    // AvatarGroup renders a labeled group with overlapping avatars.
+    const group = await canvas.findByRole("group", { name: "Team members" });
+    await expect(group).toBeInTheDocument();
+    for (const name of ["Sarah Chen", "Priya Patel", "Emma Lindqvist"]) {
+      await expect(await canvas.findByLabelText(name)).toBeInTheDocument();
+    }
+  }}
+>
+  <AvatarGroup ariaLabel="Team members">
+    <Avatar name="Sarah Chen" />
+    <Avatar name="Priya Patel" />
+    <Avatar name="Emma Lindqvist" />
+  </AvatarGroup>
+</Story>
+
+<Story
+  name="Group With Overflow"
+  asChild
+  play={async ({ canvas }) => {
+    // max/total renders an overflow counter instead of hiding avatars.
+    const group = await canvas.findByRole("group", { name: "Team members" });
+    await expect(group).toBeInTheDocument();
+    await expect(await canvas.findByText("+2")).toBeInTheDocument();
+  }}
+>
+  <AvatarGroup ariaLabel="Team members" max={3} total={5}>
+    <Avatar name="Sarah Chen" />
+    <Avatar name="Priya Patel" />
+    <Avatar name="Emma Lindqvist" />
+  </AvatarGroup>
+</Story>

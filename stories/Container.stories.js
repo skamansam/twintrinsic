@@ -1,7 +1,7 @@
 import Container from "$lib/components/Container/Container.svelte"
 
 export default {
-  title: "Layout/Container",
+  title: "Basic/Container",
   component: Container,
   tags: ["autodocs"],
   argTypes: {
@@ -43,8 +43,8 @@ export const Default = {
     template: `
       <Container {...args}>
         <div class="p-4 bg-primary-100 dark:bg-primary-800 rounded">
-          <h2 class="text-lg font-semibold text-text dark:text-muted">Container Content</h2>
-          <p class="mt-2 text-muted">This is a basic container example with some content.</p>
+          <h2 class="text-lg font-semibold text-text dark:text-muted">Welcome to Acme</h2>
+          <p class="mt-2 text-muted">The container keeps this content centered and readable at any screen size.</p>
         </div>
       </Container>
     `,

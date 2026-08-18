@@ -1,7 +1,7 @@
 import CodeBlockSpeed from '$lib/components/CodeBlockSpeed/CodeBlockSpeed.svelte';
 
 const meta = {
-	title: 'Components/CodeBlockSpeed',
+	title: "Data Display/CodeBlockSpeed",
 	component: CodeBlockSpeed,
 	tags: ['autodocs'],
 	argTypes: {
@@ -77,8 +77,7 @@ export const TypeScript = {
 	render: (args) => ({
 		Component: CodeBlockSpeed,
 		props: args,
-		slots: {
-			default: `interface User {
+		slots: {        default: `interface User {
   id: number;
   name: string;
   email: string;
@@ -86,8 +85,8 @@ export const TypeScript = {
 
 const user: User = {
   id: 1,
-  name: "John Doe",
-  email: "john@example.com"
+  name: "Sarah Chen",
+  email: "sarah.chen@acme.io"
 };`,
 		},
 	}),
