@@ -3,10 +3,9 @@
 Completion and development process documentation
 -->
 <script lang="ts">
+import CompatibilityMatrix from "$lib/components/CompatibilityMatrix/CompatibilityMatrix.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Separator from "$lib/components/Separator/Separator.svelte"
-
-let { children } = $props()
 
 const components = [
   // App
@@ -98,6 +97,9 @@ const components = [
   ]},
   { name: "Tooltip", category: "Data Display", updated: false, apis: [
     { name: "<abbr> or aria-describedby", implemented: false },
+    { name: "Popover API", implemented: false },
+    { name: "CSS Anchor Positioning", implemented: false },
+    { name: "interestfor attribute", implemented: false },
   ]},
   { name: "Tree", category: "Data Display", updated: false, apis: [
     { name: "ARIA tree pattern (APG)", implemented: false },
@@ -122,9 +124,11 @@ const components = [
   { name: "Combobox", category: "Form", updated: false, apis: [
     { name: "ARIA combobox", implemented: false },
     { name: "Popover API", implemented: false },
+    { name: "CSS Anchor Positioning", implemented: false },
   ]},
   { name: "Dropdown", category: "Form", updated: false, apis: [
     { name: "Popover API", implemented: false },
+    { name: "CSS Anchor Positioning", implemented: false },
     { name: "Keyboard navigation", implemented: false },
   ]},
   { name: "FileUpload", category: "Form", updated: false, apis: [
@@ -140,9 +144,12 @@ const components = [
   ]},
   { name: "FormField", category: "Form", updated: false, apis: [
     { name: "ARIA form controls", implemented: false },
+    { name: "CSS :has()", implemented: false },
+    { name: "CSS :user-valid / :user-invalid", implemented: false },
   ]},
   { name: "Input", category: "Form", updated: false, apis: [
     { name: "HTML input element", implemented: false },
+    { name: "CSS field-sizing: content", implemented: false },
   ]},
   { name: "InputSwitch", category: "Form", updated: false, apis: [
     { name: "HTML checkbox input", implemented: false },
@@ -157,11 +164,14 @@ const components = [
   ]},
   { name: "Listbox", category: "Form", updated: false, apis: [
     { name: "ARIA listbox", implemented: false },
+    { name: "Popover API", implemented: false },
+    { name: "CSS Anchor Positioning", implemented: false },
     { name: "Keyboard navigation", implemented: false },
   ]},
   { name: "NumberInput", category: "Form", updated: false, apis: [
     { name: "HTML number input", implemented: false },
     { name: "Intl NumberFormat", implemented: false },
+    { name: "CSS field-sizing: content", implemented: false },
   ]},
   { name: "Radio", category: "Form", updated: false, apis: [
     { name: "HTML radio input", implemented: false },
@@ -175,9 +185,11 @@ const components = [
   ]},
   { name: "Select", category: "Form", updated: false, apis: [
     { name: "HTML select element", implemented: false },
+    { name: "Customizable <select> API", implemented: false },
   ]},
   { name: "SelectGroup", category: "Form", updated: false, apis: [
     { name: "HTML optgroup", implemented: false },
+    { name: "Customizable <select> API", implemented: false },
   ]},
   { name: "Slider", category: "Form", updated: false, apis: [
     { name: "<input type=\"range\"> element", implemented: false },
@@ -188,17 +200,21 @@ const components = [
   ]},
   { name: "Textarea", category: "Form", updated: false, apis: [
     { name: "HTML textarea element", implemented: false },
+    { name: "CSS field-sizing: content", implemented: false },
   ]},
   
   // Feedback
   { name: "Modal", category: "Feedback", updated: false, apis: [
     { name: "HTML <dialog> element", implemented: false },
+    { name: "dialog closedby attribute", implemented: false },
+    { name: "Invoker Commands (command/commandfor)", implemented: false },
   ]},
   { name: "Stepper", category: "Feedback", updated: false, apis: [
     { name: "<ol> + ARIA attributes", implemented: false },
   ]},
   { name: "Toast", category: "Feedback", updated: false, apis: [
     { name: "CSS animations", implemented: false },
+    { name: "Popover API", implemented: false },
   ]},
   
   // Utility
@@ -217,6 +233,7 @@ const components = [
   { name: "ThemeToggle", category: "Utility", updated: false, apis: [
     { name: "CSS custom properties", implemented: false },
     { name: "localStorage API", implemented: false },
+    { name: "CSS light-dark()", implemented: false },
   ]},
 ]
 
@@ -236,20 +253,33 @@ function getTotalCount() {
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  {@render children?.()}
   <h1>Development Completion</h1>
   
   <p>
     This page documents the development process and completion status of the Twintrinsic component library.
   </p>
+  <div class="mb-6 p-4 bg-surface rounded-lg border border-border">
+    <p class="m-0 text-sm">
+      <strong>Progress:</strong> {getUpdatedCount()} of {getTotalCount()} components updated
+    </p>
+    <div class="mt-2 w-full bg-border rounded-full h-2">
+      <div 
+        class="bg-primary-500 h-2 rounded-full transition-all"
+        style="width: {(getUpdatedCount() / getTotalCount()) * 100}%"
+      ></div>
+    </div>
+  </div>
 
   <Separator>
-    {@render children?.('Development Process')}
+    Development Process
   </Separator>
 
   <h2>Development Approach</h2>
   <p>
-    Twintrinsic was developed using <strong>Windsurf</strong> with <strong>Claude Haiku 4.5</strong> as an AI pair programmer. The development process leveraged AI assistance for:
+    Twintrinsic was developed using various tools and LLMS. The main IDE is <strong>Windsurf/Devin</strong> 
+    with <strong>Claude Haiku 4.5+</strong> and <strong>SWE-1.6+</strong> as an AI pair programmer. I have
+    also used freebuff when I needed to clean up A LOT of code at once, mainly fixing svelte/ts errors 
+    that the other LLMs introduced and adding tests. The development process leveraged AI assistance for:
   </p>
 
   <ul>
@@ -262,7 +292,11 @@ function getTotalCount() {
 
   <h2>Manual Updates and Refinements</h2>
   <p>
-    While AI assistance was invaluable for generating initial code, all components have been manually reviewed and updated to ensure they use modern web APIs and best practices. This is necessary due to:
+    While AI assistance was invaluable for generating initial code, they generate crap code and build
+    components using old technology, sometimes building full-on components from scratch where
+    there already exists standard html compoentns we can use (like a dropdown component). All components 
+    are manually reviewed and updated to ensure they use modern web APIs and best practices. 
+    This is necessary due to:
   </p>
 
   <ul>
@@ -281,25 +315,26 @@ function getTotalCount() {
     <li>Improved TypeScript type safety and JSDoc documentation</li>
   </ul>
 
+  <h2>Browser Compatibility</h2>
+  <p>
+    Twintrinsic targets <strong>current Chrome</strong> first, since Chrome tends to ship new
+    platform APIs before other engines and most non-Firefox/Safari browsers are Chromium-derived.
+    That said, we aim for roughly <strong>80% Firefox compatibility</strong> on the Tier 0 platform
+    APIs from <code>docs/plans/HTML_SEMANTIC_REPLACEMENT_PLAN.md</code>. The table below is generated
+    by running the same feature-detection probe in Chromium, Firefox, and WebKit via Playwright
+    (<code>pnpm test:compat</code>) and is not hand-maintained.
+  </p>
+
+  <CompatibilityMatrix />
+
   <Separator>
-    {@render children?.('Component Completion Checklist')}
+    Component Completion Checklist
   </Separator>
 
   <p>
     The following checklist indicates which components have been manually reviewed and updated with modern APIs and best practices:
   </p>
 
-  <div class="mb-6 p-4 bg-surface rounded-lg border border-border">
-    <p class="m-0 text-sm">
-      <strong>Progress:</strong> {getUpdatedCount()} of {getTotalCount()} components updated
-    </p>
-    <div class="mt-2 w-full bg-border rounded-full h-2">
-      <div 
-        class="bg-primary-500 h-2 rounded-full transition-all"
-        style="width: {(getUpdatedCount() / getTotalCount()) * 100}%"
-      ></div>
-    </div>
-  </div>
 
   {#each categories as category}
     <h3>{category}</h3>
@@ -352,7 +387,7 @@ function getTotalCount() {
   {/each}
 
   <Separator>
-    {@render children?.('Next Steps')}
+    Next Steps
   </Separator>
 
   <p>

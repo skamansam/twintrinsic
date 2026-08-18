@@ -23,6 +23,7 @@ export { default as ChipGroup } from "./components/Chip/ChipGroup.svelte";
 export { default as CodeBlock } from "./components/CodeBlock/CodeBlock.svelte";
 export { default as CodeBlockSpeed } from "./components/CodeBlockSpeed/CodeBlockSpeed.svelte";
 export { default as CodeEditor } from "./components/CodeEditor/CodeEditor.svelte";
+export { default as CompatibilityMatrix } from "./components/CompatibilityMatrix/CompatibilityMatrix.svelte";
 // Layout Components
 export { default as Container } from "./components/Container/Container.svelte";
 export { default as DataTable } from "./components/DataTable/DataTable.svelte";

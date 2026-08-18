@@ -17,6 +17,8 @@
     "format": "biome format --write .",
     "lint": "biome lint .",
     "test:e2e": "playwright test",
+    "test:compat": "playwright test --project=compat-chromium --project=compat-firefox --project=compat-webkit",
+    "test:compat:merge": "node scripts/merge-browser-compat.mjs",
     "test:unit": "vitest run --project=unit",
     "test:storybook": "vitest --project=storybook",
     "test": "pnpm run test:e2e && pnpm run test:unit",
@@ -165,6 +167,11 @@
       "types": "./dist/components/CodeEditor/CodeEditor.svelte.d.ts",
       "svelte": "./dist/components/CodeEditor/CodeEditor.svelte",
       "default": "./dist/components/CodeEditor/CodeEditor.svelte"
+    },
+    "./components/CompatibilityMatrix": {
+      "types": "./dist/components/CompatibilityMatrix/CompatibilityMatrix.svelte.d.ts",
+      "svelte": "./dist/components/CompatibilityMatrix/CompatibilityMatrix.svelte",
+      "default": "./dist/components/CompatibilityMatrix/CompatibilityMatrix.svelte"
     },
     "./components/ColorPicker": {
       "types": "./dist/components/Form/ColorPicker.svelte.d.ts",

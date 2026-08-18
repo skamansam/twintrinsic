@@ -87,3 +87,32 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:e2e
+
+  browser-compat:
+    # Cross-browser feature-detection probe (Part 1.5 of
+    # docs/plans/HTML_SEMANTIC_REPLACEMENT_PLAN.md). Records which Tier 0
+    # platform APIs are supported in Chromium, Firefox, and WebKit, and
+    # merges the results into static/browser-compat.json for the docs
+    # site's CompatibilityMatrix component. Uploaded as an artifact rather
+    # than committed automatically — update static/browser-compat.json
+    # from the artifact when you want the docs site to pick up new data.
+    name: Browser compatibility matrix (Chromium/Firefox/WebKit)
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.58.2-noble
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:compat
+      - run: pnpm test:compat:merge
+      - uses: actions/upload-artifact@v4
+        with:
+          name: browser-compat
+          path: static/browser-compat.json

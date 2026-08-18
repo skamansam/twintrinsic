@@ -1,0 +1,70 @@
+{
+  "generatedAt": "2026-08-17T15:29:04.492Z",
+  "browsers": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "features": {
+    "Popover API": {
+      "chromium": true,
+      "firefox": true,
+      "webkit": true
+    },
+    "CSS Anchor Positioning": {
+      "chromium": true,
+      "firefox": true,
+      "webkit": true
+    },
+    "Invoker Commands (command/commandfor)": {
+      "chromium": true,
+      "firefox": true,
+      "webkit": true
+    },
+    "dialog closedby attribute": {
+      "chromium": true,
+      "firefox": true,
+      "webkit": false
+    },
+    "Customizable <select> API": {
+      "chromium": true,
+      "firefox": false,
+      "webkit": true
+    },
+    "CSS field-sizing: content": {
+      "chromium": true,
+      "firefox": false,
+      "webkit": true
+    },
+    "CSS :has()": {
+      "chromium": true,
+      "firefox": true,
+      "webkit": true
+    },
+    "CSS :user-valid / :user-invalid": {
+      "chromium": true,
+      "firefox": true,
+      "webkit": true
+    },
+    "CSS light-dark()": {
+      "chromium": true,
+      "firefox": true,
+      "webkit": true
+    },
+    "CSS @starting-style": {
+      "chromium": true,
+      "firefox": true,
+      "webkit": true
+    },
+    "interestfor attribute": {
+      "chromium": false,
+      "firefox": false,
+      "webkit": false
+    },
+    "<search> element": {
+      "chromium": true,
+      "firefox": true,
+      "webkit": true
+    }
+  }
+}

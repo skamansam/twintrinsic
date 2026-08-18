@@ -120,6 +120,67 @@ Elements for embedding images, audio, video.
 
 ---
 
+## Part 1.5: Chrome-Only Modern Platform APIs (2026)
+
+Twintrinsic explicitly targets **current Chrome** and does not need backwards
+compatibility, so beyond plain semantic HTML we should adopt bleeding-edge
+CSS/JS/HTML platform APIs (per MDN, as of today) that let us delete custom
+JavaScript in favor of browser-native behavior. None of these are currently
+used anywhere in `src/lib/components` (verified via search).
+
+| API | Type | Purpose | Twintrinsic Use Case |
+|-----|------|---------|----------------------|
+| **Popover API** (`popover`, `popovertarget`, `:popover-open`) | HTML/CSS | Native top-layer, light-dismissed overlays | Dropdown, Combobox, AutoComplete, Listbox, Menu, Toast, Tooltip |
+| **CSS Anchor Positioning** (`anchor-name`, `position-anchor`, `position-area`, `position-try-fallbacks`) | CSS | Tether a floating element to a trigger without JS measurement | Tooltip, Dropdown, Combobox, AutoComplete, Select popups |
+| **Invoker Commands / Command API** (`command`, `commandfor` on `<button>`) | HTML | Declaratively open/close/toggle a dialog or popover from a button | Modal, Dropdown, Toast, Accordion-like custom toggles |
+| **`<dialog closedby="any">`** | HTML | Native light-dismiss + platform close gestures for modals | Modal |
+| **Customizable `<select>`** (`appearance: base-select`, `<selectedcontent>`, `::picker(select)`, `::picker-icon`) | CSS/HTML | Fully-styleable native select with rich option markup | Select, SelectGroup, Dropdown, Combobox |
+| **`field-sizing: content`** | CSS | Auto-grow inputs/textareas to fit content | Textarea, NumberInput, Input |
+| **`:has()`** | CSS | Style a parent/label based on descendant state | FormField, RadioGroup, CheckboxGroup validation styling |
+| **`:user-valid` / `:user-invalid`** | CSS | Validation styling only after user interaction, no JS "touched" tracking | FormField, InvalidState, Form |
+| **`light-dark()`** | CSS | Resolve a color per the element's `color-scheme` without duplicate `[data-theme="dark"]` blocks | `twintrinsic.css` theme tokens, ThemeToggle |
+| **`@starting-style` + `transition-behavior: allow-discrete` + `overlay`** | CSS | Animate elements in/out of the top layer or `display: none` without JS animation classes | Modal, Toast, Dropdown, Combobox, Tooltip |
+| **Interest Invokers** (`interestfor`) | HTML | Hover/focus-triggered tooltips/previews without manual mouseenter/mouseleave JS | Tooltip |
+| **`<search>`** | HTML | Landmark for search/filter UI | AppHeader search input, Combobox/AutoComplete/DataTable filter bars |
+
+**Note:** Some of these (Popover API, anchor positioning, customizable
+`<select>`, `closedby`, invoker commands) are still evolving and don't have
+long-term Baseline status, but since Twintrinsic only targets current Chrome,
+no fallback/polyfill is required — use them directly.
+
+### Firefox Compatibility Target
+
+Chrome is the primary target because it tends to ship new platform APIs
+first, and most non-Firefox/Safari browsers are Chromium-derived and pick
+up the same features quickly. Even so, we track a **~80% Firefox
+compatibility** goal for the Tier 0 APIs above, so cross-engine support is
+verified automatically rather than assumed:
+
+- `tests/compat/browser-support.test.ts` runs a pure feature-detection
+  probe (no component behavior) against Chromium, Firefox, and WebKit via
+  three dedicated Playwright projects (`compat-chromium`, `compat-firefox`,
+  `compat-webkit` in `playwright.config.ts`).
+- `pnpm test:compat` runs all three; `pnpm test:compat:merge`
+  (`scripts/merge-browser-compat.mjs`) combines the per-browser output into
+  `static/browser-compat.json`.
+- The docs site's `CompatibilityMatrix` component
+  (`$lib/components/CompatibilityMatrix/CompatibilityMatrix.svelte`, shown
+  on `/docs/completion`) fetches that JSON at runtime and renders a live
+  support table — no hand-maintained matrix to go stale.
+- The `browser-compat` CI job (`.github/workflows/test.yml`) runs this
+  suite on every push/PR and uploads the merged JSON as a build artifact.
+
+As of the last local run, 9 of the 12 tracked features are supported in
+Firefox (Popover API, CSS Anchor Positioning, Invoker Commands, `:has()`,
+`:user-valid`/`:user-invalid`, `light-dark()`, `@starting-style`, `<search>`,
+and — surprisingly — even `dialog closedby`), landing close to the 80%
+target. The current gaps are Customizable `<select>` and
+`field-sizing: content` (not yet in Firefox) and the `interestfor`
+attribute (not yet shipping in any of the three engines' Playwright
+builds tested).
+
+---
+
 ## Part 2: Twintrinsic Components Analysis & Replacement Strategy
 
 ### **HIGH PRIORITY** - Direct Semantic HTML Replacements
@@ -155,14 +216,17 @@ Elements for embedding images, audio, video.
 
 ---
 
-#### 2. **Modal** → `<dialog>`
+#### 2. **Modal** → `<dialog closedby="any">`
 **Current:** Custom div-based with manual focus management
 **Replacement:** Native HTML5 `<dialog>` element
 **Benefits:**
-- Built-in backdrop (::backdrop pseudo-element)
+- Built-in backdrop (`::backdrop` pseudo-element)
 - Automatic focus management
 - Inert content outside dialog
 - `showModal()` and `close()` methods
+- `closedby="any"` gives native light-dismiss (backdrop click) and platform close gestures (Esc, mobile back) with zero JS
+- `command="show-modal" commandfor="dialog-id"` / `command="close"` on trigger `<button>`s removes the need for manual `onclick` handlers
+- `@starting-style` + `transition-behavior: allow-discrete` for entry/exit animation of the dialog and `::backdrop`
 - Better accessibility
 
 **Migration Path:**
@@ -172,13 +236,15 @@ Elements for embedding images, audio, video.
   Content
 </Modal>
 
-<!-- After: Native dialog -->
-<dialog bind:this={dialogRef} onclose={() => isOpen = false}>
+<!-- After: Native dialog, no JS toggle handlers needed -->
+<button command="show-modal" commandfor="my-dialog">Open</button>
+<dialog id="my-dialog" closedby="any" onclose={() => isOpen = false}>
   Content
+  <button command="close" commandfor="my-dialog">Close</button>
 </dialog>
 ```
 
-**Recommendation:** Replace with `<dialog>` element. Keep wrapper for styling and slot management.
+**Recommendation:** Replace with `<dialog closedby="any">` driven by invoker commands. Keep wrapper for styling and slot management.
 
 ---
 
@@ -346,12 +412,16 @@ Elements for embedding images, audio, video.
 
 ---
 
-#### 17. **Tooltip** → `<abbr>` or `aria-describedby`
-**Current:** Custom div-based tooltip
-**Replacement:** Use `<abbr>` for abbreviations with title, or `aria-describedby` for descriptions
+#### 17. **Tooltip** → Popover API + Anchor Positioning + `interestfor`, or `<abbr>`/`aria-describedby`
+**Current:** Custom div-based tooltip with JS-managed show/hide and positioning
+**Replacement:**
+- For simple text tooltips: `<abbr>` (native browser tooltip) or `aria-describedby`
+- For rich tooltips: `popover` attribute for top-layer rendering, `anchor-name`/`position-anchor`/`position-area` for tethering to the trigger (no JS measurement), and the `interestfor` attribute on the trigger to open on hover/focus without manual `mouseenter`/`mouseleave`/`focus` listeners
 **Benefits:**
 - Native browser tooltip for `<abbr>`
-- Better accessibility
+- No JS positioning math or event listeners for rich tooltips
+- Built-in light-dismiss and top-layer stacking via Popover API
+- Better accessibility (`interestfor` has built-in WCAG 1.4.13 hover/focus behavior)
 - Simpler markup
 
 ---
@@ -388,7 +458,55 @@ Elements for embedding images, audio, video.
 
 ---
 
+#### 21. **Dropdown / Combobox / AutoComplete / Listbox** → Popover API + Anchor Positioning
+**Current:** Custom div-based panels with manual open/close state and JS positioning
+**Replacement:** `popover` attribute for the option panel, `popovertarget` (or `command`/`commandfor`) on the trigger, `anchor-name`/`position-anchor`/`position-area`/`position-try-fallbacks` for tethering and viewport-edge flipping
+**Benefits:**
+- No JS for open/close, light-dismiss, or top-layer stacking
+- No manual `getBoundingClientRect()` positioning logic
+- Built-in Esc-to-close and outside-click-to-close
+
+---
+
+#### 22. **Select / SelectGroup** → Customizable `<select>`
+**Current:** Custom div-based dropdown mimicking a select, or bare native `<select>`
+**Replacement:** Native `<select>` with `appearance: base-select`, `<button>`/`<selectedcontent>` for the display slot, and `::picker(select)`/`::picker-icon` for styling the popup and arrow
+**Benefits:**
+- Fully custom styling while keeping native `<select>` semantics, keyboard support, and form participation
+- Options can contain rich markup (icons, secondary text) via `<option>` children
+- No JS needed for the open/close popup behavior
+
+---
+
+#### 23. **Textarea / NumberInput / Input** → `field-sizing: content`
+**Current:** Fixed-size fields, or JS that resizes based on `scrollHeight`
+**Replacement:** CSS `field-sizing: content` with `min-height`/`max-height` (or `min-width`/`max-width`) constraints
+**Benefits:**
+- Auto-grow/shrink to fit content with zero JavaScript
+- Removes `input`/`resize` event listeners used purely for sizing
+
+---
+
+#### 24. **FormField / InvalidState / RadioGroup** → `:has()` + `:user-valid` / `:user-invalid`
+**Current:** JS tracks a "touched" flag and toggles error classes on the label/wrapper
+**Replacement:** CSS `:has()` to style a `<label>`/`<fieldset>` based on a descendant input's state, and `:user-valid`/`:user-invalid` to only show validation styling after the user has interacted with the field
+**Benefits:**
+- Removes manual "touched" state tracking in JS
+- Validation styling and ARIA state (`aria-invalid`) can be kept in sync declaratively
+
+---
+
 ## Part 3: Implementation Priority Matrix
+
+### **Tier 0: Chrome-Only Platform APIs** (Highest Impact, Deletes Custom JS)
+1. **Modal** → `<dialog closedby="any">` + invoker commands (`command`/`commandfor`)
+2. **Dropdown / Combobox / AutoComplete / Listbox** → Popover API + Anchor Positioning
+3. **Tooltip** → Popover API + Anchor Positioning + `interestfor`
+4. **Select / SelectGroup** → Customizable `<select>`
+5. **Textarea / NumberInput / Input** → `field-sizing: content`
+6. **FormField / InvalidState / RadioGroup** → `:has()` + `:user-valid`/`:user-invalid`
+7. **`twintrinsic.css` theme tokens** → `light-dark()`
+8. **Modal / Toast / Dropdown / Combobox / Tooltip** → `@starting-style` + `transition-behavior: allow-discrete` for enter/exit animation
 
 ### **Tier 1: Replace Immediately** (High Impact, Low Effort)
 1. **Accordion** → `<details>` + `<summary>`
@@ -466,6 +584,13 @@ For each component replacement:
 
 | Twintrinsic Component | Native HTML / WAI-ARIA Pattern | Priority |
 |----------------------|--------------------------------|----------|
+| Modal | `<dialog closedby="any">` + invoker commands | Tier 0 |
+| Dropdown / Combobox / AutoComplete / Listbox | Popover API + Anchor Positioning | Tier 0 |
+| Tooltip | Popover API + Anchor Positioning + `interestfor` | Tier 0 |
+| Select / SelectGroup | Customizable `<select>` | Tier 0 |
+| Textarea / NumberInput / Input | `field-sizing: content` | Tier 0 |
+| FormField / InvalidState / RadioGroup | `:has()` + `:user-valid`/`:user-invalid` | Tier 0 |
+| `twintrinsic.css` theme tokens | `light-dark()` | Tier 0 |
 | Accordion | `<details>` + `<summary>` | Tier 1 |
 | Modal | `<dialog>` | Tier 1 |
 | Progress | `<progress>` | Tier 1 |

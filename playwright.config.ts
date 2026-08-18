@@ -26,5 +26,25 @@ export default defineConfig({
         ...devices["chromium"],
       },
     },
+    // Cross-browser feature-detection probes (Part 1.5 of
+    // docs/plans/HTML_SEMANTIC_REPLACEMENT_PLAN.md). These do not exercise
+    // component behavior — they just record which Tier 0 platform APIs are
+    // supported in each engine so the docs site can render a compatibility
+    // matrix. See tests/compat/README.md and scripts/merge-browser-compat.mjs.
+    {
+      name: "compat-chromium",
+      testDir: "tests/compat",
+      use: { ...devices["Desktop Chrome"] },
+    },
+    {
+      name: "compat-firefox",
+      testDir: "tests/compat",
+      use: { ...devices["Desktop Firefox"] },
+    },
+    {
+      name: "compat-webkit",
+      testDir: "tests/compat",
+      use: { ...devices["Desktop Safari"] },
+    },
   ],
 })
