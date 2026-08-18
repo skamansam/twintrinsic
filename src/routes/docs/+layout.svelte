@@ -20,7 +20,7 @@ const siteLinks = $derived([
   {
     label: "Theming",
     href: "/docs/theming",
-    current: page.url.pathname === "/docs/theming",
+    current: page.url.pathname.startsWith("/docs/theming"),
   },
   {
     label: "Utilities",
@@ -189,6 +189,12 @@ const siteMenu = [
   {
     title: "APIs",
     children: [{ title: "Utilities", link: "/docs/utilities" }],
+  },
+  {
+    title: "Theming",
+    children: [
+      { title: "Theme Preview", link: "/docs/theming/preview" },
+    ],
   },
 ]
 

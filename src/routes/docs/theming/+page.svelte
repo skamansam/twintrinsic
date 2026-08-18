@@ -379,6 +379,83 @@ var(--color-${color}-500)
 }`}
   </CodeBlock>
 
+  <h2>Additional Themes</h2>
+  <p>
+    Beyond the default light/dark pair, the <strong>Storybook demo environment</strong> ships five
+    additional themes (plus a dark variant of each) so you can preview components under different
+    color strategies: a brand-accent theme, a high-contrast theme, and three color-vision-deficiency
+    (CVD) themes. They are <strong>demo themes only</strong> — they live in
+    <code>.storybook/themes.css</code> and are intentionally NOT part of the shipped library CSS, so
+    consumers of Twintrinsic only get the default light/dark pair. The docs site imports the same
+    file so the <a href="/docs/theming/preview">Theme Preview page</a> can render them side by side.
+  </p>
+  <p>
+    Themes are selected via the <code>data-theme</code> attribute on the root element. Every custom
+    theme also has a <strong>dark variant</strong>: append <code>-dark</code> to the theme name (e.g.
+    <code>data-theme="brand-dark"</code>). The <code>dark:</code> custom variant matches any
+    <code>data-theme</code> value ending in <code>-dark</code>, so dark-mode utilities and tokens
+    engage automatically:
+  </p>
+
+  <ul>
+    <li>
+      <code>data-theme="brand"</code> / <code>data-theme="brand-dark"</code> — a teal/cyan accent
+      palette on teal-tinted surfaces that swaps the default purple identity for a cooler,
+      product-style feel. Every component follows along because they all consume the same
+      <code>--color-primary-*</code> / <code>--color-secondary-*</code> / neutral tokens.
+    </li>
+    <li>
+      <code>data-theme="high-contrast"</code> / <code>data-theme="high-contrast-dark"</code> — a WCAG
+      AAA-leaning theme with pure black text on white (or pure white on black), near-black/white
+      borders, and tuned accent scales so colored text and filled buttons keep strong contrast.
+    </li>
+  </ul>
+
+  <h3>Color Vision Deficiency (CVD) Themes</h3>
+  <p>
+    Three additional themes (plus dark variants, e.g. <code>data-theme="protanopia-dark"</code>) are
+    tuned for the most common color vision deficiencies using the Okabe-Ito blue-orange safe-axis
+    strategy — they never rely on red-vs-green or blue-vs-yellow alone, so status colors stay
+    distinguishable in both light and dark:
+  </p>
+
+  <ul>
+    <li>
+      <code>data-theme="protanopia"</code> / <code>data-theme="protanopia-dark"</code> — for red-blind
+      users. Success shifts from green to teal (blue-green) and error shifts from red to
+      vermillion-orange; the orange/amber axis stays readable.
+    </li>
+    <li>
+      <code>data-theme="deuteranopia"</code> / <code>data-theme="deuteranopia-dark"</code> — for
+      green-blind users. Success shifts to cyan (reads as blue) while error keeps a strong red, which
+      is still visible without the green cone.
+    </li>
+    <li>
+      <code>data-theme="tritanopia"</code> / <code>data-theme="tritanopia-dark"</code> — for blue-yellow
+      blind users. Primary becomes magenta, secondary red-purple, warning moves from yellow to orange,
+      and info shifts from blue to teal; success and error keep green and red.
+    </li>
+  </ul>
+
+  <CodeBlock language="html">{`<!-- Apply on the root element -->
+<html lang="en" data-theme="brand">
+  <!-- or data-theme="brand-dark", data-theme="high-contrast",
+       data-theme="high-contrast-dark", data-theme="protanopia-dark",
+       data-theme="deuteranopia-dark", data-theme="tritanopia-dark",
+       data-theme="dark" -->
+</html>`}</CodeBlock>
+
+  <p>
+    The theme switcher in Storybook is a <strong>grouped light/dark picker</strong>: a <em>Mode</em>
+    dropdown (Light / Dark) plus a <em>Theme</em> dropdown (Default, Brand, High Contrast, Protanopia,
+    Deuteranopia, Tritanopia). Dark + Brand applies <code>data-theme="brand-dark"</code>, and so on
+    for every combination. Both dropdowns are built on Storybook's core <code>globalTypes</code>
+    toolbar mechanism, so there is no addon dependency to manage. You can add your own themes by
+    defining a matching <code>[data-theme="..."]</code> block in
+    <code>src/lib/twintrinsic.css</code> and adding it to the <code>themes</code> map in
+    <code>.storybook/preview.ts</code>.
+  </p>
+
   <h2>Avoiding the Light-Mode Flash</h2>
   <p>
     Because theme detection happens in client-side JavaScript, the page can briefly render in light

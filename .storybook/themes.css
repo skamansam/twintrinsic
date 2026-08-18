@@ -1,0 +1,624 @@
+/* =====================================================================
+ * Storybook-only custom themes
+ *
+ * These are DEMO themes for the Storybook theme picker (and the docs
+ * site's Theme Preview page). They are deliberately NOT part of the
+ * shipped library CSS (`src/lib/twintrinsic.css`): consumers of
+ * Twintrinsic only get the default light/dark pair. Keep them out of
+ * `twintrinsic.css` so they never ship with the package.
+ *
+ * Each light theme is a `[data-theme="..."]` token block; each dark
+ * variant appends `-dark` and relies on the shared dark token block in
+ * `twintrinsic.css` (genericized to `[data-theme$="-dark"]`) for the base
+ * dark neutrals and status scales, then overrides its identity accents.
+ *
+ * Imported by:
+ *   - `.storybook/preview.ts` (Storybook theme picker)
+ *   - `src/routes/+layout.svelte` (docs site, so the Theme Preview page
+ *     and theming docs can render the custom themes)
+ * ===================================================================== */
+
+/* Brand theme (light) — teal primary + cyan secondary on teal-tinted
+ * neutrals. Swaps the purple/indigo identity AND the base surfaces for a
+ * cooler, more "product-y" brand feel while keeping the same token
+ * structure, so every component follows along. Dark variant:
+ * [data-theme="brand-dark"]. */
+[data-theme="brand"] {
+  /* Primary (Teal) */
+  --color-primary-50: #f0fdfa;
+  --color-primary-100: #ccfbf1;
+  --color-primary-200: #99f6e4;
+  --color-primary-300: #5eead4;
+  --color-primary-400: #2dd4bf;
+  --color-primary-500: #14b8a6;
+  --color-primary-600: #0d9488;
+  --color-primary-700: #0f766e;
+  --color-primary-800: #115e59;
+  --color-primary-900: #134e4a;
+
+  /* Secondary (Cyan) */
+  --color-secondary-50: #ecfeff;
+  --color-secondary-100: #cffafe;
+  --color-secondary-200: #a5f3fc;
+  --color-secondary-300: #67e8f9;
+  --color-secondary-400: #22d3ee;
+  --color-secondary-500: #06b6d4;
+  --color-secondary-600: #0891b2;
+  --color-secondary-700: #0e7490;
+  --color-secondary-800: #155e75;
+  --color-secondary-900: #164e63;
+
+  /* Teal-tinted light neutrals */
+  --color-background: #f4fbfa;
+  --color-surface: #e9f6f3;
+  --color-text: #0f2e2a;
+  --color-muted: #5c7a75;
+  --color-placeholder: #84a29d;
+  --color-border: #c9e5df;
+  --color-shadow: rgba(13, 148, 136, 0.15);
+
+  /* Interactive states tuned for the teal accent */
+  --color-primary-bg: var(--color-primary-50);
+  --color-primary-hover: var(--color-primary-600);
+  --color-primary-bold: var(--color-primary-700);
+  --color-secondary-bg: var(--color-secondary-50);
+  --color-secondary-hover: var(--color-secondary-600);
+  --color-secondary-bold: var(--color-secondary-700);
+  --color-hover: #dff4ef;
+  --color-focus-ring: var(--color-primary-300);
+}
+
+/* High-contrast theme (light) — WCAG AAA-ish baseline: pure black text on
+ * white, near-black borders, and darkened accent scales so colored text and
+ * filled buttons clear contrast on light backgrounds. */
+[data-theme="high-contrast"] {
+  --color-background: #ffffff;
+  --color-surface: #ffffff;
+  --color-text: #000000;
+  --color-muted: #444444;
+  --color-placeholder: #555555;
+  --color-border: #000000;
+  --color-shadow: rgba(0, 0, 0, 0.25);
+
+  /* Primary (deep violet) */
+  --color-primary-50: #f5f3ff;
+  --color-primary-100: #ede9fe;
+  --color-primary-200: #ddd6fe;
+  --color-primary-300: #c4b5fd;
+  --color-primary-400: #a78bfa;
+  --color-primary-500: #6d28d9;
+  --color-primary-600: #5b21b6;
+  --color-primary-700: #4c1d95;
+  --color-primary-800: #3b0764;
+  --color-primary-900: #2e1065;
+
+  /* Secondary (deep indigo) */
+  --color-secondary-50: #eef2ff;
+  --color-secondary-100: #e0e7ff;
+  --color-secondary-200: #c7d2fe;
+  --color-secondary-300: #a5b4fc;
+  --color-secondary-400: #818cf8;
+  --color-secondary-500: #4338ca;
+  --color-secondary-600: #3730a3;
+  --color-secondary-700: #312e81;
+  --color-secondary-800: #1e1b4b;
+  --color-secondary-900: #172042;
+
+  /* Success (deep green) */
+  --color-success-50: #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-200: #bbf7d0;
+  --color-success-300: #86efac;
+  --color-success-400: #4ade80;
+  --color-success-500: #15803d;
+  --color-success-600: #166534;
+  --color-success-700: #14532d;
+  --color-success-800: #052e16;
+  --color-success-900: #052e16;
+
+  /* Warning (deep amber) */
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #b45309;
+  --color-warning-600: #92400e;
+  --color-warning-700: #78350f;
+  --color-warning-800: #451a03;
+  --color-warning-900: #451a03;
+
+  /* Error (deep red) */
+  --color-error-50: #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-200: #fecaca;
+  --color-error-300: #fca5a5;
+  --color-error-400: #f87171;
+  --color-error-500: #b91c1c;
+  --color-error-600: #991b1b;
+  --color-error-700: #7f1d1d;
+  --color-error-800: #450a0a;
+  --color-error-900: #450a0a;
+
+  /* Info (deep blue) */
+  --color-info-50: #eff6ff;
+  --color-info-100: #dbeafe;
+  --color-info-200: #bfdbfe;
+  --color-info-300: #93c5fd;
+  --color-info-400: #60a5fa;
+  --color-info-500: #1d4ed8;
+  --color-info-600: #1e40af;
+  --color-info-700: #1e3a8a;
+  --color-info-800: #172554;
+  --color-info-900: #172554;
+
+  /* Semantic tokens resolving to the darkened scales */
+  --color-primary: var(--color-primary-500);
+  --color-primary-bg: var(--color-primary-50);
+  --color-primary-hover: var(--color-primary-600);
+  --color-primary-bold: var(--color-primary-700);
+  --color-secondary: var(--color-secondary-500);
+  --color-secondary-bg: var(--color-secondary-50);
+  --color-secondary-hover: var(--color-secondary-600);
+  --color-secondary-bold: var(--color-secondary-700);
+  --color-success: var(--color-success-500);
+  --color-success-bg: var(--color-success-50);
+  --color-success-hover: var(--color-success-600);
+  --color-warning: var(--color-warning-500);
+  --color-warning-bg: var(--color-warning-50);
+  --color-warning-hover: var(--color-warning-600);
+  --color-error: var(--color-error-500);
+  --color-error-bg: var(--color-error-50);
+  --color-error-hover: var(--color-error-600);
+  --color-info: var(--color-info-500);
+  --color-info-bg: var(--color-info-50);
+  --color-info-hover: var(--color-info-600);
+
+  --color-hover: #f3f4f6;
+  --color-focus-ring: var(--color-primary-500);
+}
+
+/* =====================================================================
+ * Color Vision Deficiency (CVD) themes — light themes tuned so the
+ * semantic accents stay distinguishable for each common deficiency.
+ * All are built on the Okabe-Ito / blue-orange safe-axis strategy:
+ * never rely on red-vs-green or blue-vs-yellow alone.
+ * ===================================================================== */
+
+/* Protanopia (red-blind) — the red cone is absent, so reds look dark and
+ * red vs. green blur together. Success becomes teal (blue-green) and error
+ * becomes vermillion-orange; the orange/amber axis stays readable because
+ * protanopes see yellow-orange well. */
+[data-theme="protanopia"] {
+  /* Success (Teal) */
+  --color-success-50: #f0fdfa;
+  --color-success-100: #ccfbf1;
+  --color-success-200: #99f6e4;
+  --color-success-300: #5eead4;
+  --color-success-400: #2dd4bf;
+  --color-success-500: #14b8a6;
+  --color-success-600: #0d9488;
+  --color-success-700: #0f766e;
+  --color-success-800: #115e59;
+  --color-success-900: #134e4a;
+
+  /* Error (Vermillion / Orange) */
+  --color-error-50: #fff7ed;
+  --color-error-100: #ffedd5;
+  --color-error-200: #fed7aa;
+  --color-error-300: #fdba74;
+  --color-error-400: #fb923c;
+  --color-error-500: #f97316;
+  --color-error-600: #ea580c;
+  --color-error-700: #c2410c;
+  --color-error-800: #9a3412;
+  --color-error-900: #7c2d12;
+}
+
+/* Deuteranopia (green-blind) — the green cone is absent, so greens wash
+ * out to brown/olive and blur against reds. Reds are still visible, so
+ * error keeps a strong red; success becomes cyan (reads as blue) instead
+ * of green. */
+[data-theme="deuteranopia"] {
+  /* Success (Cyan) */
+  --color-success-50: #ecfeff;
+  --color-success-100: #cffafe;
+  --color-success-200: #a5f3fc;
+  --color-success-300: #67e8f9;
+  --color-success-400: #22d3ee;
+  --color-success-500: #06b6d4;
+  --color-success-600: #0891b2;
+  --color-success-700: #0e7490;
+  --color-success-800: #155e75;
+  --color-success-900: #164e63;
+}
+
+/* Tritanopia (blue-yellow blind) — the blue cone is absent, so blues and
+ * greens blur and yellows look pinkish/gray. Primary becomes a magenta
+ * (fuchsia), secondary a red-purple, warning shifts from yellow to orange,
+ * and info moves from blue to teal. Success keeps green and error keeps
+ * red — both stay clearly visible. */
+[data-theme="tritanopia"] {
+  /* Primary (Fuchsia / Magenta) */
+  --color-primary-50: #fdf4ff;
+  --color-primary-100: #fae8ff;
+  --color-primary-200: #f5d0fe;
+  --color-primary-300: #f0abfc;
+  --color-primary-400: #e879f9;
+  --color-primary-500: #d946ef;
+  --color-primary-600: #c026d3;
+  --color-primary-700: #a21caf;
+  --color-primary-800: #86198f;
+  --color-primary-900: #701a75;
+
+  /* Secondary (Red-Purple) */
+  --color-secondary-50: #faf5ff;
+  --color-secondary-100: #f3e8ff;
+  --color-secondary-200: #e9d5ff;
+  --color-secondary-300: #d8b4fe;
+  --color-secondary-400: #c084fc;
+  --color-secondary-500: #a855f7;
+  --color-secondary-600: #9333ea;
+  --color-secondary-700: #7e22ce;
+  --color-secondary-800: #6b21a8;
+  --color-secondary-900: #581c87;
+
+  /* Warning (Orange — more red than yellow) */
+  --color-warning-50: #fff7ed;
+  --color-warning-100: #ffedd5;
+  --color-warning-200: #fed7aa;
+  --color-warning-300: #fdba74;
+  --color-warning-400: #fb923c;
+  --color-warning-500: #f97316;
+  --color-warning-600: #ea580c;
+  --color-warning-700: #c2410c;
+  --color-warning-800: #9a3412;
+  --color-warning-900: #7c2d12;
+
+  /* Info (Teal — bluish-green reads green, distinct from the warm accents) */
+  --color-info-50: #f0fdfa;
+  --color-info-100: #ccfbf1;
+  --color-info-200: #99f6e4;
+  --color-info-300: #5eead4;
+  --color-info-400: #2dd4bf;
+  --color-info-500: #14b8a6;
+  --color-info-600: #0d9488;
+  --color-info-700: #0f766e;
+  --color-info-800: #115e59;
+  --color-info-900: #134e4a;
+}
+
+/* =====================================================================
+ * Dark variants of the custom themes. These join the shared dark token
+ * block in `twintrinsic.css` (which is genericized to
+ * `[data-theme$="-dark"]`), so each one only needs to override the accent
+ * scales and neutrals that define its identity. The `@custom-variant dark`
+ * rule matches any `data-theme` value ending in `-dark`, so `dark:`
+ * utilities engage automatically for all of them.
+ * ===================================================================== */
+
+/* brand-dark — teal/cyan accents on teal-tinted dark neutrals, matching
+ * the light brand theme's full color scheme. */
+[data-theme="brand-dark"] {
+  /* Teal (Primary) - Dark */
+  --color-primary-50: #042f2e;
+  --color-primary-100: #134e4a;
+  --color-primary-200: #115e59;
+  --color-primary-300: #0f766e;
+  --color-primary-400: #0d9488;
+  --color-primary-500: #14b8a6;
+  --color-primary-600: #2dd4bf;
+  --color-primary-700: #5eead4;
+  --color-primary-800: #99f6e4;
+  --color-primary-900: #ccfbf1;
+
+  /* Cyan (Secondary) - Dark */
+  --color-secondary-50: #083344;
+  --color-secondary-100: #164e63;
+  --color-secondary-200: #155e75;
+  --color-secondary-300: #0e7490;
+  --color-secondary-400: #0891b2;
+  --color-secondary-500: #06b6d4;
+  --color-secondary-600: #22d3ee;
+  --color-secondary-700: #67e8f9;
+  --color-secondary-800: #a5f3fc;
+  --color-secondary-900: #cffafe;
+
+  /* Teal-tinted dark neutrals */
+  --color-background: #071a17;
+  --color-surface: #0f2e29;
+  --color-text: #e6fffa;
+  --color-muted: #7ea9a0;
+  --color-placeholder: #4c746d;
+  --color-border: #1d4942;
+  --color-shadow: rgba(0, 0, 0, 0.35);
+  --color-hover: #0e2e29;
+  --color-focus-ring: var(--color-primary-400);
+
+  /* Semantic colors - Dark */
+  --color-primary-text: #ffffff;
+  --color-secondary-text: #ffffff;
+}
+
+/* high-contrast-dark — pure black/white with bright accents, the mirror of
+ * the light high-contrast theme. 500 shades are kept dark enough that the
+ * library's white-on-500 filled buttons keep strong contrast, while the
+ * 400/600-900 text shades are pushed bright for black-background text. */
+[data-theme="high-contrast-dark"] {
+  --color-background: #000000;
+  --color-surface: #000000;
+  --color-text: #ffffff;
+  --color-muted: #e5e5e5;
+  --color-placeholder: #d4d4d4;
+  --color-border: #ffffff;
+  --color-shadow: rgba(0, 0, 0, 0.5);
+  --color-hover: #1a1a1a;
+  --color-focus-ring: #ffffff;
+
+  /* Primary (bright violet) */
+  --color-primary-50: #241a4a;
+  --color-primary-100: #312058;
+  --color-primary-200: #3d2870;
+  --color-primary-300: #4c3390;
+  --color-primary-400: #8b6cff;
+  --color-primary-500: #7c3aed;
+  --color-primary-600: #a78bfa;
+  --color-primary-700: #c4b5fd;
+  --color-primary-800: #ddd6fe;
+  --color-primary-900: #ede9fe;
+
+  /* Secondary (bright indigo) */
+  --color-secondary-50: #1e1b4b;
+  --color-secondary-100: #262254;
+  --color-secondary-200: #312d6e;
+  --color-secondary-300: #3f3a8a;
+  --color-secondary-400: #818cf8;
+  --color-secondary-500: #4338ca;
+  --color-secondary-600: #6366f1;
+  --color-secondary-700: #a5b4fc;
+  --color-secondary-800: #c7d2fe;
+  --color-secondary-900: #e0e7ff;
+
+  /* Success (bright green) */
+  --color-success-50: #052e1c;
+  --color-success-100: #063c25;
+  --color-success-200: #07502f;
+  --color-success-300: #086636;
+  --color-success-400: #4ade80;
+  --color-success-500: #15803d;
+  --color-success-600: #22c55e;
+  --color-success-700: #4ade80;
+  --color-success-800: #86efac;
+  --color-success-900: #dcfce7;
+
+  /* Warning (bright amber) */
+  --color-warning-50: #451a03;
+  --color-warning-100: #552205;
+  --color-warning-200: #6d2e07;
+  --color-warning-300: #92400e;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #b45309;
+  --color-warning-600: #f59e0b;
+  --color-warning-700: #fbbf24;
+  --color-warning-800: #fcd34d;
+  --color-warning-900: #fef3c7;
+
+  /* Error (bright red) */
+  --color-error-50: #450a0a;
+  --color-error-100: #581010;
+  --color-error-200: #701515;
+  --color-error-300: #991b1b;
+  --color-error-400: #f87171;
+  --color-error-500: #b91c1c;
+  --color-error-600: #ef4444;
+  --color-error-700: #f87171;
+  --color-error-800: #fca5a5;
+  --color-error-900: #fee2e2;
+
+  /* Info (bright blue) */
+  --color-info-50: #0c2447;
+  --color-info-100: #10305c;
+  --color-info-200: #163f75;
+  --color-info-300: #1e4ea0;
+  --color-info-400: #60a5fa;
+  --color-info-500: #1d4ed8;
+  --color-info-600: #3b82f6;
+  --color-info-700: #60a5fa;
+  --color-info-800: #93c5fd;
+  --color-info-900: #dbeafe;
+
+  /* Semantic colors - Dark */
+  --color-primary-text: #ffffff;
+  --color-secondary-text: #ffffff;
+  --color-success-text: var(--color-success-200);
+  --color-warning-text: var(--color-warning-200);
+  --color-error-text: var(--color-error-200);
+  --color-info-text: var(--color-info-200);
+}
+
+/* protanopia-dark — teal success + vermillion error on the shared dark
+ * neutrals, mirroring the light protanopia theme. */
+[data-theme="protanopia-dark"] {
+  /* Success (Teal) - Dark */
+  --color-success-50: #042f2e;
+  --color-success-100: #134e4a;
+  --color-success-200: #115e59;
+  --color-success-300: #0f766e;
+  --color-success-400: #0d9488;
+  --color-success-500: #14b8a6;
+  --color-success-600: #2dd4bf;
+  --color-success-700: #5eead4;
+  --color-success-800: #99f6e4;
+  --color-success-900: #ccfbf1;
+
+  /* Error (Vermillion / Orange) - Dark */
+  --color-error-50: #431407;
+  --color-error-100: #5f1d0c;
+  --color-error-200: #7c2d12;
+  --color-error-300: #9a3412;
+  --color-error-400: #ea580c;
+  --color-error-500: #f97316;
+  --color-error-600: #fb923c;
+  --color-error-700: #fdba74;
+  --color-error-800: #fed7aa;
+  --color-error-900: #ffedd5;
+}
+
+/* deuteranopia-dark — cyan success on the shared dark neutrals, mirroring
+ * the light deuteranopia theme. */
+[data-theme="deuteranopia-dark"] {
+  /* Success (Cyan) - Dark */
+  --color-success-50: #083344;
+  --color-success-100: #164e63;
+  --color-success-200: #155e75;
+  --color-success-300: #0e7490;
+  --color-success-400: #0891b2;
+  --color-success-500: #06b6d4;
+  --color-success-600: #22d3ee;
+  --color-success-700: #67e8f9;
+  --color-success-800: #a5f3fc;
+  --color-success-900: #cffafe;
+}
+
+/* tritanopia-dark — magenta primary, red-purple secondary, orange warning,
+ * and teal info on the shared dark neutrals, mirroring the light tritanopia
+ * theme. */
+[data-theme="tritanopia-dark"] {
+  /* Primary (Fuchsia / Magenta) - Dark */
+  --color-primary-50: #4a044e;
+  --color-primary-100: #701a75;
+  --color-primary-200: #86198f;
+  --color-primary-300: #a21caf;
+  --color-primary-400: #c026d3;
+  --color-primary-500: #d946ef;
+  --color-primary-600: #e879f9;
+  --color-primary-700: #f0abfc;
+  --color-primary-800: #f5d0fe;
+  --color-primary-900: #fae8ff;
+
+  /* Secondary (Red-Purple) - Dark */
+  --color-secondary-50: #3b0764;
+  --color-secondary-100: #581c87;
+  --color-secondary-200: #6b21a8;
+  --color-secondary-300: #7e22ce;
+  --color-secondary-400: #9333ea;
+  --color-secondary-500: #a855f7;
+  --color-secondary-600: #c084fc;
+  --color-secondary-700: #d8b4fe;
+  --color-secondary-800: #e9d5ff;
+  --color-secondary-900: #f3e8ff;
+
+  /* Warning (Orange) - Dark */
+  --color-warning-50: #431407;
+  --color-warning-100: #5f1d0c;
+  --color-warning-200: #7c2d12;
+  --color-warning-300: #9a3412;
+  --color-warning-400: #ea580c;
+  --color-warning-500: #f97316;
+  --color-warning-600: #fb923c;
+  --color-warning-700: #fdba74;
+  --color-warning-800: #fed7aa;
+  --color-warning-900: #ffedd5;
+
+  /* Info (Teal) - Dark */
+  --color-info-50: #042f2e;
+  --color-info-100: #134e4a;
+  --color-info-200: #115e59;
+  --color-info-300: #0f766e;
+  --color-info-400: #0d9488;
+  --color-info-500: #14b8a6;
+  --color-info-600: #2dd4bf;
+  --color-info-700: #5eead4;
+  --color-info-800: #99f6e4;
+  --color-info-900: #ccfbf1;
+}
+
+/* =====================================================================
+ * Storybook autodocs page theming
+ *
+ * Storybook renders the Docs page in the SAME iframe as the story canvas
+ * (`#storybook-docs` → `.sbdocs.sbdocs-wrapper`), so the `data-theme`
+ * attribute set by the theme-picker decorator on the iframe's
+ * `document.documentElement` cascades here. The Docs page chrome itself,
+ * however, is styled by Storybook with its own baked-in colors
+ * (CSS-in-JS), which don't respond to `data-theme`. These overrides map
+ * the docs chrome onto the active theme's tokens so the Docs page follows
+ * the selected theme.
+ *
+ * Selectors are scoped under `#storybook-docs` (the container Storybook
+ * mounts docs into) to beat the generated `css-*` class specificity and
+ * to avoid touching anything outside the docs view.
+ * ===================================================================== */
+#storybook-docs .sbdocs-wrapper,
+#storybook-docs .sbdocs-content {
+  background-color: var(--color-background) !important;
+  color: var(--color-text) !important;
+}
+
+#storybook-docs .sbdocs-title {
+  color: var(--color-text) !important;
+}
+
+#storybook-docs .sbdocs-subtitle,
+#storybook-docs .sbdocs-preview-actions,
+#storybook-docs .sbdocs-preview-actions * {
+  color: var(--color-muted) !important;
+}
+
+#storybook-docs .sbdocs-preview {
+  background-color: var(--color-surface) !important;
+  border-color: var(--color-border) !important;
+}
+
+/* Story previews inside docs already use Twintrinsic tokens (they are the
+ * components themselves), but the surrounding preview frame should use the
+ * theme's surface/border tokens. */
+#storybook-docs .docs-story {
+  background-color: var(--color-surface) !important;
+}
+
+/* Headings, paragraphs and links in MDX docs content. */
+#storybook-docs .sbdocs h1,
+#storybook-docs .sbdocs h2,
+#storybook-docs .sbdocs h3,
+#storybook-docs .sbdocs h4,
+#storybook-docs .sbdocs h5,
+#storybook-docs .sbdocs h6,
+#storybook-docs .sbdocs p,
+#storybook-docs .sbdocs li {
+  color: var(--color-text) !important;
+}
+
+#storybook-docs .sbdocs a {
+  color: var(--color-primary-600) !important;
+}
+
+/* Code blocks (docblock-code + MDX inline code). */
+#storybook-docs pre,
+#storybook-docs code,
+#storybook-docs .docblock-code-toggle {
+  background-color: var(--color-surface) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+
+/* ArgTypes table. */
+#storybook-docs .docblock-argstable,
+#storybook-docs .docblock-argstable th,
+#storybook-docs .docblock-argstable td {
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+
+#storybook-docs .docblock-argstable-head th {
+  color: var(--color-muted) !important;
+}
+
+/* Native form controls inside docs (e.g. the arg control selects). */
+#storybook-docs select,
+#storybook-docs input,
+#storybook-docs button {
+  color: var(--color-text) !important;
+  background-color: var(--color-surface) !important;
+  border-color: var(--color-border) !important;
+}

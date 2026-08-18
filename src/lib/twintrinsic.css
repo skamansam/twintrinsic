@@ -2,7 +2,7 @@
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
 
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant dark (&:where([data-theme="dark"], [data-theme$="-dark"], [data-theme="dark"] *, [data-theme$="-dark"] *));
 
 /* Light mode design tokens - @theme for Tailwind utility generation */
 @theme {
@@ -129,9 +129,14 @@
   --color-focus-ring: var(--color-primary-300);
 }
 
-/* Dark mode overrides */
+/* Dark mode overrides — the shared dark token set. Any theme whose
+ * `data-theme` value is `dark` or ends in `-dark` (the library's own dark
+ * theme plus any custom `*-dark` variant defined elsewhere, e.g. the
+ * Storybook-only themes in `.storybook/themes.css`) inherits these dark
+ * neutrals and status scales, then overrides its own accents. */
 :root.dark,
-[data-theme="dark"] {
+[data-theme="dark"],
+[data-theme$="-dark"] {
   /* Primary (Purple) - Dark Mode */
   --color-primary-50: #2d2b55;
   --color-primary-100: #393679;
@@ -224,6 +229,17 @@
   --color-focus-ring: var(--color-primary-400);
 }
 
+/* =====================================================================
+ * Storybook-only custom themes
+ *
+ * The Brand, High Contrast, Protanopia, Deuteranopia and Tritanopia demo
+ * themes (plus their `-dark` variants) are deliberately NOT shipped with
+ * the library. They live in `.storybook/themes.css` and are imported by
+ * the Storybook preview and the docs site (so the Theme Preview page can
+ * render them). Consumers of Twintrinsic only get the default light/dark
+ * pair defined above. See `.storybook/themes.css` for those token blocks.
+ * ===================================================================== */
+
 /* Global accent color for form elements */
 :root {
   accent-color: var(--color-primary-500);
@@ -231,6 +247,7 @@
 
 /* Global accent color for dark mode */
 :root.dark,
-[data-theme="dark"] {
+[data-theme="dark"],
+[data-theme$="-dark"] {
   accent-color: var(--color-primary-500);
 }
