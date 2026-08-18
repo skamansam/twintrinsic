@@ -88,42 +88,89 @@ export const propsMetadata = [
 	 * @param {string} lang - Language name
 	 * @returns {Promise<any|null>} Language extension or null
 	 */
+	/**
+	 * Static loader map for the locally-installed `@codemirror/lang-*`
+	 * packages. Importing the language support locally (instead of from a
+	 * CDN) guarantees the resulting extension shares the same
+	 * `@codemirror/state` instance as `basicSetup` and the `EditorState`
+	 * this component creates. A CDN-loaded module graph carries its own
+	 * `@codemirror/state`, which breaks the `instanceof` checks inside
+	 * `EditorState.create` ("Unrecognized extension value ... multiple
+	 * instances of @codemirror/state are loaded").
+	 *
+	 * `vue` / `svelte` are not installed locally, so they fall back to the
+	 * CDN loader below.
+	 */
+	const languageLoaders: Record<string, () => Promise<Record<string, unknown>>> = {
+		javascript: () => import('@codemirror/lang-javascript'),
+		typescript: () => import('@codemirror/lang-javascript'),
+		python: () => import('@codemirror/lang-python'),
+		html: () => import('@codemirror/lang-html'),
+		css: () => import('@codemirror/lang-css'),
+		json: () => import('@codemirror/lang-json'),
+		xml: () => import('@codemirror/lang-xml'),
+		markdown: () => import('@codemirror/lang-markdown'),
+		sql: () => import('@codemirror/lang-sql'),
+		java: () => import('@codemirror/lang-java'),
+		cpp: () => import('@codemirror/lang-cpp'),
+		rust: () => import('@codemirror/lang-rust'),
+		go: () => import('@codemirror/lang-go'),
+		php: () => import('@codemirror/lang-php'),
+	};
+
+	/** @type {Record<string, string>} */
+	const languageMap: Record<string, string> = {
+		javascript: '@codemirror/lang-javascript',
+		typescript: '@codemirror/lang-javascript',
+		python: '@codemirror/lang-python',
+		html: '@codemirror/lang-html',
+		css: '@codemirror/lang-css',
+		json: '@codemirror/lang-json',
+		xml: '@codemirror/lang-xml',
+		markdown: '@codemirror/lang-markdown',
+		sql: '@codemirror/lang-sql',
+		java: '@codemirror/lang-java',
+		cpp: '@codemirror/lang-cpp',
+		rust: '@codemirror/lang-rust',
+		go: '@codemirror/lang-go',
+		php: '@codemirror/lang-php',
+		vue: '@codemirror/lang-vue',
+		svelte: '@codemirror/lang-svelte',
+	};
+
 	async function loadLanguageSupport(lang: string): Promise<any | null> {
 		if (isSsr) return null;
-		/** @type {Record<string, string>} */
-		const languageMap = {
-			javascript: '@codemirror/lang-javascript',
-			typescript: '@codemirror/lang-javascript',
-			python: '@codemirror/lang-python',
-			html: '@codemirror/lang-html',
-			css: '@codemirror/lang-css',
-			json: '@codemirror/lang-json',
-			xml: '@codemirror/lang-xml',
-			markdown: '@codemirror/lang-markdown',
-			sql: '@codemirror/lang-sql',
-			java: '@codemirror/lang-java',
-			cpp: '@codemirror/lang-cpp',
-			rust: '@codemirror/lang-rust',
-			go: '@codemirror/lang-go',
-			php: '@codemirror/lang-php',
-			vue: '@codemirror/lang-vue',
-			svelte: '@codemirror/lang-svelte',
-		};  const packageName = languageMap[lang.toLowerCase() as keyof typeof languageMap];
+		const packageName = languageMap[lang.toLowerCase() as keyof typeof languageMap];
 		if (!packageName) {
 			console.warn(`Language support for ${lang} not available`);
 			return null;
 		}
 
 		try {
-			const url = getCdnUrl(packageName);
-			const module = (await import(/* @vite-ignore */ url)) as Record<string, unknown>;
-			// Find the language function - it's typically the first exported function
-			const langFn = Object.values(module).find((val: unknown) => typeof val === 'function');
-			if (!langFn || typeof langFn !== 'function') {
+			// Prefer the locally-installed package (single @codemirror/state
+			// instance). Fall back to the CDN for languages that are not
+			// installed (e.g. vue, svelte).
+			const loader = languageLoaders[packageName];
+			const module = loader
+				? await loader()
+				: ((await import(/* @vite-ignore */ getCdnUrl(packageName))) as Record<string, unknown>);
+			// Prefer the export named after the language (e.g. `javascript`,
+			// `python`), since Vite's optimizer re-exports lang packages in
+			// alphabetical order and `Object.values` would otherwise pick an
+			// unrelated function (e.g. `autoCloseTags`, which reads `env.state`
+			// and throws). Fall back to the first function export for packages
+			// whose main function has a different name.
+			const langFn =
+				(typeof module[lang.toLowerCase()] === 'function'
+					? module[lang.toLowerCase()]
+					: Object.values(module).find((val: unknown) => typeof val === 'function')) as
+					| (() => unknown)
+					| undefined;
+			if (!langFn) {
 				console.warn(`Could not find language function in ${packageName}`);
 				return null;
 			}
-			return (langFn as () => unknown)();
+			return langFn();
 		} catch (error) {
 			console.error(`Failed to load language support for ${lang}:`, error);
 			return null;
@@ -201,11 +248,29 @@ export const propsMetadata = [
 			const ext = await loadExtension(extUrl);
 			if (isExtension(ext)) exts.push(ext);
 		}
-		// Extensions are loaded dynamically from CDN, so we cast through unknown
-		const state = EditorState.create({
-			doc: code,
-			extensions: exts,
-		});
+
+		// Extensions loaded dynamically from a CDN (themes, custom `extensions`
+		// URLs, and languages without a local package) carry their own
+		// `@codemirror/state` instance. Passing those into `EditorState.create`
+		// throws "Unrecognized extension value ... multiple instances of
+		// @codemirror/state are loaded". Fall back to `basicSetup` (which is
+		// always local, hence compatible) instead of rejecting unhandled.
+		let state: EditorState;
+		try {
+			state = EditorState.create({
+				doc: code,
+				extensions: exts,
+			});
+		} catch (error) {
+			console.warn(
+				'CodeEditor: dropping CDN-loaded extension(s) after an incompatible instance was detected:',
+				error,
+			);
+			state = EditorState.create({
+				doc: code,
+				extensions: [basicSetup],
+			});
+		}
 
 	view = new EditorView({
 		state,
