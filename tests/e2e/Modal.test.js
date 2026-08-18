@@ -22,17 +22,17 @@ test.describe("Modal docs page", () => {
   });
 
   test("opening the modal shows a dialog with aria-modal", async ({ page }) => {
-    await page.getByTestId("modal-basic").getByRole("button", { name: "Open Modal" }).click();
+    await page.getByTestId("modal-basic").getByRole("button", { name: "Delete project" }).click();
 
-    const dialog = page.getByRole("dialog", { name: "Welcome to Modal" });
+    const dialog = page.getByRole("dialog", { name: "Delete project" });
     await expect(dialog).toBeVisible();
     await expect(dialog).toHaveAttribute("aria-modal", "true");
-    await expect(dialog).toContainText("This is a basic modal dialog");
+    await expect(dialog).toContainText("Delete \"Website Redesign\"?");
   });
 
   test("pressing Escape closes the modal", async ({ page }) => {
-    await page.getByTestId("modal-basic").getByRole("button", { name: "Open Modal" }).click();
-    const dialog = page.getByRole("dialog", { name: "Welcome to Modal" });
+    await page.getByTestId("modal-basic").getByRole("button", { name: "Delete project" }).click();
+    const dialog = page.getByRole("dialog", { name: "Delete project" });
     await expect(dialog).toBeVisible();
 
     await page.keyboard.press("Escape");
@@ -40,8 +40,8 @@ test.describe("Modal docs page", () => {
   });
 
   test("clicking outside the modal closes it", async ({ page }) => {
-    await page.getByTestId("modal-basic").getByRole("button", { name: "Open Modal" }).click();
-    const dialog = page.getByRole("dialog", { name: "Welcome to Modal" });
+    await page.getByTestId("modal-basic").getByRole("button", { name: "Delete project" }).click();
+    const dialog = page.getByRole("dialog", { name: "Delete project" });
     await expect(dialog).toBeVisible();
 
     // Click the backdrop at its top-left corner (outside the centered modal),
@@ -51,9 +51,9 @@ test.describe("Modal docs page", () => {
   });
 
   test("sized modal applies its size class", async ({ page }) => {
-    await page.getByTestId("modal-sizes").getByRole("button", { name: "Open Sized Modal" }).click();
+    await page.getByTestId("modal-sizes").getByRole("button", { name: "View order details" }).click();
 
-    const dialog = page.getByRole("dialog", { name: "Large Modal" });
+    const dialog = page.getByRole("dialog", { name: "Order details" });
     await expect(dialog).toBeVisible();
     await expect(dialog).toHaveClass(/max-w-lg/);
   });

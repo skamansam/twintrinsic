@@ -65,22 +65,22 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
   <h3>Basic Masonry</h3>
   <div class="masonry-demo" data-testid="masonry-basic">
     <Masonry columns={3} gap={16}>
-      <div class="masonry-item item-1">Item 1</div>
-      <div class="masonry-item item-2">Item 2</div>
-      <div class="masonry-item item-3">Item 3</div>
-      <div class="masonry-item item-4">Item 4</div>
-      <div class="masonry-item item-5">Item 5</div>
-      <div class="masonry-item item-6">Item 6</div>
+      <div class="masonry-item item-1">Sketch: login flow</div>
+      <div class="masonry-item item-2">Photo: team offsite</div>
+      <div class="masonry-item item-3">Note: Q3 roadmap</div>
+      <div class="masonry-item item-4">Screenshot: v2 dashboard</div>
+      <div class="masonry-item item-5">Quote: design review</div>
+      <div class="masonry-item item-6">Moodboard: brand refresh</div>
     </Masonry>
   </div>
 
   <CodeBlock language="svelte">{`<Masonry columns={3} gap={16}>
-  <div class="item">Item 1</div>
-  <div class="item">Item 2</div>
-  <div class="item">Item 3</div>
-  <div class="item">Item 4</div>
-  <div class="item">Item 5</div>
-  <div class="item">Item 6</div>
+  <div class="item">Sketch: login flow</div>
+  <div class="item">Photo: team offsite</div>
+  <div class="item">Note: Q3 roadmap</div>
+  <div class="item">Screenshot: v2 dashboard</div>
+  <div class="item">Quote: design review</div>
+  <div class="item">Moodboard: brand refresh</div>
 </Masonry>`}</CodeBlock>
 
   <h3>Responsive Masonry</h3>
@@ -89,14 +89,14 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
       columns={{ default: 1, sm: 2, md: 3, lg: 4 }}
       gap={16}
     >
-      <div class="masonry-item item-1">Item 1</div>
-      <div class="masonry-item item-2">Item 2</div>
-      <div class="masonry-item item-3">Item 3</div>
-      <div class="masonry-item item-4">Item 4</div>
-      <div class="masonry-item item-5">Item 5</div>
-      <div class="masonry-item item-6">Item 6</div>
-      <div class="masonry-item item-1">Item 7</div>
-      <div class="masonry-item item-2">Item 8</div>
+      <div class="masonry-item item-1">Sketch: login flow</div>
+      <div class="masonry-item item-2">Photo: team offsite</div>
+      <div class="masonry-item item-3">Note: Q3 roadmap</div>
+      <div class="masonry-item item-4">Screenshot: v2 dashboard</div>
+      <div class="masonry-item item-5">Quote: design review</div>
+      <div class="masonry-item item-6">Moodboard: brand refresh</div>
+      <div class="masonry-item item-1">Wireframe: settings page</div>
+      <div class="masonry-item item-2">Photo: launch party</div>
     </Masonry>
   </div>
 
@@ -104,14 +104,14 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
   columns={{ default: 1, sm: 2, md: 3, lg: 4 }}
   gap={16}
 >
-  <div class="item">Item 1</div>
-  <div class="item">Item 2</div>
-  <div class="item">Item 3</div>
-  <div class="item">Item 4</div>
-  <div class="item">Item 5</div>
-  <div class="item">Item 6</div>
-  <div class="item">Item 7</div>
-  <div class="item">Item 8</div>
+  <div class="item">Sketch: login flow</div>
+  <div class="item">Photo: team offsite</div>
+  <div class="item">Note: Q3 roadmap</div>
+  <div class="item">Screenshot: v2 dashboard</div>
+  <div class="item">Quote: design review</div>
+  <div class="item">Moodboard: brand refresh</div>
+  <div class="item">Wireframe: settings page</div>
+  <div class="item">Photo: launch party</div>
 </Masonry>`}</CodeBlock>
 
   <h3>Fixed Column Width</h3>
@@ -121,12 +121,12 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
       gap={16}
       centered
     >
-      <div class="masonry-item item-1">Item 1</div>
-      <div class="masonry-item item-2">Item 2</div>
-      <div class="masonry-item item-3">Item 3</div>
-      <div class="masonry-item item-4">Item 4</div>
-      <div class="masonry-item item-5">Item 5</div>
-      <div class="masonry-item item-6">Item 6</div>
+      <div class="masonry-item item-1">Sketch: login flow</div>
+      <div class="masonry-item item-2">Photo: team offsite</div>
+      <div class="masonry-item item-3">Note: Q3 roadmap</div>
+      <div class="masonry-item item-4">Screenshot: v2 dashboard</div>
+      <div class="masonry-item item-5">Quote: design review</div>
+      <div class="masonry-item item-6">Moodboard: brand refresh</div>
     </Masonry>
   </div>
 
@@ -135,12 +135,12 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
   gap={16}
   centered
 >
-  <div class="item">Item 1</div>
-  <div class="item">Item 2</div>
-  <div class="item">Item 3</div>
-  <div class="item">Item 4</div>
-  <div class="item">Item 5</div>
-  <div class="item">Item 6</div>
+  <div class="item">Sketch: login flow</div>
+  <div class="item">Photo: team offsite</div>
+  <div class="item">Note: Q3 roadmap</div>
+  <div class="item">Screenshot: v2 dashboard</div>
+  <div class="item">Quote: design review</div>
+  <div class="item">Moodboard: brand refresh</div>
 </Masonry>`}</CodeBlock>
 
   <h3>With Dynamic Content</h3>
@@ -148,28 +148,33 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
   import Masonry from "$lib/components/Masonry/Masonry.svelte";
   
   let items = [
-    { id: 1, content: "Item 1", height: "100px" },
-    { id: 2, content: "Item 2", height: "150px" },
-    { id: 3, content: "Item 3", height: "180px" },
-    { id: 4, content: "Item 4", height: "120px" }
+    { id: 1, content: "Sketch: login flow", height: "100px" },
+    { id: 2, content: "Photo: team offsite", height: "150px" },
+    { id: 3, content: "Note: Q3 roadmap", height: "180px" },
+    { id: 4, content: "Screenshot: v2 dashboard", height: "120px" }
   ];
   
   function addItem() {
     const heights = ["100px", "120px", "150px", "180px", "200px"];
     const randomHeight = heights[Math.floor(Math.random() * heights.length)];
+    const notes = [
+      "Quote: design review",
+      "Moodboard: brand refresh",
+      "Wireframe: settings page"
+    ];
     
     items = [
       ...items,
       {
         id: items.length + 1,
-        content: "Item " + (items.length + 1),
+        content: notes[(items.length - 1) % notes.length],
         height: randomHeight
       }
     ];
   }
 <\/script>
 
-<button onclick={addItem}>Add Item</button>
+<button onclick={addItem}>Add Note</button>
 
 <Masonry columns={3} gap={16}>
   {#each items as item (item.id)}

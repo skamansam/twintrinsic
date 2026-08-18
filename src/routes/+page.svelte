@@ -111,8 +111,8 @@ const components = [
         class="relative"
         showSearch
         user={{
-          name: 'John Doe',
-          avatar: 'https://via.placeholder.com/32'
+          name: 'Sarah Chen',
+          avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=64&h=64&fit=crop&crop=faces'
         }}
         navItems={[
           { label: 'Home', href: '#', current: true },

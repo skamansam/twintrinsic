@@ -28,16 +28,16 @@ Documentation page for the Card component
 
   <CodeBlock title="Basic Usage">{`
 <Card>
-  {#snippet header()}Card Title{/snippet}
-  <p>Card content goes here</p>
+  {#snippet header()}Product Details{/snippet}
+  <p>Wireless noise-cancelling headphones — $199.99</p>
 </Card>
 
 <Card hoverable>
   {#snippet media()}
-    <img src="image.jpg" alt="Card image" />
+    <img src="image.jpg" alt="Featured blog post cover" />
   {/snippet}
-  <h3>Title</h3>
-  <p>Content with hover effect</p>
+  <h3>Announcing Twintrinsic 2.0</h3>
+  <p>Faster, more accessible, 20+ new components.</p>
 </Card>
     `}
   </CodeBlock>
@@ -47,9 +47,11 @@ Documentation page for the Card component
   <h3>Basic Card</h3>
   <div class="not-prose mb-8" data-testid="card-basic">
     <Card>
-      {#snippet header()}Basic Example{/snippet}
+      {#snippet header()}Product Details{/snippet}
       <div class="p-4">
-        <p>A simple card with header and content.</p>
+        <p class="font-medium text-lg">Wireless Noise-Cancelling Headphones</p>
+        <p class="text-muted mt-1">Up to 30 hours of battery life with active noise cancelling.</p>
+        <p class="mt-3 text-lg font-semibold">$199.99</p>
       </div>
     </Card>
   </div>
@@ -59,14 +61,15 @@ Documentation page for the Card component
     <Card hoverable>
       {#snippet media()}
         <img
-          src="https://picsum.photos/600/300"
-          alt="Sample landscape"
+          src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=400&fit=crop"
+          alt="Featured blog post cover"
           class="w-full h-48 object-cover"
         />
       {/snippet}
-      {#snippet header()}Media Card{/snippet}
+      {#snippet header()}Announcing Twintrinsic 2.0{/snippet}
       <div class="p-4">
-        <p>A card with media content and hover effect.</p>
+        <p class="text-muted">A faster, more accessible release with 20+ new components and a fully revamped theming system.</p>
+        <p class="mt-3 text-sm text-primary-600 font-medium">Read more →</p>
       </div>
     </Card>
   </div>
@@ -74,14 +77,18 @@ Documentation page for the Card component
   <h3>Card with Footer</h3>
   <div class="not-prose mb-8" data-testid="card-with-footer">
     <Card>
-      {#snippet header()}Footer Example{/snippet}
+      {#snippet header()}Monthly Report — August 2026{/snippet}
       <div class="p-4">
-        <p>A card with a footer containing actions.</p>
+        <p class="text-muted">Revenue grew 18% month over month, driven by the new Pro tier.</p>
+        <div class="mt-3 flex gap-4 text-sm">
+          <span class="text-success-600">↑ $42,300 revenue</span>
+          <span class="text-muted">1,204 active users</span>
+        </div>
       </div>
       {#snippet footer()}
         <div class="flex justify-end space-x-2">
           <button class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark">
-            Action
+            View report
           </button>
         </div>
       {/snippet}

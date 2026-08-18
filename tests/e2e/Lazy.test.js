@@ -21,11 +21,18 @@ test.describe("Lazy docs page", () => {
 
   test("deferred content renders once in view", async ({ page }) => {
     const lazy = page.getByTestId("lazy-basic");
-    await expect(lazy).toContainText("This content renders when it becomes visible.");
+    await expect(lazy).toContainText("Monthly revenue chart");
   });
 
   test("placeholder snippet renders then gives way to content", async ({ page }) => {
     const lazy = page.getByTestId("lazy-placeholder");
-    await expect(lazy).toContainText("Deferred content.");
+
+    // The example sits below the fold, so the placeholder shows first.
+    await expect(lazy).toContainText("Loading chart…");
+
+    // Scrolling it into view fires the IntersectionObserver, which swaps
+    // the placeholder for the real content.
+    await lazy.scrollIntoViewIfNeeded();
+    await expect(lazy).toContainText("Live analytics widget");
   });
 });

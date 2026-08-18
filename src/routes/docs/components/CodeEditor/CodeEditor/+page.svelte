@@ -130,8 +130,8 @@ console.log(doubled);`}
 
 const user: User = {
   id: 1,
-  name: "John Doe",
-  email: "john@example.com"
+  name: "Sarah Chen",
+  email: "sarah.chen@acme.io"
 };`}
 					language="typescript"
 					theme="dracula"

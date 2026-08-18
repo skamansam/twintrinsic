@@ -23,22 +23,22 @@ import * as MenuItemModule from "$lib/components/Menu/Menu/MenuItem.svelte"
 
   <h3>Basic Menu</h3>
   <div class="p-4 bg-surface rounded-md mb-4" data-testid="menu-basic">
-    <Menu>
-      {#snippet trigger()}Open Menu{/snippet}
+    <Menu ariaLabel="Account menu">
+      {#snippet trigger()}Account{/snippet}
       {#snippet content()}
-        <MenuItem>Option 1</MenuItem>
-        <MenuItem>Option 2</MenuItem>
-        <MenuItem>Option 3</MenuItem>
+        <MenuItem>Profile</MenuItem>
+        <MenuItem>Billing</MenuItem>
+        <MenuItem>Sign out</MenuItem>
       {/snippet}
     </Menu>
   </div>
 
-  <CodeBlock language="svelte">{`<Menu>
-  {#snippet trigger()}Open Menu{/snippet}
+  <CodeBlock language="svelte">{`<Menu ariaLabel="Account menu">
+  {#snippet trigger()}Account{/snippet}
   {#snippet content()}
-    <MenuItem>Option 1</MenuItem>
-    <MenuItem>Option 2</MenuItem>
-    <MenuItem>Option 3</MenuItem>
+    <MenuItem>Profile</MenuItem>
+    <MenuItem>Billing</MenuItem>
+    <MenuItem>Sign out</MenuItem>
   {/snippet}
 </Menu>`}</CodeBlock>
 

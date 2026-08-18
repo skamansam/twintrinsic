@@ -32,7 +32,7 @@ test.describe("LazyPanel docs page", () => {
     await example.scrollIntoViewIfNeeded();
     await expect(example.locator(".panel")).toBeVisible();
     await expect(
-      example.getByText("This content was loaded lazily when the panel became visible."),
+      example.getByText("How do upgrades work? Upgrades take effect immediately and are prorated."),
     ).toBeVisible();
   });
 
@@ -40,6 +40,6 @@ test.describe("LazyPanel docs page", () => {
     const example = page.getByTestId("lazypanel-custom-loading");
     await example.scrollIntoViewIfNeeded();
     await expect(example.locator(".panel")).toBeVisible();
-    await expect(example.getByText("Content with custom loading indicator.")).toBeVisible();
+    await expect(example.getByText("Manage your profile, notifications, and security preferences.")).toBeVisible();
   });
 });

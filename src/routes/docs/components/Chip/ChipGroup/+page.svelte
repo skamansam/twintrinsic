@@ -44,7 +44,7 @@ import * as ChipGroupModule from "$lib/components/Chip/ChipGroup.svelte"
     selectable example below, which uses the default fallback).
   </p>
   <div class="not-prose mb-8" data-testid="chip-group-dynamic">
-    <ChipGroup items={["Red", "Green", "Blue", "Yellow"]}>
+    <ChipGroup items={["Design", "Engineering", "Product", "Marketing"]}>
       {#snippet itemTemplate(item: string)}
         <Chip variant="primary" clickable removable>{item}</Chip>
       {/snippet}
@@ -52,7 +52,7 @@ import * as ChipGroupModule from "$lib/components/Chip/ChipGroup.svelte"
   </div>
 
   <CodeBlock language="svelte">{`<ChipGroup
-  items={['Red', 'Green', 'Blue', 'Yellow']}
+  items={['Design', 'Engineering', 'Product', 'Marketing']}
   onremove={(e) => handleRemove(e.detail)}
 >
   {#snippet itemTemplate(item)}
@@ -71,7 +71,7 @@ import * as ChipGroupModule from "$lib/components/Chip/ChipGroup.svelte"
     own click handling (or use the fallback) for interaction:
   </p>
   <div class="not-prose mb-8" data-testid="chip-group-dynamic-selected">
-    <ChipGroup items={["Red", "Green", "Blue"]} selected={["Red", "Blue"]}>
+    <ChipGroup items={["React", "Svelte", "Vue"]} selected={["React", "Vue"]}>
       {#snippet itemTemplate(item: string, index: number, selected: boolean)}
         <Chip clickable selected={selected}>{item}</Chip>
       {/snippet}
@@ -79,8 +79,8 @@ import * as ChipGroupModule from "$lib/components/Chip/ChipGroup.svelte"
   </div>
 
   <CodeBlock language="svelte">{`<ChipGroup
-  items={['Red', 'Green', 'Blue']}
-  selected={['Red', 'Blue']}
+  items={['React', 'Svelte', 'Vue']}
+  selected={['React', 'Vue']}
 >
   {#snippet itemTemplate(item, index, selected)}
     <Chip clickable selected={selected}>{item}</Chip>
@@ -94,12 +94,12 @@ import * as ChipGroupModule from "$lib/components/Chip/ChipGroup.svelte"
     clickable and tracks the selected state).
   </p>
   <div class="not-prose mb-8" data-testid="chip-group-selectable">
-    <ChipGroup items={["Filter 1", "Filter 2", "Filter 3"]} selectable multiple>
+    <ChipGroup items={["Starter", "Pro", "Enterprise"]} selectable multiple>
     </ChipGroup>
   </div>
 
   <CodeBlock language="svelte">{`<ChipGroup
-  items={['Filter 1', 'Filter 2', 'Filter 3']}
+  items={['Starter', 'Pro', 'Enterprise']}
   selectable
   multiple
   onselect={(e) => handleSelect(e.detail.selected)}

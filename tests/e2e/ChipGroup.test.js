@@ -29,7 +29,7 @@ test.describe("ChipGroup docs page", () => {
     const example = page.getByTestId("chip-group-dynamic");
     // Chips are clickable buttons; their accessible name combines the label
     // with the inner remove button's "Remove" label, so match loosely.
-    for (const chip of ["Red", "Green", "Blue", "Yellow"]) {
+    for (const chip of ["Design", "Engineering", "Product", "Marketing"]) {
       await expect(example.getByRole("button", { name: new RegExp(chip) })).toBeVisible();
     }
     await expect(example.getByRole("button", { name: "Remove", exact: true })).toHaveCount(4);
@@ -40,12 +40,12 @@ test.describe("ChipGroup docs page", () => {
     await waitForHydration(page);
 
     const example = page.getByTestId("chip-group-dynamic-selected");
-    const red = example.getByRole("button", { name: "Red", exact: true });
-    const green = example.getByRole("button", { name: "Green", exact: true });
+    const react = example.getByRole("button", { name: "React", exact: true });
+    const svelte = example.getByRole("button", { name: "Svelte", exact: true });
 
-    // Red and Blue are pre-selected; Red is selected, Green is not.
-    await expect(red).toHaveClass(/chip-selected/);
-    await expect(green).not.toHaveClass(/chip-selected/);
+    // React and Vue are pre-selected; React is selected, Svelte is not.
+    await expect(react).toHaveClass(/chip-selected/);
+    await expect(svelte).not.toHaveClass(/chip-selected/);
   });
 
   test("selectable chip group toggles selection on click", async ({ page }) => {
@@ -56,15 +56,15 @@ test.describe("ChipGroup docs page", () => {
     const listbox = example.getByRole("listbox");
     await expect(listbox).toHaveAttribute("aria-multiselectable", "true");
 
-    const filterOne = listbox.getByRole("button", { name: "Filter 1", exact: true });
-    await expect(filterOne).not.toHaveClass(/chip-selected/);
+    const starter = listbox.getByRole("button", { name: "Starter", exact: true });
+    await expect(starter).not.toHaveClass(/chip-selected/);
 
-    await filterOne.click();
-    await expect(filterOne).toHaveClass(/chip-selected/);
+    await starter.click();
+    await expect(starter).toHaveClass(/chip-selected/);
     await expect(listbox.getByRole("button")).toHaveCount(3);
 
     // Clicking again deselects.
-    await filterOne.click();
-    await expect(filterOne).not.toHaveClass(/chip-selected/);
+    await starter.click();
+    await expect(starter).not.toHaveClass(/chip-selected/);
   });
 });

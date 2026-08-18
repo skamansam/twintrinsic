@@ -21,9 +21,13 @@ test.describe("Timeline docs page", () => {
   test("basic timeline renders items with titles and content", async ({ page }) => {
     const demo = page.getByTestId("timeline-basic");
     await expect(demo.getByRole("list")).toBeVisible();
-    for (let step = 1; step <= 3; step++) {
-      await expect(demo.getByRole("listitem").filter({ hasText: `Step ${step}` })).toBeVisible();
-      await expect(demo.getByText(`Content for step ${step}`, { exact: true })).toBeVisible();
+    for (const [title, content] of [
+      ["Kickoff", "Project started"],
+      ["Milestone", "First release shipped"],
+      ["Retrospective", "Team retro"],
+    ]) {
+      await expect(demo.getByRole("listitem").filter({ hasText: title })).toBeVisible();
+      await expect(demo.getByText(content, { exact: true })).toBeVisible();
     }
   });
 

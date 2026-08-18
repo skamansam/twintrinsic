@@ -18,21 +18,21 @@ test.describe("Tree docs page", () => {
     const tree = page.getByTestId("tree-basic").getByRole("tree");
     await expect(tree).toBeVisible();
 
-    const root = tree.getByRole("treeitem", { name: /Root Node/ });
+    const root = tree.getByRole("treeitem", { name: /Acme Website/ });
     await expect(root).toHaveAttribute("aria-expanded", "false");
 
     // Children are collapsed by default.
-    await expect(tree.getByText("Child Node 1")).not.toBeVisible();
+    await expect(tree.getByText("Pages")).not.toBeVisible();
 
     // Expanding the root reveals its children.
     await tree.getByRole("button", { name: "Expand" }).click();
     await expect(root).toHaveAttribute("aria-expanded", "true");
-    await expect(tree.getByText("Child Node 1")).toBeVisible();
-    await expect(tree.getByText("Child Node 2")).toBeVisible();
+    await expect(tree.getByText("Pages")).toBeVisible();
+    await expect(tree.getByText("Blog")).toBeVisible();
 
     // Collapse again hides them.
     await tree.getByRole("button", { name: "Collapse" }).click();
-    await expect(tree.getByText("Child Node 1")).not.toBeVisible();
+    await expect(tree.getByText("Pages")).not.toBeVisible();
   });
 
   test("expanded-by-default tree shows grandchildren immediately", async ({ page }) => {
@@ -40,8 +40,8 @@ test.describe("Tree docs page", () => {
     await waitForHydration(page);
 
     const tree = page.getByTestId("tree-expanded").getByRole("tree");
-    await expect(tree.getByText("Grandchild 1.1")).toBeVisible();
-    await expect(tree.getByText("Grandchild 2.2")).toBeVisible();
+    await expect(tree.getByText("Home")).toBeVisible();
+    await expect(tree.getByText("2026")).toBeVisible();
     // All nodes are expanded, so no Expand buttons remain.
     await expect(tree.getByRole("button", { name: "Expand" })).toHaveCount(0);
   });
@@ -54,14 +54,14 @@ test.describe("Tree docs page", () => {
     await expect(tree).toBeVisible();
 
     // Click the root node's label to select it (clicking the toggle would expand).
-    const root = tree.getByRole("treeitem", { name: /Root Node/ });
-    await tree.getByText("Root Node").click();
+    const root = tree.getByRole("treeitem", { name: /Acme Website/ });
+    await tree.getByText("Acme Website").click();
     await expect(root).toHaveAttribute("aria-selected", "true");
 
     // Expand and select a child node.
     await tree.getByRole("button", { name: "Expand" }).click();
-    await tree.getByText("Child Node 1").click();
-    await expect(tree.getByRole("treeitem", { name: /Child Node 1/ })).toHaveAttribute(
+    await tree.getByText("Pages").click();
+    await expect(tree.getByRole("treeitem", { name: /Pages/ })).toHaveAttribute(
       "aria-selected",
       "true",
     );
@@ -76,14 +76,14 @@ test.describe("Tree docs page", () => {
 
     // Expand the root, then select two siblings.
     await tree.getByRole("button", { name: "Expand" }).click();
-    await tree.getByText("Child Node 1").click();
-    await tree.getByText("Child Node 2").click();
+    await tree.getByText("Pages").click();
+    await tree.getByText("Blog").click();
 
-    await expect(tree.getByRole("treeitem", { name: /Child Node 1/ })).toHaveAttribute(
+    await expect(tree.getByRole("treeitem", { name: /Pages/ })).toHaveAttribute(
       "aria-selected",
       "true",
     );
-    await expect(tree.getByRole("treeitem", { name: /Child Node 2/ })).toHaveAttribute(
+    await expect(tree.getByRole("treeitem", { name: /Blog/ })).toHaveAttribute(
       "aria-selected",
       "true",
     );
@@ -94,13 +94,13 @@ test.describe("Tree docs page", () => {
     await waitForHydration(page);
 
     const tree = page.getByTestId("tree-selectable").getByRole("tree");
-    const root = tree.getByRole("treeitem", { name: /Root Node/ });
+    const root = tree.getByRole("treeitem", { name: /Acme Website/ });
 
     // ArrowRight expands the focused node.
     await root.focus();
     await page.keyboard.press("ArrowRight");
     await expect(root).toHaveAttribute("aria-expanded", "true");
-    await expect(tree.getByText("Child Node 1")).toBeVisible();
+    await expect(tree.getByText("Pages")).toBeVisible();
 
     // Space selects the focused node.
     await page.keyboard.press(" ");

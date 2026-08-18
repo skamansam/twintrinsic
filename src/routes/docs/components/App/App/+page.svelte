@@ -25,23 +25,27 @@ App documentation page
   <h2>Usage</h2>
 
   <h3>Basic App Layout</h3>
-  <CodeBlock language="svelte">{`<App appName="My Application">
+  <CodeBlock language="svelte">{`<App appName="Acme Suite">
   {#snippet header()}
-    <!-- Header content -->
+    <AppHeader brand="Acme Suite" navItems={[{ label: 'Home', href: '/' }]} />
   {/snippet}
   
   {#snippet leftPanel()}
-    <!-- Sidebar navigation -->
+    <Sidebar>
+      <!-- Navigation links -->
+    </Sidebar>
   {/snippet}
   
   <!-- Main content -->
   <div>
-    <h1>Main Content</h1>
-    <p>This is the main content area of the application.</p>
+    <h1>Projects</h1>
+    <p>Track and manage your team's work.</p>
   </div>
   
   {#snippet footer()}
-    <!-- Footer content -->
+    <Footer>
+      <!-- Company links -->
+    </Footer>
   {/snippet}
 </App>`}</CodeBlock>
 

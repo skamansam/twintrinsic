@@ -26,18 +26,21 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
     <Carousel>
       {#snippet items()}
         <CarouselItem>
-          <div class="h-48 bg-primary-100 dark:bg-primary-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-xl font-bold">Slide 1</h2>
+          <div class="h-48 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-xl font-bold">Unlimited projects</h2>
+            <p class="mt-1 text-sm">Create as many workspaces as you need.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
-          <div class="h-48 bg-secondary-100 dark:bg-secondary-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-xl font-bold">Slide 2</h2>
+          <div class="h-48 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-xl font-bold">Real-time collaboration</h2>
+            <p class="mt-1 text-sm">Edit together with your team, live.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
-          <div class="h-48 bg-success-100 dark:bg-success-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-xl font-bold">Slide 3</h2>
+          <div class="h-48 bg-success-100 dark:bg-success-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-xl font-bold">Enterprise security</h2>
+            <p class="mt-1 text-sm">SOC 2, SSO, and role-based access.</p>
           </div>
         </CarouselItem>
       {/snippet}
@@ -47,18 +50,21 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
   <CodeBlock language="svelte">{`<Carousel>
   {#snippet items()}
     <CarouselItem>
-      <div class="h-48 bg-primary-100 dark:bg-primary-900 flex items-center justify-center rounded-lg">
-        <h2 class="text-xl font-bold">Slide 1</h2>
+      <div class="h-48 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+        <h2 class="text-xl font-bold">Unlimited projects</h2>
+        <p class="mt-1 text-sm">Create as many workspaces as you need.</p>
       </div>
     </CarouselItem>
     <CarouselItem>
-      <div class="h-48 bg-secondary-100 dark:bg-secondary-900 flex items-center justify-center rounded-lg">
-        <h2 class="text-xl font-bold">Slide 2</h2>
+      <div class="h-48 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+        <h2 class="text-xl font-bold">Real-time collaboration</h2>
+        <p class="mt-1 text-sm">Edit together with your team, live.</p>
       </div>
     </CarouselItem>
     <CarouselItem>
-      <div class="h-48 bg-success-100 dark:bg-success-900 flex items-center justify-center rounded-lg">
-        <h2 class="text-xl font-bold">Slide 3</h2>
+      <div class="h-48 bg-success-100 dark:bg-success-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+        <h2 class="text-xl font-bold">Enterprise security</h2>
+        <p class="mt-1 text-sm">SOC 2, SSO, and role-based access.</p>
       </div>
     </CarouselItem>
   {/snippet}
@@ -69,18 +75,21 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
     <Carousel transition="fade" class="h-48">
       {#snippet items()}
         <CarouselItem>
-          <div class="h-48 bg-primary-100 dark:bg-primary-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-xl font-bold">First</h2>
+          <div class="h-48 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-xl font-bold">Design</h2>
+            <p class="mt-1 text-sm">Craft pixel-perfect interfaces.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
-          <div class="h-48 bg-secondary-100 dark:bg-secondary-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-xl font-bold">Second</h2>
+          <div class="h-48 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-xl font-bold">Build</h2>
+            <p class="mt-1 text-sm">Ship accessible components faster.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
-          <div class="h-48 bg-success-100 dark:bg-success-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-xl font-bold">Third</h2>
+          <div class="h-48 bg-success-100 dark:bg-success-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-xl font-bold">Scale</h2>
+            <p class="mt-1 text-sm">Grow without rewrites.</p>
           </div>
         </CarouselItem>
       {/snippet}
@@ -100,13 +109,15 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
     <Carousel showArrows={false} showIndicators={false}>
       {#snippet items()}
         <CarouselItem>
-          <div class="h-40 bg-warning-100 dark:bg-warning-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-xl font-bold">One</h2>
+          <div class="h-40 bg-warning-100 dark:bg-warning-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-xl font-bold">Built for teams</h2>
+            <p class="mt-1 text-sm">Shared workspaces and roles.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
-          <div class="h-40 bg-info-100 dark:bg-info-900 flex items-center justify-center rounded-lg">
-            <h2 class="text-xl font-bold">Two</h2>
+          <div class="h-40 bg-info-100 dark:bg-info-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+            <h2 class="text-xl font-bold">24/7 support</h2>
+            <p class="mt-1 text-sm">Help whenever you need it.</p>
           </div>
         </CarouselItem>
       {/snippet}
@@ -116,13 +127,15 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
   <CodeBlock language="svelte">{`<Carousel showArrows={false} showIndicators={false}>
   {#snippet items()}
     <CarouselItem>
-      <div class="h-40 bg-warning-100 dark:bg-warning-900 flex items-center justify-center rounded-lg">
-        <h2 class="text-xl font-bold">One</h2>
+      <div class="h-40 bg-warning-100 dark:bg-warning-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+        <h2 class="text-xl font-bold">Built for teams</h2>
+        <p class="mt-1 text-sm">Shared workspaces and roles.</p>
       </div>
     </CarouselItem>
     <CarouselItem>
-      <div class="h-40 bg-info-100 dark:bg-info-900 flex items-center justify-center rounded-lg">
-        <h2 class="text-xl font-bold">Two</h2>
+      <div class="h-40 bg-info-100 dark:bg-info-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+        <h2 class="text-xl font-bold">24/7 support</h2>
+        <p class="mt-1 text-sm">Help whenever you need it.</p>
       </div>
     </CarouselItem>
   {/snippet}

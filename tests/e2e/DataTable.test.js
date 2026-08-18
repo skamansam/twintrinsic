@@ -23,11 +23,11 @@ test.describe("DataTable docs page", () => {
     const demo = page.getByTestId("datatable-basic");
     await expect(demo.locator("table")).toBeVisible();
     for (const name of [
-      "John Doe",
-      "Jane Smith",
-      "Bob Johnson",
-      "Alice Williams",
-      "Charlie Brown",
+      "Sarah Chen",
+      "Marcus Webb",
+      "Priya Patel",
+      "Diego Ramírez",
+      "Emma Lindqvist",
     ]) {
       await expect(demo.getByText(name, { exact: true })).toBeVisible();
     }
@@ -46,10 +46,10 @@ test.describe("DataTable docs page", () => {
     const demo = page.getByTestId("datatable-sortable");
     const filter = demo.getByLabel("Filter by Name");
     // The filter input listens to `change`, which fires on Enter/blur.
-    await filter.fill("Jane");
+    await filter.fill("Marcus");
     await filter.press("Enter");
-    await expect(demo.getByText("Jane Smith", { exact: true })).toBeVisible();
-    await expect(demo.getByText("John Doe", { exact: true })).toHaveCount(0);
+    await expect(demo.getByText("Marcus Webb", { exact: true })).toBeVisible();
+    await expect(demo.getByText("Sarah Chen", { exact: true })).toHaveCount(0);
   });
 
   test("pagination shows page controls and advances pages", async ({ page }) => {

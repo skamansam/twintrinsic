@@ -47,14 +47,14 @@ Splitter documentation page
     <Splitter orientation="horizontal" initialSize={50}>
       {#snippet first()}
         <div class="bg-primary-100 dark:bg-primary-900 p-4 h-full overflow-auto">
-          <h3 class="font-bold mb-2">Left Panel</h3>
-          <p>Drag the divider to resize</p>
+          <h3 class="font-bold mb-2 font-mono text-sm">&lt;script&gt;</h3>
+          <p class="font-mono text-xs">import&#123; Button &#125; from "twintrinsic"<br />let count = $state(0)</p>
         </div>
       {/snippet}
       {#snippet second()}
         <div class="bg-secondary-100 dark:bg-secondary-900 p-4 h-full overflow-auto">
-          <h3 class="font-bold mb-2">Right Panel</h3>
-          <p>Use arrow keys for fine control</p>
+          <h3 class="font-bold mb-2">Live preview</h3>
+          <p>The component renders here as you edit the code on the left.</p>
         </div>
       {/snippet}
     </Splitter>
@@ -78,14 +78,14 @@ Splitter documentation page
     <Splitter orientation="vertical" initialSize={50}>
       {#snippet first()}
         <div class="bg-primary-100 dark:bg-primary-900 p-4 h-full overflow-auto">
-          <h3 class="font-bold mb-2">Top Panel</h3>
-          <p>Drag the divider to resize</p>
+          <h3 class="font-bold mb-2">Inbox</h3>
+          <p>Today's emails and meeting reminders.</p>
         </div>
       {/snippet}
       {#snippet second()}
         <div class="bg-secondary-100 dark:bg-secondary-900 p-4 h-full overflow-auto">
-          <h3 class="font-bold mb-2">Bottom Panel</h3>
-          <p>Use arrow keys for fine control</p>
+          <h3 class="font-bold mb-2">Message preview</h3>
+          <p>The selected email body appears here.</p>
         </div>
       {/snippet}
     </Splitter>

@@ -67,63 +67,59 @@ import * as RadioGroupModule from "$lib/components/Form/RadioGroup.svelte"
   <Radio value="md" label="Medium" />
   <Radio value="lg" label="Large" />
 </RadioGroup>`}
-</CodeBlock>
-
-<h3>Different Sizes</h3>
+</CodeBlock>  <h3>Different Sizes</h3>
 <div class="example" data-testid="radiogroup-sizes">
   <div class="flex flex-col gap-6">
     <RadioGroup name="size-sm" legend="Small" size="sm" layout="horizontal">
-      <Radio value="1" label="Option 1" />
-      <Radio value="2" label="Option 2" />
-      <Radio value="3" label="Option 3" />
+      <Radio value="free" label="Free" />
+      <Radio value="pro" label="Pro" />
+      <Radio value="enterprise" label="Enterprise" />
     </RadioGroup>
     
     <RadioGroup name="size-md" legend="Medium" size="md" layout="horizontal">
-      <Radio value="1" label="Option 1" />
-      <Radio value="2" label="Option 2" />
-      <Radio value="3" label="Option 3" />
+      <Radio value="free" label="Free" />
+      <Radio value="pro" label="Pro" />
+      <Radio value="enterprise" label="Enterprise" />
     </RadioGroup>
     
     <RadioGroup name="size-lg" legend="Large" size="lg" layout="horizontal">
-      <Radio value="1" label="Option 1" />
-      <Radio value="2" label="Option 2" />
-      <Radio value="3" label="Option 3" />
+      <Radio value="free" label="Free" />
+      <Radio value="pro" label="Pro" />
+      <Radio value="enterprise" label="Enterprise" />
     </RadioGroup>
   </div>
 </div>
 <CodeBlock>
   {`<RadioGroup name="size-sm" legend="Small" size="sm" layout="horizontal">
-  <Radio value="1" label="Option 1" />
-  <Radio value="2" label="Option 2" />
-  <Radio value="3" label="Option 3" />
+  <Radio value="free" label="Free" />
+  <Radio value="pro" label="Pro" />
+  <Radio value="enterprise" label="Enterprise" />
 </RadioGroup>
 
 <RadioGroup name="size-md" legend="Medium" size="md" layout="horizontal">
-  <Radio value="1" label="Option 1" />
-  <Radio value="2" label="Option 2" />
-  <Radio value="3" label="Option 3" />
+  <Radio value="free" label="Free" />
+  <Radio value="pro" label="Pro" />
+  <Radio value="enterprise" label="Enterprise" />
 </RadioGroup>
 
 <RadioGroup name="size-lg" legend="Large" size="lg" layout="horizontal">
-  <Radio value="1" label="Option 1" />
-  <Radio value="2" label="Option 2" />
-  <Radio value="3" label="Option 3" />
+  <Radio value="free" label="Free" />
+  <Radio value="pro" label="Pro" />
+  <Radio value="enterprise" label="Enterprise" />
 </RadioGroup>`}
-</CodeBlock>
-
-<h3>Disabled State</h3>
+</CodeBlock>  <h3>Disabled State</h3>
 <div class="example" data-testid="radiogroup-disabled">
   <RadioGroup name="disabled-group" legend="Unavailable options" disabled={true}>
-    <Radio value="1" label="Option 1" />
-    <Radio value="2" label="Option 2" />
-    <Radio value="3" label="Option 3" />
+    <Radio value="basic" label="Basic" />
+    <Radio value="plus" label="Plus" />
+    <Radio value="premium" label="Premium" />
   </RadioGroup>
 </div>
 <CodeBlock>
   {`<RadioGroup name="disabled-group" legend="Unavailable options" disabled={true}>
-  <Radio value="1" label="Option 1" />
-  <Radio value="2" label="Option 2" />
-  <Radio value="3" label="Option 3" />
+  <Radio value="basic" label="Basic" />
+  <Radio value="plus" label="Plus" />
+  <Radio value="premium" label="Premium" />
 </RadioGroup>`}
 </CodeBlock>
 

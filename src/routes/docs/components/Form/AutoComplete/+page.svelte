@@ -18,8 +18,9 @@ const countries = [
 ]
 
 const users = [
-  { label: "John Doe", value: "1", avatar: "https://i.pravatar.cc/40?u=1" },
-  { label: "Jane Smith", value: "2", avatar: "https://i.pravatar.cc/40?u=2" },
+  { label: "Sarah Chen", value: "1", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=faces" },
+  { label: "Marcus Webb", value: "2", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=faces" },
+  { label: "Priya Patel", value: "3", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=faces" },
 ]
 </script>
 

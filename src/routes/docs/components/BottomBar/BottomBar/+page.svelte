@@ -47,7 +47,7 @@ BottomBar documentation page
             <div class="space-y-2">
               <p>Created: April 6, 2025</p>
               <p>Status: In Progress</p>
-              <p>Owner: John Doe</p>
+              <p>Owner: Sarah Chen</p>
             </div>
           </div>
         </BottomBar>
@@ -62,7 +62,7 @@ BottomBar documentation page
     <div class="space-y-2">
       <p>Created: April 6, 2025</p>
       <p>Status: In Progress</p>
-      <p>Owner: John Doe</p>
+      <p>Owner: Sarah Chen</p>
     </div>
   </div>
 </BottomBar>`}</CodeBlock>

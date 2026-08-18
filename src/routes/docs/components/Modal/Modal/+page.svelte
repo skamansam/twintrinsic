@@ -27,24 +27,27 @@ import * as ModalModule from "$lib/components/Modal/Modal.svelte"
 
   <h2>Usage</h2>
 
-  <h3>Basic Modal</h3>
+  <h3>Confirm Delete</h3>
   <div class="p-4 bg-surface rounded-md mb-4" data-testid="modal-basic">
     <Button onclick={() => showBasicModal.set(true)}>
-      Open Modal
+      Delete project
     </Button>
   </div>
 
-  <Modal open={$showBasicModal} onclose={() => showBasicModal.set(false)}>
+  <Modal open={$showBasicModal} onclose={() => showBasicModal.set(false)} ariaLabel="Delete project">
     {#snippet header()}
-      Welcome to Modal
+      Delete "Website Redesign"?
     {/snippet}
-    <p>This is a basic modal dialog. Click outside or press Escape to close it.</p>
+    <p>
+      This will permanently delete the project and all of its 23 tasks, 4 milestones, and
+      attached files. This action cannot be undone.
+    </p>
     {#snippet footer()}
       <Button variant="outline" onclick={() => showBasicModal.set(false)}>
         Cancel
       </Button>
       <Button variant="primary" onclick={() => showBasicModal.set(false)}>
-        Confirm
+        Delete project
       </Button>
     {/snippet}
   </Modal>
@@ -74,15 +77,15 @@ import * as ModalModule from "$lib/components/Modal/Modal.svelte"
   <h3>Modal Sizes</h3>
   <div class="p-4 bg-surface rounded-md mb-4" data-testid="modal-sizes">
     <Button onclick={() => showSizedModal.set(true)}>
-      Open Sized Modal
+      View order details
     </Button>
   </div>
 
-  <Modal open={$showSizedModal} onclose={() => showSizedModal.set(false)} size="lg">
+  <Modal open={$showSizedModal} onclose={() => showSizedModal.set(false)} size="lg" ariaLabel="Order details">
     {#snippet header()}
-      Large Modal
+      Order #10482
     {/snippet}
-    <p>This is a large modal with more space for content.</p>
+    <p>Your order qualifies for free shipping. Review the items in your cart before continuing.</p>
     {#snippet footer()}
       <Button onclick={() => showSizedModal.set(false)}>Close</Button>
     {/snippet}
@@ -97,19 +100,19 @@ import * as ModalModule from "$lib/components/Modal/Modal.svelte"
   <h3>Scrollable Modal</h3>
   <div class="p-4 bg-surface rounded-md mb-4" data-testid="modal-scrollable">
     <Button onclick={() => showScrollableModal.set(true)}>
-      Open Scrollable Modal
+      View license agreement
     </Button>
   </div>
 
-  <Modal open={$showScrollableModal} onclose={() => showScrollableModal.set(false)}>
+  <Modal open={$showScrollableModal} onclose={() => showScrollableModal.set(false)} ariaLabel="License agreement">
     {#snippet header()}
-      Long Content Modal
+      Software License Agreement
     {/snippet}
     <div class="space-y-4">
-      <p>This modal contains scrollable content when it exceeds the available height.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+      <p>Please read this agreement before using the software. This modal contains scrollable content when it exceeds the available height.</p>
+      <p>You may use the software for evaluation purposes for 14 days. After the trial period, a paid subscription is required for continued use.</p>
+      <p>You may not reverse engineer, decompile, or disassemble the software, except as permitted by law. All rights, title, and interest remain with the licensor.</p>
+      <p>The software is provided "as is" without warranty of any kind, express or implied. The licensor shall not be liable for any damages arising from its use.</p>
     </div>
     {#snippet footer()}
       <Button onclick={() => showScrollableModal.set(false)}>Close</Button>

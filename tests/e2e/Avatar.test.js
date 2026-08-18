@@ -58,13 +58,13 @@ test.describe("Avatar docs page", () => {
     await expect(basic.locator("img")).toBeVisible();
   });
 
-  test("initials example shows the JD initials", async ({ page }) => {
-    // The docs page example passes name="John Doe"; the default
-    // initialsGenerator produces "JD". Tightening this assertion so a
+  test("initials example shows the MW initials", async ({ page }) => {
+    // The docs page example passes name="Marcus Webb"; the default
+    // initialsGenerator produces "MW". Tightening this assertion so a
     // regression in the generator actually fails the smoke (instead of
     // a permissive /^[A-Z]{1,2}$/ that would mask the bug).
     const initials = page.getByTestId("avatar-initials");
-    await expect(initials.locator(".avatar-fallback")).toHaveText("JD");
+    await expect(initials.locator(".avatar-fallback")).toHaveText("MW");
   });
 
   test("status indicator carries aria-label", async ({ page }) => {

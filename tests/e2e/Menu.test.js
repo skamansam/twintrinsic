@@ -44,8 +44,8 @@ test.describe("Menu docs page", () => {
 
     const items = example.getByRole("menuitem");
     await expect(items).toHaveCount(3);
-    await expect(items.nth(0)).toHaveText("Option 1");
-    await expect(items.nth(2)).toHaveText("Option 3");
+    await expect(items.nth(0)).toHaveText("Profile");
+    await expect(items.nth(2)).toHaveText("Sign out");
   });
 
   test("divider item exposes the divider class", async ({ page }) => {

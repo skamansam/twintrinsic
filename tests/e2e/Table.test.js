@@ -24,8 +24,8 @@ test.describe("Table docs page", () => {
     for (const header of ["Name", "Email", "Role"]) {
       await expect(table.getByRole("columnheader", { name: header })).toBeVisible();
     }
-    await expect(table.getByText("John Doe", { exact: true })).toBeVisible();
-    await expect(table.getByText("bob@example.com", { exact: true })).toBeVisible();
+    await expect(table.getByText("Sarah Chen", { exact: true })).toBeVisible();
+    await expect(table.getByText("priya.patel@acme.io", { exact: true })).toBeVisible();
   });
 
   test("striped table renders its content", async ({ page }) => {
@@ -44,13 +44,13 @@ test.describe("Table docs page", () => {
 
   test("hoverable table renders its content", async ({ page }) => {
     const demo = page.getByTestId("table-hoverable");
-    await expect(demo.getByText("Task 1", { exact: true })).toBeVisible();
+    await expect(demo.getByText("Migrate billing API", { exact: true })).toBeVisible();
     await expect(demo.getByText("In Progress", { exact: true })).toBeVisible();
   });
 
   test("compact table renders its content", async ({ page }) => {
     const demo = page.getByTestId("table-compact");
-    await expect(demo.getByText("Item A", { exact: true })).toBeVisible();
+    await expect(demo.getByText("Enterprise", { exact: true })).toBeVisible();
     await expect(demo.getByText("Inactive", { exact: true })).toBeVisible();
   });
 });

@@ -28,21 +28,21 @@ AppHeader documentation page
   <h3>Basic Header</h3>
   <div class="not-prose mb-8 -mx-4 sm:-mx-6" data-testid="app-header-basic">
     <AppHeader
-      brand="My App"
+      brand="Acme Suite"
       navItems={[
         { label: 'Home', href: '#', current: true },
-        { label: 'About', href: '#' },
-        { label: 'Contact', href: '#' }
+        { label: 'Projects', href: '#' },
+        { label: 'Reports', href: '#' }
       ]}
     />
   </div>
 
   <CodeBlock language="svelte">{`<AppHeader
-  brand="My App"
+  brand="Acme Suite"
   navItems={[
     { label: 'Home', href: '#', current: true },
-    { label: 'About', href: '#' },
-    { label: 'Contact', href: '#' }
+    { label: 'Projects', href: '#' },
+    { label: 'Reports', href: '#' }
   ]}
 />`}</CodeBlock>
 
@@ -50,26 +50,26 @@ AppHeader documentation page
   <div class="not-prose mb-8 -mx-4 sm:-mx-6" data-testid="app-header-with-logo">
     <AppHeader
       brand={{
-        name: 'My App',
-        logo: 'https://via.placeholder.com/32',
+        name: 'Acme Suite',
+        logo: '/logo.svg',
         href: '#'
       }}
       navItems={[
         { label: 'Home', href: '#', current: true },
-        { label: 'About', href: '#' }
+        { label: 'Projects', href: '#' }
       ]}
     />
   </div>
 
   <CodeBlock language="svelte">{`<AppHeader
   brand={{
-    name: 'My App',
-    logo: '/path/to/logo.svg',
+    name: 'Acme Suite',
+    logo: '/logo.svg',
     href: '/'
   }}
   navItems={[
     { label: 'Home', href: '/', current: true },
-    { label: 'About', href: '/about' }
+    { label: 'Projects', href: '/projects' }
   ]}
 />`}</CodeBlock>
 
@@ -77,13 +77,13 @@ AppHeader documentation page
   <div class="not-prose mb-8 -mx-4 sm:-mx-6" data-testid="app-header-full-featured">
     <AppHeader
       brand={{
-        name: 'My App',
-        logo: 'https://via.placeholder.com/32',
+        name: 'Acme Suite',
+        logo: '/logo.svg',
         href: '#'
       }}
       user={{
-        name: 'John Doe',
-        avatar: 'https://via.placeholder.com/32'
+        name: 'Sarah Chen',
+        avatar: '/avatar.svg'
       }}
       showSearch={true}
       showNotifications={true}

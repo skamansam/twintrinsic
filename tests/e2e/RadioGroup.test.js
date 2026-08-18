@@ -40,8 +40,8 @@ test.describe("RadioGroup docs page", () => {
 
   test("disabled group disables all radios", async ({ page }) => {
     const demo = page.getByTestId("radiogroup-disabled");
-    await expect(demo.getByLabel("Option 1")).toBeDisabled();
-    await expect(demo.getByLabel("Option 2")).toBeDisabled();
-    await expect(demo.getByLabel("Option 3")).toBeDisabled();
+    await expect(demo.getByLabel("Basic")).toBeDisabled();
+    await expect(demo.getByLabel("Plus")).toBeDisabled();
+    await expect(demo.getByLabel("Premium")).toBeDisabled();
   });
 });

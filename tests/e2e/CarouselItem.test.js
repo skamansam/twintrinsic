@@ -22,12 +22,13 @@ test.describe("CarouselItem docs page", () => {
     await expect(example.getByRole("tabpanel")).toHaveCount(1);
 
     // The first slide is active; the others are aria-hidden.
-    await expect(example.locator(".carousel-item-active")).toHaveText(/Slide 1/);
+    await expect(example.locator(".carousel-item-active")).toHaveText(/Unlimited projects/);
     await expect(example.locator(".carousel-item[aria-hidden='true']")).toHaveCount(2);
 
-    // Clicking the second indicator activates slide 2.
+    // Clicking the second indicator (tabs are labelled "Slide N") activates
+    // slide 2.
     await example.getByRole("tab", { name: "Slide 2" }).click();
-    await expect(example.locator(".carousel-item-active")).toHaveText(/Slide 2/);
+    await expect(example.locator(".carousel-item-active")).toHaveText(/Real-time collaboration/);
   });
 
   test("fade-transition carousel renders its slides", async ({ page }) => {
@@ -37,7 +38,7 @@ test.describe("CarouselItem docs page", () => {
     const example = page.getByTestId("carousel-item-fade");
     await expect(example.locator(".carousel-transition-fade")).toBeVisible();
     await expect(example.locator(".carousel-item")).toHaveCount(3);
-    await expect(example.locator(".carousel-item-active")).toHaveText(/First/);
+    await expect(example.locator(".carousel-item-active")).toHaveText(/Design/);
   });
 
   test("carousel without controls hides arrows and indicators", async ({ page }) => {

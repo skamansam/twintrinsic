@@ -30,18 +30,18 @@ import Table, * as TableModule from "$lib/components/Table/Table.svelte"
       </thead>
       <tbody>
         <tr>
-          <td>John Doe</td>
-          <td>john@example.com</td>
+          <td>Sarah Chen</td>
+          <td>sarah.chen@acme.io</td>
           <td>Admin</td>
         </tr>
         <tr>
-          <td>Jane Smith</td>
-          <td>jane@example.com</td>
+          <td>Marcus Webb</td>
+          <td>marcus.webb@acme.io</td>
           <td>Editor</td>
         </tr>
         <tr>
-          <td>Bob Johnson</td>
-          <td>bob@example.com</td>
+          <td>Priya Patel</td>
+          <td>priya.patel@acme.io</td>
           <td>Viewer</td>
         </tr>
       </tbody>
@@ -58,8 +58,8 @@ import Table, * as TableModule from "$lib/components/Table/Table.svelte"
   </thead>
   <tbody>
     <tr>
-      <td>John Doe</td>
-      <td>john@example.com</td>
+      <td>Sarah Chen</td>
+      <td>sarah.chen@acme.io</td>
       <td>Admin</td>
     </tr>
   </tbody>
@@ -130,17 +130,17 @@ import Table, * as TableModule from "$lib/components/Table/Table.svelte"
     <Table hoverable>
       <thead>
         <tr>
-          <th>Item</th>
+          <th>Task</th>
           <th>Status</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Task 1</td>
+          <td>Migrate billing API</td>
           <td>Complete</td>
         </tr>
         <tr>
-          <td>Task 2</td>
+          <td>Update onboarding flow</td>
           <td>In Progress</td>
         </tr>
       </tbody>
@@ -164,12 +164,12 @@ import Table, * as TableModule from "$lib/components/Table/Table.svelte"
       <tbody>
         <tr>
           <td>1</td>
-          <td>Item A</td>
+          <td>Enterprise</td>
           <td>Active</td>
         </tr>
         <tr>
           <td>2</td>
-          <td>Item B</td>
+          <td>Pro</td>
           <td>Inactive</td>
         </tr>
       </tbody>

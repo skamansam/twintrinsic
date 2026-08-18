@@ -21,7 +21,7 @@ test.describe("AvatarGroup docs page", () => {
   test("basic group renders a role=group with avatars", async ({ page }) => {
     const demo = page.getByTestId("avatargroup-basic");
     await expect(demo.getByRole("group")).toBeVisible();
-    for (const name of ["John Doe", "Jane Smith", "Bob Johnson"]) {
+    for (const name of ["Sarah Chen", "Priya Patel", "Emma Lindqvist"]) {
       await expect(demo.getByLabel(name)).toBeVisible();
     }
   });

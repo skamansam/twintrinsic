@@ -31,24 +31,12 @@ Documentation page for the Accordion component
   <CodeBlock title="Basic Usage">{`
 <Accordion>
   <AccordionItem>
-    {#snippet header()}Section 1{/snippet}
-    Content 1
+    {#snippet header()}How does the free trial work?{/snippet}
+    Start with a 14-day trial — no credit card required.
   </AccordionItem>
   <AccordionItem>
-    {#snippet header()}Section 2{/snippet}
-    Content 2
-  </AccordionItem>
-</Accordion>
-
-<Accordion allowMultiple>
-  <!-- Allows multiple items to be expanded -->
-  <AccordionItem>
-    {#snippet header()}Section 1{/snippet}
-    Content 1
-  </AccordionItem>
-  <AccordionItem>
-    {#snippet header()}Section 2{/snippet}
-    Content 2
+    {#snippet header()}When will I be billed?{/snippet}
+    Billing happens on the first day of each billing cycle.
   </AccordionItem>
 </Accordion>
     `}
@@ -56,43 +44,43 @@ Documentation page for the Accordion component
 
   <h2>Examples</h2>
 
-  <h3>Basic Accordion</h3>
+  <h3>Billing FAQ</h3>
   <div class="not-prose mb-8" data-testid="accordion-basic">
     <Accordion>
       <AccordionItem>
-        {#snippet header()}Section 1{/snippet}
+        {#snippet header()}Is there a free trial?{/snippet}
         <div class="p-4">
-          <p>Content for section 1. Only one section can be open at a time.</p>
+          <p>Yes — every new workspace starts with a 14-day free trial. No credit card is required, and you can cancel anytime.</p>
         </div>
       </AccordionItem>
       <AccordionItem>
-        {#snippet header()}Section 2{/snippet}
+        {#snippet header()}When will I be billed?{/snippet}
         <div class="p-4">
-          <p>Content for section 2. Opening this will close other sections.</p>
+          <p>You'll be billed on the first day of each billing cycle. Invoices are emailed to the workspace owner.</p>
         </div>
       </AccordionItem>
       <AccordionItem>
-        {#snippet header()}Section 3{/snippet}
+        {#snippet header()}Can I change my plan later?{/snippet}
         <div class="p-4">
-          <p>Content for section 3.</p>
+          <p>Plans can be upgraded or downgraded anytime from the Billing page. Changes are prorated automatically.</p>
         </div>
       </AccordionItem>
     </Accordion>
   </div>
 
-  <h3>Multiple Sections</h3>
+  <h3>Company Information</h3>
   <div class="not-prose mb-8" data-testid="accordion-multiple">
     <Accordion allowMultiple>
       <AccordionItem>
-        {#snippet header()}Multiple 1{/snippet}
+        {#snippet header()}Our mission{/snippet}
         <div class="p-4">
-          <p>Multiple sections can be expanded at once.</p>
+          <p>We build tools that help small teams ship software with confidence and clarity.</p>
         </div>
       </AccordionItem>
       <AccordionItem>
-        {#snippet header()}Multiple 2{/snippet}
+        {#snippet header()}Our story{/snippet}
         <div class="p-4">
-          <p>Try expanding this while the other is open.</p>
+          <p>Founded in 2021, we started as a two-person studio and now serve teams in over 40 countries.</p>
         </div>
       </AccordionItem>
     </Accordion>
@@ -102,33 +90,33 @@ Documentation page for the Accordion component
   <div class="not-prose mb-8" data-testid="accordion-no-border">
     <Accordion bordered={false}>
       <AccordionItem>
-        {#snippet header()}No Border 1{/snippet}
+        {#snippet header()}Getting started guide{/snippet}
         <div class="p-4">
-          <p>This accordion has no border around it.</p>
+          <p>Follow the quickstart to connect your first repository and invite your team.</p>
         </div>
       </AccordionItem>
       <AccordionItem>
-        {#snippet header()}No Border 2{/snippet}
+        {#snippet header()}Support options{/snippet}
         <div class="p-4">
-          <p>Notice the clean look without a border.</p>
+          <p>Email support is available 24/5, and every plan includes access to our docs and community forum.</p>
         </div>
       </AccordionItem>
     </Accordion>
   </div>
 
-  <h3>All Collapsed</h3>
+  <h3>Plan Comparison</h3>
   <div class="not-prose mb-8" data-testid="accordion-all-collapsed">
     <Accordion defaultExpanded={null}>
       <AccordionItem>
-        {#snippet header()}Collapsed 1{/snippet}
+        {#snippet header()}Starter{/snippet}
         <div class="p-4">
-          <p>All items start in a collapsed state.</p>
+          <p>Up to 5 users, 3 projects, and community support — free forever.</p>
         </div>
       </AccordionItem>
       <AccordionItem>
-        {#snippet header()}Collapsed 2{/snippet}
+        {#snippet header()}Pro{/snippet}
         <div class="p-4">
-          <p>Users must click to expand any section.</p>
+          <p>Unlimited users and projects, priority support, and advanced analytics.</p>
         </div>
       </AccordionItem>
     </Accordion>

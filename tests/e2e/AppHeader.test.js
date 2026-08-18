@@ -28,7 +28,7 @@ test.describe("AppHeader docs page", () => {
   test("basic header renders brand name and nav links", async ({ page }) => {
     const header = page.getByTestId("app-header-basic").locator(".app-header");
     await expect(header).toBeVisible();
-    await expect(header.locator(".app-header-brand-name")).toHaveText("My App");
+    await expect(header.locator(".app-header-brand-name")).toHaveText("Acme Suite");
 
     const navLinks = header.locator(".app-header-nav-link");
     await expect(navLinks).toHaveCount(3);

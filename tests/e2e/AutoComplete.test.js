@@ -72,9 +72,9 @@ test.describe("AutoComplete docs page", () => {
     const example = page.getByTestId("autocomplete-custom-template");
     const input = example.locator(".autocomplete input");
 
-    await input.fill("j");
+    await input.fill("s");
     const firstItem = example.locator(".autocomplete-item").first();
     await expect(firstItem.locator("img")).toBeVisible();
-    await expect(firstItem.locator("span")).toContainText("John");
+    await expect(firstItem.locator("span")).toContainText("Sarah");
   });
 });

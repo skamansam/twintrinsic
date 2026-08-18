@@ -35,7 +35,7 @@ test.describe("Tabs docs page", () => {
 
     await expect(tabs.nth(0)).toHaveAttribute("aria-selected", "true");
     await expect(panels.nth(0)).toBeVisible();
-    await expect(panels.nth(0)).toContainText("Content for tab 1");
+    await expect(panels.nth(0)).toContainText("Manage your payment method");
     await expect(panels.nth(1)).toBeHidden();
   });
 
@@ -49,7 +49,7 @@ test.describe("Tabs docs page", () => {
     await expect(tabs.nth(2)).toHaveAttribute("aria-selected", "true");
     await expect(tabs.nth(0)).toHaveAttribute("aria-selected", "false");
     await expect(panels.nth(2)).toBeVisible();
-    await expect(panels.nth(2)).toContainText("Content for tab 3");
+    await expect(panels.nth(2)).toContainText("Track API calls");
     await expect(panels.nth(0)).toBeHidden();
   });
 

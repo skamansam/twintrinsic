@@ -18,26 +18,35 @@ test.describe("Masonry docs page", () => {
     await expect(page.getByRole("heading", { name: "Masonry", level: 1 })).toBeVisible();
   });
 
+  const basicNotes = [
+    "Sketch: login flow",
+    "Photo: team offsite",
+    "Note: Q3 roadmap",
+    "Screenshot: v2 dashboard",
+    "Quote: design review",
+    "Moodboard: brand refresh",
+  ];
+
   test("basic masonry renders a grid with all items", async ({ page }) => {
     const demo = page.getByTestId("masonry-basic");
     await expect(demo.getByRole("grid")).toBeVisible();
-    for (let itemIndex = 1; itemIndex <= 6; itemIndex++) {
-      await expect(demo.getByText(`Item ${itemIndex}`, { exact: true })).toBeVisible();
+    for (const note of basicNotes) {
+      await expect(demo.getByText(note, { exact: true })).toBeVisible();
     }
   });
 
   test("responsive masonry renders all eight items", async ({ page }) => {
     const demo = page.getByTestId("masonry-responsive");
     await expect(demo.getByRole("grid")).toBeVisible();
-    for (let itemIndex = 1; itemIndex <= 8; itemIndex++) {
-      await expect(demo.getByText(`Item ${itemIndex}`, { exact: true })).toBeVisible();
+    for (const note of [...basicNotes, "Wireframe: settings page", "Photo: launch party"]) {
+      await expect(demo.getByText(note, { exact: true })).toBeVisible();
     }
   });
 
   test("fixed-width masonry renders its items", async ({ page }) => {
     const demo = page.getByTestId("masonry-fixed-width");
     await expect(demo.getByRole("grid")).toBeVisible();
-    await expect(demo.getByText("Item 1", { exact: true })).toBeVisible();
-    await expect(demo.getByText("Item 6", { exact: true })).toBeVisible();
+    await expect(demo.getByText("Sketch: login flow", { exact: true })).toBeVisible();
+    await expect(demo.getByText("Moodboard: brand refresh", { exact: true })).toBeVisible();
   });
 });

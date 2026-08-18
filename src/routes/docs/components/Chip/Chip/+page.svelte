@@ -134,31 +134,31 @@ Chip documentation page
   <h3>Chips with Avatar</h3>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md mb-4">
     <Chip 
-      avatar='<img src="https://i.pravatar.cc/100?img=1" alt="User Avatar">'
+      avatar='<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces" alt="Sarah Chen">'
     >
-      John Doe
+      Sarah Chen
     </Chip>
     <Chip 
       variant="primary"
-      avatar='<div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-xs font-bold">JD</div>'
+      avatar='<div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-xs font-bold">MW</div>'
       removable
     >
-      Jane Doe
+      Marcus Webb
     </Chip>
   </div>
 
   <CodeBlock language="svelte">{`<Chip 
-  avatar='<img src="https://i.pravatar.cc/100?img=1" alt="User Avatar">'
+  avatar='<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces" alt="Sarah Chen">'
 >
-  John Doe
+  Sarah Chen
 </Chip>
 
 <Chip 
   variant="primary"
-  avatar='<div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-xs font-bold">JD</div>'
+  avatar='<div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-xs font-bold">MW</div>'
   removable
 >
-  Jane Doe
+  Marcus Webb
 </Chip>`}</CodeBlock>
 
   <h3>Disabled Chips</h3>

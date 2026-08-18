@@ -11,7 +11,16 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as ComboboxModule from "$lib/components/Form/Combobox.svelte"
 
 // Sample data for examples
-const fruits = ["Apple", "Banana", "Cherry", "Date", "Elderberry", "Fig", "Grape", "Honeydew"]
+const cities = [
+  "New York",
+  "Los Angeles",
+  "Chicago",
+  "Houston",
+  "Phoenix",
+  "Philadelphia",
+  "San Antonio",
+  "San Diego",
+]
 
 const countries = [
   { name: "United States", code: "US", flag: "🇺🇸" },
@@ -36,14 +45,14 @@ const countries = [
   <h3>Basic Combobox</h3>
   <div class="not-prose mb-8 max-w-md" data-testid="combobox-basic">
     <Combobox 
-      options={fruits}
-      placeholder="Select a fruit"
+      options={cities}
+      placeholder="Select a city"
     />
   </div>
 
   <CodeBlock language="svelte">{`<Combobox 
-  options={['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry']}
-  placeholder="Select a fruit"
+  options={['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix']}
+  placeholder="Select a city"
   onchange={(e) => console.log(e.detail.value)}
 />`}</CodeBlock>
 
@@ -100,15 +109,15 @@ const countries = [
   <h3>Disabled State</h3>
   <div class="not-prose mb-8 max-w-md" data-testid="combobox-disabled">
     <Combobox 
-      options={fruits}
-      placeholder="Select a fruit"
+      options={cities}
+      placeholder="Select a city"
       disabled
     />
   </div>
 
   <CodeBlock language="svelte">{`<Combobox 
-  options={fruits}
-  placeholder="Select a fruit"
+  options={cities}
+  placeholder="Select a city"
   disabled
 />`}</CodeBlock>
 
@@ -130,39 +139,39 @@ const countries = [
   <h3>With Initial Value</h3>
   <div class="not-prose mb-8 max-w-md" data-testid="combobox-initial">
     <Combobox 
-      options={fruits}
-      placeholder="Select a fruit"
-      value="Banana"
+      options={cities}
+      placeholder="Select a city"
+      value="Chicago"
     />
   </div>
 
   <CodeBlock language="svelte">{`<Combobox 
-  options={fruits}
-  placeholder="Select a fruit"
-  value="Banana"
+  options={cities}
+  placeholder="Select a city"
+  value="Chicago"
 />`}</CodeBlock>
 
   <h3>Form Integration</h3>
   <div class="not-prose mb-8 max-w-md" data-testid="combobox-form">
     <div>
-      <label for="fruit-select" class="block text-sm font-medium mb-1">Favorite Fruit</label>
+      <label for="city-select" class="block text-sm font-medium mb-1">Billing City</label>
       <Combobox 
-        id="fruit-select"
-        name="fruit"
-        options={fruits}
-        placeholder="Select a fruit"
+        id="city-select"
+        name="city"
+        options={cities}
+        placeholder="Select a city"
         required
       />
     </div>
   </div>
 
   <CodeBlock language="svelte">{`<div>
-  <label for="fruit-select" class="block text-sm font-medium mb-1">Favorite Fruit</label>
+  <label for="city-select" class="block text-sm font-medium mb-1">Billing City</label>
   <Combobox 
-    id="fruit-select"
-    name="fruit"
-    options={fruits}
-    placeholder="Select a fruit"
+    id="city-select"
+    name="city"
+    options={cities}
+    placeholder="Select a city"
     required
   />
 </div>`}</CodeBlock>

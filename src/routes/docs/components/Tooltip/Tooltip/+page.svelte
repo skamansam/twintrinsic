@@ -19,29 +19,29 @@ import * as TooltipModule from "$lib/components/Tooltip/Tooltip.svelte"
 
   <h2>Usage</h2>
 
-  <h3>Basic Tooltip</h3>
+  <h3>Save Action</h3>
   <div class="p-4 bg-surface rounded-md mb-4" data-testid="tooltip-basic">
-    <Tooltip content="This is a helpful tooltip">
-      <Button>Hover me</Button>
+    <Tooltip content="Save changes to your profile">
+      <Button>Save</Button>
     </Tooltip>
   </div>
 
-  <CodeBlock language="svelte">{`<Tooltip text="This is a helpful tooltip">
-  <Button>Hover me</Button>
+  <CodeBlock language="svelte">{`<Tooltip content="Save changes to your profile">
+  <Button>Save</Button>
 </Tooltip>`}</CodeBlock>
 
   <h3>Tooltip Positions</h3>
   <div class="flex gap-4 p-4 bg-surface rounded-md mb-4" data-testid="tooltip-positions">
-    <Tooltip content="Top tooltip" position="top">
+    <Tooltip content="Save as draft" position="top">
       <Button>Top</Button>
     </Tooltip>
-    <Tooltip content="Right tooltip" position="right">
+    <Tooltip content="Duplicate this project" position="right">
       <Button>Right</Button>
     </Tooltip>
-    <Tooltip content="Bottom tooltip" position="bottom">
+    <Tooltip content="Archive this document" position="bottom">
       <Button>Bottom</Button>
     </Tooltip>
-    <Tooltip content="Left tooltip" position="left">
+    <Tooltip content="Export as PDF" position="left">
       <Button>Left</Button>
     </Tooltip>
   </div>

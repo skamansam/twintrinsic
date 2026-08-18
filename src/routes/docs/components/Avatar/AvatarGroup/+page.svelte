@@ -21,31 +21,31 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
   <h3>Basic Group</h3>
   <div class="not-prose border border-border rounded-md p-4 mb-4" data-testid="avatargroup-basic">
     <AvatarGroup>
-      <Avatar name="John Doe" />
-      <Avatar name="Jane Smith" />
-      <Avatar name="Bob Johnson" />
+      <Avatar name="Sarah Chen" />
+      <Avatar name="Priya Patel" />
+      <Avatar name="Emma Lindqvist" />
     </AvatarGroup>
   </div>
 
   <CodeBlock language="svelte">{`<AvatarGroup>
-  <Avatar name="John Doe" />
-  <Avatar name="Jane Smith" />
-  <Avatar name="Bob Johnson" />
+  <Avatar name="Sarah Chen" />
+  <Avatar name="Priya Patel" />
+  <Avatar name="Emma Lindqvist" />
 </AvatarGroup>`}</CodeBlock>
 
   <h3>With Overflow Count</h3>
   <div class="not-prose border border-border rounded-md p-4 mb-4" data-testid="avatargroup-overflow">
     <AvatarGroup max={3} total={10}>
-      <Avatar name="John Doe" />
-      <Avatar name="Jane Smith" />
-      <Avatar name="Bob Johnson" />
+      <Avatar name="Sarah Chen" />
+      <Avatar name="Priya Patel" />
+      <Avatar name="Emma Lindqvist" />
     </AvatarGroup>
   </div>
 
   <CodeBlock language="svelte">{`<AvatarGroup max={3} total={10}>
-  <Avatar name="John Doe" />
-  <Avatar name="Jane Smith" />
-  <Avatar name="Bob Johnson" />
+  <Avatar name="Sarah Chen" />
+  <Avatar name="Priya Patel" />
+  <Avatar name="Emma Lindqvist" />
 </AvatarGroup>`}</CodeBlock>
 
   <h2>Props</h2>

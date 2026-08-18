@@ -22,8 +22,8 @@ import * as ToastModule from "$lib/components/Toast/Toast.svelte"
 
   <h3>Basic Toast</h3>
   <div class="flex flex-wrap gap-4 p-4 bg-surface rounded-md mb-4" data-testid="toast-basic">
-    <Button onclick={() => toastStore.add({ message: "This is a toast notification" })}>
-      Show Toast
+    <Button onclick={() => toastStore.add({ message: "Profile saved successfully" })}>
+      Save Profile
     </Button>
   </div>
 
@@ -31,43 +31,43 @@ import * as ToastModule from "$lib/components/Toast/Toast.svelte"
   import { toastStore } from "$lib/components/Toast/toastStore.js"
 \u003C/script>
 
-<button onclick={() => toastStore.add({ message: "This is a toast" })}>
-  Show Toast
+<button onclick={() => toastStore.add({ message: "Profile saved successfully" })}>
+  Save Profile
 </button>
 
 <Toast />`}</CodeBlock>
 
   <h3>Toast Variants</h3>
   <div class="flex flex-wrap gap-4 p-4 bg-surface rounded-md mb-4" data-testid="toast-variants">
-    <Button onclick={() => toastStore.add({ message: "Success!", variant: "success" })}>
+    <Button onclick={() => toastStore.add({ message: "Profile saved successfully", variant: "success" })}>
       Success
     </Button>
-    <Button onclick={() => toastStore.add({ message: "Error occurred!", variant: "error" })}>
+    <Button onclick={() => toastStore.add({ message: "Could not reach server", variant: "error" })}>
       Error
     </Button>
-    <Button onclick={() => toastStore.add({ message: "Warning!", variant: "warning" })}>
+    <Button onclick={() => toastStore.add({ message: "Storage almost full — 90% used", variant: "warning" })}>
       Warning
     </Button>
-    <Button onclick={() => toastStore.add({ message: "Info message", variant: "info" })}>
+    <Button onclick={() => toastStore.add({ message: "A new version is available", variant: "info" })}>
       Info
     </Button>
   </div>
 
-  <CodeBlock language="svelte">{`toastStore.add({ message: "Success!", variant: "success" })
-toastStore.add({ message: "Error occurred!", variant: "error" })
-toastStore.add({ message: "Warning!", variant: "warning" })
-toastStore.add({ message: "Info message", variant: "info" })`}</CodeBlock>
+  <CodeBlock language="svelte">{`toastStore.add({ message: "Profile saved successfully", variant: "success" })
+toastStore.add({ message: "Could not reach server", variant: "error" })
+toastStore.add({ message: "Storage almost full — 90% used", variant: "warning" })
+toastStore.add({ message: "A new version is available", variant: "info" })`}</CodeBlock>
 
   <h3>Toast with Title</h3>
   <div class="flex flex-wrap gap-4 p-4 bg-surface rounded-md mb-4" data-testid="toast-with-title">
-    <Button onclick={() => toastStore.add({ title: "Success", message: "Your changes have been saved", variant: "success" })}>
-      With Title
+    <Button onclick={() => toastStore.add({ title: "Payment processed", message: "Your invoice has been paid", variant: "success" })}>
+      Payment Success
     </Button>
   </div>
 
   <CodeBlock language="svelte">{`toastStore.add({
-  title: "Success",
-  message: "Your changes have been saved",
+  title: "Payment processed",
+  message: "Your invoice has been paid",
   variant: "success"
 })`}</CodeBlock>
 

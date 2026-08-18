@@ -28,7 +28,7 @@ test.describe("Panel/Card snippet prop rendering", () => {
     const headerButton = panel.locator("button").first();
     await expect(headerButton).toBeVisible();
     await expect(headerButton).toHaveAttribute("aria-expanded", "true");
-    await expect(headerButton).toContainText("Basic Panel");
+    await expect(headerButton).toContainText("Order Summary");
   });
 
   test("Card passes the header snippet through to the Panel", async ({ page }) => {
@@ -37,6 +37,6 @@ test.describe("Panel/Card snippet prop rendering", () => {
 
     const card = page.getByTestId("card-basic").locator(".card");
     await expect(card).toBeVisible();
-    await expect(card.getByText("Basic Example")).toBeVisible();
+    await expect(card.getByText("Product Details")).toBeVisible();
   });
 });

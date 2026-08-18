@@ -22,16 +22,16 @@ test.describe("Dropdown docs page", () => {
 
   test("basic dropdown shows placeholder and options", async ({ page }) => {
     const select = page.locator("select").first();
-    await expect(select.locator("option").first()).toHaveText("Select a fruit");
-    for (const fruit of ["Apple", "Banana", "Cherry", "Date", "Elderberry"]) {
-      await expect(select.locator("option", { hasText: fruit })).toHaveCount(1);
+    await expect(select.locator("option").first()).toHaveText("Select a city");
+    for (const city of ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix"]) {
+      await expect(select.locator("option", { hasText: city })).toHaveCount(1);
     }
   });
 
   test("selecting an option updates the value", async ({ page }) => {
     const select = page.locator("select").first();
-    await select.selectOption("Apple");
-    await expect(select).toHaveValue("Apple");
+    await select.selectOption("Chicago");
+    await expect(select).toHaveValue("Chicago");
   });
 
   test("disabled dropdown is not interactive", async ({ page }) => {

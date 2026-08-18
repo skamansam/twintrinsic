@@ -28,7 +28,7 @@ test.describe("Tooltip docs page", () => {
     await expect(example.getByRole("tooltip")).toBeHidden();
 
     await trigger.focus();
-    await expect(page.getByRole("tooltip", { name: "This is a helpful tooltip" })).toBeVisible();
+    await expect(page.getByRole("tooltip", { name: "Save changes to your profile" })).toBeVisible();
   });
 
   test("trigger is linked to the tooltip via aria-describedby", async ({ page }) => {
@@ -42,10 +42,16 @@ test.describe("Tooltip docs page", () => {
   test("all four position tooltips appear on focus", async ({ page }) => {
     const example = page.getByTestId("tooltip-positions");
 
-    for (const name of ["Top", "Right", "Bottom", "Left"]) {
+    const expected = [
+      ["Top", "Save as draft"],
+      ["Right", "Duplicate this project"],
+      ["Bottom", "Archive this document"],
+      ["Left", "Export as PDF"],
+    ];
+    for (const [name, tip] of expected) {
       const trigger = example.locator(".tooltip-trigger").filter({ hasText: name }).first();
       await trigger.focus();
-      await expect(page.getByRole("tooltip", { name: `${name} tooltip` })).toBeVisible();
+      await expect(page.getByRole("tooltip", { name: tip })).toBeVisible();
     }
   });
 });

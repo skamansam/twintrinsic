@@ -70,14 +70,14 @@ const categories = [
 <h3>Basic Usage</h3>
 <div class="example">
   <Dropdown 
-    options={['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry']}
-    placeholder="Select a fruit"
+    options={['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix']}
+    placeholder="Select a city"
   />
 </div>
 <CodeBlock>
   {`<Dropdown 
-  options={['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry']}
-  placeholder="Select a fruit"
+  options={['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix']}
+  placeholder="Select a city"
 />`}
 </CodeBlock>
 
@@ -215,36 +215,36 @@ const categories = [
 <div class="example">
   <div class="flex flex-col gap-4">
     <Dropdown 
-      options={['Small', 'Medium', 'Large']}
-      placeholder="Small"
+      options={['Starter', 'Pro', 'Enterprise']}
+      placeholder="Starter"
       size="sm"
     />
     <Dropdown 
-      options={['Small', 'Medium', 'Large']}
-      placeholder="Medium"
+      options={['Starter', 'Pro', 'Enterprise']}
+      placeholder="Pro"
       size="md"
     />
     <Dropdown 
-      options={['Small', 'Medium', 'Large']}
-      placeholder="Large"
+      options={['Starter', 'Pro', 'Enterprise']}
+      placeholder="Enterprise"
       size="lg"
     />
   </div>
 </div>
 <CodeBlock>
   {`<Dropdown 
-  options={['Small', 'Medium', 'Large']}
-  placeholder="Small"
+  options={['Starter', 'Pro', 'Enterprise']}
+  placeholder="Starter"
   size="sm"
 />
 <Dropdown 
-  options={['Small', 'Medium', 'Large']}
-  placeholder="Medium"
+  options={['Starter', 'Pro', 'Enterprise']}
+  placeholder="Pro"
   size="md"
 />
 <Dropdown 
-  options={['Small', 'Medium', 'Large']}
-  placeholder="Large"
+  options={['Starter', 'Pro', 'Enterprise']}
+  placeholder="Enterprise"
   size="lg"
 />`}
 </CodeBlock>

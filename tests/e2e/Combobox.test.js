@@ -23,24 +23,24 @@ test.describe("Combobox docs page", () => {
     const input = demo.getByRole("combobox");
     await input.click();
     await expect(input).toHaveAttribute("aria-expanded", "true");
-    await expect(demo.getByRole("option", { name: "Apple" })).toBeVisible();
-    await expect(demo.getByRole("option", { name: "Elderberry" })).toBeVisible();
+    await expect(demo.getByRole("option", { name: "New York" })).toBeVisible();
+    await expect(demo.getByRole("option", { name: "San Diego" })).toBeVisible();
   });
 
   test("selecting an option updates the input value", async ({ page }) => {
     const demo = page.getByTestId("combobox-basic");
     const input = demo.getByRole("combobox");
     await input.click();
-    await demo.getByRole("option", { name: "Banana" }).click();
-    await expect(input).toHaveValue("Banana");
+    await demo.getByRole("option", { name: "Chicago" }).click();
+    await expect(input).toHaveValue("Chicago");
   });
 
   test("typing filters the options", async ({ page }) => {
     const demo = page.getByTestId("combobox-basic");
     const input = demo.getByRole("combobox");
-    await input.fill("Che");
-    await expect(demo.getByRole("option", { name: "Cherry" })).toBeVisible();
-    await expect(demo.getByRole("option", { name: "Apple" })).toHaveCount(0);
+    await input.fill("Ch");
+    await expect(demo.getByRole("option", { name: "Chicago" })).toBeVisible();
+    await expect(demo.getByRole("option", { name: "New York" })).toHaveCount(0);
   });
 
   test("disabled combobox is not interactive", async ({ page }) => {
@@ -55,6 +55,6 @@ test.describe("Combobox docs page", () => {
 
   test("initial value is reflected in the input", async ({ page }) => {
     const demo = page.getByTestId("combobox-initial");
-    await expect(demo.getByRole("combobox")).toHaveValue("Banana");
+    await expect(demo.getByRole("combobox")).toHaveValue("Chicago");
   });
 });

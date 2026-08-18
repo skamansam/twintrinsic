@@ -27,29 +27,29 @@ Avatar documentation page
   <h3>Basic Avatar</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="avatar-basic">
     <Avatar
-      src="https://i.pravatar.cc/300?img=1"
-      alt="User Avatar"
+      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop&crop=faces"
+      alt="Sarah Chen"
     />
   </div>
 
   <CodeBlock language="svelte">{`<Avatar 
-  src="https://i.pravatar.cc/300?img=1" 
-  alt="User Avatar" 
+  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop&crop=faces" 
+  alt="Sarah Chen" 
 />`}</CodeBlock>
 
   <h3>Fallback with Initials</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="avatar-initials">
-    <Avatar name="John Doe" />
+    <Avatar name="Marcus Webb" />
   </div>
 
-  <CodeBlock language="svelte">{`<Avatar name="John Doe" />`}</CodeBlock>
+  <CodeBlock language="svelte">{`<Avatar name="Marcus Webb" />`}</CodeBlock>
 
   <h3>Custom Fallback</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="avatar-fallback">
-    <Avatar fallback="JD" bgColor="bg-primary-600" />
+    <Avatar fallback="MW" bgColor="bg-primary-600" />
   </div>
 
-  <CodeBlock language="svelte">{`<Avatar fallback="JD" bgColor="bg-primary-600" />`}</CodeBlock>
+  <CodeBlock language="svelte">{`<Avatar fallback="MW" bgColor="bg-primary-600" />`}</CodeBlock>
 
   <h3>Gravatar Email</h3>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md mb-4" data-testid="avatar-gravatar">

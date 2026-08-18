@@ -27,8 +27,8 @@ import * as LazyPanelModule from "$lib/components/Panel/LazyPanel.svelte"
   >
     {`
 <LazyPanel>
-  {#snippet header()}Lazy Content{/snippet}
-  {#snippet loading()}Loading...{/snippet}
+  {#snippet header()}Billing FAQ{/snippet}
+  {#snippet loading()}Loading FAQ…{/snippet}
   <ExpensiveComponent />
 </LazyPanel>
     `}
@@ -39,10 +39,10 @@ import * as LazyPanelModule from "$lib/components/Panel/LazyPanel.svelte"
   <h3>Basic LazyPanel</h3>
   <div class="not-prose mb-8" data-testid="lazypanel-basic">
     <LazyPanel>
-      {#snippet header()}Basic Example{/snippet}
-      {#snippet loading()}Loading content...{/snippet}
+      {#snippet header()}Billing FAQ{/snippet}
+      {#snippet loading()}Loading FAQ…{/snippet}
       <div class="p-4">
-        <p>This content was loaded lazily when the panel became visible.</p>
+        <p>How do upgrades work? Upgrades take effect immediately and are prorated.</p>
       </div>
     </LazyPanel>
   </div>
@@ -50,14 +50,14 @@ import * as LazyPanelModule from "$lib/components/Panel/LazyPanel.svelte"
   <h3>Custom Loading State</h3>
   <div class="not-prose mb-8" data-testid="lazypanel-custom-loading">
     <LazyPanel>
-      {#snippet header()}Custom Loading{/snippet}
+      {#snippet header()}Account Settings{/snippet}
       {#snippet loading()}
         <div class="p-4 flex items-center justify-center">
           <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
       {/snippet}
       <div class="p-4">
-        <p>Content with custom loading indicator.</p>
+        <p>Manage your profile, notifications, and security preferences.</p>
       </div>
     </LazyPanel>
   </div>

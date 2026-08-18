@@ -11,26 +11,26 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 
 // Sample data for examples
 const users = [
-  { id: 1, name: "John Doe", email: "john.doe@example.com", role: "Admin", status: "Active" },
-  { id: 2, name: "Jane Smith", email: "jane.smith@example.com", role: "Editor", status: "Active" },
+  { id: 1, name: "Sarah Chen", email: "sarah.chen@acme.io", role: "Admin", status: "Active" },
+  { id: 2, name: "Marcus Webb", email: "marcus.webb@acme.io", role: "Editor", status: "Active" },
   {
     id: 3,
-    name: "Bob Johnson",
-    email: "bob.johnson@example.com",
+    name: "Priya Patel",
+    email: "priya.patel@acme.io",
     role: "Viewer",
     status: "Inactive",
   },
   {
     id: 4,
-    name: "Alice Williams",
-    email: "alice.williams@example.com",
+    name: "Diego Ramírez",
+    email: "diego.ramirez@acme.io",
     role: "Editor",
     status: "Active",
   },
   {
     id: 5,
-    name: "Charlie Brown",
-    email: "charlie.brown@example.com",
+    name: "Emma Lindqvist",
+    email: "emma.lindqvist@acme.io",
     role: "Viewer",
     status: "Active",
   },
@@ -115,9 +115,9 @@ const productColumns = [
 
   <CodeBlock language="svelte">{`\u003Cscript>
   const users = [
-    { id: 1, name: "John Doe", email: "john.doe@example.com", role: "Admin", status: "Active" },
-    { id: 2, name: "Jane Smith", email: "jane.smith@example.com", role: "Editor", status: "Active" },
-    { id: 3, name: "Bob Johnson", email: "bob.johnson@example.com", role: "Viewer", status: "Inactive" }
+    { id: 1, name: "Sarah Chen", email: "sarah.chen@acme.io", role: "Admin", status: "Active" },
+    { id: 2, name: "Marcus Webb", email: "marcus.webb@acme.io", role: "Editor", status: "Active" },
+    { id: 3, name: "Priya Patel", email: "priya.patel@acme.io", role: "Viewer", status: "Inactive" }
   ];
 
   const columns = [

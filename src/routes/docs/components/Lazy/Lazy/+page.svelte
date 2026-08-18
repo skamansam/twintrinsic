@@ -20,29 +20,41 @@ import * as LazyModule from "$lib/components/Lazy/Lazy.svelte"
   <h3>Basic</h3>
   <div class="not-prose border border-border rounded-md p-4 mb-4" data-testid="lazy-basic">
     <Lazy>
-      <p>This content renders when it becomes visible.</p>
+      <div class="p-8 bg-surface rounded-lg">
+        <h3 class="font-medium">Monthly revenue chart</h3>
+        <p class="mt-1 text-sm text-muted">Only rendered once it scrolls into view.</p>
+      </div>
     </Lazy>
   </div>
 
   <CodeBlock language="svelte">{`<Lazy>
-  <p>This content renders when it becomes visible.</p>
+  <div class="p-8 bg-surface rounded-lg">
+    <h3 class="font-medium">Monthly revenue chart</h3>
+    <p class="mt-1 text-sm text-muted">Only rendered once it scrolls into view.</p>
+  </div>
 </Lazy>`}</CodeBlock>
 
   <h3>With Placeholder</h3>
   <div class="not-prose border border-border rounded-md p-4 mb-4" data-testid="lazy-placeholder">
     <Lazy>
       {#snippet placeholder()}
-        <p class="text-muted">Loading…</p>
+        <p class="text-muted">Loading chart…</p>
       {/snippet}
-      <p>Deferred content.</p>
+      <div class="p-8 bg-surface rounded-lg">
+        <h3 class="font-medium">Live analytics widget</h3>
+        <p class="mt-1 text-sm text-muted">Deferred until visible to keep the page fast.</p>
+      </div>
     </Lazy>
   </div>
 
   <CodeBlock language="svelte">{`<Lazy>
   {#snippet placeholder()}
-    <p class="text-muted">Loading…</p>
+    <p class="text-muted">Loading chart…</p>
   {/snippet}
-  <p>Deferred content.</p>
+  <div class="p-8 bg-surface rounded-lg">
+    <h3 class="font-medium">Live analytics widget</h3>
+    <p class="mt-1 text-sm text-muted">Deferred until visible to keep the page fast.</p>
+  </div>
 </Lazy>`}</CodeBlock>
 
   <h2>Props</h2>

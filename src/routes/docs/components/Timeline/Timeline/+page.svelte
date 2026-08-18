@@ -20,17 +20,17 @@ import TimelineItem from "$lib/components/Timeline/TimelineItem.svelte"
 
   <h3>Basic Timeline</h3>
   <div class="not-prose border border-border rounded-md p-4 mb-4" data-testid="timeline-basic">
-    <Timeline>
-      <TimelineItem title="Step 1">Content for step 1</TimelineItem>
-      <TimelineItem title="Step 2">Content for step 2</TimelineItem>
-      <TimelineItem title="Step 3">Content for step 3</TimelineItem>
+    <Timeline ariaLabel="Project timeline">
+      <TimelineItem title="Kickoff" date="January 2026">Project started</TimelineItem>
+      <TimelineItem title="Milestone" date="March 2026" variant="success">First release shipped</TimelineItem>
+      <TimelineItem title="Retrospective" date="April 2026" variant="info">Team retro</TimelineItem>
     </Timeline>
   </div>
 
-  <CodeBlock language="svelte">{`<Timeline>
-  <TimelineItem title="Step 1">Content for step 1</TimelineItem>
-  <TimelineItem title="Step 2">Content for step 2</TimelineItem>
-  <TimelineItem title="Step 3">Content for step 3</TimelineItem>
+  <CodeBlock language="svelte">{`<Timeline ariaLabel="Project timeline">
+  <TimelineItem title="Kickoff" date="January 2026">Project started</TimelineItem>
+  <TimelineItem title="Milestone" date="March 2026" variant="success">First release shipped</TimelineItem>
+  <TimelineItem title="Retrospective" date="April 2026" variant="info">Team retro</TimelineItem>
 </Timeline>`}</CodeBlock>
 
   <h3>With Dates, Variants, and Status</h3>

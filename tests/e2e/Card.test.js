@@ -30,20 +30,20 @@ test.describe("Card docs page", () => {
     const card = page.getByTestId("card-basic").locator(".card");
     await expect(card).toBeVisible();
     await expect(card).toHaveClass(/border/);
-    await expect(card.getByText("Basic Example")).toBeVisible();
+    await expect(card.getByText("Product Details")).toBeVisible();
   });
 
   test("card with media renders an image with alt text", async ({ page }) => {
     const card = page.getByTestId("card-with-media").locator(".card");
     const media = card.locator(".card-media img");
     await expect(media).toBeVisible();
-    await expect(media).toHaveAttribute("alt", "Sample landscape");
+    await expect(media).toHaveAttribute("alt", "Featured blog post cover");
   });
 
   test("card with footer renders an action button", async ({ page }) => {
     const card = page.getByTestId("card-with-footer").locator(".card");
     const button = card.locator(".card-footer button").first();
     await expect(button).toBeVisible();
-    await expect(button).toHaveText("Action");
+    await expect(button).toHaveText("View report");
   });
 });

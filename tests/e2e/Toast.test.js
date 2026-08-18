@@ -27,16 +27,16 @@ test.describe("Toast docs page", () => {
     await expect(page.locator(".toast-container")).toHaveAttribute("aria-atomic", "true");
   });
 
-  test("clicking Show Toast renders a dismissible toast", async ({ page }) => {
-    await page.getByTestId("toast-basic").getByRole("button", { name: "Show Toast" }).click();
+  test("clicking Save Profile renders a dismissible toast", async ({ page }) => {
+    await page.getByTestId("toast-basic").getByRole("button", { name: "Save Profile" }).click();
 
     const toast = page.getByRole("button", { name: "Dismiss notification" });
     await expect(toast).toBeVisible();
-    await expect(toast).toContainText("This is a toast notification");
+    await expect(toast).toContainText("Profile saved successfully");
   });
 
   test("the dismiss button removes the toast", async ({ page }) => {
-    await page.getByTestId("toast-basic").getByRole("button", { name: "Show Toast" }).click();
+    await page.getByTestId("toast-basic").getByRole("button", { name: "Save Profile" }).click();
 
     const toast = page.getByRole("button", { name: "Dismiss notification" });
     await expect(toast).toBeVisible();
@@ -54,10 +54,10 @@ test.describe("Toast docs page", () => {
   });
 
   test("a toast with a title renders both title and message", async ({ page }) => {
-    await page.getByTestId("toast-with-title").getByRole("button", { name: "With Title" }).click();
+    await page.getByTestId("toast-with-title").getByRole("button", { name: "Payment Success" }).click();
 
     const toast = page.getByRole("button", { name: "Dismiss notification" });
-    await expect(toast).toContainText("Success");
-    await expect(toast).toContainText("Your changes have been saved");
+    await expect(toast).toContainText("Payment processed");
+    await expect(toast).toContainText("Your invoice has been paid");
   });
 });

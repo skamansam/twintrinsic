@@ -18,7 +18,7 @@ test.describe("Stepper docs page", () => {
     const example = page.getByTestId("stepper-basic");
     await expect(example.getByRole("navigation", { name: "Step progress" })).toBeVisible();
 
-    for (const title of ["Step 1", "Step 2", "Step 3"]) {
+    for (const title of ["Shipping", "Payment", "Review"]) {
       await expect(example.locator(".stepper-step-title").getByText(title)).toBeVisible();
     }
     // Steps show their 1-based index numbers.

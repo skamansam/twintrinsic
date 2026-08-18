@@ -28,29 +28,29 @@ import * as TabsModule from "$lib/components/Tabs/Tabs.svelte"
 
   <h2>Usage</h2>
 
-  <h3>Basic Tabs</h3>
+  <h3>Account Tabs</h3>
   <div class="p-4 bg-surface rounded-md mb-4" data-testid="tabs-basic">
     <Tabs>
       <TabList>
-        <Tab>Tab 1</Tab>
-        <Tab>Tab 2</Tab>
-        <Tab>Tab 3</Tab>
+        <Tab>Billing</Tab>
+        <Tab>Team</Tab>
+        <Tab>Usage</Tab>
       </TabList>
-      <TabPanel>Content for tab 1</TabPanel>
-      <TabPanel>Content for tab 2</TabPanel>
-      <TabPanel>Content for tab 3</TabPanel>
+      <TabPanel>Manage your payment method, invoices, and billing cycle.</TabPanel>
+      <TabPanel>Invite teammates and manage their roles and permissions.</TabPanel>
+      <TabPanel>Track API calls, storage, and seat usage for your workspace.</TabPanel>
     </Tabs>
   </div>
 
   <CodeBlock language="svelte">{`<Tabs>
   <TabList>
-    <Tab>Tab 1</Tab>
-    <Tab>Tab 2</Tab>
-    <Tab>Tab 3</Tab>
+    <Tab>Billing</Tab>
+    <Tab>Team</Tab>
+    <Tab>Usage</Tab>
   </TabList>
-  <TabPanel>Content for tab 1</TabPanel>
-  <TabPanel>Content for tab 2</TabPanel>
-  <TabPanel>Content for tab 3</TabPanel>
+  <TabPanel>Manage your payment method, invoices, and billing cycle.</TabPanel>
+  <TabPanel>Invite teammates and manage their roles and permissions.</TabPanel>
+  <TabPanel>Track API calls, storage, and seat usage for your workspace.</TabPanel>
 </Tabs>`}</CodeBlock>
 
   <h3>Tab Variants</h3>
@@ -59,44 +59,44 @@ import * as TabsModule from "$lib/components/Tabs/Tabs.svelte"
       <p class="text-sm text-muted mb-3">Default</p>
       <Tabs variant="default">
         <TabList>
-          <Tab>Default 1</Tab>
-          <Tab>Default 2</Tab>
+          <Tab>Overview</Tab>
+          <Tab>Analytics</Tab>
         </TabList>
-        <TabPanel>Default content 1</TabPanel>
-        <TabPanel>Default content 2</TabPanel>
+        <TabPanel>Key metrics and recent activity across your account.</TabPanel>
+        <TabPanel>Charts and trends for traffic and engagement.</TabPanel>
       </Tabs>
     </div>
     <div>
       <p class="text-sm text-muted mb-3">Underline</p>
       <Tabs variant="underline">
         <TabList>
-          <Tab>Underline 1</Tab>
-          <Tab>Underline 2</Tab>
+          <Tab>Documentation</Tab>
+          <Tab>Examples</Tab>
         </TabList>
-        <TabPanel>Underline content 1</TabPanel>
-        <TabPanel>Underline content 2</TabPanel>
+        <TabPanel>Guides and API reference for the component library.</TabPanel>
+        <TabPanel>Working examples you can copy into your own project.</TabPanel>
       </Tabs>
     </div>
     <div>
       <p class="text-sm text-muted mb-3">Pills</p>
       <Tabs variant="pills">
         <TabList>
-          <Tab>Pills 1</Tab>
-          <Tab>Pills 2</Tab>
+          <Tab>Monthly</Tab>
+          <Tab>Yearly</Tab>
         </TabList>
-        <TabPanel>Pills content 1</TabPanel>
-        <TabPanel>Pills content 2</TabPanel>
+        <TabPanel>Billed monthly — cancel anytime.</TabPanel>
+        <TabPanel>Billed annually — save up to 20%.</TabPanel>
       </Tabs>
     </div>
     <div>
       <p class="text-sm text-muted mb-3">Enclosed</p>
       <Tabs variant="enclosed">
         <TabList>
-          <Tab>Enclosed 1</Tab>
-          <Tab>Enclosed 2</Tab>
+          <Tab>Basic</Tab>
+          <Tab>Advanced</Tab>
         </TabList>
-        <TabPanel>Enclosed content 1</TabPanel>
-        <TabPanel>Enclosed content 2</TabPanel>
+        <TabPanel>Settings for the default experience.</TabPanel>
+        <TabPanel>Advanced options for power users.</TabPanel>
       </Tabs>
     </div>
   </div>

@@ -27,31 +27,33 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
   <h3>Basic Tree</h3>
   <div class="not-prose mb-8 max-w-md" data-testid="tree-basic">
     <Tree>
-      <TreeNode label="Root Node">
-        <TreeNode label="Child Node 1">
-          <TreeNode label="Grandchild 1.1" />
-          <TreeNode label="Grandchild 1.2" />
+      <TreeNode label="Acme Website">
+        <TreeNode label="Pages">
+          <TreeNode label="Home" />
+          <TreeNode label="Pricing" />
+          <TreeNode label="Contact" />
         </TreeNode>
-        <TreeNode label="Child Node 2">
-          <TreeNode label="Grandchild 2.1" />
-          <TreeNode label="Grandchild 2.2" />
+        <TreeNode label="Blog">
+          <TreeNode label="2026" />
+          <TreeNode label="2025" />
         </TreeNode>
-        <TreeNode label="Child Node 3" />
+        <TreeNode label="Assets" />
       </TreeNode>
     </Tree>
   </div>
 
   <CodeBlock language="svelte">{`<Tree>
-  <TreeNode label="Root Node">
-    <TreeNode label="Child Node 1">
-      <TreeNode label="Grandchild 1.1" />
-      <TreeNode label="Grandchild 1.2" />
+  <TreeNode label="Acme Website">
+    <TreeNode label="Pages">
+      <TreeNode label="Home" />
+      <TreeNode label="Pricing" />
+      <TreeNode label="Contact" />
     </TreeNode>
-    <TreeNode label="Child Node 2">
-      <TreeNode label="Grandchild 2.1" />
-      <TreeNode label="Grandchild 2.2" />
+    <TreeNode label="Blog">
+      <TreeNode label="2026" />
+      <TreeNode label="2025" />
     </TreeNode>
-    <TreeNode label="Child Node 3" />
+    <TreeNode label="Assets" />
   </TreeNode>
 </Tree>`}</CodeBlock>
 
@@ -99,100 +101,96 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
   <h3>Selectable Tree</h3>
   <div class="not-prose mb-8 max-w-md" data-testid="tree-selectable">
     <Tree selectable>
-      <TreeNode label="Root Node">
-        <TreeNode label="Child Node 1">
-          <TreeNode label="Grandchild 1.1" />
-          <TreeNode label="Grandchild 1.2" />
+      <TreeNode label="Acme Website">
+        <TreeNode label="Pages">
+          <TreeNode label="Home" />
+          <TreeNode label="Pricing" />
         </TreeNode>
-        <TreeNode label="Child Node 2">
-          <TreeNode label="Grandchild 2.1" />
-          <TreeNode label="Grandchild 2.2" />
-        </TreeNode>
-        <TreeNode label="Child Node 3" />
+        <TreeNode label="Blog" />
       </TreeNode>
     </Tree>
   </div>
 
   <CodeBlock language="svelte">{`<Tree selectable onselect={(e) => console.log(e.detail)}>
-  <TreeNode label="Root Node">
-    <TreeNode label="Child Node 1">
-      <TreeNode label="Grandchild 1.1" />
-      <TreeNode label="Grandchild 1.2" />
+  <TreeNode label="Acme Website">
+    <TreeNode label="Pages">
+      <TreeNode label="Home" />
+      <TreeNode label="Pricing" />
     </TreeNode>
-    <TreeNode label="Child Node 2">
-      <TreeNode label="Grandchild 2.1" />
-      <TreeNode label="Grandchild 2.2" />
-    </TreeNode>
-    <TreeNode label="Child Node 3" />
+    <TreeNode label="Blog" />
   </TreeNode>
 </Tree>`}</CodeBlock>
 
   <h3>Multi-Select Tree</h3>
   <div class="not-prose mb-8 max-w-md" data-testid="tree-multiselect">
     <Tree selectable multiSelect>
-      <TreeNode label="Root Node">
-        <TreeNode label="Child Node 1">
-          <TreeNode label="Grandchild 1.1" />
-          <TreeNode label="Grandchild 1.2" />
+      <TreeNode label="Acme Website">
+        <TreeNode label="Pages">
+          <TreeNode label="Home" />
+          <TreeNode label="Pricing" />
         </TreeNode>
-        <TreeNode label="Child Node 2">
-          <TreeNode label="Grandchild 2.1" />
-          <TreeNode label="Grandchild 2.2" />
-        </TreeNode>
-        <TreeNode label="Child Node 3" />
+        <TreeNode label="Blog" />
       </TreeNode>
     </Tree>
   </div>
 
   <CodeBlock language="svelte">{`<Tree selectable multiSelect onselect={(e) => console.log(e.detail)}>
-  <TreeNode label="Root Node">
-    <!-- Child nodes -->
+  <TreeNode label="Acme Website">
+    <TreeNode label="Pages">
+      <TreeNode label="Home" />
+      <TreeNode label="Pricing" />
+    </TreeNode>
+    <TreeNode label="Blog" />
   </TreeNode>
 </Tree>`}</CodeBlock>
 
   <h3>With Connecting Lines</h3>
   <div class="not-prose mb-8 max-w-md" data-testid="tree-lines">
     <Tree showLines>
-      <TreeNode label="Root Node">
-        <TreeNode label="Child Node 1">
-          <TreeNode label="Grandchild 1.1" />
-          <TreeNode label="Grandchild 1.2" />
+      <TreeNode label="Acme Website">
+        <TreeNode label="Pages">
+          <TreeNode label="Home" />
+          <TreeNode label="Pricing" />
         </TreeNode>
-        <TreeNode label="Child Node 2">
-          <TreeNode label="Grandchild 2.1" />
-          <TreeNode label="Grandchild 2.2" />
-        </TreeNode>
-        <TreeNode label="Child Node 3" />
+        <TreeNode label="Blog" />
       </TreeNode>
     </Tree>
   </div>
 
   <CodeBlock language="svelte">{`<Tree showLines>
-  <TreeNode label="Root Node">
-    <!-- Child nodes -->
+  <TreeNode label="Acme Website">
+    <TreeNode label="Pages">
+      <TreeNode label="Home" />
+      <TreeNode label="Pricing" />
+    </TreeNode>
+    <TreeNode label="Blog" />
   </TreeNode>
 </Tree>`}</CodeBlock>
 
   <h3>Expanded By Default</h3>
   <div class="not-prose mb-8 max-w-md" data-testid="tree-expanded">
     <Tree expandAll>
-      <TreeNode label="Root Node">
-        <TreeNode label="Child Node 1">
-          <TreeNode label="Grandchild 1.1" />
-          <TreeNode label="Grandchild 1.2" />
+      <TreeNode label="Acme Website">
+        <TreeNode label="Pages">
+          <TreeNode label="Home" />
+          <TreeNode label="Pricing" />
         </TreeNode>
-        <TreeNode label="Child Node 2">
-          <TreeNode label="Grandchild 2.1" />
-          <TreeNode label="Grandchild 2.2" />
+        <TreeNode label="Blog">
+          <TreeNode label="2026" />
         </TreeNode>
-        <TreeNode label="Child Node 3" />
       </TreeNode>
     </Tree>
   </div>
 
   <CodeBlock language="svelte">{`<Tree expandAll>
-  <TreeNode label="Root Node">
-    <!-- Child nodes -->
+  <TreeNode label="Acme Website">
+    <TreeNode label="Pages">
+      <TreeNode label="Home" />
+      <TreeNode label="Pricing" />
+    </TreeNode>
+    <TreeNode label="Blog">
+      <TreeNode label="2026" />
+    </TreeNode>
   </TreeNode>
 </Tree>`}</CodeBlock>
 
