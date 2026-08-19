@@ -1,10 +1,10 @@
 <script lang="ts">
   import App from "$lib/components/App/App.svelte"
-  import AreaChart from "$lib/components/Metrics/AreaChart/AreaChart.svelte"
   import Avatar from "$lib/components/Avatar/Avatar.svelte"
   import AvatarGroup from "$lib/components/Avatar/AvatarGroup.svelte"
   import Badge from "$lib/components/Badge/Badge.svelte"
   import DataTable from "$lib/components/DataTable/DataTable.svelte"
+  import AreaChart from "$lib/components/Metrics/AreaChart/AreaChart.svelte"
   import MetricGrid from "$lib/components/Metrics/MetricGrid/MetricGrid.svelte"
   import ProgressMetric from "$lib/components/Metrics/ProgressMetric/ProgressMetric.svelte"
 
@@ -134,10 +134,10 @@
       </div>
       <AvatarGroup max={5} total={6} ariaLabel="Team members">
         <Avatar name="Sarah Chen" status="online" />
-        <Avatar name="Michael Okafor" status="online" />
+        <Avatar name="James Okafor" status="online" />
         <Avatar name="Priya Patel" status="away" />
-        <Avatar name="Diego Ramos" status="offline" />
-        <Avatar name="Emily Zhang" status="online" />
+        <Avatar name="Diego Ramírez" status="offline" />
+        <Avatar name="Lena Fischer" status="online" />
       </AvatarGroup>
       <Badge variant="success" pill>All systems operational</Badge>
     </section>

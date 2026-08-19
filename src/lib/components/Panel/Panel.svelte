@@ -18,10 +18,6 @@ Usage:
   Settings content
 </Panel>
 ```
-
-Note: Panel uses the Svelte 5 snippet prop API (`header`, `children`, `footer`).
-The legacy `<svelte:fragment slot="header">` slot syntax is no longer supported
-and triggers a `$$slot_def` type error — use `{#snippet header()}` instead.
 -->
 <script module lang="ts">
 /**

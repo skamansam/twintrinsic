@@ -2,11 +2,11 @@
 import { defineMeta } from "@storybook/addon-svelte-csf"
 import { expect, userEvent } from "storybook/test"
 import Table from "$lib/components/Table/Table.svelte"
-import TableHead from "$lib/components/Table/TableHead.svelte"
 import TableBody from "$lib/components/Table/TableBody.svelte"
+import TableCell from "$lib/components/Table/TableCell.svelte"
+import TableHead from "$lib/components/Table/TableHead.svelte"
 import TableHeader from "$lib/components/Table/TableHeader.svelte"
 import TableRow from "$lib/components/Table/TableRow.svelte"
-import TableCell from "$lib/components/Table/TableCell.svelte"
 
 const { Story } = defineMeta({
   title: "Data Display/Table",
@@ -42,7 +42,7 @@ function recordRowClick(event) {
     await expect(canvas.getByRole("table")).toBeInTheDocument()
     await expect(canvas.getByRole("caption")).toHaveTextContent("Team members")
     await expect(canvas.getByRole("columnheader", { name: "Name" })).toBeInTheDocument()
-    await expect(canvas.getByRole("cell", { name: "Ada Lovelace" })).toBeInTheDocument()
+    await expect(canvas.getByRole("cell", { name: "Sarah Chen" })).toBeInTheDocument()
     await expect(canvas.getAllByRole("row").length).toBe(3)
   }}
 >
@@ -55,11 +55,11 @@ function recordRowClick(event) {
     </TableHead>
     <TableBody>
       <TableRow>
-        <TableCell>Ada Lovelace</TableCell>
+        <TableCell>Sarah Chen</TableCell>
         <TableCell>Analyst</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell>Grace Hopper</TableCell>
+        <TableCell>Marcus Webb</TableCell>
         <TableCell>Engineer</TableCell>
       </TableRow>
     </TableBody>
@@ -85,11 +85,11 @@ function recordRowClick(event) {
     </TableHead>
     <TableBody>
       <TableRow>
-        <TableCell>Alice</TableCell>
+        <TableCell>Priya Patel</TableCell>
         <TableCell numeric>95</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell>Bob</TableCell>
+        <TableCell>Emma Lindqvist</TableCell>
         <TableCell numeric>80</TableCell>
       </TableRow>
     </TableBody>
@@ -129,7 +129,7 @@ function recordRowClick(event) {
   name="Selected Row"
   asChild
   play={async ({ canvas }) => {
-    const row = canvas.getByRole("row", { name: /grace hopper/i })
+    const row = canvas.getByRole("row", { name: /marcus webb/i })
     await expect(row).toHaveAttribute("aria-selected", "true")
   }}
 >
@@ -141,10 +141,10 @@ function recordRowClick(event) {
     </TableHead>
     <TableBody>
       <TableRow>
-        <TableCell>Ada Lovelace</TableCell>
+        <TableCell>Sarah Chen</TableCell>
       </TableRow>
       <TableRow selected>
-        <TableCell>Grace Hopper</TableCell>
+        <TableCell>Marcus Webb</TableCell>
       </TableRow>
     </TableBody>
   </Table>

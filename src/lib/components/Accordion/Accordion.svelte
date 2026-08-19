@@ -7,11 +7,11 @@ Usage:
 ```svelte
 <Accordion>
   <AccordionItem>
-    <svelte:fragment slot="header">Section 1</svelte:fragment>
+    {#snippet header()}Section 1{/snippet}
     Content for section 1
   </AccordionItem>
   <AccordionItem>
-    <svelte:fragment slot="header">Section 2</svelte:fragment>
+    {#snippet header()}Section 2{/snippet}
     Content for section 2
   </AccordionItem>
 </Accordion>

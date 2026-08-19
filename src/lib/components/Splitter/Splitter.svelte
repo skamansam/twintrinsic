@@ -5,12 +5,12 @@ Splitter - A resizable divider component that allows users to drag and adjust th
 Usage:
 ```svelte
 <Splitter orientation="horizontal" initialSize={50}>
-  <svelte:fragment slot="first">
+  {#snippet first()}
     <div>Left content</div>
-  </svelte:fragment>
-  <svelte:fragment slot="second">
+  {/snippet}
+  {#snippet second()}
     <div>Right content</div>
-  </svelte:fragment>
+  {/snippet}
 </Splitter>
 ```
 

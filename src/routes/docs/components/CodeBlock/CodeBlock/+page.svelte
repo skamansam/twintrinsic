@@ -59,13 +59,12 @@ console.log(result); // Hello, world!
 <h3>Svelte</h3>
 <CodeBlock language="svelte">{`
   \u003Cscript>
-    import { createEventDispatcher } from 'svelte';
-    const dispatch = createEventDispatcher();
+    let count = $state(0);
+    let { onchange } = $props();
 
-    const { count = 0 } = $props();
-    
     function increment() {
-      dispatch('change', { count: count + 1 });
+      count += 1;
+      onchange?.(new CustomEvent('change', { detail: { count } }));
     }
   \u003C/script>
 

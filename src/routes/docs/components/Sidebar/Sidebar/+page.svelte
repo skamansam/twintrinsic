@@ -51,7 +51,7 @@ onMount(() => {
   </div>
 
   <CodeBlock language="svelte">{`<Sidebar>
-  <svelte:fragment slot="header">Navigation</svelte:fragment>
+  {#snippet header()}Navigation{/snippet}
   <nav class="space-y-2">
     <a href="#" class="block p-2 rounded hover:bg-hover">Home</a>
     <a href="#" class="block p-2 rounded hover:bg-hover">About</a>

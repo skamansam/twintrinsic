@@ -59,19 +59,19 @@ import * as ModalModule from "$lib/components/Modal/Modal.svelte"
   let open = false
 \u003C/script>
 
-<Button on:click={() => open = true}>
+<Button onclick={() => open = true}>
   Open Modal
 </Button>
 
-<Modal {open} on:close={() => open = false}>
-  <svelte:fragment slot="header">
+<Modal {open} onclose={() => open = false}>
+  {#snippet header()}
     Modal Title
-  </svelte:fragment>
+  {/snippet}
   <p>Modal content goes here</p>
-  <svelte:fragment slot="footer">
-    <Button on:click={() => open = false}>Cancel</Button>
+  {#snippet footer()}
+    <Button onclick={() => open = false}>Cancel</Button>
     <Button variant="primary">Save</Button>
-  </svelte:fragment>
+  {/snippet}
 </Modal>`}</CodeBlock>
 
   <h3>Modal Sizes</h3>
@@ -120,14 +120,14 @@ import * as ModalModule from "$lib/components/Modal/Modal.svelte"
   </Modal>
 
   <CodeBlock language="svelte">{`<Modal open={true}>
-  <svelte:fragment slot="header">
+  {#snippet header()}
     Modal Title
-  </svelte:fragment>
+  {/snippet}
   <!-- Long content will automatically scroll -->
   <p>Content here...</p>
-  <svelte:fragment slot="footer">
+  {#snippet footer()}
     <Button>Action</Button>
-  </svelte:fragment>
+  {/snippet}
 </Modal>`}</CodeBlock>
 
   <h2>Props</h2>

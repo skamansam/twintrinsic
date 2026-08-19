@@ -40,7 +40,7 @@ const { Story } = defineMeta({
 <Story name="Basic">
   <div class="w-full max-w-2xl mx-auto">
     <Carousel>
-      <div slot="items">
+      {#snippet items()}
         <CarouselItem>
           <div class="h-64 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
             <h2 class="text-2xl font-bold">Unlimited projects</h2>
@@ -59,7 +59,7 @@ const { Story } = defineMeta({
             <p class="mt-2">SOC 2, SSO, and granular role-based access control.</p>
           </div>
         </CarouselItem>
-      </div>
+      {/snippet}
     </Carousel>
   </div>
 </Story>
@@ -67,7 +67,7 @@ const { Story } = defineMeta({
 <Story name="Autoplay">
   <div class="w-full max-w-2xl mx-auto">
     <Carousel autoplay interval={5000}>
-      <div slot="items">
+      {#snippet items()}
         <CarouselItem>
           <div class="h-64 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
             <h2 class="text-2xl font-bold">Announcing Acme 3.0</h2>
@@ -86,7 +86,7 @@ const { Story } = defineMeta({
             <p class="mt-2">Join us to learn the best workflows for your team.</p>
           </div>
         </CarouselItem>
-      </div>
+      {/snippet}
     </Carousel>
   </div>
 </Story>
@@ -94,7 +94,7 @@ const { Story } = defineMeta({
 <Story name="Fade Transition">
   <div class="w-full max-w-2xl mx-auto">
     <Carousel transition="fade">
-      <div slot="items">
+      {#snippet items()}
         <CarouselItem>
           <div class="h-64 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
             <h2 class="text-2xl font-bold">Design</h2>
@@ -113,7 +113,7 @@ const { Story } = defineMeta({
             <p class="mt-2">Grow from prototype to production without rewrites.</p>
           </div>
         </CarouselItem>
-      </div>
+      {/snippet}
     </Carousel>
   </div>
 </Story>
@@ -121,7 +121,7 @@ const { Story } = defineMeta({
 <Story name="With Images">
   <div class="w-full max-w-2xl mx-auto">
     <Carousel>
-      <div slot="items">
+      {#snippet items()}
         <CarouselItem>
           <img
             src="https://images.unsplash.com/photo-1506744038136-46273834b3fb"
@@ -143,7 +143,7 @@ const { Story } = defineMeta({
             class="w-full h-64 object-cover rounded-lg"
           />
         </CarouselItem>
-      </div>
+      {/snippet}
     </Carousel>
   </div>
 </Story>

@@ -115,13 +115,14 @@ const users = [
       optionLabel="name"
       optionValue="code"
       placeholder="Select a country"
-      let:option
     >
-      <div class="flex items-center">
-        <span class="mr-2 text-lg">{option.flag}</span>
-        <span>{option.name}</span>
-        <span class="ml-2 text-xs text-muted">({option.code})</span>
-      </div>
+      {#snippet option({ option })}
+        <div class="flex items-center">
+          <span class="mr-2 text-lg">{option.flag}</span>
+          <span>{option.name}</span>
+          <span class="ml-2 text-xs text-muted">({option.code})</span>
+        </div>
+      {/snippet}
     </Combobox>
   </div>
 </Story>

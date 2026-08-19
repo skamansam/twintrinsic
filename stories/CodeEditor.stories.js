@@ -169,8 +169,7 @@ export const JSXCode = {
 };
 
 export const SvelteCode = {
-	args: {
-		code: '<script>\n  let count = 0;\n</script>\n\n<button on:click={() => count++}>\n  Count: {count}\n</button>',
+	args: {        code: '<script>\n  let count = $state(0);\n</script>\n\n<button onclick={() => count += 1}>\n  Count: {count}\n</button>',
 		language: 'javascript',
 		theme: 'light',
 		height: '400px',

@@ -6,8 +6,8 @@ Built on top of the Panel component with intersection observer for lazy loading.
 Usage:
 ```svelte
 <LazyPanel>
-  <svelte:fragment slot="header">Lazy Content</svelte:fragment>
-  <svelte:fragment slot="loading">Loading...</svelte:fragment>
+  {#snippet header()}Lazy Content{/snippet}
+  {#snippet loading()}Loading...{/snippet}
   <ExpensiveComponent />
 </LazyPanel>
 ```

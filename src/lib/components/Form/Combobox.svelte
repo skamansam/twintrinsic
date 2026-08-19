@@ -26,12 +26,13 @@ Usage:
   placeholder="Select a country"
   searchable
   clearable
-  let:option
 >
-  <div class="flex items-center">
-    <img src={option.flag} alt={option.name} class="w-5 h-5 mr-2" />
-    {option.name}
-  </div>
+  {#snippet option({ option })}
+    <div class="flex items-center">
+      <img src={option.flag} alt={option.name} class="w-5 h-5 mr-2" />
+      {option.name}
+    </div>
+  {/snippet}
 </Combobox>
 -->
 <script module lang="ts">

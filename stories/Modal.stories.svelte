@@ -25,15 +25,15 @@ const { Story } = defineMeta({
     Delete project
   </button>
   <Modal open={modalOpen} onclose={() => (modalOpen = false)} ariaLabel="Delete project">
-    <svelte:fragment slot="header">Delete "Website Redesign"?</svelte:fragment>
+    {#snippet header()}Delete "Website Redesign"?{/snippet}
     <p>
       This will permanently delete the project and all of its 23 tasks, 4 milestones, and attached files.
       This action cannot be undone.
     </p>
-    <svelte:fragment slot="footer">
+    {#snippet footer()}
       <Button variant="outline" onclick={() => (modalOpen = false)}>Cancel</Button>
       <Button variant="outline" class="text-error-500" onclick={() => (modalOpen = false)}>Delete project</Button>
-    </svelte:fragment>
+    {/snippet}
   </Modal>
 </Story>
 
@@ -42,7 +42,7 @@ const { Story } = defineMeta({
     Invite teammate
   </button>
   <Modal open={modalOpen} onclose={() => (modalOpen = false)} ariaLabel="Invite team member" size="sm">
-    <svelte:fragment slot="header">Invite a teammate</svelte:fragment>
+    {#snippet header()}Invite a teammate{/snippet}
     <form class="space-y-3" onsubmit={(e) => { e.preventDefault(); modalOpen = false }}>
       <label class="block">
         <span class="block text-sm font-medium mb-1">Email address</span>
@@ -73,7 +73,7 @@ const { Story } = defineMeta({
   <div class="flex gap-2">
     {#each ["sm", "md", "lg", "xl"] as size}
       <Modal open={true} {size} ariaLabel="{size} modal">
-        <svelte:fragment slot="header">Checkout summary ({size})</svelte:fragment>
+        {#snippet header()}Checkout summary ({size}){/snippet}
         <p>Your order qualifies for free shipping. Review the items in your cart before continuing.</p>
       </Modal>
     {/each}
@@ -81,9 +81,9 @@ const { Story } = defineMeta({
 </Story>
 
 <Story name="Without Close Button" args={{ showCloseButton: false, open: true, ariaLabel: "No close button" }}>
-  <svelte:fragment slot="header">Accept the terms to continue</svelte:fragment>
+  {#snippet header()}Accept the terms to continue{/snippet}
   <p>This modal has no close button — you must use the action area below to dismiss it.</p>
-  <svelte:fragment slot="footer">
+  {#snippet footer()}
     <Button variant="primary" onclick={() => (modalOpen = false)}>I agree</Button>
-  </svelte:fragment>
+  {/snippet}
 </Story>

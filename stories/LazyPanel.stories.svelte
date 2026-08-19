@@ -18,10 +18,10 @@
 
 <Story name="Default">
   <LazyPanel>
-    <svelte:fragment slot="header">Billing FAQ</svelte:fragment>
-    <svelte:fragment slot="loading">
+    {#snippet header()}Billing FAQ{/snippet}
+    {#snippet loading()}
       <div class="p-4">Loading FAQ…</div>
-    </svelte:fragment>
+    {/snippet}
     <div class="p-4">
       <p>How do upgrades work? Upgrades take effect immediately and are prorated.</p>
       <p class="mt-2">Scroll the FAQ list below to see more panels load lazily.</p>
@@ -31,14 +31,14 @@
 
 <Story name="With Custom Loading">
   <LazyPanel>
-    <svelte:fragment slot="header">Account Settings</svelte:fragment>
-    <svelte:fragment slot="loading">
+    {#snippet header()}Account Settings{/snippet}
+    {#snippet loading()}
       <div class="p-4 flex items-center justify-center">
         <div
           class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"
         ></div>
       </div>
-    </svelte:fragment>
+    {/snippet}
     <div class="p-4">
       <p>Manage your profile, notifications, and security preferences.</p>
     </div>
@@ -49,10 +49,10 @@
   <div class="space-y-4">
     {#each Array(5) as _, i}
       <LazyPanel>
-        <svelte:fragment slot="header">Help section {i + 1}</svelte:fragment>
-        <svelte:fragment slot="loading">
+        {#snippet header()}Help section {i + 1}{/snippet}
+        {#snippet loading()}
           <div class="p-4">Loading section {i + 1}…</div>
-        </svelte:fragment>
+        {/snippet}
         <div class="p-4">
           <p>This help article content loaded when you scrolled to it.</p>
         </div>

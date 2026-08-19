@@ -29,9 +29,9 @@ export const propsMetadata = [
  * </Tooltip>
  *
  * <Tooltip position="bottom" delay={300}>
- *   <svelte:fragment slot="content">
+ *   {#snippet tooltipContent()}
  *     <strong>Custom tooltip</strong> with HTML content
- *   </svelte:fragment>
+ *   {/snippet}
  *   <span>Hover for more info</span>
  * </Tooltip>
  * ```

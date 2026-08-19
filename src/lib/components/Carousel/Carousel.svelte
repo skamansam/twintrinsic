@@ -6,11 +6,11 @@ Provides consistent styling, accessibility features, and various display options
 Usage:
 ```svelte
 <Carousel>
-  <div slot="items">
+  {#snippet items()}
     <CarouselItem>Slide 1 content</CarouselItem>
     <CarouselItem>Slide 2 content</CarouselItem>
     <CarouselItem>Slide 3 content</CarouselItem>
-  </div>
+  {/snippet}
 </Carousel>
 
 <Carousel
@@ -20,14 +20,14 @@ Usage:
   showIndicators
   circular
 >
-  <div slot="items">
+  {#snippet items()}
     <CarouselItem>
       <img src="/image1.jpg" alt="Image 1" />
     </CarouselItem>
     <CarouselItem>
       <img src="/image2.jpg" alt="Image 2" />
     </CarouselItem>
-  </div>
+  {/snippet}
 </Carousel>
 ```
 -->

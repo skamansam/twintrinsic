@@ -18,9 +18,9 @@ Usage:
   onchange={handleFiles}
   onerror={handleError}
 >
-  <div slot="dropzone">
+  {#snippet dropzone()}
     <p>Drag files here or click to browse</p>
-  </div>
+  {/snippet}
 </FileUpload>
 ```
 -->

@@ -147,8 +147,28 @@ as you go; keep story examples, docs examples, and e2e assertions in sync.
 
 ## Remaining work (active items)
 
-- [ ] _(none — all identified placeholder content has been replaced; this
-      section stays as the place to track anything the next sweep finds)_
+- [x] **Roster-consistency sweep (this pass)** — audited all `stories/*.stories.*`
+      for placeholder text (`Lorem`, `pravatar.cc`, `Item N`, `Option N`, etc. —
+      none found, prior sweep held up) and for drift from the canonical Acme
+      roster:
+  - Fixed `DashboardDemo.svelte` team strip: `Michael Okafor`/`Diego Ramos`/
+    `Emily Zhang` (off-roster) → `James Okafor`/`Diego Ramírez`/`Lena Fischer`.
+  - Fixed `Table.stories.svelte`: `Default`/`Selected Row` used
+    `Ada Lovelace`/`Grace Hopper` and `Sortable` used generic `Alice`/`Bob`
+    despite the table caption being "Team members" — replaced with
+    `Sarah Chen`/`Marcus Webb`/`Priya Patel`/`Emma Lindqvist` and synced the
+    `play()` assertions.
+  - Note: `Ada Lovelace`/`Grace Hopper` also appear in `Form.stories.svelte`
+    (a generic "Full Name" field, not framed as an Acme team member) and in
+    `src/routes/docs/utilities/+page.svelte` / `src/routes/docs/theming/preview/+page.svelte`
+    (generic form-field examples). Left those as-is — they aren't framed as
+    Acme team members, so they don't violate the "one roster for team/user
+    context" convention, but if a stricter "roster everywhere, no exceptions"
+    rule is wanted, those are the remaining spots to change.
+  - The `skamansam@gmail.com` / "Skaman Sam Tyler" example in
+    `Avatar.stories.svelte` ("With Gravatar") is intentionally the maintainer's
+    real email so the live Gravatar hash resolves to an actual image — needs a
+    real email to demo, so it's exempted from the roster convention.
 
 ## Done items (for reference)
 

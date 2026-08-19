@@ -6,12 +6,12 @@ Built on top of the Panel component with additional positioning and animation fe
 Usage:
 ```svelte
 <BottomBar>
-  <svelte:fragment slot="header">Details</svelte:fragment>
+  {#snippet header()}Details{/snippet}
   Content here
 </BottomBar>
 
 <BottomBar expanded={false} height="20rem">
-  <svelte:fragment slot="header">Console</svelte:fragment>
+  {#snippet header()}Console{/snippet}
   Console output here
 </BottomBar>
 ```

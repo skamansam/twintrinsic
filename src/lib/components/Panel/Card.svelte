@@ -6,15 +6,15 @@ Built on top of the Panel component with additional card-specific styling.
 Usage:
 ```svelte
 <Card>
-  <svelte:fragment slot="header">Card Title</svelte:fragment>
+  {#snippet header()}Card Title{/snippet}
   <p>Card content</p>
-  <svelte:fragment slot="footer">Card footer</svelte:fragment>
+  {#snippet footer()}Card footer{/snippet}
 </Card>
 
 <Card hoverable>
-  <svelte:fragment slot="media">
+  {#snippet media()}
     <img src="image.jpg" alt="Card image" />
-  </svelte:fragment>
+  {/snippet}
   <h3>Title</h3>
   <p>Content with hover effect</p>
 </Card>

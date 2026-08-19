@@ -6,12 +6,12 @@ Provides accessible focus management, keyboard navigation, and backdrop interact
 Usage:
 ```svelte
 <Modal open={showModal} onclose={() => showModal = false}>
-  <svelte:fragment slot="header">Modal Title</svelte:fragment>
+  {#snippet header()}Modal Title{/snippet}
   <p>Modal content goes here</p>
-  <svelte:fragment slot="footer">
+  {#snippet footer()}
     <Button onclick={() => showModal = false}>Close</Button>
     <Button variant="primary">Save</Button>
-  </svelte:fragment>
+  {/snippet}
 </Modal>
 ```
 -->

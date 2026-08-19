@@ -6,7 +6,7 @@ Uses native HTML details/summary elements for semantic disclosure.
 Usage:
 ```svelte
 <AccordionItem>
-  <svelte:fragment slot="header">Section Title</svelte:fragment>
+  {#snippet header()}Section Title{/snippet}
   Content goes here
 </AccordionItem>
 ```
