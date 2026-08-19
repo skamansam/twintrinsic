@@ -43,6 +43,7 @@ const siteMenu = [
     children: [
       { title: "Data Dashboard", link: "/docs/examples/dashboard" },
       { title: "Game Map", link: "/docs/examples/game-map" },
+      { title: "Shopping Page", link: "/docs/examples/shopping" },
     ],
   },
   {
