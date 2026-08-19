@@ -73,8 +73,7 @@
 </Story>
 
 <Story name="Product Grid">
-  {#snippet template()}
-    {@const products = [
+  {@const products = [
       {
         name: "Wireless Noise-Cancelling Headphones",
         price: "$199.99",
@@ -125,5 +124,4 @@
         </Card>
       {/each}
     </div>
-  {/snippet}
 </Story>
