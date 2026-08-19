@@ -102,11 +102,21 @@
 
 <!-- Build This Yourself Banner -->
 <div id="top" class="mb-8 bg-blue-50 dark:bg-blue-950 border-l-4 border-blue-500 p-4 rounded">
-  <h3 class="font-semibold text-blue-900 dark:text-blue-100">Real-world example</h3>
-  <p class="text-sm text-blue-800 dark:text-blue-200 mt-1">
-    An Amazon-style shopping page built from <code>Card</code>, <code>Checkbox</code>,
-    <code>Slider</code>, <code>Rating</code>, and <code>MenuItem</code>.
-  </p>
+  <div class="flex items-center justify-between">
+    <div>
+      <h3 class="font-semibold text-blue-900 dark:text-blue-100">Build this yourself!</h3>
+      <p class="text-sm text-blue-800 dark:text-blue-200 mt-1">
+        An Amazon-style shopping page built from <code>Card</code>, <code>Checkbox</code>,
+        <code>Slider</code>, <code>Rating</code>, and <code>MenuItem</code>.
+      </p>
+    </div>
+    <a
+      href="/docs/examples/shopping/guide"
+      class="ml-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium whitespace-nowrap transition-colors"
+    >
+      View Guide
+    </a>
+  </div>
 </div>
 
 <div class="-mx-5">
