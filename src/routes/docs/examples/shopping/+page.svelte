@@ -1,9 +1,30 @@
 <script lang="ts">
   import Card from "$lib/components/Card/Card.svelte"
+  import Footer from "$lib/components/Footer/Footer.svelte"
   import Checkbox from "$lib/components/Form/Checkbox.svelte"
   import Rating from "$lib/components/Form/Rating.svelte"
   import Slider from "$lib/components/Form/Slider.svelte"
   import MenuItem from "$lib/components/Menu/Menu/MenuItem.svelte"
+
+  // Mega-footer link columns, similar to a large retail site's footer.
+  const footerColumns = [
+    {
+      title: "Get to Know Us",
+      links: ["About Us", "Careers", "Press Releases", "Corporate Responsibility"],
+    },
+    {
+      title: "Shop with Us",
+      links: ["Your Account", "Your Orders", "Gift Cards", "Registry"],
+    },
+    {
+      title: "Payment Options",
+      links: ["Payment Methods", "Shop with Points", "Currency Converter"],
+    },
+    {
+      title: "Let Us Help You",
+      links: ["Your Purchases", "Shipping Rates & Policies", "Returns & Replacements", "Help"],
+    },
+  ]
 
   // Category nav links rendered just below the hero banner, similar to a
   // retail site's persistent top-level navigation row.
@@ -80,7 +101,7 @@
 </script>
 
 <!-- Build This Yourself Banner -->
-<div class="mb-8 bg-blue-50 dark:bg-blue-950 border-l-4 border-blue-500 p-4 rounded">
+<div id="top" class="mb-8 bg-blue-50 dark:bg-blue-950 border-l-4 border-blue-500 p-4 rounded">
   <h3 class="font-semibold text-blue-900 dark:text-blue-100">Real-world example</h3>
   <p class="text-sm text-blue-800 dark:text-blue-200 mt-1">
     An Amazon-style shopping page built from <code>Card</code>, <code>Checkbox</code>,
@@ -198,6 +219,38 @@
       {/each}
     </div>
   </div>
+</div>
+
+<!-- Large multi-column footer -->
+<div class="-mx-5">
+  <a
+    href="#top"
+    class="block text-center py-4 bg-muted/20 dark:bg-muted/20 hover:bg-muted/30 dark:hover:bg-muted/30 text-sm font-medium"
+  >
+    Back to top
+  </a>
+  <Footer class="block! px-0! py-0! bg-gray-900 text-white">
+    {#snippet center()}
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
+        {#each footerColumns as column (column.title)}
+          <div>
+            <h3 class="font-semibold mb-3">{column.title}</h3>
+            <ul class="space-y-2 text-sm">
+              {#each column.links as link (link)}
+                <li>
+                  <!-- svelte-ignore a11y_invalid_attribute -->
+                  <a href="#" class="hover:underline">{link}</a>
+                </li>
+              {/each}
+            </ul>
+          </div>
+        {/each}
+      </div>
+      <div class="border-t border-white/10 py-4 text-center text-sm">
+        © {new Date().getFullYear()} Twintrinsic Shop Example. For demonstration purposes only.
+      </div>
+    {/snippet}
+  </Footer>
 </div>
 
 <style lang="postcss">
