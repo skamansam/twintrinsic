@@ -39,6 +39,15 @@ const countries = [
     functionality with keyboard navigation and accessibility features. It's ideal for selecting 
     from a large list of options with search capability.
   </p>
+  <p>
+    The dropdown is a native <code>popover="auto"</code> element rendered in the browser's top
+    layer — light-dismiss, Esc-to-close, and outside-click handling are all native, with zero JS
+    for positioning. It is tethered to the input with CSS Anchor Positioning
+    (<code>anchor-name</code>/<code>position-anchor</code>/<code>anchor()</code>/
+    <code>anchor-size()</code>), so the list always matches the input's width and flips above on
+    viewport overflow. In engines without native support the dropdown falls back to the OddBird
+    popover + anchor-positioning polyfills via <code>loadPlatformPolyfills()</code>.
+  </p>
 
   <h2>Examples</h2>
 

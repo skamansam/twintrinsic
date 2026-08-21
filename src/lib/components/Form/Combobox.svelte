@@ -3,6 +3,12 @@
 Combobox - A component that combines a text input with a dropdown list.
 Provides autocomplete functionality with keyboard navigation and accessibility features.
 
+The dropdown is a native `popover="auto"` element (top layer, light-dismiss,
+Esc-to-close) positioned with CSS Anchor Positioning (`anchor-name` /
+`position-anchor` / `anchor()`), so no JS measures the input width or manages
+outside-click/Esc. Load `loadPlatformPolyfills()` in the host app to restore
+these behaviors in engines without native support.
+
 Usage:
 ```svelte
 <Combobox 
@@ -150,7 +156,14 @@ let inputValue = $state("")
 let selectedOption: unknown = $state(null)
 let highlightedIndex = $state(-1)
 let filteredOptions: unknown[] = $state([])
-let inputWidth = $state(0)
+
+// True when the native Popover API is available (guards showPopover/hidePopover
+// in jsdom-based unit tests and engines that only have the polyfill).
+let supportsPopover = $state(false)
+
+$effect(() => {
+  supportsPopover = typeof dropdownElement?.showPopover === "function"
+})
 
 // Update selected option when the value prop changes. The else-branch is
 // intentionally omitted: in uncontrolled mode (no `value` prop) the internal
@@ -175,12 +188,32 @@ $effect(() => {
   }
 })
 
-// Update input width when element is mounted
+// The popover element owns its open/close state (light-dismiss, Esc, and the
+// toggle button are all handled by the browser). Keep the component's `isOpen`
+// in sync via the `toggle` event so aria-expanded and the open styles follow.
 $effect(() => {
-  if (inputElement) {
-    inputWidth = (inputElement as HTMLInputElement).offsetWidth
+  const dropdown = dropdownElement
+  if (!dropdown || typeof dropdown.addEventListener !== "function") return
+
+  const handleToggle = (event: Event) => {
+    const toggleEvent = event as ToggleEvent
+    isOpen = toggleEvent.newState === "open"
+  }
+
+  dropdown.addEventListener("toggle", handleToggle)
+  return () => {
+    dropdown.removeEventListener("toggle", handleToggle)
   }
 })
+
+/**
+ * Returns whether a popover element is currently open, working both with
+ * native `:popover-open` and the OddBird polyfill (which toggles a
+ * `:popover-open` class instead of the pseudo-class).
+ */
+function isPopoverOpen(el: HTMLElement): boolean {
+  return el.matches(":popover-open") || el.classList.contains(":popover-open")
+}
 
 /**
  * Finds an option by its value
@@ -212,7 +245,7 @@ function filterOptions(query: string): unknown[] {
 }
 
 /**
- * Handles input focus
+ * Handles input focus — opens the dropdown when configured to do so
  */
 function handleFocus(): void {
   if (disabled || readonly) return
@@ -223,26 +256,17 @@ function handleFocus(): void {
 }
 
 /**
- * Handles input blur
+ * Handles input clicks. Clicking the input is treated as an "outside" click
+ * by the popover's light-dismiss (the `source` option only sets focus order
+ * and the implicit anchor — it does not exempt the source), so the dropdown
+ * closes. Reopen it so the list stays available for typing/selection.
  */
-function handleBlur(event: Event): void {
-  // Close dropdown after a short delay to allow for click events
-  setTimeout(() => {
-    if (
-      inputElement &&
-      document.activeElement !== inputElement &&
-      !(dropdownElement as HTMLElement)?.contains(document.activeElement)
-    ) {
-      closeDropdown()
+function handleClick(): void {
+  if (disabled || readonly) return
 
-      // Reset input value if no option is selected
-      if (!selectedOption) {
-        inputValue = ""
-      } else {
-        inputValue = getItemLabel(selectedOption, optionLabel)
-      }
-    }
-  }, 100)
+  if (openOnFocus) {
+    openDropdown()
+  }
 }
 
 /**
@@ -256,7 +280,9 @@ function handleInput(event: Event): void {
   if (!target) return
   inputValue = target.value
 
-  if (!isOpen) {
+  // Use the DOM state rather than `isOpen` (which syncs via the async
+  // `toggle` event) so typing during a show doesn't re-invoke showPopover.
+  if (!dropdownElement || !isPopoverOpen(dropdownElement)) {
     openDropdown()
   }
 
@@ -350,9 +376,24 @@ async function scrollToHighlighted(): Promise<void> {
 function openDropdown(): void {
   if (disabled || readonly) return
 
-  isOpen = true
   filteredOptions = filterOptions(inputValue)
   highlightedIndex = autoSelect && filteredOptions.length > 0 ? 0 : -1
+
+  if (supportsPopover) {
+    if (dropdownElement && !isPopoverOpen(dropdownElement)) {
+      // Guarded: showPopover throws if another show/hide is mid-flight
+      // (e.g. a click that light-dismissed is still settling). The `toggle`
+      // event keeps `isOpen` correct either way.
+      try {
+        dropdownElement.showPopover({ source: inputElement })
+      } catch {
+        // ignore — popover state settles via the toggle event
+      }
+    }
+  } else {
+    // jsdom fallback: no native popover — flip the flag directly.
+    isOpen = true
+  }
 
   // Focus input if not already focused
   if (inputElement && document.activeElement !== inputElement) {
@@ -364,7 +405,17 @@ function openDropdown(): void {
  * Closes the dropdown
  */
 function closeDropdown(): void {
-  isOpen = false
+  if (supportsPopover) {
+    if (dropdownElement && isPopoverOpen(dropdownElement)) {
+      try {
+        dropdownElement.hidePopover()
+      } catch {
+        // ignore — popover state settles via the toggle event
+      }
+    }
+  } else {
+    isOpen = false
+  }
   highlightedIndex = -1
 }
 
@@ -400,19 +451,6 @@ function clearSelection(event: Event): void {
   // Focus input after clearing
   inputElement?.focus()
 }
-
-/**
- * Toggles the dropdown
- */
-function toggleDropdown(): void {
-  if (disabled || readonly) return
-
-  if (isOpen) {
-    closeDropdown()
-  } else {
-    openDropdown()
-  }
-}
 </script>
 
 <div
@@ -443,12 +481,12 @@ function toggleDropdown(): void {
       {readonly}
       {required}
       onfocus={handleFocus}
-      onblur={handleBlur}
+      onclick={handleClick}
       oninput={handleInput}
       onkeydown={handleKeydown}
       bind:this={inputElement}
     />
-    
+
     <div class="combobox-actions">
       {#if loading}
         <div class="combobox-loading">
@@ -458,7 +496,7 @@ function toggleDropdown(): void {
           </svg>
         </div>
       {/if}
-      
+
       {#if clearable && selectedOption && !disabled && !readonly}
         <button
           type="button"
@@ -471,85 +509,102 @@ function toggleDropdown(): void {
           </svg>
         </button>
       {/if}
-      
-      <button
-        type="button"
-        class="combobox-toggle"
-        aria-label={isOpen ? 'Close dropdown' : 'Open dropdown'}
-        onclick={toggleDropdown}
-        disabled={disabled || readonly}
-      >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={isOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"}></path>
-        </svg>
-      </button>
-    </div>
-  </div>
-  
-  {#if isOpen}
-    <div
-      id={`${id}-listbox`}
-      class="combobox-dropdown"
-      role="listbox"
-      style="max-height: {maxHeight}px; width: {inputWidth}px;"
-      bind:this={dropdownElement}
-    >
-      {#if filteredOptions.length === 0}
-        <div class="combobox-empty">
-          No options available
-        </div>
+
+      {#if supportsPopover}
+        <button
+          type="button"
+          class="combobox-toggle"
+          aria-label={isOpen ? 'Close dropdown' : 'Open dropdown'}
+          popovertarget={`${id}-listbox`}
+          popovertargetaction="toggle"
+          disabled={disabled || readonly}
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={isOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"}></path>
+          </svg>
+        </button>
       {:else}
-        {#each filteredOptions as opt, i}
-          <div
-            id={`${id}-option-${i}`}
-            class="
-              combobox-option
-              {i === highlightedIndex ? 'combobox-option-highlighted' : ''}
-              {selectedOption && getItemValue(selectedOption, optionValue) === getItemValue(opt, optionValue) ? 'combobox-option-selected' : ''}
-            "
-            role="option"
-            tabindex="-1"
-            aria-selected={selectedOption !== null && selectedOption !== undefined && getItemValue(selectedOption, optionValue) === getItemValue(opt, optionValue)}
-            data-index={i}
-            onclick={() => selectOption(opt)}
-            onmouseenter={() => highlightedIndex = i}
-            onkeydown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                selectOption(opt);
-              }
-            }}
-          >
-            {#if optionTemplate}
-              {@render optionTemplate(opt)}
-            {:else if option}
-              {@render option?.({ option: opt })}
-            {:else}
-              {getItemLabel(opt, optionLabel)}
-            {/if}
-          </div>
-        {/each}
+        <button
+          type="button"
+          class="combobox-toggle"
+          aria-label={isOpen ? 'Close dropdown' : 'Open dropdown'}
+          onclick={() => { if (isOpen) { closeDropdown() } else { openDropdown() } }}
+          disabled={disabled || readonly}
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={isOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"}></path>
+          </svg>
+        </button>
       {/if}
     </div>
-  {/if}
+  </div>
+
+  <div
+    id={`${id}-listbox`}
+    class="combobox-dropdown"
+    popover={supportsPopover ? 'auto' : undefined}
+    role="listbox"
+    style="max-height: {maxHeight}px;"
+    bind:this={dropdownElement}
+  >
+    {#if filteredOptions.length === 0}
+      <div class="combobox-empty">
+        No options available
+      </div>
+    {:else}
+      {#each filteredOptions as opt, i}
+        <div
+          id={`${id}-option-${i}`}
+          class="
+            combobox-option
+            {i === highlightedIndex ? 'combobox-option-highlighted' : ''}
+            {selectedOption && getItemValue(selectedOption, optionValue) === getItemValue(opt, optionValue) ? 'combobox-option-selected' : ''}
+          "
+          role="option"
+          tabindex="-1"
+          aria-selected={selectedOption !== null && selectedOption !== undefined && getItemValue(selectedOption, optionValue) === getItemValue(opt, optionValue)}
+          data-index={i}
+          onclick={() => selectOption(opt)}
+          onmouseenter={() => highlightedIndex = i}
+          onkeydown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              selectOption(opt);
+            }
+          }}
+        >
+          {#if optionTemplate}
+            {@render optionTemplate(opt)}
+          {:else if option}
+            {@render option?.({ option: opt })}
+          {:else}
+            {getItemLabel(opt, optionLabel)}
+          {/if}
+        </div>
+      {/each}
+    {/if}
+  </div>
 </div>
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";
-  
+
   .combobox {
     @apply relative w-full;
+    /* Scope the anchor name to this subtree so multiple comboboxes on a page
+       don't all bind to the last `--combobox-anchor` (see MDN anchor scoping). */
+    anchor-scope: all;
   }
-  
+
   .combobox-disabled {
     @apply opacity-50 cursor-not-allowed;
     @apply pointer-events-none;
   }
-  
+
   .combobox-readonly {
     @apply cursor-default;
   }
-  
+
   .combobox-input-container {
     @apply relative flex items-center;
     @apply w-full;
@@ -557,13 +612,14 @@ function toggleDropdown(): void {
     @apply border border-border dark:border-border;
     @apply rounded-md;
     @apply transition-colors duration-150;
+    anchor-name: --combobox-anchor;
   }
-  
+
   .combobox-open .combobox-input-container {
     @apply border-primary-500 dark:border-primary-500;
     @apply ring-2 ring-primary-500/20 dark:ring-primary-500/20;
   }
-  
+
   .combobox-input {
     @apply w-full py-2 pl-3 pr-10;
     @apply bg-transparent;
@@ -571,29 +627,29 @@ function toggleDropdown(): void {
     @apply border-none;
     @apply focus:outline-none;
   }
-  
+
   .combobox-actions {
     @apply absolute right-2;
     @apply flex items-center;
   }
-  
+
   .combobox-loading {
     @apply mr-1;
   }
-  
+
   .combobox-spinner {
     @apply w-4 h-4;
     @apply animate-spin;
     @apply text-muted dark:text-muted;
   }
-  
+
   .combobox-spinner-track {
     @apply opacity-25;
     @apply stroke-current;
     @apply fill-none;
     @apply stroke-2;
   }
-  
+
   .combobox-spinner-path {
     @apply opacity-75;
     @apply stroke-current;
@@ -602,7 +658,7 @@ function toggleDropdown(): void {
     stroke-dasharray: 60;
     stroke-dashoffset: 45;
   }
-  
+
   .combobox-clear {
     @apply p-1 mr-1;
     @apply text-muted dark:text-muted;
@@ -611,7 +667,7 @@ function toggleDropdown(): void {
     @apply focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400;
     @apply transition-colors duration-150;
   }
-  
+
   .combobox-toggle {
     @apply p-1;
     @apply text-muted dark:text-muted;
@@ -620,32 +676,44 @@ function toggleDropdown(): void {
     @apply focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400;
     @apply transition-colors duration-150;
   }
-  
+
+  /* The dropdown is a native popover. Anchor it below the input and match the
+     input's width with anchor-size(); flip above when it would overflow the
+     viewport bottom. `inset: auto` + `margin: 0` reset the UA popover styles.
+     (anchor()/anchor-size() are used instead of position-area so the OddBird
+     anchor-positioning polyfill can handle them too.) */
   .combobox-dropdown {
-    @apply absolute z-50 mt-1;
     @apply overflow-auto;
     @apply bg-background dark:bg-background;
     @apply border border-border dark:border-border;
     @apply rounded-md shadow-lg;
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    position-anchor: --combobox-anchor;
+    top: anchor(bottom);
+    left: anchor(left);
+    width: anchor-size(width);
+    position-try-fallbacks: flip-block;
   }
-  
+
   .combobox-empty {
     @apply py-2 px-3;
     @apply text-muted dark:text-muted;
     @apply text-center;
   }
-  
+
   .combobox-option {
     @apply py-2 px-3;
     @apply cursor-pointer;
     @apply text-text dark:text-text;
     @apply hover:bg-hover dark:hover:bg-hover;
   }
-  
+
   .combobox-option-highlighted {
     @apply bg-hover dark:bg-hover;
   }
-  
+
   .combobox-option-selected {
     @apply bg-primary-50 dark:bg-primary-900/20;
     @apply text-primary-700 dark:text-primary-300;

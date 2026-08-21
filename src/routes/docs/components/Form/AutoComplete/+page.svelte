@@ -31,6 +31,14 @@ const users = [
   selections. It's built on top of the base Input component and includes features like custom
   templates, keyboard navigation, and input masking.
 </p>
+<p>
+  The suggestions panel is a native <code>popover="auto"</code> element in the top layer —
+  light-dismiss, Esc-to-close, and outside-click are native, and it is tethered to the input with
+  CSS Anchor Positioning (<code>anchor-name</code>/<code>anchor()</code>/
+  <code>anchor-size()</code>), so no JS measures or positions it. It falls back to the OddBird
+  popover + anchor-positioning polyfills via <code>loadPlatformPolyfills()</code> where native
+  support is missing.
+</p>
 
 <h2>Examples</h2>
 

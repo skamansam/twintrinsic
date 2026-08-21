@@ -50,7 +50,6 @@ export const propsMetadata = [
 
 <script lang="ts" generics="TItem extends string | Record<string, unknown> = string | Record<string, unknown>">
 import { getContext } from "svelte"
-import { slide } from "svelte/transition"
 import { getItemLabel } from "../../helpers/itemLabel.js"
 import { getItemValue } from "../../helpers/itemValue.js"
 import type { FormContext, FormFieldApi } from "./formContext.js"
@@ -212,8 +211,19 @@ $effect(() => {
 let focused = $state(false)
 let showSuggestions = $state(false)
 let suggestionsPopoverRef: HTMLElement | undefined = $state()
+let anchorElement: HTMLElement | undefined = $state()
 
-// Handle popover toggle events
+// True when the native Popover API is available (guards showPopover/hidePopover
+// in jsdom-based unit tests and engines that only have the polyfill).
+let supportsPopover = $state(false)
+
+$effect(() => {
+  supportsPopover = typeof suggestionsPopoverRef?.showPopover === "function"
+})
+
+// Handle popover toggle events — the browser owns open/close (light-dismiss,
+// Esc, outside click), and `showSuggestions` follows so aria/conditional state
+// stays in sync.
 $effect(() => {
   if (!suggestionsPopoverRef) return
 
@@ -228,6 +238,63 @@ $effect(() => {
     suggestionsPopoverRef?.removeEventListener("toggle", handleToggle)
   }
 })
+
+/**
+ * Returns whether a popover element is currently open, working both with
+ * native `:popover-open` and the OddBird polyfill (which toggles a
+ * `:popover-open` class instead of the pseudo-class).
+ */
+function isPopoverOpen(el: HTMLElement): boolean {
+  return el.matches(":popover-open") || el.classList.contains(":popover-open")
+}
+
+/**
+ * Opens the suggestions popover. In environments without the Popover API
+ * (jsdom unit tests) it falls back to flipping `showSuggestions` directly.
+ */
+function openSuggestions(): void {
+  if (effectiveDisabled) return
+
+  if (supportsPopover) {
+    const popover = suggestionsPopoverRef
+    if (!popover) return
+    if (!isPopoverOpen(popover)) {
+      // Guarded: showPopover throws if another show/hide is mid-flight.
+      // The `toggle` event keeps `showSuggestions` correct either way.
+      try {
+        popover.showPopover({ source: anchorElement })
+      } catch {
+        // ignore — popover state settles via the toggle event
+      }
+    }
+    // The OddBird popover polyfill moves focus to the first focusable element
+    // on showPopover() (native does not). Keep focus in the input.
+    const input = anchorElement?.querySelector("input")
+    if (input && document.activeElement !== input) {
+      input.focus()
+    }
+  } else {
+    showSuggestions = true
+  }
+}
+
+/**
+ * Closes the suggestions popover (or falls back to the flag in jsdom).
+ */
+function closeSuggestions(): void {
+  if (supportsPopover) {
+    const popover = suggestionsPopoverRef
+    if (popover && isPopoverOpen(popover)) {
+      try {
+        popover.hidePopover()
+      } catch {
+        // ignore — popover state settles via the toggle event
+      }
+    }
+  } else {
+    showSuggestions = false
+  }
+}
 let highlightedIndex = $state(-1)
 let searchTimeout: ReturnType<typeof setTimeout> | undefined = $state()
 
@@ -256,7 +323,7 @@ function handleInput(event: CustomEvent): void {
     }, delay)
   } else {
     suggestions = []
-    showSuggestions = false
+    closeSuggestions()
   }
 }
 
@@ -272,7 +339,7 @@ function search(query: string): void {
   }
 
   suggestions = suggestions.slice(0, maxItems)
-  showSuggestions = true
+  openSuggestions()
   highlightedIndex = -1
 }
 
@@ -305,7 +372,7 @@ function selectItem(item: TItem): void {
     fieldApi?.setValue(getItemValue(item, valueField))
   }
 
-  showSuggestions = false
+  closeSuggestions()
 }
 
 // Remove selected item (multiple mode)
@@ -363,7 +430,7 @@ function handleKeydown(event: KeyboardEvent): void {
 
     case "Escape":
       event.preventDefault()
-      showSuggestions = false
+      closeSuggestions()
       break
   }
 }
@@ -372,18 +439,33 @@ function handleKeydown(event: KeyboardEvent): void {
 function handleFocus(): void {
   focused = true
   if (inputValue.length >= minLength) {
-    showSuggestions = true
+    openSuggestions()
+  }
+}
+
+/**
+ * Handles input clicks. Clicking the input is an "outside" click to the
+ * suggestions popover's light-dismiss, so it closes; reopen it when there's
+ * a searchable query so the list stays available for selection.
+ */
+function handleClick(): void {
+  if (effectiveDisabled) return
+
+  if (inputValue.length >= minLength) {
+    openSuggestions()
   }
 }
 
 function handleBlur(): void {
   focused = false
-  // Delay hiding suggestions to allow click events
+  // Delay hiding suggestions to allow click events. With native popovers
+  // light-dismiss has usually already closed it, so this is a no-op there;
+  // it matters for the jsdom fallback path.
   // @ts-ignore: DOM lib types setTimeout with `this: Window` binding;
   // module-scope has `this: void`
   setTimeout(() => {
     if (!focused) {
-      showSuggestions = false
+      closeSuggestions()
       if (forceSelection && !selectedItems) {
         inputValue = ""
       }
@@ -426,16 +508,22 @@ function renderItemTemplate(item: TItem): string {
 <div
   class="autocomplete {className}"
 >
-  <Input
-    {label}
-    {placeholder}
-    disabled={effectiveDisabled}
-    value={inputValue}
-    oninput={handleInput}
-    onfocus={handleFocus}
-    onblur={handleBlur}
-    onkeydown={handleKeydown}
-  />
+  <div
+    class="autocomplete-anchor"
+    bind:this={anchorElement}
+  >
+    <Input
+      {label}
+      {placeholder}
+      disabled={effectiveDisabled}
+      value={inputValue}
+      oninput={handleInput}
+      onfocus={handleFocus}
+      onblur={handleBlur}
+      onclick={handleClick}
+      onkeydown={handleKeydown}
+    />
+  </div>
 
   {#if derivedMultiple && Array.isArray(selectedItems) && selectedItems.length > 0}
     <div class="autocomplete-chips" aria-label="Selected items">
@@ -458,48 +546,41 @@ function renderItemTemplate(item: TItem): string {
     </div>
   {/if}
 
-  {#if showSuggestions && (suggestions.length > 0 || loading)}
-    <div
-      class="autocomplete-suggestions"
-      role="listbox"
-      transition:slide={{ duration: 150 }}
-    >
-      {#if loading}
-        <div class="autocomplete-message" role="status">
-          {loadingMessage}
+  <div
+    class="autocomplete-suggestions"
+    popover={supportsPopover ? 'auto' : undefined}
+    role={loading || suggestions.length > 0 ? 'listbox' : 'status'}
+    bind:this={suggestionsPopoverRef}
+  >
+    {#if loading}
+      <div class="autocomplete-message" role="status">
+        {loadingMessage}
+      </div>
+    {:else if suggestions.length > 0}
+      {#each suggestions as item, index}
+        <div
+          class="autocomplete-item"
+          class:autocomplete-item-highlighted={index === highlightedIndex}
+          role="option"
+          aria-selected={index === highlightedIndex}
+          tabindex={index === highlightedIndex ? 0 : -1}
+          onmouseenter={() => highlightedIndex = index}
+          onclick={() => selectItem(item)}
+          onkeydown={(event) => handleOptionKeydown(event, item)}
+        >
+          {#if ItemTemplate}
+            {@html renderItemTemplate(item)}
+          {:else}
+            {@html highlightText(getItemLabel(item, labelField), inputValue)}
+          {/if}
         </div>
-      {:else}
-        {#each suggestions as item, index}
-          <div
-            class="autocomplete-item"
-            class:autocomplete-item-highlighted={index === highlightedIndex}
-            role="option"
-            aria-selected={index === highlightedIndex}
-            tabindex={index === highlightedIndex ? 0 : -1}
-            onmouseenter={() => highlightedIndex = index}
-            onclick={() => selectItem(item)}
-            onkeydown={(event) => handleOptionKeydown(event, item)}
-          >
-            {#if ItemTemplate}
-              {@html renderItemTemplate(item)}
-            {:else}
-              {@html highlightText(getItemLabel(item, labelField), inputValue)}
-            {/if}
-          </div>
-        {/each}
-      {/if}
-    </div>
-  {:else if showSuggestions && suggestions.length === 0 && !loading}
-    <div
-      class="autocomplete-suggestions"
-      role="status"
-      transition:slide={{ duration: 150 }}
-    >
+      {/each}
+    {:else}
       <div class="autocomplete-message">
         {emptyMessage}
       </div>
-    </div>
-  {/if}
+    {/if}
+  </div>
 </div>
 
 <style lang="postcss">
@@ -507,13 +588,32 @@ function renderItemTemplate(item: TItem): string {
 
   .autocomplete {
     @apply relative w-full;
+    /* Scope the anchor name to this subtree so multiple autocompletes on a
+       page don't all bind to the last `--autocomplete-anchor`. */
+    anchor-scope: all;
   }
 
-  /* Suggestions dropdown */
+  /* Anchors the suggestions popover to the input row (not the chips below it). */
+  .autocomplete-anchor {
+    anchor-name: --autocomplete-anchor;
+  }
+
+  /* Suggestions dropdown — a native popover in the top layer, anchored below
+     the input and matched to its width with anchor-size(). `inset: auto` +
+     `margin: 0` reset the UA popover styles, and flip-block avoids viewport
+     overflow. (anchor()/anchor-size() instead of position-area so the OddBird
+     anchor-positioning polyfill can handle them too.) */
   .autocomplete-suggestions {
-    @apply z-50 w-full;
     @apply bg-surface border border-border rounded-md shadow-lg;
     @apply max-h-60 overflow-auto;
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    position-anchor: --autocomplete-anchor;
+    top: anchor(bottom);
+    left: anchor(left);
+    width: anchor-size(width);
+    position-try-fallbacks: flip-block;
   }
 
   /* Suggestion items */
