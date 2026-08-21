@@ -22,7 +22,10 @@ import * as ModalModule from "$lib/components/Modal/Modal.svelte"
   <h1>Modal</h1>
   
   <p>
-    The Modal component displays content in a dialog box that requires user attention. It provides accessible focus management, keyboard navigation, and backdrop interactions for creating dialogs, alerts, and confirmation windows.
+    The Modal component displays content in a native HTML <code>&lt;dialog&gt;</code> element that requires user
+    attention. It uses <code>closedby="any"</code> for built-in light-dismiss (Escape, backdrop click, and platform
+    close gestures), native focus management with an inert background, and <code>@starting-style</code> entry/exit
+    animations — no manual focus trap, backdrop div, or Escape listener.
   </p>
 
   <h2>Usage</h2>
@@ -162,14 +165,22 @@ import * as ModalModule from "$lib/components/Modal/Modal.svelte"
 
   <h2>Accessibility</h2>
   <ul>
-    <li>Uses <code>role="dialog"</code> for semantic meaning</li>
-    <li>Manages focus automatically when opening and closing</li>
-    <li>Supports keyboard navigation (Escape to close)</li>
-    <li>Includes proper ARIA labels and descriptions</li>
-    <li>Prevents body scroll when modal is open</li>
-    <li>Restores focus to previously focused element when closed</li>
-    <li>Supports <code>aria-modal="true"</code> attribute</li>
+    <li>Built on the native <code>&lt;dialog&gt;</code> element (implicit <code>role="dialog"</code> and <code>aria-modal</code>)</li>
+    <li><code>closedby="any"</code> gives native light-dismiss: Escape, backdrop click, and platform close gestures</li>
+    <li>Native focus management — focus moves into the dialog on open and is restored on close</li>
+    <li>Content outside the dialog becomes inert while it is open</li>
+    <li>Includes proper ARIA labels and descriptions (<code>aria-label</code>, <code>aria-labelledby</code>, <code>aria-describedby</code>)</li>
+    <li>Prevents body scroll while open via pure CSS <code>:has()</code> — no body-class bookkeeping</li>
+    <li>Entry/exit animations via <code>@starting-style</code> + <code>transition-behavior: allow-discrete</code></li>
   </ul>
+
+  <h3>Close behavior</h3>
+  <p>
+    The <code>closeOnEscape</code> and <code>closeOnOutsideClick</code> props map onto the native
+    <code>closedby</code> attribute: both enabled maps to <code>any</code>, Escape-only maps to
+    <code>closerequest</code>, and outside-click-only (or neither) maps to <code>none</code> with the
+    backdrop click handled manually.
+  </p>
 
   <h2>Best Practices</h2>
   <ul>
@@ -180,6 +191,7 @@ import * as ModalModule from "$lib/components/Modal/Modal.svelte"
     <li>Consider using smaller sizes (sm, md) for confirmation dialogs</li>
     <li>Use larger sizes (lg, xl) for forms or detailed content</li>
     <li>Always provide a way to close the modal (close button, Cancel button)</li>
+    <li>Add <code>autofocus</code> to the first control the user should interact with (e.g. a confirm button) — the browser moves focus there when the dialog opens</li>
     <li>Test keyboard navigation and screen reader compatibility</li>
   </ul>
 </Container>

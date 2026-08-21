@@ -1,7 +1,10 @@
 <!--
 @component
 Modal - A dialog component for displaying content that requires user attention.
-Provides accessible focus management, keyboard navigation, and backdrop interactions.
+Built on the native HTML `<dialog>` element with `closedby="any"` for built-in
+light-dismiss (Esc + backdrop click + platform close gestures), native focus
+management, inert background content, and `@starting-style` + `allow-discrete`
+entry/exit animations. No manual focus trap, backdrop div, or Escape listener.
 
 Usage:
 ```svelte
@@ -37,8 +40,6 @@ export const propsMetadata = [
 
 <script lang="ts">
 import type { Snippet } from "svelte"
-import { onMount } from "svelte"
-import { fade, scale } from "svelte/transition"
 
 interface Props {
   /** Additional CSS classes */
@@ -93,152 +94,86 @@ let {
   footer = undefined,
 }: Props = $props()
 
-// Modal state. We initialize from the `open` prop to avoid a one-tick
-// flash where the dialog isn't in the DOM before the sync $effect runs.
-// The $effect below keeps `isOpen` in sync with subsequent prop changes;
-// the initial-value capture warning is a false positive here.
-// svelte-ignore state_referenced_locally
-let isOpen = $state(open)
-let modalElement: HTMLElement | undefined = $state()
-let previouslyFocusedElement: HTMLElement | null = $state(null)
+let dialogElement: HTMLDialogElement | undefined = $state()
 
-// Sync open state when prop changes
+// Map the close-behavior flags onto the native `closedby` attribute so the
+// browser handles light-dismiss natively. `closedby="any"` enables both
+// Escape and outside-click close; `closerequest` restricts to Escape (and
+// platform close gestures); `none` disables both. There is no native value
+// for "outside click only", so that combination falls back to `none` plus a
+// manual backdrop-close in handleBackdropClick.
+const closedby = $derived(
+  closeOnOutsideClick && closeOnEscape
+    ? "any"
+    : closeOnEscape
+      ? "closerequest"
+      : "none"
+)
+
+// Sync the dialog open state with the `open` prop via the native
+// showModal()/close() methods. jsdom (unit tests) lacks showModal/close, so
+// fall back to toggling the `open` attribute there.
 $effect(() => {
-  isOpen = open
+  if (!dialogElement) return
 
-  if (isOpen) {
-    openModal()
-  } else {
-    closeModal()
+  if (open && !dialogElement.open) {
+    if (typeof dialogElement.showModal === "function") {
+      dialogElement.showModal()
+    } else {
+      dialogElement.setAttribute("open", "")
+    }
+    onopen?.(new CustomEvent("open"))
+  } else if (!open && dialogElement.open) {
+    if (typeof dialogElement.close === "function") {
+      dialogElement.close()
+    } else {
+      // jsdom lacks close(); mimic it and fire onclose directly.
+      dialogElement.removeAttribute("open")
+      handleClose()
+    }
   }
 })
 
 /**
- * Opens the modal
+ * Closes the dialog programmatically and reports the reason.
+ * The native `close` event fires and calls handleClose.
  */
-function openModal(): void {
-  // Save the currently focused element to restore later
-  previouslyFocusedElement = document.activeElement as HTMLElement | null
-
-  // Add body class to prevent scrolling
-  document.body.classList.add("modal-open")
-
-  // Dispatch open event
-  onopen?.(new CustomEvent("open"))
-
-  // Focus the modal after it's visible
-  setTimeout(() => {
-    focusFirstElement()
-  }, 50)
+function closeDialog(reason = "programmatic"): void {
+  if (!dialogElement?.open) return
+  pendingReason = reason
+  if (typeof dialogElement.close === "function") {
+    dialogElement.close()
+  } else {
+    dialogElement.removeAttribute("open")
+    handleClose()
+  }
 }
 
-/**
- * Closes the modal
- * @param {string} reason - Reason for closing (backdrop, escape, or programmatic)
- */
-function closeModal(reason: string = "programmatic"): void {
-  // Remove body class
-  document.body.classList.remove("modal-open")
+// The native `close` event carries no reason, so track the last
+// interaction that caused the close.
+let pendingReason = "programmatic"
 
-  // Restore focus to the previously focused element
-  previouslyFocusedElement?.focus()
-
+/** Handles the native dialog `close` event. */
+function handleClose(): void {
+  const reason = pendingReason
+  pendingReason = "programmatic"
   onclose?.(new CustomEvent("close", { detail: { reason } }))
 }
 
 /**
- * Handles backdrop clicks
- * @param {MouseEvent} event - Click event
+ * Handles backdrop clicks. With `closedby="any"` the browser already
+ * light-dismisses on outside click — this just records the reason so the
+ * `close` event reports "backdrop". With `closedby="none"` (outside-click
+ * close without Escape) the browser won't close, so close manually.
  */
 function handleBackdropClick(event: MouseEvent): void {
-  // Only close if clicking directly on the backdrop, not on the modal content
-  if (closeOnOutsideClick && event.target === event.currentTarget) {
-    isOpen = false
-    closeModal("backdrop")
-  }
-}
-
-/**
- * Handles keydown events
- * @param {KeyboardEvent} event - Keydown event
- */
-function handleKeydown(event: KeyboardEvent): void {
-  if (!isOpen) return
-
-  // Close on Escape key
-  if (closeOnEscape && event.key === "Escape") {
-    event.preventDefault()
-    isOpen = false
-    closeModal("escape")
-    return
-  }
-
-  // Trap focus within modal
-  if (event.key === "Tab") {
-    trapFocus(event)
-  }
-}
-
-/**
- * Traps focus within the modal
- * @param {KeyboardEvent} event - Keydown event
- */
-function trapFocus(event: KeyboardEvent): void {
-  if (!modalElement) return
-
-  // Get all focusable elements
-  const focusableElements = modalElement.querySelectorAll(
-    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-  )
-
-  if (focusableElements.length === 0) return
-
-  const firstElement = focusableElements[0] as HTMLElement
-  const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement
-
-  // If shift+tab on first element, move to last element
-  if (event.shiftKey && document.activeElement === firstElement) {
-    event.preventDefault()
-    lastElement.focus()
-  }
-  // If tab on last element, move to first element
-  else if (!event.shiftKey && document.activeElement === lastElement) {
-    event.preventDefault()
-    firstElement.focus()
-  }
-}
-
-/**
- * Focuses the first focusable element in the modal
- */
-function focusFirstElement(): void {
-  if (!modalElement) return
-
-  // Try to focus the first focusable element
-  const focusableElement = modalElement.querySelector(
-    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-  ) as HTMLElement | null
-
-  if (focusableElement) {
-    focusableElement.focus()
+  if (!closeOnOutsideClick || event.target !== dialogElement) return
+  if (closedby === "any") {
+    pendingReason = "backdrop"
   } else {
-    // If no focusable element, focus the modal itself
-    modalElement.focus()
+    closeDialog("backdrop")
   }
 }
-
-// Clean up when component is destroyed
-onMount(() => {
-  if (isOpen) {
-    openModal()
-  }
-
-  return () => {
-    if (isOpen) {
-      document.body.classList.remove("modal-open")
-    }
-  }
-})
 
 // Determine size classes
 const sizeClasses = $derived(
@@ -258,126 +193,152 @@ const sizeClasses = $derived(
 )
 </script>
 
-<svelte:window onkeydown={handleKeydown} />
-
-{#if isOpen}
-  <div
-    class="modal-backdrop"
-    transition:fade={{ duration: 200 }}
-  >
-  <button
-    type="button"
-    class="modal-backdrop-button"
-    aria-hidden="true"
-    tabindex="-1"
-    onclick={handleBackdropClick}
-  ></button>
-    <div
-      {id}
-      class="
-        modal
-        {sizeClasses}
-        {centered ? 'modal-centered' : ''}
-        {className}
-      "
-      role="dialog"
-      aria-modal="true"
-      aria-label={ariaLabel}
-      aria-labelledby={!ariaLabel && header ? `${id}-title` : undefined}
-      aria-describedby={ariaDescription ? `${id}-description` : undefined}
-      tabindex="-1"
-      bind:this={modalElement}
-      transition:scale={{ duration: 200, start: 0.95 }}
-    >
-      {#if header}
-        <div class="modal-header">
-          <div class="modal-title" id={`${id}-title`}>
-            {@render header()}
-          </div>
-          
-          {#if showCloseButton}
-            <button
-              type="button"
-              class="modal-close-button"
-              aria-label={closeButtonLabel}
-              onclick={() => {
-                isOpen = false;
-                closeModal();
-              }}
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-            </button>
-          {/if}
-        </div>
-      {/if}
-      
-      <div class="modal-body" id={ariaDescription ? `${id}-description` : undefined}>
-        {@render children?.()}
+<dialog
+  bind:this={dialogElement}
+  {id}
+  {closedby}
+  class="
+    modal
+    {sizeClasses}
+    {centered ? 'modal-centered' : 'modal-top'}
+    {className}
+  "
+  aria-label={ariaLabel}
+  aria-labelledby={!ariaLabel && header ? `${id}-title` : undefined}
+  aria-describedby={ariaDescription ? `${id}-description` : undefined}
+  aria-modal={open ? "true" : undefined}
+  onclick={handleBackdropClick}
+  onclose={handleClose}
+>
+  {#if header}
+    <div class="modal-header">
+      <div class="modal-title" id={`${id}-title`}>
+        {@render header()}
       </div>
-      
-      {#if footer}
-        <div class="modal-footer">
-          {@render footer()}
-        </div>
+
+      {#if showCloseButton}
+        <button
+          type="button"
+          class="modal-close-button"
+          aria-label={closeButtonLabel}
+          onclick={() => closeDialog("programmatic")}
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
       {/if}
     </div>
+  {/if}
+
+  <div class="modal-body" id={ariaDescription ? `${id}-description` : undefined}>
+    {@render children?.()}
   </div>
-{/if}
+
+  {#if footer}
+    <div class="modal-footer">
+      {@render footer()}
+    </div>
+  {/if}
+</dialog>
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";
-  
-  /* Add global style to prevent body scrolling when modal is open */
-  :global(body.modal-open) {
+
+  /* Prevent body scrolling while any modal dialog is open — pure CSS via
+     :has(), no body-class bookkeeping in JS. */
+  :global(body:has(dialog[open])) {
     @apply overflow-hidden;
   }
-  
-  .modal-backdrop {
-    @apply fixed inset-0 z-50;
-    @apply flex items-center justify-center p-4;
+
+  /* The author stylesheet must reproduce the UA's closed-dialog hiding:
+     `.modal` sets display:flex, which would otherwise override the UA
+     `dialog:not([open]) { display: none }` rule and leave a closed dialog
+     visible. */
+  :global(dialog.modal:not([open])) {
+    @apply hidden;
   }
 
-  .modal-backdrop-button {
-    @apply absolute inset-0;
-    @apply bg-black/50 dark:bg-black/60 backdrop-blur-sm;
-    @apply border-0 cursor-default;
-    @apply p-0 m-0;
-  }
-  
+  /* Entry/exit animation: the dialog transitions in from the top layer
+     with @starting-style and fades out via allow-discrete when closed. */
   .modal {
     @apply w-full relative;
-    @apply bg-background dark:bg-background text-text dark:text-text;
+    @apply bg-background text-text;
     @apply rounded-lg shadow-lg overflow-hidden;
     @apply flex flex-col max-h-[calc(100vh-2rem)];
+    @apply m-auto;
+
+    opacity: 0;
+    transform: scale(0.95);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      overlay 0.2s allow-discrete,
+      display 0.2s allow-discrete;
   }
-  
+
+  .modal[open] {
+    opacity: 1;
+    transform: scale(1);
+
+    @starting-style {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  }
+
+  /* Native backdrop. Per MDN, the backdrop's @starting-style must be a
+     standalone block — it cannot be nested inside the ::backdrop rule
+     because the nesting selector cannot represent pseudo-elements. */
+  .modal::backdrop {
+    @apply bg-black/50;
+    backdrop-filter: blur(2px);
+
+    transition:
+      background-color 0.2s ease,
+      overlay 0.2s allow-discrete,
+      display 0.2s allow-discrete;
+  }
+
+  .modal[open]::backdrop {
+    background-color: rgb(0 0 0 / 0.5);
+  }
+
+  @starting-style {
+    .modal[open]::backdrop {
+      background-color: transparent;
+    }
+  }
+
   .modal-centered {
-    @apply my-auto;
+    /* Native modal dialogs center by default — nothing to do. */
   }
-  
+
+  .modal-top {
+    @apply mt-8;
+  }
+
   .modal-header {
     @apply flex items-center justify-between p-4 sm:p-6;
-    @apply border-b border-border dark:border-border;
+    @apply border-b border-border;
   }
-  
+
   .modal-title {
     @apply text-lg font-medium;
   }
-  
+
   .modal-close-button {
-    @apply p-1 rounded-md text-muted dark:text-muted;
-    @apply hover:bg-hover dark:hover:bg-hover hover:text-text dark:hover:text-text;
-    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400;
+    @apply p-1 rounded-md text-muted;
+    @apply hover:bg-hover hover:text-text;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500;
   }
-  
+
   .modal-body {
     @apply p-4 sm:p-6 overflow-y-auto;
   }
-  
+
   .modal-footer {
     @apply flex items-center justify-end gap-3 p-4 sm:p-6;
-    @apply border-t border-border dark:border-border;
+    @apply border-t border-border;
   }
 </style>

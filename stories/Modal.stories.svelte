@@ -4,6 +4,7 @@ import Modal from "$lib/components/Modal/Modal.svelte"
 import Button from "$lib/components/Button/Button.svelte"
 
 let modalOpen = $state(false)
+let modalSize = $state("md")
 
 const { Story } = defineMeta({
   title: "Feedback/Modal",
@@ -70,20 +71,45 @@ const { Story } = defineMeta({
 </Story>
 
 <Story name="Sizes">
-  <div class="flex gap-2">
+  <div class="flex flex-wrap gap-2">
     {#each ["sm", "md", "lg", "xl"] as size}
-      <Modal open={true} {size} ariaLabel="{size} modal">
-        {#snippet header()}Checkout summary ({size}){/snippet}
-        <p>Your order qualifies for free shipping. Review the items in your cart before continuing.</p>
-      </Modal>
+      <button
+        onclick={() => { modalSize = size; modalOpen = true }}
+        class="px-4 py-2 bg-surface border border-border rounded"
+      >
+        Open {size}
+      </button>
     {/each}
   </div>
+  <Modal open={modalOpen} size={modalSize} onclose={() => (modalOpen = false)} ariaLabel="Checkout summary">
+    {#snippet header()}Checkout summary ({modalSize}){/snippet}
+    <p>Your order qualifies for free shipping. Review the items in your cart before continuing.</p>
+    {#snippet footer()}
+      <Button variant="primary" onclick={() => (modalOpen = false)}>Continue to checkout</Button>
+    {/snippet}
+  </Modal>
 </Story>
 
-<Story name="Without Close Button" args={{ showCloseButton: false, open: true, ariaLabel: "No close button" }}>
-  {#snippet header()}Accept the terms to continue{/snippet}
-  <p>This modal has no close button — you must use the action area below to dismiss it.</p>
-  {#snippet footer()}
-    <Button variant="primary" onclick={() => (modalOpen = false)}>I agree</Button>
-  {/snippet}
+<Story name="Without Close Button">
+  <button onclick={() => (modalOpen = true)} class="px-4 py-2 bg-primary-500 text-white rounded">
+    Review terms
+  </button>
+  <Modal
+    open={modalOpen}
+    showCloseButton={false}
+    closeOnEscape={false}
+    closeOnOutsideClick={false}
+    onclose={() => (modalOpen = false)}
+    ariaLabel="Accept the terms"
+  >
+    {#snippet header()}Accept the terms to continue{/snippet}
+    <p>
+      This modal has no close button and no light-dismiss — the only way out is the
+      action area below, so the user must make an explicit choice.
+    </p>
+    {#snippet footer()}
+      <Button variant="outline" onclick={() => (modalOpen = false)}>Decline</Button>
+      <Button variant="primary" onclick={() => (modalOpen = false)}>I agree</Button>
+    {/snippet}
+  </Modal>
 </Story>
