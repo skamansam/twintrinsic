@@ -622,3 +622,24 @@
   background-color: var(--color-surface) !important;
   border-color: var(--color-border) !important;
 }
+
+/* =====================================================================
+ * Story canvas theming
+ *
+ * The story canvas (`#storybook-root`) is the container Storybook mounts
+ * each story into. It is NOT covered by the `#storybook-docs` rules above
+ * (those are for the autodocs page), so without these rules the canvas
+ * keeps Storybook's baked-in light background and dark text in every
+ * theme — making light-token components unreadable when a dark theme is
+ * selected. Paint the canvas with the active theme's tokens so stories
+ * render on the correct surface, and give inherited text a themed color.
+ *
+ * Stories that intentionally render a light/dark canvas of their own
+ * (e.g. the docs App shell which sets `bg-background` on its root) still
+ * win because their own background covers the canvas. These rules only
+ * provide the default surface behind bare stories.
+ * ===================================================================== */
+#storybook-root {
+  background-color: var(--color-background) !important;
+  color: var(--color-text) !important;
+}

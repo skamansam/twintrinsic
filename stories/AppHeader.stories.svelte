@@ -43,6 +43,7 @@
   name="Default"
   args={{
     brand: "Acme Suite",
+    themeToggleHidden: true,
     navItems: [
       { label: "Home", href: "/", current: true },
       { label: "Projects", href: "/projects" },
@@ -59,6 +60,7 @@
       logo,
       href: "/",
     },
+    themeToggleHidden: true,
     navItems: [
       { label: "Home", href: "/", current: true },
       { label: "Projects", href: "/projects" },
@@ -72,6 +74,7 @@
   args={{
     brand: "Acme Suite",
     showSearch: true,
+    themeToggleHidden: true,
     navItems: [
       { label: "Home", href: "/", current: true },
       { label: "Projects", href: "/projects" },
@@ -85,6 +88,7 @@
   args={{
     brand: "Acme Suite",
     showNotifications: true,
+    themeToggleHidden: true,
     navItems: [
       { label: "Home", href: "/", current: true },
       { label: "Projects", href: "/projects" },
@@ -101,6 +105,7 @@
       name: "Sarah Chen",
       avatar: logo,
     },
+    themeToggleHidden: true,
     navItems: [
       { label: "Home", href: "/", current: true },
       { label: "Projects", href: "/projects" },
@@ -123,6 +128,7 @@
     },
     showSearch: true,
     showNotifications: true,
+    themeToggleHidden: true,
     navItems: [
       { label: "Home", href: "/", current: true },
       { label: "Dashboard", href: "/dashboard" },

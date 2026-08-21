@@ -13,10 +13,10 @@
 {:else if variant === "class"}
   <Footer class="max-w-3xl mx-auto">
     {#snippet left()}
-      <p>Left</p>
+      <p>© 2026 Acme Inc.</p>
     {/snippet}
     {#snippet right()}
-      <p>Right</p>
+      <p>Privacy Policy · Terms of Service</p>
     {/snippet}
   </Footer>
 {:else}
