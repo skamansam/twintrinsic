@@ -13,12 +13,14 @@ export const propsMetadata = [
 /**
  * @component
  * Toast - A component for displaying temporary notifications.
- * Provides consistent styling, accessibility features, and various display options.
+ * Uses pure CSS entry/exit animations via @starting-style and
+ * transition-behavior: allow-discrete, with content-visibility: auto
+ * for rendering performance. No JavaScript animation logic.
  *
  * Usage:
  * ```svelte
  * <script lang="ts">
- * import { subscribe } from "svelte/store"
+ * import { showToast } from "$lib/components/Toast/toastStore.js"
  *
  * function notify() {
  *   showToast({
@@ -35,7 +37,6 @@ export const propsMetadata = [
  * ```
  */
   import { onDestroy, onMount } from 'svelte';
-  import { fade, fly } from 'svelte/transition';
   import { toastStore } from './toastStore.js';
 
 /** Toast container positions enumerated by `positionClasses` in this component. */
@@ -161,14 +162,13 @@ export const propsMetadata = [
         class="
           toast
           toast-{toast.variant || 'default'}
+          {toast.closing ? 'toast-closing' : ''}
         "
         aria-live={toast.variant === 'error' ? 'assertive' : 'polite'}
         aria-label="Dismiss notification"
         onclick={() => removeToast(toast.id)}
         onmouseenter={() => pauseToast(toast.id)}
         onmouseleave={() => resumeToast(toast.id)}
-        in:fly={{ y: 20, duration: 200 }}
-        out:fly={{ x: 20, duration: 200 }}
       >
         <div class="toast-content">
           {#if toast.icon}
@@ -225,13 +225,12 @@ export const propsMetadata = [
         class="
           toast
           toast-{toast.variant || 'default'}
+          {toast.closing ? 'toast-closing' : ''}
         "
         role="alert"
         aria-live={toast.variant === 'error' ? 'assertive' : 'polite'}
         onmouseenter={() => pauseToast(toast.id)}
         onmouseleave={() => resumeToast(toast.id)}
-        in:fly={{ y: 20, duration: 200 }}
-        out:fly={{ x: 20, duration: 200 }}
       >
         <div class="toast-content">
           {#if toast.icon}
@@ -289,6 +288,9 @@ export const propsMetadata = [
     @apply flex flex-col gap-2;
     @apply max-w-sm w-full;
     @apply pointer-events-none;
+    /* Top-layer stacking via content-visibility for rendering perf */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 200px;
   }
   
   .toast-top-right {
@@ -321,6 +323,24 @@ export const propsMetadata = [
     @apply rounded-lg shadow-lg;
     @apply overflow-hidden;
     @apply pointer-events-auto;
+    /* Pure CSS entry via @starting-style; exit via .toast-closing class */
+    transition: opacity 200ms ease-out, transform 200ms ease-out,
+      display 200ms ease-out allow-discrete;
+  }
+
+  /* Exit animation when the closing class is applied */
+  .toast-closing {
+    opacity: 0;
+    transform: translateX(1rem);
+    display: none;
+  }
+
+  /* @starting-style for entry animation (CSS-native, no JS) */
+  @starting-style {
+    .toast {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
   }
   
   .toast-content {
@@ -400,6 +420,4 @@ export const propsMetadata = [
   .toast-info .toast-progress {
     @apply bg-info-500 dark:bg-info-500;
   }
-  
-  /* No custom animations needed - using Svelte transitions */
 </style>

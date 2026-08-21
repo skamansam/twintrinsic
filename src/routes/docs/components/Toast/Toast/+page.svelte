@@ -14,8 +14,9 @@ import * as ToastModule from "$lib/components/Toast/Toast.svelte"
   <h1>Toast</h1>
   
   <p>
-    The Toast component displays temporary notifications to users. It provides various variants for different message types,
-    customizable positioning, and automatic dismissal with optional manual close buttons.
+    The Toast component displays temporary notifications to users. Entry/exit animations use pure CSS
+    (<code>@starting-style</code> + <code>transition-behavior: allow-discrete</code>) with no JavaScript
+    animation logic. The container uses <code>content-visibility: auto</code> for rendering performance.
   </p>
 
   <h2>Usage</h2>
@@ -132,6 +133,13 @@ toastStore.add({ message: "A new version is available", variant: "info" })`}</Co
       </tr>
     </tbody>
   </table>
+
+  <h2>Modern CSS APIs</h2>
+  <ul>
+    <li><code>@starting-style</code> — CSS-native entry animation (no JavaScript)</li>
+    <li><code>transition-behavior: allow-discrete</code> — animates <code>display</code> property on exit</li>
+    <li><code>content-visibility: auto</code> — skips rendering of off-screen toast containers</li>
+  </ul>
 
   <h2>Accessibility</h2>
   <p>

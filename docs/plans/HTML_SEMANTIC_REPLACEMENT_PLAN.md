@@ -564,7 +564,7 @@ participation) — no popover migration needed.
 5. **Textarea** → `field-sizing: content` — ✅ DONE (Input/NumberInput skipped — field-sizing affects width, breaks layouts)
 6. **FormField / InvalidState / RadioGroup** → `:has()` + `:user-valid`/`:user-invalid` — ⏭️ SKIPPED (already uses .has-error CSS + TanStack Form)
 7. **`twintrinsic.css` theme tokens** → `light-dark()` — ⏭️ SKIPPED (Tailwind `dark:` variant already standard)
-8. **Modal / Toast / Dropdown / Combobox / Tooltip** → `@starting-style` + `transition-behavior: allow-discrete` for enter/exit animation
+8. **Modal / Toast / Dropdown / Combobox / Tooltip** → `@starting-style` + `transition-behavior: allow-discrete` for enter/exit animation — ✅ Toast done (`@starting-style` for entry, `.toast-closing` class + `transition-behavior: allow-discrete` for exit, `content-visibility: auto` for perf). Popover API not used (toasts need multiple visible simultaneously + `aria-live` region, which conflicts with Popover API's one-at-a-time model).
 
 ### **Tier 1: Replace Immediately** (High Impact, Low Effort) ✅ ALL DONE
 1. **Accordion** → `<details>` + `<summary>` — ✅ DONE

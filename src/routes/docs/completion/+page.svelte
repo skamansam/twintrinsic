@@ -217,9 +217,10 @@ const components = [
   { name: "Stepper", category: "Feedback", updated: true, apis: [
     { name: "<nav> landmark", implemented: true },
   ]},
-  { name: "Toast", category: "Feedback", updated: false, apis: [
-    { name: "CSS animations", implemented: true },
-    { name: "Popover API", implemented: false },
+  { name: "Toast", category: "Feedback", updated: true, apis: [
+    { name: "CSS @starting-style entry animation", implemented: true },
+    { name: "transition-behavior: allow-discrete (exit)", implemented: true },
+    { name: "content-visibility: auto (perf)", implemented: true },
   ]},
   
   // Utility
