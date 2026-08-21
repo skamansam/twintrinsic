@@ -1,5 +1,6 @@
 import type { Preview } from "@storybook/sveltekit"
 import { addons } from "storybook/internal/preview-api"
+import { loadPlatformPolyfills } from "../src/lib/polyfills.js"
 import { DOCS_RENDERED, GLOBALS_UPDATED, STORY_RENDERED } from "storybook/internal/core-events"
 import "../src/lib/twintrinsic.css"
 // Storybook-only demo themes (Brand, High Contrast, CVD + dark variants).
@@ -7,6 +8,11 @@ import "../src/lib/twintrinsic.css"
 // themes.css for rationale. Also contains the `.sbdocs` overrides that
 // make the autodocs page follow the selected theme.
 import "./themes.css"
+
+// Feature-detected polyfills for Popover API + CSS Anchor Positioning.
+// No-op in engines that support them natively; restores the behavior in
+// older test/consumer browsers so the popover-based components work there.
+void loadPlatformPolyfills()
 
 // Grouped light/dark theme picker.
 //

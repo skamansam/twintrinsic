@@ -10,13 +10,13 @@ declare global {
     // The interface that defines event.locals, which can be accessed in server hooks (handle, and handleError), server-only load functions, and +server.js files.
     interface Locals {}
 
-    // Defines the common shape of the page.data state and $page.data store - that is, the data that is shared between all pages. The Load and ServerLoad functions in ./$types will be narrowed accordingly. Use optional properties for data that is only present on specific pages. Do not add an index signature ([key: string]: any).
+    // Defines the common shape of the page.data state and $page.data store - that is, the data that is shared between all pages. The Load and ServerLoad functions in ./$types will be narrowed accordingly. Do not add an index signature ([key: string]: any).
     interface PageData {}
 
     //The shape of the page.state object, which can be manipulated using the pushState and replaceState functions from $app/navigation.
     interface PageState {}
 
-    // If your adapter provides platform-specific context via event.platform, you can specify it here.
+    // If your adapter provides platform-specific context on event.platform, you can specify it here.
     interface Platform {}
   }
 
@@ -60,6 +60,16 @@ declare global {
     game?: { id: number; title: string; slug: string }
     /** Generic config object for demo scripts */
     config?: Record<string, unknown>
+  }
+}
+
+// Augment svelte/elements HTMLAttributes with the interestfor attribute
+// (Interest Invokers API, Chrome 142+). Svelte's type definitions don't
+// include it yet.
+declare module "svelte/elements" {
+  interface HTMLAttributes<T> {
+    /** Interest Invokers: ID of the popover to show on hover/focus */
+    interestfor?: string
   }
 }
 
