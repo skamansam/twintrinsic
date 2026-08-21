@@ -29,13 +29,24 @@ import { iconConfig } from "./iconManager.js"
 export const DEFAULT_PRELOAD_ICONS: string[] = [
   // AUTO-GENERATED-ICONS-START — do not edit by hand, run `pnpm run generate:icons`
   "tabler:alert-circle",
+  "tabler:alert-triangle",
+  "tabler:bell",
   "tabler:check",
+  "tabler:check-circle",
   "tabler:chevron-down",
+  "tabler:chevron-left",
   "tabler:chevron-right",
+  "tabler:clipboard",
+  "tabler:circle-check",
   "tabler:home",
+  "tabler:info-circle",
+  "tabler:menu-2",
+  "tabler:moon",
+  "tabler:search",
   "tabler:settings",
   "tabler:star",
   "tabler:star-filled",
+  "tabler:sun",
   "tabler:x",
   // AUTO-GENERATED-ICONS-END
 ]

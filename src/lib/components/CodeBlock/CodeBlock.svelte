@@ -54,6 +54,7 @@ import type { Snippet } from "svelte";
 import { onDestroy, onMount } from "svelte";
 import { detectLanguage } from "../../helpers/detectLanguage.js"
 import "prismjs/plugins/autoloader/prism-autoloader";
+import Icon from "../Icon/Icon.svelte";
 
 // `Prism.manual` disables Prism's automatic DOM scan (`highlightAll` on
 // load). This library highlights explicitly via `Prism.highlight()` in
@@ -288,20 +289,10 @@ async function copyCode() {
       aria-label={copied ? 'Copied!' : 'Copy code'}
     >
       {#if copied}
-        <svg viewBox="0 0 24 24" width="16" height="16">
-          <path
-            fill="currentColor"
-            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
-          />
-        </svg>
+        <Icon name="tabler:check" width="16" height="16" />
         <span>Copied!</span>
       {:else}
-        <svg viewBox="0 0 24 24" width="16" height="16">
-          <path
-            fill="currentColor"
-            d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
-          />
-        </svg>
+        <Icon name="tabler:clipboard" width="16" height="16" />
         <span>Copy</span>
       {/if}
     </button>

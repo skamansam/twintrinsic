@@ -38,6 +38,7 @@ export const propsMetadata = [
  */
   import { onDestroy, onMount } from 'svelte';
   import { toastStore } from './toastStore.js';
+  import Icon from '../Icon/Icon.svelte';
 
 /** Toast container positions enumerated by `positionClasses` in this component. */
   type ToastPosition =
@@ -143,6 +144,14 @@ export const propsMetadata = [
   onDestroy(() => {
     toastStore.clear();
   });
+
+  /** Map variant to Iconify icon name */
+  const variantIcons: Record<string, string> = {
+    success: 'tabler:circle-check',
+    error: 'tabler:x',
+    warning: 'tabler:alert-triangle',
+    info: 'tabler:info-circle',
+  };
 </script>
 
 <div
@@ -177,22 +186,8 @@ export const propsMetadata = [
             </div>
           {:else}
             <div class="toast-icon">
-              {#if toast.variant === 'success'}
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-              {:else if toast.variant === 'error'}
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-              {:else if toast.variant === 'warning'}
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                </svg>
-              {:else if toast.variant === 'info'}
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
+              {#if toast.variant && variantIcons[toast.variant]}
+                <Icon name={variantIcons[toast.variant]} class="w-5 h-5" />
               {/if}
             </div>
           {/if}
@@ -205,9 +200,7 @@ export const propsMetadata = [
           </div>
           
           <span class="toast-close" aria-hidden="true">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
+            <Icon name="tabler:x" class="w-4 h-4" />
           </span>
         </div>
         
@@ -239,22 +232,8 @@ export const propsMetadata = [
             </div>
           {:else}
             <div class="toast-icon">
-              {#if toast.variant === 'success'}
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-              {:else if toast.variant === 'error'}
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-              {:else if toast.variant === 'warning'}
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                </svg>
-              {:else if toast.variant === 'info'}
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
+              {#if toast.variant && variantIcons[toast.variant]}
+                <Icon name={variantIcons[toast.variant]} class="w-5 h-5" />
               {/if}
             </div>
           {/if}

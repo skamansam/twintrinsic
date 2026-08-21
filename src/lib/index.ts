@@ -141,3 +141,4 @@ export {
   updateIconConfig,
 } from "./stores/iconManager.js";
 export { DEFAULT_PRELOAD_ICONS, preloadIcons } from "./stores/iconPreload.js";
+export { preloadManifest, addLinkPreloads, removeLinkPreloads, extractIconNames, type IconManifest } from "./helpers/iconPreload.js";

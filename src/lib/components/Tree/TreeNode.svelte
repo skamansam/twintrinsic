@@ -41,6 +41,7 @@ export const propsMetadata = [
 
 <script lang="ts">
 import { getContext, type Snippet } from "svelte"
+import Icon from "../Icon/Icon.svelte"
 
 interface Props {
   /** Additional CSS classes */
@@ -230,14 +231,10 @@ function handleKeyDown(event: KeyboardEvent): void {
           tabindex="-1"
           disabled={disabled}
         >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path 
-              stroke-linecap="round" 
-              stroke-linejoin="round" 
-              stroke-width="2" 
-              d={isExpanded ? "M19 9l-7 7-7-7" : "M9 5l7 7-7 7"}
-            ></path>
-          </svg>
+          <Icon 
+            name={isExpanded ? 'tabler:chevron-down' : 'tabler:chevron-right'} 
+            class="w-4 h-4" 
+          />
         </button>
       {:else}
         <div class="tree-node-spacer"></div>

@@ -58,6 +58,7 @@ export const propsMetadata = [
 <script lang="ts">
 import { onDestroy, onMount, setContext } from "svelte"
 import type { CarouselContext } from "./carouselContext.js"
+import Icon from "../Icon/Icon.svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -383,9 +384,7 @@ onDestroy(() => {
         {#if prevIcon}
           {@html prevIcon}
         {:else}
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-          </svg>
+          <Icon name="tabler:chevron-left" class="w-6 h-6" />
         {/if}
       </button>
       
@@ -399,9 +398,7 @@ onDestroy(() => {
         {#if nextIcon}
           {@html nextIcon}
         {:else}
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-          </svg>
+          <Icon name="tabler:chevron-right" class="w-6 h-6" />
         {/if}
       </button>
     </div>
