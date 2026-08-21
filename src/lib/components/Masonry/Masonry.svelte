@@ -309,6 +309,9 @@ onMount(() => {
   .masonry {
     @apply relative w-full;
     min-height: 100px;
+    /* Skip rendering off-screen masonry items */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 200px;
   }
   
   .masonry-centered {

@@ -161,6 +161,17 @@ const isMultiLine = $derived(variant === "text" && lines > 1)
   .skeleton {
     @apply bg-muted/10 dark:bg-muted/10;
     @apply inline-block;
+    /* Content visibility for rendering perf on off-screen skeletons */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 100px;
+    /* Entry animation via @starting-style (CSS-native, no JS) */
+    transition: opacity 200ms ease-out, display 200ms ease-out allow-discrete;
+  }
+
+  @starting-style {
+    .skeleton {
+      opacity: 0;
+    }
   }
   
   .skeleton-group {

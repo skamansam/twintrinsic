@@ -302,4 +302,20 @@ const describedBy = $derived(
   .has-error :global(textarea) {
     @apply border-error-500 dark:border-error-400 focus:ring-error-500 dark:focus:ring-error-400 focus:border-error-500 dark:focus:border-error-400;
   }
+
+  /* CSS-only validation styling via :has() + :user-valid/:user-invalid.
+     Progressive enhancement — works for fields using native constraint
+     validation (required, pattern, type, min, max). Fields using custom
+     TanStack Form validators still rely on the .has-error class above. */
+  .form-field:has(:user-invalid) :global(input),
+  .form-field:has(:user-invalid) :global(select),
+  .form-field:has(:user-invalid) :global(textarea) {
+    @apply border-error-500 dark:border-error-400;
+  }
+
+  .form-field:has(:user-valid) :global(input),
+  .form-field:has(:user-valid) :global(select),
+  .form-field:has(:user-valid) :global(textarea) {
+    @apply border-success-500 dark:border-success-400;
+  }
 </style>

@@ -810,10 +810,21 @@ function formatCell(value: unknown, column: ColumnDef<TRow>, row: TRow): string 
 
   .data-table-body {
     @apply bg-background dark:bg-background;
+    /* Skip rendering rows not in viewport for large tables */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 48px;
   }
 
   .data-table-row {
     @apply border-t border-border dark:border-border;
+    /* CSS entry animation via @starting-style (no JS) */
+    transition: opacity 150ms ease-out, display 150ms ease-out allow-discrete;
+  }
+
+  @starting-style {
+    .data-table-row {
+      opacity: 0;
+    }
   }
 
   .data-table-row-striped {

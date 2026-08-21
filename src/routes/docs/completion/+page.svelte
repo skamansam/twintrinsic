@@ -80,12 +80,15 @@ const components = [
   { name: "DataTable", category: "Data Display", updated: true, apis: [
     { name: "<table> + <thead> + <tbody> + semantic structure", implemented: true },
     { name: "ARIA table roles", implemented: true },
+    { name: "content-visibility: auto (perf)", implemented: true },
+    { name: "CSS @starting-style row animation", implemented: true },
   ]},
   { name: "Progress", category: "Data Display", updated: true, apis: [
     { name: "HTML <progress> element", implemented: true },
   ]},
   { name: "Skeleton", category: "Data Display", updated: true, apis: [
-    { name: "CSS animations", implemented: true },
+    { name: "CSS @starting-style entry animation", implemented: true },
+    { name: "content-visibility: auto (perf)", implemented: true },
   ]},
   { name: "Table", category: "Data Display", updated: true, apis: [
     { name: "<table> + <thead> + <tbody> + semantic structure", implemented: true },
@@ -152,6 +155,7 @@ const components = [
   { name: "FormField", category: "Form", updated: true, apis: [
     { name: "ARIA form controls", implemented: true },
     { name: ".has-error CSS styling", implemented: true },
+    { name: "CSS :has(:user-valid / :user-invalid)", implemented: true },
   ]},
   { name: "Input", category: "Form", updated: true, apis: [
     { name: "HTML input element", implemented: true },
