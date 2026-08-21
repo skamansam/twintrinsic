@@ -69,10 +69,13 @@ const { Story } = defineMeta({
   name="Auto Resize"
   args={{ name: "grow", autoResize: true, rows: 2, ariaLabel: "Growing textarea" }}
   play={async ({ canvas }) => {
-    // autoResize sets the textarea height to match its scrollHeight.
+    // field-sizing: content CSS auto-grows the textarea height.
     const textarea = canvas.getByRole("textbox", { name: "Growing textarea" })
-    const initialHeight = textarea.style.height
+    const initialHeight = textarea.getBoundingClientRect().height
     await userEvent.type(textarea, "Line one\nLine two\nLine three\nLine four")
-    await expect(textarea.style.height).not.toBe(initialHeight)
+    // Allow the browser to reflow after CSS field-sizing recalculates.
+    await new Promise(r => setTimeout(r, 100))
+    const finalHeight = textarea.getBoundingClientRect().height
+    await expect(finalHeight).toBeGreaterThan(initialHeight)
   }}
 />
