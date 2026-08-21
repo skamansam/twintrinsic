@@ -129,6 +129,8 @@ export type {
   PropDescriptor,
   PropMetadata,
 } from "./helpers/propMetadata.js";
+// Platform Polyfills
+export { loadPlatformPolyfills } from "./polyfills.js";
 // Icon Manager
 export {
   type IconConfig,
@@ -138,3 +140,4 @@ export {
   setIconset,
   updateIconConfig,
 } from "./stores/iconManager.js";
+export { DEFAULT_PRELOAD_ICONS, preloadIcons } from "./stores/iconPreload.js";

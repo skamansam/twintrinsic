@@ -109,6 +109,9 @@ export const propsMetadata = [
       {#if item.children?.length}
         <details class="tree-menu-details">
           <summary class="tree-menu-summary" role="menuitem" aria-haspopup="true" onclick={() => item.onClick?.()}>
+            <span class="tree-menu-chevron">
+              <Icon name="chevron-right" width="16px" height="16px" />
+            </span>
             {#if item.icon}
               <span class="tree-menu-icon {item.iconClass || ''}">
                 <Icon name={item.icon} width="20px" height="20px" />
@@ -192,25 +195,25 @@ export const propsMetadata = [
   }
 
   .tree-menu-details > summary::-webkit-details-marker {
-    @apply hidden;
+    display: none;
   }
 
   .tree-menu-details > summary::marker {
-    @apply hidden;
+    content: none;
   }
 
   .tree-menu-summary {
     @apply flex items-center gap-2 w-full px-4 py-2 rounded-md text-sm;
     @apply hover:bg-hover focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500;
     @apply transition-colors duration-150 cursor-pointer;
+    list-style: none;
   }
 
-  .tree-menu-summary::before {
-    content: "▶";
-    @apply shrink-0 w-4 h-4 flex items-center justify-center text-xs text-muted transition-transform duration-150;
+  .tree-menu-chevron {
+    @apply shrink-0 inline-flex items-center justify-center w-4 h-4 text-muted transition-transform duration-150;
   }
 
-  .tree-menu-details[open] > .tree-menu-summary::before {
+  .tree-menu-details[open] > .tree-menu-summary .tree-menu-chevron {
     @apply rotate-90;
   }
 

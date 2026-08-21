@@ -13,6 +13,7 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "check:lib": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.lib.json",
     "validate:exports": "node scripts/validate-exports.mjs",
+    "generate:icons": "node scripts/generate-icon-list.mjs",
     "check:a11y": "bash scripts/check-a11y.sh",
     "format": "biome format --write .",
     "lint": "biome lint .",
@@ -578,6 +579,10 @@
       "svelte": "./dist/helpers/itemValue.js",
       "default": "./dist/helpers/itemValue.js"
     },
+    "./polyfills": {
+      "types": "./dist/polyfills.d.ts",
+      "default": "./dist/polyfills.js"
+    },
     "./stores/iconManager": {
       "types": "./dist/stores/iconManager.d.ts",
       "svelte": "./dist/stores/iconManager.js",
@@ -646,8 +651,11 @@
     "@codemirror/view": "^6.43.9",
     "@iconify/svelte": "^5.2.2",
     "@inlang/paraglide-js": "^2.24.1",
+    "@oddbird/css-anchor-positioning": "^0.10.2",
+    "@oddbird/popover-polyfill": "^0.7.2",
     "@speed-highlight/core": "^1.2.24",
     "codemirror": "^6.0.2",
+    "interestfor": "^1.0.8",
     "leaflet": "2.0.0-alpha.1",
     "prism-svelte": "^0.5.0",
     "prismjs": "^1.30.0",

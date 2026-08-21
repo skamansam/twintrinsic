@@ -25,6 +25,7 @@ export const propsMetadata = [
 <script lang="ts">
   import type { Snippet } from "svelte";
   import { getContext, onMount } from "svelte";
+  import Icon from "../Icon/Icon.svelte";
 
   interface AccordionContext {
     groupName: string;
@@ -119,19 +120,9 @@ export const propsMetadata = [
     </div>
 
     {#if showIcon}
-      <svg
-        class="w-5 h-5 transform transition-transform duration-200 text-muted dark:text-muted"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          clip-rule="evenodd"
-        />
-      </svg>
+      <span class="accordion-chevron">
+        <Icon name="chevron-down" width="20px" height="20px" />
+      </span>
     {/if}
   </summary>
 
@@ -153,7 +144,11 @@ export const propsMetadata = [
     @apply opacity-50 cursor-not-allowed pointer-events-none;
   }
 
-  :is(details[open]) :is(summary) :is(svg) {
+  .accordion-chevron {
+    @apply shrink-0 inline-flex items-center justify-center w-5 h-5 text-muted dark:text-muted transition-transform duration-200;
+  }
+
+  :is(details[open]) :is(summary) :is(.accordion-chevron) {
     @apply rotate-180;
   }
 </style>
