@@ -330,7 +330,7 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
   @reference "../../twintrinsic.css";
   /* Base header styles */
   .app-header {
-    @apply bg-background border-b border-border sticky top-0 z-50;
+    @apply bg-background text-text border-b border-border sticky top-0 z-50;
   }
 
   .app-header-container {

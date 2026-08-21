@@ -177,7 +177,7 @@ $effect(() => {
 
   /* Base sidebar styles */
   .sidebar {
-    @apply h-full bg-background transition-[width] duration-200 ease-in-out;
+    @apply h-full overflow-y-auto bg-background transition-[width] duration-200 ease-in-out;
     width: var(--sidebar-width);
   }
 

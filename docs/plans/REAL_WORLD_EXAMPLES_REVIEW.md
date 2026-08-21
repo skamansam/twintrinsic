@@ -8,28 +8,28 @@ off each story as it's reviewed for real-world example content.
 
 ### App
 
-- [ ] **App** (`stories/App.stories.svelte`) - all examples should have realistic content data. the dark mode has dark text so it is unreadable
-  - [ ] Default
-  - [ ] With Sidebar Menu
-  - [ ] Header Actions
-  - [ ] Hidden Sidebars
-- [ ] **AppHeader** (`stories/AppHeader.stories.svelte`) - the dark mode has dark text and is unreadable. the dark mode in the example removes the styles applied by the storybook theme.
-  - [ ] Default
-  - [ ] WithLogo
-  - [ ] WithSearch
-  - [ ] WithNotifications
-  - [ ] WithUser
-  - [ ] FullFeatured
-- [ ] **BottomBar** (`stories/BottomBar.stories.js`) - the bottom bar does not attach to the bottom of the example and pops out a panel, that just says "Panel." This shoukd be a real example of a bottombar that you would find on a mobile app, with buttons and a big round action button in the middle.
-  - [ ] Default
-  - [ ] Console
-  - [ ] Collapsed
-  - [ ] Custom Height
-  - [ ] Docked
+- [x] **App** (`stories/App.stories.svelte`) - realistic dashboard content + dark-mode readable (`bg-background text-text` on the shell; ThemeToggle hidden so the picker stays authoritative)
+  - [x] Default
+  - [x] With Sidebar Menu
+  - [x] Header Actions
+  - [x] Hidden Sidebars
+- [x] **AppHeader** (`stories/AppHeader.stories.svelte`) - dark mode readable (explicit `text-text` on header; canvas themed; ThemeToggle hidden so the picker stays authoritative)
+  - [x] Default
+  - [x] WithLogo
+  - [x] WithSearch
+  - [x] WithNotifications
+  - [x] WithUser
+  - [x] FullFeatured
+- [x] **BottomBar** (`stories/BottomBar.stories.svelte`) - Default is now a real music-player mini bar with transport buttons + big round action button; other stories have real content
+  - [x] Default
+  - [x] Console
+  - [x] Collapsed
+  - [x] Custom Height
+  - [x] Docked
 - [ ] **Footer** (`stories/Footer.stories.svelte`)
   - [ ] All Regions
   - [ ] Center Only
-  - [ ] With Class - only says "left" and "right" instead of being congrous with the other examples
+  - [x] With Class - now uses congruent content (© 2026 Acme Inc. / Privacy Policy · Terms of Service)
 - [ ] **Sidebar** (`stories/Sidebar.stories.js`)
   - [ ] Default
   - [ ] Right Sidebar
