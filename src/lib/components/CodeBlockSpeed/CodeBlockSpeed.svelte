@@ -13,6 +13,7 @@ export const propsMetadata = [
 	import { detectLanguage } from '@speed-highlight/core/detect';
 	import type { Snippet } from 'svelte';
 	import { onDestroy, onMount } from 'svelte';
+	import Icon from '../Icon/Icon.svelte';
 
 	interface Props {
 		/** Code content to render when not using snippets */
@@ -111,20 +112,10 @@ export const propsMetadata = [
 			aria-label={copied ? 'Copied!' : 'Copy code'}
 		>
 			{#if copied}
-				<svg viewBox="0 0 24 24" width="16" height="16">
-					<path
-						fill="currentColor"
-						d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
-					/>
-				</svg>
+				<Icon name="tabler:check" width="16" height="16" />
 				<span>Copied!</span>
 			{:else}
-				<svg viewBox="0 0 24 24" width="16" height="16">
-					<path
-						fill="currentColor"
-						d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
-					/>
-				</svg>
+				<Icon name="tabler:clipboard" width="16" height="16" />
 				<span>Copy</span>
 			{/if}
 		</button>

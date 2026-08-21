@@ -39,22 +39,9 @@ export const propsMetadata = [
 
 <script lang="ts">
 import { getContext } from "svelte"
-import { slide } from "svelte/transition"
 import type { FormContext, FormFieldApi } from "./formContext.js"
 import Input from "./Input.svelte"
-
-/**
- * Safe wrapper around the `slide` transition that no-ops when the Web
- * Animations API is unavailable (jsdom in unit tests). This keeps the
- * production animation while preventing `element.animate is not a function`
- * crashes in test environments.
- */
-function safeSlide(node: Element, params?: { duration?: number }) {
-  if (typeof (node as HTMLElement).animate !== "function") {
-    return { duration: 0 }
-  }
-  return slide(node as HTMLElement, params)
-}
+import Icon from "../Icon/Icon.svelte"
 
 interface Props {
   /** Field name for form registration */
@@ -411,7 +398,7 @@ function handleKeydown(event: KeyboardEvent): void {
     aria-label="Calendar"
     bind:this={calendarPopoverRef}
       tabindex="-1"
-      transition:safeSlide={{ duration: 150 }}
+
       onkeydown={handleKeydown}
     >
       <div class="calendar-header">
@@ -422,9 +409,7 @@ function handleKeydown(event: KeyboardEvent): void {
           aria-label="Previous month"
           disabled={effectiveDisabled}
         >
-          <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" />
-          </svg>
+          <Icon name="tabler:chevron-left" class="w-5 h-5" />
         </button>
         
         <div class="calendar-title">
@@ -438,9 +423,7 @@ function handleKeydown(event: KeyboardEvent): void {
           aria-label="Next month"
           disabled={effectiveDisabled}
         >
-          <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" />
-          </svg>
+          <Icon name="tabler:chevron-right" class="w-5 h-5" />
         </button>
       </div>
       
@@ -503,6 +486,14 @@ function handleKeydown(event: KeyboardEvent): void {
   .calendar {
     @apply z-50 p-4;
     @apply bg-surface border border-border rounded-md shadow-lg;
+    /* Pure CSS entry animation via @starting-style */
+    transition: opacity 150ms ease-out, display 150ms ease-out allow-discrete;
+  }
+
+  @starting-style {
+    .calendar {
+      opacity: 0;
+    }
   }
 
   .calendar-header {

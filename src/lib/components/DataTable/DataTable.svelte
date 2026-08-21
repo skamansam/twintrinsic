@@ -85,6 +85,7 @@ export const propsMetadata = [
 
 <script lang="ts" generics="TRow extends Record<string, unknown> = Record<string, unknown>">
 import { setContext } from "svelte"
+import Icon from "../Icon/Icon.svelte"
 
 // `ColumnDef` is imported from the `<script module>` above; not redeclared here.
 
@@ -552,20 +553,12 @@ function formatCell(value: unknown, column: ColumnDef<TRow>, row: TRow): string 
                 {#if column.sortable !== false && sortable}
                   <span class="data-table-sort-icon">
                     {#if currentSortField === column.field}
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d={currentSortOrder === 'asc'
-                            ? "M5 15l7-7 7 7"
-                            : "M19 9l-7 7-7-7"}
-                        ></path>
-                      </svg>
+                      <Icon 
+                        name={currentSortOrder === 'asc' ? 'tabler:chevron-up' : 'tabler:chevron-down'} 
+                        class="w-4 h-4" 
+                      />
                     {:else}
-                      <svg class="w-4 h-4 opacity-0 hover:parent:opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
-                      </svg>
+                      <Icon name="tabler:arrows-sort" class="w-4 h-4 opacity-0 hover:parent:opacity-50" />
                     {/if}
                   </span>
                 {/if}
@@ -683,9 +676,7 @@ function formatCell(value: unknown, column: ColumnDef<TRow>, row: TRow): string 
             onclick={() => handlePageChange(1)}
             aria-label="First page"
           >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
-            </svg>
+            <Icon name="tabler:chevrons-left" class="w-5 h-5" />
           </button>
 
           <button
@@ -694,10 +685,7 @@ function formatCell(value: unknown, column: ColumnDef<TRow>, row: TRow): string 
             disabled={currentPage === 1}
             onclick={() => handlePageChange(currentPage - 1)}
             aria-label="Previous page"
-          >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-            </svg>
+          >            <Icon name="tabler:chevron-left" class="w-5 h-5" />
           </button>
 
           <span class="data-table-page-info">
@@ -711,9 +699,7 @@ function formatCell(value: unknown, column: ColumnDef<TRow>, row: TRow): string 
             onclick={() => handlePageChange(currentPage + 1)}
             aria-label="Next page"
           >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-            </svg>
+            <Icon name="tabler:chevron-right" class="w-5 h-5" />
           </button>
 
           <button
@@ -723,9 +709,7 @@ function formatCell(value: unknown, column: ColumnDef<TRow>, row: TRow): string 
             onclick={() => handlePageChange(totalPages)}
             aria-label="Last page"
           >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
-            </svg>
+            <Icon name="tabler:chevrons-right" class="w-5 h-5" />
           </button>
         </div>
       </div>

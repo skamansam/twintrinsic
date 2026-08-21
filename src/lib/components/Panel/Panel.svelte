@@ -67,6 +67,7 @@ export const propsMetadata = [
 
 <script lang="ts">
 import { slide } from "svelte/transition"
+import Icon from "../Icon/Icon.svelte"
 
 /**
  * @slot header Renders custom header content for the panel button
@@ -167,19 +168,10 @@ function handleKeydown(event: KeyboardEvent) {
     </div>
 
     {#if showIcon}
-      <svg
-        class="w-5 h-5 transform transition-transform duration-200 text-muted dark:text-muted {isExpanded ? 'rotate-180' : ''}"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          clip-rule="evenodd"
-        />
-      </svg>
+      <Icon 
+        name="tabler:chevron-down" 
+        class="w-5 h-5 transform transition-transform duration-200 text-muted dark:text-muted {isExpanded ? 'rotate-180' : ''}" 
+      />
     {/if}
   </button>
 
