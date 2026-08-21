@@ -21,10 +21,12 @@ describe("AccordionItem", () => {
     expect(details?.className).toContain("accordion-item")
   })
 
-  it("shows icon by default", () => {
+  it("shows icon wrapper by default", () => {
     const { container } = render(AccordionItem)
-    const svg = container.querySelector("svg")
-    expect(svg).toBeTruthy()
+    // Icon component uses @iconify/svelte which loads SVGs asynchronously;
+    // in jsdom the SVG may not be rendered, so check the chevron wrapper.
+    const chevron = container.querySelector(".accordion-chevron")
+    expect(chevron).toBeTruthy()
   })
 
   it("hides icon when showIcon is false", () => {
@@ -33,8 +35,8 @@ describe("AccordionItem", () => {
         showIcon: false,
       },
     })
-    const svg = container.querySelector("svg")
-    expect(svg).toBeFalsy()
+    const chevron = container.querySelector(".accordion-chevron")
+    expect(chevron).toBeFalsy()
   })
 
   it("applies custom class", () => {
