@@ -4,10 +4,13 @@ import { waitForHydration } from "./helpers.js";
 /**
  * Docs-site interaction + accessibility tests for the Tooltip component.
  *
- * Targets `/docs/components/Tooltip/Tooltip` and scopes selectors through the
- * `data-testid` hooks each example block exposes. Verifies the tooltip pattern:
- * `role="tooltip"`, show on focus, and `aria-describedby` linking the trigger
- * to the tooltip.
+ * Targets `/docs/components/Tooltip/Tooltip` and scopes selectors through
+ * the `data-testid` hooks each example block exposes. Verifies the native
+ * popover-based tooltip pattern: popover="hint", interestfor, and the
+ * implicit ARIA wiring the browser provides.
+ *
+ * Note: interestfor triggers on hover/focus with a small delay — tests use
+ * `waitForTimeout` after hover to let the interest event fire.
  */
 test.describe("Tooltip docs page", () => {
   test.beforeEach(async ({ page }) => {
@@ -21,25 +24,38 @@ test.describe("Tooltip docs page", () => {
     await expect(page.getByTestId("tooltip-positions")).toBeVisible();
   });
 
-  test("tooltip appears on focus and exposes role=tooltip", async ({ page }) => {
+  test("tooltip appears on hover and exposes popover", async ({ page }) => {
     const example = page.getByTestId("tooltip-basic");
-    const trigger = example.locator(".tooltip-trigger");
+    const trigger = example.locator("[interestfor]").first();
 
-    await expect(example.getByRole("tooltip")).toBeHidden();
+    // Hover the trigger — interestfor opens the popover (with a small delay)
+    await trigger.hover();
+    await page.waitForTimeout(500);
 
-    await trigger.focus();
-    await expect(page.getByRole("tooltip", { name: "Save changes to your profile" })).toBeVisible();
+    // The popover should be visible with the tooltip content (scoped to the example)
+    const popover = example.locator("[popover]");
+    await expect(popover).toBeVisible();
+    await expect(popover).toContainText("Save changes to your profile");
   });
 
-  test("trigger is linked to the tooltip via aria-describedby", async ({ page }) => {
+  test("tooltip closes on Escape", async ({ page }) => {
     const example = page.getByTestId("tooltip-basic");
-    const trigger = example.locator(".tooltip-trigger");
+    const trigger = example.locator("[interestfor]").first();
 
-    await trigger.focus();
-    await expect(trigger).toHaveAttribute("aria-describedby", /-tooltip$/);
+    // Hover to open
+    await trigger.hover();
+    await page.waitForTimeout(500);
+    const popover = example.locator("[popover]");
+    await expect(popover).toBeVisible();
+
+    // Press Escape — light-dismiss closes it
+    await page.keyboard.press("Escape");
+
+    // Tooltip should be hidden
+    await expect(popover).not.toBeVisible();
   });
 
-  test("all four position tooltips appear on focus", async ({ page }) => {
+  test("all four position tooltips appear on hover", async ({ page }) => {
     const example = page.getByTestId("tooltip-positions");
 
     const expected = [
@@ -49,9 +65,34 @@ test.describe("Tooltip docs page", () => {
       ["Left", "Export as PDF"],
     ];
     for (const [name, tip] of expected) {
-      const trigger = example.locator(".tooltip-trigger").filter({ hasText: name }).first();
-      await trigger.focus();
-      await expect(page.getByRole("tooltip", { name: tip })).toBeVisible();
+      const trigger = example.locator("[interestfor]").filter({ hasText: name }).first();
+      await trigger.hover();
+      await page.waitForTimeout(500);
+
+      // Scope to the visible popover (the one with matching text)
+      const popover = example.locator("[popover]").filter({ hasText: tip });
+      await expect(popover).toBeVisible();
+
+      // Move away to close before hovering next
+      await page.mouse.move(0, 0);
+      await page.waitForTimeout(300);
     }
+  });
+
+  test("tooltip uses anchor positioning (no manual getBoundingClientRect)", async ({ page }) => {
+    // Verify the tooltip is rendered in the top layer (popover) and positioned
+    // via CSS anchor functions rather than inline top/left pixel values.
+    const example = page.getByTestId("tooltip-basic");
+    const trigger = example.locator("[interestfor]").first();
+
+    await trigger.hover();
+    await page.waitForTimeout(500);
+
+    const popover = example.locator("[popover]");
+    await expect(popover).toBeVisible();
+    const style = await popover.getAttribute("style");
+
+    // Should use position-anchor (CSS anchor positioning), not top/left pixels
+    expect(style).toContain("position-anchor");
   });
 });

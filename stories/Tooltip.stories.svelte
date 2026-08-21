@@ -1,6 +1,7 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
 import Tooltip from "$lib/components/Tooltip/Tooltip.svelte"
+import Button from "$lib/components/Button/Button.svelte"
 
 const { Story } = defineMeta({
   title: "Data Display/Tooltip",
@@ -9,8 +10,6 @@ const { Story } = defineMeta({
   argTypes: {
     content: { control: "text" },
     position: { control: { type: "select" }, options: ["top", "right", "bottom", "left"] },
-    delay: { control: { type: "number", min: 0, max: 2000 } },
-    duration: { control: { type: "number", min: 0, max: 10000 } },
     arrow: { control: "boolean" },
     offset: { control: { type: "number", min: 0, max: 32 } },
   },
@@ -19,9 +18,9 @@ const { Story } = defineMeta({
 </script>
 
 <Story name="Default">
-  <div class="p-32">
+  <div class="p-32 flex items-center justify-center">
     <Tooltip content="Save changes to your profile">
-      <button class="px-4 py-2 bg-primary-500 text-white rounded">Save</button>
+      <Button>Save</Button>
     </Tooltip>
   </div>
 </Story>
@@ -48,29 +47,37 @@ const { Story } = defineMeta({
 
 <Story name="Positions">
   <div class="p-32 flex gap-12 items-center justify-center">
-    <Tooltip content="Top — shows above" position="top">
+    <Tooltip content="Save as draft" position="top">
       <button class="px-4 py-2 bg-primary-500 text-white rounded">Top</button>
     </Tooltip>
-    <Tooltip content="Right — shows to the side" position="right">
+    <Tooltip content="Duplicate this project" position="right">
       <button class="px-4 py-2 bg-primary-500 text-white rounded">Right</button>
     </Tooltip>
-    <Tooltip content="Bottom — shows below" position="bottom">
+    <Tooltip content="Archive this document" position="bottom">
       <button class="px-4 py-2 bg-primary-500 text-white rounded">Bottom</button>
     </Tooltip>
-    <Tooltip content="Left — shows to the side" position="left">
+    <Tooltip content="Export as PDF" position="left">
       <button class="px-4 py-2 bg-primary-500 text-white rounded">Left</button>
     </Tooltip>
   </div>
 </Story>
 
-<Story name="Without Arrow" args={{ content: "No arrow here", arrow: false }}>
-  <div class="p-32">
-    <button class="px-4 py-2 bg-primary-500 text-white rounded">Export report</button>
+<Story name="Without Arrow" args={{ content: "Export report to CSV format", arrow: false }}>
+  <div class="p-32 flex items-center justify-center">
+    <Button>Export report</Button>
   </div>
 </Story>
 
-<Story name="Delayed" args={{ content: "Shows after you pause", delay: 500 }}>
-  <div class="p-32">
-    <button class="px-4 py-2 bg-primary-500 text-white rounded">Hover and wait</button>
+<Story name="Rich Content">
+  <div class="p-32 flex items-center justify-center">
+    {#snippet tip()}
+      <div class="max-w-xs">
+        <p class="font-semibold mb-1">Keyboard shortcut</p>
+        <p class="text-xs opacity-80">Press <kbd class="px-1 py-0.5 bg-white/20 rounded text-xs">Ctrl+K</kbd> to open the command palette</p>
+      </div>
+    {/snippet}
+    <Tooltip tooltipContent={tip}>
+      <Button>Press me</Button>
+    </Tooltip>
   </div>
 </Story>

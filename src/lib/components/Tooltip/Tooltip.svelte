@@ -1,17 +1,11 @@
 <script module lang="ts">
 export const propsMetadata = [
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
-  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+  { name: "id", type: "string", description: "HTML id for the tooltip element", default: "crypto.randomUUID()", optional: true },
   { name: "content", type: "string", description: "Plain-text tooltip content", default: "\"\"", optional: true },
   { name: "position", type: "string", description: "Position of the tooltip relative to the trigger (top, right, bottom, left)", default: "\"top\"", optional: true },
-  { name: "delay", type: "number", description: "Delay in milliseconds before showing the tooltip", default: "0", optional: true },
-  { name: "duration", type: "number", description: "Time in milliseconds before auto-hiding (0 disables)", default: "0", optional: true },
   { name: "arrow", type: "boolean", description: "Whether to show the arrow", default: "true", optional: true },
   { name: "offset", type: "number", description: "Distance in pixels between the tooltip and its trigger", default: "8", optional: true },
-  { name: "showOnFocus", type: "boolean", description: "Whether to show the tooltip when the trigger receives focus", default: "true", optional: true },
-  { name: "ariaDescription", type: "string", description: "ARIA description for the trigger", optional: true },
-  { name: "onshow", type: "(event: CustomEvent) => void", description: "Callback fired when the tooltip is shown", optional: true, eventDetail: "unknown" },
-  { name: "onhide", type: "(event: CustomEvent) => void", description: "Callback fired when the tooltip is hidden", optional: true, eventDetail: "unknown" },
   { name: "tooltipContent", type: "import(\"svelte\").Snippet", description: "Snippet rendered as the tooltip content (overrides `content`)", optional: true },
 ];
 </script>
@@ -19,31 +13,40 @@ export const propsMetadata = [
 <script lang="ts">
 /**
  * @component
- * Tooltip - A component for displaying additional information when hovering or focusing on an element.
- * Provides accessible, configurable tooltips with various positions and styles.
+ * Tooltip - Displays additional information when users hover or focus on an element.
+ *
+ * Built on the native Popover API (`popover="hint"`), the `interestfor`
+ * attribute (Interest Invokers API, Chrome 142+), and CSS Anchor Positioning
+ * for automatic placement with flip behavior. Zero JavaScript is used for
+ * show/hide or positioning in modern browsers.
+ *
+ * The `interestfor` attribute is only supported on `<button>` and `<a>`
+ * elements, so the trigger is always rendered as a transparent `<button>`.
+ * The children snippet renders inside this button.
+ *
+ * The browser automatically:
+ * - Wires `aria-describedby` (or `aria-details`) on the trigger
+ * - Shows the popover on hover/focus, hides on blur/move-away
+ * - Provides light-dismiss via Esc key
+ * - Excludes mutual hint popovers (opening one closes others)
+ * - Positions the tooltip via CSS Anchor Positioning with flip fallbacks
  *
  * Usage:
  * ```svelte
- * <Tooltip content="This is a tooltip">
+ * <Tooltip content="Save changes to your profile">
  *   <Button>Hover me</Button>
  * </Tooltip>
  *
- * <Tooltip position="bottom" delay={300}>
- *   {#snippet tooltipContent()}
- *     <strong>Custom tooltip</strong> with HTML content
- *   {/snippet}
- *   <span>Hover for more info</span>
+ * <Tooltip position="bottom" content="More details">
+ *   <IconInfo />
  * </Tooltip>
  * ```
  */
-import { onMount } from "svelte"
-import { fade } from "svelte/transition"
-
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",
 
-  /** @type {string} - HTML id for accessibility */
+  /** @type {string} - HTML id for the tooltip element */
   id = crypto.randomUUID(),
 
   /** @type {string} - Plain-text tooltip content */
@@ -52,29 +55,11 @@ const {
   /** @type {string} - Position of the tooltip relative to the trigger (top, right, bottom, left) */
   position = "top",
 
-  /** @type {number} - Delay in milliseconds before showing the tooltip */
-  delay = 0,
-
-  /** @type {number} - Time in milliseconds before auto-hiding (0 disables) */
-  duration = 0,
-
   /** @type {boolean} - Whether to show the arrow */
   arrow = true,
 
   /** @type {number} - Distance in pixels between the tooltip and its trigger */
   offset = 8,
-
-  /** @type {boolean} - Whether to show the tooltip when the trigger receives focus */
-  showOnFocus = true,
-
-  /** @type {string} - ARIA description for the trigger */
-  ariaDescription = undefined,
-
-  /** @type {(event: CustomEvent) => void} - Callback fired when the tooltip is shown */
-  onshow = undefined,
-
-  /** @type {(event: CustomEvent) => void} - Callback fired when the tooltip is hidden */
-  onhide = undefined,
 
   children = undefined,
 
@@ -82,224 +67,172 @@ const {
   tooltipContent = undefined,
 } = $props()
 
-// Tooltip state
-let isVisible = $state(false)
-let triggerElement: HTMLElement | undefined = $state()
-let tooltipElement: HTMLElement | undefined = $state()
-let showTimeout: ReturnType<typeof setTimeout> | null = $state(null)
-let hideTimeout: ReturnType<typeof setTimeout> | null = $state(null)
-
-// Position state
-let tooltipPosition = $state({
-  top: 0,
-  left: 0,
-})
-
-/**
- * Shows the tooltip
- */
-function showTooltip(): void {
-  if (hideTimeout !== null) clearTimeout(hideTimeout)
-
-  if (delay > 0) {
-    showTimeout = setTimeout(() => {
-      isVisible = true
-      updatePosition()
-      onshow?.(new CustomEvent("show"))
-
-      // Auto-hide after duration if specified
-      if (duration > 0) {
-        hideTimeout = setTimeout(hideTooltip, duration)
-      }
-    }, delay)
-  } else {
-    isVisible = true
-    updatePosition()
-    onshow?.(new CustomEvent("show"))
-
-    // Auto-hide after duration if specified
-    if (duration > 0) {
-      hideTimeout = setTimeout(hideTooltip, duration)
-    }
-  }
-}
-
-/**
- * Hides the tooltip
- */
-function hideTooltip(): void {
-  if (showTimeout !== null) clearTimeout(showTimeout)
-  isVisible = false
-  onhide?.(new CustomEvent("hide"))
-}
-
-/**
- * Updates the tooltip position based on trigger element
- */
-function updatePosition(): void {
-  if (!triggerElement || !tooltipElement) return
-
-  // Get element dimensions and positions
-  const triggerRect = (triggerElement as HTMLElement).getBoundingClientRect()
-  const tooltipRect = (tooltipElement as HTMLElement).getBoundingClientRect()
-
-  // Calculate position based on specified position
-  let top = 0
-  let left = 0
-
-  switch (position) {
-    case "top":
-      top = triggerRect.top - tooltipRect.height - offset
-      left = triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2
-      break
-    case "right":
-      top = triggerRect.top + triggerRect.height / 2 - tooltipRect.height / 2
-      left = triggerRect.right + offset
-      break
-    case "bottom":
-      top = triggerRect.bottom + offset
-      left = triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2
-      break
-    case "left":
-      top = triggerRect.top + triggerRect.height / 2 - tooltipRect.height / 2
-      left = triggerRect.left - tooltipRect.width - offset
-      break
-    default:
-      // Default to top
-      top = triggerRect.top - tooltipRect.height - offset
-      left = triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2
-  }
-
-  // Adjust for scroll position
-  top += window.scrollY
-  left += window.scrollX
-
-  // Ensure tooltip stays within viewport
-  const viewportWidth = window.innerWidth
-  const viewportHeight = window.innerHeight
-
-  // Adjust horizontal position if needed
-  if (left < 10) {
-    left = 10
-  } else if (left + tooltipRect.width > viewportWidth - 10) {
-    left = viewportWidth - tooltipRect.width - 10
-  }
-
-  // Adjust vertical position if needed
-  if (top < 10) {
-    top = 10
-  } else if (top + tooltipRect.height > viewportHeight - 10) {
-    top = viewportHeight - tooltipRect.height - 10
-  }
-
-  // Update position state
-  tooltipPosition = { top, left }
-}
-
-// Event handlers
-function handleMouseEnter(): void {
-  showTooltip()
-}
-
-function handleMouseLeave(): void {
-  hideTooltip()
-}
-
-function handleFocus(): void {
-  if (showOnFocus) {
-    showTooltip()
-  }
-}
-
-function handleBlur(): void {
-  hideTooltip()
-}
-
-// Clean up timers on unmount
-onMount(() => {
-  return () => {
-    if (showTimeout !== null) clearTimeout(showTimeout)
-    if (hideTimeout !== null) clearTimeout(hideTimeout)
-  }
-})
+/** Unique anchor name linking the trigger to the tooltip via CSS Anchor Positioning. */
+const anchorName = $derived(`--tooltip-${id}`)
 </script>
 
-<div class="tooltip-wrapper {className}">
-  <!-- Trigger element -->
-  <div
+<span class="tooltip-wrapper {className}">
+  <!--
+    Trigger: interestfor wires hover/focus → popover open, and automatically
+    sets aria-describedby (plaintext) or aria-details (interactive content).
+    Must be a <button> or <a> — interestfor only works on these elements.
+    The anchor-name links to the tooltip's position-anchor for CSS tethering.
+  -->
+  <button
     class="tooltip-trigger"
-    role="button"
-    tabindex="0"
-    onmouseenter={handleMouseEnter}
-    onmouseleave={handleMouseLeave}
-    onfocus={handleFocus}
-    onblur={handleBlur}
-    bind:this={triggerElement}
-    aria-describedby={isVisible ? `${id}-tooltip` : undefined}
+    interestfor="{id}-tooltip"
+    style="anchor-name: {anchorName}"
+    type="button"
   >
     {@render children?.()}
+  </button>
+
+  <!--
+    Tooltip: popover="hint" gives top-layer rendering, light-dismiss (Esc),
+    and mutual exclusion with other hint popovers. CSS Anchor Positioning
+    handles placement and flip — zero JS positioning.
+  -->
+  <div
+    id="{id}-tooltip"
+    class="tooltip tooltip-{position} {arrow ? 'tooltip-arrow' : ''}"
+    popover="hint"
+    style="position-anchor: {anchorName}; margin: {offset}px;"
+  >
+    {#if tooltipContent}
+      {@render tooltipContent()}
+    {:else}
+      {content}
+    {/if}
   </div>
-  
-  <!-- Tooltip -->
-  {#if isVisible}
-    <div
-      id="{id}-tooltip"
-      class="tooltip tooltip-{position} {arrow ? 'tooltip-arrow' : ''}"
-      style="top: {tooltipPosition.top}px; left: {tooltipPosition.left}px;"
-      role="tooltip"
-      bind:this={tooltipElement}
-      transition:fade={{ duration: 200 }}
-    >
-      {#if tooltipContent}
-        {@render tooltipContent()}
-      {:else}
-        {content}
-      {/if}
-    </div>
-  {/if}
-</div>
+</span>
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";
-  
+
   .tooltip-wrapper {
     @apply inline-block relative;
   }
-  
+
   .tooltip-trigger {
-    @apply inline-block;
+    @apply inline-block p-0 m-0 border-0 bg-transparent;
+    appearance: none;
+    font: inherit;
+    color: inherit;
+    line-height: inherit;
+    cursor: inherit;
+
+    /* Reset button styles so children render naturally */
+    &::-webkit-details-marker,
+    &::marker {
+      display: none;
+      content: "";
+    }
   }
-  
+
   .tooltip {
-    @apply fixed z-50 max-w-xs;
-    @apply bg-surface dark:bg-surface text-text dark:text-text;
-    @apply border border-border dark:border-border rounded-md shadow-md;
+    @apply z-50 max-w-xs;
+    @apply bg-surface text-text;
+    @apply border border-border rounded-md shadow-md;
     @apply px-3 py-2 text-sm;
+
+    /* Reset popover defaults for anchor positioning */
+    inset: auto;
+    width: max-content;
+
+    /* Anchor positioning — use anchor() functions (polyfill-compatible) */
+    &.tooltip-top {
+      bottom: anchor(top);
+      left: anchor(center);
+      translate: -50% 0;
+    }
+    &.tooltip-bottom {
+      top: anchor(bottom);
+      left: anchor(center);
+      translate: -50% 0;
+    }
+    &.tooltip-left {
+      right: anchor(left);
+      top: anchor(center);
+      translate: 0 -50%;
+    }
+    &.tooltip-right {
+      left: anchor(right);
+      top: anchor(center);
+      translate: 0 -50%;
+    }
+
+    /* Flip when near viewport edge */
+    position-try-fallbacks: flip-block, flip-inline;
   }
-  
-  /* Arrow styles */
+
+  /* Popover open state — polyfill uses .\:popover-open class */
+  .tooltip:is(:popover-open, .\:popover-open) {
+    display: block;
+  }
+
+  /* Arrow pseudo-element */
   .tooltip-arrow::before {
-    @apply content-[''] absolute w-2 h-2 rotate-45;
-    @apply bg-surface dark:bg-surface border border-border dark:border-border;
+    content: "";
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    transform: rotate(45deg);
+    background: inherit;
+    border: inherit;
   }
-  
+
   .tooltip-top.tooltip-arrow::before {
-    @apply -bottom-1 left-1/2 -ml-1;
-    @apply border-b border-r;
+    bottom: -0.25rem;
+    left: 50%;
+    translate: -50% 0;
+    border-top: none;
+    border-left: none;
   }
-  
-  .tooltip-right.tooltip-arrow::before {
-    @apply -left-1 top-1/2 -mt-1;
-    @apply border-l border-t;
-  }
-  
+
   .tooltip-bottom.tooltip-arrow::before {
-    @apply -top-1 left-1/2 -ml-1;
-    @apply border-t border-l;
+    top: -0.25rem;
+    left: 50%;
+    translate: -50% 0;
+    border-bottom: none;
+    border-right: none;
   }
-  
+
   .tooltip-left.tooltip-arrow::before {
-    @apply -right-1 top-1/2 -mt-1;
-    @apply border-r border-b;
+    right: -0.25rem;
+    top: 50%;
+    translate: 0 -50%;
+    border-bottom: none;
+    border-left: none;
+  }
+
+  .tooltip-right.tooltip-arrow::before {
+    left: -0.25rem;
+    top: 50%;
+    translate: 0 -50%;
+    border-top: none;
+    border-right: none;
+  }
+
+  /* Entry animation via @starting-style + transition-behavior: allow-discrete */
+  .tooltip {
+    opacity: 0;
+    transform: scale(0.95);
+    transition:
+      opacity 150ms ease,
+      transform 150ms ease,
+      overlay 150ms allow-discrete,
+      display 150ms allow-discrete;
+  }
+
+  .tooltip:is(:popover-open, .\:popover-open) {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  @starting-style {
+    .tooltip:is(:popover-open, .\:popover-open) {
+      opacity: 0;
+      transform: scale(0.95);
+    }
   }
 </style>
