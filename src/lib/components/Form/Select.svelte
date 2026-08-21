@@ -3,6 +3,10 @@
 Select - A native HTML select component for selecting options from a dropdown list.
 Supports single and multiple selection with optgroup for nested options.
 
+Uses `appearance: base-select` (Chrome 135+) for customizable styling with a
+styled picker, arrow icon, and option checkmarks. Falls back to the standard
+OS dropdown in browsers without support.
+
 Usage:
 ```svelte
 <Select
@@ -258,5 +262,54 @@ function handleChange(event: Event): void {
 
   .select-error-text {
     @apply mt-1 text-sm text-error;
+  }
+
+  /*
+   * Customizable <select> (appearance: base-select) — progressive enhancement
+   * for Chrome 135+ and Edge 135+. Browsers without support show the
+   * standard OS dropdown.
+   */
+  .select-input,
+  .select-input::picker(select) {
+    appearance: base-select;
+  }
+
+  /* Picker dropdown */
+  .select-input::picker(select) {
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+    box-shadow:
+      0 10px 15px -3px rgb(0 0 0 / 0.1),
+      0 4px 6px -4px rgb(0 0 0 / 0.1);
+    width: anchor-size(width);
+  }
+
+  /* Options */
+  .select-input option {
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 100ms ease;
+  }
+
+  .select-input option:hover {
+    background: var(--color-primary-50);
+  }
+
+  .select-input option:checked {
+    background: var(--color-primary-500);
+    color: white;
+  }
+
+  /* Checkmark indicator */
+  .select-input option::checkmark {
+    margin-inline-start: 0.5rem;
+  }
+
+  /* Arrow icon */
+  .select-input::picker-icon {
+    @apply text-text;
   }
 </style>

@@ -3,6 +3,7 @@ import Select from "$lib/components/Form/Select.svelte"
 export default {
   title: "Form/Select",
   component: Select,
+  tags: ["autodocs"],
   argTypes: {
     label: { control: "text" },
     value: { control: "text" },
@@ -194,5 +195,25 @@ export const MultipleWithSearch = {
     ],
     multiple: true,
     placeholder: "Search languages...",
+  },
+}
+
+export const CustomStyled = {
+  name: "Custom Styled (base-select)",
+  args: {
+    label: "Shipping Method",
+    options: [
+      { value: "standard", label: "Standard (5-7 days)" },
+      { value: "express", label: "Express (2-3 days)" },
+      { value: "overnight", label: "Overnight" },
+    ],
+    placeholder: "Choose shipping...",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "In Chrome 135+ and Edge 135+, the select uses `appearance: base-select` for a customizable picker with styled options, arrow icon, and checkmark. In unsupported browsers, it falls back to the standard OS dropdown.",
+      },
+    },
   },
 }

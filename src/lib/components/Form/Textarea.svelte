@@ -158,10 +158,8 @@ function handleInput(event: Event): void {
     fieldApi.setValue(newValue)
   }
 
-  // Auto-resize if enabled
-  if (autoResize && textareaEl) {
-    resizeTextarea()
-  }
+  // Auto-resize handled by CSS field-sizing: content when supported.
+  // The JS fallback (resizeTextarea) is no longer needed.
 
   // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding
   oninput?.(new CustomEvent("input", { detail: { value: newValue } }))
@@ -185,29 +183,9 @@ function handleBlur(event: FocusEvent): void {
   onblur?.(event)
 }
 
-/**
- * Resizes the textarea based on content.
- * Declared as a const arrow function to avoid the DOM lib `this: Window` binding
- * ambiguity that occurs with `function` declarations when passed as a callback.
- */
-const resizeTextarea = (): void => {
-  if (!textareaEl) return
-
-  // Reset height to calculate scroll height
-  textareaEl.style.height = "auto"
-
-  // Set height to scroll height
-  textareaEl.style.height = `${textareaEl.scrollHeight}px`
-}
-
-// Initialize auto-resize
-$effect(() => {
-  if (autoResize && textareaEl) {
-    // Use queueMicrotask to defer resize until after the DOM has updated.
-    // Arrow function strips the `this` binding ambiguity that DOM lib has with setTimeout/queueMicrotask.
-    queueMicrotask(() => resizeTextarea())
-  }
-})
+// Auto-resize is now handled entirely by CSS `field-sizing: content`
+// (applied via the .textarea-auto-resize class when autoResize=true).
+// No JS measurement needed.
 </script>
 
 <div class="textarea-wrapper {className}">
@@ -224,7 +202,7 @@ $effect(() => {
     {maxlength}
     {autocomplete}
     aria-label={ariaLabel}
-    class="textarea {isFocused ? 'is-focused' : ''}"
+    class="textarea {isFocused ? 'is-focused' : ''} {autoResize ? 'textarea-auto-resize' : ''}"
     oninput={handleInput}
     onfocus={handleFocus}
     onblur={handleBlur}
@@ -246,5 +224,14 @@ $effect(() => {
     @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-surface dark:disabled:bg-surface;
     @apply placeholder:text-muted dark:placeholder:text-muted;
     @apply p-3 resize-y;
+  }
+
+  /* Auto-resize via CSS field-sizing: content (Chrome 123+). Replaces the
+     JS scrollHeight measurement when the browser supports it. */
+  .textarea-auto-resize {
+    field-sizing: content;
+    min-height: 4.5rem;
+    max-height: 24rem;
+    resize: none;
   }
 </style>
