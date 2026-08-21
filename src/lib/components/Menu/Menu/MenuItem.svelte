@@ -2,13 +2,13 @@
 export const propsMetadata = [
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
-  { name: "ariaLabel", type: "string", description: "ARIA label", optional: true },
+  { name: "ariaLabel", type: "string|undefined", description: "ARIA label", optional: true },
   { name: "href", type: "string", description: "Link href", default: "\"#\"", optional: true },
   { name: "active", type: "boolean", description: "Whether the item is active", default: "false", optional: true },
   { name: "disabled", type: "boolean", description: "Whether the item is disabled", default: "false", optional: true },
   { name: "initialOpen", type: "boolean", description: "Whether the submenu is initially open", default: "false", optional: true },
   { name: "divider", type: "boolean", description: "Whether to show a visual divider below this item", default: "false", optional: true },
-  { name: "icon", type: "string", description: "Icon name to render before the menu item text", optional: true },
+  { name: "icon", type: "string|undefined", description: "Icon name to render before the menu item text", optional: true },
   { name: "value", type: "any", description: "Value associated with this menu item", default: "{}", optional: true },
 ];
 </script>
@@ -28,7 +28,7 @@ const {
   /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
 
-  /** @type {string} - ARIA label */
+  /** @type {string|undefined} - ARIA label */
   ariaLabel = undefined,
 
   /** @type {string} - Link href */
@@ -46,7 +46,7 @@ const {
   /** @type {boolean} - Whether to show a visual divider below this item */
   divider = false,
 
-  /** @type {string} - Icon name to render before the menu item text */
+  /** @type {string|undefined} - Icon name to render before the menu item text */
   icon = undefined,
 
   /** @type {any} - Value associated with this menu item */
@@ -55,10 +55,8 @@ const {
   children = undefined,
 } = $props()
 
-// Use $state for values that need to be modified
 let isOpen = $state(false)
 
-// Sync isOpen when initialOpen changes
 $effect(() => {
   isOpen = initialOpen
 })
@@ -68,36 +66,38 @@ const toggleMenu = () => {
 }
 </script>
 
-<svelte:element
-  this={href ? 'a' : 'button'}
-  {href}
-  {id}
-  class="menu-item {className}"
-  class:active
-  class:disabled
-  class:divider
-  role="menuitem"
-  tabindex="0"
-  aria-label={ariaLabel}
-  aria-disabled={disabled}
-  onclick={() => !disabled && toggleMenu()}
->
-  {#if icon}
-    <Icon name={icon} class="inline-block w-4 h-4 mr-2 align-middle text-muted" />
-  {/if}
-  {@render children?.()}
-  {#if (value as { children?: unknown[] })?.children}
-    <ul class="menu-item-submenu" class:hidden={!isOpen}>
-      {#each (value as { children: unknown[] }).children as child}
-        <Self value={child as Record<string, unknown>} />
-      {/each}
-    </ul>
-  {/if}
-</svelte:element>
+<li role="none">
+  <svelte:element
+    this={href ? 'a' : 'span'}
+    {href}
+    {id}
+    class="menu-item {className}"
+    class:active
+    class:disabled
+    class:divider
+    role="menuitem"
+    tabindex="-1"
+    aria-label={ariaLabel}
+    aria-disabled={disabled}
+    onclick={() => !disabled && toggleMenu()}
+  >
+    {#if icon}
+      <Icon name={icon} class="inline-block w-4 h-4 mr-2 align-middle text-muted" />
+    {/if}
+    {@render children?.()}
+    {#if (value as { children?: unknown[] })?.children}
+      <ul class="menu-item-submenu" class:hidden={!isOpen} role="menu">
+        {#each (value as { children: unknown[] }).children as child}
+          <Self value={child as Record<string, unknown>} />
+        {/each}
+      </ul>
+    {/if}
+  </svelte:element>
+</li>
 
 <style lang="postcss">
   @reference "../../../twintrinsic.css";
-  
+
   .menu-item {
     @apply block w-full text-left;
     @apply px-4 py-2 text-sm;
@@ -113,7 +113,6 @@ const toggleMenu = () => {
     @apply hover:bg-transparent;
   }
 
-  /* Divider sits between this item and the one below it. */
   .menu-item.divider {
     @apply border-b border-border;
   }

@@ -94,11 +94,13 @@ import * as MenuItemModule from "$lib/components/Menu/Menu/MenuItem.svelte"
 
   <h2>Accessibility</h2>
   <ul>
+    <li>Uses the native <strong>Popover API</strong> (<code>popover="auto"</code>) for light-dismiss and top-layer stacking</li>
+    <li>CSS Anchor Positioning for viewport-aware dropdown placement</li>
     <li>Uses <code>role="menu"</code> for the menu container</li>
     <li>Uses <code>role="menuitem"</code> for individual items</li>
-    <li>Full keyboard navigation support</li>
+    <li>Full keyboard navigation support (WAI-ARIA menu pattern)</li>
     <li>Proper ARIA labels and attributes</li>
-    <li>Focus management for keyboard users</li>
+    <li>Focus management: first item receives focus on open, Esc returns focus to trigger</li>
   </ul>
 
   <h2>Best Practices</h2>

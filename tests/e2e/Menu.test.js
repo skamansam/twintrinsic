@@ -6,8 +6,12 @@ import { waitForHydration } from "./helpers.js";
  *
  * Targets `/docs/components/Menu/Menu` and scopes selectors through the
  * `data-testid` hooks each example block exposes. Verifies the menu pattern:
- * `aria-haspopup`/`aria-expanded` on the trigger, `role="menu"` on the
+ * `aria-haspopup="menu"` on the trigger, `role="menu"` on the
  * popup, and `role="menuitem"` on each item.
+ *
+ * The Menu now uses the native Popover API (`popover="auto"` on the
+ * content panel) with CSS Anchor Positioning. Light-dismiss, Esc, and
+ * positioning are all browser-native.
  */
 test.describe("Menu docs page", () => {
   test.beforeEach(async ({ page }) => {
@@ -26,11 +30,9 @@ test.describe("Menu docs page", () => {
     const example = page.getByTestId("menu-basic");
     const trigger = example.locator(".menu-trigger");
 
-    await expect(trigger).toHaveAttribute("aria-haspopup", "true");
-    await expect(trigger).toHaveAttribute("aria-expanded", "false");
+    await expect(trigger).toHaveAttribute("aria-haspopup", "menu");
 
     await trigger.click();
-    await expect(trigger).toHaveAttribute("aria-expanded", "true");
     await expect(example.getByRole("menu")).toBeVisible();
     await expect(example.getByRole("menuitem")).toHaveCount(3);
 
@@ -66,5 +68,16 @@ test.describe("Menu docs page", () => {
     await expect(items).toHaveCount(3);
     await expect(items.nth(0).locator("svg")).toBeVisible();
     await expect(items.nth(0)).toHaveText("Edit");
+  });
+
+  test("Escape key closes the menu", async ({ page }) => {
+    const example = page.getByTestId("menu-basic");
+    const trigger = example.locator(".menu-trigger");
+
+    await trigger.click();
+    await expect(example.getByRole("menu")).toBeVisible();
+
+    await page.keyboard.press("Escape");
+    await expect(example.getByRole("menu")).toBeHidden();
   });
 });

@@ -576,10 +576,10 @@ participation) — no popover migration needed.
 ### **Tier 2: Enhance with Semantic HTML** (Medium Impact, Medium Effort)
 1. **DataTable/Table** → Proper `<table>` structure — ✅ DONE (already uses `<table>` + `<thead>` + `<tbody>` + `<th>` + `<td>`)
 2. **Breadcrumb** → `<nav>` + `<ol>` + `<a>` — ✅ DONE (already uses `<nav>` + `<ol>`)
-3. **Menu/TreeMenu** → `<nav>` + `<ul>` + `<a>` — ⏭️ SKIPPED (Menu is a generic dropdown, not a navigation menu; TreeMenu already has ARIA roles)
+3. **Menu** → Popover API + CSS Anchor Positioning + WAI-ARIA keyboard nav — ✅ DONE (`popover="auto"` for light-dismiss/top-layer, `position-anchor`/`anchor()` for positioning, arrow key/Enter/Esc/Home/End navigation). TreeMenu already has ARIA roles, no change needed.
 4. **Timeline** → `<ol>` + `<time>` — ✅ DONE (`<div role="list">` → `<ol>`, `<div role="listitem">` → `<li>`, date → `<time>`)
 5. **Stepper** → `<nav>` + ARIA — ✅ DONE (`<div role="navigation">` → `<nav>`)
-6. **Rating** → `<fieldset>` + `<input type="radio">` — ⏭️ SKIPPED (complex component with JS state management, custom keyboard interaction)
+6. **Rating** → `<fieldset>` + `<input type="radio">` — ⏭️ SKIPPED (already implements WAI-ARIA slider pattern correctly: `role="slider"`, `aria-valuemin/max/now`, arrow key ±step, Home/End, hidden `<input type="number">` for form submission. `<input type="radio">` would regress: no half-star increments, no drag support)
 7. **Card** → `<article>` — ✅ DONE (already uses `<svelte:element this={href ? "a" : "article"}>`)
 
 ### **Tier 3: Consider for Future** (Lower Priority)
@@ -656,10 +656,10 @@ For each component replacement:
 | CodeBlock | `<pre>` + `<code>` + `<figure>` | Tier 1 |
 | DataTable/Table | `<table>` + semantic structure | Tier 2 |
 | Breadcrumb | `<nav>` + `<ol>` + `<a>` | Tier 2 |
-| Menu/TreeMenu | `<nav>` + `<ul>` + `<a>` | Tier 2 |
+| Menu | Popover API + Anchor Positioning + WAI-ARIA keys | ✅ DONE |
 | Timeline | `<ol>` + `<time>` | Tier 2 |
 | Stepper | `<ol>` + ARIA | Tier 2 |
-| Rating | `<fieldset>` + `<input type="radio">` | Tier 2 |
+| Rating | `<fieldset>` + `<input type="radio">` | ⏭️ SKIPPED (already WAI-ARIA slider) |
 | Card | `<article>` or `<section>` | Tier 2 |
 | Slider | `<input type="range">` or custom | Tier 3 |
 | Tabs | Custom with WAI-ARIA tablist pattern | Tier 3 |

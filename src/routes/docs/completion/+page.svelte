@@ -49,9 +49,10 @@ const components = [
     { name: "<nav> + <ol> + <a> elements", implemented: true },
     { name: "ARIA breadcrumb pattern", implemented: true },
   ]},
-  { name: "Menu", category: "Navigation", updated: false, apis: [
-    { name: "<nav> + <ul> + <a> elements", implemented: false },
-    { name: "Keyboard navigation", implemented: false },
+  { name: "Menu", category: "Navigation", updated: true, apis: [
+    { name: "Popover API", implemented: true },
+    { name: "CSS Anchor Positioning", implemented: true },
+    { name: "Keyboard navigation (WAI-ARIA)", implemented: true },
   ]},
   { name: "Tabs", category: "Navigation", updated: true, apis: [
     { name: "ARIA tablist pattern (APG)", implemented: true },
