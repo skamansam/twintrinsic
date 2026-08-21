@@ -101,7 +101,7 @@ setContext("stepper", {
 })
 </script>
 
-<div
+<nav
   {id}
   class="
     stepper
@@ -109,11 +109,10 @@ setContext("stepper", {
     {alternativeLabels ? 'stepper-alternative-labels' : ''}
     {className}
   "
-  role="navigation"
   aria-label={ariaLabel}
 >
   {@render children?.()}
-</div>
+</nav>
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";

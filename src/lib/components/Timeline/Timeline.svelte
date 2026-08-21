@@ -87,7 +87,7 @@ setContext("timeline", {
 })
 </script>
 
-<div
+<ol
   {id}
   class="
     timeline
@@ -98,11 +98,10 @@ setContext("timeline", {
     {animated ? 'timeline-animated' : ''}
     {className}
   "
-  role="list"
   aria-label={ariaLabel}
 >
   {@render children?.()}
-</div>
+</ol>
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";

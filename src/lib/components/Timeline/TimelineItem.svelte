@@ -185,7 +185,7 @@ onMount(() => {
 })
 </script>
 
-<div
+<li
   {id}
   class="
     timeline-item
@@ -198,7 +198,6 @@ onMount(() => {
     {animated && !isVisible ? 'timeline-item-hidden' : ''}
     {className}
   "
-  role="listitem"
   bind:this={itemElement}
 >
   <div class="timeline-item-connector">
@@ -227,9 +226,9 @@ onMount(() => {
         </h3>
         
         {#if date}
-          <div class="timeline-item-date">
+          <time class="timeline-item-date" datetime={date}>
             {date}
-          </div>
+          </time>
         {/if}
       </div>
     {/if}
@@ -238,7 +237,7 @@ onMount(() => {
       {@render children?.()}
     </div>
   </div>
-</div>
+</li>
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";
