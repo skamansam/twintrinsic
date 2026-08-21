@@ -9,150 +9,154 @@ import Separator from "$lib/components/Separator/Separator.svelte"
 
 const components = [
   // App
-  { name: "App", category: "App", updated: false, apis: [
-    { name: "CSS custom properties", implemented: false },
+  { name: "App", category: "App", updated: true, apis: [
+    { name: "CSS custom properties", implemented: true },
   ]},
   
   // Basic
-  { name: "Card", category: "Basic", updated: false, apis: [
-    { name: "Semantic HTML <article>", implemented: false },
+  { name: "Card", category: "Basic", updated: true, apis: [
+    { name: "Semantic HTML <article>", implemented: true },
   ]},
   { name: "Container", category: "Basic", updated: false, apis: [
-    { name: "Responsive design", implemented: false },
+    { name: "Responsive design", implemented: true },
     { name: "CSS Grid", implemented: false },
   ]},
   { name: "Panel", category: "Basic", updated: false, apis: [
     { name: "HTML Details element", implemented: false },
-    { name: "CSS animations", implemented: false },
+    { name: "CSS animations", implemented: true },
   ]},
-  { name: "Separator", category: "Basic", updated: false, apis: [
-    { name: "HTML <hr> element", implemented: false },
+  { name: "Separator", category: "Basic", updated: true, apis: [
+    { name: "HTML <hr> element", implemented: true },
   ]},
   { name: "Sidebar", category: "App", updated: false, apis: [
     { name: "CSS Grid", implemented: false },
-    { name: "Media queries", implemented: false },
+    { name: "Media queries", implemented: true },
   ]},
   
   // Navigation
-  { name: "Accordion", category: "Navigation", updated: false, apis: [
-    { name: "<details> + <summary> elements", implemented: false },
+  { name: "Accordion", category: "Navigation", updated: true, apis: [
+    { name: "<details> + <summary> elements", implemented: true },
   ]},
-  { name: "AppHeader", category: "App", updated: false, apis: [
-    { name: "Semantic HTML nav", implemented: false },
-    { name: "Flexbox layout", implemented: false },
+  { name: "AppHeader", category: "App", updated: true, apis: [
+    { name: "Semantic HTML nav", implemented: true },
+    { name: "Flexbox layout", implemented: true },
   ]},
-  { name: "BottomBar", category: "App", updated: false, apis: [
-    { name: "Fixed positioning", implemented: false },
-    { name: "CSS variables", implemented: false },
+  { name: "BottomBar", category: "App", updated: true, apis: [
+    { name: "Fixed positioning", implemented: true },
+    { name: "CSS variables", implemented: true },
   ]},
-  { name: "Breadcrumb", category: "Navigation", updated: false, apis: [
-    { name: "<nav> + <ol> + <a> elements", implemented: false },
-    { name: "ARIA breadcrumb pattern", implemented: false },
+  { name: "Breadcrumb", category: "Navigation", updated: true, apis: [
+    { name: "<nav> + <ol> + <a> elements", implemented: true },
+    { name: "ARIA breadcrumb pattern", implemented: true },
   ]},
   { name: "Menu", category: "Navigation", updated: false, apis: [
     { name: "<nav> + <ul> + <a> elements", implemented: false },
     { name: "Keyboard navigation", implemented: false },
   ]},
-  { name: "Tabs", category: "Navigation", updated: false, apis: [
-    { name: "ARIA tablist pattern (APG)", implemented: false },
+  { name: "Tabs", category: "Navigation", updated: true, apis: [
+    { name: "ARIA tablist pattern (APG)", implemented: true },
   ]},
   
   // Data Display
-  { name: "Avatar", category: "Data Display", updated: false, apis: [
-    { name: "CSS object-fit", implemented: false },
+  { name: "Avatar", category: "Data Display", updated: true, apis: [
+    { name: "CSS object-fit", implemented: true },
   ]},
-  { name: "Badge", category: "Data Display", updated: false, apis: [
-    { name: "Semantic HTML", implemented: false },
+  { name: "Badge", category: "Data Display", updated: true, apis: [
+    { name: "Semantic HTML", implemented: true },
   ]},
-  { name: "Carousel", category: "Data Display", updated: false, apis: [
-    { name: "ARIA carousel pattern (APG)", implemented: false },
-    { name: "Keyboard navigation", implemented: false },
+  { name: "Carousel", category: "Data Display", updated: true, apis: [
+    { name: "ARIA carousel pattern (APG)", implemented: true },
+    { name: "Keyboard navigation", implemented: true },
   ]},
-  { name: "Chip", category: "Data Display", updated: false, apis: [
-    { name: "ARIA labels", implemented: false },
+  { name: "Chip", category: "Data Display", updated: true, apis: [
+    { name: "ARIA labels", implemented: true },
   ]},
   { name: "CodeBlock", category: "Data Display", updated: false, apis: [
+    // <pre> + <code> are used, but the wrapper is a <div>, not <figure>.
     { name: "<pre> + <code> + <figure> elements", implemented: false },
-    { name: "Copy to clipboard API", implemented: false },
+    { name: "Copy to clipboard API", implemented: true },
   ]},
-  { name: "DataTable", category: "Data Display", updated: false, apis: [
-    { name: "<table> + <thead> + <tbody> + semantic structure", implemented: false },
-    { name: "ARIA table roles", implemented: false },
+  { name: "DataTable", category: "Data Display", updated: true, apis: [
+    { name: "<table> + <thead> + <tbody> + semantic structure", implemented: true },
+    { name: "ARIA table roles", implemented: true },
   ]},
-  { name: "Progress", category: "Data Display", updated: false, apis: [
-    { name: "HTML <progress> element", implemented: false },
+  { name: "Progress", category: "Data Display", updated: true, apis: [
+    { name: "HTML <progress> element", implemented: true },
   ]},
-  { name: "Skeleton", category: "Data Display", updated: false, apis: [
-    { name: "CSS animations", implemented: false },
+  { name: "Skeleton", category: "Data Display", updated: true, apis: [
+    { name: "CSS animations", implemented: true },
   ]},
-  { name: "Table", category: "Data Display", updated: false, apis: [
-    { name: "<table> + <thead> + <tbody> + semantic structure", implemented: false },
-    { name: "ARIA attributes", implemented: false },
+  { name: "Table", category: "Data Display", updated: true, apis: [
+    { name: "<table> + <thead> + <tbody> + semantic structure", implemented: true },
+    { name: "ARIA attributes", implemented: true },
   ]},
-  { name: "Tag", category: "Data Display", updated: false, apis: [
-    { name: "CSS flexbox", implemented: false },
+  { name: "Tag", category: "Data Display", updated: true, apis: [
+    { name: "CSS flexbox", implemented: true },
   ]},
-  { name: "Timeline", category: "Data Display", updated: false, apis: [
-    { name: "<ol> + <time> elements", implemented: false },
+  { name: "Timeline", category: "Data Display", updated: true, apis: [
+    { name: "<ol> + <li> semantic list", implemented: true },
+    { name: "<time> element for dates", implemented: true },
   ]},
-  { name: "Tooltip", category: "Data Display", updated: false, apis: [
-    { name: "<abbr> or aria-describedby", implemented: false },
-    { name: "Popover API", implemented: false },
-    { name: "CSS Anchor Positioning", implemented: false },
-    { name: "interestfor attribute", implemented: false },
+  { name: "Tooltip", category: "Data Display", updated: true, apis: [
+    { name: "Popover API (popover=\"hint\")", implemented: true },
+    { name: "CSS Anchor Positioning", implemented: true },
+    { name: "interestfor attribute (Interest Invokers)", implemented: true },
+    { name: "aria-describedby (automatic via interestfor)", implemented: true },
   ]},
-  { name: "Tree", category: "Data Display", updated: false, apis: [
-    { name: "ARIA tree pattern (APG)", implemented: false },
-    { name: "Keyboard navigation", implemented: false },
+  { name: "Tree", category: "Data Display", updated: true, apis: [
+    { name: "ARIA tree pattern (APG)", implemented: true },
+    { name: "Keyboard navigation", implemented: true },
   ]},
   
   // Form
-  { name: "Button", category: "Form", updated: false, apis: [
-    { name: "Semantic HTML button", implemented: false },
+  { name: "Button", category: "Form", updated: true, apis: [
+    { name: "Semantic HTML button", implemented: true },
   ]},
   { name: "Calendar", category: "Form", updated: false, apis: [
     { name: "HTML date input", implemented: false },
     { name: "Intl API", implemented: false },
   ]},
-  { name: "Checkbox", category: "Form", updated: false, apis: [
-    { name: "HTML checkbox input", implemented: false },
+  { name: "Checkbox", category: "Form", updated: true, apis: [
+    { name: "HTML checkbox input", implemented: true },
   ]},
   { name: "ColorPicker", category: "Form", updated: false, apis: [
     { name: "HTML color input", implemented: false },
     { name: "CSS color spaces", implemented: false },
   ]},
-  { name: "Combobox", category: "Form", updated: false, apis: [
-    { name: "ARIA combobox", implemented: false },
-    { name: "Popover API", implemented: false },
-    { name: "CSS Anchor Positioning", implemented: false },
+  { name: "AutoComplete", category: "Form", updated: true, apis: [
+    { name: "ARIA listbox pattern", implemented: true },
+    { name: "Popover API", implemented: true },
+    { name: "CSS Anchor Positioning", implemented: true },
   ]},
-  { name: "Dropdown", category: "Form", updated: false, apis: [
-    { name: "Popover API", implemented: false },
-    { name: "CSS Anchor Positioning", implemented: false },
-    { name: "Keyboard navigation", implemented: false },
+  { name: "Combobox", category: "Form", updated: true, apis: [
+    { name: "ARIA combobox", implemented: true },
+    { name: "Popover API", implemented: true },
+    { name: "CSS Anchor Positioning", implemented: true },
   ]},
-  { name: "FileUpload", category: "Form", updated: false, apis: [
-    { name: "File API", implemented: false },
-    { name: "Drag and drop", implemented: false },
+  { name: "Dropdown", category: "Form", updated: true, apis: [
+    { name: "HTML select element (native popup via Select)", implemented: true },
+    { name: "Keyboard navigation", implemented: true },
   ]},
-  { name: "FloatLabel", category: "Form", updated: false, apis: [
-    { name: "CSS animations", implemented: false },
+  { name: "FileUpload", category: "Form", updated: true, apis: [
+    { name: "File API", implemented: true },
+    { name: "Drag and drop", implemented: true },
   ]},
-  { name: "Form", category: "Form", updated: false, apis: [
-    { name: "FormData API", implemented: false },
-    { name: "Semantic HTML form", implemented: false },
+  { name: "FloatLabel", category: "Form", updated: true, apis: [
+    { name: "CSS animations", implemented: true },
   ]},
-  { name: "FormField", category: "Form", updated: false, apis: [
-    { name: "ARIA form controls", implemented: false },
-    { name: "CSS :has()", implemented: false },
-    { name: "CSS :user-valid / :user-invalid", implemented: false },
+  { name: "Form", category: "Form", updated: true, apis: [
+    { name: "FormData API", implemented: true },
+    { name: "Semantic HTML form", implemented: true },
   ]},
-  { name: "Input", category: "Form", updated: false, apis: [
-    { name: "HTML input element", implemented: false },
-    { name: "CSS field-sizing: content", implemented: false },
+  { name: "FormField", category: "Form", updated: true, apis: [
+    { name: "ARIA form controls", implemented: true },
+    { name: ".has-error CSS styling", implemented: true },
   ]},
-  { name: "InputSwitch", category: "Form", updated: false, apis: [
-    { name: "HTML checkbox input", implemented: false },
+  { name: "Input", category: "Form", updated: true, apis: [
+    { name: "HTML input element", implemented: true },
+  ]},
+  { name: "InputSwitch", category: "Form", updated: true, apis: [
+    { name: "HTML checkbox input", implemented: true },
   ]},
   { name: "InvalidState", category: "Form", updated: false, apis: [
     { name: "HTML validation", implemented: false },
@@ -160,21 +164,19 @@ const components = [
   ]},
   { name: "Knob", category: "Form", updated: false, apis: [
     { name: "Canvas API", implemented: false },
-    { name: "Touch events", implemented: false },
+    { name: "Touch events", implemented: true },
   ]},
-  { name: "Listbox", category: "Form", updated: false, apis: [
-    { name: "ARIA listbox", implemented: false },
-    { name: "Popover API", implemented: false },
-    { name: "CSS Anchor Positioning", implemented: false },
-    { name: "Keyboard navigation", implemented: false },
+  { name: "Listbox", category: "Form", updated: true, apis: [
+    { name: "ARIA listbox", implemented: true },
+    { name: "Keyboard navigation", implemented: true },
   ]},
   { name: "NumberInput", category: "Form", updated: false, apis: [
     { name: "HTML number input", implemented: false },
     { name: "Intl NumberFormat", implemented: false },
     { name: "CSS field-sizing: content", implemented: false },
   ]},
-  { name: "Radio", category: "Form", updated: false, apis: [
-    { name: "HTML radio input", implemented: false },
+  { name: "Radio", category: "Form", updated: true, apis: [
+    { name: "HTML radio input", implemented: true },
   ]},
   { name: "RadioGroup", category: "Form", updated: false, apis: [
     { name: "ARIA radiogroup", implemented: false },
@@ -183,47 +185,49 @@ const components = [
   { name: "Rating", category: "Form", updated: false, apis: [
     { name: "<fieldset> + <input type=\"radio\"> elements", implemented: false },
   ]},
-  { name: "Select", category: "Form", updated: false, apis: [
-    { name: "HTML select element", implemented: false },
-    { name: "Customizable <select> API", implemented: false },
+  { name: "Select", category: "Form", updated: true, apis: [
+    { name: "HTML select element (native)", implemented: true },
+    { name: "Customizable <select> (appearance: base-select)", implemented: true },
+    { name: "::picker(select) styled dropdown", implemented: true },
+    { name: "::picker-icon arrow styling", implemented: true },
   ]},
-  { name: "SelectGroup", category: "Form", updated: false, apis: [
-    { name: "HTML optgroup", implemented: false },
-    { name: "Customizable <select> API", implemented: false },
+  { name: "SelectGroup", category: "Form", updated: true, apis: [
+    { name: "HTML optgroup (native)", implemented: true },
+    { name: "Customizable <select> (appearance: base-select)", implemented: true },
   ]},
-  { name: "Slider", category: "Form", updated: false, apis: [
-    { name: "<input type=\"range\"> element", implemented: false },
+  { name: "Slider", category: "Form", updated: true, apis: [
+    { name: "<input type=\"range\"> element", implemented: true },
   ]},
   { name: "Switch", category: "Form", updated: false, apis: [
-    { name: "HTML checkbox input", implemented: false },
+    { name: "HTML checkbox input", implemented: true },
     { name: "ARIA switch", implemented: false },
   ]},
-  { name: "Textarea", category: "Form", updated: false, apis: [
-    { name: "HTML textarea element", implemented: false },
-    { name: "CSS field-sizing: content", implemented: false },
+  { name: "Textarea", category: "Form", updated: true, apis: [
+    { name: "HTML textarea element", implemented: true },
+    { name: "CSS field-sizing: content (autoResize prop)", implemented: true },
   ]},
   
   // Feedback
   { name: "Modal", category: "Feedback", updated: false, apis: [
-    { name: "HTML <dialog> element", implemented: false },
-    { name: "dialog closedby attribute", implemented: false },
+    { name: "HTML <dialog> element", implemented: true },
+    { name: "dialog closedby attribute", implemented: true },
     { name: "Invoker Commands (command/commandfor)", implemented: false },
   ]},
-  { name: "Stepper", category: "Feedback", updated: false, apis: [
-    { name: "<ol> + ARIA attributes", implemented: false },
+  { name: "Stepper", category: "Feedback", updated: true, apis: [
+    { name: "<nav> landmark", implemented: true },
   ]},
   { name: "Toast", category: "Feedback", updated: false, apis: [
-    { name: "CSS animations", implemented: false },
+    { name: "CSS animations", implemented: true },
     { name: "Popover API", implemented: false },
   ]},
   
   // Utility
-  { name: "Icon", category: "Utility", updated: false, apis: [
-    { name: "SVG elements", implemented: false },
-    { name: "ARIA labels", implemented: false },
+  { name: "Icon", category: "Utility", updated: true, apis: [
+    { name: "SVG elements", implemented: true },
+    { name: "ARIA labels", implemented: true },
   ]},
-  { name: "LazyPanel", category: "Utility", updated: false, apis: [
-    { name: "Intersection Observer", implemented: false },
+  { name: "LazyPanel", category: "Utility", updated: true, apis: [
+    { name: "Intersection Observer", implemented: true },
   ]},
   { name: "Masonry", category: "Utility", updated: false, apis: [
     { name: "CSS columns", implemented: false },
@@ -231,8 +235,8 @@ const components = [
     { name: "https://css-tricks.com/masonry-layout-is-now-grid-lanes/", implemented: false },
   ]},
   { name: "ThemeToggle", category: "Utility", updated: false, apis: [
-    { name: "CSS custom properties", implemented: false },
-    { name: "localStorage API", implemented: false },
+    { name: "CSS custom properties", implemented: true },
+    { name: "localStorage API", implemented: true },
     { name: "CSS light-dark()", implemented: false },
   ]},
 ]

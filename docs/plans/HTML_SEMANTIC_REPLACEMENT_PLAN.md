@@ -218,6 +218,12 @@ builds tested).
 
 #### 2. **Modal** → `<dialog closedby="any">`
 **Current:** Custom div-based with manual focus management
+**Status:** ✅ DONE (`src/lib/components/Modal/Modal.svelte` now renders a native
+`<dialog>` with `closedby` mapped from `closeOnEscape`/`closeOnOutsideClick`,
+`@starting-style` + `allow-discrete` entry/exit animation, `:has()` body-scroll
+lock, and zero focus-trap/backdrop/Esc JS). Invoker commands on trigger buttons
+are NOT used — the component's close button and consumers' triggers keep
+`onclick` handlers; `closedby="any"` handles light-dismiss natively.
 **Replacement:** Native HTML5 `<dialog>` element
 **Benefits:**
 - Built-in backdrop (`::backdrop` pseudo-element)
@@ -412,17 +418,24 @@ builds tested).
 
 ---
 
-#### 17. **Tooltip** → Popover API + Anchor Positioning + `interestfor`, or `<abbr>`/`aria-describedby`
-**Current:** Custom div-based tooltip with JS-managed show/hide and positioning
-**Replacement:**
-- For simple text tooltips: `<abbr>` (native browser tooltip) or `aria-describedby`
-- For rich tooltips: `popover` attribute for top-layer rendering, `anchor-name`/`position-anchor`/`position-area` for tethering to the trigger (no JS measurement), and the `interestfor` attribute on the trigger to open on hover/focus without manual `mouseenter`/`mouseleave`/`focus` listeners
+#### 17. **Tooltip** → Popover API + Anchor Positioning + `interestfor` ✅ DONE
+**Previous:** Custom div-based tooltip with JS-managed show/hide, `getBoundingClientRect()` positioning, and manual event listeners
+**Current Implementation:**
+- `popover="hint"` for top-layer rendering, light-dismiss, and mutual exclusion
+- `interestfor` attribute on a `<button>` trigger for hover/focus → popover open
+- CSS Anchor Positioning (`anchor-name`/`position-anchor` + `anchor()` functions) for tethering with `position-try-fallbacks: flip-block, flip-inline`
+- `@starting-style` + `transition-behavior: allow-discrete` for entry animation
+- Arrow via `::before` pseudo-element
+- `interestfor` polyfill loaded via `loadPlatformPolyfills()` for Firefox/Safari
+**Key learnings:**
+- `interestfor` only works on `<button>` and `<a>` elements (not `<span>` or generic elements)
+- The trigger must be a `<button>` — wrapper approach resets button styles with `appearance: none` + transparent bg so children render naturally
+- jsdom 20+ hides `[popover]` elements — unit tests query the attribute directly rather than checking visibility
 **Benefits:**
-- Native browser tooltip for `<abbr>`
-- No JS positioning math or event listeners for rich tooltips
-- Built-in light-dismiss and top-layer stacking via Popover API
-- Better accessibility (`interestfor` has built-in WCAG 1.4.13 hover/focus behavior)
-- Simpler markup
+- Zero JavaScript for show/hide, positioning, or accessibility wiring
+- Built-in WCAG 1.4.13 compliance (dismissible, hoverable, persistent)
+- Automatic `aria-describedby`/`aria-details` wiring
+- Simpler markup and no manual `getBoundingClientRect()` math
 
 ---
 
@@ -459,6 +472,44 @@ builds tested).
 ---
 
 #### 21. **Dropdown / Combobox / AutoComplete / Listbox** → Popover API + Anchor Positioning
+**Status:** 🟡 PARTIAL — **Combobox** and **AutoComplete** are ✅ done
+(`src/lib/components/Form/Combobox.svelte` and `Form/AutoComplete.svelte` now
+render their option panels as `popover="auto"` elements in the top layer,
+positioned with explicit `anchor-name` + `anchor()`/`anchor-size()` + `flip-block`
+so the OddBird anchor-positioning polyfill can handle them, with zero JS for
+light-dismiss/Esc/positioning. Both are backed by `src/lib/polyfills.ts`
+(`loadPlatformPolyfills()`), which feature-detects and injects the OddBird
+popover + css-anchor-positioning polyfills).
+
+**Scope notes:** **Listbox** is an *inline* widget (an always-visible ARIA
+listbox, not a popup panel) — the Popover API is not applicable and it keeps
+its existing keyboard nav. **Dropdown** is a legacy wrapper around the native
+`<select>` (which has its own native popup, keyboard support, and form
+participation) — no popover migration needed.
+
+**Interaction notes learned while migrating (Combobox/AutoComplete + Tooltip):**
+- `showPopover({ source })` does **NOT** exempt the source from light-dismiss —
+  clicking the input while the popover is open still closes it. The combobox
+  re-opens in the input's `click` handler (`openDropdown()` is idempotent via
+  an `isPopoverOpen()` guard that handles both `:popover-open` and the
+  polyfill's `:popover-open` class).
+- `showPopover()` throws `InvalidStateError` if a show/hide is mid-flight
+  (e.g. typing fires the input handler while the toggle event is still
+  settling `isOpen`), so open/close calls are wrapped in try/catch and the
+  open guards read the DOM state rather than the lagging `isOpen` flag.
+- Native `showPopover()` does not move focus; the OddBird popover polyfill
+  does (focuses the first focusable element) — AutoComplete refocuses the
+  input after opening to cover the polyfilled path.
+- **`interestfor` (Tooltip)** only works on `<button>` and `<a>` elements —
+  not `<span>` or generic elements. The trigger is rendered as a transparent
+  `<button>` with `appearance: none` so children render naturally. Hover on
+  a `<span interestfor>` does nothing; this is a browser constraint, not a
+  polyfill limitation.
+- **`popover="hint"` (Tooltip)** has a small delay between hover and open
+  in the real browser (unlike `popover="auto"` which opens instantly on
+  click). E2e tests use a 500ms wait after hover to account for this.
+- **jsdom + `[popover]`**: jsdom 20+ hides elements with `[popover]`, so
+  unit tests check the attribute/class rather than visibility.
 **Current:** Custom div-based panels with manual open/close state and JS positioning
 **Replacement:** `popover` attribute for the option panel, `popovertarget` (or `command`/`commandfor`) on the trigger, `anchor-name`/`position-anchor`/`position-area`/`position-try-fallbacks` for tethering and viewport-edge flipping
 **Benefits:**
@@ -468,61 +519,68 @@ builds tested).
 
 ---
 
-#### 22. **Select / SelectGroup** → Customizable `<select>`
-**Current:** Custom div-based dropdown mimicking a select, or bare native `<select>`
-**Replacement:** Native `<select>` with `appearance: base-select`, `<button>`/`<selectedcontent>` for the display slot, and `::picker(select)`/`::picker-icon` for styling the popup and arrow
+#### 22. **Select / SelectGroup** → Customizable `<select>` ✅ DONE
+**Previous:** Already a native `<select>` element with proper ARIA, but used standard OS dropdown styling
+**Current Implementation:**
+- Added `appearance: base-select` as progressive enhancement (Chrome 135+ / Edge 135+)
+- `::picker(select)` styled dropdown with custom background, border, border-radius, box-shadow
+- `option` styling with hover states and `option:checked` background
+- `::picker-icon` arrow styling
+- `option::checkmark` indicator
+- Falls back to standard OS dropdown in Firefox/Safari
 **Benefits:**
 - Fully custom styling while keeping native `<select>` semantics, keyboard support, and form participation
 - Options can contain rich markup (icons, secondary text) via `<option>` children
 - No JS needed for the open/close popup behavior
+- Progressive enhancement — no polyfill needed, unsupported browsers get standard dropdown
 
 ---
 
-#### 23. **Textarea / NumberInput / Input** → `field-sizing: content`
-**Current:** Fixed-size fields, or JS that resizes based on `scrollHeight`
-**Replacement:** CSS `field-sizing: content` with `min-height`/`max-height` (or `min-width`/`max-width`) constraints
-**Benefits:**
-- Auto-grow/shrink to fit content with zero JavaScript
-- Removes `input`/`resize` event listeners used purely for sizing
+#### 23. **Textarea** → `field-sizing: content` ✅ DONE
+**Previous:** JS-based auto-resize using `scrollHeight` measurement (`autoResize` prop)
+**Current Implementation:**
+- Added `field-sizing: content` CSS to `.textarea-auto-resize` class (applied when `autoResize=true`)
+- `min-height: 4.5rem` preserves the default rows-based height
+- `max-height: 24rem` caps the auto-growth
+- `resize: none` prevents manual resize (auto-size handles it)
+- Removed the JS `resizeTextarea()` function and `queueMicrotask` initialization — zero JavaScript for auto-resize
+**Note:** `field-sizing: content` on `<input>` affects width (not height), which can break layouts where inputs fill their container. Input and NumberInput were left unchanged — the main value is in Textarea where it replaces JS.
 
 ---
 
-#### 24. **FormField / InvalidState / RadioGroup** → `:has()` + `:user-valid` / `:user-invalid`
-**Current:** JS tracks a "touched" flag and toggles error classes on the label/wrapper
-**Replacement:** CSS `:has()` to style a `<label>`/`<fieldset>` based on a descendant input's state, and `:user-valid`/`:user-invalid` to only show validation styling after the user has interacted with the field
-**Benefits:**
-- Removes manual "touched" state tracking in JS
-- Validation styling and ARIA state (`aria-invalid`) can be kept in sync declaratively
+#### 24. **FormField / InvalidState / RadioGroup** → `:has()` + `:user-valid` / `:user-invalid` — ⏭️ SKIPPED
+**Reason:** FormField already uses effective `.has-error` CSS rules (`.has-error input` gets error border/ring styling) plus TanStack Form integration for the `touched` state. The `:has(:user-invalid)` approach would only replace the **styling** layer, not the error message visibility (which requires JS because it depends on TanStack Form's custom validators, not native constraint validation). Adding `:has()` rules alongside the existing `.has-error` rules would create duplicate/conflicting selectors. The current implementation is already clean and functional.
+**If revisited:** `:has(:user-invalid)` could replace the `.has-error` class for fields using native `required`/`pattern`/`type` validation, but not for fields with custom TanStack Form validators.
 
 ---
 
 ## Part 3: Implementation Priority Matrix
 
 ### **Tier 0: Chrome-Only Platform APIs** (Highest Impact, Deletes Custom JS)
-1. **Modal** → `<dialog closedby="any">` + invoker commands (`command`/`commandfor`)
-2. **Dropdown / Combobox / AutoComplete / Listbox** → Popover API + Anchor Positioning
-3. **Tooltip** → Popover API + Anchor Positioning + `interestfor`
-4. **Select / SelectGroup** → Customizable `<select>`
-5. **Textarea / NumberInput / Input** → `field-sizing: content`
-6. **FormField / InvalidState / RadioGroup** → `:has()` + `:user-valid`/`:user-invalid`
-7. **`twintrinsic.css` theme tokens** → `light-dark()`
+1. **Modal** → `<dialog closedby="any">` + invoker commands (`command`/`commandfor`) — ✅ DONE
+2. **Dropdown / Combobox / AutoComplete / Listbox** → Popover API + Anchor Positioning — 🟡 Combobox + AutoComplete done; Listbox/Dropdown are inline/native (no popup migration needed)
+3. **Tooltip** → Popover API + Anchor Positioning + `interestfor` — ✅ DONE
+4. **Select / SelectGroup** → Customizable `<select>` — ✅ DONE
+5. **Textarea** → `field-sizing: content` — ✅ DONE (Input/NumberInput skipped — field-sizing affects width, breaks layouts)
+6. **FormField / InvalidState / RadioGroup** → `:has()` + `:user-valid`/`:user-invalid` — ⏭️ SKIPPED (already uses .has-error CSS + TanStack Form)
+7. **`twintrinsic.css` theme tokens** → `light-dark()` — ⏭️ SKIPPED (Tailwind `dark:` variant already standard)
 8. **Modal / Toast / Dropdown / Combobox / Tooltip** → `@starting-style` + `transition-behavior: allow-discrete` for enter/exit animation
 
-### **Tier 1: Replace Immediately** (High Impact, Low Effort)
-1. **Accordion** → `<details>` + `<summary>`
-2. **Modal** → `<dialog>`
-3. **Progress** → `<progress>`
-4. **Separator** → `<hr>`
-5. **CodeBlock** → `<pre>` + `<code>` + `<figure>`
+### **Tier 1: Replace Immediately** (High Impact, Low Effort) ✅ ALL DONE
+1. **Accordion** → `<details>` + `<summary>` — ✅ DONE
+2. **Modal** → `<dialog>` — ✅ DONE (also upgraded to `<dialog closedby>` in Tier 0)
+3. **Progress** → `<progress>` — ✅ DONE
+4. **Separator** → `<hr>` — ✅ DONE
+5. **CodeBlock** → `<pre>` + `<code>` + `<figure>` — ✅ DONE
 
 ### **Tier 2: Enhance with Semantic HTML** (Medium Impact, Medium Effort)
-1. **DataTable/Table** → Proper `<table>` structure
-2. **Breadcrumb** → `<nav>` + `<ol>` + `<a>`
-3. **Menu/TreeMenu** → `<nav>` + `<ul>` + `<a>`
-4. **Timeline** → `<ol>` + `<time>`
-5. **Stepper** → `<ol>` + ARIA
-6. **Rating** → `<fieldset>` + `<input type="radio">`
-7. **Card** → `<article>` or `<section>`
+1. **DataTable/Table** → Proper `<table>` structure — ✅ DONE (already uses `<table>` + `<thead>` + `<tbody>` + `<th>` + `<td>`)
+2. **Breadcrumb** → `<nav>` + `<ol>` + `<a>` — ✅ DONE (already uses `<nav>` + `<ol>`)
+3. **Menu/TreeMenu** → `<nav>` + `<ul>` + `<a>` — ⏭️ SKIPPED (Menu is a generic dropdown, not a navigation menu; TreeMenu already has ARIA roles)
+4. **Timeline** → `<ol>` + `<time>` — ✅ DONE (`<div role="list">` → `<ol>`, `<div role="listitem">` → `<li>`, date → `<time>`)
+5. **Stepper** → `<nav>` + ARIA — ✅ DONE (`<div role="navigation">` → `<nav>`)
+6. **Rating** → `<fieldset>` + `<input type="radio">` — ⏭️ SKIPPED (complex component with JS state management, custom keyboard interaction)
+7. **Card** → `<article>` — ✅ DONE (already uses `<svelte:element this={href ? "a" : "article"}>`)
 
 ### **Tier 3: Consider for Future** (Lower Priority)
 1. **Slider** → Keep custom but consider `<input type="range">` base
