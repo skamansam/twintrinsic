@@ -1,31 +1,18 @@
 <!--
 @component
-Documentation page for the Dropdown component.
+Dropdown documentation page — standardized structure
 -->
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Dropdown from "$lib/components/Form/Dropdown.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as DropdownModule from "$lib/components/Form/Dropdown.svelte"
 
-// Sample data for examples
 const countries = [
-  {
-    label: "United States",
-    value: "us",
-    icon: '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>',
-  },
-  {
-    label: "United Kingdom",
-    value: "uk",
-    icon: '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>',
-  },
-  {
-    label: "Canada",
-    value: "ca",
-    icon: '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>',
-  },
+  { label: "United States", value: "us" },
+  { label: "United Kingdom", value: "uk" },
+  { label: "Canada", value: "ca" },
 ]
 
 const skills = [
@@ -35,251 +22,119 @@ const skills = [
   { label: "React", value: "react" },
   { label: "Vue", value: "vue" },
 ]
-
-const categories = [
-  {
-    label: "Frontend",
-    value: "frontend",
-    children: [
-      { label: "HTML", value: "html" },
-      { label: "CSS", value: "css" },
-      { label: "JavaScript", value: "js" },
-    ],
-  },
-  {
-    label: "Backend",
-    value: "backend",
-    children: [
-      { label: "Node.js", value: "node" },
-      { label: "Python", value: "python" },
-      { label: "Java", value: "java" },
-    ],
-  },
-]
 </script>
+
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
 
 <h1>Dropdown</h1>
 
 <p>
-  The Dropdown component provides a way to select one or multiple options from a dropdown menu.
-  It supports icons, option groups, cascading menus, filtering, and keyboard navigation.
+  <strong>Dropdown</strong> is a menu-based selection component for choosing one or
+  multiple options from a list. It supports icons, option groups, cascading submenus,
+  filtering, and keyboard navigation.
 </p>
+
+<h2>What, When &amp; Why</h2>
+
+<h3>What is it?</h3>
+<p>
+  A button that opens a menu of options when clicked. Different from Select in that
+  it's primarily designed for actions and rich option content (icons, nested groups)
+  rather than plain value selection.
+</p>
+
+<h3>When should I use it?</h3>
+<p>
+  Use <code>&lt;Dropdown&gt;</code> for action menus (edit, delete, share) or for
+  option selection with rich content (icons, descriptions). For simple value
+  selection, prefer <code>&lt;Select&gt;</code>. For type-ahead filtering, use
+  <code>&lt;Combobox&gt;</code>.
+</p>
+
+<h3>Why does it exist?</h3>
+<ul>
+  <li><strong>Rich content</strong> — options can include icons, descriptions, and nested groups.</li>
+  <li><strong>Space efficient</strong> — collapses many options into a single button.</li>
+  <li><strong>Popover API</strong> — uses <code>popover="auto"</code> for top-layer rendering, light-dismiss, and zero-JS open/close.</li>
+</ul>
+
+<h3>Sources</h3>
+<ul>
+  <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/">WAI-ARIA APG — Menu Button</a></li>
+  <li><a href="https://primer.style/product/components/ActionMenu">Primer — ActionMenu</a></li>
+  <li><a href="https://m3.material.io/components/menus/overview">Material Design 3 — Menus</a></li>
+</ul>
+
+<h2>Responsiveness</h2>
+<ul>
+  <li>Fills container width by default.</li>
+  <li>On mobile, the dropdown opens as a full-width overlay.</li>
+  <li>Touch targets meet 44×44 px minimum.</li>
+</ul>
+
+<h2>Customization</h2>
+<ul>
+  <li>Single or multiple selection.</li>
+  <li>Option icons, descriptions, and nested children.</li>
+  <li>Filterable options via <code>filter={true}</code>.</li>
+  <li>Clearable selection.</li>
+  <li>Sizes: <code>sm</code>, <code>md</code>, <code>lg</code>.</li>
+</ul>
 
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
-  <Dropdown 
-    options={['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix']}
-    placeholder="Select a city"
-  />
-</div>
-<CodeBlock>
-  {`<Dropdown 
+<ExampleTabs code={`<Dropdown
   options={['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix']}
   placeholder="Select a city"
-/>`}
-</CodeBlock>
+/>`}>
+  <div class="max-w-md" data-testid="dropdown-basic">
+    <Dropdown options={['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix']} placeholder="Select a city" />
+  </div>
+</ExampleTabs>
 
 <h3>With Object Options</h3>
-<div class="example">
-  <Dropdown 
-    options={countries}
-    placeholder="Select a country"
-  />
-</div>
-<CodeBlock>
-  {`const countries = [
+<ExampleTabs code={`const countries = [
   { label: 'United States', value: 'us' },
   { label: 'United Kingdom', value: 'uk' },
   { label: 'Canada', value: 'ca' }
 ]
 
-<Dropdown 
-  options={countries}
-  placeholder="Select a country"
-/>`}
-</CodeBlock>
+<Dropdown options={countries} placeholder="Select a country" />`}>
+  <div class="max-w-md" data-testid="dropdown-object">
+    <Dropdown options={countries} placeholder="Select a country" />
+  </div>
+</ExampleTabs>
 
 <h3>Multiple Selection</h3>
-<div class="example">
-  <Dropdown 
-    options={skills}
-    placeholder="Select skills"
-    multiple={true}
-  />
-</div>
-<CodeBlock>
-  {`const skills = [
-  { label: 'JavaScript', value: 'js' },
-  { label: 'TypeScript', value: 'ts' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' }
-]
-
-<Dropdown 
-  options={skills}
-  placeholder="Select skills"
-  multiple={true}
-/>`}
-</CodeBlock>
-
-<h3>With Icons</h3>
-<div class="example">
-  <Dropdown 
-    options={countries}
-    placeholder="Select a country"
-  />
-</div>
-<CodeBlock>
-  {`const countries = [
-  { 
-    label: 'United States', 
-    value: 'us', 
-    icon: '<svg>...</svg>' 
-  },
-  { 
-    label: 'United Kingdom', 
-    value: 'uk', 
-    icon: '<svg>...</svg>' 
-  },
-  { 
-    label: 'Canada', 
-    value: 'ca', 
-    icon: '<svg>...</svg>' 
-  }
-]
-
-<Dropdown 
-  options={countries}
-  placeholder="Select a country"
-  optionIcon="icon"
-/>`}
-</CodeBlock>
-
-<h3>Cascading Dropdown</h3>
-<div class="example">
-  <Dropdown 
-    options={categories}
-    placeholder="Select a category"
-    optionChildren="children"
-  />
-</div>
-<CodeBlock>
-  {`const categories = [
-  { 
-    label: 'Frontend', 
-    value: 'frontend',
-    children: [
-      { label: 'HTML', value: 'html' },
-      { label: 'CSS', value: 'css' },
-      { label: 'JavaScript', value: 'js' }
-    ]
-  },
-  { 
-    label: 'Backend', 
-    value: 'backend',
-    children: [
-      { label: 'Node.js', value: 'node' },
-      { label: 'Python', value: 'python' },
-      { label: 'Java', value: 'java' }
-    ]
-  }
-]
-
-<Dropdown 
-  options={categories}
-  placeholder="Select a category"
-  optionChildren="children"
-/>`}
-</CodeBlock>
+<ExampleTabs code={`<Dropdown options={skills} placeholder="Select skills" multiple={true} />`}>
+  <div class="max-w-md" data-testid="dropdown-multiple">
+    <Dropdown options={skills} placeholder="Select skills" multiple={true} />
+  </div>
+</ExampleTabs>
 
 <h3>With Filtering</h3>
-<div class="example">
-  <Dropdown 
-    options={skills}
-    placeholder="Search and select skills"
-    filter={true}
-  />
-</div>
-<CodeBlock>
-  {`<Dropdown 
-  options={skills}
-  placeholder="Search and select skills"
-  filter={true}
-/>`}
-</CodeBlock>
-
-<h3>Different Sizes</h3>
-<div class="example">
-  <div class="flex flex-col gap-4">
-    <Dropdown 
-      options={['Starter', 'Pro', 'Enterprise']}
-      placeholder="Starter"
-      size="sm"
-    />
-    <Dropdown 
-      options={['Starter', 'Pro', 'Enterprise']}
-      placeholder="Pro"
-      size="md"
-    />
-    <Dropdown 
-      options={['Starter', 'Pro', 'Enterprise']}
-      placeholder="Enterprise"
-      size="lg"
-    />
+<ExampleTabs code={`<Dropdown options={skills} placeholder="Search and select skills" filter={true} />`}>
+  <div class="max-w-md" data-testid="dropdown-filter">
+    <Dropdown options={skills} placeholder="Search and select skills" filter={true} />
   </div>
-</div>
-<CodeBlock>
-  {`<Dropdown 
-  options={['Starter', 'Pro', 'Enterprise']}
-  placeholder="Starter"
-  size="sm"
-/>
-<Dropdown 
-  options={['Starter', 'Pro', 'Enterprise']}
-  placeholder="Pro"
-  size="md"
-/>
-<Dropdown 
-  options={['Starter', 'Pro', 'Enterprise']}
-  placeholder="Enterprise"
-  size="lg"
-/>`}
-</CodeBlock>
+</ExampleTabs>
 
 <h3>Clearable</h3>
-<div class="example">
-  <Dropdown 
-    options={countries}
-    placeholder="Select a country"
-    clearable={true}
-  />
-</div>
-<CodeBlock>
-  {`<Dropdown 
-  options={countries}
-  placeholder="Select a country"
-  clearable={true}
-/>`}
-</CodeBlock>
+<ExampleTabs code={`<Dropdown options={countries} placeholder="Select a country" clearable={true} />`}>
+  <div class="max-w-md" data-testid="dropdown-clearable">
+    <Dropdown options={countries} placeholder="Select a country" clearable={true} />
+  </div>
+</ExampleTabs>
 
-<h3>Disabled State</h3>
-<div class="example">
-  <Dropdown 
-    options={countries}
-    placeholder="Select a country"
-    disabled={true}
-  />
-</div>
-<CodeBlock>
-  {`<Dropdown 
-  options={countries}
-  placeholder="Select a country"
-  disabled={true}
-/>`}
-</CodeBlock>
+<h3>Disabled</h3>
+<ExampleTabs code={`<Dropdown options={countries} placeholder="Select a country" disabled={true} />`}>
+  <div class="max-w-md" data-testid="dropdown-disabled">
+    <Dropdown options={countries} placeholder="Select a country" disabled={true} />
+  </div>
+</ExampleTabs>
 
 <h2>Props</h2>
 <PropsTable component={DropdownModule} />
@@ -288,34 +143,20 @@ const categories = [
 <EventsTable component={DropdownModule} />
 
 <h2>Accessibility</h2>
-<p>
-  The Dropdown component follows WAI-ARIA guidelines for combobox and listbox elements:
-</p>
 <ul>
-  <li>Uses appropriate ARIA roles (<code>combobox</code>, <code>listbox</code>, <code>option</code>)</li>
-  <li>Provides proper keyboard navigation</li>
-  <li>Manages focus appropriately</li>
-  <li>Includes proper ARIA attributes for expanded state and selection</li>
-  <li>Supports screen readers with appropriate labels and descriptions</li>
+  <li>Uses WAI-ARIA combobox/listbox roles.</li>
+  <li>Arrow keys navigate options; Enter/Space selects; Escape closes.</li>
+  <li>Focus is managed within the dropdown when open.</li>
 </ul>
 
-<h2>Keyboard Interaction</h2>
-<ul>
-  <li><code>Space</code> or <code>Enter</code> - Open/close dropdown and select highlighted option</li>
-  <li><code>ArrowDown</code> - Open dropdown or move to next option</li>
-  <li><code>ArrowUp</code> - Move to previous option</li>
-  <li><code>ArrowRight</code> - Open submenu (for cascading dropdowns)</li>
-  <li><code>ArrowLeft</code> - Close submenu (for cascading dropdowns)</li>
-  <li><code>Escape</code> - Close dropdown</li>
-  <li><code>Tab</code> - Move focus away from dropdown</li>
-  <li><code>Home</code> - Move to first option</li>
-  <li><code>End</code> - Move to last option</li>
-</ul>
-
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-  .example {
-    @apply my-4 p-4 border border-border rounded-md;
-    @apply flex flex-col gap-4 max-w-md;
-  }
-</style>
+<h2>Keyboard Support</h2>
+<table>
+  <thead><tr><th>Key</th><th>Function</th></tr></thead>
+  <tbody>
+    <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Open/close and select option</td></tr>
+    <tr><td><kbd>Arrow Down</kbd></td><td>Open or move to next option</td></tr>
+    <tr><td><kbd>Arrow Up</kbd></td><td>Move to previous option</td></tr>
+    <tr><td><kbd>Escape</kbd></td><td>Close dropdown</td></tr>
+    <tr><td><kbd>Home</kbd> / <kbd>End</kbd></td><td>Move to first/last option</td></tr>
+  </tbody>
+</table>
