@@ -1,78 +1,100 @@
 <!--
 @component
-Documentation page for the Calendar component.
+Calendar documentation page — standardized structure
 -->
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Calendar from "$lib/components/Form/Calendar.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CalendarModule from "$lib/components/Form/Calendar.svelte"
 </script>
 
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
+
 <h1>Calendar</h1>
 
 <p>
-  The Calendar component is a date picker that supports single date and range selection,
-  with keyboard navigation and accessibility features. It's built on top of the Input
-  component and includes month navigation, week numbers, and customizable formatting.
+  <strong>Calendar</strong> is a date picker supporting single date and range selection,
+  with month navigation, week numbers, and customizable formatting. Uses
+  <code>popover="auto"</code> for the popup panel with <code>@starting-style</code>
+  entry animation.
 </p>
+
+<h2>What, When &amp; Why</h2>
+
+<h3>What is it?</h3>
+<p>
+  A month-grid calendar that opens from an input field. Users click a date to select
+  it, or drag to select a range. Navigates between months with arrow buttons.
+</p>
+
+<h3>When should I use it?</h3>
+<p>
+  Use <code>&lt;Calendar&gt;</code> when the user needs to pick a date or date range.
+  For simple date input without a calendar grid, use <code>&lt;Input type="date"&gt;</code>.
+  Custom calendars are needed for range selection, week numbers, or blocked dates.
+</p>
+
+<h3>Why does it exist?</h3>
+<ul>
+  <li><strong>Range selection</strong> — native <code>&lt;input type="date"&gt;</code> doesn't support date ranges.</li>
+  <li><strong>Visual selection</strong> — the month grid makes it easy to see the selected date in context.</li>
+  <li><strong>Popover API</strong> — light-dismiss and top-layer rendering with <code>@starting-style</code> animation.</li>
+</ul>
+
+<h3>Sources</h3>
+<ul>
+  <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/#datepickerdialog">WAI-ARIA APG — Date Picker Dialog</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date">MDN — date input</a></li>
+</ul>
+
+<h2>Responsiveness</h2>
+<ul>
+  <li>Calendar grid adapts to container width.</li>
+  <li>On mobile, the calendar opens as a full-width overlay.</li>
+  <li>Touch targets meet 44×44 px minimum.</li>
+</ul>
+
+<h2>Customization</h2>
+<ul>
+  <li>Date format via <code>format</code> prop (e.g., <code>MM/dd/yyyy</code>).</li>
+  <li>Min/max date constraints.</li>
+  <li>Week numbers via <code>showWeekNumbers</code>.</li>
+  <li>Range selection via <code>range={true}</code>.</li>
+</ul>
 
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example" data-testid="calendar-basic">
-  <Calendar label="Select Date" />
-</div>
-<CodeBlock>
-  {`<Calendar label="Select Date" />`}
-</CodeBlock>
+<ExampleTabs code={`<Calendar label="Select Date" />`}>
+  <div class="max-w-md" data-testid="calendar-basic">
+    <Calendar label="Select Date" />
+  </div>
+</ExampleTabs>
 
-<h3>Date Range Selection</h3>
-<div class="example" data-testid="calendar-range">
-  <Calendar
-    label="Date Range"
-    range={true}
-    value={[new Date('2025-04-07'), new Date('2025-04-14')]}
-  />
-</div>
-<CodeBlock>
-  {`<Calendar
-  label="Date Range"
-  range={true}
-  value={[new Date('2025-04-07'), new Date('2025-04-14')]}
-/>`}
-</CodeBlock>
+<h3>Date Range</h3>
+<ExampleTabs code={`<Calendar label="Date Range" range={true} value={[new Date('2026-04-07'), new Date('2026-04-14')]} />`}>
+  <div class="max-w-md" data-testid="calendar-range">
+    <Calendar label="Date Range" range={true} value={[new Date('2026-04-07'), new Date('2026-04-14')]} />
+  </div>
+</ExampleTabs>
 
 <h3>With Min/Max Dates</h3>
-<div class="example" data-testid="calendar-min-max">
-  <Calendar
-    label="Date"
-    minDate={new Date('2025-04-01')}
-    maxDate={new Date('2025-04-30')}
-  />
-</div>
-<CodeBlock>
-  {`<Calendar
-  label="Date"
-  minDate={new Date('2025-04-01')}
-  maxDate={new Date('2025-04-30')}
-/>`}
-</CodeBlock>
+<ExampleTabs code={`<Calendar label="Date" minDate={new Date('2026-04-01')} maxDate={new Date('2026-04-30')} />`}>
+  <div class="max-w-md" data-testid="calendar-min-max">
+    <Calendar label="Date" minDate={new Date('2026-04-01')} maxDate={new Date('2026-04-30')} />
+  </div>
+</ExampleTabs>
 
-<h3>With Week Numbers</h3>
-<div class="example" data-testid="calendar-week-numbers">
-  <Calendar
-    label="Date"
-    showWeekNumbers={true}
-  />
-</div>
-<CodeBlock>
-  {`<Calendar
-  label="Date"
-  showWeekNumbers={true}
-/>`}
-</CodeBlock>
+<h3>Week Numbers</h3>
+<ExampleTabs code={`<Calendar label="Date" showWeekNumbers={true} />`}>
+  <div class="max-w-md" data-testid="calendar-week-numbers">
+    <Calendar label="Date" showWeekNumbers={true} />
+  </div>
+</ExampleTabs>
 
 <h2>Props</h2>
 <PropsTable component={CalendarModule} />
@@ -80,52 +102,23 @@ import * as CalendarModule from "$lib/components/Form/Calendar.svelte"
 <h2>Events</h2>
 <EventsTable component={CalendarModule} />
 
-<h2>Keyboard Navigation</h2>
-<p>
-  The Calendar component supports keyboard navigation when the calendar is open:
-</p>
-<ul>
-  <li><code>ArrowLeft</code> - Previous day</li>
-  <li><code>ArrowRight</code> - Next day</li>
-  <li><code>ArrowUp</code> - Previous week</li>
-  <li><code>ArrowDown</code> - Next week</li>
-  <li><code>Enter</code> - Select current date</li>
-  <li><code>Escape</code> - Close calendar</li>
-</ul>
-
-<h2>Date Formatting</h2>
-<p>
-  The format prop supports the following tokens:
-</p>
-<ul>
-  <li><code>MM</code> - Month number (01-12)</li>
-  <li><code>dd</code> - Day of the month (01-31)</li>
-  <li><code>yyyy</code> - Full year</li>
-</ul>
-<p>Examples:</p>
-<ul>
-  <li><code>MM/dd/yyyy</code> - 04/07/2025</li>
-  <li><code>dd/MM/yyyy</code> - 07/04/2025</li>
-  <li><code>yyyy-MM-dd</code> - 2025-04-07</li>
-</ul>
-
 <h2>Accessibility</h2>
-<p>
-  The Calendar component follows WAI-ARIA guidelines for date pickers:
-</p>
 <ul>
-  <li>Calendar opens in a dialog with proper ARIA labeling</li>
-  <li>Navigation buttons have descriptive labels</li>
-  <li>Date grid uses proper table semantics with row and column headers</li>
-  <li>Selected dates are indicated with <code>aria-selected</code></li>
-  <li>Keyboard navigation support</li>
-  <li>Disabled dates are properly indicated</li>
+  <li>Calendar opens in a dialog with proper ARIA labeling.</li>
+  <li>Date grid uses table semantics with row/column headers.</li>
+  <li><code>aria-selected</code> on selected dates.</li>
+  <li>Keyboard: arrow keys navigate days, Enter selects, Escape closes.</li>
 </ul>
 
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-  .example {
-    @apply my-4 p-4 border border-border rounded-md;
-    @apply flex flex-col gap-4 max-w-md;
-  }
-</style>
+<h2>Keyboard Support</h2>
+<table>
+  <thead><tr><th>Key</th><th>Function</th></tr></thead>
+  <tbody>
+    <tr><td><kbd>Arrow Left</kbd></td><td>Previous day</td></tr>
+    <tr><td><kbd>Arrow Right</kbd></td><td>Next day</td></tr>
+    <tr><td><kbd>Arrow Up</kbd></td><td>Previous week</td></tr>
+    <tr><td><kbd>Arrow Down</kbd></td><td>Next week</td></tr>
+    <tr><td><kbd>Enter</kbd></td><td>Select current date</td></tr>
+    <tr><td><kbd>Escape</kbd></td><td>Close calendar</td></tr>
+  </tbody>
+</table>

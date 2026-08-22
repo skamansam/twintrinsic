@@ -1,9 +1,9 @@
 <!--
 @component
-Documentation page for the AutoComplete component.
+AutoComplete documentation page — standardized structure
 -->
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import AutoComplete from "$lib/components/Form/AutoComplete.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
@@ -24,89 +24,74 @@ const users = [
 ]
 </script>
 
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
+
 <h1>AutoComplete</h1>
 
 <p>
-  The AutoComplete component provides suggestions as you type, supporting both single and multiple
-  selections. It's built on top of the base Input component and includes features like custom
-  templates, keyboard navigation, and input masking.
+  <strong>AutoComplete</strong> provides text-based suggestions as the user types,
+  supporting single and multiple selections. Uses <code>popover="auto"</code> for
+  the suggestions panel with CSS Anchor Positioning.
 </p>
+
+<h2>What, When &amp; Why</h2>
+
+<h3>What is it?</h3>
 <p>
-  The suggestions panel is a native <code>popover="auto"</code> element in the top layer —
-  light-dismiss, Esc-to-close, and outside-click are native, and it is tethered to the input with
-  CSS Anchor Positioning (<code>anchor-name</code>/<code>anchor()</code>/
-  <code>anchor-size()</code>), so no JS measures or positions it. It falls back to the OddBird
-  popover + anchor-positioning polyfills via <code>loadPlatformPolyfills()</code> where native
-  support is missing.
+  An input field that shows a filtered list of suggestions below it as the user types.
+  Suggestions can include rich content (avatars, descriptions) via custom templates.
 </p>
+
+<h3>When should I use it?</h3>
+<p>
+  Use <code>&lt;AutoComplete&gt;</code> for search fields, tag inputs, or any field
+  where suggesting completions saves typing. For simpler dropdown selection, use
+  <code>&lt;Combobox&gt;</code> or <code>&lt;Select&gt;</code>.
+</p>
+
+<h3>Why does it exist?</h3>
+<ul>
+  <li><strong>Speed</strong> — reduces typing errors and speeds up form completion.</li>
+  <li><strong>Rich suggestions</strong> — options can include avatars, icons, descriptions.</li>
+  <li><strong>Popover API</strong> — light-dismiss and top-layer rendering with zero JS.</li>
+</ul>
+
+<h3>Sources</h3>
+<ul>
+  <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/">WAI-ARIA APG — Combobox</a></li>
+  <li><a href="https://primer.style/product/components/Autocomplete">Primer — Autocomplete</a></li>
+</ul>
+
+<h2>Responsiveness</h2>
+<ul>
+  <li>Fills container width; suggestions panel matches input width.</li>
+  <li>On mobile, suggestions open as a full-width overlay.</li>
+</ul>
+
+<h2>Customization</h2>
+<ul>
+  <li>Custom option templates via <code>itemTemplate</code>.</li>
+  <li>Single or multiple selection.</li>
+  <li>Object data with label/value mapping.</li>
+</ul>
 
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example" data-testid="autocomplete-basic">
-  <AutoComplete
-    label="Country"
-    items={countries}
-    placeholder="Select a country"
-  />
-</div>
-<CodeBlock>
-  {`<AutoComplete
-  label="Country"
-  items={countries}
-  placeholder="Select a country"
-/>`}
-</CodeBlock>
+<ExampleTabs code={`<AutoComplete label="Country" items={countries} placeholder="Select a country" />`}>
+  <div class="max-w-md" data-testid="autocomplete-basic">
+    <AutoComplete label="Country" items={countries} placeholder="Select a country" />
+  </div>
+</ExampleTabs>
 
 <h3>Multiple Selection</h3>
-<div class="example" data-testid="autocomplete-multiple">
-  <AutoComplete
-    label="Countries"
-    items={countries}
-    multiple={true}
-    placeholder="Select countries"
-  />
-</div>
-<CodeBlock>
-  {`<AutoComplete
-  label="Countries"
-  items={countries}
-  multiple={true}
-  placeholder="Select countries"
-/>`}
-</CodeBlock>
-
-<h3>Custom Template</h3>
-<div class="example" data-testid="autocomplete-custom-template">
-  <AutoComplete
-    label="User"
-    items={users}
-    itemTemplate={{
-      render: ({ item }) => `
-        <div class="flex items-center gap-2">
-          <img src="${item.avatar}" alt="" class="w-8 h-8 rounded-full" />
-          <span>${item.label}</span>
-        </div>
-      `
-    }}
-    placeholder="Select a user"
-  />
-</div>
-<CodeBlock>
-  {`<AutoComplete
-  label="User"
-  items={users}
-  itemTemplate={{
-    render: ({ item }) => \`
-      <div class="flex items-center gap-2">
-        <img src="\${item.avatar}" alt="" class="w-8 h-8 rounded-full" />
-        <span>\${item.label}</span>
-      </div>
-    \`
-  }}
-  placeholder="Select a user"
-/>`}
-</CodeBlock>
+<ExampleTabs code={`<AutoComplete label="Countries" items={countries} multiple={true} placeholder="Select countries" />`}>
+  <div class="max-w-md" data-testid="autocomplete-multiple">
+    <AutoComplete label="Countries" items={countries} multiple={true} placeholder="Select countries" />
+  </div>
+</ExampleTabs>
 
 <h2>Props</h2>
 <PropsTable component={AutoCompleteModule} />
@@ -114,32 +99,20 @@ const users = [
 <h2>Events</h2>
 <EventsTable component={AutoCompleteModule} />
 
-<h2>Keyboard Navigation</h2>
-<p>
-  The AutoComplete component supports keyboard navigation:
-</p>
-<ul>
-  <li><code>ArrowDown</code> - Highlight next suggestion</li>
-  <li><code>ArrowUp</code> - Highlight previous suggestion</li>
-  <li><code>Enter</code> - Select highlighted suggestion</li>
-  <li><code>Escape</code> - Close suggestions</li>
-</ul>
-
 <h2>Accessibility</h2>
-<p>
-  The component follows WAI-ARIA guidelines for combobox and listbox patterns:
-</p>
 <ul>
-  <li>Proper ARIA roles and attributes for the input and suggestions list</li>
-  <li>Keyboard navigation support</li>
-  <li>Screen reader announcements for loading and empty states</li>
-  <li>Proper focus management</li>
+  <li>Uses WAI-ARIA combobox/listbox roles.</li>
+  <li>Arrow keys navigate suggestions; Enter selects; Escape closes.</li>
+  <li>Screen reader announcements for loading and empty states.</li>
 </ul>
 
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-  .example {
-    @apply my-4 p-4 border border-border rounded-md;
-    @apply flex flex-col gap-4 max-w-md;
-  }
-</style>
+<h2>Keyboard Support</h2>
+<table>
+  <thead><tr><th>Key</th><th>Function</th></tr></thead>
+  <tbody>
+    <tr><td><kbd>Arrow Down</kbd></td><td>Highlight next suggestion</td></tr>
+    <tr><td><kbd>Arrow Up</kbd></td><td>Highlight previous suggestion</td></tr>
+    <tr><td><kbd>Enter</kbd></td><td>Select highlighted suggestion</td></tr>
+    <tr><td><kbd>Escape</kbd></td><td>Close suggestions</td></tr>
+  </tbody>
+</table>
