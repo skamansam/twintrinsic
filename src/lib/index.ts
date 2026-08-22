@@ -27,6 +27,7 @@ export { default as CompatibilityMatrix } from "./components/CompatibilityMatrix
 // Layout Components
 export { default as Container } from "./components/Container/Container.svelte";
 export { default as DataTable } from "./components/DataTable/DataTable.svelte";
+export { default as ExampleTabs } from "./components/ExampleTabs/ExampleTabs.svelte";
 export { default as EventsTable } from "./components/EventsTable/EventsTable.svelte";
 export { default as Footer } from "./components/Footer/Footer.svelte";
 // Form Components

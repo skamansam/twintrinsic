@@ -1,9 +1,8 @@
 <script lang="ts">
 import { onMount } from "svelte"
-import BottomBar from "$lib/components/BottomBar/BottomBar.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Container from "$lib/components/Container/Container.svelte"
-import Panel from "$lib/components/Panel/Panel.svelte"
+import BottomBar from "$lib/components/BottomBar/BottomBar.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as BottomBarModule from "$lib/components/BottomBar/BottomBar.svelte"
@@ -11,15 +10,12 @@ import * as BottomBarModule from "$lib/components/BottomBar/BottomBar.svelte"
 let showExamples = $state(false)
 
 onMount(() => {
-  // Delay showing examples to prevent transition glitch on page load
-  setTimeout(() => {
-    showExamples = true
-  }, 100)
+  setTimeout(() => { showExamples = true }, 100)
 })
 </script>
 <!--
 @component
-BottomBar documentation page
+BottomBar documentation page — standardized structure
 -->
 
 <style lang="postcss">
@@ -27,50 +23,120 @@ BottomBar documentation page
 </style>
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>BottomBar</h1>
-  
+
+  <!-- ─── Description ───────────────────────────────────── -->
   <p>
-    The BottomBar component is a collapsible panel that attaches to the bottom of
-    its parent container. It's built on top of the Panel component and adds
-    positioning, mobile responsiveness, and smooth animations.
+    <strong>BottomBar</strong> is a collapsible panel that attaches to the bottom of its
+    parent container. It is ideal for detail panels, console output, media player
+    controls, or any content that should be accessible but out of the way until needed.
   </p>
 
+  <!-- ─── What / When / Why ─────────────────────────────── -->
+  <h2>What, When &amp; Why</h2>
+
+  <h3>What is it?</h3>
+  <p>
+    A panel anchored to the bottom edge of its parent with a clickable header snippet
+    that toggles the panel open/closed. It supports float mode (overlay with backdrop)
+    and inline mode (push content up).
+  </p>
+
+  <h3>When should I use it?</h3>
+  <p>
+    Use BottomBar for secondary content that should be available but not always visible:
+    detail panels in editors, terminal/console output, media player controls, meeting
+    control bars, or bottom-sheet-style actions on mobile.
+  </p>
+
+  <h3>Why does it exist?</h3>
+  <ul>
+    <li><strong>Space efficiency</strong> — keeps secondary content collapsed until
+      needed, maximizing the main content area.</li>
+    <li><strong>Thumb zones</strong> — on mobile, bottom-anchored controls are in the
+      natural thumb reach zone (Steven Hoober research).</li>
+    <li><strong>Platform familiarity</strong> — bottom sheets and control bars are
+      standard mobile UI patterns users already know.</li>
+  </ul>
+
+  <h3>Sources</h3>
+  <ul>
+    <li><a href="https://m3.material.io/components/bottom-sheets/overview">Material Design 3 — Bottom sheets</a></li>
+    <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/">WAI-ARIA APG — Landmarks</a></li>
+    <li><a href="https://primer.style/product/components">Primer — Overlay patterns</a></li>
+  </ul>
+
+  <!-- ─── Responsiveness ────────────────────────────────── -->
+  <h2>Responsiveness</h2>
+  <ul>
+    <li><strong>Desktop</strong> — bottom bar sits at the bottom of its parent container.</li>
+    <li><strong>Mobile</strong> — provides two modes:
+      <ul>
+        <li><strong>Float mode</strong> (default) — slides up as an overlay with a backdrop.</li>
+        <li><strong>Inline mode</strong> — pushes content up, taking full width.</li>
+      </ul>
+    </li>
+    <li>Touch targets meet 44×44 px minimum for mobile tap areas.</li>
+  </ul>
+
+  <!-- ─── Customization ─────────────────────────────────── -->
+  <h2>Customization</h2>
+  <ul>
+    <li>Custom header via the <code>header</code> snippet (text, icons, or any markup).</li>
+    <li>Set initial height via the <code>height</code> prop.</li>
+    <li>Theme colors, borders, and spacing controlled by the Tailwind theme.</li>
+    <li>Pass additional CSS classes via the <code>class</code> prop.</li>
+  </ul>
+
+  <!-- ─── Examples ──────────────────────────────────────── -->
   <h2>Examples</h2>
 
   <h3>Basic BottomBar</h3>
-  <div class="not-prose mb-8" data-testid="bottombar-basic">
-    <div class="h-[400px] bg-surface relative">
-      {#if showExamples}
+  <ExampleTabs code={`<BottomBar>
+  {#snippet header()}Details{/snippet}
+  <div class="p-4">
+    <h3 class="text-lg font-medium mb-2">Project Information</h3>
+    <div class="space-y-2">
+      <p>Created: April 6, 2026</p>
+      <p>Status: In Progress</p>
+      <p>Owner: Sarah Chen</p>
+    </div>
+  </div>
+</BottomBar>`}>
+    {#if showExamples}
+      <div class="h-[300px] bg-surface relative" data-testid="bottombar-basic">
         <BottomBar>
           {#snippet header()}Details{/snippet}
           <div class="p-4">
             <h3 class="text-lg font-medium mb-2">Project Information</h3>
             <div class="space-y-2">
-              <p>Created: April 6, 2025</p>
+              <p>Created: April 6, 2026</p>
               <p>Status: In Progress</p>
               <p>Owner: Sarah Chen</p>
             </div>
           </div>
         </BottomBar>
-      {/if}
-    </div>
-  </div>
+      </div>
+    {/if}
+  </ExampleTabs>
 
-  <CodeBlock language="svelte">{`<BottomBar>
-  {#snippet header()}Details{/snippet}
-  <div class="p-4">
-    <h3 class="text-lg font-medium mb-2">Project Information</h3>
-    <div class="space-y-2">
-      <p>Created: April 6, 2025</p>
-      <p>Status: In Progress</p>
-      <p>Owner: Sarah Chen</p>
+  <h3>Console Panel</h3>
+  <ExampleTabs code={`<BottomBar height="20rem">
+  {#snippet header()}
+    <div class="flex items-center gap-2">
+      <Icon name="tabler:terminal" />
+      Console
     </div>
+  {/snippet}
+  <div class="font-mono text-sm p-4 space-y-2">
+    <p class="text-success-500">✓ Build completed successfully</p>
+    <p class="text-warning-500">⚠ Unused variable detected</p>
+    <p class="text-error-bold">✕ Failed to load resource</p>
+    <p>> Starting development server...</p>
+    <p class="text-success-500">✓ Server is running on port 3000</p>
   </div>
-</BottomBar>`}</CodeBlock>
-
-  <h3>Console Example</h3>
-  <div class="not-prose mb-8" data-testid="bottombar-console">
-    <div class="h-[400px] bg-surface relative">
-      {#if showExamples}
+</BottomBar>`}>
+    {#if showExamples}
+      <div class="h-[300px] bg-surface relative" data-testid="bottombar-console">
         <BottomBar height="20rem">
           {#snippet header()}
             <div class="flex items-center gap-2">
@@ -89,84 +155,50 @@ BottomBar documentation page
             <p class="text-success-500">✓ Server is running on port 3000</p>
           </div>
         </BottomBar>
-      {/if}
-    </div>
-  </div>
+      </div>
+    {/if}
+  </ExampleTabs>
 
-  <h2>Props</h2>
-<PropsTable component={BottomBarModule} />
-
-  <h2>Events</h2>
-<EventsTable component={BottomBarModule} />
-
+  <!-- ─── Slots ─────────────────────────────────────────── -->
   <h2>Slots</h2>
   <table>
     <thead>
-      <tr>
-        <th>Slot</th>
-        <th>Description</th>
-      </tr>
+      <tr><th>Slot</th><th>Description</th></tr>
     </thead>
     <tbody>
-      <tr>
-        <td><code>header</code></td>
-        <td>Content for the bottom bar header</td>
-      </tr>
-      <tr>
-        <td>default</td>
-        <td>Main content of the bottom bar</td>
-      </tr>
+      <tr><td><code>header</code></td><td>Content for the bottom bar header / toggle area</td></tr>
+      <tr><td><code>default</code></td><td>Main expandable content of the bottom bar</td></tr>
     </tbody>
   </table>
 
+  <!-- ─── Props ─────────────────────────────────────────── -->
+  <h2>Props</h2>
+  <PropsTable component={BottomBarModule} />
+
+  <!-- ─── Events ────────────────────────────────────────── -->
+  <h2>Events</h2>
+  <EventsTable component={BottomBarModule} />
+
+  <!-- ─── Accessibility ─────────────────────────────────── -->
   <h2>Accessibility</h2>
-  <p>
-    The BottomBar component follows accessibility best practices:
-  </p>
   <ul>
-    <li>Uses <code>role="complementary"</code> for the bottom bar container</li>
-    <li>Uses <code>role="region"</code> for the content area</li>
-    <li>Proper ARIA labelling and relationships</li>
-    <li>Keyboard support for closing (Escape key)</li>
-    <li>Focus management when using the backdrop</li>
+    <li>Uses <code>role="complementary"</code> for the container and
+      <code>role="region"</code> for the content area.</li>
+    <li>Toggle button uses <code>aria-expanded</code> to communicate open/closed state.</li>
+    <li>Keyboard: Enter/Space toggles the panel; Escape closes it.</li>
+    <li>Focus is managed so that closing the panel returns focus to the toggle button.</li>
   </ul>
 
-  <h2>Mobile Support</h2>
-  <p>
-    The bottom bar is fully responsive and provides two modes for mobile:
-  </p>
-  <ul>
-    <li>
-      <strong>Float mode</strong> (default): The bottom bar floats over the content
-      with a backdrop when expanded
-    </li>
-    <li>
-      <strong>Inline mode</strong>: The bottom bar pushes the content when
-      expanded, taking full width
-    </li>
-  </ul>
-
+  <!-- ─── Keyboard Support ──────────────────────────────── -->
   <h2>Keyboard Support</h2>
   <table>
     <thead>
-      <tr>
-        <th>Key</th>
-        <th>Function</th>
-      </tr>
+      <tr><th>Key</th><th>Function</th></tr>
     </thead>
     <tbody>
-      <tr>
-        <td><kbd>Tab</kbd></td>
-        <td>Moves focus through interactive elements</td>
-      </tr>
-      <tr>
-        <td><kbd>Enter</kbd> or <kbd>Space</kbd></td>
-        <td>When focus is on the header, toggles the bottom bar</td>
-      </tr>
-      <tr>
-        <td><kbd>Escape</kbd></td>
-        <td>Closes the bottom bar</td>
-      </tr>
+      <tr><td><kbd>Tab</kbd></td><td>Moves focus through interactive elements in the panel</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>When focus is on the header, toggles the bottom bar open/closed</td></tr>
+      <tr><td><kbd>Escape</kbd></td><td>Closes the bottom bar</td></tr>
     </tbody>
   </table>
 </Container>
