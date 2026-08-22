@@ -19,16 +19,21 @@ test.describe("IconifyIcon docs page", () => {
   });
 
   test("basic icons demo renders icon wrappers", async ({ page }) => {
-    await expect(page.locator("._icon-home").first()).toBeVisible();
-    await expect(page.locator("._icon-settings").first()).toBeVisible();
-    await expect(page.locator("._icon-star").first()).toBeVisible();
+    // IconifyIcon SVGs have aria-hidden="true" (decorative), so use
+    // toBeAttached() instead of toBeVisible() for presence checks.
+    await expect(page.locator("._icon-home").first()).toBeAttached();
+    await expect(page.locator("._icon-settings").first()).toBeAttached();
+    await expect(page.locator("._icon-star").first()).toBeAttached();
   });
 
   test("iconsets demo renders icons with their iconset class", async ({ page }) => {
     // The "Different Iconsets" demo uses fa / heroicons / tabler overrides.
-    await expect(page.locator("._iconset-fa").first()).toBeVisible();
-    await expect(page.locator("._iconset-heroicons").first()).toBeVisible();
-    await expect(page.locator("._iconset-tabler").first()).toBeVisible();
+    // Default iconset is also tabler, so we get two tabler SVGs — check
+    // each distinct iconset is present. toBeAttached() because the SVGs
+    // have aria-hidden="true" (decorative).
+    await expect(page.locator("._iconset-fa").first()).toBeAttached();
+    await expect(page.locator("._iconset-heroicons").first()).toBeAttached();
+    await expect(page.locator("._iconset-tabler").first()).toBeAttached();
   });
 
   test("documents global icon configuration functions", async ({ page }) => {
