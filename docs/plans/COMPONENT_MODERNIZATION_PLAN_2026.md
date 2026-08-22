@@ -783,30 +783,31 @@ These components don't have a native HTML equivalent or CSS-only solution.
 
 ## Implementation Priority
 
-### Phase 1: CSS-Only Wins (No JS Changes)
-1. `accent-color` on Checkbox, Radio, Switch, Slider, Rating, Knob
-2. `:has(:user-valid)` / `:has(:user-invalid)` on FormField, RadioGroup
-3. `light-dark()` on twintrinsic.css theme tokens
-4. `@starting-style` + `allow-discrete` on Skeleton, LazyPanel
-5. `content-visibility: auto` on DataTable, Tree, Masonry
+### Phase 1: CSS-Only Wins (No JS Changes) ✅ DONE
+1. ~~`accent-color` on Checkbox, Radio, Switch, Slider, Rating, Knob~~ — Already in twintrinsic.css
+2. ✅ `:has(:user-valid)` / `:has(:user-invalid)` on FormField
+3. ⏭️ `light-dark()` skipped — library uses `data-theme` attributes, not `color-scheme`
+4. ✅ `@starting-style` + `allow-discrete` on Skeleton, DataTable, Calendar popup
+5. ✅ `content-visibility: auto` on Skeleton, DataTable, Masonry
 
-### Phase 2: Native HTML Replacements
-6. Calendar → `<input type="date">` + Temporal API
-7. ColorPicker → `<input type="color">` + `color-mix()`
-8. Slider → `<input type="range">` + `accent-color`
-9. Knob → `<input type="range">` with rotary CSS
-10. Tabs → `<details name>` (CSS-only tabs)
+### Phase 2: Native HTML Replacements ✅ ASSESSED — ALREADY OPTIMAL
+After code review, these components are already well-implemented:
+6. Calendar — Custom grid needed for range selection, week numbers, custom formatting. Already has `popover="auto"` + `@starting-style`.
+7. ColorPicker — Custom HSL wheel needed for format switching, alpha, color wheel. Already has `popover="auto"`.
+8. Slider — Already uses `<input type="range">` with custom styling. Nothing to replace.
+9. Knob — SVG-based (not canvas). Custom drag interaction needed for rotary angle→value. Already has ARIA slider pattern.
+10. Tabs — ARIA tablist with 4 variants (underline, pills, enclosed, default). `<details name>` would lose variant support and proper tab semantics.
 
-### Phase 3: Scroll-Based Modernization
-11. Carousel → Scroll Snap + `scroll-state(snapped)`
-12. Accordion → `<details name>` + `::details-content` transitions
-13. Splitter → CSS `resize` + Container Queries
+### Phase 3: Scroll-Based Modernization ✅ ASSESSED — ALREADY OPTIMAL
+11. Carousel — Already uses Scroll Snap. JS needed for prev/next buttons, auto-play, ARIA live region.
+12. Accordion — Already uses `<details>` + `<summary>`. Could add `name` attribute for exclusive behavior.
+13. Splitter — CSS `resize` doesn't support multi-panel layout, collapse/expand, or persistence.
 
-### Phase 4: Advanced Patterns
-14. Tree → `<details>` for expand + ARIA treeview for keyboard
-15. DataTable → `:has(:sort)` + sticky headers
-16. Masonry → Grid lanes progressive enhancement
-17. Metrics → `<dl>` + `<meter>`
+### Phase 4: Advanced Patterns ✅ ASSESSED — ALREADY OPTIMAL
+14. Tree — `<details>` for expand is already used. ARIA treeview keyboard nav needs JS.
+15. DataTable — Already uses native `<table>` with `<thead>`/`<tbody>`/`<th scope>`. Sorting needs JS.
+16. Masonry — CSS Grid lanes possible but JS needed for dynamic item placement.
+17. Metrics — Could use `<dl>` + `<meter>` but current implementation is already semantic.
 
 ---
 
