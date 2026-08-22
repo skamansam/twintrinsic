@@ -1,106 +1,121 @@
+<!--
+@component
+Breadcrumb documentation page — standardized structure
+-->
 <script lang="ts">
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Breadcrumb from "$lib/components/Breadcrumb/Breadcrumb.svelte"
 import BreadcrumbItem from "$lib/components/Breadcrumb/BreadcrumbItem.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as BreadcrumbModule from "$lib/components/Breadcrumb/Breadcrumb.svelte"
 import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem.svelte"
 </script>
-<!--
-@component
-Breadcrumb documentation page
--->
 
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
+
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>Breadcrumb</h1>
-  
+
   <p>
-    The Breadcrumb component is a navigation component that helps users understand their location
-    in a website or application. It provides a hierarchical trail of links with proper accessibility features.
+    <strong>Breadcrumb</strong> shows the user's current location within a site
+    hierarchy as a trail of links. Uses native <code>&lt;nav&gt;</code>,
+    <code>&lt;ol&gt;</code>, and <code>&lt;li&gt;</code> elements.
   </p>
 
-  <h2>Usage</h2>
+  <h2>What, When &amp; Why</h2>
+
+  <h3>What is it?</h3>
+  <p>
+    A horizontal list of links separated by visual dividers. The last item
+    represents the current page (not a link). Collapses middle items when the
+    trail is long.
+  </p>
+
+  <h3>When should I use it?</h3>
+  <p>
+    Use on every page with 3+ levels of hierarchy. Place at the top of the
+    content area. Not needed for single-level sites.
+  </p>
+
+  <h3>Why does it exist?</h3>
+  <ul>
+    <li><strong>Orientation</strong> — helps users understand where they are in the site structure.</li>
+    <li><strong>Navigation</strong> — provides quick access to parent pages.</li>
+    <li><strong>Accessibility</strong> — <code>&lt;nav aria-label="Breadcrumb"&gt;</code> lets screen-reader users jump to the trail.</li>
+  </ul>
+
+  <h3>Sources</h3>
+  <ul>
+    <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/">WAI-ARIA APG — Breadcrumb</a></li>
+    <li><a href="https://primer.style/product/components/Breadcrumbs">Primer — Breadcrumbs</a></li>
+  </ul>
+
+  <h2>Responsiveness</h2>
+  <ul>
+    <li>Wraps naturally on narrow screens.</li>
+    <li>Collapsible mode hides middle items on overflow.</li>
+  </ul>
+
+  <h2>Customization</h2>
+  <ul>
+    <li>Custom separator via <code>separator</code> prop.</li>
+    <li>Collapsible via <code>collapsible</code> + <code>maxVisibleItems</code>.</li>
+    <li>Icons on individual items.</li>
+  </ul>
+
+  <h2>Examples</h2>
 
   <h3>Basic Breadcrumb</h3>
-  <div class="p-4 bg-surface rounded-md mb-4" data-testid="breadcrumb-basic">
-    <Breadcrumb>
-      <BreadcrumbItem href="/">Home</BreadcrumbItem>
-      <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
-      <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
-    </Breadcrumb>
-  </div>
-
-  <CodeBlock language="svelte">{`<Breadcrumb>
+  <ExampleTabs code={`<Breadcrumb>
   <BreadcrumbItem href="/">Home</BreadcrumbItem>
   <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
   <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
-</Breadcrumb>`}</CodeBlock>
+</Breadcrumb>`}>
+    <div class="p-4 bg-surface rounded-md" data-testid="breadcrumb-basic">
+      <Breadcrumb>
+        <BreadcrumbItem href="/">Home</BreadcrumbItem>
+        <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
+        <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
+      </Breadcrumb>
+    </div>
+  </ExampleTabs>
 
   <h3>Custom Separator</h3>
-  <div class="p-4 bg-surface rounded-md mb-4" data-testid="breadcrumb-custom-separator">
-    <Breadcrumb separator="›">
-      <BreadcrumbItem href="/">Home</BreadcrumbItem>
-      <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
-      <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
-    </Breadcrumb>
-  </div>
-
-  <CodeBlock language="svelte">{`<Breadcrumb separator="›">
+  <ExampleTabs code={`<Breadcrumb separator="›">
   <BreadcrumbItem href="/">Home</BreadcrumbItem>
   <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
   <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
-</Breadcrumb>`}</CodeBlock>
+</Breadcrumb>`}>
+    <div class="p-4 bg-surface rounded-md" data-testid="breadcrumb-custom-separator">
+      <Breadcrumb separator="›">
+        <BreadcrumbItem href="/">Home</BreadcrumbItem>
+        <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
+        <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
+      </Breadcrumb>
+    </div>
+  </ExampleTabs>
 
-  <h3>With Icons</h3>
-  <div class="p-4 bg-surface rounded-md mb-4" data-testid="breadcrumb-with-icons">
-    <Breadcrumb>
-      <BreadcrumbItem 
-        href="/" 
-        icon='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>'
-      >
-        Home
-      </BreadcrumbItem>
-      <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
-      <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
-    </Breadcrumb>
-  </div>
-
-  <CodeBlock language="svelte">{`<Breadcrumb>
-  <BreadcrumbItem 
-    href="/" 
-    icon='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-    </svg>'
-  >
-    Home
-  </BreadcrumbItem>
-  <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
-  <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
-</Breadcrumb>`}</CodeBlock>
-
-  <h3>Collapsible Breadcrumb</h3>
-  <div class="p-4 bg-surface rounded-md mb-4" data-testid="breadcrumb-collapsible">
-    <Breadcrumb collapsible maxVisibleItems={1}>
-      <BreadcrumbItem href="/">Home</BreadcrumbItem>
-      <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
-      <BreadcrumbItem href="/docs/components">Components</BreadcrumbItem>
-      <BreadcrumbItem href="/docs/components/navigation">Navigation</BreadcrumbItem>
-      <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
-    </Breadcrumb>
-  </div>
-
-  <CodeBlock language="svelte">{`<Breadcrumb collapsible maxVisibleItems={1}>
+  <h3>Collapsible</h3>
+  <ExampleTabs code={`<Breadcrumb collapsible maxVisibleItems={1}>
   <BreadcrumbItem href="/">Home</BreadcrumbItem>
   <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
   <BreadcrumbItem href="/docs/components">Components</BreadcrumbItem>
   <BreadcrumbItem href="/docs/components/navigation">Navigation</BreadcrumbItem>
   <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
-</Breadcrumb>`}</CodeBlock>
+</Breadcrumb>`}>
+    <div class="p-4 bg-surface rounded-md" data-testid="breadcrumb-collapsible">
+      <Breadcrumb collapsible maxVisibleItems={1}>
+        <BreadcrumbItem href="/">Home</BreadcrumbItem>
+        <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
+        <BreadcrumbItem href="/docs/components">Components</BreadcrumbItem>
+        <BreadcrumbItem href="/docs/components/navigation">Navigation</BreadcrumbItem>
+        <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
+      </Breadcrumb>
+    </div>
+  </ExampleTabs>
 
   <h2>Breadcrumb Props</h2>
   <PropsTable component={BreadcrumbModule} />
@@ -109,24 +124,10 @@ Breadcrumb documentation page
   <PropsTable component={BreadcrumbItemModule} />
 
   <h2>Accessibility</h2>
-  <p>
-    The Breadcrumb component follows accessibility best practices:
-  </p>
   <ul>
-    <li>Uses semantic <code>&lt;nav&gt;</code> and <code>&lt;ol&gt;</code> elements for proper structure</li>
-    <li>Includes <code>aria-label="Breadcrumb"</code> on the navigation element</li>
-    <li>Sets <code>aria-current="page"</code> on the current/active item</li>
-    <li>Separators are hidden from screen readers with <code>aria-hidden="true"</code></li>
-    <li>Icons include <code>aria-hidden="true"</code> to prevent screen reader announcement</li>
-  </ul>
-
-  <h2>Collapsible Behavior</h2>
-  <p>
-    When the <code>collapsible</code> prop is enabled, the breadcrumb will automatically collapse long paths:
-  </p>
-  <ul>
-    <li>The first and last items are always visible</li>
-    <li>Middle items are hidden based on the <code>maxVisibleItems</code> prop</li>
-    <li>Individual items can opt out of collapsing by setting <code>collapsible={false}</code></li>
+    <li>Uses <code>&lt;nav aria-label="Breadcrumb"&gt;</code>.</li>
+    <li>Ordered list (<code>&lt;ol&gt;</code>) for proper trail semantics.</li>
+    <li><code>aria-current="page"</code> on the current (last) item.</li>
+    <li>Separators hidden from screen readers via <code>aria-hidden</code>.</li>
   </ul>
 </Container>

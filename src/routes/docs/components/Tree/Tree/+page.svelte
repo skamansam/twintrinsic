@@ -1,9 +1,9 @@
 <!--
 @component
-Tree documentation page
+Tree documentation page — standardized structure
 -->
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Tree from "$lib/components/Tree/Tree.svelte"
 import TreeNode from "$lib/components/Tree/TreeNode.svelte"
@@ -13,282 +13,159 @@ import * as TreeModule from "$lib/components/Tree/Tree.svelte"
 import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
 </script>
 
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
+
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>Tree</h1>
-  
+
   <p>
-    The Tree component displays hierarchical data with expandable and collapsible nodes.
-    It's ideal for file explorers, organization charts, category navigation, and other
-    hierarchical data structures.
+    <strong>Tree</strong> displays hierarchical data with expandable/collapsible
+    nodes. Ideal for file explorers, org charts, category navigation, and
+    document outlines.
   </p>
+
+  <h2>What, When &amp; Why</h2>
+
+  <h3>What is it?</h3>
+  <p>
+    A nested list of TreeNode elements with expand/collapse controls, selection
+    modes, connecting lines, and full keyboard navigation. Uses
+    <code>role="tree"</code> / <code>role="treeitem"</code>.
+  </p>
+
+  <h3>When should I use it?</h3>
+  <p>
+    Use <code>&lt;Tree&gt;</code> when data has a parent-child hierarchy: file
+    systems, org charts, nested categories, document outlines. For flat lists,
+    use a Listbox or Select.
+  </p>
+
+  <h3>Why does it exist?</h3>
+  <ul>
+    <li><strong>Hierarchical navigation</strong> — expand/collapse reveals nested items.</li>
+    <li><strong>Keyboard</strong> — arrow keys, Home/End, Enter/Space, type-ahead.</li>
+    <li><strong>Selection</strong> — single or multi-select modes.</li>
+  </ul>
+
+  <h3>Sources</h3>
+  <ul>
+    <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/treeview/">WAI-ARIA APG — Tree View</a></li>
+    <li><a href="https://primer.style/product/components/TreeView">Primer — TreeView</a></li>
+  </ul>
+
+  <h2>Responsiveness</h2>
+  <ul>
+    <li>Scrollable when the tree is taller than the container.</li>
+    <li>Touch targets meet 44×44 px minimum.</li>
+  </ul>
+
+  <h2>Customization</h2>
+  <ul>
+    <li>Selection: single (<code>selectable</code>) or multi (<code>multiSelect</code>).</li>
+    <li>Connecting lines via <code>showLines</code>.</li>
+    <li>Expand all by default via <code>expandAll</code>.</li>
+    <li>Icons on individual TreeNodes.</li>
+  </ul>
 
   <h2>Examples</h2>
 
   <h3>Basic Tree</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="tree-basic">
-    <Tree>
-      <TreeNode label="Acme Website">
-        <TreeNode label="Pages">
-          <TreeNode label="Home" />
-          <TreeNode label="Pricing" />
-          <TreeNode label="Contact" />
-        </TreeNode>
-        <TreeNode label="Blog">
-          <TreeNode label="2026" />
-          <TreeNode label="2025" />
-        </TreeNode>
-        <TreeNode label="Assets" />
-      </TreeNode>
-    </Tree>
-  </div>
-
-  <CodeBlock language="svelte">{`<Tree>
+  <ExampleTabs code={`<Tree>
   <TreeNode label="Acme Website">
     <TreeNode label="Pages">
       <TreeNode label="Home" />
       <TreeNode label="Pricing" />
-      <TreeNode label="Contact" />
     </TreeNode>
     <TreeNode label="Blog">
       <TreeNode label="2026" />
       <TreeNode label="2025" />
     </TreeNode>
-    <TreeNode label="Assets" />
   </TreeNode>
-</Tree>`}</CodeBlock>
-
-  <h3>With Icons</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="tree-icons">
-    <Tree>
-      <TreeNode 
-        label="Documents" 
-        icon='<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>'
-      >
-        <TreeNode 
-          label="Work Files" 
-          icon='<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>'
-        >
-          <TreeNode 
-            label="Quarterly Report.pdf" 
-            icon='<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>'
-          />
-          <TreeNode 
-            label="Meeting Notes.docx" 
-            icon='<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>'
-          />
+</Tree>`}>
+    <div class="max-w-md" data-testid="tree-basic">
+      <Tree>
+        <TreeNode label="Acme Website">
+          <TreeNode label="Pages">
+            <TreeNode label="Home" />
+            <TreeNode label="Pricing" />
+            <TreeNode label="Contact" />
+          </TreeNode>
+          <TreeNode label="Blog">
+            <TreeNode label="2026" />
+            <TreeNode label="2025" />
+          </TreeNode>
+          <TreeNode label="Assets" />
         </TreeNode>
-      </TreeNode>
-    </Tree>
-  </div>
+      </Tree>
+    </div>
+  </ExampleTabs>
 
-  <CodeBlock language="svelte">{`<Tree>
-  <TreeNode 
-    label="Documents" 
-    icon='<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>'
-  >
-    <TreeNode 
-      label="Work Files" 
-      icon='<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>'
-    >
-      <TreeNode 
-        label="Quarterly Report.pdf" 
-        icon='<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>'
-      />
-    </TreeNode>
+  <h3>Selectable</h3>
+  <ExampleTabs code={`<Tree selectable>
+  <TreeNode label="Projects">
+    <TreeNode label="Website" />
+    <TreeNode label="Mobile App" />
   </TreeNode>
-</Tree>`}</CodeBlock>
-
-  <h3>Selectable Tree</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="tree-selectable">
-    <Tree selectable>
-      <TreeNode label="Acme Website">
-        <TreeNode label="Pages">
-          <TreeNode label="Home" />
-          <TreeNode label="Pricing" />
+</Tree>`}>
+    <div class="max-w-md" data-testid="tree-selectable">
+      <Tree selectable>
+        <TreeNode label="Acme Website">
+          <TreeNode label="Pages">
+            <TreeNode label="Home" />
+            <TreeNode label="Pricing" />
+          </TreeNode>
+          <TreeNode label="Blog" />
         </TreeNode>
-        <TreeNode label="Blog" />
-      </TreeNode>
-    </Tree>
-  </div>
+      </Tree>
+    </div>
+  </ExampleTabs>
 
-  <CodeBlock language="svelte">{`<Tree selectable onselect={(e) => console.log(e.detail)}>
+  <h3>With Lines</h3>
+  <ExampleTabs code={`<Tree showLines>
   <TreeNode label="Acme Website">
-    <TreeNode label="Pages">
-      <TreeNode label="Home" />
-      <TreeNode label="Pricing" />
-    </TreeNode>
+    <TreeNode label="Pages"><TreeNode label="Home" /><TreeNode label="Pricing" /></TreeNode>
     <TreeNode label="Blog" />
   </TreeNode>
-</Tree>`}</CodeBlock>
-
-  <h3>Multi-Select Tree</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="tree-multiselect">
-    <Tree selectable multiSelect>
-      <TreeNode label="Acme Website">
-        <TreeNode label="Pages">
-          <TreeNode label="Home" />
-          <TreeNode label="Pricing" />
+</Tree>`}>
+    <div class="max-w-md" data-testid="tree-lines">
+      <Tree showLines>
+        <TreeNode label="Acme Website">
+          <TreeNode label="Pages"><TreeNode label="Home" /><TreeNode label="Pricing" /></TreeNode>
+          <TreeNode label="Blog" />
         </TreeNode>
-        <TreeNode label="Blog" />
-      </TreeNode>
-    </Tree>
-  </div>
+      </Tree>
+    </div>
+  </ExampleTabs>
 
-  <CodeBlock language="svelte">{`<Tree selectable multiSelect onselect={(e) => console.log(e.detail)}>
-  <TreeNode label="Acme Website">
-    <TreeNode label="Pages">
-      <TreeNode label="Home" />
-      <TreeNode label="Pricing" />
-    </TreeNode>
-    <TreeNode label="Blog" />
-  </TreeNode>
-</Tree>`}</CodeBlock>
-
-  <h3>With Connecting Lines</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="tree-lines">
-    <Tree showLines>
-      <TreeNode label="Acme Website">
-        <TreeNode label="Pages">
-          <TreeNode label="Home" />
-          <TreeNode label="Pricing" />
-        </TreeNode>
-        <TreeNode label="Blog" />
-      </TreeNode>
-    </Tree>
-  </div>
-
-  <CodeBlock language="svelte">{`<Tree showLines>
-  <TreeNode label="Acme Website">
-    <TreeNode label="Pages">
-      <TreeNode label="Home" />
-      <TreeNode label="Pricing" />
-    </TreeNode>
-    <TreeNode label="Blog" />
-  </TreeNode>
-</Tree>`}</CodeBlock>
-
-  <h3>Expanded By Default</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="tree-expanded">
-    <Tree expandAll>
-      <TreeNode label="Acme Website">
-        <TreeNode label="Pages">
-          <TreeNode label="Home" />
-          <TreeNode label="Pricing" />
-        </TreeNode>
-        <TreeNode label="Blog">
-          <TreeNode label="2026" />
-        </TreeNode>
-      </TreeNode>
-    </Tree>
-  </div>
-
-  <CodeBlock language="svelte">{`<Tree expandAll>
-  <TreeNode label="Acme Website">
-    <TreeNode label="Pages">
-      <TreeNode label="Home" />
-      <TreeNode label="Pricing" />
-    </TreeNode>
-    <TreeNode label="Blog">
-      <TreeNode label="2026" />
-    </TreeNode>
-  </TreeNode>
-</Tree>`}</CodeBlock>
-
-  <h2>Tree Props</h2>
+  <h2>Props</h2>
   <PropsTable component={TreeModule} />
 
   <h2>TreeNode Props</h2>
   <PropsTable component={TreeNodeModule} />
 
-  <h2>Tree Events</h2>
+  <h2>Events</h2>
   <EventsTable component={TreeModule} />
 
-  <h2>TreeNode Events</h2>
-  <EventsTable component={TreeNodeModule} />
-
-  <h2>TreeNode Slots</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Slot</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>icon</code></td>
-        <td>Custom icon content</td>
-      </tr>
-      <tr>
-        <td><code>label</code></td>
-        <td>Custom label content</td>
-      </tr>
-      <tr>
-        <td>default</td>
-        <td>Child nodes</td>
-      </tr>
-    </tbody>
-  </table>
-
   <h2>Accessibility</h2>
-  <p>
-    The Tree component follows WAI-ARIA guidelines for tree views:
-  </p>
   <ul>
-    <li>Uses <code>role="tree"</code> for the tree container</li>
-    <li>Uses <code>role="treeitem"</code> for each node</li>
-    <li>Uses <code>role="group"</code> for child node containers</li>
-    <li>Proper <code>aria-expanded</code>, <code>aria-selected</code>, and <code>aria-disabled</code> attributes</li>
-    <li>Supports keyboard navigation</li>
-    <li>Provides proper focus management</li>
-    <li>Uses <code>aria-level</code>, <code>aria-posinset</code>, and <code>aria-setsize</code> for hierarchical information</li>
+    <li><code>role="tree"</code>, <code>role="treeitem"</code>, <code>role="group"</code>.</li>
+    <li><code>aria-expanded</code>, <code>aria-selected</code>, <code>aria-level</code>.</li>
+    <li>Arrow keys, Home/End, Enter/Space, type-ahead.</li>
   </ul>
 
   <h2>Keyboard Support</h2>
   <table>
-    <thead>
-      <tr>
-        <th>Key</th>
-        <th>Function</th>
-      </tr>
-    </thead>
+    <thead><tr><th>Key</th><th>Function</th></tr></thead>
     <tbody>
-      <tr>
-        <td><kbd>Tab</kbd></td>
-        <td>Moves focus to the tree</td>
-      </tr>
-      <tr>
-        <td><kbd>Up Arrow</kbd></td>
-        <td>Moves focus to the previous visible node</td>
-      </tr>
-      <tr>
-        <td><kbd>Down Arrow</kbd></td>
-        <td>Moves focus to the next visible node</td>
-      </tr>
-      <tr>
-        <td><kbd>Left Arrow</kbd></td>
-        <td>Collapses an expanded node or moves focus to the parent node</td>
-      </tr>
-      <tr>
-        <td><kbd>Right Arrow</kbd></td>
-        <td>Expands a collapsed node or moves focus to the first child node</td>
-      </tr>
-      <tr>
-        <td><kbd>Home</kbd></td>
-        <td>Moves focus to the first node</td>
-      </tr>
-      <tr>
-        <td><kbd>End</kbd></td>
-        <td>Moves focus to the last visible node</td>
-      </tr>
-      <tr>
-        <td><kbd>Enter</kbd> or <kbd>Space</kbd></td>
-        <td>Selects the focused node</td>
-      </tr>
-      <tr>
-        <td><kbd>*</kbd></td>
-        <td>Expands all siblings of the current node</td>
-      </tr>
+      <tr><td><kbd>Arrow Down</kbd></td><td>Next visible node</td></tr>
+      <tr><td><kbd>Arrow Up</kbd></td><td>Previous visible node</td></tr>
+      <tr><td><kbd>Arrow Right</kbd></td><td>Expand node or move to first child</td></tr>
+      <tr><td><kbd>Arrow Left</kbd></td><td>Collapse node or move to parent</td></tr>
+      <tr><td><kbd>Home</kbd> / <kbd>End</kbd></td><td>First/last visible node</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Select the focused node</td></tr>
+      <tr><td><kbd>*</kbd></td><td>Expand all siblings</td></tr>
     </tbody>
   </table>
 </Container>

@@ -1,114 +1,39 @@
+<!--
+@component
+TreeMenu documentation page — standardized structure
+-->
 <script lang="ts">
-  import type { MenuItem as TreeMenuItem } from "$lib/components/TreeMenu/TreeMenu.svelte"
-  import TreeMenu from "$lib/components/TreeMenu/TreeMenu.svelte"
-
-  const basicItems: TreeMenuItem[] = [
-    { title: 'Home', icon: 'home', link: '/' },
-    { title: 'About', icon: 'info', link: '/about' },
-    { title: 'Settings', icon: 'settings', link: '/settings', separator: true },
-  ];
-
-  const nestedItems: TreeMenuItem[] = [
-    {
-      title: 'File',
-      icon: 'folder',
-      children: [
-        { label: 'New', link: '/file/new' },
-        { label: 'Open', link: '/file/open' },
-        { label: 'Save', link: '/file/save' },
-      ],
-    },
-    {
-      title: 'Edit',
-      icon: 'edit',
-      children: [
-        { label: 'Undo', link: '/edit/undo' },
-        { label: 'Redo', link: '/edit/redo' },
-      ],
-    },
-  ];
-
-  const actionItems: TreeMenuItem[] = [
-    {
-      title: 'Actions',
-      children: [
-        { label: 'Create', onClick: () => alert('Create clicked') },
-        { label: 'Delete', onClick: () => alert('Delete clicked') },
-      ],
-    },
-  ];
-
+import type { MenuItem as TreeMenuItem } from "$lib/components/TreeMenu/TreeMenu.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
+import TreeMenu from "$lib/components/TreeMenu/TreeMenu.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as TreeMenuModule from "$lib/components/TreeMenu/TreeMenu.svelte"
-</script>
 
-<div class="docs-container">
-  <h1>TreeMenu</h1>
+const basicItems: TreeMenuItem[] = [
+  { title: 'Home', icon: 'home', link: '/' },
+  { title: 'About', icon: 'info', link: '/about' },
+  { title: 'Settings', icon: 'settings', link: '/settings', separator: true },
+]
 
-  <p class="lead">
-    A hierarchical menu component that renders a tree of menu items. Can be used standalone or with the Sidebar component for flexible navigation structures.
-  </p>
-
-  <section>
-    <h2>Overview</h2>
-    <p>
-      TreeMenu is a versatile component for displaying hierarchical navigation structures. It supports:
-    </p>
-    <ul>
-      <li>Nested menu items with unlimited depth</li>
-      <li>Links, buttons, and action handlers</li>
-      <li>Icons with custom styling</li>
-      <li>Expandable/collapsible sections</li>
-      <li>Separators for visual organization</li>
-      <li>Text-only items for headers/labels</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>Basic Usage</h2>
-    <p>Simple menu with links:</p>
-    <div class="example" data-testid="treemenu-basic">
-      <TreeMenu items={basicItems} />
-    </div>
-    <pre><code>{`\u003Cscript lang="ts">
-  import { TreeMenu, type MenuItem } from 'twintrinsic';
-
-  const items: TreeMenuItem[] = [
-    { title: 'Home', icon: 'home', link: '/' },
-    { title: 'About', icon: 'info', link: '/about' },
-    { title: 'Settings', icon: 'settings', link: '/settings', separator: true },
-  ];
-\u003C/script>
-
-<TreeMenu {items} />`}</code></pre>
-  </section>
-
-  <section>
-    <h2>Nested Items</h2>
-    <p>Create hierarchical menus with expandable sections:</p>
-    <div class="example" data-testid="treemenu-nested">
-      <TreeMenu items={nestedItems} />
-    </div>
-    <pre><code>{`const items: TreeMenuItem[] = [
+const nestedItems: TreeMenuItem[] = [
   {
-    title: 'File',
-    icon: 'folder',
+    title: 'File', icon: 'folder',
     children: [
       { label: 'New', link: '/file/new' },
       { label: 'Open', link: '/file/open' },
       { label: 'Save', link: '/file/save' },
     ],
   },
-];`}</code></pre>
-  </section>
+  {
+    title: 'Edit', icon: 'edit',
+    children: [
+      { label: 'Undo', link: '/edit/undo' },
+      { label: 'Redo', link: '/edit/redo' },
+    ],
+  },
+]
 
-  <section>
-    <h2>With Actions</h2>
-    <p>Handle click events and custom actions:</p>
-    <div class="example" data-testid="treemenu-actions">
-      <TreeMenu items={actionItems} />
-    </div>
-    <pre><code>{`const items: TreeMenuItem[] = [
+const actionItems: TreeMenuItem[] = [
   {
     title: 'Actions',
     children: [
@@ -116,168 +41,127 @@ import * as TreeMenuModule from "$lib/components/TreeMenu/TreeMenu.svelte"
       { label: 'Delete', onClick: () => alert('Delete clicked') },
     ],
   },
-];`}</code></pre>
-  </section>
-
-  <section>
-    <h2>Props</h2>
-<PropsTable component={TreeMenuModule} />
-  </section>
-
-  <section>
-    <h2>MenuItem Structure</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Property</th>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>title</code></td>
-          <td><code>string</code></td>
-          <td>Main label for the item</td>
-        </tr>
-        <tr>
-          <td><code>label</code></td>
-          <td><code>string</code></td>
-          <td>Alternative label (used in children)</td>
-        </tr>
-        <tr>
-          <td><code>icon</code></td>
-          <td><code>string</code></td>
-          <td>Icon identifier (e.g., "home", "settings")</td>
-        </tr>
-        <tr>
-          <td><code>iconClass</code></td>
-          <td><code>string</code></td>
-          <td>Custom CSS classes for the icon</td>
-        </tr>
-        <tr>
-          <td><code>link</code></td>
-          <td><code>string</code></td>
-          <td>Navigation href (renders as anchor tag)</td>
-        </tr>
-        <tr>
-          <td><code>onClick</code></td>
-          <td><code>() => void</code></td>
-          <td>Click handler function</td>
-        </tr>
-        <tr>
-          <td><code>action</code></td>
-          <td><code>() => void</code></td>
-          <td>Alternative action handler</td>
-        </tr>
-        <tr>
-          <td><code>separator</code></td>
-          <td><code>boolean</code></td>
-          <td>Show separator before this item</td>
-        </tr>
-        <tr>
-          <td><code>children</code></td>
-          <td><code>MenuItem[]</code></td>
-          <td>Nested menu items</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section>
-    <h2>Use Cases</h2>
-    <ul>
-      <li><strong>Sidebars</strong> - Application navigation menus</li>
-      <li><strong>Command Palettes</strong> - Hierarchical command organization</li>
-      <li><strong>Settings</strong> - Nested settings categories</li>
-      <li><strong>File Explorers</strong> - Folder/file tree structures</li>
-      <li><strong>Documentation</strong> - Table of contents with sections</li>
-      <li><strong>Admin Dashboards</strong> - Multi-level admin panels</li>
-      <li><strong>Context Menus</strong> - Right-click menus with submenus</li>
-      <li><strong>Dropdown Menus</strong> - Multi-level dropdowns in headers</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>With Sidebar</h2>
-    <p>TreeMenu integrates seamlessly with the Sidebar component:</p>
-    <pre><code>{`<Sidebar menu={items} />`}</code></pre>
-    <p>
-      When a <code>menu</code> prop is provided to Sidebar, it automatically renders the TreeMenu component. You can also use custom content by omitting the menu prop:
-    </p>
-    <pre><code>{`<Sidebar>
-  <nav>Custom content</nav>
-</Sidebar>`}</code></pre>
-  </section>
-
-  <section>
-    <h2>Accessibility</h2>
-    <ul>
-      <li>Semantic HTML with proper link and button elements</li>
-      <li>Keyboard navigation support (Enter to expand/collapse)</li>
-      <li>ARIA labels for screen readers</li>
-      <li>Focus management for keyboard users</li>
-    </ul>
-  </section>
-</div>
+]
+</script>
 
 <style lang="postcss">
-  @reference '../../../../../lib/twintrinsic.css';
-
-  .docs-container {
-    @apply max-w-4xl mx-auto px-4 py-8;
-  }
-
-  h1 {
-    @apply text-4xl font-bold mb-4;
-  }
-
-  h2 {
-    @apply text-2xl font-bold mt-8 mb-4;
-  }
-
-  .lead {
-    @apply text-lg text-muted mb-6;
-  }
-
-  section {
-    @apply mb-8;
-  }
-
-  p {
-    @apply mb-4 text-base;
-  }
-
-  ul {
-    @apply list-disc list-inside space-y-2 mb-4;
-  }
-
-  .example {
-    @apply border border-border rounded-lg p-4 mb-4 bg-surface;
-  }
-
-  pre {
-    @apply bg-surface border border-border rounded-lg p-4 overflow-x-auto mb-4;
-  }
-
-  code {
-    @apply font-mono text-sm;
-  }
-
-  table {
-    @apply w-full border-collapse border border-border mb-4;
-  }
-
-  th,
-  td {
-    @apply border border-border px-4 py-2 text-left;
-  }
-
-  th {
-    @apply bg-hover font-semibold;
-  }
-
-  tr:nth-child(even) {
-    @apply bg-surface;
-  }
+  @reference '$lib/twintrinsic.css';
 </style>
+
+<h1>TreeMenu</h1>
+
+<p>
+  <strong>TreeMenu</strong> renders a hierarchical menu as a tree of items.
+  Supports nested menus, links, actions, icons, separators, and integration
+  with the Sidebar component.
+</p>
+
+<h2>What, When &amp; Why</h2>
+
+<h3>What is it?</h3>
+<p>
+  A tree-structured navigation menu where parent items expand to reveal children.
+  Each item can be a link, a button action, or a text-only header.
+</p>
+
+<h3>When should I use it?</h3>
+<p>
+  Use <code>&lt;TreeMenu&gt;</code> for deep navigation hierarchies: admin panels,
+  documentation sidebars, file explorers. For flat navigation, use a simple
+  <code>&lt;nav&gt;</code> with links. For action menus, use <code>&lt;Menu&gt;</code>.
+</p>
+
+<h3>Why does it exist?</h3>
+<ul>
+  <li><strong>Hierarchical navigation</strong> — expand/collapse reveals nested items.</li>
+  <li><strong>Sidebar integration</strong> — passes <code>items</code> directly to Sidebar.</li>
+  <li><strong>Flexible</strong> — links, buttons, actions, icons, separators in one component.</li>
+</ul>
+
+<h2>Responsiveness</h2>
+<ul>
+  <li>Scrollable when the menu is taller than the container.</li>
+  <li>Touch targets meet 44×44 px minimum.</li>
+</ul>
+
+<h2>Customization</h2>
+<ul>
+  <li>Item structure: <code>title</code>/<code>label</code>, <code>icon</code>, <code>link</code>, <code>onClick</code>, <code>children</code>.</li>
+  <li>Separators via <code>separator: true</code>.</li>
+  <li>Nested depth is unlimited.</li>
+</ul>
+
+<h2>Examples</h2>
+
+<h3>Basic Menu</h3>
+<ExampleTabs code={`const items: TreeMenuItem[] = [
+  { title: 'Home', icon: 'home', link: '/' },
+  { title: 'About', icon: 'info', link: '/about' },
+  { title: 'Settings', icon: 'settings', link: '/settings', separator: true },
+]
+
+<TreeMenu {items} />`}>
+  <div class="max-w-xs border border-border rounded-md p-2" data-testid="treemenu-basic">
+    <TreeMenu items={basicItems} />
+  </div>
+</ExampleTabs>
+
+<h3>Nested Items</h3>
+<ExampleTabs code={`const items: TreeMenuItem[] = [
+  {
+    title: 'File', icon: 'folder',
+    children: [
+      { label: 'New', link: '/file/new' },
+      { label: 'Open', link: '/file/open' },
+      { label: 'Save', link: '/file/save' },
+    ],
+  },
+]
+
+<TreeMenu {items} />`}>
+  <div class="max-w-xs border border-border rounded-md p-2" data-testid="treemenu-nested">
+    <TreeMenu items={nestedItems} />
+  </div>
+</ExampleTabs>
+
+<h3>With Actions</h3>
+<ExampleTabs code={`const items: TreeMenuItem[] = [
+  {
+    title: 'Actions',
+    children: [
+      { label: 'Create', onClick: () => alert('Create clicked') },
+      { label: 'Delete', onClick: () => alert('Delete clicked') },
+    ],
+  },
+]
+
+<TreeMenu {items} />`}>
+  <div class="max-w-xs border border-border rounded-md p-2" data-testid="treemenu-actions">
+    <TreeMenu items={actionItems} />
+  </div>
+</ExampleTabs>
+
+<h2>Props</h2>
+<PropsTable component={TreeMenuModule} />
+
+<h2>MenuItem Structure</h2>
+<table>
+  <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>title</code></td><td><code>string</code></td><td>Main label for top-level items</td></tr>
+    <tr><td><code>label</code></td><td><code>string</code></td><td>Alternative label (used in children)</td></tr>
+    <tr><td><code>icon</code></td><td><code>string</code></td><td>Icon identifier</td></tr>
+    <tr><td><code>link</code></td><td><code>string</code></td><td>Navigation href (renders as anchor)</td></tr>
+    <tr><td><code>onClick</code></td><td><code>() =&gt; void</code></td><td>Click handler</td></tr>
+    <tr><td><code>separator</code></td><td><code>boolean</code></td><td>Show separator before this item</td></tr>
+    <tr><td><code>children</code></td><td><code>MenuItem[]</code></td><td>Nested menu items</td></tr>
+  </tbody>
+</table>
+
+<h2>Accessibility</h2>
+<ul>
+  <li>Semantic HTML with proper link and button elements.</li>
+  <li>Keyboard navigation (Enter to expand/collapse).</li>
+  <li>ARIA labels for screen readers.</li>
+  <li>Focus management for keyboard users.</li>
+</ul>
