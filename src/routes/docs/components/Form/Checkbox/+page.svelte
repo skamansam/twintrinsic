@@ -1,192 +1,181 @@
 <!--
 @component
-Documentation page for the Checkbox component.
+Checkbox documentation page — standardized structure
 -->
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Checkbox from "$lib/components/Form/Checkbox.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CheckboxModule from "$lib/components/Form/Checkbox.svelte"
 </script>
 
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
+
 <h1>Checkbox</h1>
 
+<!-- ─── Description ───────────────────────────────────── -->
 <p>
-  The Checkbox component is a form control for boolean or indeterminate input with support
-  for labels, descriptions, validation states, and full accessibility features.
+  <strong>Checkbox</strong> is a form control for toggling between two states
+  (checked/unchecked) or three states (checked/unchecked/indeterminate). It wraps
+  the native <code>&lt;input type="checkbox"&gt;</code> with consistent styling,
+  labels, descriptions, and validation support.
 </p>
 
+<!-- ─── What / When / Why ─────────────────────────────── -->
+<h2>What, When &amp; Why</h2>
+
+<h3>What is it?</h3>
+<p>
+  A toggle control that lets the user select or deselect an option. Supports binary
+  (on/off) and tri-state (on/off/partial) modes. The tri-state variant is useful for
+  parent checkboxes that control a group of child checkboxes.
+</p>
+
+<h3>When should I use it?</h3>
+<p>
+  Use <code>&lt;Checkbox&gt;</code> for independent binary choices — "Remember me",
+  "I agree to terms", "Enable feature X". For mutually exclusive choices (exactly one
+  must be selected), use <code>&lt;Radio&gt;</code>. For on/off settings that take
+  effect immediately, consider <code>&lt;Switch&gt;</code>.
+</p>
+
+<h3>Why does it exist?</h3>
+<ul>
+  <li><strong>Native features</strong> — the underlying <code>&lt;input type="checkbox"&gt;</code>
+    provides built-in toggle behavior, form participation, and screen reader support.</li>
+  <li><strong>Tri-state support</strong> — the indeterminate state is useful for
+    "select all" patterns where some (but not all) children are checked.</li>
+  <li><strong>Consistency</strong> — ensures all checkboxes across the app share the
+    same styling, label positioning, and error display.</li>
+</ul>
+
+<h3>Sources</h3>
+<ul>
+  <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/">WAI-ARIA APG — Checkbox</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox">MDN — checkbox input</a></li>
+  <li><a href="https://primer.style/product/components/Checkbox">Primer — Checkbox</a></li>
+  <li><a href="https://m3.material.io/components/checkbox/overview">Material Design 3 — Checkboxes</a></li>
+  <li><a href="https://ant.design/components/checkbox">Ant Design — Checkbox</a></li>
+</ul>
+
+<!-- ─── Responsiveness ────────────────────────────────── -->
+<h2>Responsiveness</h2>
+<ul>
+  <li>Checkboxes are inline elements that wrap naturally within text or flex layouts.</li>
+  <li>Touch targets meet 44×44 px minimum for mobile tap areas.</li>
+  <li>Use <code>size</code> prop ("sm", "md", "lg") to adjust for different contexts.</li>
+</ul>
+
+<!-- ─── Customization ─────────────────────────────────── -->
+<h2>Customization</h2>
+<ul>
+  <li>Size: <code>sm</code>, <code>md</code> (default), or <code>lg</code>.</li>
+  <li>Add descriptive text below the label via the <code>description</code> prop.</li>
+  <li>Use <code>accent-color</code> (set in <code>twintrinsic.css</code>) for brand-consistent check colors.</li>
+  <li>Group checkboxes with <code>&lt;FormField&gt;</code> for shared labels and validation.</li>
+</ul>
+
+<!-- ─── Examples ──────────────────────────────────────── -->
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example" data-testid="checkbox-basic">
-  <Checkbox label="Accept terms and conditions" />
-</div>
-<CodeBlock>
-  {`<Checkbox label="Accept terms and conditions" />`}
-</CodeBlock>
+<ExampleTabs code={`<Checkbox label="Accept terms and conditions" />`}>
+  <div class="max-w-md" data-testid="checkbox-basic">
+    <Checkbox label="Accept terms and conditions" />
+  </div>
+</ExampleTabs>
 
 <h3>With Description</h3>
-<div class="example" data-testid="checkbox-description">
-  <Checkbox
-    label="Subscribe to newsletter"
-    description="Receive updates about new features and announcements"
-  />
-</div>
-<CodeBlock>
-  {`<Checkbox
+<ExampleTabs code={`<Checkbox
   label="Subscribe to newsletter"
   description="Receive updates about new features and announcements"
-/>`}
-</CodeBlock>
+/>`}>
+  <div class="max-w-md" data-testid="checkbox-description">
+    <Checkbox label="Subscribe to newsletter" description="Receive updates about new features and announcements" />
+  </div>
+</ExampleTabs>
 
 <h3>Indeterminate State</h3>
-<div class="example" data-testid="checkbox-indeterminate">
-  <Checkbox
-    label="Select all items"
-    indeterminate={true}
-    description="Some items are selected"
-  />
-</div>
-<CodeBlock>
-  {`<Checkbox
+<ExampleTabs code={`<Checkbox
   label="Select all items"
   indeterminate={true}
   description="Some items are selected"
-/>`}
-</CodeBlock>
+/>`}>
+  <div class="max-w-md" data-testid="checkbox-indeterminate">
+    <Checkbox label="Select all items" indeterminate={true} description="Some items are selected" />
+  </div>
+</ExampleTabs>
 
-<h3>Required Field</h3>
-<div class="example" data-testid="checkbox-required">
-  <Checkbox
-    label="I agree to the terms"
-    required={true}
-  />
-</div>
-<CodeBlock>
-  {`<Checkbox
-  label="I agree to the terms"
-  required={true}
-/>`}
-</CodeBlock>
-
-<h3>With Error</h3>
-<div class="example" data-testid="checkbox-error">
-  <Checkbox
-    label="Accept privacy policy"
-    error="You must accept the privacy policy"
-    required={true}
-  />
-</div>
-<CodeBlock>
-  {`<Checkbox
+<h3>Required with Error</h3>
+<ExampleTabs code={`<Checkbox
   label="Accept privacy policy"
   error="You must accept the privacy policy"
   required={true}
-/>`}
-</CodeBlock>
+/>`}>
+  <div class="max-w-md" data-testid="checkbox-error">
+    <Checkbox label="Accept privacy policy" error="You must accept the privacy policy" required={true} />
+  </div>
+</ExampleTabs>
 
 <h3>Disabled States</h3>
-<div class="example" data-testid="checkbox-disabled">
-  <div class="flex flex-col gap-4">
-    <Checkbox
-      label="Unavailable option"
-      disabled={true}
-      description="This option is currently unavailable"
-    />
-    <Checkbox
-      label="Completed task"
-      disabled={true}
-      checked={true}
-      description="This task has been completed"
-    />
+<ExampleTabs code={`<Checkbox label="Unavailable option" disabled={true} description="This option is currently unavailable" />
+<Checkbox label="Completed task" disabled={true} checked={true} description="This task has been completed" />`}>
+  <div class="max-w-md flex flex-col gap-4" data-testid="checkbox-disabled">
+    <Checkbox label="Unavailable option" disabled={true} description="This option is currently unavailable" />
+    <Checkbox label="Completed task" disabled={true} checked={true} description="This task has been completed" />
   </div>
-</div>
-<CodeBlock>
-  {`<Checkbox
-  label="Unavailable option"
-  disabled={true}
-  description="This option is currently unavailable"
-/>
-<Checkbox
-  label="Completed task"
-  disabled={true}
-  checked={true}
-  description="This task has been completed"
-/>`}
-</CodeBlock>
+</ExampleTabs>
 
 <h3>Checkbox Group</h3>
-<div class="example" data-testid="checkbox-group">
-  <div class="flex flex-col gap-2">
-    <Checkbox
-      label="Email notifications"
-      name="notifications"
-      value="email"
-    />
-    <Checkbox
-      label="SMS notifications"
-      name="notifications"
-      value="sms"
-    />
-    <Checkbox
-      label="Push notifications"
-      name="notifications"
-      value="push"
-    />
+<ExampleTabs code={`<div class="flex flex-col gap-2">
+  <Checkbox label="Email notifications" name="notifications" value="email" />
+  <Checkbox label="SMS notifications" name="notifications" value="sms" />
+  <Checkbox label="Push notifications" name="notifications" value="push" />
+</div>`}>
+  <div class="max-w-md flex flex-col gap-2" data-testid="checkbox-group">
+    <Checkbox label="Email notifications" name="notifications" value="email" />
+    <Checkbox label="SMS notifications" name="notifications" value="sms" />
+    <Checkbox label="Push notifications" name="notifications" value="push" />
   </div>
-</div>
-<CodeBlock>
-  {`<div class="flex flex-col gap-2">
-  <Checkbox
-    label="Email notifications"
-    name="notifications"
-    value="email"
-  />
-  <Checkbox
-    label="SMS notifications"
-    name="notifications"
-    value="sms"
-  />
-  <Checkbox
-    label="Push notifications"
-    name="notifications"
-    value="push"
-  />
-</div>`}
-</CodeBlock>
+</ExampleTabs>
 
+<!-- ─── Slots ─────────────────────────────────────────── -->
+<h2>Slots</h2>
+<p>
+  The Checkbox component does not expose named slots. Use props for customization.
+  For complex label content, use a raw <code>&lt;input type="checkbox"&gt;</code> with
+  a <code>&lt;label&gt;</code>.
+</p>
+
+<!-- ─── Props ─────────────────────────────────────────── -->
 <h2>Props</h2>
 <PropsTable component={CheckboxModule} />
 
+<!-- ─── Events ────────────────────────────────────────── -->
 <h2>Events</h2>
 <EventsTable component={CheckboxModule} />
 
+<!-- ─── Accessibility ─────────────────────────────────── -->
 <h2>Accessibility</h2>
-<p>
-  The Checkbox component follows WAI-ARIA guidelines for checkboxes:
-</p>
 <ul>
-  <li>Uses native <code>&lt;input type="checkbox"&gt;</code> for best compatibility</li>
-  <li>Labels are properly associated with inputs</li>
-  <li>Required fields are marked with both visual and ARIA indicators</li>
-  <li>Error messages are linked using <code>aria-describedby</code></li>
-  <li>Invalid states are indicated with <code>aria-invalid</code></li>
-  <li>Proper focus management and keyboard interaction</li>
-  <li>Support for indeterminate state</li>
+  <li>Uses native <code>&lt;input type="checkbox"&gt;</code> for maximum compatibility.</li>
+  <li>Labels are properly associated via <code>for</code>/<code>id</code> attributes.</li>
+  <li>Error messages linked via <code>aria-describedby</code>.</li>
+  <li>Invalid states use <code>aria-invalid="true"</code>.</li>
+  <li>Indeterminate state is set programmatically (not via HTML attribute).</li>
 </ul>
 
-<h2>Keyboard Interaction</h2>
-<ul>
-  <li><code>Space</code> - Toggle checkbox state</li>
-  <li><code>Tab</code> - Move focus to checkbox</li>
-</ul>
-
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-  .example {
-    @apply my-4 p-4 border border-border rounded-md;
-    @apply flex flex-col gap-4 max-w-md;
-  }
-</style>
+<!-- ─── Keyboard Support ──────────────────────────────── -->
+<h2>Keyboard Support</h2>
+<table>
+  <thead>
+    <tr><th>Key</th><th>Function</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><kbd>Space</kbd></td><td>Toggle checkbox state</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td>Move focus to the checkbox</td></tr>
+  </tbody>
+</table>

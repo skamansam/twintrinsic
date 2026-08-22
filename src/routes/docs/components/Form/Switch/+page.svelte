@@ -1,163 +1,170 @@
 <!--
 @component
-Documentation page for the Switch component.
+Switch documentation page — standardized structure
 -->
-<script>
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+<script lang="ts">
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Switch from "$lib/components/Form/Switch.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as SwitchModule from "$lib/components/Form/Switch.svelte"
 </script>
 
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
+
 <h1>Switch</h1>
 
+<!-- ─── Description ───────────────────────────────────── -->
 <p>
-  The Switch component provides a toggle switch alternative to checkboxes with support for
-  labels, different sizes, and form integration. It's designed for binary choices where
-  the user can toggle between enabled and disabled states.
+  <strong>Switch</strong> is a toggle control that switches between on and off states.
+  It is visually styled as a sliding track with a thumb, and semantically distinct from
+  a checkbox — it represents an immediate state change rather than a form value.
 </p>
 
+<!-- ─── What / When / Why ─────────────────────────────── -->
+<h2>What, When &amp; Why</h2>
+
+<h3>What is it?</h3>
+<p>
+  A binary toggle with a sliding animation. Unlike a checkbox (which represents
+  "checked" or "unchecked"), a switch represents "on" or "off" — the semantics
+  communicate that the setting takes effect immediately.
+</p>
+
+<h3>When should I use it?</h3>
+<p>
+  Use <code>&lt;Switch&gt;</code> for settings that activate/deactivate something
+  immediately: dark mode, notifications on/off, auto-save, airplane mode. Use
+  <code>&lt;Checkbox&gt;</code> for form values that are submitted with the form
+  (e.g., "I agree to terms").
+</p>
+
+<h3>Why does it exist?</h3>
+<ul>
+  <li><strong>Better semantics</strong> — screen readers announce "on/off" instead of
+    "checked/unchecked", which is clearer for settings.</li>
+  <li><strong>Visual metaphor</strong> — the sliding track communicates instant effect
+    better than a static checkbox.</li>
+  <li><strong>Platform familiarity</strong> — switches are the standard toggle
+    pattern in iOS and Android settings.</li>
+</ul>
+
+<h3>Sources</h3>
+<ul>
+  <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/switch/">WAI-ARIA APG — Switch</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/switch_role">MDN — switch role</a></li>
+  <li><a href="https://primer.style/product/components/ToggleSwitch">Primer — ToggleSwitch</a></li>
+  <li><a href="https://m3.material.io/components/switch/overview">Material Design 3 — Switches</a></li>
+  <li><a href="https://ant.design/components/switch">Ant Design — Switch</a></li>
+</ul>
+
+<!-- ─── Responsiveness ────────────────────────────────── -->
+<h2>Responsiveness</h2>
+<ul>
+  <li>Switches are inline elements that sit naturally alongside their labels.</li>
+  <li>Touch targets meet 44×44 px minimum for mobile tap areas.</li>
+  <li>Use <code>size</code> prop ("sm", "md", "lg") for different contexts.</li>
+</ul>
+
+<!-- ─── Customization ─────────────────────────────────── -->
+<h2>Customization</h2>
+<ul>
+  <li>Size: <code>sm</code>, <code>md</code> (default), or <code>lg</code>.</li>
+  <li>For label-less switches, use <code>ariaLabel</code> for screen readers.</li>
+  <li>Theme colors (track, thumb, focus ring) are controlled by the Tailwind theme.</li>
+</ul>
+
+<!-- ─── Examples ──────────────────────────────────────── -->
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example">
-  <Switch label="Enable notifications" />
-</div>
-<CodeBlock>
-  {`<Switch label="Enable notifications" />`}
-</CodeBlock>
+<ExampleTabs code={`<Switch label="Enable notifications" />`}>
+  <div class="max-w-md" data-testid="switch-basic">
+    <Switch label="Enable notifications" />
+  </div>
+</ExampleTabs>
 
 <h3>With Initial Value</h3>
-<div class="example">
-  <Switch 
-    label="Dark mode" 
-    checked={true}
-  />
-</div>
-<CodeBlock>
-  {`<Switch 
-  label="Dark mode" 
-  checked={true}
-/>`}
-</CodeBlock>
+<ExampleTabs code={`<Switch label="Dark mode" checked={true} />`}>
+  <div class="max-w-md" data-testid="switch-initial">
+    <Switch label="Dark mode" checked={true} />
+  </div>
+</ExampleTabs>
 
 <h3>Different Sizes</h3>
-<div class="example">
-  <div class="flex flex-col gap-4">
-    <Switch 
-      label="Small" 
-      size="sm"
-    />
-    <Switch 
-      label="Medium (default)" 
-      size="md"
-    />
-    <Switch 
-      label="Large" 
-      size="lg"
-    />
+<ExampleTabs code={`<Switch label="Small" size="sm" />
+<Switch label="Medium (default)" size="md" />
+<Switch label="Large" size="lg" />`}>
+  <div class="max-w-md flex flex-col gap-4" data-testid="switch-sizes">
+    <Switch label="Small" size="sm" />
+    <Switch label="Medium (default)" size="md" />
+    <Switch label="Large" size="lg" />
   </div>
-</div>
-<CodeBlock>
-  {`<Switch 
-  label="Small" 
-  size="sm"
-/>
-<Switch 
-  label="Medium (default)" 
-  size="md"
-/>
-<Switch 
-  label="Large" 
-  size="lg"
-/>`}
-</CodeBlock>
+</ExampleTabs>
 
-<h3>Disabled State</h3>
-<div class="example">
-  <div class="flex flex-col gap-4">
-    <Switch 
-      label="Disabled (off)" 
-      disabled={true}
-    />
-    <Switch 
-      label="Disabled (on)" 
-      checked={true}
-      disabled={true}
-    />
+<h3>Disabled States</h3>
+<ExampleTabs code={`<Switch label="Disabled (off)" disabled={true} />
+<Switch label="Disabled (on)" checked={true} disabled={true} />`}>
+  <div class="max-w-md flex flex-col gap-4" data-testid="switch-disabled">
+    <Switch label="Disabled (off)" disabled={true} />
+    <Switch label="Disabled (on)" checked={true} disabled={true} />
   </div>
-</div>
-<CodeBlock>
-  {`<Switch 
-  label="Disabled (off)" 
-  disabled={true}
-/>
-<Switch 
-  label="Disabled (on)" 
-  checked={true}
-  disabled={true}
-/>`}
-</CodeBlock>
+</ExampleTabs>
 
 <h3>Required Field</h3>
-<div class="example">
-  <Switch 
-    label="I agree to the terms" 
-    required={true}
-  />
-</div>
-<CodeBlock>
-  {`<Switch 
-  label="I agree to the terms" 
-  required={true}
-/>`}
-</CodeBlock>
+<ExampleTabs code={`<Switch label="I agree to the terms" required={true} />`}>
+  <div class="max-w-md" data-testid="switch-required">
+    <Switch label="I agree to the terms" required={true} />
+  </div>
+</ExampleTabs>
 
 <h3>Without Label</h3>
-<div class="example">
-  <div class="flex items-center gap-2">
+<ExampleTabs code={`<div class="flex items-center gap-2">
+  <span>Airplane mode</span>
+  <Switch ariaLabel="Toggle airplane mode" />
+</div>`}>
+  <div class="max-w-md flex items-center gap-2" data-testid="switch-no-label">
     <span>Airplane mode</span>
     <Switch ariaLabel="Toggle airplane mode" />
   </div>
-</div>
-<CodeBlock>
-  {`<div class="flex items-center gap-2">
-  <span>Airplane mode</span>
-  <Switch ariaLabel="Toggle airplane mode" />
-</div>`}
-</CodeBlock>
+</ExampleTabs>
 
+<!-- ─── Slots ─────────────────────────────────────────── -->
+<h2>Slots</h2>
+<p>
+  The Switch component does not expose named slots. Use props for customization.
+</p>
+
+<!-- ─── Props ─────────────────────────────────────────── -->
 <h2>Props</h2>
 <PropsTable component={SwitchModule} />
 
+<!-- ─── Events ────────────────────────────────────────── -->
 <h2>Events</h2>
 <EventsTable component={SwitchModule} />
 
+<!-- ─── Accessibility ─────────────────────────────────── -->
 <h2>Accessibility</h2>
-<p>
-  The Switch component follows accessibility best practices:
-</p>
 <ul>
-  <li>Uses a native <code>&lt;input type="checkbox"&gt;</code> for best compatibility</li>
-  <li>Proper focus states with visible indicators</li>
-  <li>Labels are properly associated with inputs</li>
-  <li>ARIA labels for switches without visible labels</li>
-  <li>Proper disabled states with visual indicators</li>
-  <li>High color contrast between track and thumb</li>
-  <li>Smooth transitions for state changes</li>
+  <li>Uses a native <code>&lt;input type="checkbox" role="switch"&gt;</code> for
+    maximum compatibility.</li>
+  <li>Screen readers announce "on/off" instead of "checked/unchecked".</li>
+  <li>Visible focus indicators with sufficient contrast.</li>
+  <li>Labels properly associated via <code>for</code>/<code>id</code>.</li>
+  <li>High contrast between track and thumb colors.</li>
 </ul>
 
-<h2>Keyboard Interaction</h2>
-<ul>
-  <li><code>Tab</code> - Move focus to the switch</li>
-  <li><code>Space</code> - Toggle the switch state</li>
-</ul>
-
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-  .example {
-    @apply my-4 p-4 border border-border rounded-md;
-    @apply flex flex-col gap-4 max-w-md;
-  }
-</style>
+<!-- ─── Keyboard Support ──────────────────────────────── -->
+<h2>Keyboard Support</h2>
+<table>
+  <thead>
+    <tr><th>Key</th><th>Function</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><kbd>Space</kbd></td><td>Toggle the switch state</td></tr>
+    <tr><td><kbd>Enter</kbd></td><td>Toggle the switch state (optional)</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td>Move focus to the switch</td></tr>
+  </tbody>
+</table>
