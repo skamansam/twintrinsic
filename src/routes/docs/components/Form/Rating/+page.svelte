@@ -1,255 +1,101 @@
 <!--
 @component
-Documentation page for the Rating component.
+Rating documentation page — standardized structure
 -->
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Rating from "$lib/components/Form/Rating.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as RatingModule from "$lib/components/Form/Rating.svelte"
 
 let hoverRating = $state(0)
-
 const ratingLabels: Record<number, string> = {
-  0: 'Not rated',
-  1: 'Poor',
-  2: 'Fair',
-  3: 'Good',
-  4: 'Very Good',
-  5: 'Excellent'
-}
-
-function handleHover(event: CustomEvent<{ value: number }>) {
-  hoverRating = event.detail.value
+  0: 'Not rated', 1: 'Poor', 2: 'Fair', 3: 'Good', 4: 'Very Good', 5: 'Excellent'
 }
 </script>
+
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
 
 <h1>Rating</h1>
 
 <p>
-  The Rating component provides an interactive way for users to provide ratings using stars or custom icons.
-  It supports various configurations including half-star ratings, custom sizes, and different visual styles.
+  <strong>Rating</strong> provides an interactive star-rating or custom-icon input
+  for collecting user feedback, reviews, or satisfaction scores.
 </p>
+
+<h2>What, When &amp; Why</h2>
+
+<h3>What is it?</h3>
+<p>
+  A row of selectable icons (stars by default) that map to numeric values.
+  Supports half-star increments, custom icons (hearts, thumbs), and read-only display.
+  Implements the WAI-ARIA slider pattern.
+</p>
+
+<h3>When should I use it?</h3>
+<p>
+  Use <code>&lt;Rating&gt;</code> for subjective quality assessments: product reviews,
+  satisfaction surveys, content ratings. For objective numeric input, use
+  <code>&lt;NumberInput&gt;</code> or <code>&lt;Slider&gt;</code>.
+</p>
+
+<h3>Why does it exist?</h3>
+<ul>
+  <li><strong>Familiar metaphor</strong> — star ratings are universally understood from e-commerce.</li>
+  <li><strong>Visual</strong> — more engaging than a plain number input.</li>
+  <li><strong>Accessible</strong> — WAI-ARIA slider pattern with <code>aria-valuetext</code> ("4 out of 5 stars").</li>
+</ul>
+
+<h2>Responsiveness</h2>
+<ul>
+  <li>Sizes: <code>sm</code>, <code>md</code>, <code>lg</code>.</li>
+  <li>Touch targets meet 44×44 px minimum.</li>
+</ul>
+
+<h2>Customization</h2>
+<ul>
+  <li>Icons: star (default), heart, or custom via Icon component.</li>
+  <li>Variants: <code>default</code>, <code>primary</code>, <code>secondary</code>, <code>success</code>, <code>warning</code>, <code>error</code>, <code>info</code>.</li>
+  <li>Half-star increments via <code>step={0.5}</code>.</li>
+  <li>Max value (e.g., 10 stars) via <code>max</code>.</li>
+  <li>Show numeric value via <code>showValue</code>.</li>
+</ul>
 
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example" data-testid="rating-basic-usage">
-  <Rating value={3} />
-</div>
-<CodeBlock>
-  {`<Rating value={3} />`}
-</CodeBlock>
+<ExampleTabs code={`<Rating value={3} />`}>
+  <div class="max-w-md" data-testid="rating-basic-usage"><Rating value={3} /></div>
+</ExampleTabs>
 
 <h3>Half-Star Ratings</h3>
-<div class="example" data-testid="rating-half-star">
-  <div class="flex flex-col gap-4">
-    <div class="flex items-center gap-4">
-      <span class="w-32">Default stars:</span>
-      <Rating 
-        value={3.5} 
-        step={0.5}
-      />
-    </div>
-    <div class="flex items-center gap-4">
-      <span class="w-32">Heart icons:</span>
-      <Rating 
-        value={3.5} 
-        step={0.5}
-        icon="heart"
-        emptyIcon="heart"
-        variant="error"
-      />
-    </div>
-    <div class="flex items-center gap-4">
-      <span class="w-32">FO4 icons:</span>
-      <Rating 
-        value={2}
-        icon="heart"
-        emptyIcon="heart"
-        variant="error"
-      />
-    </div>
-  </div>
-</div>
-<CodeBlock>
-  {`<Rating value={3.5} step={0.5} />
-
-<Rating 
-  value={3.5} 
-  step={0.5}
-  icon="heart"
-  emptyIcon="heart"
-  variant="error"
-/>`}
-</CodeBlock>
+<ExampleTabs code={`<Rating value={3.5} step={0.5} />`}>
+  <div class="max-w-md" data-testid="rating-half-star"><Rating value={3.5} step={0.5} /></div>
+</ExampleTabs>
 
 <h3>Different Sizes</h3>
-<div class="example" data-testid="rating-sizes">
-  <div class="flex flex-col gap-4">
-    <div class="flex items-center gap-4">
-      <span class="w-20">Small:</span>
-      <Rating value={4} size="sm" />
-    </div>
-    <div class="flex items-center gap-4">
-      <span class="w-20">Medium:</span>
-      <Rating value={4} size="md" />
-    </div>
-    <div class="flex items-center gap-4">
-      <span class="w-20">Large:</span>
-      <Rating value={4} size="lg" />
-    </div>
-    <div class="flex items-center gap-4">
-      <span class="w-20">Large (heart):</span>
-      <Rating value={4} size="lg" icon="heart" emptyIcon="heart" variant="error" />
-    </div>
-  </div>
-</div>
-<CodeBlock>
-  {`<Rating value={4} size="sm" />
+<ExampleTabs code={`<Rating value={4} size="sm" />
 <Rating value={4} size="md" />
-<Rating value={4} size="lg" />
-<Rating value={4} size="lg" icon="heart" emptyIcon="heart" variant="error" />`}
-</CodeBlock>
-
-<h3>Color Variants</h3>
-<div class="example" data-testid="rating-variants">
-  <div class="flex flex-col gap-4">
-    <div class="flex items-center">
-      <span class="w-20">Default:</span>
-      <Rating value={4} variant="default" />
-    </div>
-    <div class="flex items-center">
-      <span class="w-20">Primary:</span>
-      <Rating value={4} variant="primary" />
-    </div>
-    <div class="flex items-center">
-      <span class="w-20">Secondary:</span>
-      <Rating value={4} variant="secondary" />
-    </div>
-    <div class="flex items-center">
-      <span class="w-20">Success:</span>
-      <Rating value={4} variant="success" />
-    </div>
-    <div class="flex items-center">
-      <span class="w-20">Warning:</span>
-      <Rating value={4} variant="warning" />
-    </div>
-    <div class="flex items-center">
-      <span class="w-20">Error:</span>
-      <Rating value={4} variant="error" />
-    </div>
-    <div class="flex items-center">
-      <span class="w-20">Info:</span>
-      <Rating value={4} variant="info" />
-    </div>
+<Rating value={4} size="lg" />`}>
+  <div class="max-w-md flex flex-col gap-2" data-testid="rating-sizes">
+    <Rating value={4} size="sm" />
+    <Rating value={4} size="md" />
+    <Rating value={4} size="lg" />
   </div>
-</div>
-<CodeBlock>
-  {`<Rating value={4} variant="default" />
-<Rating value={4} variant="primary" />
-<Rating value={4} variant="secondary" />
-<Rating value={4} variant="success" />
-<Rating value={4} variant="warning" />
-<Rating value={4} variant="error" />
-<Rating value={4} variant="info" />`}
-</CodeBlock>
+</ExampleTabs>
 
-<h3>Read-only and Disabled States</h3>
-<div class="example" data-testid="rating-states">
-  <div class="flex flex-col gap-4">
-    <div class="flex items-center">
-      <span class="w-20">Read-only:</span>
-      <Rating value={3.5} readonly={true} />
-    </div>
-    <div class="flex items-center">
-      <span class="w-20">Disabled:</span>
-      <Rating value={3.5} disabled={true} />
-    </div>
-  </div>
-</div>
-<CodeBlock>
-  {`<Rating value={3.5} readonly={true} />
-<Rating value={3.5} disabled={true} />`}
-</CodeBlock>
+<h3>Read-only</h3>
+<ExampleTabs code={`<Rating value={3.5} readonly={true} />`}>
+  <div class="max-w-md" data-testid="rating-readonly"><Rating value={3.5} readonly={true} /></div>
+</ExampleTabs>
 
 <h3>With Value Display</h3>
-<div class="example" data-testid="rating-value-display">
-  <div class="flex flex-col gap-4">
-    <div class="flex items-center gap-4">
-      <Rating value={4} showValue={true} />
-    </div>
-    <div class="flex items-center gap-4">
-      <Rating value={4} showValue={true} icon="star" variant="success" />
-    </div>
-  </div>
-</div>
-<CodeBlock>
-  {`<Rating value={4} showValue={true} />
-
-<Rating value={4} showValue={true} icon="star" variant="success" />`}
-</CodeBlock>
-
-<h3>Hover Callback with Dynamic Content</h3>
-<div class="example" data-testid="rating-hover">
-  <div class="flex flex-col gap-4">
-    <div class="flex items-center gap-4">
-      <Rating 
-        value={3} 
-        showPreview={true}
-        onhover={handleHover}
-      />
-      <div class="text-sm font-medium text-text dark:text-text">
-        {ratingLabels[hoverRating] || ratingLabels[0]}
-      </div>
-    </div>
-  </div>
-</div>
-<CodeBlock>
-  {`\u003Cscript>
-  let hoverRating = $state(0)
-
-  const ratingLabels = {
-    0: 'Not rated',
-    1: 'Poor',
-    2: 'Fair',
-    3: 'Good',
-    4: 'Very Good',
-    5: 'Excellent'
-  }
-
-  function handleHover(event) {
-    hoverRating = event.detail.value
-  }
-\u003C/script>
-
-<Rating 
-  value={3} 
-  showPreview={true}
-  onhover={handleHover}
-/>
-<div>{ratingLabels[hoverRating] || ratingLabels[0]}</div>`}
-</CodeBlock>
-
-<h3>Custom Maximum</h3>
-<div class="example" data-testid="rating-custom-max">
-  <div class="flex flex-col gap-4">
-    <div class="flex items-center gap-4">
-      <span class="w-32">Out of 10:</span>
-      <Rating value={7} max={10} />
-    </div>
-    <div class="flex items-center gap-4">
-      <span class="w-32">Out of 10 (info):</span>
-      <Rating value={7} max={10} icon="star" variant="info" />
-    </div>
-  </div>
-</div>
-<CodeBlock>
-  {`<Rating value={7} max={10} />
-
-<Rating value={7} max={10} icon="star" variant="info" />`}
-</CodeBlock>
+<ExampleTabs code={`<Rating value={4} showValue={true} />`}>
+  <div class="max-w-md" data-testid="rating-value-display"><Rating value={4} showValue={true} /></div>
+</ExampleTabs>
 
 <h2>Props</h2>
 <PropsTable component={RatingModule} />
@@ -258,31 +104,20 @@ function handleHover(event: CustomEvent<{ value: number }>) {
 <EventsTable component={RatingModule} />
 
 <h2>Accessibility</h2>
-<p>
-  The Rating component follows accessibility best practices:
-</p>
 <ul>
-  <li>Uses appropriate ARIA attributes (<code>role="slider"</code> for interactive ratings)</li>
-  <li>Provides <code>aria-valuemin</code>, <code>aria-valuemax</code>, and <code>aria-valuenow</code> for screen readers</li>
-  <li>Supports keyboard navigation for selecting ratings</li>
-  <li>Proper focus states with visible indicators</li>
-  <li>Descriptive <code>aria-valuetext</code> (e.g., "4 out of 5")</li>
-  <li>Proper disabled and readonly states</li>
+  <li><code>role="slider"</code> with <code>aria-valuemin</code>, <code>aria-valuemax</code>, <code>aria-valuenow</code>.</li>
+  <li><code>aria-valuetext</code> provides human-readable value ("4 out of 5 stars").</li>
+  <li>Arrow keys adjust rating; Home/End for min/max.</li>
+  <li>Visible focus ring.</li>
 </ul>
 
-<h2>Keyboard Interaction</h2>
-<ul>
-  <li><code>Tab</code> - Focus the rating component</li>
-  <li><code>ArrowRight/ArrowUp</code> - Increase rating by step value</li>
-  <li><code>ArrowLeft/ArrowDown</code> - Decrease rating by step value</li>
-  <li><code>Home</code> - Set to minimum value</li>
-  <li><code>End</code> - Set to maximum value</li>
-</ul>
-
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-  .example {
-    @apply my-4 p-4 border border-border rounded-md;
-    @apply flex flex-col gap-4 max-w-md;
-  }
-</style>
+<h2>Keyboard Support</h2>
+<table>
+  <thead><tr><th>Key</th><th>Function</th></tr></thead>
+  <tbody>
+    <tr><td><kbd>Arrow Right</kbd> / <kbd>Arrow Up</kbd></td><td>Increase rating</td></tr>
+    <tr><td><kbd>Arrow Left</kbd> / <kbd>Arrow Down</kbd></td><td>Decrease rating</td></tr>
+    <tr><td><kbd>Home</kbd></td><td>Set to minimum</td></tr>
+    <tr><td><kbd>End</kbd></td><td>Set to maximum</td></tr>
+  </tbody>
+</table>

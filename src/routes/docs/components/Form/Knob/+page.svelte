@@ -1,206 +1,98 @@
 <!--
 @component
-Documentation page for the Knob component.
+Knob documentation page — standardized structure
 -->
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import FormField from "$lib/components/Form/FormField.svelte"
 import Knob from "$lib/components/Form/Knob.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as KnobModule from "$lib/components/Form/Knob.svelte"
+
+const valueDisplayCode = `<Knob name="progress" value={75} showValue={true} valueTemplate="{value}%" />`
+const sizesCode = `<Knob size="sm" value={25} />
+<Knob size="md" value={50} />
+<Knob size="lg" value={75} />`
 </script>
+
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
 
 <h1>Knob</h1>
 
 <p>
-  The Knob component provides a circular slider for selecting numeric values.
-  It offers an intuitive interface with drag interaction, keyboard controls,
-  and customizable appearance.
+  <strong>Knob</strong> is a circular rotary control for selecting a value within a
+  range. Common in audio/video production, IoT dashboards, and industrial control UIs.
 </p>
+
+<h2>What, When &amp; Why</h2>
+
+<h3>What is it?</h3>
+<p>
+  A circular SVG-based control with a draggable thumb that maps angle to value.
+  Supports keyboard navigation (arrows, Home/End) and touch drag interaction.
+</p>
+
+<h3>When should I use it?</h3>
+<p>
+  Use <code>&lt;Knob&gt;</code> in domain-specific UIs that mimic physical hardware
+  (audio mixers, light controls, scientific instruments). For general-purpose forms,
+  use <code>&lt;Slider&gt;</code> instead.
+</p>
+
+<h3>Why does it exist?</h3>
+<ul>
+  <li><strong>Domain familiarity</strong> — audio engineers expect knobs for volume/pan controls.</li>
+  <li><strong>Compact form factor</strong> — occupies less space than a horizontal slider.</li>
+  <li><strong>WAI-ARIA slider pattern</strong> — full keyboard support with screen reader announcements.</li>
+</ul>
+
+<h2>Responsiveness</h2>
+<ul>
+  <li>Sizes: <code>sm</code> (48px), <code>md</code> (72px), <code>lg</code> (96px).</li>
+  <li>Touch drag works on mobile; keyboard fallback always available.</li>
+</ul>
+
+<h2>Customization</h2>
+<ul>
+  <li>Custom color, thickness, tick marks.</li>
+  <li>Value display with custom template.</li>
+  <li>Min/max/step configuration.</li>
+</ul>
 
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example" data-testid="knob-basic-usage">
-  <Knob 
-    name="volume" 
-    value={50} 
-    min={0} 
-    max={100} 
-  />
-</div>
-<CodeBlock>
-  {`<Knob 
-  name="volume" 
-  value={50} 
-  min={0} 
-  max={100} 
-/>`}
-</CodeBlock>
+<ExampleTabs code={`<Knob name="volume" value={50} min={0} max={100} />`}>
+  <div class="max-w-md flex justify-center" data-testid="knob-basic-usage">
+    <Knob name="volume" value={50} min={0} max={100} />
+  </div>
+</ExampleTabs>
 
 <h3>With Value Display</h3>
-<div class="example" data-testid="knob-value-display">
-  <Knob 
-    name="progress" 
-    value={75} 
-    showValue={true}
-    valueTemplate={"{value}%"} 
-  />
-</div>
-<CodeBlock>
-  {`<Knob 
-  name="progress" 
-  value={75} 
-  showValue={true}
-  valueTemplate="{value}%" 
-/>`}
-</CodeBlock>
+<ExampleTabs code={valueDisplayCode}>
+  <div class="max-w-md flex justify-center" data-testid="knob-value-display">
+    <Knob name="progress" value={75} showValue={true} valueTemplate="{75}%" />
+  </div>
+</ExampleTabs>
 
 <h3>Different Sizes</h3>
-<div class="example" data-testid="knob-sizes">
-  <div class="flex items-center gap-8">
-    <div class="flex flex-col items-center">
-      <span class="text-sm mb-2">Small</span>
-      <Knob 
-        size="sm"
-        value={25}
-      />
-    </div>
-    <div class="flex flex-col items-center">
-      <span class="text-sm mb-2">Medium (default)</span>
-      <Knob 
-        size="md"
-        value={50}
-      />
-    </div>
-    <div class="flex flex-col items-center">
-      <span class="text-sm mb-2">Large</span>
-      <Knob 
-        size="lg"
-        value={75}
-      />
-    </div>
+<ExampleTabs code={sizesCode}>
+  <div class="max-w-md flex items-center justify-center gap-8" data-testid="knob-sizes">
+    <div class="flex flex-col items-center"><span class="text-sm mb-2">Small</span><Knob size="sm" value={25} /></div>
+    <div class="flex flex-col items-center"><span class="text-sm mb-2">Medium</span><Knob size="md" value={50} /></div>
+    <div class="flex flex-col items-center"><span class="text-sm mb-2">Large</span><Knob size="lg" value={75} /></div>
   </div>
-</div>
-<CodeBlock>
-  {`<Knob size="sm" value={25} />
-<Knob size="md" value={50} />
-<Knob size="lg" value={75} />`}
-</CodeBlock>
+</ExampleTabs>
 
-<h3>Custom Color</h3>
-<div class="example" data-testid="knob-colors">
-  <div class="flex items-center gap-8">
-    <Knob 
-      value={60}
-      color="var(--color-success-500)"
-    />
-    <Knob 
-      value={40}
-      color="var(--color-warning-500)"
-    />
-    <Knob 
-      value={20}
-      color="var(--color-error-500)"
-    />
+<h3>Disabled</h3>
+<ExampleTabs code={`<Knob value={65} disabled={true} />`}>
+  <div class="max-w-md flex justify-center" data-testid="knob-disabled-state">
+    <Knob value={65} disabled={true} />
   </div>
-</div>
-<CodeBlock>
-  {`<Knob 
-  value={60}
-  color="var(--color-success-500)"
-/>
-<Knob 
-  value={40}
-  color="var(--color-warning-500)"
-/>
-<Knob 
-  value={20}
-  color="var(--color-error-500)"
-/>`}
-</CodeBlock>
-
-<h3>With Tick Marks</h3>
-<div class="example" data-testid="knob-ticks">
-  <Knob 
-    value={30}
-    showTicks={true}
-    tickCount={12}
-  />
-</div>
-<CodeBlock>
-  {`<Knob 
-  value={30}
-  showTicks={true}
-  tickCount={12}
-/>`}
-</CodeBlock>
-
-<h3>Custom Thickness</h3>
-<div class="example" data-testid="knob-thickness">
-  <div class="flex items-center gap-8">
-    <Knob 
-      value={50}
-      thickness={2}
-    />
-    <Knob 
-      value={50}
-      thickness={6}
-    />
-    <Knob 
-      value={50}
-      thickness={10}
-    />
-  </div>
-</div>
-<CodeBlock>
-  {`<Knob value={50} thickness={2} />
-<Knob value={50} thickness={6} />
-<Knob value={50} thickness={10} />`}
-</CodeBlock>
-
-<h3>Disabled State</h3>
-<div class="example" data-testid="knob-disabled-state">
-  <Knob 
-    value={65}
-    disabled={true}
-  />
-</div>
-<CodeBlock>
-  {`<Knob 
-  value={65}
-  disabled={true}
-/>`}
-</CodeBlock>
-
-<h3>With Form Field</h3>
-<div class="example" data-testid="knob-formfield">
-  <FormField label="Temperature">
-    <Knob 
-      name="temperature" 
-      value={22} 
-      min={15} 
-      max={30} 
-      step={0.5} 
-      showValue={true}
-      valueTemplate={"{value}°C"}
-    />
-  </FormField>
-</div>
-<CodeBlock>
-  {`<FormField label="Temperature">
-  <Knob 
-    name="temperature" 
-    value={22} 
-    min={15} 
-    max={30} 
-    step={0.5} 
-    showValue={true}
-    valueTemplate="{value}°C"
-  />
-</FormField>`}
-</CodeBlock>
+</ExampleTabs>
 
 <h2>Props</h2>
 <PropsTable component={KnobModule} />
@@ -209,52 +101,19 @@ import * as KnobModule from "$lib/components/Form/Knob.svelte"
 <EventsTable component={KnobModule} />
 
 <h2>Accessibility</h2>
-<p>
-  The Knob component follows accessibility best practices:
-</p>
 <ul>
-  <li>Uses <code>role="slider"</code> for proper semantics</li>
-  <li>Includes <code>aria-valuemin</code>, <code>aria-valuemax</code>, and <code>aria-valuenow</code> attributes</li>
-  <li>Provides keyboard navigation with arrow keys</li>
-  <li>Supports focus states with visible indicators</li>
-  <li>Includes proper disabled states</li>
-  <li>Uses ARIA labels for better screen reader support</li>
+  <li><code>role="slider"</code> with <code>aria-valuemin</code>, <code>aria-valuemax</code>, <code>aria-valuenow</code>.</li>
+  <li>Arrow keys increment/decrement; Home/End for min/max.</li>
+  <li>Visible focus ring.</li>
 </ul>
 
-<h2>Keyboard Interaction</h2>
-<ul>
-  <li><code>Tab</code> - Move focus to the knob</li>
-  <li><code>ArrowUp</code>/<code>ArrowRight</code> - Increase value</li>
-  <li><code>ArrowDown</code>/<code>ArrowLeft</code> - Decrease value</li>
-  <li><code>Home</code> - Set to minimum value</li>
-  <li><code>End</code> - Set to maximum value</li>
-</ul>
-
-<h2>Form Integration</h2>
-<p>
-  The Knob component integrates with the Form component for validation and submission:
-</p>
-<CodeBlock>
-  {`<Form onSubmit={handleSubmit}>
-  <FormField label="Volume">
-    <Knob 
-      name="volume" 
-      value={50} 
-      min={0} 
-      max={100} 
-      showValue={true}
-      valueTemplate="{value}%"
-    />
-  </FormField>
-  
-  <Button type="submit">Save Settings</Button>
-</Form>`}
-</CodeBlock>
-
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-  .example {
-    @apply my-4 p-4 border border-border rounded-md;
-    @apply flex flex-col items-center justify-center;
-  }
-</style>
+<h2>Keyboard Support</h2>
+<table>
+  <thead><tr><th>Key</th><th>Function</th></tr></thead>
+  <tbody>
+    <tr><td><kbd>Arrow Up</kbd> / <kbd>Arrow Right</kbd></td><td>Increase value</td></tr>
+    <tr><td><kbd>Arrow Down</kbd> / <kbd>Arrow Left</kbd></td><td>Decrease value</td></tr>
+    <tr><td><kbd>Home</kbd></td><td>Set to minimum</td></tr>
+    <tr><td><kbd>End</kbd></td><td>Set to maximum</td></tr>
+  </tbody>
+</table>

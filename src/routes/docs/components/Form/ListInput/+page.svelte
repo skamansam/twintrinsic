@@ -1,5 +1,9 @@
+<!--
+@component
+ListInput documentation page — standardized structure
+-->
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import FormField from "$lib/components/Form/FormField.svelte"
@@ -8,109 +12,95 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as ListInputModule from "$lib/components/Form/ListInput.svelte"
 </script>
 
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
+
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>ListInput</h1>
 
   <p>
-    The ListInput component manages a list of values rendered as chips with a
-    single text field. Values are added by pressing <kbd>Enter</kbd>,
-    <kbd>Tab</kbd>, or <kbd>,</kbd>, removed via the chip's remove button or
-    <kbd>Backspace</kbd>, and can be validated as they are entered.
+    <strong>ListInput</strong> manages a list of values rendered as removable chips
+    with a text input. Users type a value and press Enter/Tab/comma to add it to the list.
   </p>
+
+  <h2>What, When &amp; Why</h2>
+
+  <h3>What is it?</h3>
+  <p>
+    A text input that converts typed values into discrete, removable chip elements.
+    Supports validation, disabled state, and form integration.
+  </p>
+
+  <h3>When should I use it?</h3>
+  <p>
+    Use <code>&lt;ListInput&gt;</code> when users need to enter multiple short values:
+    tags, email recipients, skills, keywords. For selecting from a predefined list,
+    use <code>&lt;Listbox&gt;</code>.
+  </p>
+
+  <h3>Why does it exist?</h3>
+  <ul>
+    <li><strong>Discrete values</strong> — each value is a separate, removable chip.</li>
+    <li><strong>Validation</strong> — reject invalid values before adding them.</li>
+    <li><strong>Keyboard friendly</strong> — Enter/Tab/comma to add, Backspace to remove.</li>
+  </ul>
+
+  <h2>Responsiveness</h2>
+  <ul>
+    <li>Fills container width; chips wrap to the next line when space runs out.</li>
+    <li>Touch targets meet 44×44 px minimum.</li>
+  </ul>
+
+  <h2>Customization</h2>
+  <ul>
+    <li>Validation via <code>validator</code> function.</li>
+    <li>Error message via <code>errorMessage</code>.</li>
+    <li>Wrap with <code>&lt;FormField&gt;</code> for labels.</li>
+  </ul>
 
   <h2>Examples</h2>
 
   <h3>Basic Usage</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="list-input-basic">
-    <ListInput
-      name="tags"
-      ariaLabel="Add a tag"
-      placeholder="Type and press Enter..."
-      values={["svelte", "typescript"]}
-    />
-  </div>
-
-  <CodeBlock language="svelte">{`<ListInput
-  name="tags"
-  ariaLabel="Add a tag"
-  placeholder="Type and press Enter..."
-  values={['svelte', 'typescript']}
-/>`}</CodeBlock>
+  <ExampleTabs code={`<ListInput name="tags" ariaLabel="Add a tag" placeholder="Type and press Enter..." values={['svelte', 'typescript']} />`}>
+    <div class="max-w-md" data-testid="list-input-basic">
+      <ListInput name="tags" ariaLabel="Add a tag" placeholder="Type and press Enter..." values={["svelte", "typescript"]} />
+    </div>
+  </ExampleTabs>
 
   <h3>With Validation</h3>
-  <p>
-    Pass a <code>validator</code> to reject invalid values; the
-    <code>errorMessage</code> is announced via <code>role="alert"</code>.
-  </p>
-  <div class="not-prose mb-8 max-w-md" data-testid="list-input-validated">
-    <ListInput
-      name="emails"
-      ariaLabel="Add an email"
-      placeholder="Type an email and press Enter..."
-      values={["ada@example.com"]}
-      validator={(value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)}
-      errorMessage="Please enter a valid email address"
-    />
-  </div>
-
-  <CodeBlock language="svelte">{`<ListInput
+  <ExampleTabs code={`<ListInput
   name="emails"
   ariaLabel="Add an email"
   placeholder="Type an email and press Enter..."
   values={['ada@example.com']}
   validator={(value) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value)}
   errorMessage="Please enter a valid email address"
-/>`}</CodeBlock>
+/>`}>
+    <div class="max-w-md" data-testid="list-input-validated">
+      <ListInput name="emails" ariaLabel="Add an email" placeholder="Type an email and press Enter..." values={["ada@example.com"]}
+        validator={(value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)} errorMessage="Please enter a valid email address" />
+    </div>
+  </ExampleTabs>
 
   <h3>Disabled</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="list-input-disabled">
-    <ListInput
-      name="readonly"
-      ariaLabel="Readonly tags"
-      placeholder="Type and press Enter..."
-      values={["locked", "frozen"]}
-      disabled
-    />
-  </div>
+  <ExampleTabs code={`<ListInput name="readonly" ariaLabel="Readonly tags" values={['locked', 'frozen']} disabled />`}>
+    <div class="max-w-md" data-testid="list-input-disabled">
+      <ListInput name="readonly" ariaLabel="Readonly tags" values={["locked", "frozen"]} disabled />
+    </div>
+  </ExampleTabs>
 
-  <CodeBlock language="svelte">{`<ListInput
-  name="readonly"
-  ariaLabel="Readonly tags"
-  placeholder="Type and press Enter..."
-  values={['locked', 'frozen']}
-  disabled
-/>`}</CodeBlock>
-
-  <h3>With Form Field</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="list-input-formfield">
-    <FormField label="Recipients">
-      <ListInput
-        name="recipients"
-        ariaLabel="Add a recipient"
-        placeholder="Type an email and press Enter..."
-      />
-    </FormField>
-  </div>
-
-  <CodeBlock language="svelte">{`<FormField label="Recipients">
-  <ListInput
-    name="recipients"
-    ariaLabel="Add a recipient"
-    placeholder="Type an email and press Enter..."
-  />
-</FormField>`}</CodeBlock>
-
-  <h2>ListInput Props</h2>
+  <h2>Props</h2>
   <PropsTable component={ListInputModule} />
 
-  <h2>ListInput Events</h2>
+  <h2>Events</h2>
   <EventsTable component={ListInputModule} />
 
   <h2>Accessibility</h2>
   <ul>
-    <li>Each chip is exposed as a <code>role="button"</code> with a descriptive <code>aria-label</code> and a focused remove button labeled "Remove &#123;value&#125;"</li>
-    <li>The text field has an accessible name via <code>ariaLabel</code> (or <code>name</code>)</li>
-    <li>Validation errors render in a <code>role="alert"</code> region</li>
-    <li>Full keyboard support: Enter/Tab/comma to add, Backspace to remove, arrow keys to navigate chips, Escape to blur</li>
+    <li>Each chip is a <code>role="button"</code> with descriptive <code>aria-label</code>.</li>
+    <li>Text field has accessible name via <code>ariaLabel</code>.</li>
+    <li>Validation errors use <code>role="alert"</code>.</li>
+    <li>Full keyboard: Enter/Tab/comma to add, Backspace to remove, arrows to navigate chips.</li>
   </ul>
 </Container>

@@ -1,274 +1,121 @@
 <!--
 @component
-Documentation page for the SelectGroup component.
+SelectGroup documentation page — standardized structure
 -->
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import FormField from "$lib/components/Form/FormField.svelte"
 import Select from "$lib/components/Form/Select.svelte"
 import SelectGroup from "$lib/components/Form/SelectGroup.svelte"
-import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as SelectGroupModule from "$lib/components/Form/SelectGroup.svelte"
 
-// Sample data for examples
-const europeanCountries = [
-  { value: "fr", label: "France" },
-  { value: "de", label: "Germany" },
-  { value: "it", label: "Italy" },
-  { value: "es", label: "Spain" },
-  { value: "uk", label: "United Kingdom" },
-]
-
-const northAmericanCountries = [
-  { value: "us", label: "United States" },
-  { value: "ca", label: "Canada" },
-  { value: "mx", label: "Mexico" },
-]
-
-const asianCountries = [
-  { value: "jp", label: "Japan" },
-  { value: "cn", label: "China" },
-  { value: "in", label: "India" },
-  { value: "kr", label: "South Korea" },
-  { value: "sg", label: "Singapore" },
-]
-
-// Selected values for examples
-let selectedCountry = ""
+let selectedCountry = $state("")
 </script>
+
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
 
 <h1>SelectGroup</h1>
 
 <p>
-  The SelectGroup component is used to organize related options within a Select component. 
-  It creates semantic groupings with optional labels, making it easier for users to find 
-  and select options from large lists.
+  <strong>SelectGroup</strong> organizes related options within a Select component
+  using native <code>&lt;optgroup&gt;</code> elements with visual group labels.
 </p>
+
+<h2>What, When &amp; Why</h2>
+
+<h3>What is it?</h3>
+<p>
+  A wrapper that creates a labeled group of <code>&lt;option&gt;</code> elements
+  inside a <code>&lt;select&gt;</code>. The group label is visually distinct and
+  announced by screen readers.
+</p>
+
+<h3>When should I use it?</h3>
+<p>
+  Use <code>&lt;SelectGroup&gt;</code> when a Select has many options that benefit
+  from categorization (countries by continent, products by category). For fewer
+  options (5–15), groups may add unnecessary complexity.
+</p>
+
+<h3>Why does it exist?</h3>
+<ul>
+  <li><strong>Scannability</strong> — visual group labels help users find options faster.</li>
+  <li><strong>Semantics</strong> — native <code>&lt;optgroup&gt;</code> is announced by screen readers.</li>
+  <li><strong>Disable groups</strong> — disable an entire category at once.</li>
+</ul>
+
+<h2>Responsiveness</h2>
+<ul>
+  <li>Group labels and options adapt to the Select's width.</li>
+  <li>Touch targets meet 44×44 px minimum.</li>
+</ul>
+
+<h2>Customization</h2>
+<ul>
+  <li>Disable entire groups via <code>disabled</code> prop.</li>
+  <li>Wrap with <code>&lt;FormField&gt;</code> for labels and validation.</li>
+</ul>
 
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example" data-testid="select-group-basic">
-  <Select 
-    label="Select a country" 
-    bind:value={selectedCountry}
-  >
-    <SelectGroup label="Europe">
-      {#each europeanCountries as country}
-        <option value={country.value}>{country.label}</option>
-      {/each}
-    </SelectGroup>
-    <SelectGroup label="North America">
-      {#each northAmericanCountries as country}
-        <option value={country.value}>{country.label}</option>
-      {/each}
-    </SelectGroup>
-    <SelectGroup label="Asia">
-      {#each asianCountries as country}
-        <option value={country.value}>{country.label}</option>
-      {/each}
-    </SelectGroup>
-  </Select>
-  <p class="text-sm text-muted mt-2">Selected country: {selectedCountry || 'None'}</p>
-</div>
-<CodeBlock>
-  {`\u003Cscript>
-  const europeanCountries = [
-    { value: 'fr', label: 'France' },
-    { value: 'de', label: 'Germany' },
-    { value: 'it', label: 'Italy' },
-    { value: 'es', label: 'Spain' },
-    { value: 'uk', label: 'United Kingdom' }
-  ]
-
-  const northAmericanCountries = [
-    { value: 'us', label: 'United States' },
-    { value: 'ca', label: 'Canada' },
-    { value: 'mx', label: 'Mexico' }
-  ]
-
-  const asianCountries = [
-    { value: 'jp', label: 'Japan' },
-    { value: 'cn', label: 'China' },
-    { value: 'in', label: 'India' },
-    { value: 'kr', label: 'South Korea' },
-    { value: 'sg', label: 'Singapore' }
-  ]
-
-  let selectedCountry = ''
-\u003C/script>
-
-<Select 
-  label="Select a country" 
-  bind:value={selectedCountry}
->
-  <SelectGroup label="Europe">
-    {#each europeanCountries as country}
-      <option value={country.value}>{country.label}</option>
-    {/each}
-  </SelectGroup>
-  <SelectGroup label="North America">
-    {#each northAmericanCountries as country}
-      <option value={country.value}>{country.label}</option>
-    {/each}
-  </SelectGroup>
-  <SelectGroup label="Asia">
-    {#each asianCountries as country}
-      <option value={country.value}>{country.label}</option>
-    {/each}
-  </SelectGroup>
-</Select>`}
-</CodeBlock>
-
-<h3>Disabled Group</h3>
-<div class="example" data-testid="select-group-disabled">
-  <Select 
-    label="Select a country" 
-    bind:value={selectedCountry}
-  >
-    <SelectGroup label="Europe">
-      {#each europeanCountries as country}
-        <option value={country.value}>{country.label}</option>
-      {/each}
-    </SelectGroup>
-    <SelectGroup label="North America" disabled={true}>
-      {#each northAmericanCountries as country}
-        <option value={country.value}>{country.label}</option>
-      {/each}
-    </SelectGroup>
-    <SelectGroup label="Asia">
-      {#each asianCountries as country}
-        <option value={country.value}>{country.label}</option>
-      {/each}
-    </SelectGroup>
-  </Select>
-</div>
-<CodeBlock>
-  {`<Select 
-  label="Select a country" 
-  bind:value={selectedCountry}
->
-  <SelectGroup label="Europe">
-    {#each europeanCountries as country}
-      <option value={country.value}>{country.label}</option>
-    {/each}
-  </SelectGroup>
-  <SelectGroup label="North America" disabled={true}>
-    {#each northAmericanCountries as country}
-      <option value={country.value}>{country.label}</option>
-    {/each}
-  </SelectGroup>
-  <SelectGroup label="Asia">
-    {#each asianCountries as country}
-      <option value={country.value}>{country.label}</option>
-    {/each}
-  </SelectGroup>
-</Select>`}
-</CodeBlock>
-
-<h3>With Form Field</h3>
-<div class="example" data-testid="select-group-formfield">
-  <FormField label="Select a country" required={true}>
-    <Select 
-      required={true}
-      bind:value={selectedCountry}
-    >
-      <SelectGroup label="Europe">
-        {#each europeanCountries as country}
-          <option value={country.value}>{country.label}</option>
-        {/each}
-      </SelectGroup>
-      <SelectGroup label="North America">
-        {#each northAmericanCountries as country}
-          <option value={country.value}>{country.label}</option>
-        {/each}
-      </SelectGroup>
-    </Select>
-  </FormField>
-</div>
-<CodeBlock>
-  {`<FormField label="Select a country" required={true}>
-  <Select 
-    required={true}
-    bind:value={selectedCountry}
-  >
-    <SelectGroup label="Europe">
-      {#each europeanCountries as country}
-        <option value={country.value}>{country.label}</option>
-      {/each}
-    </SelectGroup>
-    <SelectGroup label="North America">
-      {#each northAmericanCountries as country}
-        <option value={country.value}>{country.label}</option>
-      {/each}
-    </SelectGroup>
-  </Select>
-</FormField>`}
-</CodeBlock>
-
-<h2>Props</h2>
-<PropsTable component={SelectGroupModule} />
-
-<h2>Accessibility</h2>
-<p>
-  The SelectGroup component follows accessibility best practices:
-</p>
-<ul>
-  <li>Uses the native <code>&lt;optgroup&gt;</code> element for proper semantics and screen reader support</li>
-  <li>Provides clear visual grouping with labels</li>
-  <li>Supports proper disabled states for entire groups</li>
-  <li>Maintains proper color contrast for group labels</li>
-</ul>
-
-<h2>Usage with Select Component</h2>
-<p>
-  The SelectGroup component is designed to be used within a Select component to organize related options:
-</p>
-<CodeBlock>
-  {`<Select name="country" label="Select a country">
+<ExampleTabs code={`<Select label="Select a country" bind:value={selectedCountry}>
   <SelectGroup label="Europe">
     <option value="fr">France</option>
     <option value="de">Germany</option>
     <option value="it">Italy</option>
   </SelectGroup>
-  
   <SelectGroup label="North America">
     <option value="us">United States</option>
     <option value="ca">Canada</option>
     <option value="mx">Mexico</option>
   </SelectGroup>
-</Select>`}
-</CodeBlock>
-
-<h2>Form Integration</h2>
-<p>
-  The SelectGroup component works seamlessly with the Form component when used within a Select:
-</p>
-<CodeBlock>
-  {`<Form onSubmit={handleSubmit}>
-  <FormField label="Country">
-    <Select name="country" required={true}>
+</Select>`}>
+  <div class="max-w-md" data-testid="select-group-basic">
+    <Select label="Select a country" bind:value={selectedCountry}>
       <SelectGroup label="Europe">
         <option value="fr">France</option>
         <option value="de">Germany</option>
+        <option value="it">Italy</option>
       </SelectGroup>
-      
       <SelectGroup label="North America">
         <option value="us">United States</option>
         <option value="ca">Canada</option>
+        <option value="mx">Mexico</option>
       </SelectGroup>
     </Select>
-  </FormField>
-  
-  <Button type="submit">Submit</Button>
-</Form>`}
-</CodeBlock>
+    <p class="text-sm text-muted mt-2">Selected: {selectedCountry || 'None'}</p>
+  </div>
+</ExampleTabs>
 
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-  .example {
-    @apply my-4 p-4 border border-border rounded-md;
-    @apply flex flex-col gap-4 max-w-md;
-  }
-</style>
+<h3>Disabled Group</h3>
+<ExampleTabs code={`<Select label="Select a country">
+  <SelectGroup label="Europe">
+    <option value="fr">France</option>
+    <option value="de">Germany</option>
+  </SelectGroup>
+  <SelectGroup label="North America" disabled={true}>
+    <option value="us">United States</option>
+    <option value="ca">Canada</option>
+  </SelectGroup>
+</Select>`}>
+  <div class="max-w-md" data-testid="select-group-disabled">
+    <Select label="Select a country">
+      <SelectGroup label="Europe"><option value="fr">France</option><option value="de">Germany</option></SelectGroup>
+      <SelectGroup label="North America" disabled={true}><option value="us">United States</option><option value="ca">Canada</option></SelectGroup>
+    </Select>
+  </div>
+</ExampleTabs>
+
+<h2>Props</h2>
+<PropsTable component={SelectGroupModule} />
+
+<h2>Accessibility</h2>
+<ul>
+  <li>Uses native <code>&lt;optgroup&gt;</code> for proper semantics.</li>
+  <li>Group labels announced by screen readers.</li>
+  <li>Disabled groups are visually and programmatically disabled.</li>
+</ul>

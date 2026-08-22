@@ -1,206 +1,103 @@
 <!--
 @component
-Documentation page for the InvalidState component.
+InvalidState documentation page — standardized structure
 -->
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import FormField from "$lib/components/Form/FormField.svelte"
 import InvalidState from "$lib/components/Form/InvalidState.svelte"
 import TextInput from "$lib/components/Form/TextInput.svelte"
-import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as InvalidStateModule from "$lib/components/Form/InvalidState.svelte"
 </script>
 
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
+
 <h1>InvalidState</h1>
 
 <p>
-  The InvalidState component provides a consistent way to display validation errors in forms.
-  It includes styling, icons, and proper accessibility attributes to ensure error messages
-  are clearly communicated to all users.
+  <strong>InvalidState</strong> displays validation error messages with consistent
+  styling, icons, and accessibility attributes.
 </p>
+
+<h2>What, When &amp; Why</h2>
+
+<h3>What is it?</h3>
+<p>
+  An error message component with <code>role="alert"</code> and
+  <code>aria-live="assertive"</code> so screen readers announce it immediately.
+  Includes a warning icon and red styling by default.
+</p>
+
+<h3>When should I use it?</h3>
+<p>
+  Use <code>&lt;InvalidState&gt;</code> inside <code>&lt;FormField&gt;</code> to
+  display validation errors. Show it conditionally when a field fails validation.
+</p>
+
+<h3>Why does it exist?</h3>
+<ul>
+  <li><strong>Accessibility</strong> — <code>role="alert"</code> announces errors to screen readers.</li>
+  <li><strong>Consistency</strong> — all error messages share the same icon, color, and spacing.</li>
+  <li><strong>Visibility</strong> — red color + icon draws attention without being disruptive.</li>
+</ul>
+
+<h2>Responsiveness</h2>
+<ul>
+  <li>Fills container width; text wraps naturally on narrow screens.</li>
+</ul>
+
+<h2>Customization</h2>
+<ul>
+  <li>Message via <code>message</code> prop or default slot.</li>
+  <li>Hide icon via <code>showIcon={false}</code>.</li>
+  <li>Custom icon via <code>icon</code> prop.</li>
+</ul>
 
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example" data-testid="invalidstate-basic-usage">
-  <InvalidState message="This field is required" />
-</div>
-<CodeBlock>
-  {`<InvalidState message="This field is required" />`}
-</CodeBlock>
+<ExampleTabs code={`<InvalidState message="This field is required" />`}>
+  <div class="max-w-md" data-testid="invalidstate-basic-usage">
+    <InvalidState message="This field is required" />
+  </div>
+</ExampleTabs>
 
-<h3>With Form Field</h3>
-<div class="example" data-testid="invalidstate-formfield">
-  <FormField label="Email">
-    <TextInput type="email" name="email" />
-    <InvalidState message="Please enter a valid email address" />
-  </FormField>
-</div>
-<CodeBlock>
-  {`<FormField label="Email">
+<h3>With FormField</h3>
+<ExampleTabs code={`<FormField label="Email">
   <TextInput type="email" name="email" />
   <InvalidState message="Please enter a valid email address" />
-</FormField>`}
-</CodeBlock>
-
-<h3>Without Icon</h3>
-<div class="example" data-testid="invalidstate-no-icon">
-  <InvalidState 
-    message="This field is required" 
-    showIcon={false}
-  />
-</div>
-<CodeBlock>
-  {`<InvalidState 
-  message="This field is required" 
-  showIcon={false}
-/>`}
-</CodeBlock>
-
-<h3>With Custom Icon</h3>
-<div class="example" data-testid="invalidstate-custom-icon">
-  <InvalidState 
-    message="Password must be at least 8 characters long" 
-    icon='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m0 0v2m0-2h2m-2 0H9m3-4V7a3 3 0 00-3-3H9a3 3 0 00-3 3v4m9 0h6m-6 0H9"></path></svg>'
-  />
-</div>
-<CodeBlock>
-  {`<InvalidState 
-  message="Password must be at least 8 characters long" 
-  icon='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m0 0v2m0-2h2m-2 0H9m3-4V7a3 3 0 00-3-3H9a3 3 0 00-3 3v4m9 0h6m-6 0H9"></path></svg>'
-/>`}
-</CodeBlock>
-
-<h3>With Child Content</h3>
-<div class="example" data-testid="invalidstate-children">
-  <InvalidState>
-    <span>This field is <strong>required</strong> and cannot be left empty.</span>
-  </InvalidState>
-</div>
-<CodeBlock>
-  {`<InvalidState>
-  <span>This field is <strong>required</strong> and cannot be left empty.</span>
-</InvalidState>`}
-</CodeBlock>
-
-<h3>Multiple Error Messages</h3>
-<div class="example" data-testid="invalidstate-multiple">
-  <div class="flex flex-col gap-1">
-    <InvalidState message="Password must be at least 8 characters long" />
-    <InvalidState message="Password must include at least one number" />
-    <InvalidState message="Password must include at least one special character" />
+</FormField>`}>
+  <div class="max-w-md" data-testid="invalidstate-formfield">
+    <FormField label="Email">
+      <TextInput type="email" name="email" />
+      <InvalidState message="Please enter a valid email address" />
+    </FormField>
   </div>
-</div>
-<CodeBlock>
-  {`<div class="flex flex-col gap-1">
-  <InvalidState message="Password must be at least 8 characters long" />
-  <InvalidState message="Password must include at least one number" />
-  <InvalidState message="Password must include at least one special character" />
-</div>`}
-</CodeBlock>
+</ExampleTabs>
+
+<h3>Multiple Errors</h3>
+<ExampleTabs code={`<div class="flex flex-col gap-1">
+  <InvalidState message="Password must be at least 8 characters" />
+  <InvalidState message="Password must include a number" />
+  <InvalidState message="Password must include a special character" />
+</div>`}>
+  <div class="max-w-md flex flex-col gap-1" data-testid="invalidstate-multiple">
+    <InvalidState message="Password must be at least 8 characters" />
+    <InvalidState message="Password must include a number" />
+    <InvalidState message="Password must include a special character" />
+  </div>
+</ExampleTabs>
 
 <h2>Props</h2>
 <PropsTable component={InvalidStateModule} />
 
-<h2>Slots</h2>
-<table class="props-table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>default</td>
-      <td>Custom content to display instead of the message prop</td>
-    </tr>
-  </tbody>
-</table>
-
 <h2>Accessibility</h2>
-<p>
-  The InvalidState component follows accessibility best practices:
-</p>
 <ul>
-  <li>Uses <code>role="alert"</code> to ensure screen readers announce the error</li>
-  <li>Includes <code>aria-live="assertive"</code> to immediately announce changes</li>
-  <li>Provides visual indication with both color and icons</li>
-  <li>Maintains sufficient color contrast for visibility</li>
-  <li>Animates subtly to draw attention without being distracting</li>
+  <li><code>role="alert"</code> ensures screen readers announce the error.</li>
+  <li><code>aria-live="assertive"</code> for immediate announcement.</li>
+  <li>Red color + icon for visual indication.</li>
+  <li>Sufficient color contrast (WCAG AA).</li>
 </ul>
-
-<h2>Form Integration</h2>
-<p>
-  The InvalidState component is typically used within forms to display validation errors:
-</p>
-<CodeBlock>
-  {`\u003Cscript>
-  let errors = {};
-  
-  function validateForm(values) {
-    errors = {};
-    
-    if (!values.email) {
-      errors.email = "Email is required";
-    } else if (!/^[^@]+@[^@]+\.[^@]+$/.test(values.email)) {
-      errors.email = "Please enter a valid email address";
-    }
-    
-    if (!values.password) {
-      errors.password = "Password is required";
-    } else if (values.password.length < 8) {
-      errors.password = "Password must be at least 8 characters long";
-    }
-    
-    return Object.keys(errors).length === 0;
-  }
-\u003C/script>
-
-<Form onSubmit={handleSubmit}>
-  <FormField label="Email">
-    <TextInput 
-      type="email"
-      name="email"
-      required={true}
-    />
-    {#if errors.email}
-      <InvalidState message={errors.email} />
-    {/if}
-  </FormField>
-  
-  <FormField label="Password">
-    <TextInput 
-      type="password"
-      name="password"
-      required={true}
-    />
-    {#if errors.password}
-      <InvalidState message={errors.password} />
-    {/if}
-  </FormField>
-  
-  <Button type="submit">Sign In</Button>
-</Form>`}
-</CodeBlock>
-
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-  .example {
-    @apply my-4 p-4 border border-border rounded-md;
-    @apply flex flex-col gap-4 max-w-md;
-  }
-  
-  .props-table {
-    @apply w-full border-collapse mb-6;
-  }
-  
-  .props-table th {
-    @apply text-left py-2 px-4 bg-surface dark:bg-surface font-medium text-text dark:text-text border-b border-border dark:border-border;
-  }
-  
-  .props-table td {
-    @apply py-2 px-4 border-b border-border dark:border-border text-text dark:text-text;
-  }
-</style>
