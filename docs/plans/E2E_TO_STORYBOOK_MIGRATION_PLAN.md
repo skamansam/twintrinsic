@@ -1,6 +1,6 @@
 # E2E → Docs + Storybook Test Migration Plan
 
-Status: **Draft** (awaiting approval before implementation)
+Status: **Complete** — all tests migrated to docs routes. Decision: keep e2e tests as comprehensive component behavior tests, not lightweight smoke tests.
 Owner: TBD
 Last updated: 2025-01-XX
 
