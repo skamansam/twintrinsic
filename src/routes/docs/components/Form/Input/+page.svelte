@@ -8,12 +8,14 @@ import Input from "$lib/components/Form/Input.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as InputModule from "$lib/components/Form/Input.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>Input</h1>
 
 <!-- ─── Description ───────────────────────────────────── -->
@@ -222,3 +224,4 @@ import * as InputModule from "$lib/components/Form/Input.svelte"
   <li>Credit Card: <code>#### #### #### ####</code></li>
   <li>Serial Number: <code>AA-##-**</code></li>
 </ul>
+</Container>

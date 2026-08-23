@@ -8,12 +8,14 @@ import Tab from "$lib/components/Tabs/Tab.svelte"
 import TabList from "$lib/components/Tabs/TabList.svelte"
 import TabPanel from "$lib/components/Tabs/TabPanel.svelte"
 import Tabs from "$lib/components/Tabs/Tabs.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>TabList</h1>
 
 <p>
@@ -66,3 +68,4 @@ import Tabs from "$lib/components/Tabs/Tabs.svelte"
   <li>Arrow keys navigate between tabs.</li>
   <li><code>aria-label</code> or <code>aria-labelledby</code> for the tab list.</li>
 </ul>
+</Container>

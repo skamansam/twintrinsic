@@ -9,6 +9,7 @@ import Select from "$lib/components/Form/Select.svelte"
 import SelectGroup from "$lib/components/Form/SelectGroup.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as SelectGroupModule from "$lib/components/Form/SelectGroup.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 
 let selectedCountry = $state("")
 </script>
@@ -17,6 +18,7 @@ let selectedCountry = $state("")
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>SelectGroup</h1>
 
 <p>
@@ -119,3 +121,4 @@ let selectedCountry = $state("")
   <li>Group labels announced by screen readers.</li>
   <li>Disabled groups are visually and programmatically disabled.</li>
 </ul>
+</Container>

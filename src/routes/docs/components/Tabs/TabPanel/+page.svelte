@@ -8,12 +8,14 @@ import Tab from "$lib/components/Tabs/Tab.svelte"
 import TabList from "$lib/components/Tabs/TabList.svelte"
 import TabPanel from "$lib/components/Tabs/TabPanel.svelte"
 import Tabs from "$lib/components/Tabs/Tabs.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>TabPanel</h1>
 
 <p>
@@ -66,3 +68,4 @@ import Tabs from "$lib/components/Tabs/Tabs.svelte"
   <li>Hidden panels use <code>aria-hidden</code> or <code>hidden</code> attribute.</li>
   <li>Focusable elements inside the panel are in the tab sequence when the panel is active.</li>
 </ul>
+</Container>

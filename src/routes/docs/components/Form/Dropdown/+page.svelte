@@ -8,6 +8,7 @@ import Dropdown from "$lib/components/Form/Dropdown.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as DropdownModule from "$lib/components/Form/Dropdown.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 
 const countries = [
   { label: "United States", value: "us" },
@@ -28,6 +29,7 @@ const skills = [
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>Dropdown</h1>
 
 <p>
@@ -160,3 +162,4 @@ const skills = [
     <tr><td><kbd>Home</kbd> / <kbd>End</kbd></td><td>Move to first/last option</td></tr>
   </tbody>
 </table>
+</Container>

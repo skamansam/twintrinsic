@@ -8,12 +8,14 @@ import Textarea from "$lib/components/Form/Textarea.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as TextareaModule from "$lib/components/Form/Textarea.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>Textarea</h1>
 
 <!-- ─── Description ───────────────────────────────────── -->
@@ -175,3 +177,4 @@ import * as TextareaModule from "$lib/components/Form/Textarea.svelte"
     <tr><td><kbd>Ctrl+Enter</kbd></td><td>Submit form (if configured)</td></tr>
   </tbody>
 </table>
+</Container>

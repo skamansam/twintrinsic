@@ -4,6 +4,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CardModule from "$lib/components/Card/Card.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 <!--
 @component
@@ -13,7 +14,7 @@ Documentation page for the Card component
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
-<article class="prose dark:prose-invert max-w-none">
+<Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>Card</h1>
   <p>
     A styled container for content with optional header, media, and footer sections.
@@ -191,4 +192,4 @@ Documentation page for the Card component
     <li>Media content requires proper alt text</li>
     <li>Interactive elements maintain proper focus states</li>
   </ul>
-</article>
+</Container>

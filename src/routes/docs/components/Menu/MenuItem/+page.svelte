@@ -8,12 +8,14 @@ import Menu from "$lib/components/Menu/Menu/Menu.svelte"
 import MenuItem from "$lib/components/Menu/Menu/MenuItem.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as MenuItemModule from "$lib/components/Menu/Menu/MenuItem.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>MenuItem</h1>
 
 <p>
@@ -90,3 +92,4 @@ import * as MenuItemModule from "$lib/components/Menu/Menu/MenuItem.svelte"
   <li>Disabled items use <code>aria-disabled</code>.</li>
   <li>Submenus have <code>aria-haspopup</code>.</li>
 </ul>
+</Container>

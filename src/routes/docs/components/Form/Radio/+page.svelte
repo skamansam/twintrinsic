@@ -9,6 +9,7 @@ import Radio from "$lib/components/Form/Radio.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as RadioModule from "$lib/components/Form/Radio.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 
 let theme = $state("light")
 let fruit = $state("apple")
@@ -45,6 +46,7 @@ const horizontalCode = `<script>
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>Radio</h1>
 
 <!-- ─── Description ───────────────────────────────────── -->
@@ -211,3 +213,4 @@ const horizontalCode = `<script>
     <tr><td><kbd>Arrow Down</kbd> / <kbd>Arrow Right</kbd></td><td>Move to and select the next radio</td></tr>
   </tbody>
 </table>
+</Container>

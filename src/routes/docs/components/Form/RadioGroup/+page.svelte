@@ -9,12 +9,14 @@ import RadioGroup from "$lib/components/Form/RadioGroup.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as RadioGroupModule from "$lib/components/Form/RadioGroup.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>RadioGroup</h1>
 
 <p>
@@ -129,3 +131,4 @@ import * as RadioGroupModule from "$lib/components/Form/RadioGroup.svelte"
     <tr><td><kbd>Arrow Down</kbd> / <kbd>Arrow Right</kbd></td><td>Next radio</td></tr>
   </tbody>
 </table>
+</Container>

@@ -8,6 +8,7 @@ import Rating from "$lib/components/Form/Rating.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as RatingModule from "$lib/components/Form/Rating.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 
 let hoverRating = $state(0)
 const ratingLabels: Record<number, string> = {
@@ -19,6 +20,7 @@ const ratingLabels: Record<number, string> = {
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>Rating</h1>
 
 <p>
@@ -121,3 +123,4 @@ const ratingLabels: Record<number, string> = {
     <tr><td><kbd>End</kbd></td><td>Set to maximum</td></tr>
   </tbody>
 </table>
+</Container>

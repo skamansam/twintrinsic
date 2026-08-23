@@ -6,8 +6,10 @@ Documentation page for the CodeBlock component.
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CodeBlockModule from "$lib/components/CodeBlock/CodeBlock.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>CodeBlock</h1>
 
 <p>
@@ -197,3 +199,4 @@ function example() {
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
+</Container>

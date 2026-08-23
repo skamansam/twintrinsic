@@ -8,7 +8,7 @@ import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
-<Container class="prose dark:prose-invert max-w-4xl">
+<Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>ThemeToggle</h1>
   <p>
     A toggle button for switching between light and dark themes. The component automatically

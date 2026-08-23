@@ -8,12 +8,14 @@ import Checkbox from "$lib/components/Form/Checkbox.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CheckboxModule from "$lib/components/Form/Checkbox.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>Checkbox</h1>
 
 <!-- ─── Description ───────────────────────────────────── -->
@@ -179,3 +181,4 @@ import * as CheckboxModule from "$lib/components/Form/Checkbox.svelte"
     <tr><td><kbd>Tab</kbd></td><td>Move focus to the checkbox</td></tr>
   </tbody>
 </table>
+</Container>

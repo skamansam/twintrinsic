@@ -1,128 +1,150 @@
+<!--
+@component
+CodeEditor documentation page — standardized structure
+-->
 <script lang="ts">
 import CodeBlock from '$lib/components/CodeBlock/CodeBlock.svelte'
 import CodeEditor from '$lib/components/CodeEditor/CodeEditor.svelte'
+import Container from "$lib/components/Container/Container.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CodeEditorModule from "$lib/components/CodeEditor/CodeEditor.svelte"
 </script>
 
-<div class="space-y-8">
-	<section>
-		<h1 class="text-4xl font-bold mb-4">CodeEditor</h1>
-		<p class="text-lg text-gray-600 dark:text-gray-400">
-			A powerful code editor component powered by CodeMirror 6. Supports dynamic extension loading
-			from multiple CDNs, syntax highlighting for 15+ languages, and customizable themes.
-		</p>
-	</section>
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
 
-	<section>
-		<h2 class="text-2xl font-bold mb-4">Features</h2>
-		<ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
-			<li>
-				<strong>Dynamic Extension Loading:</strong> Load CodeMirror extensions from jsdelivr, esm.sh, or unpkg
-			</li>
-			<li>
-				<strong>Multiple Languages:</strong> Built-in support for JavaScript, TypeScript, Python, HTML, CSS, JSON, XML, Markdown, SQL, Java, C++, Rust, Go, PHP, Vue, and Svelte
-			</li>
-			<li>
-				<strong>Theme Support:</strong> 9+ pre-configured themes including One Dark, Dracula, Nord, Solarized, and more
-			</li>
-			<li>
-				<strong>Syntax Highlighting:</strong> Automatic syntax highlighting based on selected language
-			</li>
-			<li>
-				<strong>Line Numbers:</strong> Built-in line number gutter
-			</li>
-			<li>
-				<strong>Code Folding:</strong> Fold/unfold code blocks
-			</li>
-			<li>
-				<strong>Active Line Highlighting:</strong> Visual feedback for the current line
-			</li>
-		</ul>
-	</section>
+<Container as="article" class="prose dark:prose-invert max-w-none">
+<h1>CodeEditor</h1>
 
-	<section>
-		<h2 class="text-2xl font-bold mb-4">Basic Usage</h2>
-		<CodeBlock language="svelte">{`\u003Cscript>
-  import { CodeEditor } from 'twintrinsic';
-\u003C/script>
+<p>
+  A powerful code editor component powered by CodeMirror 6. Supports dynamic
+  extension loading from multiple CDNs, syntax highlighting for 15+ languages,
+  and customizable themes.
+</p>
 
-<CodeEditor
+<h2>What, When &amp; Why</h2>
+
+<h3>What is it?</h3>
+<p>
+  A full-featured code editing widget built on CodeMirror 6. It loads extensions
+  dynamically from CDNs (esm.sh, jsdelivr, unpkg), providing syntax highlighting,
+  line numbers, code folding, and active line highlighting without bundling the
+  entire CodeMirror library.
+</p>
+
+<h3>When should I use it?</h3>
+<p>
+  Use <code>&lt;CodeEditor&gt;</code> when users need to write or edit code directly
+  in the browser — configuration editors, code playgrounds, CMS code fields. For
+  read-only code display, use <code>&lt;CodeBlock&gt;</code> instead.
+</p>
+
+<h3>Why does it exist?</h3>
+<ul>
+  <li><strong>Dynamic loading</strong> — extensions load from CDN on demand, keeping the initial bundle small.</li>
+  <li><strong>15+ languages</strong> — JavaScript, TypeScript, Python, HTML, CSS, JSON, and more.</li>
+  <li><strong>9+ themes</strong> — One Dark, Dracula, Nord, Solarized, and others.</li>
+  <li><strong>Full editor features</strong> — line numbers, code folding, active line highlighting.</li>
+</ul>
+
+<h3>Sources</h3>
+<ul>
+  <li><a href="https://codemirror.net/">CodeMirror 6</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea">MDN — textarea element</a></li>
+</ul>
+
+<h2>Responsiveness</h2>
+<ul>
+  <li>Editor fills container width; height is configurable via the <code>height</code> prop.</li>
+  <li>Line wrapping can be enabled for narrow viewports.</li>
+  <li>Touch input supported on mobile devices.</li>
+</ul>
+
+<h2>Customization</h2>
+<ul>
+  <li>Theme selection via <code>theme</code> prop (light, one-dark, dracula, nord, etc.).</li>
+  <li>Language via <code>language</code> prop.</li>
+  <li>CDN source via <code>cdnSource</code> prop (esm.sh, jsdelivr, unpkg).</li>
+  <li>Height via <code>height</code> prop.</li>
+</ul>
+
+<h2>Examples</h2>
+
+<h3>JavaScript Editor</h3>
+<ExampleTabs code={`<CodeEditor
   code="const greeting = 'Hello, World!';"
   language="javascript"
   theme="light"
-  height="400px"
-/>`}</CodeBlock>
-	</section>
-
-	<section>
-		<h2 class="text-2xl font-bold mb-4">Examples</h2>
-
-		<div class="space-y-8">
-			<div>
-			<div data-testid="code-editor-javascript"><h3 class="text-xl font-semibold mb-3">JavaScript Editor</h3>
-			<CodeEditor
-					code={`function fibonacci(n) {
+  height="300px"
+/>`}>
+  <div data-testid="code-editor-javascript">
+    <CodeEditor
+      code={`function fibonacci(n) {
   if (n <= 1) return n;
   return fibonacci(n - 1) + fibonacci(n - 2);
 }
 
 console.log(fibonacci(10));`}
-					language="javascript"
-					theme="light"
-					height="300px"
-				/>
-			</div>
+      language="javascript"
+      theme="light"
+      height="300px"
+    />
+  </div>
+</ExampleTabs>
 
-			<div data-testid="code-editor-python">
-				<h3 class="text-xl font-semibold mb-3">Python Editor</h3>
-				<CodeEditor
-					code={`def hello_world():
+<h3>Python Editor</h3>
+<ExampleTabs code={`<CodeEditor
+  code="def hello_world(): print('Hello!')"
+  language="python"
+  theme="light"
+  height="300px"
+/>`}>
+  <div data-testid="code-editor-python">
+    <CodeEditor
+      code={`def hello_world():
     print("Hello, World!")
 
 if __name__ == "__main__":
     hello_world()`}
-					language="python"
-					theme="light"
-					height="300px"
-				/>
-			</div>
+      language="python"
+      theme="light"
+      height="300px"
+    />
+  </div>
+</ExampleTabs>
 
-			<div data-testid="code-editor-html">
-				<h3 class="text-xl font-semibold mb-3">HTML Editor</h3>
-				<CodeEditor
-					code={`<!DOCTYPE html>
-<html>
-  <head>
-    <title>Example</title>
-  </head>
-  <body>
-    <h1>Hello World</h1>
-  </body>
-</html>`}
-					language="html"
-					theme="light"
-					height="300px"
-				/>
-			</div>
-
-			<div data-testid="code-editor-one-dark">
-				<h3 class="text-xl font-semibold mb-3">Dark Theme (One Dark)</h3>
-				<CodeEditor
-					code={`const greeting = "Hello, CodeMirror!";
+<h3>Dark Theme (One Dark)</h3>
+<ExampleTabs code={`<CodeEditor
+  code="const x = 42;"
+  language="javascript"
+  theme="one-dark"
+  height="300px"
+/>`}>
+  <div data-testid="code-editor-one-dark">
+    <CodeEditor
+      code={`const greeting = "Hello, CodeMirror!";
 const numbers = [1, 2, 3, 4, 5];
 const doubled = numbers.map(n => n * 2);
 console.log(doubled);`}
-					language="javascript"
-					theme="one-dark"
-					height="300px"
-				/>
-			</div>
+      language="javascript"
+      theme="one-dark"
+      height="300px"
+    />
+  </div>
+</ExampleTabs>
 
-			<div data-testid="code-editor-dracula">
-				<h3 class="text-xl font-semibold mb-3">Dracula Theme</h3>
-				<CodeEditor
-					code={`interface User {
+<h3>Dracula Theme (TypeScript)</h3>
+<ExampleTabs code={`<CodeEditor
+  code="interface User { id: number; name: string; }"
+  language="typescript"
+  theme="dracula"
+  height="300px"
+/>`}>
+  <div data-testid="code-editor-dracula">
+    <CodeEditor
+      code={`interface User {
   id: number;
   name: string;
   email: string;
@@ -133,115 +155,34 @@ const user: User = {
   name: "Sarah Chen",
   email: "sarah.chen@acme.io"
 };`}
-					language="typescript"
-					theme="dracula"
-					height="300px"
-				/>
-			</div>
-		</div>
-		</div>
-	</section>
+      language="typescript"
+      theme="dracula"
+      height="300px"
+    />
+  </div>
+</ExampleTabs>
 
-	<section>
-		<h2 class="text-2xl font-bold mb-4">Props</h2>
-  <PropsTable component={CodeEditorModule} />
-	</section>
+<h2>Supported Languages</h2>
+<p>JavaScript, TypeScript, Python, HTML, CSS, JSON, XML, Markdown, SQL, Java, C++, Rust, Go, PHP, Vue, and Svelte.</p>
 
-	<section>
-		<h2 class="text-2xl font-bold mb-4">Supported Languages</h2>
-		<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">JavaScript</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">TypeScript</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">Python</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">HTML</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">CSS</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">JSON</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">XML</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">Markdown</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">SQL</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">Java</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">C++</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">Rust</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">Go</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">PHP</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">Vue</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">Svelte</div>
-		</div>
-	</section>
+<h2>Supported Themes</h2>
+<p>light (default), one-dark, dracula, material-dark, nord, solarized-light, solarized-dark, sublime, ayu-light, ayu-dark.</p>
 
-	<section>
-		<h2 class="text-2xl font-bold mb-4">Supported Themes</h2>
-		<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">light (default)</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">one-dark</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">dracula</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">material-dark</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">nord</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">solarized-light</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">solarized-dark</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">sublime</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">ayu-light</div>
-			<div class="p-3 bg-gray-100 dark:bg-gray-800 rounded">ayu-dark</div>
-		</div>
-	</section>
+<h2>CDN Sources</h2>
+<ul>
+  <li><strong>esm.sh</strong> (default) — fast and reliable ESM CDN.</li>
+  <li><strong>jsdelivr</strong> — popular CDN with global distribution.</li>
+  <li><strong>unpkg</strong> — fast global content delivery for npm packages.</li>
+</ul>
 
-	<section>
-		<h2 class="text-2xl font-bold mb-4">CDN Sources</h2>
-		<p class="text-gray-700 dark:text-gray-300 mb-4">
-			The CodeEditor component can load extensions from three different CDN sources:
-		</p>
-		<div class="space-y-4">
-			<div>
-				<h3 class="font-semibold mb-2">esm.sh (default)</h3>
-				<p class="text-gray-600 dark:text-gray-400 text-sm">
-					Fast and reliable ESM CDN. Recommended for most use cases.
-				</p>
-				<CodeBlock language="javascript">{`cdnSource='esm.sh'`}</CodeBlock>
-			</div>
-			<div>
-				<h3 class="font-semibold mb-2">jsdelivr</h3>
-				<p class="text-gray-600 dark:text-gray-400 text-sm">
-					Popular CDN with global distribution and good performance.
-				</p>
-				<CodeBlock language="javascript">{`cdnSource='jsdelivr'`}</CodeBlock>
-			</div>
-			<div>
-				<h3 class="font-semibold mb-2">unpkg</h3>
-				<p class="text-gray-600 dark:text-gray-400 text-sm">
-					Fast, global content delivery network for npm packages.
-				</p>
-				<CodeBlock language="javascript">{`cdnSource='unpkg'`}</CodeBlock>
-			</div>
-		</div>
-	</section>
+<h2>Props</h2>
+<PropsTable component={CodeEditorModule} />
 
-	<section>
-		<h2 class="text-2xl font-bold mb-4">Accessibility</h2>
-		<ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
-			<li>Keyboard navigation support through CodeMirror</li>
-			<li>Screen reader compatible</li>
-			<li>Proper semantic HTML structure</li>
-			<li>High contrast theme options available</li>
-		</ul>
-	</section>
-</div>
-
-<style lang="postcss">
-	@reference "$lib/twintrinsic.css";
-
-	section {
-		@apply py-6;
-	}
-
-	h1 {
-		@apply text-gray-900 dark:text-white;
-	}
-
-	h2 {
-		@apply text-gray-900 dark:text-white;
-	}
-
-	h3 {
-		@apply text-gray-900 dark:text-white;
-	}
-</style>
+<h2>Accessibility</h2>
+<ul>
+  <li>Keyboard navigation support through CodeMirror.</li>
+  <li>Screen reader compatible.</li>
+  <li>Proper semantic HTML structure.</li>
+  <li>High contrast theme options available.</li>
+</ul>
+</Container>

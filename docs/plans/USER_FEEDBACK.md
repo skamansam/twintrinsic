@@ -13,6 +13,10 @@ When sizing down, the appheader disappears. I think the appheader menu does not 
 
 I'm not really certain we need the *Items as separate docs since they aren't used solo. AccordionItem, BreadcrumbItem, etc, should be incorporated into their enclosing components' docs.
 
+We need to work on suporting internationalization, including lef to right reading order. All our docs pages should have a left-to-right toggle so users can see how well it works. We should also be using the -start- and -end- tailwind classes (i.e. text-start, text-end instead of text-left, text-right). I would like the demo pages to be translated to Persian. We have support for translations using paraglide and need to start integrating that into our components, if we even need to.
+
+We need to support passing the HTML props to the underlying html elements in all components. We don't need to handle some of them, just pass them along, so our compoennt props can get the ...rest of the props and pass that to the component instead of keeping a running list of all the things the underlying component uses. We can read what we need to, then pass the rest on down.
+
 ### Examples / General
 All of the guides for the examples need to be standardized. They are written vastly different. I like the Shopping Page guide the best - with the code examples and example usage details forthe demo. Maybe add a WHY we use this component in the guide. A little more about the shopping page at the top would be nice. Maybe ahave a tabbed interface for the code/example. So for Hero Header, it would show a tab that allows to to switch between the example in the demo and the code to generate it. We could incorporate the best practices with the components in the page, maybe with an Alert component (see Feedback/Alert below).
 
@@ -26,6 +30,12 @@ The guide is missing
 
 The shopping page scrolls all of the page. It has 2 scrollbars - one for the content, like it should have, and one for the whole page which scrolls the app itsef.
 
+### App / App
+
+There are a lot of issues here. The sidebar is supposed to be hidden when the window is narrow enough. The appheader is supposed to show the menu icon so users can show/hide the sidebar. The menu on the appheader is supposed to collapse to another dropdown navigation menu. Actually, I think we should include the top menu in the sidebar menu and have those hide and show depending on the window width.
+
+There is also an issue where the small version (narrow version) of the sidebar does not show anything but hte chevrons from the collapsible menu items. We should show dots or something to denote that there are other menu items there you can click on, and let the tooltips show what they are.
+
 ### App / BottomBar
 The demos are awful and they don't work. I don't knwo if the component is broken or the page is broken, but the demos definitely are. We should include more demos, like from the flowbite site - https://flowbite.com/docs/components/bottom-navigation/. We don't need their code, just the same demos - Menu Items, Application Bar (we may need to alter the component code to add a "float" option for this), navigation like with an e-reader, card with bottom bar, meeting control bar, and video player. 
 
@@ -35,8 +45,9 @@ The demos don't work well. The demos need a border to show the separation betwee
 ### App / ThemeToggle
 we can remove the nested theme demo. We do not supprot nested themes yet. The app itself also scrolls on this page.
 
-### App / AccordionItem
-I don't think we need to work on this component. The header should be a prop on the item AND a snippet for more detailed control. So the usage should be something like:
+### Basic / AccordionItem
+We need to have this incorporated with the Accordion docs. there's no reason to have this separate since it can't be used separately. 
+ The header should be a prop on the item AND a snippet for more detailed control. So the usage should be something like:
 ```tsx
 <AccordionItem header="Getting started">
     Install the package and import the components you need.
@@ -170,7 +181,7 @@ We need to have a bit about this compoennt vs the Badge component. It doesn't lo
 
 ### Data Display / Timeline
 
-We need to make a horizontal timeline component.
+We need to make a horizontal timeline component and example.
 
 We need to create a cool example where we use a timeline. I don't really know what to show, but something useful. Maybe something like the demos on https://primevue.dev/timeline/. I think a cool demo would be to read a github log and build a timeline of commits, then combine that with ticket data so we get a cool visualization of work done over time. The ticket would be on the top and clicking on certain actions - git log, ticket data, status, would show those in a timeline. The ticket data would look like the "Custom" demo on that primevue page, but with ticket data instead. The status would show something like the "Interactive" demo where it shows the steps to competion and the dates, times, persons, and notes, of the steps to deployment. Each unfinished step can have a notes then allow the user to switch to the status.
 
@@ -217,4 +228,47 @@ We need to add tooltips to the graphs. If the user specifies "follow" for the li
 If possible, we should support smoothing out the lines and stepping the lines. The options could be stepType="smooth|linear(default)|step"
 
 We need to add quite a bit on when to use area vs line vs area charts. We need to do more research on how and when and why to use them and include that in the docs. One of ur goals with this project is to have information on when and why to use each component. We need to support all the use-cases for each o four charts.
+
+### Metrics / StatsCard
+
+I think we can calculate the trend direction from the value, based on whether it is positive or negative or has a plus sign or negative sign at the beginning. Maybe we need to do research on ways to get values from other languages and determine positive/negative. Although this might be overkill, as I think most languages use the plus and minus signs.
+
+I would also like to add a MetricTrend to the stats card to show the trend over time. 
+
+### Metrics / KPICard
+
+I think we need more info on when to use this component vs the stats card. If there is very little difference, maybe we can support the progress bar in the stats card.
+
+We need more examples to showcase what all the options are.
+
+
+### Metrics / ProgressMetric
+
+We should add a tooltip to the progress bar that shows the percentage and the value.
+
+We need to use an actual progress bar instead of rolling our own. Maybe we can just use the Progress component instead of this one, but add the features of this to that so we can create the same thing with Progress instead of having 2 components that do roughly the same thing. Then we could use the Progress in the statsCard to get  a KPICard. We could add information about using a KPICard to the statsCard info, and a bit about using the ProgressMetric with the Progress component.
+
+### Form / Autocomplete
+
+I think we need to have a way to specify where the selected item chips show up - start,end,top,bottom. The start and end options would make it look like the chips are in the text box.
+
+We need more demos to showcase all the options.
+
+### Form / Button
+
+We need to use the Icon component for the icon. We also could support using an avatar component for the avatar. We should be doing this for all components.
+
+This page also scrolls the App.
+
+
+### Form / Calendar
+
+The calendar popup shows up at the top of the page. 
+
+I think we need to use a date input underlying this. we can style the  icon using `::-webkit-calendar-picker-indicator`. I think we can style the individual parts as well, like month, day, etc. To date, the only thing we can't style is the popup. We should route input to the date input for validation, etc. Maybe we can take some tips from https://github.com/codeclown/native-datepicker
+
+### Form / ColorPicker
+
+We need to use a native colorpicker for this element.
+
 

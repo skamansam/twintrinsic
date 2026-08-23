@@ -9,12 +9,14 @@ import InvalidState from "$lib/components/Form/InvalidState.svelte"
 import TextInput from "$lib/components/Form/TextInput.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as InvalidStateModule from "$lib/components/Form/InvalidState.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>InvalidState</h1>
 
 <p>
@@ -101,3 +103,4 @@ import * as InvalidStateModule from "$lib/components/Form/InvalidState.svelte"
   <li>Red color + icon for visual indication.</li>
   <li>Sufficient color contrast (WCAG AA).</li>
 </ul>
+</Container>

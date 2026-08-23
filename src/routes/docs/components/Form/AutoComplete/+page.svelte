@@ -8,6 +8,7 @@ import AutoComplete from "$lib/components/Form/AutoComplete.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as AutoCompleteModule from "$lib/components/Form/AutoComplete.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 
 const countries = [
   { label: "United States", value: "US" },
@@ -28,6 +29,7 @@ const users = [
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>AutoComplete</h1>
 
 <p>
@@ -116,3 +118,4 @@ const users = [
     <tr><td><kbd>Escape</kbd></td><td>Close suggestions</td></tr>
   </tbody>
 </table>
+</Container>

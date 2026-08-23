@@ -9,6 +9,7 @@ import NumberInput from "$lib/components/Form/NumberInput.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as NumberInputModule from "$lib/components/Form/NumberInput.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 
 let quantity = $state(1)
 let price = $state(29.99)
@@ -20,6 +21,7 @@ let temperature = $state(22.5)
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>NumberInput</h1>
 
 <p>
@@ -147,3 +149,4 @@ let temperature = $state(22.5)
     <tr><td><kbd>End</kbd></td><td>Set to maximum value</td></tr>
   </tbody>
 </table>
+</Container>

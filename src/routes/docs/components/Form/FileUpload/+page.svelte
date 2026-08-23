@@ -1,9 +1,9 @@
 <!--
 @component
-FileUpload documentation page
+FileUpload documentation page — standardized structure
 -->
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import FileUpload from "$lib/components/Form/FileUpload.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
@@ -11,215 +11,100 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as FileUploadModule from "$lib/components/Form/FileUpload.svelte"
 </script>
 
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
+
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>FileUpload</h1>
-  
+
   <p>
-    The FileUpload component provides a modern interface for uploading files with drag-and-drop support,
-    file validation, and progress tracking. It's designed to be user-friendly and accessible.
+    <strong>FileUpload</strong> provides a drag-and-drop zone and file browser for
+    uploading files with validation, preview, and progress tracking.
   </p>
+
+  <h2>What, When &amp; Why</h2>
+
+  <h3>What is it?</h3>
+  <p>
+    A dropzone area that accepts files via drag-and-drop or click-to-browse. Shows
+    file previews, validates file types/sizes, and optionally auto-uploads.
+  </p>
+
+  <h3>When should I use it?</h3>
+  <p>
+    Use <code>&lt;FileUpload&gt;</code> when users need to upload files: profile
+    pictures, document attachments, data imports. For simple single-file input,
+    use <code>&lt;input type="file"&gt;</code> directly.
+  </p>
+
+  <h3>Why does it exist?</h3>
+  <ul>
+    <li><strong>UX</strong> — drag-and-drop is faster than file browser navigation.</li>
+    <li><strong>Validation</strong> — rejects wrong file types and oversized files before upload.</li>
+    <li><strong>Progress</strong> — shows upload progress for large files.</li>
+  </ul>
+
+  <h2>Responsiveness</h2>
+  <ul>
+    <li>Dropzone fills its container width.</li>
+    <li>On mobile, drag-and-drop is replaced by a prominent browse button.</li>
+    <li>Touch targets meet 44×44 px minimum.</li>
+  </ul>
+
+  <h2>Customization</h2>
+  <ul>
+    <li>Accept specific file types via <code>accept</code> prop.</li>
+    <li>Limit file count and size via <code>maxFiles</code> and <code>maxSize</code>.</li>
+    <li>Custom dropzone and preview templates via snippets.</li>
+    <li>Auto-upload to a URL.</li>
+  </ul>
 
   <h2>Examples</h2>
 
-  <h3>Basic File Upload</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="fileupload-basic">
-    <FileUpload 
-      dropzoneLabel="Drop files here or click to browse"
-      browseLabel="Select Files"
-    />
-  </div>
-
-  <CodeBlock language="svelte">{`<FileUpload 
+  <h3>Basic Upload</h3>
+  <ExampleTabs code={`<FileUpload
   dropzoneLabel="Drop files here or click to browse"
   browseLabel="Select Files"
-  onchange={(e) => console.log(e.detail.files)}
-/>`}</CodeBlock>
+/>`}>
+    <div class="max-w-md" data-testid="fileupload-basic">
+      <FileUpload dropzoneLabel="Drop files here or click to browse" browseLabel="Select Files" />
+    </div>
+  </ExampleTabs>
 
   <h3>Image Upload</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="fileupload-image">
-    <FileUpload 
-      accept="image/*"
-      dropzoneLabel="Drop images here or click to browse"
-      browseLabel="Select Images"
-      maxSize={2097152}
-      onchange={(e) => console.log(e.detail.files)}
-    />
-  </div>
+  <ExampleTabs code={`<FileUpload accept="image/*" dropzoneLabel="Drop images here" browseLabel="Select Images" maxSize={2097152} />`}>
+    <div class="max-w-md" data-testid="fileupload-image">
+      <FileUpload accept="image/*" dropzoneLabel="Drop images here" browseLabel="Select Images" maxSize={2097152} />
+    </div>
+  </ExampleTabs>
 
-  <CodeBlock language="svelte">{`<FileUpload 
-  accept="image/*"
-  dropzoneLabel="Drop images here or click to browse"
-  browseLabel="Select Images"
-  maxSize={2097152} // 2MB
-  onchange={(e) => console.log(e.detail.files)}
-/>`}</CodeBlock>
-
-  <h3>Document Upload</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="fileupload-document">
-    <FileUpload 
-      accept=".pdf,.doc,.docx,.txt"
-      dropzoneLabel="Drop documents here or click to browse"
-      browseLabel="Select Documents"
-    />
-  </div>
-
-  <CodeBlock language="svelte">{`<FileUpload 
-  accept=".pdf,.doc,.docx,.txt"
-  dropzoneLabel="Drop documents here or click to browse"
-  browseLabel="Select Documents"
-  onchange={(e) => console.log(e.detail.files)}
-/>`}</CodeBlock>
-
-  <h3>Single File Upload</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="fileupload-single">
-    <FileUpload 
-      multiple={false}
-      dropzoneLabel="Drop a file here or click to browse"
-      browseLabel="Select File"
-    />
-  </div>
-
-  <CodeBlock language="svelte">{`<FileUpload 
-  multiple={false}
-  dropzoneLabel="Drop a file here or click to browse"
-  browseLabel="Select File"
-  onchange={(e) => console.log(e.detail.files)}
-/>`}</CodeBlock>
-
-  <h3>With File Validation</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="fileupload-validation">
-    <FileUpload 
-      accept="image/*"
-      maxFiles={3}
-      maxSize={1048576}
-      dropzoneLabel="Drop up to 3 images (max 1MB each)"
-      browseLabel="Select Images"
-      onerror={(e) => console.log(e.detail.errors)}
-    />
-  </div>
-
-  <CodeBlock language="svelte">{`<FileUpload 
-  accept="image/*"
-  maxFiles={3}
-  maxSize={1048576} // 1MB
-  dropzoneLabel="Drop up to 3 images (max 1MB each)"
-  browseLabel="Select Images"
-  onerror={(e) => console.log(e.detail.errors)}
-/>`}</CodeBlock>
-
-  <h3>Disabled State</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="fileupload-disabled">
-    <FileUpload 
-      disabled
-      dropzoneLabel="Upload disabled"
-      browseLabel="Cannot select files"
-    />
-  </div>
-
-  <CodeBlock language="svelte">{`<FileUpload 
-  disabled
-  dropzoneLabel="Upload disabled"
-  browseLabel="Cannot select files"
-/>`}</CodeBlock>
-
-  <h3>Custom Styling</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="fileupload-styling">
-    <FileUpload 
-      class="border-2 border-dashed border-primary-500 dark:border-primary-400 rounded-xl p-8"
-      dropzoneLabel="Drop files here or click to browse"
-      browseLabel="Select Files"
-    />
-  </div>
-
-  <CodeBlock language="svelte">{`<FileUpload 
-  class="border-2 border-dashed border-primary-500 dark:border-primary-400 rounded-xl p-8"
-  dropzoneLabel="Drop files here or click to browse"
-  browseLabel="Select Files"
-/>`}</CodeBlock>
-
-  <h3>With Auto Upload</h3>
-  <div class="not-prose mb-8 max-w-md" data-testid="fileupload-auto">
-    <FileUpload 
-      dropzoneLabel="Drop files here or click to browse"
-      browseLabel="Select Files"
-      autoUpload
-      uploadUrl="/api/upload"
-    />
-  </div>
-
-  <CodeBlock language="svelte">{`<FileUpload 
-  dropzoneLabel="Drop files here or click to browse"
-  browseLabel="Select Files"
-  autoUpload
-  uploadUrl="/api/upload"
-  onsuccess={(e) => console.log('Upload successful', e.detail)}
-  onerror={(e) => console.log('Upload failed', e.detail.errors)}
-  onprogress={(e) => console.log('Progress:', e.detail.progress)}
-/>`}</CodeBlock>
+  <h3>Disabled</h3>
+  <ExampleTabs code={`<FileUpload disabled dropzoneLabel="Upload disabled" browseLabel="Cannot select files" />`}>
+    <div class="max-w-md" data-testid="fileupload-disabled">
+      <FileUpload disabled dropzoneLabel="Upload disabled" browseLabel="Cannot select files" />
+    </div>
+  </ExampleTabs>
 
   <h2>Props</h2>
-<PropsTable component={FileUploadModule} />
+  <PropsTable component={FileUploadModule} />
 
   <h2>Events</h2>
-<EventsTable component={FileUploadModule} />
-
-  <h2>Snippets</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Snippet</th>
-        <th>Props</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>dropzone</code></td>
-        <td>None</td>
-        <td>Custom dropzone content</td>
-      </tr>
-      <tr>
-        <td><code>previews</code></td>
-        <td><code>{`{ files: File[], removeFile: (index: number) => void }`}</code></td>
-        <td>Custom file previews template</td>
-      </tr>
-    </tbody>
-  </table>
+  <EventsTable component={FileUploadModule} />
 
   <h2>Accessibility</h2>
-  <p>
-    The FileUpload component follows accessibility best practices:
-  </p>
   <ul>
-    <li>Uses native <code>&lt;input type="file"&gt;</code> for keyboard and screen reader accessibility</li>
-    <li>Provides clear instructions for drag-and-drop and browse options</li>
-    <li>Uses proper ARIA attributes for the dropzone</li>
-    <li>Provides visual feedback for drag-and-drop interactions</li>
-    <li>Communicates errors and validation issues clearly</li>
-    <li>Shows progress information during uploads</li>
+    <li>Uses native <code>&lt;input type="file"&gt;</code> for keyboard/screen reader access.</li>
+    <li>Dropzone has clear instructions and visual feedback.</li>
+    <li>Errors and validation issues are announced clearly.</li>
   </ul>
 
   <h2>Keyboard Support</h2>
   <table>
-    <thead>
-      <tr>
-        <th>Key</th>
-        <th>Function</th>
-      </tr>
-    </thead>
+    <thead><tr><th>Key</th><th>Function</th></tr></thead>
     <tbody>
-      <tr>
-        <td><kbd>Tab</kbd></td>
-        <td>Moves focus to the file input</td>
-      </tr>
-      <tr>
-        <td><kbd>Enter</kbd> or <kbd>Space</kbd></td>
-        <td>When focus is on the dropzone, opens the file browser</td>
-      </tr>
-      <tr>
-        <td><kbd>Enter</kbd> or <kbd>Space</kbd></td>
-        <td>When focus is on a file delete button, removes the file</td>
-      </tr>
+      <tr><td><kbd>Tab</kbd></td><td>Move focus to the file input</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Open file browser</td></tr>
     </tbody>
   </table>
 </Container>

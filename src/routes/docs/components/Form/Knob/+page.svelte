@@ -9,6 +9,7 @@ import Knob from "$lib/components/Form/Knob.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as KnobModule from "$lib/components/Form/Knob.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 
 const valueDisplayCode = `<Knob name="progress" value={75} showValue={true} valueTemplate="{value}%" />`
 const sizesCode = `<Knob size="sm" value={25} />
@@ -20,6 +21,7 @@ const sizesCode = `<Knob size="sm" value={25} />
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>Knob</h1>
 
 <p>
@@ -117,3 +119,4 @@ const sizesCode = `<Knob size="sm" value={25} />
     <tr><td><kbd>End</kbd></td><td>Set to maximum</td></tr>
   </tbody>
 </table>
+</Container>

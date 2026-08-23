@@ -6,6 +6,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as AccordionModule from "$lib/components/Accordion/Accordion.svelte"
 import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 <!--
 @component
@@ -15,7 +16,7 @@ Documentation page for the Accordion component
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
-<article class="prose dark:prose-invert max-w-none">
+<Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>Accordion</h1>
   <p>
     A group of collapsible items where only one can be expanded at a time by default.
@@ -162,4 +163,4 @@ Documentation page for the Accordion component
     <li><kbd>Tab</kbd>: Move focus between panels</li>
     <li><kbd>Shift</kbd> + <kbd>Tab</kbd>: Move focus to previous panel</li>
   </ul>
-</article>
+</Container>

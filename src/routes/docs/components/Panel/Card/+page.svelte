@@ -1,7 +1,9 @@
 <script lang="ts">
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>Card</h1>
 
 <p>
@@ -26,3 +28,4 @@ The Card component is a sub-component of Panel used for structuring and organizi
 <style lang="postcss">
 @reference '$lib/twintrinsic.css';
 </style>
+</Container>

@@ -9,12 +9,14 @@ import InputSwitch from "$lib/components/Form/InputSwitch.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as InputSwitchModule from "$lib/components/Form/InputSwitch.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>InputSwitch</h1>
 
 <p>
@@ -121,3 +123,4 @@ import * as InputSwitchModule from "$lib/components/Form/InputSwitch.svelte"
     <tr><td><kbd>Tab</kbd></td><td>Move focus to the switch</td></tr>
   </tbody>
 </table>
+</Container>

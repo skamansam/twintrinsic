@@ -9,6 +9,7 @@ import Listbox from "$lib/components/Form/Listbox.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as ListboxModule from "$lib/components/Form/Listbox.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 
 const colors = [
   { label: "Red", value: "red" },
@@ -26,6 +27,7 @@ let selectedFruits = $state(["Apple", "Grape"])
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>Listbox</h1>
 
 <p>
@@ -134,3 +136,4 @@ let selectedFruits = $state(["Apple", "Grape"])
     <tr><td><kbd>Type</kbd></td><td>Jump to matching option</td></tr>
   </tbody>
 </table>
+</Container>

@@ -8,6 +8,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import TreeMenu from "$lib/components/TreeMenu/TreeMenu.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as TreeMenuModule from "$lib/components/TreeMenu/TreeMenu.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 
 const basicItems: TreeMenuItem[] = [
   { title: 'Home', icon: 'home', link: '/' },
@@ -48,6 +49,7 @@ const actionItems: TreeMenuItem[] = [
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>TreeMenu</h1>
 
 <p>
@@ -165,3 +167,4 @@ const actionItems: TreeMenuItem[] = [
   <li>ARIA labels for screen readers.</li>
   <li>Focus management for keyboard users.</li>
 </ul>
+</Container>

@@ -8,6 +8,7 @@ import Select from "$lib/components/Form/Select.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as SelectModule from "$lib/components/Form/Select.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 
 const countries = [
   { value: "us", label: "United States" },
@@ -32,6 +33,7 @@ const languages = [
   @reference '$lib/twintrinsic.css';
 </style>
 
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>Select</h1>
 
 <!-- ─── Description ───────────────────────────────────── -->
@@ -207,3 +209,4 @@ const languages = [
     <tr><td><kbd>Type</kbd></td><td>Search through options when dropdown is open</td></tr>
   </tbody>
 </table>
+</Container>

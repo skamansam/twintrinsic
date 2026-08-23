@@ -1,69 +1,80 @@
 <!--
 @component
-Documentation page for the FloatLabel component.
+FloatLabel documentation page — standardized structure
 -->
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import FloatLabel from "$lib/components/Form/FloatLabel.svelte"
 import Select from "$lib/components/Form/Select.svelte"
 import Textarea from "$lib/components/Form/Textarea.svelte"
 import TextInput from "$lib/components/Form/TextInput.svelte"
-import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as FloatLabelModule from "$lib/components/Form/FloatLabel.svelte"
+import Container from "$lib/components/Container/Container.svelte"
 </script>
 
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
+
+<Container as="article" class="prose dark:prose-invert max-w-none">
 <h1>FloatLabel</h1>
 
 <p>
-  The FloatLabel component creates form inputs with animated floating labels that move out of the way
-  when the input is focused or has a value. This provides a modern, space-efficient design while
-  maintaining clear labeling for improved user experience.
+  <strong>FloatLabel</strong> wraps form inputs with an animated label that floats
+  above the field when focused or filled, saving vertical space while maintaining
+  clear context.
 </p>
+
+<h2>What, When &amp; Why</h2>
+
+<h3>What is it?</h3>
+<p>
+  A form field wrapper that positions the label inside the input when empty, then
+  animates it above the input when focused or filled. Uses CSS <code>:has()</code>
+  for the float animation — no JavaScript needed.
+</p>
+
+<h3>When should I use it?</h3>
+<p>
+  Use <code>&lt;FloatLabel&gt;</code> for dense forms where vertical space is at a
+  premium: mobile forms, side panels, modal forms. For standard forms with ample
+  space, prefer <code>&lt;FormField&gt;</code> with a separate label above.
+</p>
+
+<h3>Why does it exist?</h3>
+<ul>
+  <li><strong>Space efficiency</strong> — combines label and placeholder into one element.</li>
+  <li><strong>Persistent context</strong> — the floating label is always visible, even after typing.</li>
+  <li><strong>Modern CSS</strong> — <code>:has()</code> enables the float animation without JS.</li>
+</ul>
+
+<h2>Responsiveness</h2>
+<ul>
+  <li>Fills container width by default.</li>
+  <li>Works with any input type (text, email, password, textarea, select).</li>
+</ul>
+
+<h2>Customization</h2>
+<ul>
+  <li>Wrap any input component (TextInput, Textarea, Select).</li>
+  <li>Add help text, error messages, required indicators via props.</li>
+  <li>Disabled state via prop.</li>
+</ul>
 
 <h2>Examples</h2>
 
 <h3>Basic Usage</h3>
-<div class="example" data-testid="floatlabel-basic-usage">
-  <FloatLabel label="Username">
-    <TextInput name="username" />
-  </FloatLabel>
-</div>
-<CodeBlock>
-  {`<FloatLabel label="Username">
+<ExampleTabs code={`<FloatLabel label="Username">
   <TextInput name="username" />
-</FloatLabel>`}
-</CodeBlock>
+</FloatLabel>`}>
+  <div class="max-w-md" data-testid="floatlabel-basic-usage">
+    <FloatLabel label="Username"><TextInput name="username" /></FloatLabel>
+  </div>
+</ExampleTabs>
 
 <h3>With Different Input Types</h3>
-<div class="example" data-testid="floatlabel-types">
-  <div class="flex flex-col gap-4">
-    <FloatLabel label="Email">
-      <TextInput type="email" name="email" />
-    </FloatLabel>
-    
-    <FloatLabel label="Password">
-      <TextInput type="password" name="password" />
-    </FloatLabel>
-    
-    <FloatLabel label="Message">
-      <Textarea name="message" rows={3} />
-    </FloatLabel>
-    
-    <FloatLabel label="Country">
-      <Select 
-        name="country"
-        options={[
-          { label: 'United States', value: 'us' },
-          { label: 'Canada', value: 'ca' },
-          { label: 'United Kingdom', value: 'uk' }
-        ]}
-      />
-    </FloatLabel>
-  </div>
-</div>
-<CodeBlock>
-  {`<FloatLabel label="Email">
+<ExampleTabs code={`<FloatLabel label="Email">
   <TextInput type="email" name="email" />
 </FloatLabel>
 
@@ -73,174 +84,36 @@ import * as FloatLabelModule from "$lib/components/Form/FloatLabel.svelte"
 
 <FloatLabel label="Message">
   <Textarea name="message" rows={3} />
+</FloatLabel>`}>
+  <div class="max-w-md flex flex-col gap-4" data-testid="floatlabel-types">
+    <FloatLabel label="Email"><TextInput type="email" name="email" /></FloatLabel>
+    <FloatLabel label="Password"><TextInput type="password" name="password" /></FloatLabel>
+    <FloatLabel label="Message"><Textarea name="message" rows={3} /></FloatLabel>
+  </div>
+</ExampleTabs>
+
+<h3>With Error &amp; Help Text</h3>
+<ExampleTabs code={`<FloatLabel label="Email" error="Please enter a valid email">
+  <TextInput type="email" name="email" />
 </FloatLabel>
 
-<FloatLabel label="Country">
-  <Select 
-    name="country"
-    options={[
-      { label: 'United States', value: 'us' },
-      { label: 'Canada', value: 'ca' },
-      { label: 'United Kingdom', value: 'uk' }
-    ]}
-  />
-</FloatLabel>`}
-</CodeBlock>
-
-<h3>Required Field</h3>
-<div class="example" data-testid="floatlabel-required">
-  <FloatLabel label="Email" required={true}>
-    <TextInput type="email" name="email" required={true} />
-  </FloatLabel>
-</div>
-<CodeBlock>
-  {`<FloatLabel label="Email" required={true}>
-  <TextInput type="email" name="email" required={true} />
-</FloatLabel>`}
-</CodeBlock>
-
-<h3>With Error Message</h3>
-<div class="example" data-testid="floatlabel-error">
-  <FloatLabel 
-    label="Email" 
-    error="Please enter a valid email address"
-  >
-    <TextInput type="email" name="email" />
-  </FloatLabel>
-</div>
-<CodeBlock>
-  {`<FloatLabel 
-  label="Email" 
-  error="Please enter a valid email address"
->
-  <TextInput type="email" name="email" />
-</FloatLabel>`}
-</CodeBlock>
-
-<h3>With Help Text</h3>
-<div class="example" data-testid="floatlabel-help">
-  <FloatLabel 
-    label="Password" 
-    helpText="Password must be at least 8 characters long"
-  >
-    <TextInput type="password" name="password" />
-  </FloatLabel>
-</div>
-<CodeBlock>
-  {`<FloatLabel 
-  label="Password" 
-  helpText="Password must be at least 8 characters long"
->
+<FloatLabel label="Password" helpText="At least 8 characters">
   <TextInput type="password" name="password" />
-</FloatLabel>`}
-</CodeBlock>
-
-<h3>Disabled State</h3>
-<div class="example" data-testid="floatlabel-disabled-state">
-  <FloatLabel label="Username" disabled={true}>
-    <TextInput name="username" disabled={true} />
-  </FloatLabel>
-</div>
-<CodeBlock>
-  {`<FloatLabel label="Username" disabled={true}>
-  <TextInput name="username" disabled={true} />
-</FloatLabel>`}
-</CodeBlock>
-
-<h3>With Initial Value</h3>
-<div class="example" data-testid="floatlabel-initial-value">
-  <FloatLabel label="Username">
-    <TextInput name="username" value="johndoe" />
-  </FloatLabel>
-</div>
-<CodeBlock>
-  {`<FloatLabel label="Username">
-  <TextInput name="username" value="johndoe" />
-</FloatLabel>`}
-</CodeBlock>
+</FloatLabel>`}>
+  <div class="max-w-md flex flex-col gap-4" data-testid="floatlabel-error">
+    <FloatLabel label="Email" error="Please enter a valid email"><TextInput type="email" name="email" /></FloatLabel>
+    <FloatLabel label="Password" helpText="At least 8 characters"><TextInput type="password" name="password" /></FloatLabel>
+  </div>
+</ExampleTabs>
 
 <h2>Props</h2>
 <PropsTable component={FloatLabelModule} />
 
-<h2>Slots</h2>
-<table class="props-table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>default</td>
-      <td>The input component to wrap with the floating label</td>
-    </tr>
-  </tbody>
-</table>
-
 <h2>Accessibility</h2>
-<p>
-  The FloatLabel component follows accessibility best practices:
-</p>
 <ul>
-  <li>Associates labels with inputs using proper <code>for</code> attributes</li>
-  <li>Maintains visible labels at all times</li>
-  <li>Properly indicates required fields with both visual and screen reader cues</li>
-  <li>Error messages are announced to screen readers using <code>role="alert"</code></li>
-  <li>Preserves the accessibility features of the wrapped input components</li>
+  <li>Labels are properly associated via <code>for</code>/<code>id</code>.</li>
+  <li>Labels remain visible at all times (never hidden).</li>
+  <li>Error messages use <code>role="alert"</code> for screen reader announcements.</li>
+  <li>Preserves accessibility features of wrapped input components.</li>
 </ul>
-
-<h2>Best Practices</h2>
-<ul>
-  <li>Use clear, concise labels that describe the input's purpose</li>
-  <li>Keep labels short to avoid overflow when floating</li>
-  <li>Ensure error messages are descriptive and actionable</li>
-  <li>Use help text to provide additional context or requirements</li>
-  <li>Maintain consistent styling across your form by using FloatLabel for all inputs</li>
-</ul>
-
-<h2>Form Integration</h2>
-<p>
-  The FloatLabel component works with the Form component for validation and submission:
-</p>
-<CodeBlock>
-  {`<Form onSubmit={handleSubmit}>
-  <FloatLabel label="Email" required={true}>
-    <TextInput 
-      type="email"
-      name="email"
-      required={true}
-    />
-  </FloatLabel>
-  
-  <FloatLabel label="Password" required={true}>
-    <TextInput 
-      type="password"
-      name="password"
-      required={true}
-    />
-  </FloatLabel>
-  
-  <Button type="submit">Sign In</Button>
-</Form>`}
-</CodeBlock>
-
-<style lang="postcss">
-  @reference '$lib/twintrinsic.css';
-  .example {
-    @apply my-4 p-4 border border-border rounded-md;
-    @apply flex flex-col gap-4 max-w-md;
-  }
-  
-  .props-table {
-    @apply w-full border-collapse mb-6;
-  }
-  
-  .props-table th {
-    @apply text-left py-2 px-4 bg-surface dark:bg-surface font-medium text-text dark:text-text border-b border-border dark:border-border;
-  }
-  
-  .props-table td {
-    @apply py-2 px-4 border-b border-border dark:border-border text-text dark:text-text;
-  }
-</style>
+</Container>
