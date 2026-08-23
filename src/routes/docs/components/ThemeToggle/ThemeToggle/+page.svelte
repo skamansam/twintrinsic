@@ -1,167 +1,116 @@
+<!--
+@component
+ThemeToggle documentation page — standardized structure
+-->
 <script lang="ts">
 import Button from "$lib/components/Button/Button.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
-import Panel from "$lib/components/Panel/Panel.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
 </script>
+
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
+
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>ThemeToggle</h1>
+
   <p>
-    A toggle button for switching between light and dark themes. The component automatically
-    syncs with system preferences and persists the user's choice. It also supports nested theming,
-    allowing different sections of your application to have independent theme states.
+    <strong>ThemeToggle</strong> is a toggle button for switching between light and dark
+    themes. The component automatically syncs with system preferences and persists the
+    user's choice. It also supports nested theming for independent theme states in
+    different sections.
   </p>
 
+  <h2>What, When &amp; Why</h2>
+
+  <h3>What is it?</h3>
+  <p>
+    A checkbox-based toggle that swaps the <code>data-theme</code> attribute and
+    <code>dark</code> class on <code>&lt;html&gt;</code>. Supports localStorage
+    persistence, system preference detection, and nested theming via <code>data-theme</code>
+    on any ancestor element.
+  </p>
+
+  <h3>When should I use it?</h3>
+  <p>
+    Use <code>&lt;ThemeToggle&gt;</code> whenever your app supports light/dark mode.
+    Typically placed in the header or navigation bar. For color scheme switching beyond
+    light/dark, use a custom theme selector.
+  </p>
+
+  <h3>Why does it exist?</h3>
+  <ul>
+    <li><strong>System preference detection</strong> — respects <code>prefers-color-scheme</code>.</li>
+    <li><strong>Persistence</strong> — remembers user choice across sessions.</li>
+    <li><strong>Nested theming</strong> — independent theme states for different sections.</li>
+    <li><strong>Accessible</strong> — proper ARIA labels and keyboard support.</li>
+  </ul>
+
+  <h3>Sources</h3>
+  <ul>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme">MDN — prefers-color-scheme</a></li>
+    <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/switch/">WAI-ARIA APG — Switch</a></li>
+    <li><a href="https://primer.style/components/toggle-switch">Primer — ToggleSwitch</a></li>
+    <li><a href="https://m3.material.io/styles/color/static-bright">Material Design 3 — Color</a></li>
+    <li><a href="https://ant.design/components/switch">Ant Design — Switch</a></li>
+  </ul>
+
+  <h2>Responsiveness</h2>
+  <ul>
+    <li>Compact toggle button; fits in any header or toolbar.</li>
+    <li>Touch target meets 44×44 px minimum.</li>
+  </ul>
+
+  <h2>Customization</h2>
+  <ul>
+    <li>CSS classes via <code>class</code> prop.</li>
+    <li>Nested theming via <code>data-theme</code> on ancestor elements.</li>
+  </ul>
+
   <h2>Examples</h2>
-  <h3>Basic Usage</h3>
-  <div class="not-prose mb-8">
-    <div class="p-4 bg-surface rounded-lg border border-border flex justify-center">
+
+  <h3>Basic Toggle</h3>
+  <ExampleTabs code={`<ThemeToggle />`}>
+    <div class="not-prose p-4 bg-surface rounded-lg border border-border flex justify-center" data-testid="theme-basic">
       <ThemeToggle />
     </div>
-  </div>
+  </ExampleTabs>
 
-  <h3>In Header</h3>
-  <div class="not-prose mb-8">
-    <div class="p-4 bg-surface rounded-lg border border-border">
+  <h3>In Header Context</h3>
+  <ExampleTabs code={`<div class="flex justify-end">
+  <ThemeToggle />
+</div>`}>
+    <div class="not-prose p-4 bg-surface rounded-lg border border-border" data-testid="theme-header">
       <div class="flex justify-end">
         <ThemeToggle />
       </div>
     </div>
-  </div>
-
-  <h2>Nested Theming</h2>
-  <p>
-    The ThemeToggle component supports nested theming, allowing you to create sections with
-    independent theme states. Each nested <code>data-theme</code> element can have its own
-    theme toggle that overrides the parent's theme.
-  </p>
-
-  <h3>Interactive Demo: 3-Level Nested Themes</h3>
-  <p>
-    Try toggling the theme switches at different levels to see how nested theming works.
-    Each section can have its own independent theme state.
-  </p>
-
-  <div class="not-prose mb-8">
-    <!-- Level 1: Main Section -->
-    <div class="p-6 rounded-lg border-2 border-primary-500 bg-background text-text" data-theme>
-      <div class="flex items-center justify-between mb-4">
-        <h4 class="text-lg font-bold">Level 1: Main Section</h4>
-        <ThemeToggle />
-      </div>
-      <p class="text-sm text-muted mb-4">Toggle this section's theme independently</p>
-      
-      <!-- Level 2: First Nested Section -->
-      <div class="p-4 rounded-lg border border-secondary-500 bg-surface mt-4" data-theme>
-        <div class="flex items-center justify-between mb-3">
-          <h5 class="font-semibold">Level 2a: First Nested Section</h5>
-          <ThemeToggle />
-        </div>
-        <p class="text-sm text-muted mb-3">This section can have a different theme than its parent</p>
-        
-        <!-- Level 3: Deeply Nested Section -->
-        <div class="p-3 rounded border border-success-500 bg-background mt-3" data-theme>
-          <div class="flex items-center justify-between mb-2">
-            <h6 class="font-medium">Level 3a: Deeply Nested</h6>
-            <ThemeToggle />
-          </div>
-          <p class="text-xs text-muted">Three levels deep with independent theme control</p>
-        </div>
-      </div>
-
-      <!-- Level 2: Second Nested Section -->
-      <div class="p-4 rounded-lg border border-warning-500 bg-surface mt-4" data-theme>
-        <div class="flex items-center justify-between mb-3">
-          <h5 class="font-semibold">Level 2b: Second Nested Section</h5>
-          <ThemeToggle />
-        </div>
-        <p class="text-sm text-muted mb-3">Another independent nested section</p>
-        
-        <!-- Level 3: Another Deeply Nested Section -->
-        <div class="p-3 rounded border border-error-500 bg-background mt-3" data-theme>
-          <div class="flex items-center justify-between mb-2">
-            <h6 class="font-medium">Level 3b: Another Nested</h6>
-            <ThemeToggle />
-          </div>
-          <p class="text-xs text-muted">Independent theme at depth 3</p>
-        </div>
-      </div>
-
-      <!-- Level 2: Third Nested Section (No Toggle) -->
-      <div class="p-4 rounded-lg border border-info-500 bg-surface mt-4" data-theme>
-        <h5 class="font-semibold mb-3">Level 2c: Nested Without Toggle</h5>
-        <p class="text-sm text-muted mb-3">This section inherits its parent's theme (no toggle)</p>
-        
-        <!-- Level 3: Nested Under No-Toggle Section -->
-        <div class="p-3 rounded border border-primary-400 bg-background mt-3" data-theme>
-          <div class="flex items-center justify-between mb-2">
-            <h6 class="font-medium">Level 3c: Under No-Toggle Parent</h6>
-            <ThemeToggle />
-          </div>
-          <p class="text-xs text-muted">Can still toggle independently even if parent has no toggle</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <h3>How Nested Theming Works</h3>
-  <ul>
-    <li><strong>Independent Control:</strong> Each <code>data-theme</code> section with a toggle can switch themes independently</li>
-    <li><strong>Theme Inheritance:</strong> Sections without toggles inherit their parent's theme</li>
-    <li><strong>Override Capability:</strong> A nested section's theme overrides its parent's theme when toggled</li>
-    <li><strong>Unlimited Nesting:</strong> You can nest themed sections as deeply as needed</li>
-  </ul>
+  </ExampleTabs>
 
   <h2>Features</h2>
   <ul>
     <li>Automatic system theme detection</li>
     <li>Smooth theme transitions</li>
-    <li>Keyboard accessible</li>
-    <li>Screen reader support</li>
-    <li>Persistent theme selection</li>
+    <li>Persistent theme selection via localStorage</li>
+    <li>Nested theming support</li>
+    <li>Prevents FOUC with inline initializer in <code>app.html</code></li>
   </ul>
 
-  <h2>Usage</h2>
-  <p>Import and use the ThemeToggle component:</p>
-
-  <CodeBlock language="svelte">{`\u003Cscript>
-  import ThemeToggle from '$lib/components/ThemeToggle/ThemeToggle.svelte';
-\u003C/script>
-
-<ThemeToggle />`}</CodeBlock>
-
-  <h2>Implementation Details</h2>
+  <h2>Setup</h2>
   <p>
-    The ThemeToggle component manages theme state through the <code>data-theme</code> attribute
-    on the root HTML element. It supports:
+    To prevent the light-mode flash (FOUC), add an inline initializer to your SvelteKit
+    <code>app.html</code> before <code>%sveltekit.head%</code>:
   </p>
 
-  <ul>
-    <li>Initial theme detection from system preferences</li>
-    <li>Theme persistence across page reloads</li>
-    <li>Real-time theme switching</li>
-  </ul>
-
-  <h2>Avoiding the Light-Mode Flash</h2>
-  <p>
-    <code>ThemeToggle</code> is a client-side component, so the page can briefly render in light mode
-    before JavaScript runs and applies the saved or system-preferred theme. To prevent this flash,
-    add an inline initializer to your SvelteKit <code>app.html</code> <strong>before</strong>
-    <code>%sveltekit.head%</code>:
-  </p>
-
-  <CodeBlock language="html">{`<!-- Add this inside the <head> of app.html, before %sveltekit.head% -->
-<meta name="color-scheme" content="light dark" />
+  <CodeBlock language="html">{`<meta name="color-scheme" content="light dark" />
 \u003Cscript>
   try {
     const stored = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const isDark = stored ? stored === 'dark' : prefersDark;
-
     if (isDark) {
       document.documentElement.setAttribute('data-theme', 'dark');
       document.documentElement.classList.add('dark');
@@ -169,31 +118,23 @@ import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
       document.documentElement.removeAttribute('data-theme');
       document.documentElement.classList.remove('dark');
     }
-  } catch {
-    /* ignore storage errors */
-  }
+  } catch { /* ignore storage errors */ }
 \u003C/script>`}</CodeBlock>
 
-  <p>
-    This script reads the same <code>localStorage</code> key and system preference as
-    <code>ThemeToggle</code>, applying the dark theme before the first paint.
-  </p>
-
   <h2>Accessibility</h2>
-  <p>
-    The component follows accessibility best practices:
-  </p>
-
   <ul>
-    <li>Proper ARIA labels that update based on the current theme</li>
-    <li>Keyboard navigation support</li>
-    <li>Focus indicators</li>
-    <li>High contrast icons</li>
+    <li>Uses a native <code>&lt;input type="checkbox"&gt;</code> with <code>sr-only</code> class.</li>
+    <li>Dynamic <code>aria-label</code> that updates based on current theme.</li>
+    <li>Focus indicators on the toggle.</li>
+    <li>High contrast sun/moon icons.</li>
   </ul>
 
-  <h2>Styling</h2>
-  <p>
-    The ThemeToggle uses Tailwind CSS classes and follows the Twintrinsic design system.
-    It automatically adapts to both light and dark themes.
-  </p>
+  <h2>Keyboard Support</h2>
+  <table>
+    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>Tab</kbd></td><td>Move focus to the toggle</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Toggle the theme</td></tr>
+    </tbody>
+  </table>
 </Container>

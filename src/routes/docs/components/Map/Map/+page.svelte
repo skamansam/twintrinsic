@@ -1,289 +1,146 @@
 <!--
 @component
-Map documentation page
+Map documentation page — standardized structure
 -->
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import CodeBlock from '$lib/components/CodeBlock/CodeBlock.svelte'
-	import Container from '$lib/components/Container/Container.svelte'
-	import MapComponent from '$lib/components/Map/Map.svelte';
+import Container from "$lib/components/Container/Container.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import MapComponent from "$lib/components/Map/Map.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
-	import CustomMapImage from "./fallout4-pipboy-highres.webp";
 import * as MapComponentModule from "$lib/components/Map/Map.svelte"
-
-	let customMapImageRef: any;
-	let customMarkersRef: any;
-	let customImageURL = 'https://staticdelivery.nexusmods.com/mods/1151/images/92456/92456-1742822281-187495018.png';
-
 </script>
 
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
+
 <Container as="article" class="prose dark:prose-invert max-w-none">
-	<h1>Map</h1>
+  <h1>Map</h1>
 
-	<p>
-		An interactive map component built on <a href="https://leafletjs.com/" target="_blank"
-			>Leaflet</a
-		>, a lightweight JavaScript library for mobile-friendly interactive maps.
-	</p>
+  <p>
+    <strong>Map</strong> is an interactive map component built on
+    <a href="https://leafletjs.com/" target="_blank">Leaflet</a>, a lightweight JavaScript
+    library for mobile-friendly interactive maps.
+  </p>
 
-	<h2>Features</h2>
-	<ul>
-		<li>Interactive tile-based maps with zoom and pan controls</li>
-		<li>Customizable tile layers (OpenStreetMap, CartoDB, etc.)</li>
-		<li>Configurable zoom levels and bounds</li>
-		<li>Optional zoom and attribution controls</li>
-		<li>Click, zoom, and move event handlers</li>
-		<li>Lightweight and performant</li>
-	</ul>
+  <h2>What, When &amp; Why</h2>
 
-	<h2>Basic Usage</h2>
-	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200" data-testid="map-basic">
-		<MapComponent center={[-25.2637, -57.5759]} zoom={13} />
-	</div>
+  <h3>What is it?</h3>
+  <p>
+    A Leaflet-powered interactive map with tile-based rendering, zoom/pan controls, custom
+    markers, and event handling. Supports both geographic (lat/lng) and pixel-based
+    (Simple CRS) coordinate systems for custom image maps.
+  </p>
 
-	<CodeBlock language="svelte">{`\u003Cscript>
-  import { Map } from '$lib';
-\u003C/script>
+  <h3>When should I use it?</h3>
+  <p>
+    Use <code>&lt;Map&gt;</code> when you need to display geographic locations, store
+    finders, delivery tracking, or custom image overlays (game maps, floor plans).
+    For simple data visualization, consider chart components.
+  </p>
 
-<Map center={[-25.2637, -57.5759]} zoom={13} />`}</CodeBlock>
+  <h3>Why does it exist?</h3>
+  <ul>
+    <li><strong>Leaflet integration</strong> — battle-tested, lightweight mapping library.</li>
+    <li><strong>Custom CRS</strong> — pixel-based coordinates for custom image maps.</li>
+    <li><strong>Event system</strong> — click, zoom, and move handlers for interactivity.</li>
+    <li><strong>Tile providers</strong> — OpenStreetMap, CartoDB, and more.</li>
+  </ul>
 
-	<h2>Custom Center and Zoom</h2>
-	<p>Set a custom center location and initial zoom level:</p>
-	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200" data-testid="map-custom-center">
-		<MapComponent center={[-25.2637, -57.5759]} zoom={12} />
-	</div>
+  <h3>Sources</h3>
+  <ul>
+    <li><a href="https://leafletjs.com/">Leaflet</a></li>
+    <li><a href="https://leafletjs.com/reference-2.0.0.html">Leaflet API Reference</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API">MDN — Geolocation API</a></li>
+    <li><a href="https://www.openstreetmap.org/">OpenStreetMap</a></li>
+    <li><a href="https://carto.com/">CartoDB</a></li>
+  </ul>
 
-	<CodeBlock language="svelte">{`\u003Cscript>
-  import { Map } from '$lib';
-\u003C/script>
+  <h2>Responsiveness</h2>
+  <ul>
+    <li>Fills container width and height; set via parent CSS.</li>
+    <li>Touch gestures for pan and zoom on mobile.</li>
+    <li>Responsive tile loading.</li>
+  </ul>
 
-<Map center={[-25.2637, -57.5759]} zoom={12} />`}</CodeBlock>
+  <h2>Customization</h2>
+  <ul>
+    <li><code>center</code> — initial map center [lat, lng].</li>
+    <li><code>zoom</code> — initial zoom level.</li>
+    <li><code>tileUrl</code> — custom tile provider URL.</li>
+    <li><code>attribution</code> — custom attribution text.</li>
+    <li><code>zoomControl</code> / <code>attributionControl</code> — show/hide controls.</li>
+    <li><code>useSimpleCRS</code> — pixel-based coordinates for custom images.</li>
+    <li><code>customImage</code> / <code>imageWidth</code> / <code>imageHeight</code> — custom image map.</li>
+  </ul>
 
-	<h2>Different Tile Layers</h2>
-	<p>Use different tile layer providers:</p>
-	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200" data-testid="map-tile-layer">
-		<MapComponent
-			center={[-25.2637, -57.5759]}
-			zoom={13}
-			tileUrl={'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'}
-			attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors &copy; <a href='https://carto.com/attributions'>CARTO</a>"
-		/>
-	</div>
+  <h2>Examples</h2>
 
-	<CodeBlock language="svelte">{`\u003Cscript>
-  import { Map } from '$lib';
-\u003C/script>
+  <h3>Basic Map</h3>
+  <ExampleTabs code={`<Map center={[-25.2637, -57.5759]} zoom={13} />`}>
+    <div class="h-96 w-full rounded-lg border border-border" data-testid="map-basic">
+      <MapComponent center={[-25.2637, -57.5759]} zoom={13} />
+    </div>
+  </ExampleTabs>
 
-<Map 
-  center={[-25.2637, -57.5759]} 
+  <h3>Custom Tile Layer</h3>
+  <ExampleTabs code={`<Map
+  center={[-25.2637, -57.5759]}
   zoom={13}
   tileUrl="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
-  attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors &copy; <a href='https://carto.com/attributions'>CARTO</a>"
-/>`}</CodeBlock>
+  attribution="© OpenStreetMap contributors © CARTO"
+/>`}>
+    <div class="h-96 w-full rounded-lg border border-border" data-testid="map-tile-layer">
+      <MapComponent
+        center={[-25.2637, -57.5759]}
+        zoom={13}
+        tileUrl={'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'}
+        attribution="© OpenStreetMap contributors © CARTO"
+      />
+    </div>
+  </ExampleTabs>
 
-	<h2>Without Controls</h2>
-	<p>Disable zoom or attribution controls:</p>
-	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200" data-testid="map-no-controls">
-		<MapComponent center={[-25.2637, -57.5759]} zoom={13} zoomControl={false} attributionControl={false} />
-	</div>
-
-	<CodeBlock language="svelte">{`\u003Cscript>
-  import { Map } from '$lib';
-\u003C/script>
-
-<Map 
-  center={[-25.2637, -57.5759]} 
+  <h3>Without Controls</h3>
+  <ExampleTabs code={`<Map
+  center={[-25.2637, -57.5759]}
   zoom={13}
   zoomControl={false}
   attributionControl={false}
-/>`}</CodeBlock>
+/>`}>
+    <div class="h-96 w-full rounded-lg border border-border" data-testid="map-no-controls">
+      <MapComponent center={[-25.2637, -57.5759]} zoom={13} zoomControl={false} attributionControl={false} />
+    </div>
+  </ExampleTabs>
 
-	<h2>Custom Map Image</h2>
-	<p>Use a custom static image as a map with pixel-based coordinates:</p>
-	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200" data-testid="map-custom-image">
-		<MapComponent
-			useSimpleCRS={true}
-			customImage={customImageURL}
-			imageWidth={1031}
-			imageHeight={1031}
-			center={[384, 512]}
-			zoom={5}
-		/>
-	</div>
+  <h2>Props</h2>
+  <PropsTable component={MapComponentModule} />
 
-	<CodeBlock language="svelte">{`\u003Cscript>
-  import { Map } from '$lib';
-\u003C/script>
+  <h2>Events</h2>
+  <EventsTable component={MapComponentModule} />
 
-<Map 
-  useSimpleCRS={true}
-  imageWidth={1024}
-  imageHeight={768}
-  center={[384, 512]}
-  zoom={1}
-/>`}</CodeBlock>
+  <h2>Tile Layer Providers</h2>
+  <ul>
+    <li><strong>OpenStreetMap</strong>: <code>https://&#123;s&#125;.tile.openstreetmap.org/&#123;z&#125;/&#123;x&#125;/&#123;y&#125;.png</code></li>
+    <li><strong>CartoDB Light</strong>: <code>https://cartodb-basemaps-&#123;s&#125;.global.ssl.fastly.net/light_all/&#123;z&#125;/&#123;x&#125;/&#123;y&#125;.png</code></li>
+    <li><strong>CartoDB Dark</strong>: <code>https://cartodb-basemaps-&#123;s&#125;.global.ssl.fastly.net/dark_all/&#123;z&#125;/&#123;x&#125;/&#123;y&#125;.png</code></li>
+  </ul>
 
-	<h2>Custom Markers</h2>
-	<p>Add custom markers to the map with a custom image background using pixel coordinates:</p>
-	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200" data-testid="map-custom-markers">
-		<MapComponent
-			bind:this={customMarkersRef}
-			useSimpleCRS={true}
-			imageWidth={1024}
-			imageHeight={768}
-			center={[384, 512]}
-			zoom={1}
-		/>
-	</div>
+  <h2>Accessibility</h2>
+  <ul>
+    <li>Arrow keys to pan the map.</li>
+    <li><kbd>+</kbd> / <kbd>-</kbd> to zoom in and out.</li>
+    <li>Click on the map to interact with markers and popups.</li>
+    <li>Leaflet provides built-in keyboard navigation and screen reader support.</li>
+  </ul>
 
-	<CodeBlock language="svelte">{`\u003Cscript>
-  import { Map } from '$lib';
-
-  let markers = [
-    { id: 1, lat: 384, lng: 512, name: 'Center Marker' },
-    { id: 2, lat: 300, lng: 400, name: 'Marker 2' }
-  ];
-\u003C/script>
-
-<Map 
-  useSimpleCRS={true}
-  imageWidth={1024}
-  imageHeight={768}
-  center={[384, 512]}
-  zoom={1}
-  {markers}
-/>`}</CodeBlock>
-
-	<h2>Interactive Marker Creation</h2>
-	<p>Click on the map to create new markers:</p>
-	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200" data-testid="map-interactive">
-		<MapComponent 
-			center={[-25.2637, -57.5759]} 
-			zoom={13}
-			onclick={(event) => {
-				console.log('Marker created at:', event.detail);
-			}}
-		/>
-	</div>
-
-	<CodeBlock language="svelte">{`\u003Cscript>
-  import { Map } from '$lib';
-  import { onMount } from 'svelte';
-
-  let markers = [];
-  let mapInstance;
-
-  function handleMapClick(event) {
-    const { lat, lng } = event.detail;
-    markers = [...markers, { lat, lng }];
-    
-    // Add marker to map
-    onMount(async () => {
-      const L = await import('leaflet');
-      const marker = new L.Marker([lat, lng]);
-      marker.addTo(mapInstance);
-      marker.bindPopup(` + '\`Marker at \${lat.toFixed(4)}, \${lng.toFixed(4)}\`' + `);
-    });
-  }
-\u003C/script>
-
-<Map 
-  bind:this={mapInstance}
-  center={[-25.2637, -57.5759]} 
-  zoom={13}
-  onclick={handleMapClick}
-/>
-
-<div class="mt-4">
-  <h3>Markers Created: {markers.length}</h3>
-  {#each markers as marker (marker)}
-    <p>{marker.lat.toFixed(4)}, {marker.lng.toFixed(4)}</p>
-  {/each}
-</div>`}</CodeBlock>
-
-	<h2>Custom Image Map with Simple CRS</h2>
-	<p>Use a custom image as a map with pixel-based coordinates and constrained bounds:</p>
-	<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200" data-testid="map-simple-crs">
-		<MapComponent
-			useSimpleCRS={true}
-			imageWidth={1024}
-			imageHeight={768}
-			center={[384, 512]}
-			zoom={1}
-		/>
-	</div>
-
-	<CodeBlock language="svelte">{`\u003Cscript>
-  import { Map } from '$lib';
-  import { onMount } from 'svelte';
-
-  let mapInstance;
-
-  onMount(async () => {
-    const L = await import('leaflet');
-    // Add custom image overlay with pixel coordinates
-    const imageBounds = [[0, 0], [768, 1024]];
-    const imageUrl = 'https://staticdelivery.nexusmods.com/mods/1151/images/92456/92456-1742822281-187495018.png';
-    const imageOverlay = new L.ImageOverlay(imageUrl, imageBounds);
-    imageOverlay.addTo(mapInstance);
-  });
-\u003C/script>
-
-<Map 
-  bind:this={mapInstance}
-  useSimpleCRS={true}
-  imageWidth={1024}
-  imageHeight={768}
-  center={[384, 512]}
-  zoom={1}
-/>`}</CodeBlock>
-
-	<h2>Props</h2>
-	<PropsTable component={MapComponentModule} />
-
-	<h2>Events</h2>
-	<EventsTable component={MapComponentModule} />
-
-	<h2>Tile Layer Providers</h2>
-	<p>Popular tile layer providers:</p>
-	<ul>
-		<li>
-			<strong>OpenStreetMap</strong>:
-			<code>https://&#123;s&#125;.tile.openstreetmap.org/&#123;z&#125;/&#123;x&#125;/&#123;y&#125;.png</code>
-		</li>
-		<li>
-			<strong>CartoDB Light</strong>:
-			<code
-				>https://cartodb-basemaps-&#123;s&#125;.global.ssl.fastly.net/light_all/&#123;z&#125;/&#123;x&#125;/&#123;y&#125;.png</code
-			>
-		</li>
-		<li>
-			<strong>CartoDB Dark</strong>:
-			<code
-				>https://cartodb-basemaps-&#123;s&#125;.global.ssl.fastly.net/dark_all/&#123;z&#125;/&#123;x&#125;/&#123;y&#125;.png</code
-			>
-		</li>
-	</ul>
-
-	<h2>Accessibility</h2>
-	<p>
-		The Map component is built on Leaflet, which provides keyboard navigation and screen reader
-		support. Users can:
-	</p>
-	<ul>
-		<li>Use arrow keys to pan the map</li>
-		<li>Use <code>+</code> and <code>-</code> keys to zoom in and out</li>
-		<li>Click on the map to interact with markers and popups</li>
-	</ul>
-
-	<h2>Resources</h2>
-	<ul>
-		<li>
-			<a href="https://leafletjs.com/" target="_blank">Leaflet Documentation</a>
-		</li>
-		<li>
-			<a href="https://leafletjs.com/reference-2.0.0.html" target="_blank">Leaflet API Reference</a>
-		</li>
-	</ul>
+  <h2>Keyboard Support</h2>
+  <table>
+    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>Arrow keys</kbd></td><td>Pan the map</td></tr>
+      <tr><td><kbd>+</kbd> / <kbd>-</kbd></td><td>Zoom in / out</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>Move focus to controls and markers</td></tr>
+    </tbody>
+  </table>
 </Container>

@@ -1,76 +1,94 @@
-<script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
-import Container from "$lib/components/Container/Container.svelte"
-import Icon from "$lib/components/Icon/Icon.svelte"
-import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
-import { setIconset } from "$lib/stores/iconManager.js"
-import * as IconModule from "$lib/components/Icon/Icon.svelte"
-</script>
 <!--
 @component
-IconifyIcon documentation page
+IconifyIcon documentation page — standardized structure
 -->
+<script lang="ts">
+import Container from "$lib/components/Container/Container.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
+import Icon from "$lib/components/Icon/Icon.svelte"
+import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as IconModule from "$lib/components/Icon/Icon.svelte"
+</script>
 
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
 </style>
+
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>IconifyIcon</h1>
-  
+
   <p>
-    The IconifyIcon component is a wrapper around the Iconify SVG icon library that integrates with Twintrinsic's global icon management system. It allows you to use over 275,000 icons from 200+ icon sets with a single default iconset configuration.
+    <strong>IconifyIcon</strong> is the Iconify-powered SVG icon component used internally
+    by Twintrinsic's <code>&lt;Icon&gt;</code> component. It fetches icons on-demand from
+    the Iconify CDN and supports 275,000+ icons from 200+ icon sets.
   </p>
 
-  <h2>Setup</h2>
+  <h2>What, When &amp; Why</h2>
+
+  <h3>What is it?</h3>
   <p>
-    First, set the default iconset in your app root or layout:
+    The underlying Iconify integration that powers the <code>&lt;Icon&gt;</code> component.
+    It handles CDN fetching, SVG rendering, caching, and global icon configuration. Most
+    users should use <code>&lt;Icon&gt;</code> directly.
   </p>
 
-  <CodeBlock language="svelte">{`\u003Cscript>
-  import { setIconset } from 'twintrinsic'
-  
-  // Set globally once - all IconifyIcon components will use this
-  setIconset('mdi-light')
-\u003C/script>`}</CodeBlock>
-
-  <h2>Basic Usage</h2>
+  <h3>When should I use it?</h3>
   <p>
-    Once the default iconset is set, use IconifyIcon with just the icon name:
+    Use the higher-level <code>&lt;Icon&gt;</code> component for most cases.
+    <code>IconifyIcon</code> is exposed for advanced use cases where you need direct
+    access to the Iconify integration layer.
   </p>
 
-  <CodeBlock language="svelte">{`\u003Cscript>
-  import { Icon } from 'twintrinsic'
-\u003C/script>
+  <h3>Why does it exist?</h3>
+  <ul>
+    <li><strong>Iconify CDN</strong> — on-demand loading from the Iconify API.</li>
+    <li><strong>Browser caching</strong> — loaded icons are cached for subsequent renders.</li>
+    <li><strong>Global config</strong> — shared iconset, color, and size settings.</li>
+  </ul>
 
-<!-- Uses default iconset (mdi-light) -->
-<Icon name="home" />
+  <h3>Sources</h3>
+  <ul>
+    <li><a href="https://iconify.design/">Iconify</a></li>
+    <li><a href="https://iconify.design/docs/api/">Iconify API</a></li>
+    <li><a href="https://icon-sets.iconify.design/">Icon Sets Browser</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Basic_Shapes">MDN — SVG</a></li>
+    <li><a href="https://primer.style/components/octicon">Primer — Octicon</a></li>
+  </ul>
+
+  <h2>Responsiveness</h2>
+  <ul>
+    <li>Icons scale via <code>width</code> and <code>height</code> props.</li>
+    <li>Default size inherits from the parent's font-size.</li>
+  </ul>
+
+  <h2>Customization</h2>
+  <ul>
+    <li><code>name</code> — icon name with optional iconset prefix.</li>
+    <li><code>iconset</code> — override the default iconset.</li>
+    <li><code>color</code> — set icon color.</li>
+    <li><code>rotate</code> — rotate icon (0–3).</li>
+    <li><code>hFlip</code> / <code>vFlip</code> — flip icon.</li>
+  </ul>
+
+  <h2>Examples</h2>
+
+  <h3>Basic Icons</h3>
+  <ExampleTabs code={`<Icon name="home" />
 <Icon name="settings" />
-<Icon name="star" />`}</CodeBlock>
-
-  <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark">
-    <h3 class="text-sm font-semibold mb-4">Demo: Basic Icons</h3>
-    <div class="flex gap-4 items-center text-2xl">
+<Icon name="star" />`}>
+    <div class="flex gap-4 items-center text-2xl" data-testid="iconify-basic">
       <Icon name="home" />
       <Icon name="settings" />
       <Icon name="star" />
     </div>
-  </div>
+  </ExampleTabs>
 
-  <h2>Overriding the Iconset</h2>
-  <p>
-    Override the default iconset for specific icons:
-  </p>
-
-  <CodeBlock language="svelte">{`<!-- Uses default iconset -->
-<Icon name="home" />
-
-<!-- Override to use a different iconset -->
+  <h3>Different Iconsets</h3>
+  <ExampleTabs code={`<Icon name="home" />
 <Icon name="star" iconset="fa" />
-<Icon name="heart" iconset="heroicons" />`}</CodeBlock>
-
-  <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark">
-    <h3 class="text-sm font-semibold mb-4">Demo: Different Iconsets</h3>
-    <div class="flex gap-6 items-center flex-wrap text-2xl">
+<Icon name="heart" iconset="heroicons" />
+<Icon name="search" iconset="tabler" />`}>
+    <div class="flex gap-6 items-center flex-wrap text-2xl" data-testid="iconify-iconsets">
       <div class="flex flex-col items-center gap-2">
         <Icon name="home" width="32px" height="32px" />
         <span class="text-xs text-muted">Default (mdi)</span>
@@ -88,161 +106,37 @@ IconifyIcon documentation page
         <span class="text-xs text-muted">Tabler</span>
       </div>
     </div>
-  </div>
-
-  <h2>Styling Icons</h2>
-  <p>
-    Customize icon appearance with color, size, and CSS classes:
-  </p>
-
-  <CodeBlock language="svelte">{`<!-- With color -->
-<Icon name="home" color="red" />
-
-<!-- With size -->
-<Icon name="settings" width="32px" height="32px" />
-
-<!-- With CSS classes -->
-<Icon name="star" class="text-yellow-500" />
-
-<!-- Combined -->
-<Icon 
-  name="heart" 
-  color="pink" 
-  width="24px"
-  class="hover:scale-110 transition-transform"
-/>`}</CodeBlock>
-
-  <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark">
-    <h3 class="text-sm font-semibold mb-4">Demo: Styled Icons</h3>
-    <div class="flex gap-6 items-center flex-wrap">
-      <div class="flex flex-col items-center gap-2">
-        <Icon name="home" color="red" width="32px" height="32px" />
-        <span class="text-xs text-muted">Red</span>
-      </div>
-      <div class="flex flex-col items-center gap-2">
-        <Icon name="settings" color="blue" width="32px" height="32px" />
-        <span class="text-xs text-muted">Blue</span>
-      </div>
-      <div class="flex flex-col items-center gap-2">
-        <Icon name="star" color="yellow-500" width="32px" height="32px" />
-        <span class="text-xs text-muted">Yellow</span>
-      </div>
-      <div class="flex flex-col items-center gap-2">
-        <Icon name="heart" color="pink" width="32px" height="32px" />
-        <span class="text-xs text-muted">Pink</span>
-      </div>
-    </div>
-  </div>
-
-  <h2>Icon Transformations</h2>
-  <p>
-    Apply transformations to icons:
-  </p>
-
-  <CodeBlock language="svelte">{`<!-- Rotate icon -->
-<Icon name="arrow-right" rotate={1} />
-
-<!-- Flip icon -->
-<Icon name="arrow-left" hFlip={true} />
-<Icon name="arrow-up" vFlip={true} />`}</CodeBlock>
-
-  <div class="border border-border rounded-md p-6 mb-6 bg-surface dark:bg-surface-dark">
-    <h3 class="text-sm font-semibold mb-4">Demo: Transformations</h3>
-    <div class="flex gap-6 items-center flex-wrap text-2xl">
-      <div class="flex flex-col items-center gap-2">
-        <Icon name="arrow-right" width="32px" height="32px" />
-        <span class="text-xs text-muted">Normal</span>
-      </div>
-      <div class="flex flex-col items-center gap-2">
-        <Icon name="arrow-right" rotate={1} width="32px" height="32px" />
-        <span class="text-xs text-muted">Rotate 90°</span>
-      </div>
-      <div class="flex flex-col items-center gap-2">
-        <Icon name="arrow-right" rotate={2} width="32px" height="32px" />
-        <span class="text-xs text-muted">Rotate 180°</span>
-      </div>
-      <div class="flex flex-col items-center gap-2">
-        <Icon name="arrow-right" rotate={3} width="32px" height="32px" />
-        <span class="text-xs text-muted">Rotate 270°</span>
-      </div>
-      <div class="flex flex-col items-center gap-2">
-        <Icon name="arrow-right" hFlip={true} width="32px" height="32px" />
-        <span class="text-xs text-muted">H-Flip</span>
-      </div>
-    </div>
-  </div>
+  </ExampleTabs>
 
   <h2>Available Iconsets</h2>
-  <p>
-    Popular iconsets include:
-  </p>
   <ul>
-    <li><strong>mdi</strong> - Material Design Icons (4000+ icons)</li>
-    <li><strong>mdi-light</strong> - Material Design Light Icons</li>
-    <li><strong>fa</strong> - Font Awesome (1500+ icons)</li>
-    <li><strong>heroicons</strong> - Heroicons (292 icons)</li>
-    <li><strong>tabler</strong> - Tabler Icons (4000+ icons)</li>
-    <li><strong>feather</strong> - Feather Icons (286 icons)</li>
-    <li><strong>bi</strong> - Bootstrap Icons (2000+ icons)</li>
+    <li><strong>mdi</strong> — Material Design Icons (4000+ icons)</li>
+    <li><strong>mdi-light</strong> — Material Design Light Icons</li>
+    <li><strong>fa</strong> — Font Awesome (1500+ icons)</li>
+    <li><strong>heroicons</strong> — Heroicons (292 icons)</li>
+    <li><strong>tabler</strong> — Tabler Icons (4000+ icons)</li>
+    <li><strong>feather</strong> — Feather Icons (286 icons)</li>
+    <li><strong>bi</strong> — Bootstrap Icons (2000+ icons)</li>
   </ul>
   <p>
-    Browse all available iconsets at <a href="https://icon-sets.iconify.design/" target="_blank">icon-sets.iconify.design</a>
+    Browse all iconsets at
+    <a href="https://icon-sets.iconify.design/" target="_blank">icon-sets.iconify.design</a>.
   </p>
 
   <h2>Props</h2>
   <PropsTable component={IconModule} />
 
-  <h2>Global Icon Configuration</h2>
-  <p>
-    Manage the global icon configuration with these functions:
-  </p>
-
-  <CodeBlock language="typescript">{`import { 
-  setIconset, 
-  setIconColor, 
-  setIconSize,
-  updateIconConfig 
-} from 'twintrinsic'
-
-// Set default iconset
-setIconset('mdi-light')
-
-// Set default color for all icons
-setIconColor('currentColor')
-
-// Set default size for all icons
-setIconSize('24px')
-
-// Update multiple settings at once
-updateIconConfig({
-  defaultIconset: 'heroicons',
-  color: 'blue',
-  size: '20px'
-})`}</CodeBlock>
-
-  <h2>Best Practices</h2>
-  <ul>
-    <li>Set the default iconset once in your app root or layout</li>
-    <li>Use icon names without the iconset prefix (e.g., "home" not "mdi-light:home")</li>
-    <li>Use CSS classes for styling when possible (e.g., <code>class="text-red-500"</code>)</li>
-    <li>Override iconset only when necessary for specific icons</li>
-    <li>Use <code>width</code> and <code>height</code> to control icon size, or set font-size via CSS</li>
-    <li>Provide meaningful icon names in your components for accessibility</li>
-  </ul>
-
   <h2>Accessibility</h2>
   <ul>
-    <li>Icons are rendered as SVG elements with proper semantic structure</li>
-    <li>Use descriptive icon names that indicate their purpose</li>
-    <li>Provide context through surrounding text or ARIA labels when icons are used alone</li>
-    <li>Ensure sufficient color contrast for icon visibility</li>
+    <li>Icons are rendered as SVG elements with proper semantic structure.</li>
+    <li>Use descriptive icon names that indicate their purpose.</li>
+    <li>Provide context through surrounding text or ARIA labels when icons are used alone.</li>
+    <li>Ensure sufficient color contrast for icon visibility.</li>
   </ul>
 
-  <h2>Performance</h2>
-  <ul>
-    <li>Icons are loaded on-demand from the Iconify CDN</li>
-    <li>Loaded icons are cached in the browser</li>
-    <li>Use the <code>onLoad</code> callback to handle loading states if needed</li>
-    <li>Consider using a limited set of iconsets to reduce network requests</li>
-  </ul>
+  <h2>Keyboard Support</h2>
+  <p>
+    Icons are static display elements. Interactive elements containing icons
+    maintain their native keyboard behavior.
+  </p>
 </Container>
