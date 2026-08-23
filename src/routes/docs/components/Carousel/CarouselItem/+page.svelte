@@ -1,157 +1,132 @@
+<!--
+@component
+CarouselItem documentation page — standardized structure
+-->
 <script lang="ts">
 import Carousel from "$lib/components/Carousel/Carousel.svelte"
 import CarouselItem from "$lib/components/Carousel/CarouselItem.svelte"
-import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelte"
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelte"
 </script>
+
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>CarouselItem</h1>
 
   <p>
-    The CarouselItem component is a single slide inside a
-    <code>Carousel</code>. It registers itself with the parent carousel and
-    renders as a <code>role="tabpanel"</code> with
-    <code>aria-roledescription="slide"</code>, applying the active state and
-    the configured slide/fade transition.
+    <strong>CarouselItem</strong> is a single slide inside a <code>&lt;Carousel&gt;</code>.
+    It registers itself with the parent carousel and renders as a
+    <code>role="tabpanel"</code> with <code>aria-roledescription="slide"</code>.
   </p>
+
+  <h2>What, When &amp; Why</h2>
+
+  <h3>What is it?</h3>
+  <p>
+    A single slide within a Carousel. Each CarouselItem is a content panel that can contain
+    images, text, cards, or any markup. The parent Carousel manages transitions, navigation,
+    and active state.
+  </p>
+
+  <h3>When should I use it?</h3>
+  <p>
+    Always use <code>&lt;CarouselItem&gt;</code> inside a <code>&lt;Carousel&gt;</code>.
+    Each slide in your carousel gets its own <code>&lt;CarouselItem&gt;</code>.
+  </p>
+
+  <h3>Why does it exist?</h3>
+  <ul>
+    <li><strong>Self-contained slides</strong> — each item is an independent content panel.</li>
+    <li><strong>Accessible</strong> — <code>role="tabpanel"</code> with <code>aria-roledescription="slide"</code>.</li>
+    <li><strong>Flexible</strong> — accepts any content as children.</li>
+  </ul>
+
+  <h3>Sources</h3>
+  <ul>
+    <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/carousel/">WAI-ARIA APG — Carousel</a></li>
+    <li><a href="https://m3.material.io/components/carousel/overview">Material Design 3 — Carousel</a></li>
+    <li><a href="https://ant.design/components/carousel">Ant Design — Carousel</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/tabpanel_role">MDN — tabpanel role</a></li>
+    <li><a href="https://primer.style/components/overlay">Primer — Overlay</a></li>
+  </ul>
+
+  <h2>Responsiveness</h2>
+  <ul>
+    <li>Fills the carousel container width.</li>
+    <li>Content scales naturally within the slide.</li>
+  </ul>
+
+  <h2>Customization</h2>
+  <ul>
+    <li>Accepts any content as children.</li>
+    <li>Parent Carousel controls transition, arrows, and indicators.</li>
+  </ul>
 
   <h2>Examples</h2>
 
   <h3>Basic Slides</h3>
-  <div class="not-prose mb-8" data-testid="carousel-item-basic">
-    <Carousel>
-      {#snippet items()}
-        <CarouselItem>
-          <div class="h-48 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-xl font-bold">Unlimited projects</h2>
-            <p class="mt-1 text-sm">Create as many workspaces as you need.</p>
-          </div>
-        </CarouselItem>
-        <CarouselItem>
-          <div class="h-48 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-xl font-bold">Real-time collaboration</h2>
-            <p class="mt-1 text-sm">Edit together with your team, live.</p>
-          </div>
-        </CarouselItem>
-        <CarouselItem>
-          <div class="h-48 bg-success-100 dark:bg-success-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-xl font-bold">Enterprise security</h2>
-            <p class="mt-1 text-sm">SOC 2, SSO, and role-based access.</p>
-          </div>
-        </CarouselItem>
-      {/snippet}
-    </Carousel>
-  </div>
-
-  <CodeBlock language="svelte">{`<Carousel>
+  <ExampleTabs code={`<Carousel>
   {#snippet items()}
     <CarouselItem>
-      <div class="h-48 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+      <div class="h-48 bg-primary-100 flex items-center justify-center rounded-lg">
         <h2 class="text-xl font-bold">Unlimited projects</h2>
-        <p class="mt-1 text-sm">Create as many workspaces as you need.</p>
       </div>
     </CarouselItem>
     <CarouselItem>
-      <div class="h-48 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+      <div class="h-48 bg-secondary-100 flex items-center justify-center rounded-lg">
         <h2 class="text-xl font-bold">Real-time collaboration</h2>
-        <p class="mt-1 text-sm">Edit together with your team, live.</p>
-      </div>
-    </CarouselItem>
-    <CarouselItem>
-      <div class="h-48 bg-success-100 dark:bg-success-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-        <h2 class="text-xl font-bold">Enterprise security</h2>
-        <p class="mt-1 text-sm">SOC 2, SSO, and role-based access.</p>
       </div>
     </CarouselItem>
   {/snippet}
-</Carousel>`}</CodeBlock>
+</Carousel>`}>
+    <div data-testid="carousel-item-basic">
+      <Carousel>
+        {#snippet items()}
+          <CarouselItem>
+            <div class="h-48 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+              <h2 class="text-xl font-bold">Unlimited projects</h2>
+              <p class="mt-1 text-sm">Create as many workspaces as you need.</p>
+            </div>
+          </CarouselItem>
+          <CarouselItem>
+            <div class="h-48 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+              <h2 class="text-xl font-bold">Real-time collaboration</h2>
+              <p class="mt-1 text-sm">Edit together with your team, live.</p>
+            </div>
+          </CarouselItem>
+          <CarouselItem>
+            <div class="h-48 bg-success-100 dark:bg-success-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
+              <h2 class="text-xl font-bold">Enterprise security</h2>
+              <p class="mt-1 text-sm">SOC 2, SSO, and role-based access.</p>
+            </div>
+          </CarouselItem>
+        {/snippet}
+      </Carousel>
+    </div>
+  </ExampleTabs>
 
-  <h3>Fade Transition</h3>
-  <div class="not-prose mb-8" data-testid="carousel-item-fade">
-    <Carousel transition="fade" class="h-48">
-      {#snippet items()}
-        <CarouselItem>
-          <div class="h-48 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-xl font-bold">Design</h2>
-            <p class="mt-1 text-sm">Craft pixel-perfect interfaces.</p>
-          </div>
-        </CarouselItem>
-        <CarouselItem>
-          <div class="h-48 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-xl font-bold">Build</h2>
-            <p class="mt-1 text-sm">Ship accessible components faster.</p>
-          </div>
-        </CarouselItem>
-        <CarouselItem>
-          <div class="h-48 bg-success-100 dark:bg-success-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-xl font-bold">Scale</h2>
-            <p class="mt-1 text-sm">Grow without rewrites.</p>
-          </div>
-        </CarouselItem>
-      {/snippet}
-    </Carousel>
-  </div>
-
-  <CodeBlock language="svelte">{`<Carousel transition="fade">
-  {#snippet items()}
-    <CarouselItem>…</CarouselItem>
-    <CarouselItem>…</CarouselItem>
-    <CarouselItem>…</CarouselItem>
-  {/snippet}
-</Carousel>`}</CodeBlock>
-
-  <h3>Without Controls</h3>
-  <div class="not-prose mb-8" data-testid="carousel-item-no-controls">
-    <Carousel showArrows={false} showIndicators={false}>
-      {#snippet items()}
-        <CarouselItem>
-          <div class="h-40 bg-warning-100 dark:bg-warning-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-xl font-bold">Built for teams</h2>
-            <p class="mt-1 text-sm">Shared workspaces and roles.</p>
-          </div>
-        </CarouselItem>
-        <CarouselItem>
-          <div class="h-40 bg-info-100 dark:bg-info-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-xl font-bold">24/7 support</h2>
-            <p class="mt-1 text-sm">Help whenever you need it.</p>
-          </div>
-        </CarouselItem>
-      {/snippet}
-    </Carousel>
-  </div>
-
-  <CodeBlock language="svelte">{`<Carousel showArrows={false} showIndicators={false}>
-  {#snippet items()}
-    <CarouselItem>
-      <div class="h-40 bg-warning-100 dark:bg-warning-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-        <h2 class="text-xl font-bold">Built for teams</h2>
-        <p class="mt-1 text-sm">Shared workspaces and roles.</p>
-      </div>
-    </CarouselItem>
-    <CarouselItem>
-      <div class="h-40 bg-info-100 dark:bg-info-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-        <h2 class="text-xl font-bold">24/7 support</h2>
-        <p class="mt-1 text-sm">Help whenever you need it.</p>
-      </div>
-    </CarouselItem>
-  {/snippet}
-</Carousel>`}</CodeBlock>
-
-  <h2>CarouselItem Props</h2>
+  <h2>Props</h2>
   <PropsTable component={CarouselItemModule} />
 
-  <h2>CarouselItem Events</h2>
+  <h2>Events</h2>
   <EventsTable component={CarouselItemModule} />
 
   <h2>Accessibility</h2>
   <ul>
-    <li>Each slide renders <code>role="tabpanel"</code> with <code>aria-roledescription="slide"</code></li>
-    <li>Inactive slides are hidden from assistive technology with <code>aria-hidden</code></li>
-    <li>The parent carousel ties slide indicators to the slides via <code>aria-selected</code></li>
-    <li>Keyboard users can navigate with Arrow keys, Home, and End on the carousel region</li>
+    <li>Each slide renders <code>role="tabpanel"</code> with <code>aria-roledescription="slide"</code>.</li>
+    <li>Inactive slides are hidden from assistive technology with <code>aria-hidden</code>.</li>
+    <li>Keyboard users navigate with Arrow keys, Home, and End on the carousel region.</li>
   </ul>
+
+  <h2>Keyboard Support</h2>
+  <p>
+    CarouselItem is a content panel and does not require direct keyboard interaction.
+    Navigation is handled by the parent Carousel.
+  </p>
 </Container>
