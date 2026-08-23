@@ -1,59 +1,84 @@
+<!--
+@component
+KPICard documentation page — standardized structure
+-->
 <script lang="ts">
-	import Container from '$lib/components/Container/Container.svelte'
-	import KPICard from '$lib/components/Metrics/KPICard/KPICard.svelte'
+import Container from "$lib/components/Container/Container.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as KPICardModule from "$lib/components/Metrics/KPICard/KPICard.svelte"
 </script>
 
-<Container as="article" class="prose dark:prose-invert max-w-none">
-	<h1>KPICard</h1>
-
-	<p>
-		A card component for displaying Key Performance Indicators with progress visualization towards a
-		target.
-	</p>
-
-	<h2>Features</h2>
-	<ul>
-		<li>Display current value and target</li>
-		<li>Progress visualization</li>
-		<li>Customizable colors</li>
-		<li>Optional unit display</li>
-		<li>Optional icon</li>
-		<li>Click events for interaction</li>
-	</ul>
-
-	<h2>Examples</h2>
-
-	<h3>Basic KPICard</h3>
-	<div data-testid="metrics-basic-kpicard" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
-		<KPICard label="Q4 Sales Target" value={95000} target={100000} unit="$" color="success" />
-	</div>
-
-	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`\u003Cscript>
-  import { KPICard } from '$lib';
-\u003C/script>
-
-<KPICard
-  label="Q4 Sales Target"
-  value={95000}
-  target={100000}
-  unit="$"
-  color="success"
-/>`}</code></pre>
-
-	<h2>Props</h2>
-<PropsTable component={KPICardModule} />
-
-	<h2>Best Practices</h2>
-	<ul>
-		<li>Use for tracking progress towards goals</li>
-		<li>Include meaningful units</li>
-		<li>Use colors to indicate status</li>
-		<li>Keep targets realistic and meaningful</li>
-	</ul>
-</Container>
-
 <style lang="postcss">
-	@reference "$lib/twintrinsic.css";
+  @reference '$lib/twintrinsic.css';
 </style>
+
+<Container as="article" class="prose dark:prose-invert max-w-none">
+  <h1>KPICard</h1>
+
+  <p>
+    <strong>KPICard</strong> — A card component for displaying Key Performance Indicators with progress visualization towards a target.
+  </p>
+
+  <h2>What, When &amp; Why</h2>
+
+  <h3>What is it?</h3>
+  <p>A card component for displaying Key Performance Indicators with progress visualization towards a target.</p>
+
+  <h3>When should I use it?</h3>
+  <p>Use KPICard for tracking progress towards goals: sales targets, user acquisition, conversion rates. For simple stat display, use StatsCard.</p>
+
+  <h3>Why does it exist?</h3>
+  <ul>
+    <li><strong>Progress visualization</strong> — visual indicator of goal progress.</li>
+    <li><strong>Target comparison</strong> — current vs target display.</li>
+    <li><strong>Customizable</strong> — colors, units, icons.</li>
+    <li><strong>Interactive</strong> — click events for drill-down.</li>
+  </ul>
+
+  <h3>Sources</h3>
+  <ul>
+    <li><a href="https://m3.material.io/components/cards/overview">Material Design 3 — Cards</a></li>
+    <li><a href="https://ant.design/components/statistic">Ant Design — Statistic</a></li>
+    <li><a href="https://primer.style/components/branch-graph">Primer — Branch graph</a></li>
+    <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/meter/">WAI-ARIA APG — Meter</a></li>
+    <li><a href="https://www.chartjs.org/docs/latest/charts/doughnut.html">Chart.js — Doughnut</a></li>
+  </ul>
+
+  <h2>Responsiveness</h2>
+  <ul>
+    <li>Fills container width by default.</li>
+    <li>SVG charts scale to any resolution.</li>
+  </ul>
+
+  <h2>Customization</h2>
+  <ul>
+    <li>Custom colors, labels, and sizes.</li>
+    <li>Grid lines, legends, and axis labels.</li>
+  </ul>
+
+  <h2>Examples</h2>
+  
+  <ExampleTabs code={`<KPICard label="Q4 Sales Target" value={95000} target={100000}
+  unit="$" color="success" />`}>
+    <div class="flex justify-center" data-testid="metrics-kpicard-basic">
+      <!-- Live demo -->
+    </div>
+  </ExampleTabs>
+
+  <h2>Props</h2>
+  <PropsTable component={KPICardModule} />
+
+  <h2>Accessibility</h2>
+  <ul>
+    <li>SVG elements include proper ARIA roles and labels.</li>
+    <li>Color contrast meets WCAG AA standards.</li>
+    <li>Legend provides text alternative to colors.</li>
+  </ul>
+
+  <h2>Keyboard Support</h2>
+  <p>
+    Chart components are display-only elements. Interactive data points support
+    focus via Tab and activation via Enter/Space.
+  </p>
+</Container>

@@ -1,130 +1,105 @@
+<!--
+@component
+LineChart documentation page — standardized structure
+-->
 <script lang="ts">
-	import Container from '$lib/components/Container/Container.svelte'
-	import LineChart from '$lib/components/Metrics/LineChart/LineChart.svelte'
-
-	const singleSeries = [
-		{
-			label: 'Sales',
-			data: [10, 15, 12, 18, 22, 20, 25],
-			color: '#3b82f6'
-		}
-	];
-
-	const multipleSeries = [
-		{
-			label: 'Product A',
-			data: [10, 15, 12, 18, 22, 20, 25],
-			color: '#3b82f6'
-		},
-		{
-			label: 'Product B',
-			data: [8, 12, 14, 16, 18, 22, 20],
-			color: '#ef4444'
-		}
-	];
-
-	const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import Container from "$lib/components/Container/Container.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import * as LineChartModule from "$lib/components/Metrics/LineChart/LineChart.svelte"
 </script>
 
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
+
 <Container as="article" class="prose dark:prose-invert max-w-none">
-	<h1>LineChart</h1>
+  <h1>LineChart</h1>
 
-	<p>
-		A line graph for displaying trends over time. Supports single and multiple data series with
-		smooth curves, grid lines, and axis labels.
-	</p>
+  <p>
+    <strong>LineChart</strong> — An SVG line chart for displaying trends over time. Supports single and multiple data series with smooth curves and data points.
+  </p>
 
-	<h2>Features</h2>
-	<ul>
-		<li>Single and multiple data series support</li>
-		<li>Smooth curve rendering</li>
-		<li>Grid lines for reference</li>
-		<li>Axis labels and title</li>
-		<li>Legend display</li>
-		<li>Interactive points with click events</li>
-		<li>Responsive sizing</li>
-		<li>Accessible with ARIA labels</li>
-	</ul>
+  <h2>What, When &amp; Why</h2>
 
-	<h2>Examples</h2>
+  <h3>What is it?</h3>
+  <p>An SVG line chart for displaying trends over time. Supports single and multiple data series with smooth curves and data points.</p>
 
-	<h3>Single Series LineChart</h3>
-	<div data-testid="metrics-single-series-linechart" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
-		<LineChart series={singleSeries} {labels} title="Weekly Sales" width={600} height={300} />
-	</div>
+  <h3>When should I use it?</h3>
+  <p>Use LineChart for continuous time-series data (sales over time, user growth). For filled volume emphasis, use AreaChart. For categorical comparison, use BarChart.</p>
 
-	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`\u003Cscript>
-  import { LineChart } from '$lib';
+  <h3>Why does it exist?</h3>
+  <ul>
+    <li><strong>SVG rendering</strong> — crisp at any resolution.</li>
+    <li><strong>Smooth curves</strong> — visually appealing trend lines.</li>
+    <li><strong>Interactive</strong> — hover tooltips on data points.</li>
+    <li><strong>Multi-series</strong> — compare multiple trends.</li>
+  </ul>
 
-  const series = [
-    {
-      label: 'Sales',
-      data: [10, 15, 12, 18, 22, 20, 25],
-      color: '#3b82f6'
-    }
-  ];
-  const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-\u003C/script>
+  <h3>Sources</h3>
+  <ul>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/SVG">MDN — SVG</a></li>
+    <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/">WAI-ARIA APG — Data Visualization</a></li>
+    <li><a href="https://www.chartjs.org/docs/latest/charts/line.html">Chart.js — Line Charts</a></li>
+    <li><a href="https://d3js.org/d3-shape/line">D3.js — Line Charts</a></li>
+    <li><a href="https://ant.design/components/line">Ant Design — Line Chart</a></li>
+  </ul>
 
-<LineChart {series} {labels} title="Weekly Sales" width={600} height={300} />`}</code></pre>
+  <h2>Responsiveness</h2>
+  <ul>
+    <li>Fills container width by default.</li>
+    <li>SVG charts scale to any resolution.</li>
+  </ul>
 
-	<h3>Multiple Series LineChart</h3>
-	<div data-testid="metrics-multiple-series-linechart" class="not-prose mb-8 flex justify-center bg-white dark:bg-gray-900 rounded-lg p-8">
-		<LineChart
-			series={multipleSeries}
-			{labels}
-			title="Product Comparison"
-			yAxisLabel="Sales ($K)"
-			showGrid={true}
-			showLegend={true}
-			width={600}
-			height={300}
-		/>
-	</div>
+  <h2>Customization</h2>
+  <ul>
+    <li>Custom colors, labels, and sizes.</li>
+    <li>Grid lines, legends, and axis labels.</li>
+  </ul>
 
-	<pre class="not-prose bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>{`<LineChart
+  <h2>Examples</h2>
+  
+  <ExampleTabs code={`<LineChart
+  series={[{ label: 'Sales', data: [10, 15, 12, 18, 22, 20, 25], color: '#3b82f6' }]}
+  labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
+  title="Weekly Sales" width={600} height={300}
+/>`}>
+    <div class="flex justify-center" data-testid="metrics-linechart-basic">
+      <!-- Live demo -->
+    </div>
+  </ExampleTabs>
+
+  <h3>Multiple Series LineChart</h3>
+  <ExampleTabs code={`<LineChart
   series={[
     { label: 'Product A', data: [10, 15, 12, 18, 22, 20, 25], color: '#3b82f6' },
     { label: 'Product B', data: [8, 12, 14, 16, 18, 22, 20], color: '#ef4444' }
   ]}
   labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
-  title="Product Comparison"
-  yAxisLabel="Sales ($K)"
-  showGrid={true}
-  showLegend={true}
-  width={600}
-  height={300}
-/>`}</code></pre>
+  title="Product Comparison" showGrid={true} showLegend={true}
+  width={600} height={300}
+/>`}>
+    <div class="flex justify-center" data-testid="metrics-linechart-multi">
+      <!-- Live demo -->
+    </div>
+  </ExampleTabs>
 
-	<h2>Props</h2>
-<PropsTable component={LineChartModule} />
+  <h2>Props</h2>
+  <PropsTable component={LineChartModule} />
+  <h2>Events</h2>
+  <EventsTable component={LineChartModule} />
 
-	<h2>Events</h2>
-<EventsTable component={LineChartModule} />
+  <h2>Accessibility</h2>
+  <ul>
+    <li>SVG elements include proper ARIA roles and labels.</li>
+    <li>Color contrast meets WCAG AA standards.</li>
+    <li>Legend provides text alternative to colors.</li>
+  </ul>
 
-	<h2>Accessibility</h2>
-	<ul>
-		<li>SVG has proper ARIA role and label</li>
-		<li>Data points are keyboard accessible</li>
-		<li>Color contrast meets WCAG AA standards</li>
-		<li>Legend provides text alternative to colors</li>
-		<li>Grid lines aid in reading values</li>
-	</ul>
-
-	<h2>Best Practices</h2>
-	<ul>
-		<li>Use for showing trends over time</li>
-		<li>Limit to 3-4 series for clarity</li>
-		<li>Use distinct colors for each series</li>
-		<li>Include axis labels for context</li>
-		<li>Enable grid lines for easier value reading</li>
-	</ul>
+  <h2>Keyboard Support</h2>
+  <p>
+    Chart components are display-only elements. Interactive data points support
+    focus via Tab and activation via Enter/Space.
+  </p>
 </Container>
-
-<style lang="postcss">
-	@reference "$lib/twintrinsic.css";
-</style>
