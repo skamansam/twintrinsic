@@ -1,280 +1,234 @@
 <!--
 @component
-Stepper documentation page
+Stepper documentation page — standardized structure
 -->
 <script lang="ts">
-import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
-import Stepper from "$lib/components/Stepper/Stepper.svelte"
-import StepperStep from "$lib/components/Stepper/StepperStep.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import Stepper from "$lib/components/Stepper/Stepper.svelte"
+import StepperStep from "$lib/components/Stepper/StepperStep.svelte"
 import * as StepperModule from "$lib/components/Stepper/Stepper.svelte"
 import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
 </script>
 
+<style lang="postcss">
+  @reference '$lib/twintrinsic.css';
+</style>
+
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <h1>Stepper</h1>
-  
+
   <p>
-    The Stepper component displays progress through a sequence of logical and numbered steps.
-    It's commonly used for multi-step forms, wizards, or any process that requires users to
+    <strong>Stepper</strong> displays progress through a sequence of logical and numbered steps.
+    It is commonly used for multi-step forms, wizards, or any process that requires users to
     complete steps in a specific order.
   </p>
+
+  <h2>What, When &amp; Why</h2>
+
+  <h3>What is it?</h3>
+  <p>
+    A sequential navigation component that shows the user's current position in a multi-step
+    process. Each step can be completed, active, pending, or in error. Supports horizontal
+    and vertical orientations with optional step content display.
+  </p>
+
+  <h3>When should I use it?</h3>
+  <p>
+    Use <code>&lt;Stepper&gt;</code> for workflows with 3+ sequential steps: checkout flows,
+    registration wizards, onboarding sequences, or configuration steps. For tabbed content
+    that can be accessed in any order, use <code>&lt;Tabs&gt;</code>.
+  </p>
+
+  <h3>Why does it exist?</h3>
+  <ul>
+    <li><strong>Progress visibility</strong> — users always know where they are in the process.</li>
+    <li><strong>Linear and non-linear modes</strong> — enforce sequential steps or allow free navigation.</li>
+    <li><strong>Vertical and horizontal orientations</strong> — adapts to different layout contexts.</li>
+    <li><strong>Error state</strong> — clearly marks failed steps for user attention.</li>
+  </ul>
+
+  <h3>Sources</h3>
+  <ul>
+    <li><a href="https://m3.material.io/components/steppers/overview">Material Design 3 — Steppers</a></li>
+    <li><a href="https://ant.design/components/steps">Ant Design — Steps</a></li>
+    <li><a href="https://primer.style/components/stepper">Primer — Stepper</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/tab_role">MDN — ARIA tab roles</a></li>
+    <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/">WAI-ARIA APG — Tabs</a></li>
+  </ul>
+
+  <h2>Responsiveness</h2>
+  <ul>
+    <li>Horizontal stepper compresses on narrow screens; use <code>orientation="vertical"</code> for mobile.</li>
+    <li>Alternative labels stack below icons on smaller viewports.</li>
+    <li>Vertical stepper content is full-width and scrollable.</li>
+  </ul>
+
+  <h2>Customization</h2>
+  <ul>
+    <li>Orientations: <code>horizontal</code>, <code>vertical</code>.</li>
+    <li>Variants: <code>primary</code>, <code>success</code>, <code>warning</code>, <code>error</code>.</li>
+    <li><code>alternativeLabels</code> — labels below step icons instead of beside them.</li>
+    <li><code>linear={false}</code> — non-linear mode for free step navigation.</li>
+    <li>Custom icons via the <code>icon</code> prop on <code>&lt;StepperStep&gt;</code>.</li>
+    <li>Optional, disabled, and error states per step.</li>
+  </ul>
 
   <h2>Examples</h2>
 
   <h3>Basic Stepper</h3>
-  <div class="not-prose mb-8 max-w-3xl" data-testid="stepper-basic">
-    <Stepper>
-      <StepperStep label="Shipping">
-        <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Shipping Address</h3>
-          <p class="mt-2">We'll send your order to the address you provide here.</p>
-        </div>
-      </StepperStep>
-      <StepperStep label="Payment">
-        <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Payment Method</h3>
-          <p class="mt-2">Your card details are encrypted and never stored on our servers.</p>
-        </div>
-      </StepperStep>
-      <StepperStep label="Review">
-        <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Review Your Order</h3>
-          <p class="mt-2">Double-check your items and shipping details before placing the order.</p>
-        </div>
-      </StepperStep>
-    </Stepper>
-  </div>
-
-  <CodeBlock language="svelte">{`<Stepper>
+  <ExampleTabs code={`<Stepper>
   <StepperStep label="Shipping">
-    <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
+    <div class="p-4 mt-4 bg-surface rounded-lg">
       <h3 class="text-lg font-medium">Shipping Address</h3>
       <p class="mt-2">We'll send your order to the address you provide here.</p>
     </div>
   </StepperStep>
   <StepperStep label="Payment">
-    <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
+    <div class="p-4 mt-4 bg-surface rounded-lg">
       <h3 class="text-lg font-medium">Payment Method</h3>
       <p class="mt-2">Your card details are encrypted and never stored on our servers.</p>
     </div>
   </StepperStep>
   <StepperStep label="Review">
-    <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
+    <div class="p-4 mt-4 bg-surface rounded-lg">
       <h3 class="text-lg font-medium">Review Your Order</h3>
       <p class="mt-2">Double-check your items and shipping details before placing the order.</p>
     </div>
   </StepperStep>
-</Stepper>`}</CodeBlock>
+</Stepper>`}>
+    <div class="max-w-3xl" data-testid="stepper-basic">
+      <Stepper>
+        <StepperStep label="Shipping">
+          <div class="p-4 mt-4 bg-surface rounded-lg">
+            <h3 class="text-lg font-medium">Shipping Address</h3>
+            <p class="mt-2">We'll send your order to the address you provide here.</p>
+          </div>
+        </StepperStep>
+        <StepperStep label="Payment">
+          <div class="p-4 mt-4 bg-surface rounded-lg">
+            <h3 class="text-lg font-medium">Payment Method</h3>
+            <p class="mt-2">Your card details are encrypted and never stored on our servers.</p>
+          </div>
+        </StepperStep>
+        <StepperStep label="Review">
+          <div class="p-4 mt-4 bg-surface rounded-lg">
+            <h3 class="text-lg font-medium">Review Your Order</h3>
+            <p class="mt-2">Double-check your items and shipping details before placing the order.</p>
+          </div>
+        </StepperStep>
+      </Stepper>
+    </div>
+  </ExampleTabs>
 
   <h3>Vertical Stepper</h3>
-  <div class="not-prose mb-8 max-w-3xl" data-testid="stepper-vertical">
-    <Stepper orientation="vertical">
-      <StepperStep label="Personal Information">
-        <div class="p-4 mt-2 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Personal Information</h3>
-          <p class="mt-2">Enter your personal details.</p>
-          <div class="mt-4 space-y-4">
-            <div>
-              <label for="full-name" class="block text-sm font-medium">Full Name</label>
-              <input id="full-name" type="text" class="mt-1 block w-full rounded-md border-border bg-background p-2" />
-            </div>
-            <div>
-              <label for="email" class="block text-sm font-medium">Email</label>
-              <input id="email" type="email" class="mt-1 block w-full rounded-md border-border bg-background p-2" />
-            </div>
-          </div>
-        </div>
-      </StepperStep>
-      <StepperStep label="Address">
-        <div class="p-4 mt-2 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Address</h3>
-          <p class="mt-2">Enter your address details.</p>
-          <div class="mt-4 space-y-4">
-            <div>
-              <label for="street-address" class="block text-sm font-medium">Street Address</label>
-              <input id="street-address" type="text" class="mt-1 block w-full rounded-md border-border bg-background p-2" />
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <label for="city" class="block text-sm font-medium">City</label>
-                <input id="city" type="text" class="mt-1 block w-full rounded-md border-border bg-background p-2" />
-              </div>
-              <div>
-                <label for="postal-code" class="block text-sm font-medium">Postal Code</label>
-                <input id="postal-code" type="text" class="mt-1 block w-full rounded-md border-border bg-background p-2" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </StepperStep>
-      <StepperStep label="Review">
-        <div class="p-4 mt-2 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Review</h3>
-          <p class="mt-2">Review your information before submitting.</p>
-          <div class="mt-4 space-y-4">
-            <div class="p-3 bg-background dark:bg-background rounded-md">
-              <h4 class="font-medium">Personal Information</h4>
-              <p class="text-sm text-muted dark:text-muted mt-1">Sarah Chen</p>
-              <p class="text-sm text-muted dark:text-muted">sarah.chen@acme.io</p>
-            </div>
-            <div class="p-3 bg-background dark:bg-background rounded-md">
-              <h4 class="font-medium">Address</h4>
-              <p class="text-sm text-muted dark:text-muted mt-1">123 Main St</p>
-              <p class="text-sm text-muted dark:text-muted">New York, 10001</p>
-            </div>
-          </div>
-        </div>
-      </StepperStep>
-    </Stepper>
-  </div>
-
-  <CodeBlock language="svelte">{`<Stepper orientation="vertical">
+  <ExampleTabs code={`<Stepper orientation="vertical">
   <StepperStep label="Personal Information">
-    <!-- Step content -->
+    <div class="p-4 mt-2 bg-surface rounded-lg">
+      <h3 class="text-lg font-medium">Personal Information</h3>
+      <p class="mt-2">Enter your personal details.</p>
+    </div>
   </StepperStep>
   <StepperStep label="Address">
-    <!-- Step content -->
+    <div class="p-4 mt-2 bg-surface rounded-lg">
+      <h3 class="text-lg font-medium">Address</h3>
+      <p class="mt-2">Enter your address details.</p>
+    </div>
   </StepperStep>
-  <StepperStep label="Review">
-    <!-- Step content -->
-  </StepperStep>
-</Stepper>`}</CodeBlock>
+</Stepper>`}>
+    <div class="max-w-3xl" data-testid="stepper-vertical">
+      <Stepper orientation="vertical">
+        <StepperStep label="Personal Information">
+          <div class="p-4 mt-2 bg-surface rounded-lg">
+            <h3 class="text-lg font-medium">Personal Information</h3>
+            <p class="mt-2">Enter your personal details.</p>
+          </div>
+        </StepperStep>
+        <StepperStep label="Address">
+          <div class="p-4 mt-2 bg-surface rounded-lg">
+            <h3 class="text-lg font-medium">Address</h3>
+            <p class="mt-2">Enter your address details.</p>
+          </div>
+        </StepperStep>
+      </Stepper>
+    </div>
+  </ExampleTabs>
 
   <h3>Non-Linear Stepper</h3>
-  <div class="not-prose mb-8 max-w-3xl" data-testid="stepper-nonlinear">
-    <Stepper linear={false}>
-      <StepperStep label="Account" optional>
-        <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Account Setup</h3>
-          <p class="mt-2">Create your account or sign in.</p>
-        </div>
-      </StepperStep>
-      <StepperStep label="Profile" optional>
-        <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Profile Information</h3>
-          <p class="mt-2">Tell us about yourself.</p>
-        </div>
-      </StepperStep>
-      <StepperStep label="Preferences">
-        <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Preferences</h3>
-          <p class="mt-2">Set your preferences.</p>
-        </div>
-      </StepperStep>
-      <StepperStep label="Complete">
-        <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Complete</h3>
-          <p class="mt-2">Your setup is complete!</p>
-        </div>
-      </StepperStep>
-    </Stepper>
-  </div>
-
-  <CodeBlock language="svelte">{`<Stepper linear={false}>
-  <StepperStep label="Account" optional>
-    <!-- Step content -->
-  </StepperStep>
-  <StepperStep label="Profile" optional>
-    <!-- Step content -->
-  </StepperStep>
-  <StepperStep label="Preferences">
-    <!-- Step content -->
-  </StepperStep>
-  <StepperStep label="Complete">
-    <!-- Step content -->
-  </StepperStep>
-</Stepper>`}</CodeBlock>
+  <ExampleTabs code={`<Stepper linear={false}>
+  <StepperStep label="Account" optional>Account Setup</StepperStep>
+  <StepperStep label="Profile" optional>Profile Information</StepperStep>
+  <StepperStep label="Preferences">Preferences</StepperStep>
+  <StepperStep label="Complete">All set!</StepperStep>
+</Stepper>`}>
+    <div class="max-w-3xl" data-testid="stepper-nonlinear">
+      <Stepper linear={false}>
+        <StepperStep label="Account" optional>
+          <div class="p-4 mt-4 bg-surface rounded-lg">
+            <h3 class="text-lg font-medium">Account Setup</h3>
+            <p class="mt-2">Create your account or sign in.</p>
+          </div>
+        </StepperStep>
+        <StepperStep label="Profile" optional>
+          <div class="p-4 mt-4 bg-surface rounded-lg">
+            <h3 class="text-lg font-medium">Profile Information</h3>
+            <p class="mt-2">Tell us about yourself.</p>
+          </div>
+        </StepperStep>
+        <StepperStep label="Preferences">
+          <div class="p-4 mt-4 bg-surface rounded-lg">
+            <h3 class="text-lg font-medium">Preferences</h3>
+            <p class="mt-2">Set your preferences.</p>
+          </div>
+        </StepperStep>
+        <StepperStep label="Complete">
+          <div class="p-4 mt-4 bg-surface rounded-lg">
+            <h3 class="text-lg font-medium">Complete</h3>
+            <p class="mt-2">Your setup is complete!</p>
+          </div>
+        </StepperStep>
+      </Stepper>
+    </div>
+  </ExampleTabs>
 
   <h3>Alternative Labels</h3>
-  <div class="not-prose mb-8 max-w-3xl" data-testid="stepper-alternative">
-    <Stepper alternativeLabels>
-      <StepperStep label="Cart">
-        <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Shopping Cart</h3>
-          <p class="mt-2">Review your items.</p>
-        </div>
-      </StepperStep>
-      <StepperStep label="Shipping">
-        <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Shipping Information</h3>
-          <p class="mt-2">Enter your shipping details.</p>
-        </div>
-      </StepperStep>
-      <StepperStep label="Payment">
-        <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Payment Method</h3>
-          <p class="mt-2">Select your payment method.</p>
-        </div>
-      </StepperStep>
-      <StepperStep label="Confirm">
-        <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Confirmation</h3>
-          <p class="mt-2">Review and confirm your order.</p>
-        </div>
-      </StepperStep>
-    </Stepper>
-  </div>
-
-  <CodeBlock language="svelte">{`<Stepper alternativeLabels>
-  <StepperStep label="Cart">
-    <!-- Step content -->
-  </StepperStep>
-  <StepperStep label="Shipping">
-    <!-- Step content -->
-  </StepperStep>
-  <StepperStep label="Payment">
-    <!-- Step content -->
-  </StepperStep>
-  <StepperStep label="Confirm">
-    <!-- Step content -->
-  </StepperStep>
-</Stepper>`}</CodeBlock>
-
-  <h3>With Icons</h3>
-  <div class="not-prose mb-8 max-w-3xl" data-testid="stepper-icons">
-    <Stepper>
-      <StepperStep 
-        label="Account" 
-        icon='<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>'
-      >
-        <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Account Setup</h3>
-          <p class="mt-2">Create your account.</p>
-        </div>
-      </StepperStep>
-      <StepperStep 
-        label="Preferences" 
-        icon='<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 01-2.573 1.066c-1.543-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"></path></svg>'
-      >
-        <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Preferences</h3>
-          <p class="mt-2">Set your preferences.</p>
-        </div>
-      </StepperStep>
-      <StepperStep 
-        label="Confirmation" 
-        icon='<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
-      >
-        <div class="p-4 mt-4 bg-surface dark:bg-surface rounded-lg">
-          <h3 class="text-lg font-medium">Confirmation</h3>
-          <p class="mt-2">Confirm your settings.</p>
-        </div>
-      </StepperStep>
-    </Stepper>
-  </div>
-
-  <CodeBlock language="svelte">{`<Stepper>
-  <StepperStep 
-    label="Account" 
-    icon='<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>'
-  >
-    <!-- Step content -->
-  </StepperStep>
-  <!-- Other steps -->
-</Stepper>`}</CodeBlock>
+  <ExampleTabs code={`<Stepper alternativeLabels>
+  <StepperStep label="Cart">Shopping Cart</StepperStep>
+  <StepperStep label="Shipping">Shipping Information</StepperStep>
+  <StepperStep label="Payment">Payment Method</StepperStep>
+  <StepperStep label="Confirm">Confirmation</StepperStep>
+</Stepper>`}>
+    <div class="max-w-3xl" data-testid="stepper-alternative">
+      <Stepper alternativeLabels>
+        <StepperStep label="Cart">
+          <div class="p-4 mt-4 bg-surface rounded-lg">
+            <h3 class="text-lg font-medium">Shopping Cart</h3>
+            <p class="mt-2">Review your items.</p>
+          </div>
+        </StepperStep>
+        <StepperStep label="Shipping">
+          <div class="p-4 mt-4 bg-surface rounded-lg">
+            <h3 class="text-lg font-medium">Shipping Information</h3>
+            <p class="mt-2">Enter your shipping details.</p>
+          </div>
+        </StepperStep>
+        <StepperStep label="Payment">
+          <div class="p-4 mt-4 bg-surface rounded-lg">
+            <h3 class="text-lg font-medium">Payment Method</h3>
+            <p class="mt-2">Select your payment method.</p>
+          </div>
+        </StepperStep>
+        <StepperStep label="Confirm">
+          <div class="p-4 mt-4 bg-surface rounded-lg">
+            <h3 class="text-lg font-medium">Confirmation</h3>
+            <p class="mt-2">Review and confirm your order.</p>
+          </div>
+        </StepperStep>
+      </Stepper>
+    </div>
+  </ExampleTabs>
 
   <h2>Stepper Props</h2>
   <PropsTable component={StepperModule} />
@@ -288,76 +242,37 @@ import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
   <h2>StepperStep Events</h2>
   <EventsTable component={StepperStepModule} />
 
-  <h2>StepperStep Slots</h2>
+  <h2>Slots</h2>
   <table>
-    <thead>
-      <tr>
-        <th>Slot</th>
-        <th>Description</th>
-      </tr>
-    </thead>
+    <thead><tr><th>Slot</th><th>Description</th></tr></thead>
     <tbody>
-      <tr>
-        <td><code>icon</code></td>
-        <td>Custom icon content</td>
-      </tr>
-      <tr>
-        <td><code>label</code></td>
-        <td>Custom label content</td>
-      </tr>
-      <tr>
-        <td>default</td>
-        <td>Step content</td>
-      </tr>
+      <tr><td><code>icon</code></td><td>Custom icon content for the step marker</td></tr>
+      <tr><td><code>label</code></td><td>Custom label content for the step</td></tr>
+      <tr><td><code>default</code></td><td>Step content (shown when active in vertical mode)</td></tr>
     </tbody>
   </table>
 
   <h2>Accessibility</h2>
-  <p>
-    The Stepper component follows accessibility best practices:
-  </p>
   <ul>
-    <li>Uses <code>role="tablist"</code> for the stepper container</li>
-    <li>Uses <code>role="tab"</code> for step headers</li>
-    <li>Uses <code>role="tabpanel"</code> for step content</li>
-    <li>Proper <code>aria-selected</code>, <code>aria-controls</code>, and <code>aria-labelledby</code> attributes</li>
-    <li>Supports keyboard navigation</li>
-    <li>Provides visual indicators for active, completed, and error states</li>
+    <li>Uses <code>role="tablist"</code> for the stepper container.</li>
+    <li>Uses <code>role="tab"</code> for step headers.</li>
+    <li>Uses <code>role="tabpanel"</code> for step content.</li>
+    <li>Proper <code>aria-selected</code>, <code>aria-controls</code>, and <code>aria-labelledby</code> attributes.</li>
+    <li>Active step marked with <code>aria-current="step"</code>.</li>
+    <li>Completed steps show check icon; error steps show error icon.</li>
+    <li>Disabled steps expose <code>aria-disabled</code> and are skipped by interaction.</li>
   </ul>
 
   <h2>Keyboard Support</h2>
   <table>
-    <thead>
-      <tr>
-        <th>Key</th>
-        <th>Function</th>
-      </tr>
-    </thead>
+    <thead><tr><th>Key</th><th>Function</th></tr></thead>
     <tbody>
-      <tr>
-        <td><kbd>Tab</kbd></td>
-        <td>Moves focus to the stepper</td>
-      </tr>
-      <tr>
-        <td><kbd>Enter</kbd> or <kbd>Space</kbd></td>
-        <td>When focus is on a step header, activates that step</td>
-      </tr>
-      <tr>
-        <td><kbd>Left Arrow</kbd> or <kbd>Up Arrow</kbd></td>
-        <td>Moves focus to the previous step</td>
-      </tr>
-      <tr>
-        <td><kbd>Right Arrow</kbd> or <kbd>Down Arrow</kbd></td>
-        <td>Moves focus to the next step</td>
-      </tr>
-      <tr>
-        <td><kbd>Home</kbd></td>
-        <td>Moves focus to the first step</td>
-      </tr>
-      <tr>
-        <td><kbd>End</kbd></td>
-        <td>Moves focus to the last step</td>
-      </tr>
+      <tr><td><kbd>Tab</kbd></td><td>Moves focus to the stepper</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Activates the focused step</td></tr>
+      <tr><td><kbd>Left Arrow</kbd> / <kbd>Up Arrow</kbd></td><td>Moves focus to the previous step</td></tr>
+      <tr><td><kbd>Right Arrow</kbd> / <kbd>Down Arrow</kbd></td><td>Moves focus to the next step</td></tr>
+      <tr><td><kbd>Home</kbd></td><td>Moves focus to the first step</td></tr>
+      <tr><td><kbd>End</kbd></td><td>Moves focus to the last step</td></tr>
     </tbody>
   </table>
 </Container>
