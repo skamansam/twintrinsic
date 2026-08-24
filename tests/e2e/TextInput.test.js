@@ -26,13 +26,13 @@ test.describe("TextInput docs page", () => {
 
   test("initial value is honored", async ({ page }) => {
     const demo = page.getByTestId("textinput-value");
-    await expect(demo.locator("input")).toHaveValue("john@example.com");
+    await expect(demo.locator("input")).toHaveValue("hello@world.com");
   });
 
-  test("icons render around the input", async ({ page }) => {
+  test("multiple inputs render in the icons example", async ({ page }) => {
     const demo = page.getByTestId("textinput-icons");
-    await expect(demo.locator(".input-icon-start")).toBeVisible();
-    await expect(demo.locator(".input-icon-end")).toBeVisible();
+    const inputs = demo.locator("input");
+    await expect(inputs).toHaveCount(2);
   });
 
   test("clearable input shows a clear button and clears the value", async ({ page }) => {

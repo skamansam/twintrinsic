@@ -38,19 +38,20 @@ test.describe("Table docs page", () => {
   test("bordered table renders its content", async ({ page }) => {
     const demo = page.getByTestId("table-bordered");
     await expect(demo.locator("table")).toBeVisible();
-    await expect(demo.getByText("Responsive", { exact: true })).toBeVisible();
-    await expect(demo.getByText("Semantic HTML with ARIA support", { exact: true })).toBeVisible();
+    await expect(demo.getByText("Alice", { exact: true })).toBeVisible();
+    await expect(demo.getByText("Engineer", { exact: true })).toBeVisible();
   });
 
   test("hoverable table renders its content", async ({ page }) => {
     const demo = page.getByTestId("table-hoverable");
     await expect(demo.getByText("Migrate billing API", { exact: true })).toBeVisible();
-    await expect(demo.getByText("In Progress", { exact: true })).toBeVisible();
+    await expect(demo.getByText("Done", { exact: true })).toBeVisible();
   });
 
   test("compact table renders its content", async ({ page }) => {
     const demo = page.getByTestId("table-compact");
-    await expect(demo.getByText("Enterprise", { exact: true })).toBeVisible();
-    await expect(demo.getByText("Inactive", { exact: true })).toBeVisible();
+    await expect(demo.locator("table")).toBeVisible();
+    await expect(demo.getByText("Feature", { exact: true })).toBeVisible();
+    await expect(demo.getByText("Responsive", { exact: true })).toBeVisible();
   });
 });

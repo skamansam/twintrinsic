@@ -5,9 +5,8 @@ import { waitForHydration } from "./helpers.js";
  * Docs-site interaction + accessibility tests for the Textarea component.
  *
  * Targets `/docs/components/Form/Textarea`. Each example exposes a
- * `data-testid` (e.g. `textarea-basic`) that lands on the native `<textarea>`
- * via the component's rest-prop passthrough. Verifies typing, pre-filled
- * values, disabled/readonly states, and character limits.
+ * `data-testid` wrapper (`textarea-basic`, etc.) containing a Textarea component.
+ * Tests query the actual `<textarea>` element within each wrapper.
  */
 test.describe("Textarea docs page", () => {
   test.beforeEach(async ({ page }) => {
@@ -21,41 +20,44 @@ test.describe("Textarea docs page", () => {
   });
 
   test("accepts typed input", async ({ page }) => {
-    const textarea = page.getByTestId("textarea-basic");
+    const textarea = page.getByTestId("textarea-basic").locator("textarea");
     await textarea.fill("Hello from the docs test");
     await expect(textarea).toHaveValue("Hello from the docs test");
   });
 
   test("pre-filled value is honored", async ({ page }) => {
-    await expect(page.getByTestId("textarea-prefilled")).toHaveValue(
+    const textarea = page.getByTestId("textarea-prefilled").locator("textarea");
+    await expect(textarea).toHaveValue(
       "This is a pre-filled textarea with some initial content.",
     );
   });
 
   test("auto-resize textarea accepts input", async ({ page }) => {
-    const textarea = page.getByTestId("textarea-autoresize");
+    const textarea = page.getByTestId("textarea-autoresize").locator("textarea");
     await textarea.fill("A line of text");
     await expect(textarea).toHaveValue("A line of text");
   });
 
   test("disabled textarea is not editable", async ({ page }) => {
-    await expect(page.getByTestId("textarea-disabled")).toBeDisabled();
+    const textarea = page.getByTestId("textarea-disabled").locator("textarea");
+    await expect(textarea).toBeDisabled();
   });
 
   test("readonly textarea is not editable but focusable", async ({ page }) => {
-    const readonly = page.getByTestId("textarea-readonly");
+    const readonly = page.getByTestId("textarea-readonly").locator("textarea");
     await expect(readonly).not.toBeEditable();
     await readonly.focus();
     await expect(readonly).toBeFocused();
   });
 
   test("enforces the character limit", async ({ page }) => {
-    const limited = page.getByTestId("textarea-maxlength");
+    const limited = page.getByTestId("textarea-maxlength").locator("textarea");
     await limited.fill("x".repeat(150));
     await expect(limited).toHaveValue("x".repeat(100));
   });
 
   test("required textarea is marked required", async ({ page }) => {
-    await expect(page.getByTestId("textarea-required")).toHaveAttribute("required", "");
+    const textarea = page.getByTestId("textarea-required").locator("textarea");
+    await expect(textarea).toHaveAttribute("required", "");
   });
 });

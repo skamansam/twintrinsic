@@ -88,6 +88,10 @@ let selectedCountry = $state("")
         <option value="ca">Canada</option>
         <option value="mx">Mexico</option>
       </SelectGroup>
+      <SelectGroup label="Asia">
+        <option value="jp">Japan</option>
+        <option value="cn">China</option>
+      </SelectGroup>
     </Select>
     <p class="text-sm text-muted mt-2">Selected: {selectedCountry || 'None'}</p>
   </div>
@@ -108,6 +112,7 @@ let selectedCountry = $state("")
     <Select label="Select a country">
       <SelectGroup label="Europe"><option value="fr">France</option><option value="de">Germany</option></SelectGroup>
       <SelectGroup label="North America" disabled={true}><option value="us">United States</option><option value="ca">Canada</option></SelectGroup>
+      <SelectGroup label="Asia"><option value="jp">Japan</option></SelectGroup>
     </Select>
   </div>
 </ExampleTabs>
@@ -121,7 +126,8 @@ let selectedCountry = $state("")
     <div data-testid="select-group-formfield">
       <FormField label="Region">
         <SelectGroup label="Asia">
-          <optgroup label="Asia"><option value="jp">Japan</option></optgroup>
+          <option value="jp">Japan</option>
+          <option value="cn">China</option>
         </SelectGroup>
       </FormField>
     </div>
