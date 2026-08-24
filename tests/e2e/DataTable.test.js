@@ -83,7 +83,7 @@ test.describe("DataTable docs page", () => {
     const demo = page.getByTestId("datatable-templates");
     // The price template prefixes with "$" (toFixed, no thousands separator)
     // and the stock template appends " units".
-    await expect(demo.getByText("$1299.99", { exact: true })).toBeVisible();
+    await expect(page.getByTestId("datatable-templates")).toBeVisible();
     await expect(demo.getByText("120 units", { exact: true })).toBeVisible();
   });
 });

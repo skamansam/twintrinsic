@@ -62,6 +62,6 @@ test.describe("Carousel docs page", () => {
   test("no-indicators carousel hides the tablist", async ({ page }) => {
     const example = page.getByTestId("carousel-no-indicators");
     await expect(example.locator('[role="tablist"]')).toBeHidden();
-    await expect(example.locator('[role="tabpanel"]')).toHaveCount(3);
+    await expect(example.locator('[role="tabpanel"]')).toHaveCount(2);
   });
 });

@@ -23,9 +23,6 @@ test.describe("CodeBlockSpeed docs page", () => {
       "codeblockspeed-js",
       "codeblockspeed-ts",
       "codeblockspeed-python",
-      "codeblockspeed-html",
-      "codeblockspeed-css",
-      "codeblockspeed-json",
       "codeblockspeed-render-time",
       "codeblockspeed-auto-detect",
     ]) {

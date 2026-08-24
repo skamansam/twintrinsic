@@ -21,6 +21,7 @@ test.describe("Lazy docs page", () => {
 
   test("deferred content renders once in view", async ({ page }) => {
     const lazy = page.getByTestId("lazy-basic");
+    await lazy.scrollIntoViewIfNeeded();
     await expect(lazy).toContainText("Monthly revenue chart");
   });
 

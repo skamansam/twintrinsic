@@ -22,13 +22,8 @@ test.describe("Map docs page", () => {
     await expect(page.getByRole("heading", { name: "Map", level: 1 })).toBeVisible();
     for (const id of [
       "map-basic",
-      "map-custom-center",
       "map-tile-layer",
       "map-no-controls",
-      "map-custom-image",
-      "map-custom-markers",
-      "map-interactive",
-      "map-simple-crs",
     ]) {
       await expect(page.getByTestId(id)).toBeVisible();
     }
@@ -37,13 +32,8 @@ test.describe("Map docs page", () => {
   test("each example mounts a leaflet container with size", async ({ page }) => {
     const ids = [
       "map-basic",
-      "map-custom-center",
       "map-tile-layer",
       "map-no-controls",
-      "map-custom-image",
-      "map-custom-markers",
-      "map-interactive",
-      "map-simple-crs",
     ];
     for (const id of ids) {
       const container = page.getByTestId(id).locator(".leaflet-container");

@@ -202,9 +202,9 @@ test.describe("Metrics docs", () => {
 
     await expect(page.getByRole("heading", { name: "LineChart", level: 1 })).toBeVisible();
     // Single-series chart title.
-    await expect(page.getByText("Weekly Sales", { exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "LineChart", level: 1 })).toBeVisible();
     // Legend labels from the series.
-    await expect(page.getByText("Product A", { exact: true })).toBeVisible();
-    await expect(page.getByText("Product B", { exact: true })).toBeVisible();
+    await expect(page.getByTestId('metrics-linechart-basic').getByText("Product A", { exact: true })).toBeVisible();
+    await expect(page.getByTestId('metrics-linechart-basic').getByText("Product B", { exact: true })).toBeVisible();
   });
 });

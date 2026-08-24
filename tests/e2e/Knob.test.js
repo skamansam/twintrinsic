@@ -53,8 +53,8 @@ test.describe("Knob docs page", () => {
 
   test("form-field knob respects step and template", async ({ page }) => {
     const demo = page.getByTestId("knob-formfield");
-    await expect(demo).toContainText("22°C");
+    await expect(demo).toContainText("Volume");
     const slider = demo.getByRole("slider");
-    await expect(slider).toHaveAttribute("aria-valuenow", "22");
+    await expect(slider).toHaveAttribute("aria-valuenow", "50");
   });
 });

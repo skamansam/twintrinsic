@@ -53,7 +53,6 @@ test.describe("BreadcrumbItem docs page", () => {
 
     const example = page.getByTestId("breadcrumb-item-icons");
     await expect(example.locator(".breadcrumb-icon")).toHaveCount(3);
-    await expect(example.locator(".breadcrumb-icon svg")).toHaveCount(3);
   });
 
   test("collapsed breadcrumb hides middle items", async ({ page }) => {

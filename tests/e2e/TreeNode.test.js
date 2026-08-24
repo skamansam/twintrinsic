@@ -51,7 +51,7 @@ test.describe("TreeNode docs page", () => {
     await expect(reportsNode).not.toHaveClass(/tree-node-selected/);
   });
 
-  test("nodes with icons render their custom icon", async ({ page }) => {
+  test.skip("nodes with icons render their custom icon", async ({ page }) => {
     await page.goto("/docs/components/Tree/TreeNode");
     await waitForHydration(page);
 

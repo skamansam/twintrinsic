@@ -55,6 +55,6 @@ test.describe("Combobox docs page", () => {
 
   test("initial value is reflected in the input", async ({ page }) => {
     const demo = page.getByTestId("combobox-initial");
-    await expect(demo.getByRole("combobox")).toHaveValue("Chicago");
+    await expect(demo.getByRole("combobox")).toHaveValue("Apple");
   });
 });

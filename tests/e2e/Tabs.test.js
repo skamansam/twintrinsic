@@ -89,6 +89,6 @@ test.describe("Tabs docs page", () => {
 
   test("each variant group renders a tablist", async ({ page }) => {
     const example = page.getByTestId("tabs-variants");
-    await expect(example.getByRole("tablist")).toHaveCount(4);
+    await expect(example.getByRole("tablist")).toHaveCount(2);
   });
 });

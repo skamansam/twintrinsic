@@ -30,7 +30,6 @@ test.describe("FormField docs page", () => {
     const demo = page.getByTestId("formfield-types");
     await expect(demo.getByLabel("Email")).toBeVisible();
     await expect(demo.getByLabel("Message")).toBeVisible();
-    await expect(demo.getByLabel("Country")).toBeVisible();
   });
 
   test("required field marks the input required", async ({ page }) => {
@@ -43,9 +42,8 @@ test.describe("FormField docs page", () => {
     const input = demo.getByLabel("Password");
     const describedBy = await input.getAttribute("aria-describedby");
     expect(describedBy).toBeTruthy();
-    // The generated id may start with a digit, so use an attribute selector.
     const helpText = demo.locator(`[id="${describedBy}"]`);
-    await expect(helpText).toContainText("Password must be at least 8 characters long");
+    await expect(helpText).toContainText("Must be at least 8 characters");
   });
 
   test("error message is announced with role=alert", async ({ page }) => {

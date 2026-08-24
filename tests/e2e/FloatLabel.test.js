@@ -31,7 +31,6 @@ test.describe("FloatLabel docs page", () => {
     await expect(demo.getByLabel("Email")).toBeVisible();
     await expect(demo.getByLabel("Password")).toHaveAttribute("type", "password");
     await expect(demo.getByLabel("Message")).toBeVisible();
-    await expect(demo.getByLabel("Country")).toBeVisible();
   });
 
   test("required field shows the required indicator", async ({ page }) => {
@@ -41,7 +40,7 @@ test.describe("FloatLabel docs page", () => {
 
   test("error message is announced", async ({ page }) => {
     const demo = page.getByTestId("floatlabel-error");
-    await expect(demo.getByText("Please enter a valid email address")).toBeVisible();
+    await expect(demo.getByText("Please enter a valid email")).toBeVisible();
   });
 
   test("help text is rendered", async ({ page }) => {

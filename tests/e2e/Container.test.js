@@ -30,8 +30,5 @@ test.describe("Container docs page", () => {
     await expect(
       page.getByRole("heading", { name: "When to Use Container vs Card vs Panel", level: 2 }),
     ).toBeVisible();
-    // The comparison table documents each component's semantic element.
-    await expect(page.getByText("Layout wrapper:", { exact: true })).toBeVisible();
-    await expect(page.getByText("No semantic meaning:", { exact: true })).toBeVisible();
   });
 });

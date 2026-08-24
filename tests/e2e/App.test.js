@@ -37,7 +37,7 @@ test.describe("App docs page", () => {
 
   test("documents responsive behavior", async ({ page }) => {
     await expect(
-      page.getByRole("heading", { name: "Responsive Behavior", level: 2 }),
+      page.getByRole("heading", { name: "Responsiveness", level: 2 }),
     ).toBeVisible();
     await expect(page.getByText("side panels expand to full width")).toBeVisible();
   });

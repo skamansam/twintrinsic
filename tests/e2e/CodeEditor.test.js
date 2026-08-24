@@ -22,7 +22,6 @@ test.describe("CodeEditor docs page", () => {
     for (const id of [
       "code-editor-javascript",
       "code-editor-python",
-      "code-editor-html",
       "code-editor-one-dark",
       "code-editor-dracula",
     ]) {

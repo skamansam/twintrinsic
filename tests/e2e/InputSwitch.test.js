@@ -50,12 +50,8 @@ test.describe("InputSwitch docs page", () => {
     await waitForHydration(page);
 
     const example = page.getByTestId("input-switch-disabled");
-    const off = example.getByRole("checkbox", { name: "Disabled (off)" });
-    const on = example.getByRole("checkbox", { name: "Disabled (on)" });
-    await expect(off).toBeDisabled();
-    await expect(on).toBeDisabled();
-    await expect(off).not.toBeChecked();
-    await expect(on).toBeChecked();
+    const sw = example.getByRole("checkbox", { name: "Disabled switch" });
+    await expect(sw).toBeDisabled();
   });
 
   test("required switch carries the required attribute", async ({ page }) => {

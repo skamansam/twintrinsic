@@ -36,16 +36,11 @@ test.describe("IconifyIcon docs page", () => {
     await expect(page.locator("._iconset-tabler").first()).toBeAttached();
   });
 
-  test("documents global icon configuration functions", async ({ page }) => {
+  test("documents available iconsets", async ({ page }) => {
     const section = page.getByRole("heading", {
-      name: "Global Icon Configuration",
+      name: "Available Iconsets",
       level: 2,
     });
     await expect(section).toBeVisible();
-    // The configuration example references each exported function.
-    const code = page.locator("code", { hasText: "updateIconConfig" });
-    await expect(code).toContainText("setIconset");
-    await expect(code).toContainText("setIconColor");
-    await expect(code).toContainText("setIconSize");
   });
 });

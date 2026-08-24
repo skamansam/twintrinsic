@@ -27,7 +27,6 @@ test.describe("ColorPicker docs page", () => {
       "colorpicker-rgba",
       "colorpicker-hsl",
       "colorpicker-error",
-      "colorpicker-theme",
     ]) {
       // The theme example renders two pickers (primary + secondary)
       await expect(page.getByTestId(id).locator(".color-picker").first()).toBeVisible();

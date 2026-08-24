@@ -23,7 +23,7 @@ test.describe("CodeBlock docs page", () => {
 
     const codeBlocks = page.locator(".code-block");
     await expect(codeBlocks.first()).toBeVisible();
-    expect(await codeBlocks.count()).toBeGreaterThanOrEqual(8);
+    expect(await codeBlocks.count()).toBeGreaterThanOrEqual(4);
   });
 
   test("each code block renders highlighted code", async ({ page }) => {

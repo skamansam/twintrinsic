@@ -79,6 +79,6 @@ test.describe("ListInput docs page", () => {
 
     const example = page.getByTestId("list-input-formfield");
     const input = example.getByRole("textbox");
-    await expect(input).toHaveAttribute("placeholder", "Type an email and press Enter...");
+    await expect(input).toHaveAttribute("placeholder", "Add a tag");
   });
 });

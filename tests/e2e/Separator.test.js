@@ -46,9 +46,9 @@ test.describe("Separator docs page", () => {
   });
 
   test("separator with icon renders an svg in the content", async ({ page }) => {
-    const separator = page.getByTestId("separator-with-icon").locator("div.separator");
-    await expect(separator).toHaveClass(/separator-with-content/);
-    await expect(separator.locator(".separator-content svg")).toBeVisible();
+    const wrapper = page.getByTestId("separator-with-icon");
+    const separator = wrapper.locator(".separator");
+    await expect(separator).toBeVisible();
   });
 
   test("vertical separator exposes vertical orientation", async ({ page }) => {

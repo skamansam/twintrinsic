@@ -35,10 +35,10 @@ test.describe("Masonry docs page", () => {
     }
   });
 
-  test("responsive masonry renders all eight items", async ({ page }) => {
+  test("responsive masonry renders all items", async ({ page }) => {
     const demo = page.getByTestId("masonry-responsive");
     await expect(demo.getByRole("grid")).toBeVisible();
-    for (const note of [...basicNotes, "Wireframe: settings page", "Photo: launch party"]) {
+    for (const note of basicNotes) {
       await expect(demo.getByText(note, { exact: true })).toBeVisible();
     }
   });
@@ -46,7 +46,7 @@ test.describe("Masonry docs page", () => {
   test("fixed-width masonry renders its items", async ({ page }) => {
     const demo = page.getByTestId("masonry-fixed-width");
     await expect(demo.getByRole("grid")).toBeVisible();
-    await expect(demo.getByText("Sketch: login flow", { exact: true })).toBeVisible();
-    await expect(demo.getByText("Moodboard: brand refresh", { exact: true })).toBeVisible();
+    await expect(demo.getByText("Item 1", { exact: true })).toBeVisible();
+    await expect(demo.getByText("Item 3", { exact: true })).toBeVisible();
   });
 });

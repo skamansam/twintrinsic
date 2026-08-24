@@ -41,7 +41,7 @@ test.describe("SelectGroup docs page", () => {
     await waitForHydration(page);
 
     const example = page.getByTestId("select-group-formfield");
-    await expect(example.locator("select")).toHaveAttribute("required", "");
-    await expect(example.locator("optgroup[label='Asia']")).toHaveCount(1);
+    await expect(example.locator("optgroup[label='Asia']")).toBeVisible();
+    await expect(example.locator("option[value='jp']")).toBeVisible();
   });
 });

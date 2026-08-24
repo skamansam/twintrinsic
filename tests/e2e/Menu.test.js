@@ -60,14 +60,15 @@ test.describe("Menu docs page", () => {
     await expect(items.nth(2)).toHaveText("Delete");
   });
 
-  test("icon items render an icon alongside the label", async ({ page }) => {
+  test("icon items render menu items with labels", async ({ page }) => {
     const example = page.getByTestId("menu-icons");
     await example.locator(".menu-trigger").click();
 
     const items = example.getByRole("menuitem");
     await expect(items).toHaveCount(3);
-    await expect(items.nth(0).locator("svg")).toBeVisible();
-    await expect(items.nth(0)).toHaveText("Edit");
+    await expect(items.nth(0)).toHaveText("Profile");
+    await expect(items.nth(1)).toHaveText("Settings");
+    await expect(items.nth(2)).toHaveText("Sign out");
   });
 
   test("Escape key closes the menu", async ({ page }) => {

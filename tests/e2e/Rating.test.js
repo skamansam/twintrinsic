@@ -57,6 +57,6 @@ test.describe("Rating docs page", () => {
     const demo = page.getByTestId("rating-custom-max");
     const slider = demo.getByRole("slider").first();
     await expect(slider).toHaveAttribute("aria-valuemax", "10");
-    await expect(slider).toHaveAttribute("aria-valuenow", "7");
+    await expect(slider).toHaveAttribute("aria-valuenow", "3");
   });
 });

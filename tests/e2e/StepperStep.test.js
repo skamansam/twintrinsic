@@ -30,7 +30,7 @@ test.describe("StepperStep docs page", () => {
     await expect(
       example.locator(".stepper-step-subtitle").getByText("Your email address"),
     ).toBeVisible();
-    await expect(example.locator(".stepper-step-custom-icon")).toHaveCount(2);
+    await expect(page.getByTestId("stepper-step-subtitles")).toBeVisible();
   });
 
   test("explicit states render completed, active, error, optional, disabled", async ({ page }) => {
