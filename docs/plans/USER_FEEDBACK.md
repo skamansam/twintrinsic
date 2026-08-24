@@ -17,6 +17,8 @@ We need to work on suporting internationalization, including lef to right readin
 
 We need to support passing the HTML props to the underlying html elements in all components. We don't need to handle some of them, just pass them along, so our compoennt props can get the ...rest of the props and pass that to the component instead of keeping a running list of all the things the underlying component uses. We can read what we need to, then pass the rest on down.
 
+We can acheieve better native support by using the datalist element. See https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/datalist for uses. We can use it with the dropdown, combobox,  range, and other elements. Perhaps we can build something like a JS helper to use datalists in unsupported ways, like for tickmarks in donnutCharts.
+
 ### Examples / General
 All of the guides for the examples need to be standardized. They are written vastly different. I like the Shopping Page guide the best - with the code examples and example usage details forthe demo. Maybe add a WHY we use this component in the guide. A little more about the shopping page at the top would be nice. Maybe ahave a tabbed interface for the code/example. So for Hero Header, it would show a tab that allows to to switch between the example in the demo and the code to generate it. We could incorporate the best practices with the components in the page, maybe with an Alert component (see Feedback/Alert below).
 
@@ -269,6 +271,113 @@ I think we need to use a date input underlying this. we can style the  icon usin
 
 ### Form / ColorPicker
 
-We need to use a native colorpicker for this element.
+We need to use a native colorpicker for the core of this element. We can handle validations and other stuff by passing to the native colorpicker and then handling the events. This also gives us aria support for free.
+
+### Form / ComboBox
+
+We should try this out, but I think we can style native select elements so most of the code for this should be styling for the element. See https://github.com/codeclown/native-datepicker.
+
+There is info on all the native form elements at https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Styling_web_forms
+
+Native type/search support can be done with vanilla html:
+
+```html
+<label for="ice-cream-choice">Choose flavor:</label>
+<input type="text" list="ice-cream-flavors" id="ice-cream-choice" name="ice-cream-choice" />
+
+<datalist id="ice-cream-flavors">
+  <option value="Chocolate"></option>
+  <option value="Coconut"></option>
+  <option value="Vanilla"></option>
+</datalist>
+```
+
+### Form / Dropdown
+
+What is the diffrerence between this and the combobox? We need a section int he docs about the combobox vs other similar types of components.
+
+### Form / FileUpload
+
+We need to use the file inpu at the core of this. All the features are supported and more. We shoukd add a camera capture to this. Or maybe a camera component that allows easy access to the camera api and to upload images from the camera, using the fileupload input. We shoukd add a way to upload multiple files at once, along with a display of the file information. We shoukd add icons (with the Icon component, and use a map for mimetypes with a default that is from the [FileIcons](https://github.com/file-icons/icons)) for every file that is going to be uploaded.
 
 
+### Form / FloatLabel
+
+This component does not appear to work. I can't see the label.
+
+Also, I think the placeholder should be the same as the floating label and I don't see any placeholder text.
+
+### Form  / FormField
+
+We need to add more examples here. I would like to see one for a typical bootstrap horizontal input group where the label is on the left and the input is in the middle and an icon is on the right.
+
+### Form / Form
+
+The spacing between formfields needs to be adjusted - the fields are touching each other. I don't know if this is an issue with Form or FormField, but the demo/default for FormFields inside Forms should have spacing.
+
+### Form / FormBuilder
+
+We should have a new component that builds forms from data. It shoukd take an openapi specification and build a form for it. We do not need an external lib for this - we can do it by parsing the json data and building the form from it. The 3rd-party libs have all sorts of extra stuff we will never use. The formbuilder should also take just an array of general simple objects and build a form from it. This is a large undertaking so should be built separately.
+
+### Form / Input
+
+The With Icons demo does not work. It is supposed to be a passwrod inout, but the "show password" icon does not work.
+
+### Form / InoutSwitch
+
+The thumb does not move all the way to the right when the switch is on.
+
+We need to make sure the underlaying component is a checkbox. This component should be just a checkbox and a bunch of styles as this is a common thing and CSS-only switch tutorials are all over the place online.
+
+
+### form / Knob
+
+The With Value Display example doe snot appear to work. It shows the value, but is not interactive and the thumb is missing.
+
+### Form / NumberInout
+
+The suffixes overlay the buttons. Suffix should take an icon name as well. If the suffix is longer than 3 characters, we shouldl assume it is an icon.
+
+### Form / Rating
+
+This needs a lot more testing. When I click on any star, it toggles from 1 to 3 and back, instead of just removing the one star. The issue seems happen depending on whether I am clicking in the middle of the star or near the edges.
+
+### Form / SelectGroup
+
+I don't think we need this. We should use the Select element for the same functionality.
+
+### Form / Switch
+
+We have 2 switch elements. If there is a differece bwtweem the switch and inoutswitch, the inoutswitch's features shoukd be added here.
+
+### Feedback / Modal
+
+The scrollabel demo needs to be updated with a much longer scrollable text. The scroll doesn't show for me and I have a normal screen resolution.
+
+### Feedback / Stepper
+
+The Basic stepper demo doesn't really work. The step titles are shown too far down, but should be to the right of the step number. The other text is not shown at all. The code/demo tabs aren't used on this page either.
+
+The Vertical Stepper doesn't really work either. The first step is visible, with no way to show th others.
+
+The label prop should also be a snippet.
+
+
+### Feedback / StepperStep
+
+This shoukd just be renamed to Step. The docs page isn't necessary either because this is not a standalone component.
+
+### Feedback / Toast
+
+The toast should use the popover api. Most of the javascript can be eliminated. We should also use other twintrinsic components whenever we can. For instance, the progress bar should be a twintrinsic progress element. In fact, we should create a Timer element that uses other elements like progress, Gauge Chart, etc. to display a countdown. Maybe even tie in a KPICard so it so it ticks down from the count. We should make the timer count up or down, have different timings, and be able to be paused, resumed, and stopped. Then we can use that as the display for the toast with timer.
+
+The toast positions do not position the toast anywhere but bottom left. We should support all 8 positions (left, right, top, bottom, top left, etc.), offsets, and stacking order (bottom, top, one at a time, etc.).
+
+### Utility / LazyPanel
+
+Do we really need this component? I think the lazy component can handle this. What is the difference?
+
+
+### Themeing / Theme Preview
+
+The badges in all the theme cards are static with respect to the window. They stay in place when scrolled, instead of moving with the other content. They also overlap each other. I think this is causing the app element itself to scroll instead of just the content area.
