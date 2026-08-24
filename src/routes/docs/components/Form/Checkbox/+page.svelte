@@ -109,9 +109,14 @@ import Container from "$lib/components/Container/Container.svelte"
   <div class="max-w-md" data-testid="checkbox-indeterminate">
     <Checkbox label="Select all items" indeterminate={true} description="Some items are selected" />
   </div>
-</ExampleTabs>
+</ExampleTabs>  <h3>Required</h3>
+  <ExampleTabs code={`<Checkbox label="Accept terms" required={true} />`}>
+    <div class="max-w-md" data-testid="checkbox-required">
+      <Checkbox label="Accept terms" required={true} />
+    </div>
+  </ExampleTabs>
 
-<h3>Required with Error</h3>
+  <h3>Required with Error</h3>
 <ExampleTabs code={`<Checkbox
   label="Accept privacy policy"
   error="You must accept the privacy policy"

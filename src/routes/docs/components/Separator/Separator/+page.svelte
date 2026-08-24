@@ -105,7 +105,7 @@ import * as SeparatorModule from "$lib/components/Separator/Separator.svelte"
 <Separator color="success">Success</Separator>
 <Separator color="warning">Warning</Separator>
 <Separator color="error">Error</Separator>`}>
-    <div class="space-y-4" data-testid="separator-colors">
+    <div class="space-y-4" data-testid="separator-color-variants">
       <Separator color="default">Default</Separator>
       <Separator color="primary">Primary</Separator>
       <Separator color="success">Success</Separator>
@@ -121,6 +121,13 @@ import * as SeparatorModule from "$lib/components/Separator/Separator.svelte"
       <tr><td><code>default</code></td><td>Optional content to display in the center of the separator</td></tr>
     </tbody>
   </table>
+
+  <h3>With Content</h3>
+  <ExampleTabs code={`<Separator>Or</Separator>`}>
+    <div data-testid="separator-with-icon">
+      <Separator>Or</Separator>
+    </div>
+  </ExampleTabs>
 
   <h2>Props</h2>
   <PropsTable component={SeparatorModule} />

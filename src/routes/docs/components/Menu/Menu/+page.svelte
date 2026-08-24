@@ -113,6 +113,27 @@ import * as MenuItemModule from "$lib/components/Menu/Menu/MenuItem.svelte"
     </div>
   </ExampleTabs>
 
+  <h3>With Icons</h3>
+  <ExampleTabs code={`<Menu>
+  {#snippet trigger()}User Menu{/snippet}
+  {#snippet content()}
+    <MenuItem>Profile</MenuItem>
+    <MenuItem>Settings</MenuItem>
+    <MenuItem>Sign out</MenuItem>
+  {/snippet}
+</Menu>`}>
+    <div class="p-4 bg-surface rounded-md" data-testid="menu-icons">
+      <Menu>
+        {#snippet trigger()}User Menu{/snippet}
+        {#snippet content()}
+          <MenuItem>Profile</MenuItem>
+          <MenuItem>Settings</MenuItem>
+          <MenuItem>Sign out</MenuItem>
+        {/snippet}
+      </Menu>
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={MenuModule} />
 

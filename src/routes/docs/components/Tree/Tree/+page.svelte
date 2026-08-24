@@ -139,6 +139,40 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
     </div>
   </ExampleTabs>
 
+  <h3>Expanded by Default</h3>
+  <ExampleTabs code={`<Tree>
+  <TreeNode label="Home" expanded>
+    <TreeNode label="About" />
+    <TreeNode label="Contact" />
+  </TreeNode>
+</Tree>`}>
+    <div data-testid="tree-expanded">
+      <Tree>
+        <TreeNode label="Home" expanded>
+          <TreeNode label="About" />
+          <TreeNode label="Contact" />
+        </TreeNode>
+      </Tree>
+    </div>
+  </ExampleTabs>
+
+  <h3>Multi-Select</h3>
+  <ExampleTabs code={`<Tree multiSelect>
+  <TreeNode label="Documents">
+    <TreeNode label="readme.md" />
+    <TreeNode label="CHANGELOG.md" />
+  </TreeNode>
+</Tree>`}>
+    <div data-testid="tree-multiselect">
+      <Tree multiSelect>
+        <TreeNode label="Documents">
+          <TreeNode label="readme.md" />
+          <TreeNode label="CHANGELOG.md" />
+        </TreeNode>
+      </Tree>
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={TreeModule} />
 

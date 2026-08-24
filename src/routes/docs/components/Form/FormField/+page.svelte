@@ -83,9 +83,39 @@ import Container from "$lib/components/Container/Container.svelte"
   <div class="max-w-md" data-testid="formfield-help">
     <FormField label="Password" helpText="Must be at least 8 characters"><TextInput type="password" name="password" /></FormField>
   </div>
-</ExampleTabs>
+</ExampleTabs>  <h3>Required</h3>
+  <ExampleTabs code={`<FormField label="Email" required>
+  <TextInput type="email" name="email" required />
+</FormField>`}>
+    <div class="max-w-md" data-testid="formfield-required">
+      <FormField label="Email" required><TextInput type="email" name="email" required /></FormField>
+    </div>
+  </ExampleTabs>
 
-<h3>Error State</h3>
+  <h3>Different Input Types</h3>
+  <ExampleTabs code={`<FormField label="Email">
+  <TextInput type="email" name="email" />
+</FormField>
+
+<FormField label="Message">
+  <Textarea name="message" rows={3} />
+</FormField>`}>
+    <div class="max-w-md flex flex-col gap-4" data-testid="formfield-types">
+      <FormField label="Email"><TextInput type="email" name="email" /></FormField>
+      <FormField label="Message"><Textarea name="message" rows={3} /></FormField>
+    </div>
+  </ExampleTabs>
+
+  <h3>Hidden Label</h3>
+  <ExampleTabs code={`<FormField label="Search" hideLabel>
+  <TextInput name="search" placeholder="Search..." />
+</FormField>`}>
+    <div class="max-w-md" data-testid="formfield-hidden-label">
+      <FormField label="Search" hideLabel><TextInput name="search" placeholder="Search..." /></FormField>
+    </div>
+  </ExampleTabs>
+
+  <h3>Error State</h3>
 <ExampleTabs code={`<FormField label="Email" error="Please enter a valid email address">
   <TextInput type="email" name="email" />
 </FormField>`}>

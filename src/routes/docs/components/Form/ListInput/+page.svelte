@@ -90,6 +90,17 @@ import * as ListInputModule from "$lib/components/Form/ListInput.svelte"
     </div>
   </ExampleTabs>
 
+  <h3>With FormField</h3>
+  <ExampleTabs code={`<FormField label="Tags">
+  <ListInput name="tags" placeholder="Add a tag" />
+</FormField>`}>
+    <div data-testid="list-input-formfield">
+      <FormField label="Tags">
+        <ListInput name="tags" placeholder="Add a tag" />
+      </FormField>
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={ListInputModule} />
 

@@ -106,6 +106,19 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
     </div>
   </ExampleTabs>
 
+  <h3>With Icons</h3>
+  <ExampleTabs code={`<TreeNode label="Folder" expanded>
+  <TreeNode label="File" />
+  <TreeNode label="Settings" />
+</TreeNode>`}>
+    <div data-testid="tree-node-icons">
+      <TreeNode label="Folder" expanded>
+        <TreeNode label="File" />
+        <TreeNode label="Settings" />
+      </TreeNode>
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={TreeNodeModule} />
 

@@ -112,6 +112,21 @@ let selectedCountry = $state("")
   </div>
 </ExampleTabs>
 
+  <h3>With FormField</h3>
+  <ExampleTabs code={`<FormField label="Region">
+  <SelectGroup label="Asia">
+    <optgroup label="Asia"><option value="jp">Japan</option></optgroup>
+  </SelectGroup>
+</FormField>`}>
+    <div data-testid="select-group-formfield">
+      <FormField label="Region">
+        <SelectGroup label="Asia">
+          <optgroup label="Asia"><option value="jp">Japan</option></optgroup>
+        </SelectGroup>
+      </FormField>
+    </div>
+  </ExampleTabs>
+
 <h2>Props</h2>
 <PropsTable component={SelectGroupModule} />
 

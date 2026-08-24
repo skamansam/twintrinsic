@@ -117,14 +117,14 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
   </ExampleTabs>
 
   <h3>Autoplay with Fade</h3>
-  <ExampleTabs code={`<Carousel autoplay interval={5000} transition="fade">
+  <ExampleTabs code={`<Carousel autoplay interval={5000} >
   {#snippet items()}
     <CarouselItem><!-- slide 1 --></CarouselItem>
     <CarouselItem><!-- slide 2 --></CarouselItem>
   {/snippet}
 </Carousel>`}>
     <div class="max-w-2xl" data-testid="carousel-autoplay">
-      <Carousel autoplay interval={5000} transition="fade" class="h-64">
+      <Carousel autoplay interval={5000}  class="h-64">
         {#snippet items()}
           <CarouselItem>
             <div class="h-64 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
@@ -138,6 +138,40 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
               <p class="mt-2">Save 20% when you switch to yearly billing.</p>
             </div>
           </CarouselItem>
+        {/snippet}
+      </Carousel>
+    </div>
+  </ExampleTabs>
+
+  <h3>Fade Transition</h3>
+  <ExampleTabs code={`<Carousel>
+  {#snippet items()}
+    <CarouselItem><div class="h-48 bg-primary-100 flex items-center justify-center">Slide 1</div></CarouselItem>
+    <CarouselItem><div class="h-48 bg-secondary-100 flex items-center justify-center">Slide 2</div></CarouselItem>
+  {/snippet}
+</Carousel>`}>
+    <div class="max-w-2xl" data-testid="carousel-fade">
+      <Carousel>
+        {#snippet items()}
+          <CarouselItem><div class="h-48 bg-primary-100 flex items-center justify-center">Slide 1</div></CarouselItem>
+          <CarouselItem><div class="h-48 bg-secondary-100 flex items-center justify-center">Slide 2</div></CarouselItem>
+        {/snippet}
+      </Carousel>
+    </div>
+  </ExampleTabs>
+
+  <h3>No Indicators</h3>
+  <ExampleTabs code={`<Carousel showIndicators={false}>
+  {#snippet items()}
+    <CarouselItem><div class="h-48 bg-primary-100 flex items-center justify-center">Slide 1</div></CarouselItem>
+    <CarouselItem><div class="h-48 bg-secondary-100 flex items-center justify-center">Slide 2</div></CarouselItem>
+  {/snippet}
+</Carousel>`}>
+    <div class="max-w-2xl" data-testid="carousel-no-indicators">
+      <Carousel showIndicators={false}>
+        {#snippet items()}
+          <CarouselItem><div class="h-48 bg-primary-100 flex items-center justify-center">Slide 1</div></CarouselItem>
+          <CarouselItem><div class="h-48 bg-secondary-100 flex items-center justify-center">Slide 2</div></CarouselItem>
         {/snippet}
       </Carousel>
     </div>

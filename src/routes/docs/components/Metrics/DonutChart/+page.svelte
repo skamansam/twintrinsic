@@ -7,6 +7,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import DonutChart from "$lib/components/Metrics/DonutChart/DonutChart.svelte"
 import * as DonutChartModule from "$lib/components/Metrics/DonutChart/DonutChart.svelte"
 </script>
 
@@ -63,8 +64,27 @@ import * as DonutChartModule from "$lib/components/Metrics/DonutChart/DonutChart
   <ExampleTabs code={`<DonutChart data={[30, 25, 20, 15, 10]}
   labels={['Product A', 'Product B', 'Product C', 'Product D', 'Product E']}
   size={300} />`}>
-    <div class="flex justify-center" data-testid="metrics-donutchart-basic">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-basic-donutchart">
+      <DonutChart
+        data={[30, 25, 20, 15, 10]}
+        labels={["Product A", "Product B", "Product C", "Product D", "Product E"]}
+        size={300}
+      />
+    </div>
+  </ExampleTabs>
+
+  <h3>Title and Legend</h3>
+  <ExampleTabs code={`<DonutChart data={[30, 25, 20, 15, 10]}
+  labels={['Product A', 'Product B', 'Product C', 'Product D', 'Product E']}
+  title="Market Share" showLegend={true} size={300} />`}>
+    <div class="flex justify-center" data-testid="metrics-with-title-and-legend">
+      <DonutChart
+        data={[30, 25, 20, 15, 10]}
+        labels={["Product A", "Product B", "Product C", "Product D", "Product E"]}
+        title="Market Share"
+        showLegend={true}
+        size={300}
+      />
     </div>
   </ExampleTabs>
 
@@ -73,8 +93,15 @@ import * as DonutChartModule from "$lib/components/Metrics/DonutChart/DonutChart
   labels={['Product A', 'Product B', 'Product C', 'Product D', 'Product E']}
   colors={['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6']}
   title="Custom Colors" showLegend={true} size={300} />`}>
-    <div class="flex justify-center" data-testid="metrics-donutchart-multi">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-custom-colors">
+      <DonutChart
+        data={[30, 25, 20, 15, 10]}
+        labels={["Product A", "Product B", "Product C", "Product D", "Product E"]}
+        colors={["#3b82f6", "#ef4444", "#10b981", "#f59e0b", "#8b5cf6"]}
+        title="Custom Colors"
+        showLegend={true}
+        size={300}
+      />
     </div>
   </ExampleTabs>
 

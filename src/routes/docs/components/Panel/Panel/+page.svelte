@@ -142,6 +142,19 @@ import * as PanelModule from "$lib/components/Panel/Panel.svelte"
     </tbody>
   </table>
 
+  <h3>Custom Header</h3>
+  <ExampleTabs code={`<Panel>
+  {#snippet header()}Custom Header{/snippet}
+  <p>Panel with a custom header snippet.</p>
+</Panel>`}>
+    <div class="max-w-xl" data-testid="panel-custom-header">
+      <Panel>
+        {#snippet header()}Custom Header{/snippet}
+        <p>Panel with a custom header snippet.</p>
+      </Panel>
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={PanelModule} />
 

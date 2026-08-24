@@ -143,6 +143,56 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
     </div>
   </ExampleTabs>
 
+  <h3>No Border</h3>
+  <ExampleTabs code={`<Accordion bordered={false}>
+  <AccordionItem>
+    {#snippet header()}What's included?{/snippet}
+    <div class="p-4">All plans include unlimited projects and team members.</div>
+  </AccordionItem>
+  <AccordionItem>
+    {#snippet header()}What support do you offer?{/snippet}
+    <div class="p-4">Email support for free plans, priority for paid.</div>
+  </AccordionItem>
+</Accordion>`}>
+    <div class="max-w-2xl" data-testid="accordion-no-border">
+      <Accordion bordered={false}>
+        <AccordionItem>
+          {#snippet header()}What's included?{/snippet}
+          <div class="p-4">All plans include unlimited projects and team members.</div>
+        </AccordionItem>
+        <AccordionItem>
+          {#snippet header()}What support do you offer?{/snippet}
+          <div class="p-4">Email support for free plans, priority support for paid plans.</div>
+        </AccordionItem>
+      </Accordion>
+    </div>
+  </ExampleTabs>
+
+  <h3>All Collapsed</h3>
+  <ExampleTabs code={`<Accordion defaultExpanded={null}>
+  <AccordionItem>
+    {#snippet header()}First question{/snippet}
+    <div class="p-4">Answer one.</div>
+  </AccordionItem>
+  <AccordionItem>
+    {#snippet header()}Second question{/snippet}
+    <div class="p-4">Answer two.</div>
+  </AccordionItem>
+</Accordion>`}>
+    <div class="max-w-2xl" data-testid="accordion-all-collapsed">
+      <Accordion defaultExpanded={null}>
+        <AccordionItem>
+          {#snippet header()}First question{/snippet}
+          <div class="p-4">All items start collapsed.</div>
+        </AccordionItem>
+        <AccordionItem>
+          {#snippet header()}Second question{/snippet}
+          <div class="p-4">Click any header to expand it.</div>
+        </AccordionItem>
+      </Accordion>
+    </div>
+  </ExampleTabs>
+
   <h2>Accordion Props</h2>
   <PropsTable component={AccordionModule} />
 

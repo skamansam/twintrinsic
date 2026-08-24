@@ -6,6 +6,7 @@ KPICard documentation page — standardized structure
 import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import KPICard from "$lib/components/Metrics/KPICard/KPICard.svelte"
 import * as KPICardModule from "$lib/components/Metrics/KPICard/KPICard.svelte"
 </script>
 
@@ -61,8 +62,8 @@ import * as KPICardModule from "$lib/components/Metrics/KPICard/KPICard.svelte"
   
   <ExampleTabs code={`<KPICard label="Q4 Sales Target" value={95000} target={100000}
   unit="$" color="success" />`}>
-    <div class="flex justify-center" data-testid="metrics-kpicard-basic">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-basic-kpicard">
+      <KPICard label="Q4 Sales Target" value={95000} target={100000} unit="$" color="success" />
     </div>
   </ExampleTabs>
 

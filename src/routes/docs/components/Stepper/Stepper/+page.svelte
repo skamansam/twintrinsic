@@ -230,6 +230,21 @@ import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
     </div>
   </ExampleTabs>
 
+  <h3>Custom Icons</h3>
+  <ExampleTabs code={`<Stepper>
+  <StepperStep title="Upload">Upload files here.</StepperStep>
+  <StepperStep title="Process">Processing data.</StepperStep>
+  <StepperStep title="Done">Complete!</StepperStep>
+</Stepper>`}>
+    <div data-testid="stepper-icons">
+      <Stepper>
+        <StepperStep title="Upload">Upload files here.</StepperStep>
+        <StepperStep title="Process">Processing data.</StepperStep>
+        <StepperStep title="Done">Complete!</StepperStep>
+      </Stepper>
+    </div>
+  </ExampleTabs>
+
   <h2>Stepper Props</h2>
   <PropsTable component={StepperModule} />
 

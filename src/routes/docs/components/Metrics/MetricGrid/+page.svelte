@@ -6,6 +6,7 @@ MetricGrid documentation page — standardized structure
 import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import MetricGrid from "$lib/components/Metrics/MetricGrid/MetricGrid.svelte"
 import * as MetricGridModule from "$lib/components/Metrics/MetricGrid/MetricGrid.svelte"
 </script>
 
@@ -63,8 +64,15 @@ import * as MetricGridModule from "$lib/components/Metrics/MetricGrid/MetricGrid
   { label: 'Total Revenue', value: '$45,231.89', color: 'primary' },
   { label: 'Total Users', value: '2,543', color: 'success' }
 ]} columns={4} gap="md" />`}>
-    <div class="flex justify-center" data-testid="metrics-metricgrid-basic">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-basic-metricgrid">
+      <MetricGrid
+        items={[
+          { label: "Total Revenue", value: "$45,231.89" },
+          { label: "Total Users", value: "2,543" },
+          { label: "Conversion Rate", value: "4.8%" },
+          { label: "Active Sessions", value: "542" }
+        ]}
+      />
     </div>
   </ExampleTabs>
 

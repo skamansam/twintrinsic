@@ -7,6 +7,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import BarChart from "$lib/components/Metrics/BarChart/BarChart.svelte"
 import * as BarChartModule from "$lib/components/Metrics/BarChart/BarChart.svelte"
 </script>
 
@@ -65,8 +66,13 @@ import * as BarChartModule from "$lib/components/Metrics/BarChart/BarChart.svelt
   labels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']}
   title="Monthly Revenue" width={600} height={300}
 />`}>
-    <div class="flex justify-center" data-testid="metrics-barchart-basic">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-single-series-barchart">
+      <BarChart
+        series={[{ label: "Revenue", data: [45, 52, 48, 61, 55, 67] }]}
+        labels={["Jan", "Feb", "Mar", "Apr", "May", "Jun"]}
+        title="Monthly Revenue"
+        showLegend={true}
+      />
     </div>
   </ExampleTabs>
 
@@ -80,8 +86,16 @@ import * as BarChartModule from "$lib/components/Metrics/BarChart/BarChart.svelt
   title="Quarterly Comparison" showGrid={true} showLegend={true}
   width={600} height={300}
 />`}>
-    <div class="flex justify-center" data-testid="metrics-barchart-multi">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-multiple-series-barchart">
+      <BarChart
+        series={[
+          { label: "Q1", data: [30, 40, 35, 50] },
+          { label: "Q2", data: [35, 45, 40, 55] }
+        ]}
+        labels={["Product A", "Product B", "Product C", "Product D"]}
+        title="Quarterly Comparison"
+        showLegend={true}
+      />
     </div>
   </ExampleTabs>
 

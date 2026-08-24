@@ -101,6 +101,28 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
+  <h3>Disabled</h3>
+  <ExampleTabs code={`<InputSwitch label="Disabled switch" disabled />`}>
+    <div class="max-w-md" data-testid="input-switch-disabled">
+      <InputSwitch label="Disabled switch" disabled />
+    </div>
+  </ExampleTabs>
+
+  <h3>No Visible Label</h3>
+  <ExampleTabs code={`<InputSwitch ariaLabel="Toggle airplane mode" />`}>
+    <div class="max-w-md" data-testid="input-switch-nolabel">
+      <InputSwitch ariaLabel="Toggle airplane mode" />
+    </div>
+  </ExampleTabs>
+
+  <h3>Required</h3>
+  <ExampleTabs code={`<InputSwitch label="I agree to the terms" required />`}>
+    <div class="max-w-md" data-testid="input-switch-required">
+      <InputSwitch label="I agree to the terms" required />
+    </div>
+  </ExampleTabs>
+
+
 <h2>Props</h2>
 <PropsTable component={InputSwitchModule} />
 

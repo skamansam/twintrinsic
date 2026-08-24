@@ -93,6 +93,21 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
+  <h3>Without Icon</h3>
+  <ExampleTabs code={`<InvalidState message="This field is required" showIcon={false} />`}>
+    <div class="max-w-md" data-testid="invalidstate-no-icon">
+      <InvalidState message="This field is required" showIcon={false} />
+    </div>
+  </ExampleTabs>
+
+  <h3>Custom Children</h3>
+  <ExampleTabs code={`<InvalidState><strong>required</strong> — please fill in this field</InvalidState>`}>
+    <div class="max-w-md" data-testid="invalidstate-children">
+      <InvalidState><strong>required</strong> — please fill in this field</InvalidState>
+    </div>
+  </ExampleTabs>
+
+
 <h2>Props</h2>
 <PropsTable component={InvalidStateModule} />
 

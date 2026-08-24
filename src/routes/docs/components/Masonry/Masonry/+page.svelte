@@ -129,6 +129,21 @@ import * as MasonryModule from "$lib/components/Masonry/Masonry.svelte"
     </div>
   </ExampleTabs>
 
+  <h3>Fixed Width</h3>
+  <ExampleTabs code={`<Masonry gap={16}>
+  <div class="p-4 bg-surface rounded">Item 1</div>
+  <div class="p-4 bg-surface rounded">Item 2</div>
+  <div class="p-4 bg-surface rounded">Item 3</div>
+</Masonry>`}>
+    <div data-testid="masonry-fixed-width">
+      <Masonry gap={16}>
+        <div class="p-4 bg-surface rounded">Item 1</div>
+        <div class="p-4 bg-surface rounded">Item 2</div>
+        <div class="p-4 bg-surface rounded">Item 3</div>
+      </Masonry>
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={MasonryModule} />
 

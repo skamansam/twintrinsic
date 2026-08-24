@@ -196,6 +196,38 @@ import * as TableModule from "$lib/components/Table/Table.svelte"
     </div>
   </ExampleTabs>
 
+  <h3>Bordered</h3>
+  <ExampleTabs code={`<Table bordered>
+  <thead><tr><th>Name</th><th>Role</th></tr></thead>
+  <tbody><tr><td>Alice</td><td>Engineer</td></tr></tbody>
+</Table>`}>
+    <div class="overflow-x-auto" data-testid="table-bordered">
+      <Table bordered>
+        <thead><tr><th>Name</th><th>Role</th></tr></thead>
+        <tbody><tr><td>Alice</td><td>Engineer</td></tr></tbody>
+      </Table>
+    </div>
+  </ExampleTabs>
+
+  <h3>Hoverable</h3>
+  <ExampleTabs code={`<Table hoverable>
+  <thead><tr><th>Task</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>Migrate billing API</td><td>Done</td></tr>
+    <tr><td>Write integration tests</td><td>In progress</td></tr>
+  </tbody>
+</Table>`}>
+    <div class="overflow-x-auto" data-testid="table-hoverable">
+      <Table hoverable>
+        <thead><tr><th>Task</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Migrate billing API</td><td>Done</td></tr>
+          <tr><td>Write integration tests</td><td>In progress</td></tr>
+        </tbody>
+      </Table>
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={TableModule} />
 

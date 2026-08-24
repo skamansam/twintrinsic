@@ -48,6 +48,55 @@ import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem
 
   <h2>Examples</h2>
 
+  <h3>Basic Items</h3>
+  <ExampleTabs code={`<Breadcrumb>
+  <BreadcrumbItem href="/">Home</BreadcrumbItem>
+  <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
+  <BreadcrumbItem>Components</BreadcrumbItem>
+</Breadcrumb>`}>
+    <div class="p-4 bg-surface rounded-md" data-testid="breadcrumb-item-basic">
+      <Breadcrumb>
+        <BreadcrumbItem href="/">Home</BreadcrumbItem>
+        <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
+        <BreadcrumbItem>Components</BreadcrumbItem>
+      </Breadcrumb>
+    </div>
+  </ExampleTabs>
+
+  <h3>With Icons</h3>
+  <ExampleTabs code={`<Breadcrumb separator="›">
+  <BreadcrumbItem href="/" icon="home">Home</BreadcrumbItem>
+  <BreadcrumbItem href="/docs" icon="book">Docs</BreadcrumbItem>
+  <BreadcrumbItem icon="component">Components</BreadcrumbItem>
+</Breadcrumb>`}>
+    <div class="p-4 bg-surface rounded-md" data-testid="breadcrumb-item-icons">
+      <Breadcrumb separator="›">
+        <BreadcrumbItem href="/" icon="home">Home</BreadcrumbItem>
+        <BreadcrumbItem href="/docs" icon="book">Docs</BreadcrumbItem>
+        <BreadcrumbItem icon="component">Components</BreadcrumbItem>
+      </Breadcrumb>
+    </div>
+  </ExampleTabs>
+
+  <h3>Collapsed</h3>
+  <ExampleTabs code={`<Breadcrumb collapsible maxVisibleItems={1}>
+  <BreadcrumbItem href="/">Home</BreadcrumbItem>
+  <BreadcrumbItem>Section A</BreadcrumbItem>
+  <BreadcrumbItem>Section B</BreadcrumbItem>
+  <BreadcrumbItem>Section C</BreadcrumbItem>
+  <BreadcrumbItem>Current Page</BreadcrumbItem>
+</Breadcrumb>`}>
+    <div class="p-4 bg-surface rounded-md" data-testid="breadcrumb-item-collapsed">
+      <Breadcrumb collapsible maxVisibleItems={1}>
+        <BreadcrumbItem href="/">Home</BreadcrumbItem>
+        <BreadcrumbItem>Section A</BreadcrumbItem>
+        <BreadcrumbItem>Section B</BreadcrumbItem>
+        <BreadcrumbItem>Section C</BreadcrumbItem>
+        <BreadcrumbItem>Current Page</BreadcrumbItem>
+      </Breadcrumb>
+    </div>
+  </ExampleTabs>
+
   <h3>Links and Current</h3>
   <ExampleTabs code={`<Breadcrumb separator="›">
   <BreadcrumbItem href="/">Home</BreadcrumbItem>

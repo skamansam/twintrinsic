@@ -126,6 +126,20 @@ let temperature = $state(22.5)
 <h2>Slots</h2>
 <p>The NumberInput component does not expose named slots. Use props for customization.</p>
 
+  <h3>No Buttons</h3>
+  <ExampleTabs code={`<NumberInput showButtons={false} placeholder="Enter a number" />`}>
+    <div data-testid="numberinput-no-buttons">
+      <NumberInput showButtons={false} placeholder="Enter a number" />
+    </div>
+  </ExampleTabs>
+
+  <h3>Readonly</h3>
+  <ExampleTabs code={`<NumberInput readonly ariaLabel="readonly"  />`}>
+    <div data-testid="numberinput-readonly">
+      <NumberInput readonly ariaLabel="readonly"  />
+    </div>
+  </ExampleTabs>
+
 <h2>Props</h2>
 <PropsTable component={NumberInputModule} />
 

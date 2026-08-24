@@ -111,6 +111,40 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
     </div>
   </ExampleTabs>
 
+  <h3>Fade Transition</h3>
+  <ExampleTabs code={`<Carousel>
+  {#snippet items()}
+    <CarouselItem><div class="h-48 bg-primary-100 flex items-center justify-center">Slide 1</div></CarouselItem>
+    <CarouselItem><div class="h-48 bg-secondary-100 flex items-center justify-center">Slide 2</div></CarouselItem>
+  {/snippet}
+</Carousel>`}>
+    <div data-testid="carousel-item-fade">
+      <Carousel>
+        {#snippet items()}
+          <CarouselItem><div class="h-48 bg-primary-100 flex items-center justify-center">Slide 1</div></CarouselItem>
+          <CarouselItem><div class="h-48 bg-secondary-100 flex items-center justify-center">Slide 2</div></CarouselItem>
+        {/snippet}
+      </Carousel>
+    </div>
+  </ExampleTabs>
+
+  <h3>No Controls</h3>
+  <ExampleTabs code={`<Carousel showArrows={false} showIndicators={false}>
+  {#snippet items()}
+    <CarouselItem><div class="h-48 bg-primary-100 flex items-center justify-center">Slide 1</div></CarouselItem>
+    <CarouselItem><div class="h-48 bg-secondary-100 flex items-center justify-center">Slide 2</div></CarouselItem>
+  {/snippet}
+</Carousel>`}>
+    <div data-testid="carousel-item-no-controls">
+      <Carousel showArrows={false} showIndicators={false}>
+        {#snippet items()}
+          <CarouselItem><div class="h-48 bg-primary-100 flex items-center justify-center">Slide 1</div></CarouselItem>
+          <CarouselItem><div class="h-48 bg-secondary-100 flex items-center justify-center">Slide 2</div></CarouselItem>
+        {/snippet}
+      </Carousel>
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={CarouselItemModule} />
 

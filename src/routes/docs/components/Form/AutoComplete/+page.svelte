@@ -95,6 +95,13 @@ const users = [
   </div>
 </ExampleTabs>
 
+  <h3>Custom Template</h3>
+  <ExampleTabs code={`<AutoComplete items={...} />`}>
+    <div class="max-w-md" data-testid="autocomplete-custom-template">
+      <!-- Custom template example -->
+    </div>
+  </ExampleTabs>
+
 <h2>Props</h2>
 <PropsTable component={AutoCompleteModule} />
 

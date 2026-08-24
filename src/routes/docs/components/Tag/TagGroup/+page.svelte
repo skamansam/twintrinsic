@@ -118,6 +118,36 @@ const techTags = ["JavaScript", "TypeScript", "Svelte", "Tailwind CSS"]
   </div>
 </ExampleTabs>
 
+  <h3>Group Role</h3>
+  <ExampleTabs code={`<TagGroup>
+  <Tag>Design</Tag>
+  <Tag>Development</Tag>
+  <Tag>Marketing</Tag>
+</TagGroup>`}>
+    <div class="not-prose mb-8" data-testid="tag-group">
+      <TagGroup>
+        <Tag>Design</Tag>
+        <Tag>Development</Tag>
+        <Tag>Marketing</Tag>
+      </TagGroup>
+    </div>
+  </ExampleTabs>
+
+  <h3>Dynamic Items</h3>
+  <ExampleTabs code={`<TagGroup>
+  {#each ['React', 'Vue', 'Svelte'] as framework}
+    <Tag>{framework}</Tag>
+  {/each}
+</TagGroup>`}>
+    <div class="not-prose mb-8" data-testid="tag-group-dynamic">
+      <TagGroup>
+        <Tag>React</Tag>
+        <Tag>Vue</Tag>
+        <Tag>Svelte</Tag>
+      </TagGroup>
+    </div>
+  </ExampleTabs>
+
 <h2>Props</h2>
 <PropsTable component={TagGroupModule} />
 

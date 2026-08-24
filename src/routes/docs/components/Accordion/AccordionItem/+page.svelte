@@ -122,6 +122,48 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
     </div>
   </ExampleTabs>
 
+  <h3>Initially Expanded</h3>
+  <ExampleTabs code={`<Accordion defaultExpanded={0}>
+  <AccordionItem>
+    {#snippet header()}First question{/snippet}
+    <div class="p-4">Here is the answer to a frequently asked question.</div>
+  </AccordionItem>
+  <AccordionItem>
+    {#snippet header()}Second question{/snippet}
+    <div class="p-4">This item starts collapsed.</div>
+  </AccordionItem>
+</Accordion>`}>
+    <div class="max-w-2xl" data-testid="accordion-item-expanded">
+      <Accordion defaultExpanded={0}>
+        <AccordionItem>
+          {#snippet header()}First question{/snippet}
+          <div class="p-4">Here is the answer to a frequently asked question.</div>
+        </AccordionItem>
+        <AccordionItem>
+          {#snippet header()}Second question{/snippet}
+          <div class="p-4">This item starts collapsed.</div>
+        </AccordionItem>
+      </Accordion>
+    </div>
+  </ExampleTabs>
+
+  <h3>No Icon</h3>
+  <ExampleTabs code={`<Accordion>
+  <AccordionItem showIcon={false}>
+    {#snippet header()}Plain header{/snippet}
+    <div class="p-4">This item has no chevron icon.</div>
+  </AccordionItem>
+</Accordion>`}>
+    <div class="max-w-2xl" data-testid="accordion-item-noicon">
+      <Accordion>
+        <AccordionItem showIcon={false}>
+          {#snippet header()}Plain header{/snippet}
+          <div class="p-4">This item has no chevron icon.</div>
+        </AccordionItem>
+      </Accordion>
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={AccordionItemModule} />
 

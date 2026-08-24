@@ -75,6 +75,13 @@ import * as ButtonModule from "$lib/components/Button/Button.svelte"
 
   <h2>Examples</h2>
 
+  <h3>Basic</h3>
+  <ExampleTabs code={`<Button>Default Button</Button>`}>
+    <div class="flex flex-wrap items-center gap-4" data-testid="button-basic">
+      <Button>Default Button</Button>
+    </div>
+  </ExampleTabs>
+
   <h3>Variants</h3>
   <ExampleTabs code={`<Button variant="default">Default</Button>
 <Button variant="primary">Primary</Button>
@@ -124,6 +131,15 @@ import * as ButtonModule from "$lib/components/Button/Button.svelte"
     <div class="flex flex-wrap items-center gap-4" data-testid="button-link">
       <Button href="/docs">Link Button</Button>
       <Button href="https://example.com" target="_blank" variant="primary">External Link</Button>
+    </div>
+  </ExampleTabs>
+
+  <h3>With Icons</h3>
+  <ExampleTabs code={`<Button icon="plus">Add Item</Button>
+<Button icon="trash" iconPosition="right">Delete</Button>`}>
+    <div class="flex flex-wrap items-center gap-4" data-testid="button-with-icons">
+      <Button icon="plus">Add Item</Button>
+      <Button icon="trash" iconPosition="right">Delete</Button>
     </div>
   </ExampleTabs>
 

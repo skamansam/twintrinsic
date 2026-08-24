@@ -7,6 +7,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import PieChart from "$lib/components/Metrics/PieChart/PieChart.svelte"
 import * as PieChartModule from "$lib/components/Metrics/PieChart/PieChart.svelte"
 </script>
 
@@ -61,16 +62,26 @@ import * as PieChartModule from "$lib/components/Metrics/PieChart/PieChart.svelt
   <h2>Examples</h2>
   
   <ExampleTabs code={`<PieChart data={[35, 25, 20, 20]} labels={['Chrome', 'Firefox', 'Safari', 'Edge']} size={300} />`}>
-    <div class="flex justify-center" data-testid="metrics-piechart-basic">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-basic-piechart">
+      <PieChart
+        data={[35, 25, 20, 15, 5]}
+        labels={["Chrome", "Firefox", "Safari", "Edge", "Other"]}
+        size={300}
+      />
     </div>
   </ExampleTabs>
 
   <h3>With Title and Legend</h3>
   <ExampleTabs code={`<PieChart data={[35, 25, 20, 20]} labels={['Chrome', 'Firefox', 'Safari', 'Edge']}
   title="Browser Market Share" showLegend={true} size={300} />`}>
-    <div class="flex justify-center" data-testid="metrics-piechart-multi">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-with-title-and-legend">
+      <PieChart
+        data={[35, 25, 20, 15, 5]}
+        labels={["Chrome", "Firefox", "Safari", "Edge", "Other"]}
+        title="Browser Market Share"
+        showLegend={true}
+        size={300}
+      />
     </div>
   </ExampleTabs>
 

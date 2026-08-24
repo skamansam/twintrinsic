@@ -179,6 +179,13 @@ import * as IconModule from "$lib/components/Icon/Icon.svelte"
   preloadIcons([...DEFAULT_PRELOAD_ICONS, 'shopping-cart', 'heart'])
 \u003C/script>`}</CodeBlock>
 
+  <h3>Iconset Switcher</h3>
+  <ExampleTabs code={`<Icon name="check" />`}>
+    <div data-testid="icon-iconset-changer">
+      <Icon name="check" />
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={IconModule} />
 

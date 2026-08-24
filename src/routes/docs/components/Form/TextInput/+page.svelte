@@ -96,6 +96,13 @@ import * as TextInputModule from "$lib/components/Form/TextInput.svelte"
     <div class="max-w-md" data-testid="textinput-disabled"><TextInput name="disabled" value="Cannot edit" disabled /></div>
   </ExampleTabs>
 
+  <h3>With Value</h3>
+  <ExampleTabs code={`<TextInput value="hello@world.com" />`}>
+    <div data-testid="textinput-value">
+      <TextInput value="hello@world.com" />
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={TextInputModule} />
 

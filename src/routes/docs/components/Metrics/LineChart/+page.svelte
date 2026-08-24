@@ -7,6 +7,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import LineChart from "$lib/components/Metrics/LineChart/LineChart.svelte"
 import * as LineChartModule from "$lib/components/Metrics/LineChart/LineChart.svelte"
 </script>
 
@@ -66,7 +67,12 @@ import * as LineChartModule from "$lib/components/Metrics/LineChart/LineChart.sv
   title="Weekly Sales" width={600} height={300}
 />`}>
     <div class="flex justify-center" data-testid="metrics-linechart-basic">
-      <!-- Live demo -->
+      <LineChart
+        series={[{ label: "Product A", data: [12, 19, 15, 22, 18, 25] }, { label: "Product B", data: [8, 12, 10, 16, 14, 20] }]}
+        labels={["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]}
+        title="Weekly Sales"
+        showLegend={true}
+      />
     </div>
   </ExampleTabs>
 
@@ -81,7 +87,12 @@ import * as LineChartModule from "$lib/components/Metrics/LineChart/LineChart.sv
   width={600} height={300}
 />`}>
     <div class="flex justify-center" data-testid="metrics-linechart-multi">
-      <!-- Live demo -->
+      <LineChart
+        series={[{ label: "Product A", data: [12, 19, 15, 22, 18, 25] }]}
+        labels={["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]}
+        title="Weekly Sales"
+        showLegend={true}
+      />
     </div>
   </ExampleTabs>
 

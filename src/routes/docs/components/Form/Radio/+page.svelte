@@ -183,6 +183,13 @@ const horizontalCode = `<script>
 </p>
 
 <!-- ─── Props ─────────────────────────────────────────── -->
+  <h3>Basic with Label</h3>
+  <ExampleTabs code={`<Radio name="theme" value="light" label="Light theme" checked />`}>
+    <div data-testid="radio-basic">
+      <Radio name="theme" value="light" label="Light theme" checked />
+    </div>
+  </ExampleTabs>
+
 <h2>Props</h2>
 <PropsTable component={RadioModule} />
 

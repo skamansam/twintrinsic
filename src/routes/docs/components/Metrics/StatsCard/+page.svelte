@@ -7,6 +7,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import StatsCard from "$lib/components/Metrics/StatsCard/StatsCard.svelte"
 import * as StatsCardModule from "$lib/components/Metrics/StatsCard/StatsCard.svelte"
 </script>
 
@@ -61,16 +62,16 @@ import * as StatsCardModule from "$lib/components/Metrics/StatsCard/StatsCard.sv
   <h2>Examples</h2>
   
   <ExampleTabs code={`<StatsCard label="Total Revenue" value="$124,532.89" color="primary" />`}>
-    <div class="flex justify-center" data-testid="metrics-statscard-basic">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-basic-statscard">
+      <StatsCard label="Total Revenue" value="$124,532.89" color="success" />
     </div>
   </ExampleTabs>
 
   <h3>With Trend Indicator</h3>
   <ExampleTabs code={`<StatsCard label="Total Users" value="2,543"
   trend="up" trendValue="12.5%" color="success" />`}>
-    <div class="flex justify-center" data-testid="metrics-statscard-multi">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-with-trend-indicator">
+      <StatsCard label="Total Users" value="2,543" trend="up" trendValue="12.5%" color="primary" />
     </div>
   </ExampleTabs>
 

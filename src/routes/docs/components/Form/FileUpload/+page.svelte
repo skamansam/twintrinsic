@@ -86,6 +86,13 @@ import * as FileUploadModule from "$lib/components/Form/FileUpload.svelte"
     </div>
   </ExampleTabs>
 
+  <h3>Single File</h3>
+  <ExampleTabs code={`<FileUpload multiple={false} />`}>
+    <div class="max-w-md" data-testid="fileupload-single">
+      <FileUpload multiple={false} />
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={FileUploadModule} />
 

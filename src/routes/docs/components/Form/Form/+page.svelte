@@ -110,6 +110,32 @@ import * as FormFieldModule from "$lib/components/Form/FormField.svelte"
     </div>
   </ExampleTabs>
 
+  <h3>Form States</h3>
+  <ExampleTabs code={`<Form >
+  <FormField label="Username"><Input name="username" /></FormField>
+  <Button type="submit">Submit</Button>
+</Form>`}>
+    <div class="max-w-md" data-testid="form-states">
+      <Form >
+        <FormField label="Username"><Input name="username" /></FormField>
+        <Button type="submit">Submit</Button>
+      </Form>
+    </div>
+  </ExampleTabs>
+
+  <h3>Validation</h3>
+  <ExampleTabs code={`<Form >
+  <FormField label="Username" required><Input name="username" required /></FormField>
+  <Button type="submit">Submit</Button>
+</Form>`}>
+    <div class="max-w-md" data-testid="form-validation">
+      <Form >
+        <FormField label="Username" required><Input name="username" required /></FormField>
+        <Button type="submit">Submit</Button>
+      </Form>
+    </div>
+  </ExampleTabs>
+
   <h2>Form Props</h2>
   <PropsTable component={FormModule} />
 

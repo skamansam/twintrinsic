@@ -7,6 +7,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import MetricTrend from "$lib/components/Metrics/MetricTrend/MetricTrend.svelte"
 import * as MetricTrendModule from "$lib/components/Metrics/MetricTrend/MetricTrend.svelte"
 </script>
 
@@ -62,8 +63,12 @@ import * as MetricTrendModule from "$lib/components/Metrics/MetricTrend/MetricTr
   
   <ExampleTabs code={`<MetricTrend label="Sales Trend"
   data={[10, 15, 12, 18, 22, 20, 25]} color="#10b981" />`}>
-    <div class="flex justify-center" data-testid="metrics-metrictrend-basic">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-basic-metrictrend">
+      <MetricTrend
+        data={[10, 15, 13, 18, 22, 25, 20, 28]}
+        label="Sales Trend"
+        color="#3b82f6"
+      />
     </div>
   </ExampleTabs>
 

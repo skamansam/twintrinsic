@@ -110,6 +110,21 @@ import * as ChipGroupModule from "$lib/components/Chip/ChipGroup.svelte"
   </div>
 </ExampleTabs>
 
+  <h3>Dynamic Selection</h3>
+  <ExampleTabs code={`<ChipGroup>
+  <Chip>React</Chip>
+  <Chip>Vue</Chip>
+  <Chip>Svelte</Chip>
+</ChipGroup>`}>
+    <div class="flex flex-wrap gap-2" data-testid="chip-group-dynamic-selected">
+      <ChipGroup>
+        <Chip>React</Chip>
+        <Chip>Vue</Chip>
+        <Chip>Svelte</Chip>
+      </ChipGroup>
+    </div>
+  </ExampleTabs>
+
 <h2>Props</h2>
 <PropsTable component={ChipGroupModule} />
 

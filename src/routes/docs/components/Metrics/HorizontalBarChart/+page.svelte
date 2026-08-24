@@ -7,6 +7,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import HorizontalBarChart from "$lib/components/Metrics/HorizontalBarChart/HorizontalBarChart.svelte"
 import * as HorizontalBarChartModule from "$lib/components/Metrics/HorizontalBarChart/HorizontalBarChart.svelte"
 </script>
 
@@ -65,8 +66,13 @@ import * as HorizontalBarChartModule from "$lib/components/Metrics/HorizontalBar
   labels={['Chrome', 'Firefox', 'Safari', 'Edge', 'Other']}
   title="Browser Usage" width={600} height={250}
 />`}>
-    <div class="flex justify-center" data-testid="metrics-horizontalbarchart-basic">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-basic-horizontalbarchart">
+      <HorizontalBarChart
+        data={[65, 40, 25, 15, 10]}
+        labels={["Chrome", "Firefox", "Safari", "Edge", "Other"]}
+        title="Browser Usage"
+        showGrid={true}
+      />
     </div>
   </ExampleTabs>
 

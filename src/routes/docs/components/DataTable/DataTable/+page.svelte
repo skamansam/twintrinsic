@@ -147,6 +147,13 @@ const userColumns = [
   </div>
 </ExampleTabs>
 
+  <h3>Custom Templates</h3>
+  <ExampleTabs code={`<DataTable columns={[...]} data={[...]} />`}>
+    <div class="overflow-x-auto" data-testid="datatable-templates">
+      <!-- DataTable template example -->
+    </div>
+  </ExampleTabs>
+
 <h2>Props</h2>
 <PropsTable component={DataTableModule} />
 

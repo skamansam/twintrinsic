@@ -108,6 +108,21 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
+  <h3>Initial Value</h3>
+  <ExampleTabs code={`<RadioGroup name="size" value="medium">
+  <Radio name="size" value="small" label="Small" />
+  <Radio name="size" value="medium" label="Medium" />
+  <Radio name="size" value="large" label="Large" />
+</RadioGroup>`}>
+    <div data-testid="radiogroup-initial">
+      <RadioGroup name="size" value="medium">
+        <Radio name="size" value="small" label="Small" />
+        <Radio name="size" value="medium" label="Medium" />
+        <Radio name="size" value="large" label="Large" />
+      </RadioGroup>
+    </div>
+  </ExampleTabs>
+
 <h2>Props</h2>
 <PropsTable component={RadioGroupModule} />
 

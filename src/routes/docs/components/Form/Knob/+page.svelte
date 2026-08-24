@@ -96,6 +96,17 @@ const sizesCode = `<Knob size="sm" value={25} />
   </div>
 </ExampleTabs>
 
+  <h3>With FormField</h3>
+  <ExampleTabs code={`<FormField label="Volume">
+  <Knob min={0} max={100} value={50} />
+</FormField>`}>
+    <div data-testid="knob-formfield">
+      <FormField label="Volume">
+        <Knob min={0} max={100} value={50} />
+      </FormField>
+    </div>
+  </ExampleTabs>
+
 <h2>Props</h2>
 <PropsTable component={KnobModule} />
 

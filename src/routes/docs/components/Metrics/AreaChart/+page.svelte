@@ -6,6 +6,7 @@ AreaChart documentation page — standardized structure
 import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import AreaChart from "$lib/components/Metrics/AreaChart/AreaChart.svelte"
 import * as AreaChartModule from "$lib/components/Metrics/AreaChart/AreaChart.svelte"
 </script>
 
@@ -65,8 +66,13 @@ import * as AreaChartModule from "$lib/components/Metrics/AreaChart/AreaChart.sv
   title="Website Traffic"
   width={600} height={300}
 />`}>
-    <div class="flex justify-center" data-testid="metrics-areachart-basic">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-single-series-areachart">
+      <AreaChart
+        series={[{ label: "Website Traffic", data: [1200, 1900, 1500, 2200, 1800, 2500] }]}
+        labels={["Jan", "Feb", "Mar", "Apr", "May", "Jun"]}
+        title="Website Traffic"
+        showLegend={true}
+      />
     </div>
   </ExampleTabs>
 
@@ -80,8 +86,17 @@ import * as AreaChartModule from "$lib/components/Metrics/AreaChart/AreaChart.sv
   title="Traffic by Device" stacked={true} showGrid={true} showLegend={true}
   width={600} height={300}
 />`}>
-    <div class="flex justify-center" data-testid="metrics-areachart-multi">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-stacked-areachart">
+      <AreaChart
+        series={[
+          { label: "Desktop", data: [800, 1200, 900, 1400, 1100, 1600] },
+          { label: "Mobile", data: [400, 700, 600, 800, 700, 900] }
+        ]}
+        labels={["Jan", "Feb", "Mar", "Apr", "May", "Jun"]}
+        title="Traffic by Device (Stacked)"
+        stacked={true}
+        showLegend={true}
+      />
     </div>
   </ExampleTabs>
 

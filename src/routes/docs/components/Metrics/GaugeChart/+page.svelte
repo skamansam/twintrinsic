@@ -6,6 +6,7 @@ GaugeChart documentation page — standardized structure
 import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import GaugeChart from "$lib/components/Metrics/GaugeChart/GaugeChart.svelte"
 import * as GaugeChartModule from "$lib/components/Metrics/GaugeChart/GaugeChart.svelte"
 </script>
 
@@ -61,22 +62,38 @@ import * as GaugeChartModule from "$lib/components/Metrics/GaugeChart/GaugeChart
   
   <ExampleTabs code={`<GaugeChart value={75} min={0} max={100}
   label="Performance Score" unit="%" color="primary" />`}>
-    <div class="flex justify-center" data-testid="metrics-gaugechart-basic">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-basic-gaugechart">
+      <GaugeChart value={75} min={0} max={100} label="Performance Score" unit="%" color="primary" />
+    </div>
+  </ExampleTabs>
+
+  <h3>With Tic Marks</h3>
+  <ExampleTabs code={`<GaugeChart value={82} min={0} max={100}
+  label="Customer Satisfaction" unit="%" color="primary" showTicks={true} size={300} />`}>
+    <div class="flex justify-center" data-testid="metrics-with-tic-marks">
+      <GaugeChart value={82} min={0} max={100} label="Customer Satisfaction" unit="%" color="primary" size={300} />
     </div>
   </ExampleTabs>
 
   <h3>With Color Zones</h3>
   <ExampleTabs code={`<GaugeChart value={71} min={0} max={100}
-  label="Customer Satisfaction" unit="%" color="primary" size={300}
+  label="Walmart's Customer Satisfaction Score" unit="%" color="primary" size={300}
   zones={[
     { start: 0, end: 25, color: '#ef4444', label: 'Poor' },
     { start: 25, end: 50, color: '#f97316', label: 'Fair' },
     { start: 50, end: 75, color: '#eab308', label: 'Good' },
     { start: 75, end: 100, color: '#10b981', label: 'Excellent' }
   ]} />`}>
-    <div class="flex justify-center" data-testid="metrics-gaugechart-multi">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-with-color-zones">
+      <GaugeChart value={71} min={0} max={100} label="Walmart's Customer Satisfaction Score" unit="%" color="primary" size={300} />
+    </div>
+  </ExampleTabs>
+
+  <h3>Full Circle</h3>
+  <ExampleTabs code={`<GaugeChart value={92} min={0} max={100}
+  label="System Health" unit="%" color="success" fullCircle={true} size={300} />`}>
+    <div class="flex justify-center" data-testid="metrics-full-circle-gauge">
+      <GaugeChart value={92} min={0} max={100} label="System Health" unit="%" color="success" size={300} />
     </div>
   </ExampleTabs>
 

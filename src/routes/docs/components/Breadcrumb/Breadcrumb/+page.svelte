@@ -117,6 +117,21 @@ import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem
     </div>
   </ExampleTabs>
 
+  <h3>With Icons</h3>
+  <ExampleTabs code={`<Breadcrumb>
+  <BreadcrumbItem href="/" icon="home">Home</BreadcrumbItem>
+  <BreadcrumbItem href="/docs" icon="book">Documentation</BreadcrumbItem>
+  <BreadcrumbItem icon="component">Components</BreadcrumbItem>
+</Breadcrumb>`}>
+    <div class="p-4 bg-surface rounded-md" data-testid="breadcrumb-with-icons">
+      <Breadcrumb>
+        <BreadcrumbItem href="/" icon="home">Home</BreadcrumbItem>
+        <BreadcrumbItem href="/docs" icon="book">Documentation</BreadcrumbItem>
+        <BreadcrumbItem icon="component">Components</BreadcrumbItem>
+      </Breadcrumb>
+    </div>
+  </ExampleTabs>
+
   <h2>Breadcrumb Props</h2>
   <PropsTable component={BreadcrumbModule} />
 

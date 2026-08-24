@@ -121,6 +121,19 @@ import * as ButtonGroupModule from "$lib/components/Button/ButtonGroup.svelte"
     </div>
   </ExampleTabs>
 
+  <h3>Full Width</h3>
+  <ExampleTabs code={`<ButtonGroup ariaLabel="Sign in options" fullWidth>
+  <Button variant="primary">Sign in</Button>
+  <Button>Create account</Button>
+</ButtonGroup>`}>
+    <div data-testid="button-group-fullwidth">
+      <ButtonGroup ariaLabel="Sign in options" fullWidth>
+        <Button variant="primary">Sign in</Button>
+        <Button>Create account</Button>
+      </ButtonGroup>
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={ButtonGroupModule} />
 

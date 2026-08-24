@@ -99,6 +99,22 @@ const ratingLabels: Record<number, string> = {
   <div class="max-w-md" data-testid="rating-value-display"><Rating value={4} showValue={true} /></div>
 </ExampleTabs>
 
+  <h3>Custom Max</h3>
+  <ExampleTabs code={`<Rating value={3} max={10} />`}>
+    <div data-testid="rating-custom-max">
+      <Rating value={3} max={10} />
+    </div>
+  </ExampleTabs>
+
+  <h3>States</h3>
+  <ExampleTabs code={`<Rating value={4} readonly />
+<Rating value={2} disabled />`}>
+    <div class="flex gap-8" data-testid="rating-states">
+      <Rating value={4} readonly />
+      <Rating value={2} disabled />
+    </div>
+  </ExampleTabs>
+
 <h2>Props</h2>
 <PropsTable component={RatingModule} />
 

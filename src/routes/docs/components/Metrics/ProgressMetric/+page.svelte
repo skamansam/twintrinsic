@@ -6,6 +6,7 @@ ProgressMetric documentation page — standardized structure
 import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import ProgressMetric from "$lib/components/Metrics/ProgressMetric/ProgressMetric.svelte"
 import * as ProgressMetricModule from "$lib/components/Metrics/ProgressMetric/ProgressMetric.svelte"
 </script>
 
@@ -61,8 +62,8 @@ import * as ProgressMetricModule from "$lib/components/Metrics/ProgressMetric/Pr
   
   <ExampleTabs code={`<ProgressMetric label="CPU Usage" value={65} max={100}
   color="primary" showPercentage={true} />`}>
-    <div class="flex justify-center" data-testid="metrics-progressmetric-basic">
-      <!-- Live demo -->
+    <div class="flex justify-center" data-testid="metrics-basic-progressmetric">
+      <ProgressMetric label="CPU Usage" value={72} max={100} color="primary" showPercentage />
     </div>
   </ExampleTabs>
 

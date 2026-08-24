@@ -112,6 +112,13 @@ let selectedFruits = $state(["Apple", "Grape"])
   </div>
 </ExampleTabs>
 
+  <h3>With Filter</h3>
+  <ExampleTabs code={`<Listbox options={[...]} />`}>
+    <div class="max-w-md" data-testid="listbox-filtering">
+      <Listbox options={[{value: "a", label: "Alice"}, {value: "b", label: "Bob"}, {value: "c", label: "Charlie"}]} />
+    </div>
+  </ExampleTabs>
+
 <h2>Props</h2>
 <PropsTable component={ListboxModule} />
 

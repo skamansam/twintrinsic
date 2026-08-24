@@ -152,6 +152,13 @@ const countries = [
     </tbody>
   </table>
 
+  <h3>Initial Value</h3>
+  <ExampleTabs code={`<Combobox options={[...]} value="apple" />`}>
+    <div class="max-w-md" data-testid="combobox-initial">
+      <Combobox options={[{value: "apple", label: "Apple"}, {value: "banana", label: "Banana"}, {value: "cherry", label: "Cherry"}]} value="apple" />
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={ComboboxModule} />
 

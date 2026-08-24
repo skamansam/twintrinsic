@@ -90,9 +90,34 @@ import Container from "$lib/components/Container/Container.svelte"
     <FloatLabel label="Password"><TextInput type="password" name="password" /></FloatLabel>
     <FloatLabel label="Message"><Textarea name="message" rows={3} /></FloatLabel>
   </div>
-</ExampleTabs>
+</ExampleTabs>  <h3>Required</h3>
+  <ExampleTabs code={`<FloatLabel label="Email" required>
+  <TextInput type="email" name="email" required />
+</FloatLabel>`}>
+    <div class="max-w-md" data-testid="floatlabel-required">
+      <FloatLabel label="Email" required><TextInput type="email" name="email" required /></FloatLabel>
+    </div>
+  </ExampleTabs>
 
-<h3>With Error &amp; Help Text</h3>
+  <h3>Help Text</h3>
+  <ExampleTabs code={`<FloatLabel label="Password" helpText="Password must be at least 8 characters long">
+  <TextInput type="password" name="password" />
+</FloatLabel>`}>
+    <div class="max-w-md" data-testid="floatlabel-help">
+      <FloatLabel label="Password" helpText="Password must be at least 8 characters long"><TextInput type="password" name="password" /></FloatLabel>
+    </div>
+  </ExampleTabs>
+
+  <h3>Initial Value</h3>
+  <ExampleTabs code={`<FloatLabel label="Username">
+  <TextInput name="username" value="johndoe" />
+</FloatLabel>`}>
+    <div class="max-w-md" data-testid="floatlabel-initial-value">
+      <FloatLabel label="Username"><TextInput name="username" value="johndoe" /></FloatLabel>
+    </div>
+  </ExampleTabs>
+
+  <h3>With Error &amp; Help Text</h3>
 <ExampleTabs code={`<FloatLabel label="Email" error="Please enter a valid email">
   <TextInput type="email" name="email" />
 </FloatLabel>

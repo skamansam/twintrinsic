@@ -103,6 +103,13 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
+  <h3>HSL Format</h3>
+  <ExampleTabs code={`<ColorPicker format="hsl" />`}>
+    <div class="max-w-md" data-testid="colorpicker-hsl">
+      <ColorPicker format="hsl" />
+    </div>
+  </ExampleTabs>
+
 <h2>Props</h2>
 <PropsTable component={ColorPickerModule} />
 
