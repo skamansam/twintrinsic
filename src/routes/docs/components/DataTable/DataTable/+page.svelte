@@ -32,6 +32,18 @@ const userColumns = [
     },
   },
 ]
+
+const templateData = [
+  { name: "Widget A", price: 29.99, stock: 120 },
+  { name: "Gadget B", price: 49.50, stock: 85 },
+  { name: "Doohickey C", price: 12.00, stock: 200 },
+]
+
+const templateColumns = [
+  { field: "name", header: "Product" },
+  { field: "price", header: "Price", template: (v: unknown) => `$${Number(v).toFixed(2)}` },
+  { field: "stock", header: "Stock", template: (v: unknown) => `${v} units` },
+]
 </script>
 
 <style lang="postcss">
@@ -148,9 +160,14 @@ const userColumns = [
 </ExampleTabs>
 
   <h3>Custom Templates</h3>
-  <ExampleTabs code={`<DataTable columns={[...]} data={[...]} />`}>
+  <ExampleTabs code={`const productColumns = [
+  { field: 'name', header: 'Product' },
+  { field: 'price', header: 'Price', template: (v) => "$" + Number(v).toFixed(2) },
+  { field: 'stock', header: 'Stock', template: (v) => v + " units" },
+]
+<DataTable columns={productColumns} data={products} />`}>
     <div class="overflow-x-auto" data-testid="datatable-templates">
-      <!-- DataTable template example -->
+      <DataTable columns={templateColumns} data={templateData} />
     </div>
   </ExampleTabs>
 

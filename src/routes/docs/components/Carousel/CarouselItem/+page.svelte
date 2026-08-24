@@ -112,14 +112,14 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
   </ExampleTabs>
 
   <h3>Fade Transition</h3>
-  <ExampleTabs code={`<Carousel>
+  <ExampleTabs code={`<Carousel transition="fade">
   {#snippet items()}
     <CarouselItem><div class="h-48 bg-primary-100 flex items-center justify-center">Slide 1</div></CarouselItem>
     <CarouselItem><div class="h-48 bg-secondary-100 flex items-center justify-center">Slide 2</div></CarouselItem>
   {/snippet}
 </Carousel>`}>
     <div data-testid="carousel-item-fade">
-      <Carousel>
+      <Carousel transition="fade">
         {#snippet items()}
           <CarouselItem><div class="h-48 bg-primary-100 flex items-center justify-center">Slide 1</div></CarouselItem>
           <CarouselItem><div class="h-48 bg-secondary-100 flex items-center justify-center">Slide 2</div></CarouselItem>
