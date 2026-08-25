@@ -29,8 +29,8 @@ function recordSort(event) {
 }
 
 let clickedRow = null
-function recordRowClick(event) {
-  clickedRow = event.detail.row
+function recordRowClick(event, row) {
+  clickedRow = row
 }
 </script>
 

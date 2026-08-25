@@ -77,7 +77,7 @@ export type InputProps = {
   /** Blur event handler */
   onblur?: (event: FocusEvent) => void
   /** Click event handler on the input field */
-  onclick?: (event: MouseEvent) => void
+  onclick?: (event: MouseEvent | KeyboardEvent) => void
   /** Mousedown event handler on the input field */
   onmousedown?: (event: MouseEvent) => void
   /** Keydown event handler on the input field */
@@ -112,7 +112,7 @@ export const propsMetadata = [
   { name: "ariaDescription", type: "string", description: "ARIA description", default: "\"\"", optional: true },
   { name: "onfocus", type: "(event: FocusEvent) => void", description: "Focus event handler", optional: true },
   { name: "onblur", type: "(event: FocusEvent) => void", description: "Blur event handler", optional: true },
-  { name: "onclick", type: "(event: MouseEvent) => void", description: "Click event handler on the input field", optional: true },
+  { name: "onclick", type: "(event: MouseEvent | KeyboardEvent) => void", description: "Click event handler on the input field", optional: true },
   { name: "onmousedown", type: "(event: MouseEvent) => void", description: "Mousedown event handler on the input field", optional: true },
   { name: "onkeydown", type: "(event: KeyboardEvent) => void", description: "Keydown event handler on the input field", optional: true },
   { name: "oninput", type: "(event: CustomEvent<{ value: string }>) => void", description: "Input event handler", optional: true, eventDetail: "{ value: string }" },
@@ -168,7 +168,7 @@ const {
   onfocus,
   /** @type {(event: Event) => void} - Blur event handler */
   onblur,
-  /** @type {(event: MouseEvent) => void} - Click event handler on the input field */
+  /** @type {(event: MouseEvent | KeyboardEvent) => void} - Click event handler on the input field */
   onclick,
   /** @type {(event: MouseEvent) => void} - Mousedown event handler on the input field */
   onmousedown,

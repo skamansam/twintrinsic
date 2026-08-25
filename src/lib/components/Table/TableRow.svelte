@@ -5,7 +5,7 @@ export const propsMetadata = [
   { name: "disabled", type: "boolean", description: "Whether the row is disabled", default: "false", optional: true },
   { name: "clickable", type: "boolean", description: "Whether the row is clickable", default: "false", optional: true },
   { name: "data", type: "any", description: "Data associated with the row", optional: false },
-  { name: "onclick", type: "(event: CustomEvent) => void", description: "Click event handler", optional: false, eventDetail: "unknown" },
+  { name: "onclick", type: "(event: MouseEvent, row: any) => void", description: "Click event handler with row data", optional: false },
 ];
 </script>
 
@@ -46,7 +46,7 @@ const {
   /** @type {any} - Data associated with the row */
   data,
 
-  /** @type {(event: CustomEvent) => void} - Click event handler */
+  /** @type {(event: MouseEvent, row: any) => void} - Click event handler with row data */
   onclick,
 
   children,
@@ -68,7 +68,7 @@ const hoverable = $derived(tableContext?.hoverable ?? false)
 function handleClick(event: MouseEvent): void {
   if (disabled) return
 
-  onclick?.(new CustomEvent("click", { detail: { event, row: data } }))
+  onclick?.(event, data)
 }
 </script>
 

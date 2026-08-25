@@ -45,7 +45,7 @@ export const propsMetadata = [
   { name: "formtarget", type: "string", description: "Form target", optional: true },
   { name: "rel", type: "string", description: "Relationship attribute for links", optional: true },
   { name: "download", type: "string", description: "Download attribute for links", optional: true },
-  { name: "onclick", type: "(event: CustomEvent) => void", description: "Click event handler", optional: true, eventDetail: "unknown" },
+  { name: "onclick", type: "(event: MouseEvent | KeyboardEvent) => void", description: "Click event handler", optional: true },
 ];
 </script>
 
@@ -124,7 +124,7 @@ const {
   /** @type {string} - Download attribute for links */
   download = undefined,
 
-  /** @type {(event: CustomEvent) => void} - Click event handler */
+  /** @type {(event: MouseEvent | KeyboardEvent) => void} - Click event handler */
   onclick = undefined,
 
   children = undefined,
@@ -140,7 +140,7 @@ function handleClick(event: Event): void {
     return
   }
 
-  onclick?.(new CustomEvent("click", { detail: event }))
+  onclick?.(event as MouseEvent | KeyboardEvent)
 }
 
 // Read the buttonGroup context (set by ButtonGroup) for inherited styling.

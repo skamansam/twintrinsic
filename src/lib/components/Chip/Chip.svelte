@@ -14,7 +14,7 @@ export const propsMetadata = [
   { name: "removeAriaLabel", type: "string", description: "ARIA label for the remove button", default: "\"Remove\"", optional: true },
   { name: "removeIcon", type: "string", description: "Custom remove icon (HTML or SVG string)", optional: true },
   { name: "onremove", type: "(event: CustomEvent) => void", description: "Remove event handler", optional: true, eventDetail: "unknown" },
-  { name: "onclick", type: "(event: CustomEvent) => void", description: "Click event handler", optional: true, eventDetail: "unknown" },
+  { name: "onclick", type: "(event: MouseEvent | KeyboardEvent) => void", description: "Click event handler", optional: true },
 ];
 </script>
 
@@ -79,8 +79,8 @@ interface Props {
   removeIcon?: string
   /** @type {(event: CustomEvent) => void} - Remove event handler */
   onremove?: (event: CustomEvent) => void
-  /** @type {(event: CustomEvent) => void} - Click event handler */
-  onclick?: (event: CustomEvent) => void
+  /** @type {(event: MouseEvent | KeyboardEvent) => void} - Click event handler */
+  onclick?: (event: MouseEvent | KeyboardEvent) => void
   /** Child content (snippet) */
   children?: import("svelte").Snippet
 }
@@ -179,7 +179,7 @@ function handleClick(event: MouseEvent): void {
   }
 
   if (clickable) {
-    onclick?.(new CustomEvent("click", { detail: event }))
+    onclick?.(event)
   }
 }
 
@@ -206,7 +206,7 @@ function handleKeydown(event: KeyboardEvent): void {
 
   if ((clickable && event.key === "Enter") || event.key === " ") {
     event.preventDefault()
-    onclick?.(new CustomEvent("click", { detail: event }))
+    onclick?.(event)
   }
 }
 </script>
