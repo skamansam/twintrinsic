@@ -23,8 +23,8 @@ Usage:
 -->
 <script module lang="ts">
 export const propsMetadata = [
-  { name: "name", type: "string", description: "Field name for form registration", optional: true },
-  { name: "label", type: "string", description: "Input label", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
+  { name: "label", type: "string", description: "Label text", optional: true },
   { name: "items", type: "TItem[]", description: "Array of items to search through (strings or objects)", default: "[]", optional: true },
   { name: "labelField", type: "string", description: "Field to use for item labels", default: "\"label\"", optional: true },
   { name: "valueField", type: "string", description: "Field to use for item values", default: "\"value\"", optional: true },
@@ -70,9 +70,9 @@ export type ItemTemplateValue<TItem> =
   | { render: (args: { item: TItem }) => string }
 
 interface Props<TItem extends string | Record<string, unknown> = string | Record<string, unknown>> {
-  /** Field name for form registration */
+  /** Name attribute */
   name?: string
-  /** Input label */
+  /** Label text */
   label?: string
   /** Array of items to search through (strings or objects) */
   items?: TItem[]

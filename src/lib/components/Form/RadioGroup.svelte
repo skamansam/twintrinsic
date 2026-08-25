@@ -20,7 +20,7 @@ Usage:
 export const propsMetadata = [
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
-  { name: "name", type: "string", description: "Radio group name", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
   { name: "value", type: "string", description: "Currently selected value", default: "\"\"", optional: true },
   { name: "legend", type: "string", description: "Legend text for the fieldset", optional: true },
   { name: "required", type: "boolean", description: "Whether the radio group is required", default: "false", optional: true },
@@ -42,7 +42,7 @@ interface Props {
   class?: string
   /** HTML id for accessibility */
   id?: string
-  /** Radio group name */
+  /** Name attribute */
   name?: string
   /** Currently selected value */
   value?: string

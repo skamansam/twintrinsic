@@ -15,7 +15,7 @@ This component is deprecated. Use Select instead:
 export const propsMetadata = [
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", optional: true },
-  { name: "name", type: "string", description: "Input name", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
   { name: "options", type: "Array", description: "Options to display", default: "[]", optional: true },
   { name: "value", type: "any", description: "Selected value(s)", optional: true },
   { name: "placeholder", type: "string", description: "Placeholder text", default: "\"Select an option\"", optional: true },
@@ -45,7 +45,7 @@ const {
   /** @type {string} - HTML id for accessibility */
   id = undefined,
 
-  /** @type {string} - Input name */
+  /** @type {string} - Name attribute */
   name = undefined,
 
   /** @type {Array} - Options to display */

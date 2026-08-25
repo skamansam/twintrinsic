@@ -32,7 +32,7 @@ Usage:
 export const propsMetadata = [
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
-  { name: "name", type: "string", description: "Input name", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
   { name: "options", type: "TOption[]", description: "Options to display (strings or objects)", default: "[]", optional: true },
   { name: "value", type: "TOption | TOption[] | null", description: "Selected value(s). Object for single selection, array for multiple.", default: "null", optional: true },
   { name: "multiple", type: "boolean", description: "Whether multiple selection is allowed", default: "false", optional: true },
@@ -62,7 +62,7 @@ interface Props<TOption extends string | Record<string, unknown> = string | Reco
   class?: string
   /** HTML id for accessibility */
   id?: string
-  /** Input name */
+  /** Name attribute */
   name?: string
   /** Options to display (strings or objects) */
   options?: TOption[]

@@ -26,7 +26,7 @@ Usage:
 export const propsMetadata = [
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
-  { name: "name", type: "string", description: "Input name", optional: false },
+  { name: "name", type: "string", description: "Name attribute", optional: false },
   { name: "placeholder", type: "string", description: "Placeholder text", default: "\"Add item...\"", optional: true },
   { name: "values", type: "string[]", description: "Array of values", default: "[]", optional: true },
   { name: "disabled", type: "boolean", description: "Whether the input is disabled", default: "false", optional: true },
@@ -57,7 +57,7 @@ const {
   /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
 
-  /** @type {string} - Input name */
+  /** @type {string} - Name attribute */
   name,
 
   /** @type {string} - Placeholder text */

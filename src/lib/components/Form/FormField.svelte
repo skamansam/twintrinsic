@@ -19,7 +19,7 @@ Usage:
 export const propsMetadata = [
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
-  { name: "name", type: "string", description: "Field name (used for form data)", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
   { name: "label", type: "string", description: "Field label", optional: true },
   { name: "helpText", type: "string", description: "Help text displayed below the field", optional: true },
   { name: "error", type: "string", description: "Error message to display", optional: true },
@@ -50,7 +50,7 @@ interface Props {
   class?: string
   /** HTML id for accessibility */
   id?: string
-  /** Field name (used for form data) */
+  /** Name attribute */
   name?: string
   /** Field label */
   label?: string

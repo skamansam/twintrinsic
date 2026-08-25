@@ -61,8 +61,8 @@ export const propsMetadata = [
   { name: "showPreview", type: "boolean", description: "Whether to show hover preview", default: "false", optional: true },
   { name: "icon", type: "string", description: "Custom icon name for filled state (e.g., \"star\", \"heart\")", default: "\"tabler:star-filled\"", optional: true },
   { name: "emptyIcon", type: "string", description: "Custom icon name for empty state (e.g., \"star\", \"heart\")", default: "\"tabler:star\"", optional: true },
-  { name: "name", type: "string", description: "Name attribute for form submission", optional: true },
-  { name: "placeholder", type: "string", description: "Placeholder text hint", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
+  { name: "placeholder", type: "string", description: "Placeholder text", optional: true },
   { name: "ariaLabel", type: "string", description: "ARIA label for accessibility", default: "\"Rating\"", optional: true },
   { name: "onchange", type: "(event: CustomEvent<{ value: number }>) => void", description: "Change event handler", optional: true, eventDetail: "{ value: number }" },
   { name: "onhover", type: "(event: CustomEvent<{ value: number }>) => void", description: "Hover event handler", optional: true, eventDetail: "{ value: number }" },
@@ -117,9 +117,9 @@ interface Props {
   icon?: string
   /** Custom icon name for empty state (e.g., "star", "heart") */
   emptyIcon?: string
-  /** Name attribute for form submission */
+  /** Name attribute */
   name?: string
-  /** Placeholder text hint */
+  /** Placeholder text */
   placeholder?: string
   /** ARIA label for accessibility */
   ariaLabel?: string

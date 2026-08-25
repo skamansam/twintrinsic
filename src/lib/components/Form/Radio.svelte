@@ -25,7 +25,7 @@ Usage:
 export const propsMetadata = [
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
-  { name: "name", type: "string", description: "Radio name (for grouping)", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
   { name: "value", type: "string", description: "Radio value", optional: true },
   { name: "label", type: "string", description: "Label text", optional: true },
   { name: "checked", type: "boolean", description: "Whether the radio is checked", default: "false", optional: true },
@@ -56,7 +56,7 @@ interface Props {
   class?: string
   /** HTML id for accessibility */
   id?: string
-  /** Radio name (for grouping) */
+  /** Name attribute */
   name?: string
   /** Radio value */
   value?: string

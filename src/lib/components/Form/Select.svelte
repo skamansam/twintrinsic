@@ -31,9 +31,9 @@ Usage:
 -->
 <script module lang="ts">
 export const propsMetadata = [
-  { name: "label", type: "string", description: "Input label", default: "\"\"", optional: true },
+  { name: "label", type: "string", description: "Label text", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
-  { name: "name", type: "string", description: "Input name", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
   { name: "options", type: "SelectOption[]", description: "Options to display", default: "[]", optional: true },
   { name: "value", type: "string | string[] | undefined", description: "Selected value(s)", default: "$bindable()", optional: true },
   { name: "multiple", type: "boolean", description: "Whether multiple selection is allowed", default: "false", optional: true },
@@ -64,11 +64,11 @@ interface SelectOption {
 }
 
 interface SelectProps {
-  /** Input label */
+  /** Label text */
   label?: string
   /** HTML id for accessibility */
   id?: string
-  /** Input name */
+  /** Name attribute */
   name?: string
   /** Options to display */
   options?: SelectOption[]

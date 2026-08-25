@@ -71,7 +71,7 @@ describe("props extraction accuracy", () => {
     );
 
     expect(byName.label.type).toBe("string");
-    expect(byName.label.description).toBe("Input label text");
+    expect(byName.label.description).toBe("Label text");
     expect(byName.type.default).toBe('"text"');
     // events (callback props) are tagged with their CustomEvent detail type
     expect(byName.oninput.eventDetail).toBe("{ value: string }");

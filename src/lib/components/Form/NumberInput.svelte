@@ -32,7 +32,7 @@ Usage:
 export const propsMetadata = [
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
-  { name: "name", type: "string", description: "Input name", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
   { name: "value", type: "number", description: "Input value", default: "0", optional: true },
   { name: "placeholder", type: "string", description: "Placeholder text", default: "\"\"", optional: true },
   { name: "min", type: "number", description: "Minimum allowed value", optional: true },
@@ -64,7 +64,7 @@ interface Props {
   class?: string
   /** HTML id for accessibility */
   id?: string
-  /** Input name */
+  /** Name attribute */
   name?: string
   /** Input value */
   value?: number

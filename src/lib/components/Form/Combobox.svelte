@@ -45,7 +45,7 @@ Usage:
 export const propsMetadata = [
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
-  { name: "name", type: "string", description: "Name attribute for the input", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
   { name: "options", type: "Array", description: "Options to display in the dropdown", default: "[]", optional: true },
   { name: "value", type: "any", description: "Current value", default: "null", optional: true },
   { name: "placeholder", type: "string", description: "Placeholder text", default: "\"Select an option\"", optional: true },
@@ -83,7 +83,7 @@ const {
   /** @type {string} - HTML id for accessibility */
   id = crypto.randomUUID(),
 
-  /** @type {string} - Name attribute for the input */
+  /** @type {string} - Name attribute */
   name = undefined,
 
   /** @type {Array} - Options to display in the dropdown */

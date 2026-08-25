@@ -19,11 +19,11 @@ Usage:
 -->
 <script module lang="ts">
 export const propsMetadata = [
-  { name: "name", type: "string", description: "Field name for form registration", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
   { name: "value", type: "string", description: "Color value in current format", default: "\"#000000\"", optional: true },
   { name: "format", type: "\"hex\" | \"rgb\" | \"rgba\" | \"hsl\" | \"hsla\"", description: "Color format", default: "\"hex\"", optional: true },
   { name: "showAlpha", type: "boolean", description: "Whether to show alpha channel", default: "false", optional: true },
-  { name: "label", type: "string", description: "Input label", default: "\"Color\"", optional: true },
+  { name: "label", type: "string", description: "Label text", default: "\"Color\"", optional: true },
   { name: "disabled", type: "boolean", description: "Whether the picker is disabled", default: "false", optional: true },
   { name: "error", type: "string", description: "Error message", default: "\"\"", optional: true },
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
@@ -37,7 +37,7 @@ import type { FormContext, FormFieldApi } from "./formContext.js"
 import Input from "./Input.svelte"
 
 interface Props {
-  /** Field name for form registration */
+  /** Name attribute */
   name?: string
   /** Color value in current format */
   value?: string
@@ -45,7 +45,7 @@ interface Props {
   format?: "hex" | "rgb" | "rgba" | "hsl" | "hsla"
   /** Whether to show alpha channel */
   showAlpha?: boolean
-  /** Input label */
+  /** Label text */
   label?: string
   /** Whether the picker is disabled */
   disabled?: boolean

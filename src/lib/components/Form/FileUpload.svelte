@@ -28,7 +28,7 @@ Usage:
 export const propsMetadata = [
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
-  { name: "name", type: "string", description: "Name attribute for the input", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
   { name: "value", type: "File[]", description: "Current value (array of files)", default: "[]", optional: true },
   { name: "accept", type: "string", description: "Accepted file types (e.g., \"image/*,.pdf\")", optional: true },
   { name: "multiple", type: "boolean", description: "Whether multiple files can be selected", default: "false", optional: true },
@@ -74,7 +74,7 @@ interface Props {
   class?: string
   /** HTML id for accessibility */
   id?: string
-  /** Name attribute for the input */
+  /** Name attribute */
   name?: string
   /** Current value (array of files) */
   value?: File[]

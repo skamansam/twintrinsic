@@ -21,7 +21,7 @@ Usage:
 -->
 <script module lang="ts">
 export const propsMetadata = [
-  { name: "name", type: "string", description: "Field name for form registration", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
   { name: "value", type: "Date | [Date, Date] | Date[] | null", description: "Selected date or date range", default: "null", optional: true },
   { name: "range", type: "boolean", description: "Whether to allow range selection", default: "false", optional: true },
   { name: "minDate", type: "Date | null", description: "Minimum selectable date", default: "null", optional: true },
@@ -29,7 +29,7 @@ export const propsMetadata = [
   { name: "showWeekNumbers", type: "boolean", description: "Whether to show week numbers", default: "false", optional: true },
   { name: "dayNames", type: "string[]", description: "Custom day names", default: "[\"Su\", \"Mo\", \"Tu\", \"We\", \"Th\", \"Fr\", \"Sa\"]", optional: true },
   { name: "monthNames", type: "string[]", description: "Custom month names", default: "[\n    \"January\",\n    \"February\",\n    \"March\",\n    \"April\",\n    \"May\",\n    \"June\",\n    \"July\",\n    \"August\",\n    \"September\",\n    \"October\",\n    \"November\",\n    \"December\",\n  ]", optional: true },
-  { name: "label", type: "string", description: "Input label", default: "\"Date\"", optional: true },
+  { name: "label", type: "string", description: "Label text", default: "\"Date\"", optional: true },
   { name: "format", type: "string", description: "Date format for display", default: "\"MM/dd/yyyy\"", optional: true },
   { name: "disabled", type: "boolean", description: "Whether the calendar is disabled", default: "false", optional: true },
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
@@ -44,7 +44,7 @@ import Input from "./Input.svelte"
 import Icon from "../Icon/Icon.svelte"
 
 interface Props {
-  /** Field name for form registration */
+  /** Name attribute */
   name?: string
   /** Selected date or date range */
   value?: Date | [Date, Date] | Date[] | null
@@ -60,7 +60,7 @@ interface Props {
   dayNames?: string[]
   /** Custom month names */
   monthNames?: string[]
-  /** Input label */
+  /** Label text */
   label?: string
   /** Date format for display */
   format?: string

@@ -34,7 +34,7 @@ Usage:
  *  from type $$ComponentProps".
  */
 export type InputProps = {
-  /** Input label text */
+  /** Label text */
   label?: string
   /** Input type (text, email, password, etc.) */
   type?: string
@@ -91,7 +91,7 @@ export type InputProps = {
 }
 
 export const propsMetadata = [
-  { name: "label", type: "string", description: "Input label text", optional: true },
+  { name: "label", type: "string", description: "Label text", optional: true },
   { name: "type", type: "string", description: "Input type (text, email, password, etc.)", default: "\"text\"", optional: true },
   { name: "value", type: "string", description: "Input value", default: "\"\"", optional: true },
   { name: "placeholder", type: "string", description: "Placeholder text", default: "\"\"", optional: true },
@@ -128,7 +128,7 @@ import { slide } from "svelte/transition"
 import Icon from "../Icon/Icon.svelte"
 
 const {
-  /** @type {string} - Input label text */
+  /** @type {string} - Label text */
   label,
   /** @type {string} - Input type (text, email, password, etc.) */
   type = "text",

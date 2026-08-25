@@ -2,7 +2,7 @@
 export const propsMetadata = [
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", optional: true },
-  { name: "name", type: "string", description: "Name attribute for the textarea", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
   { name: "placeholder", type: "string", description: "Placeholder text", default: "\"\"", optional: true },
   { name: "value", type: "string", description: "Textarea value", default: "\"\"", optional: true },
   { name: "rows", type: "number", description: "Number of visible rows", default: "3", optional: true },
@@ -50,7 +50,7 @@ let {
   /** @type {string} - HTML id for accessibility */
   id = undefined,
 
-  /** @type {string} - Name attribute for the textarea */
+  /** @type {string} - Name attribute */
   name = undefined,
 
   /** @type {string} - Placeholder text */

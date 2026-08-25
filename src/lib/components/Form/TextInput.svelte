@@ -5,7 +5,7 @@ export const propsMetadata = [
   { name: "startIcon", type: "string", description: "Icon (HTML or SVG string) shown before the input", optional: true },
   { name: "endIcon", type: "string", description: "Icon (HTML or SVG string) shown after the input", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", optional: true },
-  { name: "name", type: "string", description: "Name attribute for the input", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
   { name: "placeholder", type: "string", description: "Placeholder text", default: "\"\"", optional: true },
   { name: "value", type: "string", description: "Input value", default: "\"\"", optional: true },
   { name: "required", type: "boolean", description: "Whether the input is required", default: "false", optional: true },
@@ -62,7 +62,7 @@ interface Props {
   endIcon?: string
   /** HTML id for accessibility */
   id?: string
-  /** Name attribute for the input */
+  /** Name attribute */
   name?: string
   /** Placeholder text */
   placeholder?: string

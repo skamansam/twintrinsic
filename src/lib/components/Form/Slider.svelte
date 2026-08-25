@@ -37,7 +37,7 @@ export const propsMetadata = [
   { name: "disabled", type: "boolean", description: "Whether the slider is disabled", default: "false", optional: true },
   { name: "showValue", type: "boolean", description: "Whether to show the current value", default: "false", optional: true },
   { name: "valueFormat", type: "string", description: "Format for displayed value", default: "\"{value}\"", optional: true },
-  { name: "name", type: "string", description: "Name attribute for form submission", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
   { name: "ariaLabel", type: "string", description: "ARIA label for accessibility", optional: true },
   { name: "showTicks", type: "boolean", description: "Whether to show tick marks", default: "false", optional: true },
   { name: "tickValues", type: "number[]", description: "Custom tick values", default: "[]", optional: true },
@@ -83,7 +83,7 @@ const {
   /** @type {string} - Format for displayed value */
   valueFormat = "{value}",
 
-  /** @type {string} - Name attribute for form submission */
+  /** @type {string} - Name attribute */
   name = undefined,
 
   /** @type {string} - ARIA label for accessibility */

@@ -20,7 +20,7 @@ Usage:
 export const propsMetadata = [
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
-  { name: "name", type: "string", description: "Input name", optional: true },
+  { name: "name", type: "string", description: "Name attribute", optional: true },
   { name: "label", type: "string", description: "Label text", optional: true },
   { name: "checked", type: "boolean", description: "Whether the switch is checked", default: "false", optional: true },
   { name: "required", type: "boolean", description: "Whether the switch is required", default: "false", optional: true },
@@ -40,7 +40,7 @@ interface Props {
   class?: string
   /** HTML id for accessibility */
   id?: string
-  /** Input name */
+  /** Name attribute */
   name?: string
   /** Label text */
   label?: string
