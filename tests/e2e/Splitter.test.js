@@ -2,12 +2,11 @@ import { expect, test } from "@playwright/test";
 import { waitForHydration } from "./helpers.js";
 
 /**
- * Docs-site interaction + accessibility tests for the Splitter component.
+ * Comprehensive docs-site tests for the Splitter component.
  *
- * Targets `/docs/components/Splitter/Splitter` and scopes selectors through the
- * `data-testid` hooks each example block exposes. Verifies the W3C window
- * splitter pattern: `role="separator"`, `aria-orientation`, `aria-valuenow`
- * range, and keyboard resizing.
+ * Targets `/docs/components/Splitter/Splitter`. Splitter implements the
+ * W3C window splitter pattern with `role="separator"`, `aria-orientation`,
+ * `aria-valuenow` range, and keyboard resizing via arrow keys.
  */
 test.describe("Splitter docs page", () => {
   test.beforeEach(async ({ page }) => {
@@ -15,13 +14,16 @@ test.describe("Splitter docs page", () => {
     await waitForHydration(page);
   });
 
-  test("renders the docs page with all live examples", async ({ page }) => {
+  test("renders the docs page heading", async ({ page }) => {
     await expect(page.getByRole("heading", { name: "Splitter", level: 1 })).toBeVisible();
+  });
+
+  test("renders both horizontal and vertical examples", async ({ page }) => {
     await expect(page.getByTestId("splitter-horizontal")).toBeVisible();
     await expect(page.getByTestId("splitter-vertical")).toBeVisible();
   });
 
-  test("divider exposes role=separator with an orientation", async ({ page }) => {
+  test("horizontal divider exposes role=separator with correct ARIA", async ({ page }) => {
     const divider = page.getByTestId("splitter-horizontal").getByRole("separator");
     await expect(divider).toBeVisible();
     await expect(divider).toHaveAttribute("aria-orientation", "horizontal");
@@ -37,10 +39,34 @@ test.describe("Splitter docs page", () => {
 
   test("ArrowRight increases the horizontal split size", async ({ page }) => {
     const divider = page.getByTestId("splitter-horizontal").getByRole("separator");
-
     await divider.focus();
     await page.keyboard.press("ArrowRight");
-
     await expect(divider).toHaveAttribute("aria-valuenow", "55");
+  });
+
+  test("ArrowLeft decreases the horizontal split size", async ({ page }) => {
+    const divider = page.getByTestId("splitter-horizontal").getByRole("separator");
+    await divider.focus();
+    await page.keyboard.press("ArrowLeft");
+    await expect(divider).toHaveAttribute("aria-valuenow", "45");
+  });
+
+  test("ArrowDown moves the vertical split position", async ({ page }) => {
+    const divider = page.getByTestId("splitter-vertical").getByRole("separator");
+    await divider.focus();
+    const initial = parseInt(await divider.getAttribute("aria-valuenow") || "50", 10);
+    await page.keyboard.press("ArrowDown");
+    const after = parseInt(await divider.getAttribute("aria-valuenow") || "50", 10);
+    // ArrowDown should change the value
+    expect(after).not.toBe(initial);
+  });
+
+  test("splitter divider is keyboard focusable", async ({ page }) => {
+    const divider = page.getByTestId("splitter-horizontal").getByRole("separator");
+    // Separators in the window splitter pattern should be focusable
+    await divider.focus();
+    await expect(divider).toBeFocused();
+    // Should have tabindex
+    await expect(divider).toHaveAttribute("tabindex", "0");
   });
 });

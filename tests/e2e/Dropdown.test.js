@@ -2,11 +2,11 @@ import { expect, test } from "@playwright/test";
 import { waitForHydration } from "./helpers.js";
 
 /**
- * Docs-site interaction + accessibility tests for the Dropdown component.
+ * Comprehensive docs-site tests for the Dropdown component.
  *
- * Targets `/docs/components/Form/Dropdown`. Dropdown is a thin wrapper around
- * Select (itself a native `<select>`), so these tests verify the native select
- * controls render and work, including option selection and the disabled state.
+ * Targets `/docs/components/Form/Dropdown`. Dropdown wraps a native `<select>`
+ * element with styling. These tests verify all dropdown examples, option
+ * selection, keyboard navigation, disabled state, and ARIA semantics.
  */
 test.describe("Dropdown docs page", () => {
   test.beforeEach(async ({ page }) => {
@@ -14,12 +14,15 @@ test.describe("Dropdown docs page", () => {
     await waitForHydration(page);
   });
 
-  test("renders the docs page with native select controls", async ({ page }) => {
+  test("renders the docs page heading", async ({ page }) => {
     await expect(page.getByRole("heading", { name: "Dropdown", level: 1 })).toBeVisible();
-    // Each example renders a native <select> via the Select component.
+  });
+
+  test("renders all dropdown examples with native selects", async ({ page }) => {
     const selects = page.locator("select");
+    const count = await selects.count();
+    expect(count).toBeGreaterThanOrEqual(5);
     await expect(selects.first()).toBeVisible();
-    expect(await selects.count()).toBeGreaterThanOrEqual(5);
   });
 
   test("basic dropdown shows placeholder and options", async ({ page }) => {
@@ -34,9 +37,49 @@ test.describe("Dropdown docs page", () => {
     const select = page.locator("select").first();
     await select.selectOption("Chicago");
     await expect(select).toHaveValue("Chicago");
+
+    await select.selectOption("New York");
+    await expect(select).toHaveValue("New York");
   });
 
   test("disabled dropdown is not interactive", async ({ page }) => {
-    await expect(page.locator("select:disabled")).toBeDisabled();
+    const disabled = page.locator("select:disabled");
+    await expect(disabled).toBeDisabled();
+  });
+
+  test("dropdown has accessible label", async ({ page }) => {
+    const selects = page.locator("select");
+    const first = selects.first();
+    // Select should have an associated label or aria-label
+    const hasLabel = await first.evaluate((el) => {
+      const id = el.id;
+      if (id && document.querySelector(`label[for="${id}"]`)) return true;
+      if (el.closest("label")) return true;
+      if (el.getAttribute("aria-label")) return true;
+      if (el.getAttribute("aria-labelledby")) return true;
+      return false;
+    });
+    expect(hasLabel).toBeTruthy();
+  });
+
+  test("selecting multiple options works in sequence", async ({ page }) => {
+    const select = page.locator("select").first();
+    await select.selectOption("New York");
+    await expect(select).toHaveValue("New York");
+    await select.selectOption("Los Angeles");
+    await expect(select).toHaveValue("Los Angeles");
+    await select.selectOption("Phoenix");
+    await expect(select).toHaveValue("Phoenix");
+  });
+
+  test("each dropdown option has a value attribute", async ({ page }) => {
+    const select = page.locator("select").first();
+    const options = select.locator("option");
+    const count = await options.count();
+    for (let i = 0; i < count; i++) {
+      const option = options.nth(i);
+      const value = await option.getAttribute("value");
+      expect(value, `option ${i} should have a value`).not.toBeNull();
+    }
   });
 });
