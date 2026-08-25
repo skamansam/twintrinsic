@@ -75,6 +75,7 @@ export const propsMetadata = [
 
 import type { Snippet } from "svelte"
 import { getContext } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 import Icon from "../Icon/Icon.svelte"
 
 /** Rating color variants enumerated by `variantClasses` in this component. */
@@ -159,6 +160,22 @@ let {
   children,
 }: Props = $props()
 
+// Get form context if available
+const formContext = getContext<FormContext | undefined>("form")
+let fieldApi: FormFieldApi | undefined
+
+// Register with form if available
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, value)
+  }
+})
+
+// Disabled from form context takes precedence over the local prop
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
+
 // Derived values for reactive prop access in closures
 const derivedValue = $derived(value)
 
@@ -186,7 +203,7 @@ $effect(() => {
 
 // Computed values
 const displayValue = $derived(hoverValue >= 0 ? hoverValue : currentValue)
-const isInteractive = $derived(!readonly && !disabled)
+const isInteractive = $derived(!readonly && !effectiveDisabled)
 
 // Determine size classes
 const sizeClasses = $derived(
@@ -437,7 +454,7 @@ function handleKeydown(event: KeyboardEvent): void {
     rating
     {sizeClasses}
     {isInteractive ? 'rating-interactive' : ''}
-    {disabled ? 'rating-disabled' : ''}
+    {effectiveDisabled ? 'rating-disabled' : ''}
     {className}
   "
   role={isInteractive ? 'slider' : 'img'}
@@ -448,7 +465,7 @@ function handleKeydown(event: KeyboardEvent): void {
   aria-valuenow={isInteractive ? currentValue : undefined}
   aria-valuetext={isInteractive ? `${currentValue} out of ${max}` : undefined}
   aria-readonly={readonly ? true : undefined}
-  aria-disabled={disabled ? true : undefined}
+  aria-disabled={effectiveDisabled ? true : undefined}
   onmousedown={handleStart}
   ontouchstart={handleStart}
   onmouseenter={handleEnter}
@@ -465,7 +482,7 @@ function handleKeydown(event: KeyboardEvent): void {
     {step}
     {placeholder}
     {readonly}
-    disabled={disabled}
+    disabled={effectiveDisabled}
     value={currentValue}
     bind:this={inputElement}
     onchange={handleInputChange}

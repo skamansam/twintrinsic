@@ -53,7 +53,8 @@ export const propsMetadata = [
 
 <script lang="ts">
 import type { Snippet } from "svelte"
-import { onDestroy } from "svelte"
+import { getContext, onDestroy } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
 interface PreviewsArgs {
   files: File[]
@@ -139,6 +140,22 @@ let {
   dropzone,
   previews,
 }: Props = $props()
+
+// Get form context if available
+const formContext = getContext<FormContext | undefined>("form")
+let fieldApi: FormFieldApi | undefined
+
+// Register with form if available
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, value)
+  }
+})
+
+// Disabled from form context takes precedence over the local prop
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
 
 // Component state
 let files: File[] = $state([])
@@ -288,7 +305,7 @@ function removeFile(index: number): void {
  * @param {DragEvent} event - Drag event
  */
 function handleDragEnter(event: DragEvent): void {
-  if (disabled) return
+  if (effectiveDisabled) return
 
   event.preventDefault()
   event.stopPropagation()
@@ -300,7 +317,7 @@ function handleDragEnter(event: DragEvent): void {
  * @param {DragEvent} event - Drag event
  */
 function handleDragOver(event: DragEvent): void {
-  if (disabled) return
+  if (effectiveDisabled) return
 
   event.preventDefault()
   event.stopPropagation()
@@ -312,7 +329,7 @@ function handleDragOver(event: DragEvent): void {
  * @param {DragEvent} event - Drag event
  */
 function handleDragLeave(event: DragEvent): void {
-  if (disabled) return
+  if (effectiveDisabled) return
 
   event.preventDefault()
   event.stopPropagation()
@@ -333,7 +350,7 @@ function handleDragLeave(event: DragEvent): void {
  * @param {DragEvent} event - Drop event
  */
 function handleDrop(event: DragEvent): void {
-  if (disabled) return
+  if (effectiveDisabled) return
 
   event.preventDefault()
   event.stopPropagation()
@@ -350,7 +367,7 @@ function handleDrop(event: DragEvent): void {
  */
 function browse(evt: Event): void {
   evt.stopPropagation()
-  if (disabled) return
+  if (effectiveDisabled) return
 
   if (inputElement) {
     inputElement.click()
@@ -559,7 +576,7 @@ onDestroy(() => {
   class="
     file-upload
     {isDragging ? 'file-upload-dragging' : ''}
-    {disabled ? 'file-upload-disabled' : ''}
+    {effectiveDisabled ? 'file-upload-disabled' : ''}
     {className}
   "
 >
@@ -571,14 +588,14 @@ onDestroy(() => {
     ondrop={handleDrop}
     onclick={browse}
     onkeydown={(event: KeyboardEvent) => {
-			if (disabled) return
+			if (effectiveDisabled) return
 			if (event.key !== 'Enter' && event.key !== ' ') return
 			event.preventDefault()
 			browse(event)
 		}}
     bind:this={dropzoneElement}
     role="button"
-    tabindex={disabled ? undefined : 0}
+    tabindex={effectiveDisabled ? undefined : 0}
     aria-label={ariaLabel}
   >
     {#if dropzone}
@@ -604,7 +621,7 @@ onDestroy(() => {
           type="button" 
           class="file-upload-browse"
           onclick={browse}
-          disabled={disabled}
+          disabled={effectiveDisabled}
         >
           {browseLabel}
         </button>
@@ -618,7 +635,7 @@ onDestroy(() => {
     {name}
     {accept}
     {multiple}
-    {disabled}
+    disabled={effectiveDisabled}
     class="file-upload-input"
     onchange={handleInputChange}
     bind:this={inputElement}
@@ -668,7 +685,7 @@ onDestroy(() => {
                   class="file-upload-preview-remove"
                   aria-label={`Remove ${file.name}`}
                   onclick={() => removeFile(i)}
-                  disabled={disabled || uploading}
+                  disabled={effectiveDisabled || uploading}
                 >
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>

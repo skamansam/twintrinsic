@@ -72,6 +72,7 @@ export const propsMetadata = [
 
 <script lang="ts">
 import { getContext, tick } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 import { getItemLabel } from "../../helpers/itemLabel.js"
 import { getItemValue } from "../../helpers/itemValue.js"
 
@@ -147,6 +148,22 @@ const {
   /** @type {import("svelte").Snippet<[{ option: unknown }]>} - Snippet rendering an option */
   option = undefined,
 } = $props()
+
+// Get form context if available
+const formContext = getContext<FormContext | undefined>("form")
+let fieldApi: FormFieldApi | undefined
+
+// Register with form if available
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, value)
+  }
+})
+
+// Disabled from form context takes precedence over the local prop
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
 
 // Component state
 let inputElement: HTMLInputElement | undefined = $state()
@@ -248,7 +265,7 @@ function filterOptions(query: string): unknown[] {
  * Handles input focus — opens the dropdown when configured to do so
  */
 function handleFocus(): void {
-  if (disabled || readonly) return
+  if (effectiveDisabled || readonly) return
 
   if (openOnFocus) {
     openDropdown()
@@ -262,7 +279,7 @@ function handleFocus(): void {
  * closes. Reopen it so the list stays available for typing/selection.
  */
 function handleClick(): void {
-  if (disabled || readonly) return
+  if (effectiveDisabled || readonly) return
 
   if (openOnFocus) {
     openDropdown()
@@ -274,7 +291,7 @@ function handleClick(): void {
  * @param {Event} event - Input event
  */
 function handleInput(event: Event): void {
-  if (disabled || readonly) return
+  if (effectiveDisabled || readonly) return
 
   const target = event.target as HTMLInputElement | null
   if (!target) return
@@ -298,7 +315,7 @@ function handleInput(event: Event): void {
  * @param {KeyboardEvent} event - Keydown event
  */
 async function handleKeydown(event: KeyboardEvent): Promise<void> {
-  if (disabled || readonly) return
+  if (effectiveDisabled || readonly) return
 
   switch (event.key) {
     case "ArrowDown":
@@ -374,7 +391,7 @@ async function scrollToHighlighted(): Promise<void> {
  * Opens the dropdown
  */
 function openDropdown(): void {
-  if (disabled || readonly) return
+  if (effectiveDisabled || readonly) return
 
   filteredOptions = filterOptions(inputValue)
   highlightedIndex = autoSelect && filteredOptions.length > 0 ? 0 : -1
@@ -440,7 +457,7 @@ function selectOption(option: unknown): void {
 function clearSelection(event: Event): void {
   event.stopPropagation()
 
-  if (disabled || readonly) return
+  if (effectiveDisabled || readonly) return
 
   selectedOption = null
   inputValue = ""
@@ -456,7 +473,7 @@ function clearSelection(event: Event): void {
 <div
   class="
     combobox
-    {disabled ? 'combobox-disabled' : ''}
+    {effectiveDisabled ? 'combobox-disabled' : ''}
     {readonly ? 'combobox-readonly' : ''}
     {isOpen ? 'combobox-open' : ''}
     {className}
@@ -477,7 +494,7 @@ function clearSelection(event: Event): void {
       aria-activedescendant={highlightedIndex >= 0 ? `${id}-option-${highlightedIndex}` : undefined}
       role="combobox"
       autocomplete="off"
-      {disabled}
+      disabled={effectiveDisabled}
       {readonly}
       {required}
       onfocus={handleFocus}
@@ -497,7 +514,7 @@ function clearSelection(event: Event): void {
         </div>
       {/if}
 
-      {#if clearable && selectedOption && !disabled && !readonly}
+      {#if clearable && selectedOption && !effectiveDisabled && !readonly}
         <button
           type="button"
           class="combobox-clear"
@@ -517,7 +534,7 @@ function clearSelection(event: Event): void {
           aria-label={isOpen ? 'Close dropdown' : 'Open dropdown'}
           popovertarget={`${id}-listbox`}
           popovertargetaction="toggle"
-          disabled={disabled || readonly}
+          disabled={effectiveDisabled || readonly}
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={isOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"}></path>
@@ -529,7 +546,7 @@ function clearSelection(event: Event): void {
           class="combobox-toggle"
           aria-label={isOpen ? 'Close dropdown' : 'Open dropdown'}
           onclick={() => { if (isOpen) { closeDropdown() } else { openDropdown() } }}
-          disabled={disabled || readonly}
+          disabled={effectiveDisabled || readonly}
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={isOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"}></path>

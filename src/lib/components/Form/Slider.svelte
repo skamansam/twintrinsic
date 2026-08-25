@@ -49,6 +49,9 @@ export const propsMetadata = [
 </script>
 
 <script lang="ts">
+import { getContext } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
+
 const {
   /** @type {string} - Additional CSS classes */
   class: className = "",
@@ -104,6 +107,22 @@ const {
   oninput = undefined,
 } = $props()
 
+// Get form context if available
+const formContext = getContext<FormContext | undefined>("form")
+let fieldApi: FormFieldApi | undefined
+
+// Register with form if available
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, value)
+  }
+})
+
+// Disabled from form context takes precedence over the local prop
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
+
 let inputElement: HTMLInputElement | undefined = $state()
 
 const formattedValue = $derived(valueFormat.replace("{value}", String(value)))
@@ -142,7 +161,7 @@ function handleInput(e: Event): void {
     {max}
     {step}
     {name}
-    {disabled}
+    disabled={effectiveDisabled}
     aria-label={ariaLabel}
     class="slider {variantClasses}"
     bind:this={inputElement}

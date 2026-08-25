@@ -109,6 +109,10 @@ interface SelectProps {
   /** Custom option children (e.g. `<SelectGroup>`/`<option>` snippets) */
   children?: import("svelte").Snippet
 }
+
+import { getContext } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
+
 let {
   label = "",
   id = crypto.randomUUID(),
@@ -133,6 +137,22 @@ let {
   onfilter = undefined,
   children = undefined,
 }: SelectProps = $props()
+
+// Get form context if available
+const formContext = getContext<FormContext | undefined>("form")
+let fieldApi: FormFieldApi | undefined
+
+// Register with form if available
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, value)
+  }
+})
+
+// Disabled from form context takes precedence over the local prop
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
 
 // Component state
 let selectElement: HTMLSelectElement | undefined = $state()
@@ -182,7 +202,7 @@ function handleChange(event: Event): void {
       bind:this={selectElement}
       bind:value={selectedValue}
       onchange={handleChange}
-      {disabled}
+      disabled={effectiveDisabled}
       {required}
       aria-invalid={!!error}
       aria-describedby={error ? 'select-error' : undefined}

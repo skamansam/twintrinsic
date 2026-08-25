@@ -122,6 +122,8 @@ export const propsMetadata = [
 </script>
 
 <script lang="ts">
+import { getContext } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 import { slide } from "svelte/transition"
 import Icon from "../Icon/Icon.svelte"
 
@@ -181,6 +183,22 @@ const {
   /** @type {() => void} - Right icon click handler */
   onrightIconClick,
 }: InputProps = $props()
+
+// Get form context if available
+const formContext = getContext<FormContext | undefined>("form")
+let fieldApi: FormFieldApi | undefined
+
+// Register with form if available
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, value)
+  }
+})
+
+// Disabled from form context takes precedence over the local prop
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
 
 let inputValue = $state("")
 let focused = $state(false)
@@ -265,7 +283,7 @@ const containerClasses = $derived(`
     form-input-container
     ${floating ? "form-input-floating" : ""}
     ${error ? "form-input-error" : ""}
-    ${disabled ? "form-input-disabled" : ""}
+    ${effectiveDisabled ? "form-input-disabled" : ""}
     ${className}
   `)
 
@@ -273,7 +291,7 @@ const labelClasses = $derived(`
     form-input-label
     ${floating && (focused || inputValue) ? "form-input-label-float" : ""}
     ${error ? "form-input-label-error" : ""}
-    ${disabled ? "form-input-label-disabled" : ""}
+    ${effectiveDisabled ? "form-input-label-disabled" : ""}
   `)
 
 const inputClasses = $derived(`
@@ -314,7 +332,7 @@ const inputClasses = $derived(`
       class={inputClasses}
       value={inputValue}
       placeholder={floating ? ' ' : placeholder}
-      {disabled}
+      disabled={effectiveDisabled}
       {readonly}
       {required}
       {minlength}

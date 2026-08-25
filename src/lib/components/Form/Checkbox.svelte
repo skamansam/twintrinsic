@@ -36,6 +36,7 @@ export const propsMetadata = [
 
 <script lang="ts">
 import { getContext } from "svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
 const {
   /** @type {string} - Label text */
@@ -64,6 +65,22 @@ const {
 
 let checkboxEl: HTMLInputElement | undefined = $state()
 
+// Get form context if available
+const formContext = getContext<FormContext | undefined>("form")
+let fieldApi: FormFieldApi | undefined
+
+// Register with form if available
+$effect(() => {
+  if (formContext && name) {
+    fieldApi = formContext.registerField(name, checked)
+  }
+})
+
+// Disabled from form context takes precedence over the local prop
+const effectiveDisabled = $derived(
+  disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
+)
+
 // Update indeterminate state
 $effect(() => {
   if (checkboxEl) {
@@ -81,7 +98,7 @@ function handleChange(event: Event) {
 <div class="checkbox-container {className}">
   <label
     class="checkbox"
-    class:checkbox-disabled={disabled}
+    class:checkbox-disabled={effectiveDisabled}
     class:checkbox-error={error}
   >
     <input
@@ -90,7 +107,7 @@ function handleChange(event: Event) {
       {name}
       {value}
       {checked}
-      {disabled}
+      disabled={effectiveDisabled}
       {required}
       aria-invalid={!!error}
       aria-describedby={error ? `${name}-error` : undefined}
