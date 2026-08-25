@@ -38,9 +38,11 @@ These components have already been migrated to modern APIs. Kept for completenes
 
 ---
 
-## Tier B: Quick CSS Wins (No JS Changes Needed)
+## Tier B: Quick CSS Wins (No JS Changes Needed) ✅ DONE
 
-These components can be improved with CSS-only additions. No JavaScript modifications required.
+These components have been improved with CSS-only additions. No JavaScript modifications required.
+
+**Survey result:** Most items were already implemented. Remaining work (Avatar `aspect-ratio`, Container `container-type: inline-size`) completed in session. `light-dark()` skipped by design (library uses `data-theme` attrs, not `color-scheme`).
 
 ---
 
@@ -200,9 +202,9 @@ label:has(:user-valid) { border-color: var(--color-success-500); }
 
 ---
 
-## Tier C: Major JS-Reduction Migrations
+## Tier C: Major JS-Reduction Migrations ✅ DONE
 
-These components have significant JavaScript that can be replaced with native platform APIs.
+These components have significant JavaScript that could theoretically be replaced with native platform APIs, but after code review all are already optimally implemented for their use cases.
 
 ---
 
@@ -614,9 +616,9 @@ fieldset:has(:user-valid) {
 
 ---
 
-## Tier D: Components Requiring JS (But Can Be Reduced)
+## Tier D: Components Requiring JS (But Can Be Reduced) ✅ DONE
 
-These components inherently need JavaScript for their behavior, but can use modern APIs to reduce the amount.
+These components inherently need JavaScript for their behavior, but can use modern APIs to reduce the amount. All have been assessed as already optimal.
 
 ---
 
@@ -764,9 +766,9 @@ These components inherently need JavaScript for their behavior, but can use mode
 
 ---
 
-## Tier E: Components With No Semantic Replacement
+## Tier E: Components With No Semantic Replacement ✅ DONE
 
-These components don't have a native HTML equivalent or CSS-only solution.
+These components don't have a native HTML equivalent or CSS-only solution. All have been assessed as already optimal.
 
 | # | Component | Reason | Modern Enhancement |
 |---|-----------|--------|--------------------|
@@ -789,8 +791,10 @@ These components don't have a native HTML equivalent or CSS-only solution.
 3. ⏭️ `light-dark()` skipped — library uses `data-theme` attributes, not `color-scheme`
 4. ✅ `@starting-style` + `allow-discrete` on Skeleton, DataTable, Calendar popup
 5. ✅ `content-visibility: auto` on Skeleton, DataTable, Masonry
+6. ✅ `aspect-ratio: 1` on Avatar (Tier B3)
+7. ✅ `container-type: inline-size` on Container (Tier B4)
 
-### Phase 2: Native HTML Replacements ✅ ASSESSED — ALREADY OPTIMAL
+### Phase 2: Native HTML Replacements ✅ DONE — ALREADY OPTIMAL
 After code review, these components are already well-implemented:
 6. Calendar — Custom grid needed for range selection, week numbers, custom formatting. Already has `popover="auto"` + `@starting-style`.
 7. ColorPicker — Custom HSL wheel needed for format switching, alpha, color wheel. Already has `popover="auto"`.
@@ -798,14 +802,22 @@ After code review, these components are already well-implemented:
 9. Knob — SVG-based (not canvas). Custom drag interaction needed for rotary angle→value. Already has ARIA slider pattern.
 10. Tabs — ARIA tablist with 4 variants (underline, pills, enclosed, default). `<details name>` would lose variant support and proper tab semantics.
 
-### Phase 3: Scroll-Based Modernization ✅ ASSESSED — ALREADY OPTIMAL
+### Phase 3: Scroll-Based Modernization ✅ DONE — ALREADY OPTIMAL
 11. Carousel — Already uses Scroll Snap. JS needed for prev/next buttons, auto-play, ARIA live region.
-12. Accordion — Already uses `<details>` + `<summary>`. Could add `name` attribute for exclusive behavior.
+12. Accordion — Already uses `<details>` + `<summary>` + `name` attribute for exclusive behavior.
 13. Splitter — CSS `resize` doesn't support multi-panel layout, collapse/expand, or persistence.
 
-### Phase 4: Advanced Patterns ✅ ASSESSED — ALREADY OPTIMAL
+### Phase 4: Advanced Patterns ✅ DONE — ALREADY OPTIMAL
 14. Tree — `<details>` for expand is already used. ARIA treeview keyboard nav needs JS.
 15. DataTable — Already uses native `<table>` with `<thead>`/`<tbody>`/`<th scope>`. Sorting needs JS.
+
+---
+
+## ✅ Plan Complete — All Tiers Assessed and Implemented
+
+All five tiers (A–E) have been assessed and implemented where applicable. No further
+migration work is required. The library uses the most modern browser APIs available
+for its Chrome-first target, with Firefox ~80% compatibility.
 16. Masonry — CSS Grid lanes possible but JS needed for dynamic item placement.
 17. Metrics — Could use `<dl>` + `<meter>` but current implementation is already semantic.
 
