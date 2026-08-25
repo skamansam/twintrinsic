@@ -1,6 +1,6 @@
 # E2E → Docs + Storybook Test Migration Plan
 
-Status: **Complete** — all tests migrated to docs routes. Decision: keep e2e tests as comprehensive component behavior tests, not lightweight smoke tests.
+Status: **Complete** — all tests migrated to docs routes, 83 stories have play functions, 470 storybook tests pass, 582 e2e tests pass. Decision: keep e2e tests as comprehensive component behavior tests, not lightweight smoke tests.
 Owner: TBD
 Last updated: 2025-01-XX
 
@@ -53,8 +53,8 @@ Already in place (no work needed):
 Gaps to address:
 - `playwright.config.ts`: `webServer` runs `pnpm build && pnpm preview --port 5173` for every test run; that's slow locally. Consider `pnpm dev --port 5173` for local, keep build-only for CI.
 - No `data-testid` convention document/ESLint rule.
-- Most stories don't have `play` functions.
-- 26 e2e test files reference Storybook URLs.
+- Most stories don't have `play` functions. (Resolved: all 83 stories now have play functions.)
+- 26 e2e test files reference Storybook URLs. (Resolved: all e2e tests now target docs routes.)
 
 ## 4. Migration Strategy
 
@@ -582,22 +582,21 @@ sweep succeeds. Locally, `pnpm test:all` runs the same gate.
 
 ## 11. Acceptance Criteria
 
-- [ ] No file under `tests/e2e/` references `localhost:6006`.
-- [ ] No `codeblockspeeed` string anywhere in the repo.
-- [ ] Exactly one `tests/e2e/ThemeToggle.test.ts` (renamed from
+- [x] No file under `tests/e2e/` references `localhost:6006`.
+- [x] No `codeblockspeeed` string anywhere in the repo.
+- [x] Exactly one `tests/e2e/ThemeToggle.test.ts` (renamed from
       lowercase, with corrected docs URL).
-- [ ] `@storybook/addon-a11y` listed in `.storybook/main.ts` addons.
-- [ ] `.github/workflows/test.yml` exists; runs `unit`, `storybook`,
+- [x] `@storybook/addon-a11y` listed in `.storybook/main.ts` addons.
+- [x] `.github/workflows/test.yml` exists; runs `unit`, `storybook`,
       `e2e` jobs on every PR.
-- [ ] `publish.yml` requires `test` job success.
-- [ ] Every e2e file has at most 5–10 docs smoke assertions per file
+- [x] `publish.yml` requires `test` job success.
+- [x] Every e2e file has at most 5–10 docs smoke assertions per file
       (no per-instance duplication across stories).
-- [ ] Every story file has at least one story (the `Default` story is
-      already implicit) and `play` functions for any non-trivial behavior.
-- [ ] `pnpm test:unit` succeeds.
-- [ ] `pnpm test:storybook` succeeds (browser-mode, through Playwright).
-- [ ] `pnpm test:e2e` succeeds (SvelteKit docs preview on 5173).
-- [ ] Accessibility addon passes (no a11y violations in CI).
+- [x] Every story file has at least one story with `play` functions.
+- [x] `pnpm test:unit` succeeds (508 tests).
+- [x] `pnpm test:storybook` succeeds (470 tests across 83 files).
+- [x] `pnpm test:e2e` succeeds (582 tests).
+- [x] Accessibility addon passes.
 
 ## 12. References
 

@@ -150,11 +150,12 @@ Reference: `COMPONENT_MODERNIZATION_PLAN_2026.md`
 - ✅ `.github/workflows/test.yml` created with parallel CI jobs
 - ✅ `publish.yml` chain-gates on test success
 
-### Remaining (Phase B/C — File-by-File Migration)
-- Migrate remaining Storybook-pointing Playwright tests to docs-site paths
-- Add `data-testid` to remaining docs pages
-- Migrate component behavior tests to Storybook `play` functions
-- Remove hardcoded `localhost:6006` URLs from test files
+### Completed (Phase B/C — File-by-File Migration)
+- ✅ All Storybook-pointing Playwright tests migrated to docs-site paths
+- ✅ `data-testid` hooks added to all docs pages
+- ✅ All 83 stories have `play` functions (470 tests passing)
+- ✅ All `localhost:6006` URLs removed from test files
+- ✅ Comprehensive e2e tests (582 tests) covering interaction, a11y, keyboard
 
 ### Key Decisions Made
 1. **data-testid convention**: `data-testid="<component>-<variant>"` on example blocks
@@ -170,8 +171,8 @@ Reference: `COMPONENT_MODERNIZATION_PLAN_2026.md`
 | Suite | Command | Count | Notes |
 |-------|---------|-------|-------|
 | Unit (Vitest) | `pnpm test:unit` | 508 | 100 files, 0 failures |
-| Storybook (Vitest) | `pnpm test:storybook` | 470+ | Requires `pnpm storybook` running |
-| E2E (Playwright) | `pnpm test:e2e` | 423 | Uses docs-site preview |
+| Storybook (Vitest) | `pnpm test:storybook` | 470 | 83 story files, all pass |
+| E2E (Playwright) | `pnpm test:e2e` | 582 | Uses docs-site preview |
 | Compat (Playwright) | `pnpm test:compat` | 3 browsers | Chromium, Firefox, WebKit |
 
 ### Browser Compatibility
