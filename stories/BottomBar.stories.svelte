@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect } from "storybook/test"
 import BottomBar from "$lib/components/BottomBar/BottomBar.svelte"
 
 const { Story } = defineMeta({
@@ -20,7 +21,15 @@ const { Story } = defineMeta({
 })
 </script>
 
-<Story name="Default" args={{ expanded: true }}>
+<Story
+  name="Default"
+  args={{ expanded: true }}
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText("Midnight Drive")).toBeInTheDocument();
+    await expect(canvas.getByText("Lena Fischer")).toBeInTheDocument();
+    await expect(canvas.getByRole("button", { name: /play/i })).toBeInTheDocument();
+  }}
+>
   <!-- A music-player mini bar: a bottom bar you'd actually find on a
        mobile app, with transport buttons and a big round action button
        in the middle. -->

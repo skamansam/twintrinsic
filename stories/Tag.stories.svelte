@@ -54,7 +54,14 @@ const codeIcon =
   '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>'
 </script>
 
-<Story name="Basic">
+<Story
+  name="Basic"
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText("Default")).toBeInTheDocument();
+    await expect(canvas.getByText("Primary")).toBeInTheDocument();
+    await expect(canvas.getByText("Success")).toBeInTheDocument();
+  }}
+>
   <div class="flex flex-wrap gap-2">
     <Tag>Default</Tag>
     <Tag variant="primary">Primary</Tag>

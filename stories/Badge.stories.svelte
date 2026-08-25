@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect } from "storybook/test"
 import Badge from "$lib/components/Badge/Badge.svelte"
 
 const { Story } = defineMeta({
@@ -21,7 +22,13 @@ const { Story } = defineMeta({
 })
 </script>
 
-<Story name="Default" args={{}}>5</Story>
+<Story
+  name="Default"
+  args={{}}
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText("5")).toBeInTheDocument();
+  }}
+>5</Story>
 
 <Story name="Variants">
   <div class="flex flex-wrap gap-2">

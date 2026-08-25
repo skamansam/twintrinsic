@@ -1,3 +1,4 @@
+import { expect, userEvent } from "storybook/test"
 import Calendar from "$lib/components/Form/Calendar.svelte"
 
 export default {
@@ -20,6 +21,10 @@ export default {
 export const Default = {
   args: {
     label: "Select Date",
+  },
+  play: async ({ canvas }) => {
+    const input = canvas.getByRole("combobox", { name: /select date/i });
+    await expect(input).toBeInTheDocument();
   },
 }
 
@@ -92,5 +97,9 @@ export const Disabled = {
     label: "Date",
     disabled: true,
     value: new Date("2025-04-07"),
+  },
+  play: async ({ canvas }) => {
+    const input = canvas.getByRole("combobox", { name: /date/i });
+    await expect(input).toBeDisabled();
   },
 }

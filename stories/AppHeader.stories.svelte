@@ -1,5 +1,6 @@
 <script module>
   import { defineMeta } from "@storybook/addon-svelte-csf";
+  import { expect } from "storybook/test";
   import AppHeader from "../src/lib/components/AppHeader/AppHeader.svelte";
 
   const logo = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%234f46e5'/%3E%3Ctext x='16' y='21' font-family='Arial' font-size='16' font-weight='bold' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E`;
@@ -49,6 +50,11 @@
       { label: "Projects", href: "/projects" },
       { label: "Reports", href: "/reports" },
     ],
+  }}
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText("Acme Suite")).toBeInTheDocument();
+    await expect(canvas.getByRole("link", { name: "Home" })).toBeInTheDocument();
+    await expect(canvas.getByRole("link", { name: "Projects" })).toBeInTheDocument();
   }}
 />
 

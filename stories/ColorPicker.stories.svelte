@@ -1,5 +1,6 @@
 <script module>
   import { defineMeta } from "@storybook/addon-svelte-csf";
+  import { expect } from "storybook/test";
   import ColorPicker from "../src/lib/components/Form/ColorPicker.svelte";
 
   const { Story } = defineMeta({
@@ -19,7 +20,14 @@
   });
 </script>
 
-<Story name="Default" args={{ label: "Color" }} />
+<Story
+  name="Default"
+  args={{ label: "Color" }}
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText("Color")).toBeInTheDocument();
+    await expect(canvas.getByRole("textbox")).toBeInTheDocument();
+  }}
+/>
 
 <Story name="With Value" args={{ label: "Color", value: "#FF0000" }} />
 
@@ -56,11 +64,17 @@
 <Story
   name="With Error"
   args={{ label: "Color", error: "Please select a valid color" }}
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText("Please select a valid color")).toBeVisible();
+  }}
 />
 
 <Story
   name="Disabled"
   args={{ label: "Color", value: "#FF0000", disabled: true }}
+  play={async ({ canvas }) => {
+    await expect(canvas.getByRole("textbox")).toBeDisabled();
+  }}
 />
 
 <Story

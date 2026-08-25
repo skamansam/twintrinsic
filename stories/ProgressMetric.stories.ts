@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/sveltekit';
 import ProgressMetric from '$lib/components/Metrics/ProgressMetric/ProgressMetric.svelte';
+import { expect } from 'storybook/test';
 
 const meta = {
 	title: 'Metrics/ProgressMetric',
@@ -24,6 +25,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Project Progress')).toBeInTheDocument();
+	},
 	args: {
 		label: 'Project Progress',
 		value: 65,

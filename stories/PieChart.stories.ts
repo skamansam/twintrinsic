@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/sveltekit';
 import PieChart from '$lib/components/Metrics/PieChart/PieChart.svelte';
+import { expect } from 'storybook/test';
 
 const meta = {
 	title: 'Metrics/PieChart',
@@ -19,6 +20,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Chrome')).toBeInTheDocument();
+	},
 	args: {
 		data: [35, 25, 20, 20],
 		labels: ['Chrome', 'Firefox', 'Safari', 'Edge'],

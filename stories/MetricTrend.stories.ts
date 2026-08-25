@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/sveltekit';
 import MetricTrend from '$lib/components/Metrics/MetricTrend/MetricTrend.svelte';
+import { expect } from 'storybook/test';
 
 const meta = {
 	title: 'Metrics/MetricTrend',
@@ -17,6 +18,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const UpwardTrend: Story = {
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Sales Trend')).toBeInTheDocument();
+	},
 	args: {
 		label: 'Sales Trend',
 		data: [10, 12, 15, 14, 18, 20, 22, 25, 28, 30],

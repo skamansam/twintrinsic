@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect } from "storybook/test"
 import Separator from "$lib/components/Separator/Separator.svelte"
 
 const { Story } = defineMeta({
@@ -16,7 +17,13 @@ const { Story } = defineMeta({
 })
 </script>
 
-<Story name="Default" />
+<Story
+  name="Default"
+  play={async ({ canvas }) => {
+    const hr = canvas.getByRole("separator");
+    await expect(hr).toBeInTheDocument();
+  }}
+/>
 
 <Story name="With Text" args={{ class: "max-w-sm" }}>
   <div class="space-y-4">

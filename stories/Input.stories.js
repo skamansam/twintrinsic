@@ -1,3 +1,4 @@
+import { expect, userEvent } from "storybook/test"
 import Input from "$lib/components/Form/Input.svelte"
 
 export default {
@@ -28,6 +29,12 @@ export const Default = {
     label: "Username",
     placeholder: "Enter username",
   },
+  play: async ({ canvas }) => {
+    const input = canvas.getByPlaceholderText("Enter username");
+    await expect(input).toBeInTheDocument();
+    await userEvent.type(input, "johndoe");
+    await expect(input).toHaveValue("johndoe");
+  },
 }
 
 export const WithIcons = {
@@ -57,6 +64,9 @@ export const WithError = {
     error: "Please enter a valid email address",
     required: true,
   },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText("Please enter a valid email address")).toBeVisible();
+  },
 }
 
 export const WithHelpText = {
@@ -73,6 +83,10 @@ export const Disabled = {
     label: "Username",
     value: "johndoe",
     disabled: true,
+  },
+  play: async ({ canvas }) => {
+    const input = canvas.getByDisplayValue("johndoe");
+    await expect(input).toBeDisabled();
   },
 }
 

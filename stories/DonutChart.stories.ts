@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/sveltekit';
 import DonutChart from '$lib/components/Metrics/DonutChart/DonutChart.svelte';
+import { expect } from 'storybook/test';
 
 const meta = {
 	title: 'Metrics/DonutChart',
@@ -20,6 +21,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Sales Distribution')).toBeInTheDocument();
+	},
 	args: {
 		data: [30, 25, 20, 15, 10],
 		labels: ['Product A', 'Product B', 'Product C', 'Product D', 'Product E'],

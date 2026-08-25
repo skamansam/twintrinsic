@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect, userEvent } from "storybook/test"
 import Tree from "$lib/components/Tree/Tree.svelte"
 import TreeNode from "$lib/components/Tree/TreeNode.svelte"
 
@@ -72,7 +73,17 @@ const fileSystemData = [
 ]
 </script>
 
-<Story name="Basic">
+<Story
+  name="Basic"
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText("Acme Website")).toBeInTheDocument();
+    await expect(canvas.getByText("Pages")).toBeInTheDocument();
+    await expect(canvas.getByText("Blog")).toBeInTheDocument();
+    // Click to expand
+    await userEvent.click(canvas.getByText("Pages"));
+    await expect(canvas.getByText("Home")).toBeInTheDocument();
+  }}
+>
   <div class="w-full max-w-md">
     <Tree>
       <TreeNode label="Acme Website">

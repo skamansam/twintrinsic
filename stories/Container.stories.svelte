@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect } from "storybook/test"
 import Container from "$lib/components/Container/Container.svelte"
 
 const { Story } = defineMeta({
@@ -16,7 +17,13 @@ const { Story } = defineMeta({
 })
 </script>
 
-<Story name="Default" args={{ fluid: false, class: "bg-surface p-4" }}>
+<Story
+  name="Default"
+  args={{ fluid: false, class: "bg-surface p-4" }}
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText("Welcome to Acme")).toBeInTheDocument();
+  }}
+>
   <div class="p-4 bg-primary-100 dark:bg-primary-800 rounded">
     <h2 class="text-lg font-semibold text-text dark:text-muted">Welcome to Acme</h2>
     <p class="mt-2 text-muted">The container keeps this content centered and readable at any screen size.</p>

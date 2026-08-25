@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect } from "storybook/test"
 import FileUpload from "$lib/components/Form/FileUpload.svelte"
 
 const { Story } = defineMeta({
@@ -33,7 +34,15 @@ const { Story } = defineMeta({
 })
 </script>
 
-<Story name="Basic">
+<Story
+  name="Basic"
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText("Drop files here or click to browse")).toBeVisible();
+    await expect(canvas.getByText("Select Files")).toBeVisible();
+    const fileInput = canvas.getByRole("textbox", { hidden: true });
+    await expect(fileInput).toBeInTheDocument();
+  }}
+>
   <div class="w-full max-w-xl">
     <FileUpload 
       dropzoneLabel="Drop files here or click to browse"
@@ -86,7 +95,12 @@ const { Story } = defineMeta({
   </div>
 </Story>
 
-<Story name="Disabled">
+<Story
+  name="Disabled"
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText("Upload disabled")).toBeVisible();
+  }}
+>
   <div class="w-full max-w-xl">
     <FileUpload 
       disabled

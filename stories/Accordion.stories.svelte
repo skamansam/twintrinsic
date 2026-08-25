@@ -1,5 +1,6 @@
 <script module>
   import { defineMeta } from "@storybook/addon-svelte-csf";
+  import { expect, userEvent } from "storybook/test";
   import Accordion from "../src/lib/components/Accordion/Accordion.svelte";
   import AccordionItem from "../src/lib/components/Accordion/AccordionItem.svelte";
 
@@ -15,7 +16,17 @@
   });
 </script>
 
-<Story name="Default" args={{ defaultExpanded: 0, bordered: true }}>
+<Story
+  name="Default"
+  args={{ defaultExpanded: 0, bordered: true }}
+  play={async ({ canvas }) => {
+    // Accordion uses <details>/<summary> — first item is expanded by default.
+    const summary = canvas.getByText("What is Twintrinsic?");
+    await expect(summary).toBeInTheDocument();
+    // The first item's content should be visible (expanded by default).
+    await expect(canvas.getByText(/Twintrinsic is a Tailwind-based/)).toBeVisible();
+  }}
+>
   <Accordion defaultExpanded={0} bordered={true}>
      <AccordionItem>
       {#snippet header()}What is Twintrinsic?{/snippet}

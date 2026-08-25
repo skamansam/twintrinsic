@@ -1,5 +1,6 @@
 <script module>
   import { defineMeta } from '@storybook/addon-svelte-csf';
+  import { expect } from 'storybook/test';
   import TreeMenu from '$lib/components/TreeMenu/TreeMenu.svelte';
 
   const { Story } = defineMeta({
@@ -40,6 +41,11 @@
         separator: true,
       },
     ],
+  }}
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText('Home')).toBeInTheDocument();
+    await expect(canvas.getByText('About')).toBeInTheDocument();
+    await expect(canvas.getByText('Settings')).toBeInTheDocument();
   }}
 />
 

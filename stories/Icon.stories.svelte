@@ -1,5 +1,6 @@
 <script module>
   import { defineMeta } from "@storybook/addon-svelte-csf";
+  import { expect } from "storybook/test";
   import Icon from "../src/lib/components/Icon/Icon.svelte";
 
   const { Story } = defineMeta({
@@ -65,7 +66,15 @@
   });
 </script>
 
-<Story name="Basic" args={{ name: "check", size: "md" }} />
+<Story
+  name="Basic"
+  args={{ name: "check", size: "md" }}
+  play={async ({ canvas }) => {
+    const icon = canvas.getByRole("img", { name: /check/i });
+    await expect(icon).toBeInTheDocument();
+    await expect(icon).toHaveClass(/_icon-/);
+  }}
+/>
 
 <Story name="Sizes" asChild>
   <div class="flex items-center gap-4">

@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect } from "storybook/test"
 import CodeBlockSpeed from "$lib/components/CodeBlockSpeed/CodeBlockSpeed.svelte"
 
 const { Story } = defineMeta({
@@ -18,7 +19,15 @@ const { Story } = defineMeta({
 })
 </script>
 
-<Story name="Default" args={{ language: "js" }}>
+<Story
+  name="Default"
+  args={{ language: "js" }}
+  play={async ({ canvas }) => {
+    const pre = canvas.getByRole("article").querySelector("pre");
+    await expect(pre).toBeInTheDocument();
+    await expect(canvas.getByText("greeting")).toBeInTheDocument();
+  }}
+>
 {`const greeting = "Hello, Speed Highlight!";
 console.log(greeting);`}
 </Story>

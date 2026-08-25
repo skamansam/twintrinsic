@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect } from "storybook/test"
 import Stepper from "$lib/components/Stepper/Stepper.svelte"
 import StepperStep from "$lib/components/Stepper/StepperStep.svelte"
 
@@ -39,7 +40,14 @@ const { Story } = defineMeta({
 })
 </script>
 
-<Story name="Basic">
+<Story
+  name="Basic"
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText("Shipping")).toBeInTheDocument();
+    await expect(canvas.getByText("Payment")).toBeInTheDocument();
+    await expect(canvas.getByText("Review")).toBeInTheDocument();
+  }}
+>
   <div class="w-full max-w-3xl mx-auto">
     <Stepper>
       <StepperStep label="Shipping">

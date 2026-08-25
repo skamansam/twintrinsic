@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect } from "storybook/test"
 import DataTable from "$lib/components/DataTable/DataTable.svelte"
 
 const { Story } = defineMeta({
@@ -187,7 +188,15 @@ const productColumns = [
 ]
 </script>
 
-<Story name="Basic">
+<Story
+  name="Basic"
+  play={async ({ canvas }) => {
+    const table = canvas.getByRole("table");
+    await expect(table).toBeInTheDocument();
+    await expect(canvas.getByRole("columnheader", { name: /name/i })).toBeInTheDocument();
+    await expect(canvas.getByRole("cell", { name: /sarah chen/i })).toBeInTheDocument();
+  }}
+>
   <div class="w-full">
     <DataTable 
       data={users} 

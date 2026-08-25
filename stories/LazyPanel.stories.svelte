@@ -1,5 +1,6 @@
 <script module>
   import { defineMeta } from "@storybook/addon-svelte-csf";
+  import { expect } from "storybook/test";
   import LazyPanel from "../src/lib/components/Panel/LazyPanel.svelte";
 
   const { Story } = defineMeta({
@@ -16,7 +17,12 @@
   });
 </script>
 
-<Story name="Default">
+<Story
+  name="Default"
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText("Billing FAQ")).toBeInTheDocument();
+  }}
+>
   <LazyPanel>
     {#snippet header()}Billing FAQ{/snippet}
     {#snippet loading()}

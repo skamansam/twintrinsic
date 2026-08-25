@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect } from "storybook/test"
 import Progress from "$lib/components/Progress/Progress.svelte"
 
 const { Story } = defineMeta({
@@ -20,7 +21,14 @@ const { Story } = defineMeta({
 })
 </script>
 
-<Story name="Default" />
+<Story
+  name="Default"
+  play={async ({ canvas }) => {
+    const bar = canvas.getByRole("progressbar");
+    await expect(bar).toBeInTheDocument();
+    await expect(bar).toHaveAttribute("aria-valuenow", "65");
+  }}
+/>
 
 <Story name="Variants">
   <div class="space-y-3">

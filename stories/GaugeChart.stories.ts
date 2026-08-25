@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/sveltekit';
 import GaugeChart from '$lib/components/Metrics/GaugeChart/GaugeChart.svelte';
+import { expect } from 'storybook/test';
 
 const meta = {
 	title: 'Metrics/GaugeChart',
@@ -27,6 +28,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText(/65/)).toBeInTheDocument();
+	},
 	args: {
 		value: 65,
 		min: 0,

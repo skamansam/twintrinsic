@@ -1,5 +1,6 @@
 <script module>
   import { defineMeta } from "@storybook/addon-svelte-csf";
+  import { expect } from "storybook/test";
   import Card from "../src/lib/components/Card/Card.svelte";
 
   const { Story } = defineMeta({
@@ -18,7 +19,13 @@
   });
 </script>
 
-<Story name="Default">
+<Story
+  name="Default"
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText("Wireless Noise-Cancelling Headphones")).toBeInTheDocument();
+    await expect(canvas.getByText("$199.99")).toBeInTheDocument();
+  }}
+>
   <Card>
     {#snippet header()}Product Details{/snippet}
     <p class="font-medium text-lg">Wireless Noise-Cancelling Headphones</p>

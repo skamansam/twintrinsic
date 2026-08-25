@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect, userEvent } from "storybook/test"
 import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
 
 const { Story } = defineMeta({
@@ -17,7 +18,16 @@ const { Story } = defineMeta({
 })
 </script>
 
-<Story name="Default">
+<Story
+  name="Default"
+  play={async ({ canvas }) => {
+    const toggle = canvas.getByRole("checkbox");
+    await expect(toggle).toBeInTheDocument();
+    await expect(toggle).not.toBeChecked();
+    await userEvent.click(toggle);
+    await expect(toggle).toBeChecked();
+  }}
+>
   <div class="p-4">
     <ThemeToggle />
   </div>

@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect } from "storybook/test"
 import Panel from "$lib/components/Panel/Panel.svelte"
 
 const { Story } = defineMeta({
@@ -17,7 +18,14 @@ const { Story } = defineMeta({
 })
 </script>
 
-<Story name="Default" args={{ expanded: true, class: "max-w-xl" }}>
+<Story
+  name="Default"
+  args={{ expanded: true, class: "max-w-xl" }}
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText("Order Summary")).toBeInTheDocument();
+    await expect(canvas.getByText("$149.00")).toBeInTheDocument();
+  }}
+>
   {#snippet header()}Order Summary{/snippet}
   <div class="space-y-2">
     <div class="flex justify-between">

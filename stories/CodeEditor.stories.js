@@ -1,3 +1,4 @@
+import { expect } from 'storybook/test';
 import CodeEditor from '$lib/components/CodeEditor/CodeEditor.svelte';
 
 const meta = {
@@ -75,6 +76,10 @@ export const Default = {
 		language: 'javascript',
 		theme: 'light',
 		height: '400px',
+	},
+	play: async ({ canvas }) => {
+		const editor = canvas.getByRole('code');
+		await expect(editor).toBeInTheDocument();
 	},
 };
 

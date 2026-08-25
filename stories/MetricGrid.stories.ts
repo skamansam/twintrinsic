@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/sveltekit';
 import MetricGrid from '$lib/components/Metrics/MetricGrid/MetricGrid.svelte';
+import { expect } from 'storybook/test';
 
 const meta = {
 	title: 'Metrics/MetricGrid',
@@ -16,6 +17,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Dashboard: Story = {
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Total Revenue')).toBeInTheDocument();
+	},
 	args: {
 		columns: 4,
 		gap: 'md',

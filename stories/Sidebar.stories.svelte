@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect } from "storybook/test"
 import Sidebar from "$lib/components/Sidebar/Sidebar.svelte"
 
 const { Story } = defineMeta({
@@ -20,7 +21,14 @@ const { Story } = defineMeta({
 })
 </script>
 
-<Story name="Default" args={{ visible: true, class: "h-[400px]" }}>
+<Story
+  name="Default"
+  args={{ visible: true, class: "h-[400px]" }}
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText("Navigation")).toBeInTheDocument();
+    await expect(canvas.getByRole("link", { name: "Home" })).toBeInTheDocument();
+  }}
+>
   <div class="h-[400px] bg-surface relative">
     <Sidebar visible>
       {#snippet header()}Navigation{/snippet}

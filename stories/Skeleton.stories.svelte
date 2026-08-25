@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect } from "storybook/test"
 import Skeleton from "$lib/components/Skeleton/Skeleton.svelte"
 
 const { Story } = defineMeta({
@@ -17,7 +18,15 @@ const { Story } = defineMeta({
 })
 </script>
 
-<Story name="Default" args={{ width: "200px", height: "20px" }} />
+<Story
+  name="Default"
+  args={{ width: "200px", height: "20px" }}
+  play={async ({ canvas }) => {
+    const skeleton = canvas.getByRole("status");
+    await expect(skeleton).toBeInTheDocument();
+    await expect(skeleton).toHaveAttribute("aria-busy", "true");
+  }}
+/>
 
 <Story name="Variants">
   <div class="space-y-4">

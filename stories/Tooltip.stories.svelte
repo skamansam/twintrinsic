@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect, userEvent } from "storybook/test"
 import Tooltip from "$lib/components/Tooltip/Tooltip.svelte"
 import Button from "$lib/components/Button/Button.svelte"
 
@@ -17,7 +18,15 @@ const { Story } = defineMeta({
 })
 </script>
 
-<Story name="Default">
+<Story
+  name="Default"
+  play={async ({ canvas }) => {
+    const btn = canvas.getByRole("button", { name: /save/i });
+    await expect(btn).toBeInTheDocument();
+    await userEvent.hover(btn);
+    await expect(canvas.getByText("Save changes to your profile")).toBeVisible();
+  }}
+>
   <div class="p-32 flex items-center justify-center">
     <Tooltip content="Save changes to your profile">
       <Button>Save</Button>

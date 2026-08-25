@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect, userEvent } from "storybook/test"
 import Combobox from "$lib/components/Form/Combobox.svelte"
 
 const { Story } = defineMeta({
@@ -88,7 +89,17 @@ const users = [
 ]
 </script>
 
-<Story name="Basic">
+<Story
+  name="Basic"
+  play={async ({ canvas }) => {
+    const input = canvas.getByPlaceholderText("Select a city");
+    await expect(input).toBeInTheDocument();
+    await userEvent.click(input);
+    // Typing filters the dropdown options
+    await userEvent.type(input, "New");
+    await expect(input).toHaveValue("New");
+  }}
+>
   <div class="w-full max-w-md mx-auto">
     <Combobox 
       options={cities}
@@ -127,7 +138,13 @@ const users = [
   </div>
 </Story>
 
-<Story name="Disabled">
+<Story
+  name="Disabled"
+  play={async ({ canvas }) => {
+    const input = canvas.getByPlaceholderText("Select a city");
+    await expect(input).toBeDisabled();
+  }}
+>
   <div class="w-full max-w-md mx-auto">
     <Combobox 
       options={cities}

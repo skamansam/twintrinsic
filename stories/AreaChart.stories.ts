@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/sveltekit';
 import AreaChart from '$lib/components/Metrics/AreaChart/AreaChart.svelte';
+import { expect } from 'storybook/test';
 
 const meta = {
 	title: 'Metrics/AreaChart',
@@ -22,6 +23,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const SingleSeries: Story = {
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Weekly Traffic')).toBeInTheDocument();
+	},
 	args: {
 		series: [
 			{

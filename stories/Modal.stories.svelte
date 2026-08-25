@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect, userEvent } from "storybook/test"
 import Modal from "$lib/components/Modal/Modal.svelte"
 import Button from "$lib/components/Button/Button.svelte"
 
@@ -21,7 +22,15 @@ const { Story } = defineMeta({
 })
 </script>
 
-<Story name="Confirm Delete">
+<Story
+  name="Confirm Delete"
+  play={async ({ canvas }) => {
+    const trigger = canvas.getByText("Delete project");
+    await userEvent.click(trigger);
+    await expect(canvas.getByText('Delete "Website Redesign"?')).toBeInTheDocument();
+    await expect(canvas.getByText(/permanently delete/)).toBeInTheDocument();
+  }}
+>
   <button onclick={() => (modalOpen = true)} class="px-4 py-2 bg-error-500 text-white rounded">
     Delete project
   </button>

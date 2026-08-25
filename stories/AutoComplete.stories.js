@@ -1,3 +1,4 @@
+import { expect, userEvent } from "storybook/test"
 import AutoComplete from "$lib/components/Form/AutoComplete.svelte"
 
 const countries = [
@@ -53,6 +54,12 @@ export const Default = {
     label: "Country",
     items: countries,
     placeholder: "Select a country",
+  },
+  play: async ({ canvas }) => {
+    const input = canvas.getByPlaceholderText("Select a country");
+    await expect(input).toBeInTheDocument();
+    await userEvent.type(input, "Unit");
+    await expect(input).toHaveValue("Unit");
   },
 }
 
@@ -126,6 +133,10 @@ export const Disabled = {
     disabled: true,
     value: countries[0],
     placeholder: "Disabled",
+  },
+  play: async ({ canvas }) => {
+    const input = canvas.getByPlaceholderText("Disabled");
+    await expect(input).toBeDisabled();
   },
 }
 

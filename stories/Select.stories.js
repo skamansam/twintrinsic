@@ -1,3 +1,4 @@
+import { expect, userEvent, within } from "storybook/test"
 import Select from "$lib/components/Form/Select.svelte"
 
 export default {
@@ -92,6 +93,11 @@ export const Default = {
     options: countries,
     placeholder: "Select a country...",
   },
+  play: async ({ canvas }) => {
+    const select = canvas.getByRole("combobox", { name: /country/i });
+    await expect(select).toBeInTheDocument();
+    await expect(select).toHaveValue("");
+  },
 }
 
 export const WithValue = {
@@ -99,6 +105,10 @@ export const WithValue = {
     label: "Country",
     options: countries,
     value: "us",
+  },
+  play: async ({ canvas }) => {
+    const select = canvas.getByRole("combobox", { name: /country/i });
+    await expect(select).toHaveValue("us");
   },
 }
 
@@ -135,6 +145,11 @@ export const WithError = {
     error: "Please select a country",
     required: true,
   },
+  play: async ({ canvas }) => {
+    const select = canvas.getByRole("combobox", { name: /country/i });
+    await expect(select).toHaveAttribute("aria-invalid", "true");
+    await expect(canvas.getByText("Please select a country")).toBeVisible();
+  },
 }
 
 export const Disabled = {
@@ -143,6 +158,10 @@ export const Disabled = {
     options: countries,
     value: "us",
     disabled: true,
+  },
+  play: async ({ canvas }) => {
+    const select = canvas.getByRole("combobox", { name: /country/i });
+    await expect(select).toBeDisabled();
   },
 }
 

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/sveltekit';
 import HorizontalBarChart from '$lib/components/Metrics/HorizontalBarChart/HorizontalBarChart.svelte';
+import { expect } from 'storybook/test';
 
 const meta = {
 	title: 'Metrics/HorizontalBarChart',
@@ -21,6 +22,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Chrome')).toBeInTheDocument();
+	},
 	args: {
 		data: [45, 38, 52, 41, 35],
 		labels: ['Chrome', 'Firefox', 'Safari', 'Edge', 'Other'],

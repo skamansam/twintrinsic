@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/sveltekit';
 import StatsCard from '$lib/components/Metrics/StatsCard/StatsCard.svelte';
+import { expect } from 'storybook/test';
 
 const meta = {
 	title: 'Metrics/StatsCard',
@@ -24,6 +25,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Total Revenue')).toBeInTheDocument();
+	},
 	args: {
 		label: 'Total Revenue',
 		value: '$12,345',

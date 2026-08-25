@@ -1,5 +1,6 @@
 <script module>
   import { defineMeta } from "@storybook/addon-svelte-csf"
+  import { expect, userEvent } from "storybook/test"
   import Menu from "$lib/components/Menu/Menu/Menu.svelte"
   import MenuItem from "$lib/components/Menu/Menu/MenuItem.svelte"
 
@@ -14,7 +15,16 @@
   })
 </script>
 
-<Story name="Basic">
+<Story
+  name="Basic"
+  play={async ({ canvas }) => {
+    const trigger = canvas.getByText("Account");
+    await expect(trigger).toBeInTheDocument();
+    await userEvent.click(trigger);
+    await expect(canvas.getByText("Profile")).toBeInTheDocument();
+    await expect(canvas.getByText("Sign out")).toBeInTheDocument();
+  }}
+>
   <div class="p-8">
     <Menu ariaLabel="Account menu">
       {#snippet trigger()}Account{/snippet}

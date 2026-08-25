@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/sveltekit';
+import { expect } from 'storybook/test';
 import BarChart from '$lib/components/Metrics/BarChart/BarChart.svelte';
 
 const meta = {
@@ -21,6 +22,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const SingleSeries: Story = {
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Monthly Revenue')).toBeInTheDocument();
+	},
 	args: {
 		series: [
 			{

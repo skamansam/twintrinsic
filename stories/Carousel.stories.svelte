@@ -1,5 +1,6 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
+import { expect } from "storybook/test"
 import Carousel from "$lib/components/Carousel/Carousel.svelte"
 import CarouselItem from "$lib/components/Carousel/CarouselItem.svelte"
 
@@ -37,7 +38,14 @@ const { Story } = defineMeta({
 })
 </script>
 
-<Story name="Basic">
+<Story
+  name="Basic"
+  play={async ({ canvas }) => {
+    await expect(canvas.getByText("Unlimited projects")).toBeInTheDocument();
+    await expect(canvas.getByRole("button", { name: /previous/i })).toBeInTheDocument();
+    await expect(canvas.getByRole("button", { name: /next/i })).toBeInTheDocument();
+  }}
+>
   <div class="w-full max-w-2xl mx-auto">
     <Carousel>
       {#snippet items()}
