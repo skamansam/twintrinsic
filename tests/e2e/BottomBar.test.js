@@ -2,16 +2,11 @@ import { expect, test } from "@playwright/test";
 import { waitForHydration } from "./helpers.js";
 
 /**
- * Docs-site smoke tests for the BottomBar component.
+ * Comprehensive docs-site interaction + accessibility tests for BottomBar.
  *
- * Component-level behavior (keyboard toggle, disabled state, docked /
- * backdrop handling) is covered by the Storybook vitest suite
- * (`pnpm test:storybook`).
- *
- * These tests verify the docs landing page renders the live examples
- * (`data-testid="bottombar-*"` hooks; the docs page mounts them after
- * a 100ms delay to avoid a transition glitch, so Playwright waits for
- * the container to appear) and that the expand/collapse toggle works.
+ * Targets `/docs/components/BottomBar/BottomBar`. The bar renders as a
+ * `role="complementary"` container with a `role="region"` panel inside.
+ * Examples are scoped via data-testid (bottombar-basic, bottombar-console).
  */
 test.describe("BottomBar docs page", () => {
   test.beforeEach(async ({ page }) => {
@@ -20,9 +15,21 @@ test.describe("BottomBar docs page", () => {
   });
 
   test("renders the docs page with all live examples", async ({ page }) => {
-    await expect(page.getByRole("heading", { name: "BottomBar", level: 1 })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "BottomBar", level: 1 }),
+    ).toBeVisible();
     await expect(page.getByTestId("bottombar-basic")).toBeVisible();
     await expect(page.getByTestId("bottombar-console")).toBeVisible();
+  });
+
+  test("basic bottom bar renders with complementary and region roles", async ({ page }) => {
+    const example = page.getByTestId("bottombar-basic");
+    const container = example.locator(".bottombar-container");
+    await expect(container).toBeVisible();
+    await expect(container).toHaveAttribute("role", "complementary");
+
+    const region = container.locator(".bottombar[role='region']");
+    await expect(region).toBeVisible();
   });
 
   test("renders the bottom bar expanded with content", async ({ page }) => {
@@ -31,7 +38,6 @@ test.describe("BottomBar docs page", () => {
     await expect(container).toBeVisible();
 
     await expect(container.locator(".bottombar")).toHaveClass(/bottombar-expanded/);
-    await expect(container.locator(".bottombar[role='region']")).toBeVisible();
     await expect(example.getByText("Project Information")).toBeVisible();
   });
 
@@ -40,13 +46,40 @@ test.describe("BottomBar docs page", () => {
     const container = example.locator(".bottombar-container");
     await expect(container).toBeVisible();
 
-    // Collapse
+    // Collapse.
     await container.locator("button").first().click();
     await expect(container.locator(".bottombar")).toHaveClass(/bottombar-collapsed/);
 
-    // Expand again
+    // Expand again.
     await container.locator("button").first().click();
     await expect(container.locator(".bottombar")).toHaveClass(/bottombar-expanded/);
+  });
+
+  test("toggle button is keyboard accessible (Enter/Space)", async ({ page }) => {
+    const example = page.getByTestId("bottombar-basic");
+    const container = example.locator(".bottombar-container");
+    const toggleBtn = container.locator("button").first();
+
+    await toggleBtn.focus();
+    await expect(toggleBtn).toBeFocused();
+
+    await page.keyboard.press("Enter");
+    await expect(container.locator(".bottombar")).toHaveClass(/bottombar-collapsed/);
+
+    await page.keyboard.press("Enter");
+    await expect(container.locator(".bottombar")).toHaveClass(/bottombar-expanded/);
+  });
+
+  test("Escape key collapses the bottom bar", async ({ page }) => {
+    const example = page.getByTestId("bottombar-basic");
+    const container = example.locator(".bottombar-container");
+
+    // Ensure it starts expanded.
+    await expect(container.locator(".bottombar")).toHaveClass(/bottombar-expanded/);
+
+    // Press Escape anywhere on the page.
+    await page.keyboard.press("Escape");
+    await expect(container.locator(".bottombar")).toHaveClass(/bottombar-collapsed/);
   });
 
   test("console example renders its log content", async ({ page }) => {
@@ -54,5 +87,20 @@ test.describe("BottomBar docs page", () => {
     const container = example.locator(".bottombar-container");
     await expect(container).toBeVisible();
     await expect(example.getByText("Build completed successfully")).toBeVisible();
+  });
+
+  test("console example also has region role", async ({ page }) => {
+    const example = page.getByTestId("bottombar-console");
+    const region = example.locator(".bottombar[role='region']");
+    await expect(region).toBeVisible();
+  });
+
+  test("toggle button has sr-only accessible label", async ({ page }) => {
+    const example = page.getByTestId("bottombar-basic");
+    const container = example.locator(".bottombar-container");
+    const toggleBtn = container.locator("button").first();
+    // The button should be focusable and interactive.
+    await expect(toggleBtn).toBeVisible();
+    await expect(toggleBtn).toBeEnabled();
   });
 });

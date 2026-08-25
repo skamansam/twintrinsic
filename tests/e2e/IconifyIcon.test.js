@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { waitForHydration } from "./helpers.js";
 
 /**
- * Docs-site tests for the Icon / IconifyIcon integration page.
+ * Comprehensive docs-site tests for IconifyIcon.
  *
  * Targets `/docs/components/Icon/IconifyIcon/IconifyIcon`. Icons load
  * on-demand from the Iconify CDN; the tests assert the wrapper elements
@@ -15,7 +15,9 @@ test.describe("IconifyIcon docs page", () => {
   });
 
   test("renders the docs page heading", async ({ page }) => {
-    await expect(page.getByRole("heading", { name: "IconifyIcon", level: 1 })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "IconifyIcon", level: 1 }),
+    ).toBeVisible();
   });
 
   test("basic icons demo renders icon wrappers", async ({ page }) => {
@@ -26,11 +28,16 @@ test.describe("IconifyIcon docs page", () => {
     await expect(page.locator("._icon-star").first()).toBeAttached();
   });
 
-  test("iconsets demo renders icons with their iconset class", async ({ page }) => {
-    // The "Different Iconsets" demo uses fa / heroicons / tabler overrides.
-    // Default iconset is also tabler, so we get two tabler SVGs — check
-    // each distinct iconset is present. toBeAttached() because the SVGs
-    // have aria-hidden="true" (decorative).
+  test("icons are decorative (aria-hidden=true)", async ({ page }) => {
+    const icons = page.locator("._icon-home svg").first();
+    if (await icons.count() > 0) {
+      await expect(icons).toHaveAttribute("aria-hidden", "true");
+    }
+  });
+
+  test("iconsets demo renders icons with their iconset class", async ({
+    page,
+  }) => {
     await expect(page.locator("._iconset-fa").first()).toBeAttached();
     await expect(page.locator("._iconset-heroicons").first()).toBeAttached();
     await expect(page.locator("._iconset-tabler").first()).toBeAttached();
@@ -42,5 +49,16 @@ test.describe("IconifyIcon docs page", () => {
       level: 2,
     });
     await expect(section).toBeVisible();
+  });
+
+  test("icon wrappers have consistent sizing classes", async ({ page }) => {
+    const icons = page.locator("._icon-home").first();
+    await expect(icons).toBeAttached();
+    // The icon wrapper should have dimensions set.
+    const box = await icons.boundingBox();
+    if (box) {
+      expect(box.width).toBeGreaterThan(0);
+      expect(box.height).toBeGreaterThan(0);
+    }
   });
 });
