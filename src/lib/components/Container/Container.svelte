@@ -54,9 +54,19 @@ const {
 
 <svelte:element
   this={as}
-  class="{fluid ? 'w-full' : 'container mx-auto px-4 sm:px-6 lg:px-8'} {className}"
+  class="tw-container {fluid ? 'w-full' : 'container mx-auto px-4 sm:px-6 lg:px-8'} {className}"
   {role}
   aria-label={ariaLabel}
 >
   {@render children?.()}
 </svelte:element>
+
+<style lang="postcss">
+  @reference "../../twintrinsic.css";
+
+  /* CSS Container Queries: children can use @container to adapt
+   * based on the Container's width (e.g. @container (min-width: 640px)). */
+  .tw-container {
+    container-type: inline-size;
+  }
+</style>

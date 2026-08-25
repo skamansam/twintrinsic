@@ -349,6 +349,8 @@ function generateRandomColor() {
   .avatar {
     @apply relative inline-flex items-center justify-center flex-shrink-0;
     @apply bg-surface dark:bg-surface text-text dark:text-text;
+    /* CSS aspect-ratio ensures consistent sizing without JS measurement */
+    aspect-ratio: 1;
   }
   
   .avatar-bordered {
