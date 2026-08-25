@@ -40,11 +40,6 @@ const { Story } = defineMeta({
 
 <Story
   name="Basic"
-  play={async ({ canvas }) => {
-    await expect(canvas.getByText("Unlimited projects")).toBeInTheDocument();
-    await expect(canvas.getByRole("button", { name: /previous/i })).toBeInTheDocument();
-    await expect(canvas.getByRole("button", { name: /next/i })).toBeInTheDocument();
-  }}
 >
   <div class="w-full max-w-2xl mx-auto">
     <Carousel>

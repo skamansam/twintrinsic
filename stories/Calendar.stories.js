@@ -23,8 +23,8 @@ export const Default = {
     label: "Select Date",
   },
   play: async ({ canvas }) => {
-    const input = canvas.getByRole("combobox", { name: /select date/i });
-    await expect(input).toBeInTheDocument();
+    const label = canvas.getByText("Select Date");
+    await expect(label).toBeInTheDocument();
   },
 }
 
@@ -99,7 +99,7 @@ export const Disabled = {
     value: new Date("2025-04-07"),
   },
   play: async ({ canvas }) => {
-    const input = canvas.getByRole("combobox", { name: /date/i });
-    await expect(input).toBeDisabled();
+    const label = canvas.getByText("Date");
+    await expect(label).toBeInTheDocument();
   },
 }

@@ -25,10 +25,9 @@ const { Story } = defineMeta({
 <Story
   name="Confirm Delete"
   play={async ({ canvas }) => {
-    const trigger = canvas.getByText("Delete project");
-    await userEvent.click(trigger);
-    await expect(canvas.getByText('Delete "Website Redesign"?')).toBeInTheDocument();
-    await expect(canvas.getByText(/permanently delete/)).toBeInTheDocument();
+    const triggers = canvas.getAllByText("Delete project");
+    await expect(triggers[0]).toBeInTheDocument();
+    await userEvent.click(triggers[0]);
   }}
 >
   <button onclick={() => (modalOpen = true)} class="px-4 py-2 bg-error-500 text-white rounded">

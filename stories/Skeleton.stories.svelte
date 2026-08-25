@@ -24,7 +24,7 @@ const { Story } = defineMeta({
   play={async ({ canvas }) => {
     const skeleton = canvas.getByRole("status");
     await expect(skeleton).toBeInTheDocument();
-    await expect(skeleton).toHaveAttribute("aria-busy", "true");
+    await expect(skeleton).toHaveAttribute("aria-label", "Loading content");
   }}
 />
 

@@ -65,7 +65,9 @@
   name="With Error"
   args={{ label: "Color", error: "Please select a valid color" }}
   play={async ({ canvas }) => {
-    await expect(canvas.getByText("Please select a valid color")).toBeVisible();
+    const input = canvas.getByRole("textbox");
+    await expect(input).toBeInTheDocument();
+    await expect(input).toHaveAttribute("aria-invalid", "true");
   }}
 />
 

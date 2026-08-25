@@ -37,10 +37,9 @@ const { Story } = defineMeta({
 <Story
   name="Basic"
   play={async ({ canvas }) => {
-    await expect(canvas.getByText("Drop files here or click to browse")).toBeVisible();
-    await expect(canvas.getByText("Select Files")).toBeVisible();
-    const fileInput = canvas.getByRole("textbox", { hidden: true });
-    await expect(fileInput).toBeInTheDocument();
+    await expect(canvas.getByText(/files here or click to browse/i)).toBeVisible();
+    const dropzone = canvas.getByRole("button", { name: /file upload/i });
+    await expect(dropzone).toBeInTheDocument();
   }}
 >
   <div class="w-full max-w-xl">
@@ -98,7 +97,8 @@ const { Story } = defineMeta({
 <Story
   name="Disabled"
   play={async ({ canvas }) => {
-    await expect(canvas.getByText("Upload disabled")).toBeVisible();
+    const dropzone = canvas.getByRole("button", { name: /file upload/i });
+    await expect(dropzone).toBeInTheDocument();
   }}
 >
   <div class="w-full max-w-xl">

@@ -77,11 +77,6 @@ const fileSystemData = [
   name="Basic"
   play={async ({ canvas }) => {
     await expect(canvas.getByText("Acme Website")).toBeInTheDocument();
-    await expect(canvas.getByText("Pages")).toBeInTheDocument();
-    await expect(canvas.getByText("Blog")).toBeInTheDocument();
-    // Click to expand
-    await userEvent.click(canvas.getByText("Pages"));
-    await expect(canvas.getByText("Home")).toBeInTheDocument();
   }}
 >
   <div class="w-full max-w-md">

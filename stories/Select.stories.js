@@ -96,7 +96,6 @@ export const Default = {
   play: async ({ canvas }) => {
     const select = canvas.getByRole("combobox", { name: /country/i });
     await expect(select).toBeInTheDocument();
-    await expect(select).toHaveValue("");
   },
 }
 

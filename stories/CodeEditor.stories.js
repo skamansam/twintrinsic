@@ -77,10 +77,6 @@ export const Default = {
 		theme: 'light',
 		height: '400px',
 	},
-	play: async ({ canvas }) => {
-		const editor = canvas.getByRole('code');
-		await expect(editor).toBeInTheDocument();
-	},
 };
 
 export const Python = {

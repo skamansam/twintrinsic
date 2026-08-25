@@ -21,7 +21,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	play: async ({ canvas }) => {
-		await expect(canvas.getByText('Chrome')).toBeInTheDocument();
+		await expect(canvas.getByText(/Chrome/)).toBeInTheDocument();
 	},
 	args: {
 		data: [35, 25, 20, 20],

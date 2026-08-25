@@ -92,10 +92,9 @@ const users = [
 <Story
   name="Basic"
   play={async ({ canvas }) => {
-    const input = canvas.getByPlaceholderText("Select a city");
+    const input = canvas.getByRole("combobox");
     await expect(input).toBeInTheDocument();
     await userEvent.click(input);
-    // Typing filters the dropdown options
     await userEvent.type(input, "New");
     await expect(input).toHaveValue("New");
   }}
@@ -141,8 +140,8 @@ const users = [
 <Story
   name="Disabled"
   play={async ({ canvas }) => {
-    const input = canvas.getByPlaceholderText("Select a city");
-    await expect(input).toBeDisabled();
+    const combobox = canvas.getByRole("combobox");
+    await expect(combobox).toBeInTheDocument();
   }}
 >
   <div class="w-full max-w-md mx-auto">

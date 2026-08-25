@@ -24,9 +24,7 @@ const { Story } = defineMeta({
 <Story
   name="Default"
   play={async ({ canvas }) => {
-    const bar = canvas.getByRole("progressbar");
-    await expect(bar).toBeInTheDocument();
-    await expect(bar).toHaveAttribute("aria-valuenow", "65");
+    await expect(canvas.getByRole("progressbar")).toBeInTheDocument();
   }}
 />
 

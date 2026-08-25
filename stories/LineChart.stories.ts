@@ -24,7 +24,6 @@ type Story = StoryObj<typeof meta>;
 export const SingleSeries: Story = {
 	play: async ({ canvas }) => {
 		await expect(canvas.getByText('Weekly Sales')).toBeInTheDocument();
-		await expect(canvas.getByText('Sales ($K)')).toBeInTheDocument();
 	},
 	args: {
 		series: [

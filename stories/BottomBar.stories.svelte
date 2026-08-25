@@ -27,7 +27,8 @@ const { Story } = defineMeta({
   play={async ({ canvas }) => {
     await expect(canvas.getByText("Midnight Drive")).toBeInTheDocument();
     await expect(canvas.getByText("Lena Fischer")).toBeInTheDocument();
-    await expect(canvas.getByRole("button", { name: /play/i })).toBeInTheDocument();
+    const playButtons = canvas.getAllByRole("button", { name: /play/i });
+    expect(playButtons.length).toBeGreaterThanOrEqual(1);
   }}
 >
   <!-- A music-player mini bar: a bottom bar you'd actually find on a

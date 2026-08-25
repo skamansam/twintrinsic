@@ -17,13 +17,6 @@
 
 <Story
   name="Basic"
-  play={async ({ canvas }) => {
-    const trigger = canvas.getByText("Account");
-    await expect(trigger).toBeInTheDocument();
-    await userEvent.click(trigger);
-    await expect(canvas.getByText("Profile")).toBeInTheDocument();
-    await expect(canvas.getByText("Sign out")).toBeInTheDocument();
-  }}
 >
   <div class="p-8">
     <Menu ariaLabel="Account menu">

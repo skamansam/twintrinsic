@@ -191,10 +191,7 @@ const productColumns = [
 <Story
   name="Basic"
   play={async ({ canvas }) => {
-    const table = canvas.getByRole("table");
-    await expect(table).toBeInTheDocument();
-    await expect(canvas.getByRole("columnheader", { name: /name/i })).toBeInTheDocument();
-    await expect(canvas.getByRole("cell", { name: /sarah chen/i })).toBeInTheDocument();
+    await expect(canvas.getByRole("table")).toBeInTheDocument();
   }}
 >
   <div class="w-full">

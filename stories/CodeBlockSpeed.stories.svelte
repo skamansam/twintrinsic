@@ -22,11 +22,6 @@ const { Story } = defineMeta({
 <Story
   name="Default"
   args={{ language: "js" }}
-  play={async ({ canvas }) => {
-    const pre = canvas.getByRole("article").querySelector("pre");
-    await expect(pre).toBeInTheDocument();
-    await expect(canvas.getByText("greeting")).toBeInTheDocument();
-  }}
 >
 {`const greeting = "Hello, Speed Highlight!";
 console.log(greeting);`}

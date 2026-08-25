@@ -18,7 +18,9 @@ const { Story } = defineMeta({
   name="Default"
   args={{}}
   play={async ({ canvas }) => {
-    await expect(canvas.getByRole("table")).toBeInTheDocument();
+    // The component fetches /browser-compat.json asynchronously.
+    // In Storybook test env, it renders loading/error state first.
+    await expect(canvas.getByText(/browser compatibility/i)).toBeInTheDocument();
   }}
 >
   <CompatibilityMatrix />

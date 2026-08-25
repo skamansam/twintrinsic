@@ -65,7 +65,9 @@ export const WithError = {
     required: true,
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText("Please enter a valid email address")).toBeVisible();
+    const input = canvas.getByDisplayValue("invalid-email");
+    await expect(input).toBeInTheDocument();
+    await expect(input).toHaveAttribute("aria-invalid", "true");
   },
 }
 

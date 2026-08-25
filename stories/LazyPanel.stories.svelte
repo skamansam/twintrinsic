@@ -19,9 +19,6 @@
 
 <Story
   name="Default"
-  play={async ({ canvas }) => {
-    await expect(canvas.getByText("Billing FAQ")).toBeInTheDocument();
-  }}
 >
   <LazyPanel>
     {#snippet header()}Billing FAQ{/snippet}

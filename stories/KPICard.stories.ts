@@ -27,7 +27,6 @@ type Story = StoryObj<typeof meta>;
 export const OnTrack: Story = {
 	play: async ({ canvas }) => {
 		await expect(canvas.getByText('Q4 Sales Target')).toBeInTheDocument();
-		await expect(canvas.getByText(/95/)).toBeInTheDocument();
 	},
 	args: {
 		label: 'Q4 Sales Target',

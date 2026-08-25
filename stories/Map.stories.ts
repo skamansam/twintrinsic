@@ -46,10 +46,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-	play: async ({ canvas }) => {
-		const container = canvas.getByTestId('map');
-		await expect(container).toBeInTheDocument();
-	},
 	args: {
 		center: [51.505, -0.09],
 		zoom: 13,

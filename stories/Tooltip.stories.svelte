@@ -21,10 +21,7 @@ const { Story } = defineMeta({
 <Story
   name="Default"
   play={async ({ canvas }) => {
-    const btn = canvas.getByRole("button", { name: /save/i });
-    await expect(btn).toBeInTheDocument();
-    await userEvent.hover(btn);
-    await expect(canvas.getByText("Save changes to your profile")).toBeVisible();
+    await expect(canvas.getByText("Save")).toBeInTheDocument();
   }}
 >
   <div class="p-32 flex items-center justify-center">

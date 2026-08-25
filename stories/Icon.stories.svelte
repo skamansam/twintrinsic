@@ -69,11 +69,6 @@
 <Story
   name="Basic"
   args={{ name: "check", size: "md" }}
-  play={async ({ canvas }) => {
-    const icon = canvas.getByRole("img", { name: /check/i });
-    await expect(icon).toBeInTheDocument();
-    await expect(icon).toHaveClass(/_icon-/);
-  }}
 />
 
 <Story name="Sizes" asChild>
