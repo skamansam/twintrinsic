@@ -249,6 +249,40 @@ $effect(() => {
 onchange?.(new CustomEvent("change", { detail: value }));
 ```
 
+### Rest Props / Attribute Passthrough
+
+Every component destructures `...restProps` (last item of the `$props()`
+destructure) and spreads it onto its root element, so consumers can pass
+native attributes to any component. Rules:
+
+- **Where it lands**: on the component's root element — or on the **native
+  form element** (`<input>`, `<select>`, `<textarea>`) for form controls.
+  Components that conditionally render (Button `<a>`/`<button>`, Tag,
+  Chip, Separator, Skeleton, Table) spread rest on **every branch**.
+  Components that delegate to an inner component (Calendar, ColorPicker,
+  AutoComplete → `Input`; Dropdown → `Select`) forward `{...restProps}` to
+  that child.
+- **Index signatures**: Props interfaces/types include
+  `[key: \`data-${string}\`]: unknown` and
+  `[key: \`aria-${string}\`]: string | undefined` **always**.
+- **Event handlers**: add
+  `[key: \`on${string}\`]: ((event: Event) => void) | undefined` **only
+  when the component has no `on*` callback props of its own**. A generic
+  `on${string}` index signature cannot coexist with typed callback props
+  (`onchange?: (e: CustomEvent) => void`, `ontoggle?: (payload) => void`,
+  …) — the narrower params fail TypeScript's contravariant index
+  conformance. Components with a callback API stay data/aria-only and use
+  their explicit typed props for events.
+- **Inline components** (no `interface Props`, e.g. Button) get a
+  permissive inferred rest type automatically — no index signatures needed.
+- **Rest never contains `class`/`id`** — those are always destructured as
+  explicit props, so the spread can't conflict with them.
+
+Verification: `grep -rn '...restProps' src/lib/components/` should list
+nearly every component, and each destructured `restProps` must be spread in
+the template (`grep -l '{...restProps}'`). Covered by
+`tests/e2e/RestProps.test.js`.
+
 ### Shared Helpers (`src/lib/helpers/`)
 
 Label/value extraction and group-remove dispatch are shared utilities in
