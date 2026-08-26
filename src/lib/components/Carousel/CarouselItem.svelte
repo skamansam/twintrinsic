@@ -33,7 +33,9 @@ import type { CarouselContext } from "./carouselContext.js"
 interface Props {
   /** Additional props passed through to the root element */
   [key: `data-${string}`]: unknown
-  [key: `aria-${string}`]: string | undefined
+  [key: `aria-${string}`]: string | undefined;
+  /** Native event handlers passed through to the root element */
+  [key: `on${string}`]: ((event: Event) => void) | undefined;
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */

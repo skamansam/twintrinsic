@@ -30,7 +30,9 @@ import type { Snippet } from "svelte"
 interface Props {
   /** Additional props passed through to the root element */
   [key: `data-${string}`]: unknown
-  [key: `aria-${string}`]: string | undefined
+  [key: `aria-${string}`]: string | undefined;
+  /** Native event handlers passed through to the root element */
+  [key: `on${string}`]: ((event: Event) => void) | undefined;
   /** If true, container will be full-width */
   fluid?: boolean
   /** Additional CSS classes to apply */

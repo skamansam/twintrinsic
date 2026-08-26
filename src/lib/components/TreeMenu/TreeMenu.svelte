@@ -57,6 +57,8 @@ export const propsMetadata = [
     /** Additional props passed through to the root element */
     [key: `data-${string}`]: unknown;
     [key: `aria-${string}`]: string | undefined;
+  /** Native event handlers passed through to the root element */
+  [key: `on${string}`]: ((event: Event) => void) | undefined;
     /** HTML id for accessibility */
     id?: string;
     /** Menu items to render (supports nested children) */

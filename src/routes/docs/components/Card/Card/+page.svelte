@@ -155,10 +155,27 @@ import * as CardModule from "$lib/components/Card/Card.svelte"
   </ExampleTabs>
 
   <h3>Rest Props Passthrough</h3>
-  <ExampleTabs code={`<Card data-rest-pass="card">Card content</Card>`}>
+  <ExampleTabs
+    code={`<Card
+  data-rest-pass="card"
+  onclick={(event) =>
+    event.currentTarget.setAttribute("data-clicked", "true")
+  }
+>
+  Click me — the native onclick handler is forwarded via rest props.
+</Card>`}
+  >
     <div data-testid="card-rest-props">
-      <Card data-rest-pass="card">
-        <div class="p-4">Rest props land on the root <code>&lt;article&gt;</code> element.</div>
+      <Card
+        data-rest-pass="card"
+        onclick={(event) =>
+          (event.currentTarget as HTMLElement).setAttribute("data-clicked", "true")
+        }
+      >
+        <div class="p-4">
+          Rest props (data-*, aria-*, and native event handlers) land on the root
+          <code>&lt;article&gt;</code> element.
+        </div>
       </Card>
     </div>
   </ExampleTabs>

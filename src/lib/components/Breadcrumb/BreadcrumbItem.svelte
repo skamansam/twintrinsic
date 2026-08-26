@@ -34,7 +34,9 @@ import type { BreadcrumbContext } from "./breadcrumbContext.js"
 interface Props {
   /** Additional props passed through to the root element */
   [key: `data-${string}`]: unknown
-  [key: `aria-${string}`]: string | undefined
+  [key: `aria-${string}`]: string | undefined;
+  /** Native event handlers passed through to the root element */
+  [key: `on${string}`]: ((event: Event) => void) | undefined;
   /** Additional CSS classes */
   class?: string
   /** Link URL (if item is a link) */

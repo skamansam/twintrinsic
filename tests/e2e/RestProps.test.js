@@ -55,6 +55,20 @@ test.describe("Rest props attribute passthrough", () => {
     const example = page.getByTestId("card-rest-props");
     const card = example.locator("article[data-rest-pass='card']");
     await expect(card).toBeVisible();
-    await expect(card).toContainText("Rest props land on the root");
+    await expect(card).toContainText("Rest props (data-*, aria-*, and native event handlers)");
+  });
+
+  test("Card forwards a native onclick handler passed via rest props", async ({ page }) => {
+    await page.goto("/docs/components/Card/Card");
+    await waitForHydration(page);
+
+    const example = page.getByTestId("card-rest-props");
+    const card = example.locator("article[data-rest-pass='card']");
+    await expect(card).not.toHaveAttribute("data-clicked", "true");
+
+    await card.click();
+    // The consumer-supplied native handler runs because it was forwarded
+    // onto the root element through the rest spread.
+    await expect(card).toHaveAttribute("data-clicked", "true");
   });
 });
