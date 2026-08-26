@@ -136,6 +136,7 @@ let {
   onclose = undefined,
   onfilter = undefined,
   children = undefined,
+  ...restProps
 }: SelectProps = $props()
 
 // Get form context if available
@@ -198,6 +199,7 @@ function handleChange(event: Event): void {
     {/if}
     
     <select
+      {...restProps}
       {id}
       bind:this={selectElement}
       bind:value={selectedValue}

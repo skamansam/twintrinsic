@@ -89,6 +89,9 @@ type RatingVariant =
   | "info"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -158,6 +161,7 @@ let {
   filledIcon,
   emptyIconSnippet,
   children,
+  ...restProps
 }: Props = $props()
 
 // Get form context if available
@@ -449,6 +453,7 @@ function handleKeydown(event: KeyboardEvent): void {
      This matches the APG slider pattern (single tab stop, arrow keys adjust). -->
 <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 <div
+  {...restProps}
   {id}
   class="
     rating

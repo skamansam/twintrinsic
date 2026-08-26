@@ -77,6 +77,7 @@ const {
 
   /** @type {string} - ARIA label for accessibility */
   ariaLabel = undefined,
+  ...restProps
 } = $props()
 
 const isIndeterminate = $derived(indeterminate)
@@ -112,7 +113,7 @@ const variantClasses = $derived(
 const progressAriaLabel = $derived(ariaLabel || `Progress: ${formattedValue}`)
 </script>
 
-<div class="progress-container {className}">
+<div {...restProps} class="progress-container {className}">
   {#if showValue}
     <div class="progress-label">
       {formattedValue}

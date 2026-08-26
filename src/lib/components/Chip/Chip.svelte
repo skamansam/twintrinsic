@@ -51,6 +51,9 @@ export const propsMetadata = [
  * ```
  */
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** @type {string} - Additional CSS classes */
   class?: string
   /** @type {string} - HTML id for accessibility */
@@ -104,6 +107,7 @@ const {
   onremove = undefined,
   onclick = undefined,
   children = undefined,
+  ...restProps
 }: Props = $props()
 
 // Determine variant classes
@@ -212,7 +216,7 @@ function handleKeydown(event: KeyboardEvent): void {
 </script>
 
 {#if clickable && !disabled}
-	<div
+	<div {...restProps}
 		{id}
 		class="
 			chip
@@ -263,6 +267,7 @@ function handleKeydown(event: KeyboardEvent): void {
 	</div>
 {:else}
 	<div
+		{...restProps}
 		{id}
 		class="
 			chip

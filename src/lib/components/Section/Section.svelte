@@ -59,10 +59,11 @@ const {
   title = "",
   subtitle = "",
   children,
+  ...restProps
 }: Props = $props()
 </script>
 
-<section {id} class={className}>
+<section {...restProps} {id} class={className}>
   {#if title || subtitle}
     <header>
       {#if title}

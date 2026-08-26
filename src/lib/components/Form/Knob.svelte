@@ -60,6 +60,9 @@ import { getContext, onMount } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -117,6 +120,7 @@ let {
   onchange,
   tickCount = 10,
   ariaLabel,
+  ...restProps
 }: Props = $props()
 
 // Get form context if available
@@ -448,6 +452,7 @@ const fontSizeClasses = $derived(
 </script>
 
 <div
+  {...restProps}
   {id}
   class="knob {sizeClasses} {className}"
   class:disabled={effectiveDisabled}

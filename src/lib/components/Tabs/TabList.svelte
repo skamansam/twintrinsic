@@ -34,6 +34,7 @@ const {
   ariaLabel = undefined,
 
   children = undefined,
+  ...restProps
 } = $props()
 
 // Get tabs context
@@ -44,7 +45,7 @@ const centered = tabsContext?.centered || false
 const fullWidth = tabsContext?.fullWidth || false
 </script>
 
-<div
+<div {...restProps}
   class="
     tab-list
     {fullWidth ? 'w-full' : ''}

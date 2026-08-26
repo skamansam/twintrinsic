@@ -101,6 +101,7 @@ const {
   header = null,
   footer = null,
   ontoggle = undefined,
+  ...restProps
 }: PanelProps = $props()
 
 let isExpanded = $state(true)
@@ -133,7 +134,7 @@ function handleKeydown(event: KeyboardEvent) {
 }
 </script>
 
-<div 
+<div {...restProps} 
   class="panel {bordered ? 'border border-border dark:border-border rounded-lg' : ''} {className}"
   class:disabled
 >

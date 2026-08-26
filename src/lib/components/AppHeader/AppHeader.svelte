@@ -47,6 +47,9 @@ type Brand = string | { name: string; logo?: import("svelte").Snippet<[number]> 
 type User = { name: string; avatar?: string; href?: string } | null
 type NavItem = { label: string; href?: string; current?: boolean }
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Brand display: a string or an object with name, logo, href, and tagline */
   brand: Brand
   /** Current user object, or null when signed out */
@@ -86,6 +89,7 @@ const {
   userMenu = undefined,
   onsearch = undefined,
   onsignout = undefined,
+  ...restProps
 }: Props = $props()
 
 let mobileMenuOpen = $state(false)
@@ -184,6 +188,7 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
 {/snippet}
 
 <header
+  {...restProps}
   class="app-header {className}"
   {id}
 >

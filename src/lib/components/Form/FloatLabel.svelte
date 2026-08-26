@@ -35,6 +35,9 @@ import type { Snippet } from "svelte"
 import { onMount } from "svelte"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -61,6 +64,7 @@ let {
   error,
   helpText,
   children,
+  ...restProps
 }: Props = $props()
 
 // Component state
@@ -178,6 +182,7 @@ onMount(() => {
 </script>
 
 <div
+  {...restProps}
   class="
     float-label-wrapper
     {isFocused ? 'is-focused' : ''}

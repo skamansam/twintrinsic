@@ -42,6 +42,9 @@ import type { Snippet } from "svelte"
 import { onDestroy, onMount } from "svelte"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -81,6 +84,7 @@ const {
   animationEasing = "ease-out",
   ariaLabel = "Masonry grid",
   children,
+  ...restProps
 }: Props = $props()
 
 // Component state
@@ -288,7 +292,7 @@ onMount(() => {
 })
 </script>
 
-<div
+<div {...restProps}
   {id}
   class="
     masonry

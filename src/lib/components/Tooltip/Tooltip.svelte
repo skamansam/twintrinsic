@@ -65,13 +65,14 @@ const {
 
   /** @type {import("svelte").Snippet} - Snippet rendered as the tooltip content (overrides `content`) */
   tooltipContent = undefined,
+  ...restProps
 } = $props()
 
 /** Unique anchor name linking the trigger to the tooltip via CSS Anchor Positioning. */
 const anchorName = $derived(`--tooltip-${id}`)
 </script>
 
-<span class="tooltip-wrapper {className}">
+<span {...restProps} class="tooltip-wrapper {className}">
   <!--
     Trigger: interestfor wires hover/focus → popover open, and automatically
     sets aria-describedby (plaintext) or aria-details (interactive content).

@@ -22,6 +22,9 @@ import { getItemLabel } from "../../helpers/itemLabel.js"
 import { getItemValue } from "../../helpers/itemValue.js"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -67,6 +70,7 @@ let {
   ariaLabel,
   onchange,
   children,
+  ...restProps
 }: Props = $props()
 
 let isOpen = $state(false)
@@ -261,7 +265,7 @@ const listboxId = $derived(`${id}-listbox`)
   }
 </style>
 
-<div class="combobox-wrapper {className}" {id}>
+<div {...restProps} class="combobox-wrapper {className}" {id}>
   <div class="combobox-input-wrapper">
     <input
       bind:this={inputElement}

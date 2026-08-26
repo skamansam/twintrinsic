@@ -91,6 +91,7 @@ const {
   onclose = undefined,
   /** @type {(event: CustomEvent) => void} - Filter event handler */
   onfilter = undefined,
+  ...restProps
 } = $props()
 
 // Normalize string options (e.g. `["Apple", "Banana"]`) into the
@@ -104,6 +105,7 @@ const normalizedOptions = $derived(
 </script>
 
 <Select
+  {...restProps}
   {id}
   label={ariaLabel || name}
   options={normalizedOptions}

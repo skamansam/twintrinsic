@@ -32,6 +32,9 @@ import Icon from "../Icon/Icon.svelte"
 import type { BreadcrumbContext } from "./breadcrumbContext.js"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** Link URL (if item is a link) */
@@ -55,6 +58,7 @@ let {
   current = false,
   collapsible = true,
   children,
+  ...restProps
 }: Props = $props()
 
 // Get breadcrumb context
@@ -109,7 +113,7 @@ const isLast = $derived(index === -1 || !itemElement?.nextElementSibling)
 const isCurrent = $derived(current || isLast)
 </script>
 
-<li 
+<li {...restProps} 
   class="
     breadcrumb-item
     {isCurrent ? 'breadcrumb-item-current' : ''}

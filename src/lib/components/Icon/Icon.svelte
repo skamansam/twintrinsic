@@ -44,6 +44,9 @@ import IconifyIcon from '@iconify/svelte'
 import { iconConfig } from '../../stores/iconManager.js'
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Icon name without iconset prefix (e.g., "home", "star") */
   name: string
   /** Override the default iconset for this icon */
@@ -80,6 +83,7 @@ let {
   class: className = '',
   inline = undefined,
   onLoad = undefined,
+  ...restProps
 }: Props = $props()
 
 // Subscribe to the global iconset configuration
@@ -105,7 +109,10 @@ let resolvedIconset = $derived(parsedName.iconset || iconset || (currentConfig a
 
 // Build the full icon name with iconset prefix
 let fullIconName = $derived(`${resolvedIconset}:${parsedName.name}`)
-</script>  <IconifyIcon
+</script>
+
+<IconifyIcon
+  {...restProps}
   icon={fullIconName}
   {color}
   {width}

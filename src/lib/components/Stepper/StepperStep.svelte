@@ -90,6 +90,7 @@ const {
   onClick = undefined,
 
   children = undefined,
+  ...restProps
 } = $props()
 
 // Get stepper context
@@ -169,7 +170,7 @@ function handleClick(): void {
 }
 </script>
 
-<div
+<div {...restProps}
   {id}
   class="
     stepper-step

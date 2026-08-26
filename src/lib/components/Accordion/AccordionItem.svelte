@@ -58,6 +58,7 @@ export const propsMetadata = [
     showIcon = true,
     children = undefined,
     header = undefined,
+  ...restProps
   }: Props = $props();
 
   const accordion = getContext<AccordionContext | undefined>("accordion");
@@ -89,7 +90,7 @@ export const propsMetadata = [
   }
 </script>
 
-<details
+<details {...restProps}
   class="accordion-item {className}"
   class:disabled
   bind:this={detailsElement}

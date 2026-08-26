@@ -64,6 +64,7 @@ const {
   class: className = "",
   /** @type {(event: CustomEvent) => void} - Change event handler */
   onchange = undefined,
+  ...restProps
 } = $props()
 
 let checkboxEl: HTMLInputElement | undefined = $state()
@@ -105,6 +106,7 @@ function handleChange(event: Event) {
     class:checkbox-error={error}
   >
     <input
+      {...restProps}
       type="checkbox"
       bind:this={checkboxEl}
       {id}

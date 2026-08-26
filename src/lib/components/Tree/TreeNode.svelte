@@ -192,7 +192,7 @@ function handleKeyDown(event: KeyboardEvent): void {
 }
 </script>
 
-<div
+<div {...restProps}
   {id}
   class="
     tree-node

@@ -116,6 +116,7 @@ const {
 
   /** @type {Function} - Custom function to generate initials */
   initialsGenerator = undefined,
+  ...restProps
 } = $props()
 
 // Component state
@@ -282,7 +283,7 @@ function generateRandomColor() {
 }
 </script>
 
-<div
+<div {...restProps}
   {id}
   class="
     avatar

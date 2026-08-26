@@ -41,6 +41,7 @@ const {
   as = undefined,
 
   children = undefined,
+  ...restProps
 } = $props()
 
 // Color variants mapping
@@ -61,13 +62,14 @@ const resolvedColorClass = $derived(colorClasses[color as Color] ?? colorClasses
 </script>
 
 {#if element === "hr"}
-  <hr
+  <hr {...restProps}
     class="separator {resolvedColorClass} {vertical ? 'separator-vertical' : 'separator-horizontal'} {className}"
     aria-orientation={vertical ? 'vertical' : 'horizontal'}
     aria-label={ariaLabel}
   />
 {:else}
   <div
+    {...restProps}
     class="separator {resolvedColorClass} {vertical ? 'separator-vertical' : 'separator-horizontal'} {hasContent ? 'separator-with-content' : ''} {className}"
     role="separator"
     aria-orientation={vertical ? 'vertical' : 'horizontal'}

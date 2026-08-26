@@ -38,6 +38,9 @@ import { getContext, setContext } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -74,6 +77,7 @@ let {
   size = "md",
   onchange,
   children,
+  ...restProps
 }: Props = $props()
 
 // Get form context if available
@@ -154,7 +158,7 @@ setContext("radioGroup", {
 })
 </script>
 
-<fieldset
+<fieldset {...restProps}
   {id}
   class="radio-group {layout === 'horizontal' ? 'radio-group-horizontal' : 'radio-group-vertical'} {className}"
   disabled={effectiveDisabled}

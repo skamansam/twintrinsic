@@ -53,6 +53,7 @@ const {
   maxVisibleItems = 1,
 
   children,
+  ...restProps
 } = $props()
 
 // Provide context for child components. Called at init (not in `$effect`) so
@@ -71,7 +72,7 @@ const breadcrumbContext: BreadcrumbContext = {
 setContext<BreadcrumbContext>("breadcrumb", breadcrumbContext)
 </script>
 
-<nav
+<nav {...restProps}
   {id}
   class="breadcrumb {className}"
   aria-label={ariaLabel}

@@ -45,6 +45,9 @@ import Input from "./Input.svelte"
 import Icon from "../Icon/Icon.svelte"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** HTML id for accessibility */
   id?: string
   /** Name attribute */
@@ -103,6 +106,7 @@ let {
   disabled = false,
   class: className = "",
   onselect,
+  ...restProps
 }: Props = $props()
 
 let currentMonth = $state(new Date())
@@ -385,6 +389,7 @@ function handleKeydown(event: KeyboardEvent): void {
        dismisses it immediately after it opens. The picker stays open
        only when the mousedown doesn't move focus. -->
   <Input
+    {...restProps}
     {id}
     {label}
     disabled={effectiveDisabled}

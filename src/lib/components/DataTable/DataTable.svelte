@@ -90,6 +90,9 @@ import Icon from "../Icon/Icon.svelte"
 // `ColumnDef` is imported from the `<script module>` above; not redeclared here.
 
 interface Props<TRow extends Record<string, unknown> = Record<string, unknown>> {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -189,6 +192,7 @@ let {
   onfilter,
   onpage,
   onselect,
+  ...restProps
 }: Props<TRow> = $props()
 
 // Component state
@@ -495,7 +499,7 @@ function formatCell(value: unknown, column: ColumnDef<TRow>, row: TRow): string 
 }
 </script>
 
-<div
+<div {...restProps}
   class="
     data-table-wrapper
     {responsive ? 'data-table-responsive' : ''}

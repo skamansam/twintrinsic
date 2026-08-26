@@ -53,6 +53,7 @@ const {
   value = {},
 
   children = undefined,
+  ...restProps
 } = $props()
 
 let isOpen = $state(false)
@@ -66,7 +67,7 @@ const toggleMenu = () => {
 }
 </script>
 
-<li role="none">
+<li {...restProps} role="none">
   <svelte:element
     this={href ? 'a' : 'span'}
     {href}

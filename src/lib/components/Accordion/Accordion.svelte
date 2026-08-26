@@ -56,6 +56,7 @@ export const propsMetadata = [
     bordered = true,
     onchange = undefined,
     children = undefined,
+  ...restProps
   }: Props = $props();
 
   const groupName = crypto.randomUUID();
@@ -69,7 +70,7 @@ export const propsMetadata = [
   });
 </script>
 
-<div 
+<div {...restProps} 
   class="accordion {bordered ? 'border border-border dark:border-border rounded-lg' : ''} {className}"
   id={id}
 >

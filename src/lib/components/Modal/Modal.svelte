@@ -42,6 +42,9 @@ export const propsMetadata = [
 import type { Snippet } from "svelte"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -92,6 +95,7 @@ let {
   children = undefined,
   header = undefined,
   footer = undefined,
+  ...restProps
 }: Props = $props()
 
 let dialogElement: HTMLDialogElement | undefined = $state()
@@ -193,7 +197,7 @@ const sizeClasses = $derived(
 )
 </script>
 
-<dialog
+<dialog {...restProps}
   bind:this={dialogElement}
   {id}
   {closedby}

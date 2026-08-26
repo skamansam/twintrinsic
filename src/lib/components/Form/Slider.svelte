@@ -105,6 +105,7 @@ const {
   onchange = undefined,
   /** @type {(event: CustomEvent) => void} - Input event handler */
   oninput = undefined,
+  ...restProps
 } = $props()
 
 // Get form context if available
@@ -154,6 +155,7 @@ function handleInput(e: Event): void {
 
 <div class="slider-wrapper {className}">
   <input
+    {...restProps}
     {id}
     type="range"
     {value}

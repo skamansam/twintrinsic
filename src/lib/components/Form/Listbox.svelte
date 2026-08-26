@@ -115,6 +115,7 @@ let {
   ariaLabel,
   onchange,
   onfilter,
+  ...restProps
 }: Props<TOption> = $props()
 
 // Get form context if available
@@ -364,6 +365,7 @@ const filteredOptions = $derived(filterOptions())
   {/if}
 
   <div
+    {...restProps}
     id="{id}-listbox"
     class="listbox"
     style="max-height: {maxHeight}px;"

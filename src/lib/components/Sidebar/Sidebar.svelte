@@ -111,6 +111,7 @@ const {
   header = undefined,
   title = undefined,
   children = undefined,
+  ...restProps
 }: SidebarProps = $props()
 
 let isExpanded = $state(true)
@@ -133,7 +134,7 @@ $effect(() => {
 </script>
 
 <!-- svelte-ignore a11y_no_redundant_roles -->
-<aside
+<aside {...restProps}
   class="
     sidebar-container
     {position === 'right' ? 'sidebar-right' : 'sidebar-left'}

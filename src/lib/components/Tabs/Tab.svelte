@@ -44,6 +44,7 @@ const {
   iconPosition = "left",
 
   children = undefined,
+  ...restProps
 } = $props()
 
 // Get tabs context
@@ -104,7 +105,7 @@ const tabId = $derived(id || `tab-${crypto.randomUUID()}`)
 const panelId = $derived(`panel-${tabId}`)
 </script>
 
-<button
+<button {...restProps}
   id={tabId}
   class="tab {className}"
   role="tab"

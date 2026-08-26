@@ -27,6 +27,9 @@ export const propsMetadata = [
 import type { Snippet } from "svelte"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -87,6 +90,7 @@ const {
   media = undefined,
   header = undefined,
   footer = undefined,
+  ...restProps
 }: Props = $props()
 
 // Determine if card has clickable behavior (derived so the conditional render
@@ -96,6 +100,7 @@ const isClickable = $derived(!!href)
 </script>
 
 <svelte:element
+  {...restProps}
   this={href ? "a" : "article"}
   {id}
   class="

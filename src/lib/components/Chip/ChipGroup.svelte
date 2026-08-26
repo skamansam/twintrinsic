@@ -131,6 +131,7 @@ let {
   onselect,
   onremove,
   children,
+  ...restProps
 }: Props<TItem> = $props()
 
 // Component state. Initialize from the controlled `selected` prop so the
@@ -169,7 +170,7 @@ function handleRemove(index: number): void {
 }
 </script>
 
-<div
+<div {...restProps}
   {id}
   class="
     chip-group

@@ -147,6 +147,7 @@ const {
 
   /** @type {import("svelte").Snippet<[{ option: unknown }]>} - Snippet rendering an option */
   option = undefined,
+  ...restProps
 } = $props()
 
 // Get form context if available
@@ -481,6 +482,7 @@ function clearSelection(event: Event): void {
 >
   <div class="combobox-input-container">
     <input
+      {...restProps}
       {id}
       {name}
       type="text"

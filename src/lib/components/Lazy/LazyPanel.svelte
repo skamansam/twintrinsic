@@ -30,6 +30,9 @@ import { onMount } from "svelte"
 import Panel from "../Panel/Panel.svelte"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -57,6 +60,7 @@ const {
   header = undefined,
   loading = undefined,
   children = undefined,
+  ...restProps
 }: Props = $props()
 
 let isVisible = $state(false)
@@ -83,7 +87,7 @@ onMount(() => {
 })
 </script>
 
-<div bind:this={sentinel} class="lazy-panel-sentinel {className}">
+<div {...restProps} bind:this={sentinel} class="lazy-panel-sentinel {className}">
   {#if isVisible}
     <Panel {expanded} {id}>
       {#if header}

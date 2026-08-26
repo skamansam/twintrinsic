@@ -32,10 +32,11 @@ const {
   class: className = "",
 
   children,
+  ...restProps
 } = $props()
 </script>
 
-<thead class="table-head {className}">
+<thead {...restProps} class="table-head {className}">
   {@render children?.()}
 </thead>
 

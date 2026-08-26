@@ -145,6 +145,7 @@ let {
   disabled = false,
   onselect,
   onremove,
+  ...restProps
 }: Props<TItem> = $props()
 
 let inputValue = $state("")
@@ -517,6 +518,7 @@ function renderItemTemplate(item: TItem): string {
     bind:this={anchorElement}
   >
     <Input
+      {...restProps}
       {id}
       {label}
       {placeholder}

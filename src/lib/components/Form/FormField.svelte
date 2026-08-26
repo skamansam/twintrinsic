@@ -46,6 +46,9 @@ interface ChildProps {
 }
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -81,6 +84,7 @@ let {
   hideLabel = false,
   layout,
   children,
+  ...restProps
 }: Props = $props()
 
 // Get form context if available
@@ -201,7 +205,7 @@ const describedBy = $derived(
 )
 </script>
 
-<div 
+<div {...restProps} 
   class="
     form-field
     {fieldLayout === 'horizontal' ? 'form-field-horizontal' : 'form-field-vertical'}

@@ -56,6 +56,7 @@ const {
   ariaLabel = undefined,
 
   children,
+  ...restProps
 } = $props()
 
 // Provide context for child buttons (wrapped in getters so prop changes propagate)
@@ -66,7 +67,7 @@ setContext("buttonGroup", {
 })
 </script>
 
-<div
+<div {...restProps}
   {id}
   class="
     button-group

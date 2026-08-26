@@ -117,6 +117,7 @@ const {
 
   /** @type {import("svelte").Snippet} - Snippet rendering the slide items */
   items = undefined,
+  ...restProps
 } = $props()
 
 // Component state
@@ -346,7 +347,7 @@ onDestroy(() => {
 </script>
 
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-<div
+<div {...restProps}
   {id}
   class="
     carousel

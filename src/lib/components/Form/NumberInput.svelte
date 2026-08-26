@@ -60,6 +60,9 @@ import { getContext } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -129,6 +132,7 @@ let {
   oninput,
   onfocus,
   onblur,
+  ...restProps
 }: Props = $props()
 
 // Get form context if available
@@ -377,6 +381,7 @@ const buttonSizeClasses = $derived(
     {/if}
     
     <input
+      {...restProps}
       {id}
       {name}
       type="text"

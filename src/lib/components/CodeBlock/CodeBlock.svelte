@@ -76,6 +76,9 @@ if (Prism.plugins?.autoloader) {
 }
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** The language for syntax highlighting */
   language?: string
   /** Additional CSS classes */
@@ -96,7 +99,8 @@ let {
   pluginSource = "unpkg",
   plugins = [],
   title,
-  children
+  children,
+  ...restProps
 }: Props = $props()
 
 let code = $state("")
@@ -277,7 +281,7 @@ async function copyCode() {
 }
 </script>
 
-<div class="code-block {className}">
+<div {...restProps} class="code-block {className}">
   <div class="code-header">
     {#if language}
       <div class="code-language">{language}</div>

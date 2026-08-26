@@ -51,6 +51,9 @@ import type { Snippet } from "svelte";
 import { setContext } from "svelte";
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -86,6 +89,7 @@ let {
   ariaLabel = "Tree",
   onselect,
   children,
+  ...restProps
 }: Props = $props()
 
 // Derived values for reactive prop access in closures
@@ -133,7 +137,7 @@ $effect(() => {
 })
 </script>
 
-<div
+<div {...restProps}
   {id}
   class="
     tree

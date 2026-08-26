@@ -73,6 +73,7 @@ const {
   inline = true,
 
   children = undefined,
+  ...restProps
 } = $props()
 
 // Determine if badge should be hidden
@@ -157,6 +158,7 @@ const positionClasses = $derived(
 
 {#if !isHidden}
   <span
+    {...restProps}
     {id}
     class="
       badge

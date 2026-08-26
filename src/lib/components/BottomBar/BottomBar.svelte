@@ -80,6 +80,7 @@ const {
   ontoggle,
   header,
   children,
+  ...restProps
 }: BottomBarProps = $props()
 
 let isExpanded = $state(false)
@@ -108,6 +109,7 @@ function handleKeydown(event: KeyboardEvent) {
 <svelte:window onkeydown={handleKeydown} />
 
 <div
+  {...restProps}
   class="
     bottombar-container
     {docked ? 'bottombar-docked' : ''}

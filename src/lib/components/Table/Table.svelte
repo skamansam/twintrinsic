@@ -74,6 +74,7 @@ const {
   ariaDescription = undefined,
 
   children = undefined,
+  ...restProps
 } = $props()
 
 // Provide context for child components. Called at init (not in `$effect`) so
@@ -97,6 +98,7 @@ setContext("table", {
 {#if responsive}
   <div class="table-responsive">
     <table
+      {...restProps}
       {id}
       class="
         table
@@ -122,6 +124,7 @@ setContext("table", {
   </div>
 {:else}
   <table
+    {...restProps}
     {id}
     class="
       table

@@ -103,6 +103,7 @@ const {
   onfocus = undefined,
   /** @type {(event: CustomEvent) => void} - Blur event handler */
   onblur = undefined,
+  ...restProps
 } = $props()
 
 // Get form context if available
@@ -429,6 +430,7 @@ function handleBlur(event: FocusEvent): void {
     
     <!-- Input -->
     <input
+      {...restProps}
       {id}
       {name}
       type="text"

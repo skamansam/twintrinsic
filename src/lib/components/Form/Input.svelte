@@ -182,6 +182,7 @@ const {
   onleftIconClick,
   /** @type {() => void} - Right icon click handler */
   onrightIconClick,
+  ...restProps
 }: InputProps = $props()
 
 // Get form context if available
@@ -326,6 +327,7 @@ const inputClasses = $derived(`
     {/if}
 
     <input
+      {...restProps}
       {type}
       {id}
       {name}

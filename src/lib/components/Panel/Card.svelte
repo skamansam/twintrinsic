@@ -81,6 +81,7 @@ let {
   header,
   footer,
   media,
+  ...restProps
 }: CardProps = $props()
 
 // Handle click events if card is clickable
@@ -98,7 +99,7 @@ function handleClick(event: MouseEvent | KeyboardEvent): void {
 </script>
 
 <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-<div
+<div {...restProps}
   class="
     card
     {shadow ? `shadow-${shadowSize}` : ''}

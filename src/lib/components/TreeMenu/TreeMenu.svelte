@@ -54,6 +54,9 @@ export const propsMetadata = [
   import TreeMenuSelf from "./TreeMenu.svelte"
 
   interface Props {
+    /** Additional props passed through to the root element */
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: string | undefined;
     /** HTML id for accessibility */
     id?: string;
     /** Menu items to render (supports nested children) */
@@ -64,7 +67,13 @@ export const propsMetadata = [
     showSearch?: boolean;
   }
 
-  let { id = crypto.randomUUID(), items = [], class: className = "", showSearch = false }: Props = $props();
+  let {
+    id = crypto.randomUUID(),
+    items = [],
+    class: className = "",
+    showSearch = false,
+    ...restProps
+  }: Props = $props();
 
   let searchQuery = $state("");
 
@@ -90,7 +99,7 @@ export const propsMetadata = [
 
 </script>
 
-<div id={id} class="tree-menu-container {className}">
+<div id={id} {...restProps} class="tree-menu-container {className}">
   {#if showSearch}
     <div class="tree-menu-search-header">
       <input

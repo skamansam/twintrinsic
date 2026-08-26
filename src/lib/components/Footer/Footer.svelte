@@ -32,6 +32,9 @@ export const propsMetadata = [
   import type { Snippet } from "svelte";
 
   interface Props {
+    /** Additional props passed through to the root element */
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: string | undefined;
     /** Additional CSS classes */
     class?: string;
     /** Left-aligned content snippet */
@@ -42,10 +45,16 @@ export const propsMetadata = [
     right?: Snippet;
   }
 
-  const { class: className = "", left, center, right }: Props = $props();
+  const {
+    class: className = "",
+    left,
+    center,
+    right,
+    ...restProps
+  }: Props = $props();
 </script>
 
-<footer class="footer {className}">
+<footer {...restProps} class="footer {className}">
   <div class="footer-left">
     {#if left}
       {@render left()}

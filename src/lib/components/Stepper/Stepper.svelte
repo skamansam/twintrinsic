@@ -70,6 +70,7 @@ const {
   ariaLabel = "Step progress",
 
   children,
+  ...restProps
 } = $props()
 
 // Provide context for child components. Called at init (not in `$effect`) so
@@ -101,7 +102,7 @@ setContext("stepper", {
 })
 </script>
 
-<nav
+<nav {...restProps}
   {id}
   class="
     stepper

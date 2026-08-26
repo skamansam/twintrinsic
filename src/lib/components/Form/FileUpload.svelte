@@ -70,6 +70,9 @@ interface UploadError {
 }
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -139,6 +142,7 @@ let {
   onsuccess,
   dropzone,
   previews,
+  ...restProps
 }: Props = $props()
 
 // Get form context if available
@@ -630,6 +634,7 @@ onDestroy(() => {
   </div>
   
   <input
+    {...restProps}
     {id}
     type="file"
     {name}

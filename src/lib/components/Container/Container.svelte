@@ -28,6 +28,9 @@ export const propsMetadata = [
 import type { Snippet } from "svelte"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** If true, container will be full-width */
   fluid?: boolean
   /** Additional CSS classes to apply */
@@ -49,10 +52,12 @@ const {
   role = null,
   ariaLabel = null,
   children = undefined,
+  ...restProps
 }: Props = $props()
 </script>
 
 <svelte:element
+  {...restProps}
   this={as}
   class="tw-container {fluid ? 'w-full' : 'container mx-auto px-4 sm:px-6 lg:px-8'} {className}"
   {role}

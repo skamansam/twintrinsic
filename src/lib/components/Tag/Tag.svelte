@@ -48,6 +48,9 @@ type TagVariant =
   | "info"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -100,6 +103,7 @@ let {
   dismissIcon,
   ondismiss,
   children,
+  ...restProps
 }: Props = $props()
 
 // Determine variant classes
@@ -170,7 +174,7 @@ function handleClick(event: MouseEvent): void {
 </script>
 
 {#if href}
-  <a
+  <a {...restProps}
     {id}
     href={href}
     target={target}
@@ -214,6 +218,7 @@ function handleClick(event: MouseEvent): void {
 {:else}
   {#if clickable && dismissible}
     <span
+      {...restProps}
       {id}
       class="
         tag
@@ -250,6 +255,7 @@ function handleClick(event: MouseEvent): void {
   {:else if clickable}
     <button
       type="button"
+      {...restProps}
       {id}
       class="
         tag
@@ -272,6 +278,7 @@ function handleClick(event: MouseEvent): void {
     </button>
   {:else}
     <span
+      {...restProps}
       {id}
       class="
         tag

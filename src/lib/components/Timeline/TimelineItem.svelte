@@ -86,6 +86,7 @@ const {
   position = undefined,
 
   children,
+  ...restProps
 } = $props()
 
 // Get timeline context
@@ -186,7 +187,7 @@ onMount(() => {
 })
 </script>
 
-<li
+<li {...restProps}
   {id}
   class="
     timeline-item

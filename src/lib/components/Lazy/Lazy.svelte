@@ -32,6 +32,9 @@ import type { Snippet } from "svelte"
 import { onMount } from "svelte"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -61,6 +64,7 @@ let {
   delay = 0,
   children = undefined,
   placeholder = undefined,
+  ...restProps
 }: Props = $props()
 
 // State
@@ -129,7 +133,7 @@ onMount(() => {
 })
 </script>
 
-<div 
+<div {...restProps} 
   {id}
   class="lazy-container {className}"
   bind:this={element}

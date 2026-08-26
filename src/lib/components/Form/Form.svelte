@@ -40,6 +40,9 @@ import { setContext } from "svelte"
 import type { FormContext } from "./formContext.js"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -82,6 +85,7 @@ let {
   onchange = undefined,
   onerror = undefined,
   children = undefined,
+  ...restProps
 }: Props = $props()
 
 // Form state
@@ -272,7 +276,7 @@ const formApi = {
 // Note: Form component exposes API through context, not events
 </script>
 
-<form
+<form {...restProps}
   {id}
   method={method as 'get' | 'post'}
   {action}

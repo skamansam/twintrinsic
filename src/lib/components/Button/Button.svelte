@@ -128,6 +128,7 @@ const {
   onclick = undefined,
 
   children = undefined,
+  ...restProps
 } = $props()
 
 /**
@@ -251,6 +252,7 @@ onMount(() => {
 
 {#if isLink}
   <a
+    {...restProps}
     {id}
     class={buttonClass}
     {href}
@@ -266,6 +268,7 @@ onMount(() => {
   </a>
 {:else}
   <button
+    {...restProps}
     {id}
     class={buttonClass}
     {type}

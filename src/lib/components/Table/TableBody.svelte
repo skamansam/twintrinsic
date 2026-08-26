@@ -31,10 +31,11 @@ const {
   class: className = "",
 
   children,
+  ...restProps
 } = $props()
 </script>
 
-<tbody class="table-body {className}">
+<tbody {...restProps} class="table-body {className}">
   {@render children?.()}
 </tbody>
 

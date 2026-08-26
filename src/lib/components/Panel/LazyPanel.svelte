@@ -34,6 +34,9 @@ import { onMount } from "svelte"
 import Panel from "./Panel.svelte"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Whether the panel is expanded */
   expanded?: boolean
   /** Additional CSS classes */
@@ -72,6 +75,7 @@ let {
   children,
   header,
   loading,
+  ...restProps
 }: Props = $props()
 
 let isVisible = $state(false)
@@ -107,7 +111,7 @@ onMount(() => {
 })
 </script>
 
-<div bind:this={panelElement}>
+<div {...restProps} bind:this={panelElement}>
   <Panel
     {expanded}
     class={className}

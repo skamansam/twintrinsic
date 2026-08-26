@@ -60,6 +60,7 @@ const {
   ariaLabel = "Avatar group",
 
   children,
+  ...restProps
 } = $props()
 
 // Provide context for child avatars. Called at init (not in `$effect`) so the
@@ -83,7 +84,7 @@ const showOverflow = $derived(max !== undefined && total !== undefined && total 
 const overflowCount = $derived(showOverflow ? total - max : 0)
 </script>
 
-<div
+<div {...restProps}
   {id}
   class="
     avatar-group

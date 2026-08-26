@@ -71,6 +71,7 @@ export const propsMetadata = [
     duration = 5000,
     dismissible = true,
     pauseOnHover = true,
+  ...restProps
   }: Props = $props();
 
   // Component state
@@ -154,7 +155,7 @@ export const propsMetadata = [
   };
 </script>
 
-<div
+<div {...restProps}
   class="
     toast-container
     {positionClasses}

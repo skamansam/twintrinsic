@@ -45,10 +45,11 @@ const {
   animated = true,
 
   children = undefined,
+  ...restProps
 } = $props()
 </script>
 
-<div 
+<div {...restProps} 
   class="invalid-state {className}"
   role="alert"
   aria-live="assertive"

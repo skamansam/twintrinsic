@@ -62,6 +62,7 @@ const {
 
   /** @type {string} - ARIA label for accessibility */
   ariaLabel = "Loading content",
+  ...restProps
 } = $props()
 
 // Determine height based on variant
@@ -110,7 +111,7 @@ const isMultiLine = $derived(variant === "text" && lines > 1)
 </script>
 
 {#if isMultiLine}
-  <div 
+  <div {...restProps} 
     {id}
     class="skeleton-group {className}"
     role="status"
@@ -136,6 +137,7 @@ const isMultiLine = $derived(variant === "text" && lines > 1)
   </div>
 {:else}
   <div
+    {...restProps}
     {id}
     class="
       skeleton

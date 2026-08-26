@@ -38,6 +38,9 @@ import type { FormContext, FormFieldApi } from "./formContext.js"
 import Input from "./Input.svelte"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** HTML id for accessibility */
   id?: string
   /** Name attribute */
@@ -71,6 +74,7 @@ let {
   error = "",
   class: className = "",
   onchange = undefined,
+  ...restProps
 }: Props = $props()
 
 let showPicker = $state(false)
@@ -363,6 +367,7 @@ function handleInput(event: CustomEvent): void {
        it right after it opens. When the popover is already open the
        input stays focusable so the value can be edited directly. -->
   <Input
+    {...restProps}
     {id}
     {label}
     disabled={effectiveDisabled}

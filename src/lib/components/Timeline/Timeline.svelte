@@ -64,6 +64,7 @@ const {
   ariaLabel = "Timeline",
 
   children,
+  ...restProps
 } = $props()
 
 // Provide context for child components. Called at init (not in `$effect`) so
@@ -87,7 +88,7 @@ setContext("timeline", {
 })
 </script>
 
-<ol
+<ol {...restProps}
   {id}
   class="
     timeline

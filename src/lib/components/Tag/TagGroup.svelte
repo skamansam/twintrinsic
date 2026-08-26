@@ -104,6 +104,7 @@ let {
   ariaLabel = "Tag group",
   ondismiss,
   children,
+  ...restProps
 }: Props<TItem> = $props()
 
 /**
@@ -115,7 +116,7 @@ function handleDismiss(index: number): void {
 }
 </script>
 
-<div
+<div {...restProps}
   {id}
   class="
     tag-group

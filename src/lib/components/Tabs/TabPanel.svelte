@@ -31,6 +31,9 @@ import { getContext, onMount } from "svelte"
 import { fade } from "svelte/transition"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -54,6 +57,7 @@ let {
   animated = true,
   animationDuration = 200,
   children = undefined,
+  ...restProps
 }: Props = $props()
 
 // Get tabs context
@@ -102,7 +106,7 @@ const panelId = $derived(id || `panel-${crypto.randomUUID()}`)
 const tabId = $derived(`tab-${panelId.replace("panel-", "")}`)
 </script>
 
-<div
+<div {...restProps}
   id={panelId}
   class="tab-panel {className}"
   role="tabpanel"

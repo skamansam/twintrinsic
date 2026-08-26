@@ -43,6 +43,9 @@ export const propsMetadata = [
 import { onMount, type Snippet } from "svelte"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */
@@ -76,6 +79,7 @@ let {
   first = undefined,
   second = undefined,
   onresize = undefined,
+  ...restProps
 }: Props = $props()
 
 let size = $state(0)
@@ -207,7 +211,7 @@ function separator(
     },
   }
 }
-</script>  <div
+</script>  <div {...restProps}
     {id}
     bind:this={containerRef}
     class="splitter {className}"

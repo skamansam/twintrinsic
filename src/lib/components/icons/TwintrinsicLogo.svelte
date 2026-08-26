@@ -17,10 +17,11 @@ const {
 
   /** @type {string} - Width and height of the logo (CSS size) */
   size = "3rem",
+  ...restProps
 } = $props()
 </script>
 
-<svg
+<svg {...restProps}
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 180 180"
   class={className}

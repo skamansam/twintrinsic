@@ -30,6 +30,9 @@ export const propsMetadata = [
 import type { Snippet } from "svelte"
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for the menu trigger */
@@ -48,6 +51,7 @@ const {
   ariaLabel = "Menu",
   trigger = undefined,
   content = undefined,
+  ...restProps
 }: Props = $props()
 
 let menuEl: HTMLDivElement | undefined = $state()
@@ -152,7 +156,7 @@ function handleFocusOut(e: FocusEvent) {
 }
 </script>
 
-<div class="menu {className}" {id}>
+<div {...restProps} class="menu {className}" {id}>
   <button
     type="button"
     class="menu-trigger"
