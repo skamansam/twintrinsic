@@ -27,6 +27,9 @@ Usage:
  * "Type 'boolean' is not assignable to type 'never'".
  */
 export type PanelProps = {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Whether the panel is expanded */
   expanded?: boolean
   /** Additional CSS classes */

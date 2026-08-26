@@ -26,6 +26,9 @@ import type { Snippet } from "svelte"
  * destructured props are not annotated with its own type.
  */
 export type BottomBarProps = {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Whether the bottom bar is expanded by default */
   expanded?: boolean
   /** Additional CSS classes */

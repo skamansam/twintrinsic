@@ -45,6 +45,9 @@ import type { MenuItem } from "../TreeMenu/TreeMenu.svelte"
  * destructured props are not annotated with its own type.
  */
 export type SidebarProps = {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Show/hide the sidebar (controlled by parent) */
   visible?: boolean
   /** Additional CSS classes */

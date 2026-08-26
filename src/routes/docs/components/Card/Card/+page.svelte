@@ -154,6 +154,15 @@ import * as CardModule from "$lib/components/Card/Card.svelte"
     </div>
   </ExampleTabs>
 
+  <h3>Rest Props Passthrough</h3>
+  <ExampleTabs code={`<Card data-rest-pass="card">Card content</Card>`}>
+    <div data-testid="card-rest-props">
+      <Card data-rest-pass="card">
+        <div class="p-4">Rest props land on the root <code>&lt;article&gt;</code> element.</div>
+      </Card>
+    </div>
+  </ExampleTabs>
+
   <h2>Slots</h2>
   <table>
     <thead><tr><th>Slot</th><th>Description</th></tr></thead>

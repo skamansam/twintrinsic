@@ -34,6 +34,9 @@ Usage:
  *  from type $$ComponentProps".
  */
 export type InputProps = {
+  /** Additional props passed through to the input element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Label text */
   label?: string
   /** Input type (text, email, password, etc.) */

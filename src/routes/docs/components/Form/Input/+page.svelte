@@ -168,6 +168,13 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
+<h3>Rest Props Passthrough</h3>
+<ExampleTabs code={`<Input data-rest-pass="input" aria-label="Rest props input" placeholder="Enter value" />`}>
+  <div class="max-w-md" data-testid="input-rest-props">
+    <Input data-rest-pass="input" aria-label="Rest props input" placeholder="Enter value" />
+  </div>
+</ExampleTabs>
+
 <!-- ─── Slots ─────────────────────────────────────────── -->
 <h2>Slots</h2>
 <p>

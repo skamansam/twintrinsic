@@ -143,6 +143,13 @@ import * as ButtonModule from "$lib/components/Button/Button.svelte"
     </div>
   </ExampleTabs>
 
+  <h3>Rest Props Passthrough</h3>
+  <ExampleTabs code={`<Button data-rest-pass="button">Rest Props</Button>`}>
+    <div class="flex flex-wrap items-center gap-4" data-testid="button-rest-props">
+      <Button data-rest-pass="button">Rest Props</Button>
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={ButtonModule} />
 

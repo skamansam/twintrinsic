@@ -29,6 +29,9 @@ import type { Snippet } from "svelte"
  * are not annotated with its own type.
  */
 export type CardProps = {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Additional CSS classes */
   class?: string
   /** HTML id for accessibility */

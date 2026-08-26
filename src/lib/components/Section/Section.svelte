@@ -37,6 +37,9 @@ export const propsMetadata = [
 import type { Snippet } from "svelte";
 
 type Props = {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown;
+  [key: `aria-${string}`]: string | undefined;
   /** Additional CSS classes */
   class?: string;
 
