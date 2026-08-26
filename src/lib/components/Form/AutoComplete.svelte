@@ -43,6 +43,7 @@ export const propsMetadata = [
   { name: "loading", type: "boolean", description: "Whether suggestions are loading", default: "false", optional: true },
   { name: "placeholder", type: "string", description: "Placeholder text", default: "\"\"", optional: true },
   { name: "disabled", type: "boolean", description: "Whether the input is disabled", default: "false", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
   { name: "onselect", type: "(event: CustomEvent<{ item?: TItem; items?: TItem[] }>) => void", description: "Select event handler", optional: true, eventDetail: "{ item?: TItem; items?: TItem[] }" },
   { name: "onremove", type: "(event: CustomEvent<{ item: TItem }>) => void", description: "Remove event handler", optional: true, eventDetail: "{ item: TItem }" },
 ];
@@ -70,6 +71,8 @@ export type ItemTemplateValue<TItem> =
   | { render: (args: { item: TItem }) => string }
 
 interface Props<TItem extends string | Record<string, unknown> = string | Record<string, unknown>> {
+  /** HTML id for accessibility */
+  id?: string
   /** Name attribute */
   name?: string
   /** Label text */
@@ -117,6 +120,7 @@ interface Props<TItem extends string | Record<string, unknown> = string | Record
 }
 
 let {
+  id = crypto.randomUUID(),
   name,
   label,
   items = [],
@@ -513,6 +517,7 @@ function renderItemTemplate(item: TItem): string {
     bind:this={anchorElement}
   >
     <Input
+      {id}
       {label}
       {placeholder}
       disabled={effectiveDisabled}

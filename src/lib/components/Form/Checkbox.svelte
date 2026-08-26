@@ -20,6 +20,7 @@ Usage:
 -->
 <script module lang="ts">
 export const propsMetadata = [
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
   { name: "label", type: "string", description: "Label text", optional: true },
   { name: "description", type: "string", description: "Description text", default: "\"\"", optional: true },
   { name: "checked", type: "boolean", description: "Whether the checkbox is checked", default: "false", optional: true },
@@ -39,6 +40,8 @@ import { getContext } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
 
 const {
+  /** @type {string} - HTML id for accessibility */
+  id = crypto.randomUUID(),
   /** @type {string} - Label text */
   label = undefined,
   /** @type {string} - Description text */
@@ -104,13 +107,14 @@ function handleChange(event: Event) {
     <input
       type="checkbox"
       bind:this={checkboxEl}
+      {id}
       {name}
       {value}
       {checked}
       disabled={effectiveDisabled}
       {required}
       aria-invalid={!!error}
-      aria-describedby={error ? `${name}-error` : undefined}
+      aria-describedby={error ? `${id}-error` : undefined}
       onchange={handleChange}
     />
     <span class="checkbox-control" aria-hidden="true">
@@ -141,7 +145,7 @@ function handleChange(event: Event) {
   {#if error}
     <div
       class="checkbox-error-text"
-      id="{name}-error"
+      id="{id}-error"
       role="alert"
     >
       {error}

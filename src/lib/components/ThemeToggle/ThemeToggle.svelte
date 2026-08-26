@@ -8,9 +8,22 @@ Usage:
 <ThemeToggle />
 ```
 -->
+<script module lang="ts">
+export const propsMetadata = [
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
+];
+</script>
+
 <script lang="ts">
   import { onMount } from 'svelte';
   import Icon from '../Icon/Icon.svelte';
+
+  interface Props {
+    /** HTML id for accessibility */
+    id?: string;
+  }
+
+  let { id = crypto.randomUUID() }: Props = $props();
 
   let isDarkMode = $state(false);
 
@@ -39,6 +52,7 @@ Usage:
 <label class="tw-theme-toggle" data-twintrinsic-theme-toggle aria-label="Toggle theme">
   <input 
     type="checkbox" 
+    {id}
     class="tw-theme"
     checked={isDarkMode}
     onchange={(e) => {

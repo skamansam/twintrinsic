@@ -42,6 +42,7 @@ Provides semantic, accessible tree navigation with minimal JavaScript.
   }
 
 export const propsMetadata = [
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
   { name: "items", type: "MenuItem[]", description: "Menu items to render (supports nested children)", default: "[]", optional: true },
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "showSearch", type: "boolean", description: "Whether to show a search input that filters items", default: "false", optional: true },
@@ -53,6 +54,8 @@ export const propsMetadata = [
   import TreeMenuSelf from "./TreeMenu.svelte"
 
   interface Props {
+    /** HTML id for accessibility */
+    id?: string;
     /** Menu items to render (supports nested children) */
     items?: MenuItem[];
     /** Additional CSS classes */
@@ -61,7 +64,7 @@ export const propsMetadata = [
     showSearch?: boolean;
   }
 
-  let { items = [], class: className = "", showSearch = false }: Props = $props();
+  let { id = crypto.randomUUID(), items = [], class: className = "", showSearch = false }: Props = $props();
 
   let searchQuery = $state("");
 
@@ -87,7 +90,7 @@ export const propsMetadata = [
 
 </script>
 
-<div class="tree-menu-container {className}">
+<div id={id} class="tree-menu-container {className}">
   {#if showSearch}
     <div class="tree-menu-search-header">
       <input

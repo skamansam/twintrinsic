@@ -33,6 +33,7 @@ export const propsMetadata = [
   { name: "format", type: "string", description: "Date format for display", default: "\"MM/dd/yyyy\"", optional: true },
   { name: "disabled", type: "boolean", description: "Whether the calendar is disabled", default: "false", optional: true },
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
   { name: "onselect", type: "(event: CustomEvent<{ date?: Date; start?: Date; end?: Date | null }>) => void", description: "Select event handler", optional: true, eventDetail: "{ date?: Date; start?: Date; end?: Date | null }" },
 ];
 </script>
@@ -44,6 +45,8 @@ import Input from "./Input.svelte"
 import Icon from "../Icon/Icon.svelte"
 
 interface Props {
+  /** HTML id for accessibility */
+  id?: string
   /** Name attribute */
   name?: string
   /** Selected date or date range */
@@ -73,6 +76,7 @@ interface Props {
 }
 
 let {
+  id = crypto.randomUUID(),
   name,
   value = null,
   range = false,
@@ -381,6 +385,7 @@ function handleKeydown(event: KeyboardEvent): void {
        dismisses it immediately after it opens. The picker stays open
        only when the mousedown doesn't move focus. -->
   <Input
+    {id}
     {label}
     disabled={effectiveDisabled}
     value={inputValue}

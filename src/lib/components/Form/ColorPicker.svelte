@@ -27,6 +27,7 @@ export const propsMetadata = [
   { name: "disabled", type: "boolean", description: "Whether the picker is disabled", default: "false", optional: true },
   { name: "error", type: "string", description: "Error message", default: "\"\"", optional: true },
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
+  { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
   { name: "onchange", type: "(event: CustomEvent<{ value: string }>) => void", description: "Change event handler", optional: true, eventDetail: "{ value: string }" },
 ];
 </script>
@@ -37,6 +38,8 @@ import type { FormContext, FormFieldApi } from "./formContext.js"
 import Input from "./Input.svelte"
 
 interface Props {
+  /** HTML id for accessibility */
+  id?: string
   /** Name attribute */
   name?: string
   /** Color value in current format */
@@ -58,6 +61,7 @@ interface Props {
 }
 
 let {
+  id = crypto.randomUUID(),
   name,
   value = "#000000",
   format = "hex",
@@ -359,6 +363,7 @@ function handleInput(event: CustomEvent): void {
        it right after it opens. When the popover is already open the
        input stays focusable so the value can be edited directly. -->
   <Input
+    {id}
     {label}
     disabled={effectiveDisabled}
     {error}
