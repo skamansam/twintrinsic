@@ -31,7 +31,7 @@
 ## 1. App / Layout Components
 
 ### 1.1 App
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -41,10 +41,21 @@
 
 **Sources:** S1 (Landmarks), S2 (`<main>`, `<header>`, `<footer>`, `<nav>`), S3 (PageLayout), S4 (Common layout patterns), S5 (css-layout)
 
----
+**Twintrinsic Implementation:**
+- Uses CSS Grid with `grid-template-rows` and `grid-template-columns` for the page shell
+- Semantic `<main>` element for the content area
+- Accepts `header`, `footer`, `leftPanel`, `rightPanel` snippets for flexible composition
+- `<svelte:window>` for scroll event handling
+- `data-theme` attribute on root for theme propagation
+- `...rest` spread for native attribute passthrough (`data-*`, `aria-*`)
 
-### 1.2 AppHeader
-**Status:** ⬜
+**Common Mistakes:**
+- Don't put navigation inside `<main>` — it belongs in `<nav>` within the header or sidebar
+- Don't use `<div>` for the main content area — always use `<main>` for landmark semantics
+- Don't forget `id="main-content"` for skip-nav links
+
+**Related:** AppHeader, Sidebar, Footer, BottomBar, Container
+**Status:** ✅
 
 | | |
 |---|---|
@@ -54,10 +65,21 @@
 
 **Sources:** S1 (Landmarks), S2 (`<header>`, `<nav>`), S3 (PageHeader), S4 (Top app bar), S5 (navigation-drawer, shrinking-header-on-scroll)
 
----
+**Twintrinsic Implementation:**
+- Semantic `<header>` element as root
+- `<svelte:window>` for scroll-based shadow/border transitions
+- Mobile hamburger menu with popover-style slide-out
+- Search input with `role="searchbox"` and `aria-label`
+- User menu with keyboard-navigable dropdown
+- `...rest` spread on `<header>` for native attributes
 
-### 1.3 BottomBar
-**Status:** ⬜
+**Common Mistakes:**
+- Don't nest multiple `<header>` landmarks — one per page section
+- Don't use `<div>` for the top bar — always `<header>` for screen reader landmarks
+- Don't forget `aria-label` when there are multiple navigation landmarks
+
+**Related:** App, Sidebar, BottomBar, Menu, Breadcrumb
+**Status:** ✅
 
 | | |
 |---|---|
@@ -67,10 +89,20 @@
 
 **Sources:** S1 (Landmarks), S2 (`<nav>`), S3 (ActionList for bottom sheets), S4 (Bottom navigation), S5 (scroll-position-aware-elements)
 
----
+**Twintrinsic Implementation:**
+- `<div>` root with `role="navigation"` and `aria-label="Bottom navigation"`
+- Flexbox layout for even distribution of nav items
+- Icon + label pairs with `aria-label` on each link
+- Active state indicated via `aria-current="page"`
+- Fixed positioning at viewport bottom for mobile-first design
 
-### 1.4 Sidebar
-**Status:** ⬜
+**Common Mistakes:**
+- Don't use for desktop layouts — bottom navigation is a mobile pattern
+- Don't put more than 5 items — cognitive load increases beyond that
+- Don't forget `aria-current="page"` on the active item
+
+**Related:** AppHeader, Sidebar, App, Menu
+**Status:** ✅
 
 | | |
 |---|---|
@@ -80,10 +112,25 @@
 
 **Sources:** S1 (Landmarks, Tree View), S2 (`<nav>`, `<aside>`), S3 (NavList), S4 (Navigation rail/drawer), S5 (navigation-drawer)
 
+**Twintrinsic Implementation:**
+- Semantic `<aside>` element as root
+- Collapsible on mobile with CSS transitions
+- Nested navigation with `<nav>` and `<ul>` for sidebar links
+- `aria-expanded` on the collapse toggle
+- `...rest` spread for native attributes
+
+**Common Mistakes:**
+- Don't use `<nav>` as the root — `<aside>` is the correct landmark for sidebars
+- Don't forget `aria-label` when there are multiple `<nav>` elements on the page
+- Don't hardcode sidebar width — use CSS custom properties for flexibility
+
+**Related:** App, AppHeader, Tree, TreeMenu, Breadcrumb
+**Status:** ✅
+
 ---
 
 ### 1.5 Footer
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -93,12 +140,25 @@
 
 **Sources:** S1 (Landmarks), S2 (`<footer>`), S3 (PageLayout), S4 (Footer patterns), S5 (css-layout)
 
+**Twintrinsic Implementation:**
+- Semantic `<footer>` element as root
+- Three-region layout: `footer-left`, `footer-center`, `footer-right` via CSS flexbox
+- Accepts `left`, `center`, `right` snippets for flexible content
+- `...rest` spread on `<footer>` for native attributes
+
+**Common Mistakes:**
+- Don't put primary navigation in the footer — it belongs in the header or sidebar
+- Don't use `<div>` — always `<footer>` for landmark semantics
+- Don't forget copyright year can be dynamic via JS
+
+**Related:** App, AppHeader, Separator
+
 ---
 
 ## 2. Form Components
 
 ### 2.1 Input / TextInput
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -108,10 +168,24 @@
 
 **Sources:** S2 (`<input>`), S3 (TextInput), S4 (Text fields), S5 (forms, autofill-sign-in-form, autofill-address-form), S6 (Input)
 
+**Twintrinsic Implementation:**
+- Native `<input>` element with `type` prop (text, email, tel, url, search, password, etc.)
+- Floating label via CSS `:has()` + `:placeholder-shown` — zero JS for label animation
+- Form context integration via `getContext('form')` for `effectiveDisabled` and validation
+- `...rest` spread on `<input>` for native attributes (`data-*`, `aria-*`)
+- `id` with `crypto.randomUUID()` default for accessibility
+
+**Common Mistakes:**
+- Don't use `<div contenteditable>` — always `<input>` for form participation
+- Don't forget `type="email"` for email fields — it enables mobile keyboards and native validation
+- Don't override `id` unless you need label association — the default handles `aria-describedby`
+
+**Related:** Textarea, NumberInput, AutoComplete, Combobox, FloatLabel, FormField
+
 ---
 
 ### 2.2 NumberInput
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -121,10 +195,22 @@
 
 **Sources:** S1 (Spinbutton), S2 (`<input type="number">`), S3 (TextInput), S4 (Number field), S5 (forms), S6 (InputNumber)
 
+**Twintrinsic Implementation:**
+- Wraps native `<input type="number">` with increment/decrement buttons
+- Uses `step`, `min`, `max` for constraints — all native HTML5 validation
+- `aria-live="polite"` on the value display for screen reader announcements
+- Form context integration via `getContext('form')`
+
+**Common Mistakes:**
+- Don't use `<input type="text" inputmode="numeric">` when you need step controls
+- Don't forget `aria-label` on increment/decrement buttons
+
+**Related:** Input, Slider, Knob
+
 ---
 
 ### 2.3 Textarea
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -134,10 +220,22 @@
 
 **Sources:** S2 (`<textarea>`), S3 (Textarea), S4 (Text fields), S5 (form-fields-automatically-fit-contents), S6 (Input.TextArea)
 
+**Twintrinsic Implementation:**
+- Native `<textarea>` element with `field-sizing: content` for auto-grow (Chrome 123+)
+- JS fallback for `autoResize` using `scrollHeight` when `field-sizing` isn't supported
+- `aria-live="polite"` on character count when `maxLength` is set
+- Form context integration via `getContext('form')`
+
+**Common Mistakes:**
+- Don't use `<div contenteditable>` for multi-line text — always `<textarea>`
+- Don't forget `field-sizing: content` is Chrome-only — provide a JS fallback
+
+**Related:** Input, CodeEditor, FloatLabel, FormField
+
 ---
 
 ### 2.4 Select / SelectGroup
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -147,10 +245,23 @@
 
 **Sources:** S1 (Listbox), S2 (`<select>`, `<optgroup>`), S3 (Select), S4 (Menus and selects), S5 (animated-select-picker, branded-select-styling, custom-select-picker-layouts, rich-media-picker), S6 (Select)
 
+**Twintrinsic Implementation:**
+- Native `<select>` element with `appearance: base-select` (Chrome 135+) for customizable styling
+- `::picker(select)` CSS pseudo-element for popover-style option list
+- `<optgroup>` for option grouping via SelectGroup subcomponent
+- Form context integration via `getContext('form')` for `effectiveDisabled`
+
+**Common Mistakes:**
+- Don't build a custom dropdown from `<div>` — use `<select>` for form participation and keyboard nav
+- Don't forget `appearance: base-select` requires Chrome 135+ — provide fallback styling
+- Don't use for fewer than 5 options — radio buttons are faster to scan
+
+**Related:** SelectGroup, Combobox, Listbox, Dropdown
+
 ---
 
 ### 2.5 Dropdown
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -160,10 +271,19 @@
 
 **Sources:** S1 (Menu Button), S2 (`popover` attribute), S3 (ActionMenu, DropdownMenu), S4 (Menus), S5 (declarative-dialog-popover-control, resilient-context-menus-and-nested-dropdowns)
 
+**Twintrinsic Implementation:**
+- Deprecated wrapper around Select — kept for backward compatibility
+- Delegates all behavior to the Select component
+
+**Common Mistakes:**
+- Don't use in new code — use Select or Combobox instead
+
+**Related:** Select, Combobox, Menu
+
 ---
 
 ### 2.6 Combobox
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -173,10 +293,23 @@
 
 **Sources:** S1 (Combobox), S2 (`<datalist>` concept), S3 (Autocomplete, SelectPanel), S4 (Exposed dropdown menu), S5 (select-menu-interaction, validate-input-after-interaction), S6 (AutoComplete)
 
+**Twintrinsic Implementation:**
+- Uses `popover="auto"` for the suggestions panel — top-layer rendering with light-dismiss
+- CSS Anchor Positioning for tethering the popup to the input
+- WAI-ARIA combobox pattern with `role="combobox"` + `aria-expanded` + `aria-controls`
+- Keyboard: ArrowDown/Up navigate, Enter selects, Escape closes
+- Form context integration via `getContext('form')` for `effectiveDisabled`
+
+**Common Mistakes:**
+- Don't use a `<div>` dropdown — `popover="auto"` handles top-layer, light-dismiss, and z-index
+- Don't forget `aria-activedescendant` for highlighting the active option
+
+**Related:** AutoComplete, Select, Listbox, Menu
+
 ---
 
 ### 2.7 AutoComplete
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -186,10 +319,23 @@
 
 **Sources:** S1 (Combobox), S2 (`<datalist>`), S3 (Autocomplete), S5 (autofill-address-form, autofill-sign-in-form), S6 (AutoComplete)
 
+**Twintrinsic Implementation:**
+- Uses `popover="auto"` for the suggestions panel with CSS Anchor Positioning
+- Supports single and multiple selection with removable chip display
+- Custom `itemTemplate` for rich suggestion rendering (avatars, icons)
+- `highlight` prop for matching text highlighting in suggestions
+- WAI-ARIA combobox pattern with full keyboard navigation
+
+**Common Mistakes:**
+- Don't confuse with Combobox — AutoComplete is for text completion, Combobox for selection
+- Don't forget to set `multiple={true}` for tag-input style behavior
+
+**Related:** Combobox, Input, Listbox, Chip
+
 ---
 
 ### 2.8 Listbox
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -199,10 +345,23 @@
 
 **Sources:** S1 (Listbox), S2 (`<select size>` concept), S3 (ActionList), S4 (List), S5 (resilient-context-menus-and-nested-dropdowns), S6 (TreeSelect)
 
+**Twintrinsic Implementation:**
+- Always-visible list of options (no dropdown to open)
+- `filter={true}` enables a filter input for narrowing options
+- `filterPlaceholder` for the filter input placeholder text
+- WAI-ARIA listbox pattern with `role="listbox"` + `role="option"`
+- Form context integration via `getContext('form')`
+
+**Common Mistakes:**
+- Don't use for fewer than 5 options — use radio buttons or checkboxes
+- Don't forget `aria-selected` on the selected option
+
+**Related:** Select, Combobox, AutoComplete, Menu
+
 ---
 
 ### 2.9 Checkbox
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -212,10 +371,24 @@
 
 **Sources:** S1 (Checkbox), S2 (`<input type="checkbox">`), S3 (Checkbox), S4 (Checkboxes), S5 (brand-consistent-forms), S6 (Checkbox)
 
+**Twintrinsic Implementation:**
+- Native `<input type="checkbox">` with custom wrapper styling
+- Supports indeterminate state via JS `element.indeterminate = true`
+- `accent-color` for brand-tinted checkbox appearance
+- Form context integration via `getContext('form')` for `effectiveDisabled`
+- `id` with `crypto.randomUUID()` default for label association
+
+**Common Mistakes:**
+- Don't use `<div onclick>` — always `<input type="checkbox">` for form participation
+- Don't forget `aria-describedby` for error messages
+- Don't use for on/off settings — use Switch instead
+
+**Related:** Radio, RadioGroup, Switch, FormField
+
 ---
 
 ### 2.10 Radio / RadioGroup
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -225,10 +398,24 @@
 
 **Sources:** S1 (Radio Group), S2 (`<input type="radio">`), S3 (Radio, RadioGroup), S4 (Radio buttons), S5 (brand-consistent-forms), S6 (Radio.Group)
 
+**Twintrinsic Implementation:**
+- Native `<input type="radio">` with custom wrapper styling
+- RadioGroup uses `<fieldset>` + `<legend>` for accessible grouping
+- `name` attribute for mutual exclusion — native browser behavior
+- Arrow key navigation between radios in a group (native)
+- `accent-color` for brand-tinted appearance
+
+**Common Mistakes:**
+- Don't forget `name` attribute — without it, radios won't be mutually exclusive
+- Don't use for binary on/off — use Checkbox or Switch
+- Don't use `<div role="radio">` — always native `<input type="radio">`
+
+**Related:** Checkbox, Switch, RadioGroup, FormField
+
 ---
 
 ### 2.11 Switch / InputSwitch
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -238,10 +425,23 @@
 
 **Sources:** S1 (Switch), S2 (`<input type="checkbox" role="switch">`), S3 (ToggleSwitch), S4 (Switch), S5 (brand-consistent-forms), S6 (Switch)
 
+**Twintrinsic Implementation:**
+- Uses `<input type="checkbox" role="switch">` — native checkbox with switch semantics
+- Screen readers announce "on/off" instead of "checked/unchecked"
+- CSS transition on the track for smooth sliding animation
+- `accent-color` for brand-tinted track color
+- Form context integration via `getContext('form')`
+
+**Common Mistakes:**
+- Don't use `<div role="switch">` — always `<input type="checkbox" role="switch">`
+- Don't use for form values — use Checkbox for checked/unchecked semantics
+
+**Related:** Checkbox, FormField
+
 ---
 
 ### 2.12 Slider
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -251,10 +451,23 @@
 
 **Sources:** S1 (Slider, Slider Multi-Thumb), S2 (`<input type="range">`), S3 (Slider — not in Primer, but referenced in APG), S4 (Sliders), S5 (brand-consistent-forms), S6 (Slider)
 
+**Twintrinsic Implementation:**
+- Native `<input type="range">` with custom WebKit/Firefox styling
+- `accent-color` for brand-tinted thumb and track
+- `<output>` element for live value display with `aria-live`
+- WAI-ARIA slider pattern — native element already implements it
+- Form context integration via `getContext('form')`
+
+**Common Mistakes:**
+- Don't build a custom slider from `<div>` — `<input type="range">` provides keyboard nav and touch support
+- Don't forget `<output>` for the value display — it's semantically correct and accessible
+
+**Related:** NumberInput, Knob, Rating
+
 ---
 
 ### 2.13 Knob
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -264,10 +477,23 @@
 
 **Sources:** S1 (Slider pattern), S2 (no native element — custom), S4 (no direct equivalent), S5 (no direct equivalent), S6 (Slider — similar concept)
 
+**Twintrinsic Implementation:**
+- SVG-based rotary control with ARIA slider pattern
+- `conic-gradient` for the fill indicator based on value
+- Mouse/touch drag for angle-to-value conversion
+- `aria-valuemin`, `aria-valuemax`, `aria-valuenow` for screen readers
+- Form context integration via `getContext('form')`
+
+**Common Mistakes:**
+- Don't use for general-purpose forms — use Slider instead
+- Don't forget `aria-valuetext` for human-readable value announcements
+
+**Related:** Slider, Rating, NumberInput
+
 ---
 
 ### 2.14 Rating
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -277,10 +503,23 @@
 
 **Sources:** S1 (Slider — rating example), S2 (no native element), S3 (no direct equivalent), S4 (no direct equivalent), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- WAI-ARIA slider pattern with `role="slider"`
+- Hidden `<input type="number">` for form submission
+- `step` prop for half-star increments (0.5)
+- `accent-color` for brand-tinted star color
+- Form context integration via `getContext('form')`
+
+**Common Mistakes:**
+- Don't use `<input type="radio">` for star ratings — slider pattern supports half-stars and drag
+- Don't forget `aria-valuetext` for "4 out of 5 stars" announcements
+
+**Related:** Slider, NumberInput
+
 ---
 
 ### 2.15 Calendar
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -290,10 +529,23 @@
 
 **Sources:** S1 (Dialog — date picker example), S2 (`<input type="date">`, `<input type="datetime-local">`), S3 (no direct equivalent), S4 (Date pickers), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- Custom grid-based calendar with `popover="auto"` for the picker panel
+- `@starting-style` + `transition-behavior: allow-discrete` for entry animation
+- Range selection support with visual highlighting
+- Week numbers via `weekNumber` prop
+- Form context integration via `getContext('form')`
+
+**Common Mistakes:**
+- Don't use `<input type="date">` when you need range selection or custom formatting
+- Don't forget `popover="auto"` — it handles top-layer rendering and light-dismiss
+
+**Related:** Input, ColorPicker, Select
+
 ---
 
 ### 2.16 ColorPicker
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -303,10 +555,23 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<input type="color">`), S3 (no direct equivalent), S4 (no direct equivalent), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- Custom HSL wheel with `conic-gradient` for the color picker
+- `popover="auto"` for the picker panel with light-dismiss
+- Format switching: hex, RGB, HSL with live preview
+- Alpha/opacity slider for transparent colors
+- Form context integration via `getContext('form')`
+
+**Common Mistakes:**
+- Don't use `<input type="color">` when you need HSL, alpha, or preset palettes
+- Don't forget to provide a hex input for precise color entry
+
+**Related:** Input, Calendar, Slider
+
 ---
 
 ### 2.17 FileUpload
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -316,10 +581,24 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<input type="file">`, `<input accept>`), S3 (no direct equivalent), S4 (no direct equivalent), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- Native `<input type="file">` as the base with custom dropzone UI
+- Drag-and-drop support via `dragenter`/`dragover`/`drop` events
+- `FileReader` API for preview generation
+- `<progress>` element for upload progress display
+- Form context integration via `getContext('form')`
+
+**Common Mistakes:**
+- Don't use `<div contenteditable>` for file uploads — always `<input type="file">`
+- Don't forget `accept` attribute for file type filtering
+- Don't forget `aria-live="polite"` on the progress/status region
+
+**Related:** Input, Progress, ListInput
+
 ---
 
 ### 2.18 FloatLabel
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -329,10 +608,21 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<label>`), S3 (FormControl), S4 (Filled text fields), S5 (autofill-highlight-inputs), S6 (Form)
 
+**Twintrinsic Implementation:**
+- CSS `:has()` + `:placeholder-shown` for label float animation — zero JS
+- `@starting-style` for smooth label transition on mount
+- Wraps any form input (Input, Select, Textarea) with floating label behavior
+
+**Common Mistakes:**
+- Don't use JS for the float animation — CSS `:has()` handles it natively
+- Don't forget proper `<label>` + `for` association for accessibility
+
+**Related:** Input, FormField, Select
+
 ---
 
 ### 2.19 Form / FormField / InvalidState
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -342,10 +632,23 @@
 
 **Sources:** S1 (forms generally), S2 (`<form>`, `<fieldset>`, `<legend>`, `<label>`), S3 (FormControl), S4 (Text fields), S5 (forms, required-field-feedback, validate-input-after-interaction, accessible-error-announcement), S6 (Form)
 
+**Twintrinsic Implementation:**
+- FormField wraps inputs with label, helper text, and error message
+- `:has(:user-valid)` / `:has(:user-invalid)` for CSS-only validation styling
+- `aria-describedby` links input to error/helper text
+- `aria-invalid` on the input when validation fails
+- Form context via `setContext('form')` / `getContext('form')` for shared state
+
+**Common Mistakes:**
+- Don't show error messages on mount — use `:user-valid`/`:user-invalid` to show after interaction
+- Don't forget `aria-describedby` — screen readers need the error message linked to the input
+
+**Related:** Input, Checkbox, Select, InvalidState
+
 ---
 
 ### 2.20 ListInput
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -355,12 +658,24 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<input>` + custom), S3 (TextInputWithTokens), S4 (Chips), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- Maintains a list of values (tags, chips, tokens)
+- Enter/comma adds a new item, Backspace removes the last
+- Each tag has a Remove button with `aria-label="Remove [value]"`
+- `role="list"` on the container, `role="listitem"` on each tag
+
+**Common Mistakes:**
+- Don't use a comma-separated text field — discrete items are more accessible
+- Don't forget `aria-label` on remove buttons
+
+**Related:** Chip, Tag, Input, AutoComplete
+
 ---
 
 ## 3. Navigation Components
 
 ### 3.1 Menu / MenuItem
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -370,10 +685,22 @@
 
 **Sources:** S1 (Menu and Menubar, Menu Button), S2 (`<menu>`, `popover`), S3 (ActionMenu, ActionList), S4 (Menus), S5 (resilient-context-menus-and-nested-dropdowns), S6 (Menu)
 
+**Twintrinsic Implementation:**
+- Uses `popover="auto"` for the menu panel — top-layer rendering with light-dismiss
+- CSS Anchor Positioning for tethering the menu to the trigger button
+- WAI-ARIA menu pattern: ArrowDown/Up navigate, Enter/Space activates, Escape closes
+- Nested submenus with proper focus management
+
+**Common Mistakes:**
+- Don't use a `<div>` dropdown — `popover="auto"` handles light-dismiss and z-index
+- Don't forget `aria-expanded` on the trigger button
+
+**Related:** Dropdown, Combobox, TreeMenu
+
 ---
 
 ### 3.2 Tabs / Tab / TabList / TabPanel
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -383,10 +710,23 @@
 
 **Sources:** S1 (Tabs), S2 (no native element — `<details name>` is related but different), S3 (UnderlineNav, UnderlinePanels), S4 (Tabs), S5 (search-hidden-content, anchor-positioning-tab-underline), S6 (Tabs)
 
+**Twintrinsic Implementation:**
+- ARIA tablist pattern with `role="tablist"` / `role="tab"` / `role="tabpanel"`
+- 4 variants: underline, pills, enclosed, default
+- `aria-selected` on the active tab, `aria-controls` linking to panel
+- Arrow keys navigate between tabs, Enter/Space activates
+- Tab panels use `role="tabpanel"` with `aria-labelledby`
+
+**Common Mistakes:**
+- Don't use `<details name>` when you need proper tab semantics (aria-selected, tablist)
+- Don't forget `tabindex="0"` on the active tab and `tabindex="-1"` on inactive tabs
+
+**Related:** Accordion, Menu, Breadcrumb
+
 ---
 
 ### 3.3 Breadcrumb / BreadcrumbItem
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -396,10 +736,22 @@
 
 **Sources:** S1 (Breadcrumb), S2 (`<nav>`, `<ol>`, `<li>`, `aria-current`), S3 (Breadcrumbs), S4 (Breadcrumbs), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- Semantic `<nav aria-label="Breadcrumb">` + `<ol>` + `<li>` structure
+- `aria-current="page"` on the last link (current page)
+- Separator styling via CSS `::before` pseudo-element — no JS needed
+- `<link>` on each item except the last (which uses `<span>` or `<a aria-current="page">`)
+
+**Common Mistakes:**
+- Don't use `<div>` for breadcrumbs — always `<nav>` + `<ol>` for landmark semantics
+- Don't forget `aria-current="page"` on the last item
+
+**Related:** App, AppHeader, Sidebar, Tree
+
 ---
 
 ### 3.4 Tree / TreeNode
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -409,10 +761,23 @@
 
 **Sources:** S1 (Tree View), S2 (`<details>`, `<summary>` concept), S3 (TreeView), S4 (no direct equivalent), S5 (search-hidden-content), S6 (Tree)
 
+**Twintrinsic Implementation:**
+- `<details>` + `<summary>` for expand/collapse — native HTML
+- ARIA treeview pattern: `role="tree"` / `role="treeitem"` / `role="group"`
+- `aria-expanded`, `aria-selected`, `aria-level` for screen readers
+- Arrow keys: Right expands, Left collapses, Up/Down navigate siblings
+- `multiSelect` implies `selectable` (fixed in recent commit)
+
+**Common Mistakes:**
+- Don't use a nested `<ul>` without ARIA roles — tree semantics require `role="tree"`
+- Don't forget `aria-level` — screen readers need depth information
+
+**Related:** TreeMenu, Listbox, Menu
+
 ---
 
 ### 3.5 TreeMenu
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -422,12 +787,24 @@
 
 **Sources:** S1 (Tree View, Menu), S2 (`<menu>`, `<li>`), S3 (NavList), S4 (Menus), S5 (resilient-context-menus-and-nested-dropdowns), S6 (Menu)
 
+**Twintrinsic Implementation:**
+- Combines tree semantics with menu behavior
+- Hierarchical navigation items that expand/collapse
+- Uses `role="tree"` / `role="treeitem"` for semantics
+- `...rest` spread for native attributes
+
+**Common Mistakes:**
+- Don't use for flat navigation — use Menu or Breadcrumb instead
+- Don't forget keyboard navigation — arrow keys should work like Tree
+
+**Related:** Tree, Menu, Sidebar
+
 ---
 
 ## 4. Data Display Components
 
 ### 4.1 DataTable
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -437,10 +814,23 @@
 
 **Sources:** S1 (Table, Grid), S2 (`<table>`, `<thead>`, `<tbody>`, `<th scope>`), S3 (DataTable), S4 (Data tables), S5 (no direct equivalent), S6 (Table)
 
+**Twintrinsic Implementation:**
+- Native `<table>` + `<thead>` + `<tbody>` + `<th scope>` for semantic structure
+- `aria-sort` on sorted column headers
+- `aria-selected` on selected rows
+- `content-visibility: auto` on `<tbody>` for large table performance
+- `@starting-style` for row entry animations
+
+**Common Mistakes:**
+- Don't use `<div role="table">` — always native `<table>` for semantics
+- Don't forget `<th scope="col">` — screen readers need column header associations
+
+**Related:** Listbox, EventsTable, PropsTable
+
 ---
 
 ### 4.2 Badge
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -450,10 +840,22 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<span>` or `<output>`), S3 (CounterLabel, Label, StateLabel), S4 (Badges), S5 (no direct equivalent), S6 (Badge)
 
+**Twintrinsic Implementation:**
+- `<span>` with variant classes for status/count/category
+- `accent-color` for consistent theming
+- `aria-hidden="true"` for decorative badges, `aria-label` for informative ones
+- WCAG AA color contrast for status colors
+
+**Common Mistakes:**
+- Don't use a `<div>` — `<span>` is more semantic for inline content
+- Don't rely solely on color to convey status — add text or icons
+
+**Related:** Tag, Chip, Avatar
+
 ---
 
 ### 4.3 Avatar / AvatarGroup
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -463,10 +865,23 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<img>` with `alt`), S3 (Avatar, AvatarStack), S4 (no direct equivalent), S5 (no direct equivalent), S6 (Avatar)
 
+**Twintrinsic Implementation:**
+- `<img>` with `alt` text for user avatars
+- `aspect-ratio: 1` for consistent circular sizing
+- Fallback to initials when no image is provided
+- AvatarGroup with overlap using negative margin
+- `<picture>` with `<source>` for AVIF/WebP responsive images
+
+**Common Mistakes:**
+- Don't forget `alt` text — even if decorative, use `alt=""` (empty alt)
+- Don't use `<div>` for the image — always `<img>` for semantics
+
+**Related:** Badge, Icon, Image
+
 ---
 
 ### 4.4 Tag / TagGroup
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -476,10 +891,22 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<span>`), S3 (Token, LabelGroup), S4 (Chips), S5 (no direct equivalent), S6 (Tag)
 
+**Twintrinsic Implementation:**
+- `<span>` with removable button for delete action
+- `role="group"` with group label for TagGroup
+- Each removable tag has `aria-label="Remove [tag name]"`
+- `dispatchGroupRemove` helper for consistent removal events
+
+**Common Mistakes:**
+- Don't forget `aria-label` on remove buttons
+- Don't use `<div>` — `<span>` is more semantic for inline tags
+
+**Related:** Chip, ChipGroup, ListInput
+
 ---
 
 ### 4.5 Chip / ChipGroup
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -489,10 +916,22 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<button>` or `<span>`), S3 (Token), S4 (Chips), S5 (no direct equivalent), S6 (Tag)
 
+**Twintrinsic Implementation:**
+- `<button>` for clickable chips (more interactive than Tag)
+- `aria-pressed` for toggle chips
+- `aria-live="polite"` for dynamic chip addition/removal
+- Icons, avatars, and close buttons supported
+
+**Common Mistakes:**
+- Don't use `<span onclick>` — always `<button>` for interactive chips
+- Don't forget `aria-pressed` for toggle state
+
+**Related:** Tag, TagGroup, Button
+
 ---
 
 ### 4.6 Tooltip
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -502,10 +941,22 @@
 
 **Sources:** S1 (Tooltip), S2 (`<abbr title>`, `title` attribute), S3 (Tooltip), S4 (Tooltips), S5 (position-aware-tooltips, interest-triggered-tooltips), S6 (Tooltip)
 
+**Twintrinsic Implementation:**
+- Uses `popover="hint"` + `interestfor` for hover-triggered display
+- CSS Anchor Positioning for tethering to the trigger element
+- `role="tooltip"` + `aria-describedby` on the trigger
+- Escape dismisses; no focus inside tooltip
+
+**Common Mistakes:**
+- Don't put focusable content in a tooltip — use a dialog/popover instead
+- Don't forget `aria-describedby` — screen readers need the tooltip linked
+
+**Related:** Menu, Popover, Modal
+
 ---
 
 ### 4.7 EventsTable / PropsTable
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -515,10 +966,22 @@
 
 **Sources:** S1 (Table), S2 (`<table>`), S3 (no direct equivalent), S4 (no direct equivalent), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- Native `<table>` with `<th scope="col">` for headers
+- Auto-generated from TypeScript types via `propsMetadata`
+- `<caption>` for table title
+- `content-visibility: auto` for large tables
+
+**Common Mistakes:**
+- Don't use `<div>` — always `<table>` for semantic data display
+- Don't forget `<th scope="col">` for column header associations
+
+**Related:** DataTable, CompatibilityMatrix
+
 ---
 
 ### 4.8 CompatibilityMatrix
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -528,12 +991,22 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<table>`), S3 (no direct equivalent), S4 (no direct equivalent), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- Native `<table>` with clear visual indicators
+- Auto-generated from feature detection tests
+- Checkmarks, crosses, partial support icons
+
+**Common Mistakes:**
+- Don't use color alone to indicate support — add icons or text
+
+**Related:** DataTable, PropsTable, EventsTable
+
 ---
 
 ## 5. Feedback Components
 
 ### 5.1 Modal / Dialog
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -543,10 +1016,23 @@
 
 **Sources:** S1 (Dialog Modal), S2 (`<dialog>`), S3 (Dialog, ConfirmationDialog), S4 (Dialogs), S5 (light-dismiss-a-dialog, declarative-dialog-popover-control, animate-to-from-top-layer, platform-controls-dismiss-dialog), S6 (Modal)
 
+**Twintrinsic Implementation:**
+- Native `<dialog closedby="any">` for light-dismiss dialogs
+- `@starting-style` + `transition-behavior: allow-discrete` for enter/exit animations
+- `::backdrop` for dimming the background
+- Focus trapping via native `<dialog>` behavior
+- Escape to close (native)
+
+**Common Mistakes:**
+- Don't use a `<div>` overlay — `<dialog>` provides inert background, focus trap, and Escape
+- Don't forget `closedby="any"` for light-dismiss behavior
+
+**Related:** Toast, Popover, Menu
+
 ---
 
 ### 5.2 Toast
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -556,10 +1042,23 @@
 
 **Sources:** S1 (Alert pattern — related), S2 (`<output>`, `aria-live`), S3 (Banner), S4 (Snackbars), S5 (persistent-toast-notifications), S6 (Message)
 
+**Twintrinsic Implementation:**
+- `@starting-style` + `transition-behavior: allow-discrete` for entry animation
+- `content-visibility: auto` for off-screen performance
+- `aria-live="polite"` region for screen reader announcements
+- Auto-dismiss after configurable timeout
+- Multiple toasts stack (not limited by Popover API)
+
+**Common Mistakes:**
+- Don't use Popover API for toasts — it's one-at-a-time, conflicts with stacking
+- Don't forget `aria-live="polite"` — screen readers need to announce new toasts
+
+**Related:** Modal, Skeleton, Progress
+
 ---
 
 ### 5.3 Skeleton
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -569,10 +1068,23 @@
 
 **Sources:** S1 (no direct pattern), S2 (`aria-busy`, `aria-live`), S3 (SkeletonAvatar, SkeletonBox, SkeletonText), S4 (no direct equivalent), S5 (defer-rendering-heavy-content), S6 (Skeleton)
 
+**Twintrinsic Implementation:**
+- CSS `@keyframes` shimmer animation with `@property` for gradient angle
+- `@starting-style` for smooth entry animation
+- `content-visibility: auto` for off-screen skeleton performance
+- `aria-busy="true"` and `aria-live="polite"` on the loading region
+- `transition-behavior: allow-discrete` for exit when content loads
+
+**Common Mistakes:**
+- Don't use spinners for layout-heavy content — skeletons show structure
+- Don't forget `aria-busy="true"` — screen readers need loading state
+
+**Related:** Progress, Lazy, Toast
+
 ---
 
 ### 5.4 Progress
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -582,10 +1094,22 @@
 
 **Sources:** S1 (Meter — related but different), S2 (`<progress>`, `<meter>`), S3 (ProgressBar), S4 (Progress indicators), S5 (scroll-progress-indicator), S6 (Progress)
 
+**Twintrinsic Implementation:**
+- Native `<progress>` element with `aria-valuenow/min/max`
+- CSS styling for track and fill with `accent-color`
+- Indeterminate mode via CSS animation (no `value` attribute)
+- `<meter>` for scalar measurements within a range
+
+**Common Mistakes:**
+- Don't use `<div>` with width animation — `<progress>` is semantic and accessible
+- Don't confuse `<progress>` (task completion) with `<meter>` (scalar measurement)
+
+**Related:** Skeleton, Metrics, NumberInput
+
 ---
 
 ### 5.5 Stepper / StepperStep
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -595,12 +1119,24 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<ol>`, `aria-current`), S3 (no direct equivalent — but Stepper is common), S4 (no direct equivalent), S5 (scroll-progress-indicator — related)
 
+**Twintrinsic Implementation:**
+- `<ol>` for semantic ordering of steps
+- `aria-current="step"` on the active step
+- Step states: completed (checkmark), current (active), upcoming (muted)
+- `<nav>` wrapping for landmark semantics
+
+**Common Mistakes:**
+- Don't use `<ul>` — steps have inherent order, so `<ol>` is correct
+- Don't forget `aria-current="step"` on the active step
+
+**Related:** Timeline, Breadcrumb, Accordion
+
 ---
 
 ## 6. Navigation Components (continued)
 
 ### 6.1 Pagination
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -615,7 +1151,7 @@
 ## 7. Layout Components
 
 ### 7.1 Container / Section / Panel
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -625,10 +1161,22 @@
 
 **Sources:** S1 (Landmarks), S2 (`<section>`, `<div>`, `<article>`), S3 (PageLayout, Stack), S4 (no direct equivalent), S5 (css-layout, size-aware-styling), S6 (Space)
 
+**Twintrinsic Implementation:**
+- Container: CSS Container Queries (`container-type: inline-size`) for responsive child styling
+- Section: `<section>` semantic element with heading
+- Panel: `<div>` with `role="region"` and `aria-label` if it's a landmark
+- `...rest` spread for native attributes
+
+**Common Mistakes:**
+- Don't use `<div>` for Section — `<section>` is the correct semantic element
+- Don't forget `<section>` needs a heading for proper semantics
+
+**Related:** Card, App, Container
+
 ---
 
 ### 7.2 Hero
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -638,10 +1186,22 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<header>`, `<section>`, `<h1>`), S3 (PageHeader — similar), S4 (no direct equivalent), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- `<header>` or `<section>` as root with heading
+- CTA button should be the first focusable element
+- Background images with sufficient contrast (WCAG AA)
+- Responsive layout with CSS Grid or Flexbox
+
+**Common Mistakes:**
+- Don't use `<div>` — `<header>` or `<section>` is correct for landmark semantics
+- Don't forget to check color contrast on text over background images
+
+**Related:** AppHeader, Card, Container
+
 ---
 
 ### 7.3 Splitter
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -651,10 +1211,22 @@
 
 **Sources:** S1 (Window Splitter), S2 (CSS `resize`), S3 (SplitPageLayout), S4 (no direct equivalent), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- WAI-ARIA window splitter pattern
+- Keyboard: arrow keys resize, Enter resets
+- `aria-valuenow/min/max` for position
+- CSS `resize` for basic functionality; custom JS for precise control
+
+**Common Mistakes:**
+- Don't use CSS `resize` alone — it doesn't support multi-panel layout
+- Don't forget keyboard accessibility — arrow keys must work
+
+**Related:** Container, Section, Card
+
 ---
 
 ### 7.4 Masonry
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -664,12 +1236,24 @@
 
 **Sources:** S1 (no direct pattern), S2 (CSS Grid), S3 (no direct equivalent), S4 (no direct equivalent), S5 (css-layout), S6 (Waterfall — similar concept)
 
+**Twintrinsic Implementation:**
+- CSS columns for masonry-like flow (`columns: 3`)
+- `content-visibility: auto` for off-screen items
+- `break-inside: avoid` on items to prevent splitting
+- Progressive enhancement with `@supports (grid-template-rows: masonry)`
+
+**Common Mistakes:**
+- Don't use JS for layout measurement — CSS columns handle it natively
+- Don't forget `break-inside: avoid` — items can split across columns without it
+
+**Related:** Masonry, Container, Card
+
 ---
 
 ## 8. Utility Components
 
 ### 8.1 Button / ButtonGroup
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -679,10 +1263,23 @@
 
 **Sources:** S1 (Button), S2 (`<button>`), S3 (Button, ButtonGroup, IconButton), S4 (Buttons), S5 (custom-button-actions, declarative-dialog-popover-control), S6 (Button)
 
+**Twintrinsic Implementation:**
+- Conditional `<a>` or `<button>` based on `href` prop
+- `type="submit"` for form buttons, `type="button"` for JS-only
+- Native keyboard activation (Enter/Space) — zero JS needed
+- `...rest` spread on every branch (a/button)
+- `disabled` prop with `aria-disabled` for consistent semantics
+
+**Common Mistakes:**
+- Don't use `<div onclick>` — always `<button>` or `<a>` for interactive elements
+- Don't forget `type="button"` — without it, the button submits forms by default
+
+**Related:** ButtonGroup, Chip, Tag, Link
+
 ---
 
 ### 8.2 Card
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -692,10 +1289,22 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<article>`, `<div>`), S3 (Card), S4 (Cards), S5 (size-aware-styling), S6 (Card)
 
+**Twintrinsic Implementation:**
+- Semantic `<article>` element as root
+- Container Queries for responsive child layout
+- `...rest` spread with `on${string}` event handler index signature
+- Clickable cards use `<a>` or `<button>` as root (not `<div onclick>`)
+
+**Common Mistakes:**
+- Don't use `<div onclick>` for clickable cards — use `<a>` or `<button>`
+- Don't forget `role="region"` + `aria-label` if the card is a landmark
+
+**Related:** Container, Section, Button
+
 ---
 
 ### 8.3 CodeBlock / CodeBlockSpeed
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -705,10 +1314,22 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<pre>`, `<code>`), S3 (no direct equivalent), S4 (no direct equivalent), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- `<pre><code>` with `class="language-[lang]"` for semantics
+- Prism.js for syntax highlighting
+- Copy-to-clipboard button with `aria-label="Copy code"`
+- `content-visibility: auto` for large code blocks
+
+**Common Mistakes:**
+- Don't use `<div>` with `white-space: pre` — always `<pre><code>`
+- Don't forget the copy button — developers expect it
+
+**Related:** CodeEditor, CodeBlockSpeed, Icon
+
 ---
 
 ### 8.4 CodeEditor
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -718,10 +1339,20 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<textarea>` concept), S3 (no direct equivalent), S4 (no direct equivalent), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- CodeMirror integration — full-featured, battle-tested
+- Syntax highlighting, line numbers, autocomplete, plugins
+- Kept as-is per user decision — too complex to replace
+
+**Common Mistakes:**
+- Don't use for read-only code display — use CodeBlock instead
+
+**Related:** CodeBlock, CodeBlockSpeed
+
 ---
 
 ### 8.5 Icon / IconifyIcon
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -731,10 +1362,23 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<svg>`, `<img>` for icons), S3 (Icon, IconButton), S4 (Icons), S5 (deliver-optimized-decorative-images), S6 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- Wraps `@iconify/svelte` for 150,000+ icons from 100+ icon sets
+- `preloadIcons()` for runtime prefetching
+- `preloadManifest` for build-time registration
+- `addLinkPreloads` for `<link rel="preload">` injection
+- `aria-hidden="true"` for decorative icons
+
+**Common Mistakes:**
+- Don't use inline SVGs — use the Icon component for consistency
+- Don't forget `aria-hidden="true"` for decorative icons
+
+**Related:** Avatar, Badge, Button
+
 ---
 
 ### 8.6 Lazy / LazyPanel
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -744,10 +1388,22 @@
 
 **Sources:** S1 (no direct pattern), S2 (`loading="lazy"`, Intersection Observer), S3 (no direct equivalent), S4 (no direct equivalent), S5 (defer-rendering-heavy-content, defer-work-until-scroll-ends), S6 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- Intersection Observer for viewport detection
+- `<img loading="lazy">` for native image lazy loading
+- `content-visibility: auto` for off-screen content skipping
+- LazyPanel variant for tab panels
+
+**Common Mistakes:**
+- Don't use JS timers for lazy loading — Intersection Observer is the standard
+- Don't forget `content-visibility: auto` as a CSS-only alternative for simple cases
+
+**Related:** Skeleton, Card, Container
+
 ---
 
 ### 8.7 Map
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -757,10 +1413,20 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<canvas>`, `<iframe>` concept), S3 (no direct equivalent), S4 (no direct equivalent), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- Leaflet.js integration — lightweight, mobile-friendly
+- OpenStreetMap tiles by default
+- Kept as-is per user decision — too complex to replicate
+
+**Common Mistakes:**
+- Don't use `<map>` + `<area>` — those are for image maps, not interactive maps
+
+**Related:** Icon, CodeEditor
+
 ---
 
 ### 8.8 Separator
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -770,10 +1436,22 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<hr>`), S3 (no direct equivalent), S4 (Dividers), S5 (no direct equivalent), S6 (Divider)
 
+**Twintrinsic Implementation:**
+- Native `<hr>` element for semantic thematic breaks
+- CSS-only variants: solid, dashed, dotted, gradient, with text
+- `role="separator"` when used as a visual divider (not thematic break)
+- `aria-orientation="vertical"` for vertical separators
+
+**Common Mistakes:**
+- Don't use `<div>` — `<hr>` is semantic and accessible
+- Don't forget `role="separator"` when the `<hr>` is visual, not thematic
+
+**Related:** Container, Section, Card
+
 ---
 
 ### 8.9 ThemeToggle
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -783,10 +1461,23 @@
 
 **Sources:** S1 (no direct pattern), S2 (`prefers-color-scheme`, `color-scheme`), S3 (no direct equivalent), S4 (no direct equivalent), S5 (dark-mode, component-specific-light-dark-theme, design-token-reactivity), S6 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- Toggles `data-theme` attribute on `<html>` for CSS-based theming
+- Respects `prefers-color-scheme` media query as default
+- Stores preference in `localStorage`
+- `id` with `crypto.randomUUID()` default
+- `...rest` spread for native attributes
+
+**Common Mistakes:**
+- Don't use JS to toggle individual CSS properties — use `data-theme` + CSS custom properties
+- Don't forget to respect system preference as the default
+
+**Related:** Container, Section
+
 ---
 
 ### 8.10 Timeline / TimelineItem
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -796,10 +1487,22 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<ol>`, `<li>`, `<time>`), S3 (Timeline), S4 (no direct equivalent), S5 (no direct equivalent), S6 (Timeline)
 
+**Twintrinsic Implementation:**
+- Semantic `<ol>` + `<li>` for chronological ordering
+- `<time datetime="...">` for machine-readable dates
+- Connecting lines via CSS `::before` pseudo-element
+- Vertical and horizontal layout variants
+
+**Common Mistakes:**
+- Don't use `<ul>` — events have inherent order, so `<ol>` is correct
+- Don't forget `<time datetime="...">` for screen readers and SEO
+
+**Related:** Stepper, Breadcrumb, Listbox
+
 ---
 
 ### 8.11 RenderStringOrSnippet
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -809,12 +1512,22 @@
 
 **Sources:** S1 (no direct pattern), S2 (no direct equivalent), S3 (no direct equivalent), S4 (no direct equivalent), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- Utility component for rendering either a string or Svelte snippet
+- Used internally by other components to accept flexible content
+- No public API — internal only
+
+**Common Mistakes:**
+- Don't use directly — it's an internal utility
+
+**Related:** No related public components
+
 ---
 
 ## 9. Metrics / Chart Components
 
 ### 9.1 AreaChart / BarChart / LineChart / PieChart / DonutChart / HorizontalBarChart
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -824,10 +1537,22 @@
 
 **Sources:** S1 (no direct pattern), S2 (`<canvas>`, `<svg>`), S3 (no direct equivalent), S4 (no direct equivalent), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- SVG-based chart rendering for Area, Bar, Line, Pie, Donut, HorizontalBar
+- `aria-label` on chart container for screen readers
+- Accessible data tables as alternatives
+- `content-visibility: auto` for off-screen charts
+
+**Common Mistakes:**
+- Don't use `<canvas>` without a text alternative — SVG is more accessible
+- Don't forget to provide an accessible data table alternative
+
+**Related:** KPICard, MetricGrid, GaugeChart
+
 ---
 
 ### 9.2 GaugeChart
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -837,10 +1562,22 @@
 
 **Sources:** S1 (Meter), S2 (`<meter>`), S3 (no direct equivalent), S4 (no direct equivalent), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- SVG-based semicircular/circular gauge
+- `role="meter"` with `aria-valuenow/min/max`
+- Text alternative with actual value
+- `conic-gradient` for the fill indicator
+
+**Common Mistakes:**
+- Don't use `<div>` with CSS rotation — always `role="meter"` for accessibility
+- Don't forget the text alternative — screen readers can't read SVG
+
+**Related:** Slider, Progress, NumberInput
+
 ---
 
 ### 9.3 KPICard / StatsCard / MetricGrid / MetricTrend / ProgressMetric
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -850,12 +1587,24 @@
 
 **Sources:** S1 (Meter), S2 (`<dl>`, `<dt>`, `<dd>`, `<meter>`), S3 (no direct equivalent), S4 (no direct equivalent), S5 (no direct equivalent)
 
+**Twintrinsic Implementation:**
+- `<dl>` + `<dt>` + `<dd>` for semantic key-value pairs
+- `<meter>` for scalar measurements within metrics
+- CSS Grid for responsive layout
+- `content-visibility: auto` for off-screen metric cards
+
+**Common Mistakes:**
+- Don't use `<div>` for label-value pairs — `<dl>` is semantic
+- Don't forget `aria-label` on metric containers
+
+**Related:** Progress, GaugeChart, DataTable
+
 ---
 
 ## 10. Accordion (Disclosure)
 
 ### 10.1 Accordion / AccordionItem
-**Status:** ⬜
+**Status:** ✅
 
 | | |
 |---|---|
@@ -865,29 +1614,43 @@
 
 **Sources:** S1 (Accordion), S2 (`<details>`, `<summary>`, `<details name>`), S3 (Details), S4 (Expansion panels), S5 (search-hidden-content), S6 (Collapse)
 
+**Twintrinsic Implementation:**
+- Native `<details>` + `<summary>` for expand/collapse — zero JS
+- `<details name="group">` for exclusive behavior (only one open at a time)
+- `aria-expanded` on the summary button
+- `aria-controls` linking summary to panel content
+- CSS transitions for smooth expand/collapse animation
+
+**Common Mistakes:**
+- Don't use `<div onclick>` with JS toggle — `<details>` is native and accessible
+- Don't forget `<details name>` for exclusive accordion behavior
+- Don't use Accordion for tab switching — use Tabs component instead
+
+**Related:** Tabs, Tree, Menu
+
 ---
 
 ## Summary Statistics
 
 | Category | Components | Research Status |
 |----------|-----------|-----------------|
-| App / Layout | 5 | ⬜ Not started |
-| Form | 20 | ⬜ Not started |
-| Navigation | 5 | ⬜ Not started |
-| Data Display | 8 | ⬜ Not started |
-| Feedback | 5 | ⬜ Not started |
-| Layout | 4 | ⬜ Not started |
-| Utility | 11 | ⬜ Not started |
-| Metrics/Charts | 8 | ⬜ Not started |
-| Accordion | 1 | ⬜ Not started |
+| App / Layout | 5 | ✅ Implementation notes added |
+| Form | 20 | ✅ Implementation notes added |
+| Navigation | 5 | ✅ Implementation notes added |
+| Data Display | 8 | ✅ Implementation notes added |
+| Feedback | 5 | ✅ Implementation notes added |
+| Layout | 4 | ✅ Implementation notes added |
+| Utility | 11 | ✅ Implementation notes added |
+| Metrics/Charts | 8 | ✅ Implementation notes added |
+| Accordion | 1 | ✅ Implementation notes added |
 | **Total** | **67** | |
 
 ---
 
 ## Next Steps
 
-1. ☐ Review each component entry against the actual Twintrinsic implementation
-2. ☐ Add Twintrinsic-specific implementation notes (which modern APIs are used)
-3. ☐ Add "Common Mistakes" section for each component
-4. ☐ Add "Related Components" cross-references
+1. ✅ Review each component entry against the actual Twintrinsic implementation
+2. ✅ Add Twintrinsic-specific implementation notes (which modern APIs are used)
+3. ✅ Add "Common Mistakes" section for each component
+4. ✅ Add "Related Components" cross-references
 5. ☐ Publish as component documentation on the docs site
