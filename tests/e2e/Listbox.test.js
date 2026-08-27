@@ -43,7 +43,7 @@ test.describe("Listbox docs page", () => {
     await expect(option).toHaveAttribute("aria-selected", "false");
   });
 
-  test.skip("filter input narrows options", async ({ page }) => {
+  test("filter input narrows options", async ({ page }) => {
     const demo = page.getByTestId("listbox-filtering");
     const filter = demo.getByPlaceholder("Search fruits...");
     await filter.fill("Gra");

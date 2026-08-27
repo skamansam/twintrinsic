@@ -23,6 +23,15 @@ const users = [
   { label: "Marcus Webb", value: "2", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=faces" },
   { label: "Priya Patel", value: "3", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=faces" },
 ]
+
+/** Renders an avatar row for the custom template example */
+function renderAvatar(item: (typeof users)[number]): string {
+  return (
+    `<span class="flex items-center gap-2">` +
+    `<img src="${item.avatar}" width="28" height="28" class="rounded-full" />` +
+    `<span>${item.label}</span></span>`
+  )
+}
 </script>
 
 <style lang="postcss">
@@ -96,9 +105,14 @@ const users = [
 </ExampleTabs>
 
   <h3>Custom Template</h3>
-  <ExampleTabs code={`<AutoComplete items={...} />`}>
+  <ExampleTabs code={"<AutoComplete label=\"Team Member\" items={users} placeholder=\"Search by name...\" itemTemplate={renderAvatar} />"}>
     <div class="max-w-md" data-testid="autocomplete-custom-template">
-      <!-- Custom template example -->
+      <AutoComplete
+        label="Team Member"
+        items={users}
+        placeholder="Search by name..."
+        itemTemplate={renderAvatar}
+      />
     </div>
   </ExampleTabs>
 

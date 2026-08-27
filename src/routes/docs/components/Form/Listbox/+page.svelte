@@ -113,9 +113,19 @@ let selectedFruits = $state(["Apple", "Grape"])
 </ExampleTabs>
 
   <h3>With Filter</h3>
-  <ExampleTabs code={`<Listbox options={[...]} />`}>
+  <ExampleTabs code={`<Listbox
+  name="fruit-filter"
+  options={[{value:'apple',label:'Apple'},{value:'banana',label:'Banana'},{value:'cherry',label:'Cherry'},{value:'grape',label:'Grape'},{value:'kiwi',label:'Kiwi'}]}
+  filter={true}
+  filterPlaceholder="Search fruits..."
+/>`}>
     <div class="max-w-md" data-testid="listbox-filtering">
-      <Listbox options={[{value: "a", label: "Alice"}, {value: "b", label: "Bob"}, {value: "c", label: "Charlie"}]} />
+      <Listbox
+        name="fruit-filter"
+        options={[{value:'apple',label:'Apple'},{value:'banana',label:'Banana'},{value:'cherry',label:'Cherry'},{value:'grape',label:'Grape'},{value:'kiwi',label:'Kiwi'}]}
+        filter={true}
+        filterPlaceholder="Search fruits..."
+      />
     </div>
   </ExampleTabs>
 

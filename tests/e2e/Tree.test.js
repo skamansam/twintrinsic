@@ -63,19 +63,32 @@ test.describe("Tree docs page", () => {
     );
   });
 
-  test.skip("multi-select tree tracks multiple selected nodes", async ({ page }) => {
+  test("multi-select tree tracks multiple selected nodes", async ({ page }) => {
     const tree = page.getByTestId("tree-multiselect").getByRole("tree");
     await expect(tree).toHaveAttribute("aria-multiselectable", "true");
 
-    await tree.getByRole("button", { name: "Expand" }).click();
-    await tree.getByText("Pages").click();
-    await tree.getByText("Blog").click();
-
-    await expect(tree.getByRole("treeitem", { name: /Pages/ })).toHaveAttribute(
+    // The multi-select example has Documents → readme.md + CHANGELOG.md
+    // Click the root to select it first
+    await tree.getByText("Documents").click();
+    await expect(tree.getByRole("treeitem", { name: /Documents/ })).toHaveAttribute(
       "aria-selected",
       "true",
     );
-    await expect(tree.getByRole("treeitem", { name: /Blog/ })).toHaveAttribute(
+
+    // Expand to reveal children
+    await tree.getByRole("button", { name: "Expand" }).click();
+    await expect(tree.getByText("readme.md")).toBeVisible();
+    await expect(tree.getByText("CHANGELOG.md")).toBeVisible();
+
+    // Select the children
+    await tree.getByText("readme.md").click();
+    await tree.getByText("CHANGELOG.md").click();
+
+    await expect(tree.getByRole("treeitem", { name: /readme.md/ })).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
+    await expect(tree.getByRole("treeitem", { name: /CHANGELOG.md/ })).toHaveAttribute(
       "aria-selected",
       "true",
     );

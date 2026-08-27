@@ -93,7 +93,7 @@ let {
 }: Props = $props()
 
 // Derived values for reactive prop access in closures
-const derivedSelectable = $derived(selectable)
+const derivedSelectable = $derived(selectable || multiSelect)
 const derivedMultiSelect = $derived(multiSelect)
 
 // Component state

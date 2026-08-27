@@ -67,7 +67,19 @@ test.describe("AutoComplete docs page", () => {
     await expect(example.locator(".autocomplete-chip")).toHaveCount(0);
   });
 
-  test.skip("custom template example renders avatars", async ({ page }) => {
-    // Skipped: custom template placeholder has no live demo yet
+  test("custom template example renders avatars", async ({ page }) => {
+    const example = page.getByTestId("autocomplete-custom-template");
+    await expect(example).toBeVisible();
+
+    const input = example.locator(".autocomplete input");
+    await input.fill("Sa");
+    const suggestions = example.locator(".autocomplete-suggestions");
+    await expect(suggestions).toBeVisible();
+
+    // Custom template renders <img> avatars inside suggestion items
+    const items = suggestions.locator(".autocomplete-item");
+    await expect(items).toHaveCount(1);
+    await expect(items.first()).toContainText("Sarah");
+    await expect(items.first().locator("img")).toHaveAttribute("width", "28");
   });
 });
