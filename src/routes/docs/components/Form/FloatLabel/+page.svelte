@@ -49,6 +49,23 @@ import Container from "$lib/components/Container/Container.svelte"
   <li><strong>Modern CSS</strong> — <code>:has()</code> enables the float animation without JS.</li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>CSS `:has()` + `:placeholder-shown` for label float animation — zero JS</li>
+    <li>`@starting-style` for smooth label transition on mount</li>
+    <li>Wraps any form input (Input, Select, Textarea) with floating label behavior</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use JS for the float animation — CSS `:has()` handles it natively</li>
+    <li>Don't forget proper `&lt;label&gt;` + `for` association for accessibility</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Input, FormField, Select</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Fills container width by default.</li>

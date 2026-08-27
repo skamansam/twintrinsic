@@ -80,6 +80,24 @@ const actionItems: TreeMenuItem[] = [
   <li><strong>Flexible</strong> — links, buttons, actions, icons, separators in one component.</li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Combines tree semantics with menu behavior</li>
+    <li>Hierarchical navigation items that expand/collapse</li>
+    <li>Uses `role=&quot;tree&quot;` / `role=&quot;treeitem&quot;` for semantics</li>
+    <li>`...rest` spread for native attributes</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use for flat navigation — use Menu or Breadcrumb instead</li>
+    <li>Don't forget keyboard navigation — arrow keys should work like Tree</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Tree, Menu, Sidebar</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Scrollable when the menu is taller than the container.</li>

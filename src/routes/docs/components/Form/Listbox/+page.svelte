@@ -64,6 +64,25 @@ let selectedFruits = $state(["Apple", "Grape"])
   <li><a href="https://primer.style/product/components/ActionList">Primer — ActionList</a></li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Always-visible list of options (no dropdown to open)</li>
+    <li>`filter=&#123;true&#125;` enables a filter input for narrowing options</li>
+    <li>`filterPlaceholder` for the filter input placeholder text</li>
+    <li>WAI-ARIA listbox pattern with `role=&quot;listbox&quot;` + `role=&quot;option&quot;`</li>
+    <li>Form context integration via `getContext('form')`</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use for fewer than 5 options — use radio buttons or checkboxes</li>
+    <li>Don't forget `aria-selected` on the selected option</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Select, Combobox, AutoComplete, Menu</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Fills container width; scrollable when options overflow.</li>

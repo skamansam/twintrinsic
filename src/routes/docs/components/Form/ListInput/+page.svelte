@@ -46,7 +46,25 @@ import * as ListInputModule from "$lib/components/Form/ListInput.svelte"
     <li><strong>Keyboard friendly</strong> — Enter/Tab/comma to add, Backspace to remove.</li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Maintains a list of values (tags, chips, tokens)</li>
+    <li>Enter/comma adds a new item, Backspace removes the last</li>
+    <li>Each tag has a Remove button with `aria-label=&quot;Remove [value]&quot;`</li>
+    <li>`role=&quot;list&quot;` on the container, `role=&quot;listitem&quot;` on each tag</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use a comma-separated text field — discrete items are more accessible</li>
+    <li>Don't forget `aria-label` on remove buttons</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Chip, Tag, Input, AutoComplete</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Fills container width; chips wrap to the next line when space runs out.</li>
     <li>Touch targets meet 44×44 px minimum.</li>

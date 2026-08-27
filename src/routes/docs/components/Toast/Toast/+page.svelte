@@ -59,7 +59,26 @@ import * as ToastModule from "$lib/components/Toast/Toast.svelte"
     <li><a href="https://ant.design/components/message">Ant Design — Message</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>`@starting-style` + `transition-behavior: allow-discrete` for entry animation</li>
+    <li>`content-visibility: auto` for off-screen performance</li>
+    <li>`aria-live=&quot;polite&quot;` region for screen reader announcements</li>
+    <li>Auto-dismiss after configurable timeout</li>
+    <li>Multiple toasts stack (not limited by Popover API)</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use Popover API for toasts — it's one-at-a-time, conflicts with stacking</li>
+    <li>Don't forget `aria-live=&quot;polite&quot;` — screen readers need to announce new toasts</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Modal, Skeleton, Progress</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Max width <code>max-w-sm</code> (384px); collapses on small screens.</li>
     <li>Positioned in corners or centered; doesn't overlap the viewport edge.</li>

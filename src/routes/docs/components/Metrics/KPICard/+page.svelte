@@ -46,7 +46,25 @@ import * as KPICardModule from "$lib/components/Metrics/KPICard/KPICard.svelte"
     <li><a href="https://www.chartjs.org/docs/latest/charts/doughnut.html">Chart.js — Doughnut</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>`&lt;dl&gt;` + `&lt;dt&gt;` + `&lt;dd&gt;` for semantic key-value pairs</li>
+    <li>`&lt;meter&gt;` for scalar measurements within metrics</li>
+    <li>CSS Grid for responsive layout</li>
+    <li>`content-visibility: auto` for off-screen metric cards</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div&gt;` for label-value pairs — `&lt;dl&gt;` is semantic</li>
+    <li>Don't forget `aria-label` on metric containers</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Progress, GaugeChart, DataTable</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Fills container width by default.</li>
     <li>SVG charts scale to any resolution.</li>

@@ -58,7 +58,26 @@ import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
     <li><a href="https://ant.design/components/switch">Ant Design — Switch</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Toggles `data-theme` attribute on `&lt;html&gt;` for CSS-based theming</li>
+    <li>Respects `prefers-color-scheme` media query as default</li>
+    <li>Stores preference in `localStorage`</li>
+    <li>`id` with `crypto.randomUUID()` default</li>
+    <li>`...rest` spread for native attributes</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use JS to toggle individual CSS properties — use `data-theme` + CSS custom properties</li>
+    <li>Don't forget to respect system preference as the default</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Container, Section</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Compact toggle button; fits in any header or toolbar.</li>
     <li>Touch target meets 44×44 px minimum.</li>

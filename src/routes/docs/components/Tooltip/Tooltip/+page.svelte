@@ -59,6 +59,24 @@ import * as TooltipModule from "$lib/components/Tooltip/Tooltip.svelte"
   <li><a href="https://m3.material.io/components/tooltips/overview">Material Design 3 — Tooltips</a></li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Uses `popover=&quot;hint&quot;` + `interestfor` for hover-triggered display</li>
+    <li>CSS Anchor Positioning for tethering to the trigger element</li>
+    <li>`role=&quot;tooltip&quot;` + `aria-describedby` on the trigger</li>
+    <li>Escape dismisses; no focus inside tooltip</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't put focusable content in a tooltip — use a dialog/popover instead</li>
+    <li>Don't forget `aria-describedby` — screen readers need the tooltip linked</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Menu, Popover, Modal</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Tooltip positions automatically adapt to viewport edges via CSS.</li>

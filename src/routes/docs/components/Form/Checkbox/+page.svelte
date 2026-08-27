@@ -64,6 +64,26 @@ import Container from "$lib/components/Container/Container.svelte"
 </ul>
 
 <!-- ─── Responsiveness ────────────────────────────────── -->
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Native `&lt;input type=&quot;checkbox&quot;&gt;` with custom wrapper styling</li>
+    <li>Supports indeterminate state via JS `element.indeterminate = true`</li>
+    <li>`accent-color` for brand-tinted checkbox appearance</li>
+    <li>Form context integration via `getContext('form')` for `effectiveDisabled`</li>
+    <li>`id` with `crypto.randomUUID()` default for label association</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div onclick&gt;` — always `&lt;input type=&quot;checkbox&quot;&gt;` for form participation</li>
+    <li>Don't forget `aria-describedby` for error messages</li>
+    <li>Don't use for on/off settings — use Switch instead</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Radio, RadioGroup, Switch, FormField</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Checkboxes are inline elements that wrap naturally within text or flex layouts.</li>

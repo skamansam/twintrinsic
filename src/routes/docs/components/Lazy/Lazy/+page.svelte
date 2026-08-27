@@ -55,7 +55,25 @@ import * as LazyModule from "$lib/components/Lazy/Lazy.svelte"
     <li><a href="https://www.w3.org/TR/intersection-observer/">W3C — IntersectionObserver</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Intersection Observer for viewport detection</li>
+    <li>`&lt;img loading=&quot;lazy&quot;&gt;` for native image lazy loading</li>
+    <li>`content-visibility: auto` for off-screen content skipping</li>
+    <li>LazyPanel variant for tab panels</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use JS timers for lazy loading — Intersection Observer is the standard</li>
+    <li>Don't forget `content-visibility: auto` as a CSS-only alternative for simple cases</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Skeleton, Card, Container</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Fills container width by default.</li>
     <li>Placeholder content adapts to the container.</li>

@@ -53,6 +53,25 @@ import Container from "$lib/components/Container/Container.svelte"
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date">MDN — date input</a></li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Custom grid-based calendar with `popover=&quot;auto&quot;` for the picker panel</li>
+    <li>`@starting-style` + `transition-behavior: allow-discrete` for entry animation</li>
+    <li>Range selection support with visual highlighting</li>
+    <li>Week numbers via `weekNumber` prop</li>
+    <li>Form context integration via `getContext('form')`</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;input type=&quot;date&quot;&gt;` when you need range selection or custom formatting</li>
+    <li>Don't forget `popover=&quot;auto&quot;` — it handles top-layer rendering and light-dismiss</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Input, ColorPicker, Select</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Calendar grid adapts to container width.</li>

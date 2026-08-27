@@ -57,7 +57,26 @@ import * as IconModule from "$lib/components/Icon/Icon.svelte"
     <li><a href="https://primer.style/components/octicon">Primer — Octicon</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Wraps `@iconify/svelte` for 150,000+ icons from 100+ icon sets</li>
+    <li>`preloadIcons()` for runtime prefetching</li>
+    <li>`preloadManifest` for build-time registration</li>
+    <li>`addLinkPreloads` for `&lt;link rel=&quot;preload&quot;&gt;` injection</li>
+    <li>`aria-hidden=&quot;true&quot;` for decorative icons</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use inline SVGs — use the Icon component for consistency</li>
+    <li>Don't forget `aria-hidden=&quot;true&quot;` for decorative icons</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Avatar, Badge, Button</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Icons scale via <code>width</code> and <code>height</code> props.</li>
     <li>Default size inherits from the font-size of the parent element.</li>

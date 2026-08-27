@@ -55,6 +55,24 @@ import * as ChipModule from "$lib/components/Chip/Chip.svelte"
   <li><a href="https://ant.design/components/tag">Ant Design — Tag</a></li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>`&lt;button&gt;` for clickable chips (more interactive than Tag)</li>
+    <li>`aria-pressed` for toggle chips</li>
+    <li>`aria-live=&quot;polite&quot;` for dynamic chip addition/removal</li>
+    <li>Icons, avatars, and close buttons supported</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;span onclick&gt;` — always `&lt;button&gt;` for interactive chips</li>
+    <li>Don't forget `aria-pressed` for toggle state</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Tag, TagGroup, Button</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Chips wrap naturally within their container.</li>

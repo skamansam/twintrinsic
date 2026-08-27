@@ -56,7 +56,25 @@ import * as CodeBlockModule from "$lib/components/CodeBlock/CodeBlock.svelte"
     <li><a href="https://ant.design/components/typography">Ant Design — Typography</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>`&lt;pre&gt;&lt;code&gt;` with `class=&quot;language-[lang]&quot;` for semantics</li>
+    <li>Prism.js for syntax highlighting</li>
+    <li>Copy-to-clipboard button with `aria-label=&quot;Copy code&quot;`</li>
+    <li>`content-visibility: auto` for large code blocks</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div&gt;` with `white-space: pre` — always `&lt;pre&gt;&lt;code&gt;`</li>
+    <li>Don't forget the copy button — developers expect it</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>CodeEditor, CodeBlockSpeed, Icon</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Horizontal scrolling for long lines via <code>overflow-x-auto</code>.</li>
     <li>Fills container width by default.</li>

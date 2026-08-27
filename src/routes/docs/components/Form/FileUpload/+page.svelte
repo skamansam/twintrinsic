@@ -45,7 +45,27 @@ import * as FileUploadModule from "$lib/components/Form/FileUpload.svelte"
     <li><strong>Progress</strong> — shows upload progress for large files.</li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Native `&lt;input type=&quot;file&quot;&gt;` as the base with custom dropzone UI</li>
+    <li>Drag-and-drop support via `dragenter`/`dragover`/`drop` events</li>
+    <li>`FileReader` API for preview generation</li>
+    <li>`&lt;progress&gt;` element for upload progress display</li>
+    <li>Form context integration via `getContext('form')`</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div contenteditable&gt;` for file uploads — always `&lt;input type=&quot;file&quot;&gt;`</li>
+    <li>Don't forget `accept` attribute for file type filtering</li>
+    <li>Don't forget `aria-live=&quot;polite&quot;` on the progress/status region</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Input, Progress, ListInput</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Dropzone fills its container width.</li>
     <li>On mobile, drag-and-drop is replaced by a prominent browse button.</li>

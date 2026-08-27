@@ -52,6 +52,25 @@ import Container from "$lib/components/Container/Container.svelte"
   <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/">WAI-ARIA APG — Forms</a></li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Custom HSL wheel with `conic-gradient` for the color picker</li>
+    <li>`popover=&quot;auto&quot;` for the picker panel with light-dismiss</li>
+    <li>Format switching: hex, RGB, HSL with live preview</li>
+    <li>Alpha/opacity slider for transparent colors</li>
+    <li>Form context integration via `getContext('form')`</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;input type=&quot;color&quot;&gt;` when you need HSL, alpha, or preset palettes</li>
+    <li>Don't forget to provide a hex input for precise color entry</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Input, Calendar, Slider</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Color wheel and sliders adapt to container width.</li>

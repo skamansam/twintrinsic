@@ -63,6 +63,25 @@ import Container from "$lib/components/Container/Container.svelte"
 </ul>
 
 <!-- ─── Responsiveness ────────────────────────────────── -->
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Uses `&lt;input type=&quot;checkbox&quot; role=&quot;switch&quot;&gt;` — native checkbox with switch semantics</li>
+    <li>Screen readers announce &quot;on/off&quot; instead of &quot;checked/unchecked&quot;</li>
+    <li>CSS transition on the track for smooth sliding animation</li>
+    <li>`accent-color` for brand-tinted track color</li>
+    <li>Form context integration via `getContext('form')`</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div role=&quot;switch&quot;&gt;` — always `&lt;input type=&quot;checkbox&quot; role=&quot;switch&quot;&gt;`</li>
+    <li>Don't use for form values — use Checkbox for checked/unchecked semantics</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Checkbox, FormField</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Switches are inline elements that sit naturally alongside their labels.</li>

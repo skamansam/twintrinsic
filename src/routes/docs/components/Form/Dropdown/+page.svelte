@@ -69,6 +69,21 @@ const skills = [
   <li><a href="https://m3.material.io/components/menus/overview">Material Design 3 — Menus</a></li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Deprecated wrapper around Select — kept for backward compatibility</li>
+    <li>Delegates all behavior to the Select component</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use in new code — use Select or Combobox instead</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Select, Combobox, Menu</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Fills container width by default.</li>

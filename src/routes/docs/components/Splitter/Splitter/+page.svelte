@@ -58,7 +58,25 @@ import * as SplitterModule from "$lib/components/Splitter/Splitter.svelte"
     <li><a href="https://primer.style/components/split-page-layout">Primer — SplitPageLayout</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>WAI-ARIA window splitter pattern</li>
+    <li>Keyboard: arrow keys resize, Enter resets</li>
+    <li>`aria-valuenow/min/max` for position</li>
+    <li>CSS `resize` for basic functionality; custom JS for precise control</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use CSS `resize` alone — it doesn't support multi-panel layout</li>
+    <li>Don't forget keyboard accessibility — arrow keys must work</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Container, Section, Card</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Fills its container's width and height.</li>
     <li>Touch targets on the divider meet 44×44 px minimum.</li>

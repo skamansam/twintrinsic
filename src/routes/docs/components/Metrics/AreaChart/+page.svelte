@@ -46,7 +46,25 @@ import * as AreaChartModule from "$lib/components/Metrics/AreaChart/AreaChart.sv
     <li><a href="https://ant.design/components/area">Ant Design — Area Chart</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>SVG-based chart rendering for Area, Bar, Line, Pie, Donut, HorizontalBar</li>
+    <li>`aria-label` on chart container for screen readers</li>
+    <li>Accessible data tables as alternatives</li>
+    <li>`content-visibility: auto` for off-screen charts</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;canvas&gt;` without a text alternative — SVG is more accessible</li>
+    <li>Don't forget to provide an accessible data table alternative</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>KPICard, MetricGrid, GaugeChart</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Fills container width by default.</li>
     <li>SVG charts scale to any resolution.</li>

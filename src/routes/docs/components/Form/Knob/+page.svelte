@@ -51,6 +51,25 @@ const sizesCode = `<Knob size="sm" value={25} />
   <li><strong>WAI-ARIA slider pattern</strong> — full keyboard support with screen reader announcements.</li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>SVG-based rotary control with ARIA slider pattern</li>
+    <li>`conic-gradient` for the fill indicator based on value</li>
+    <li>Mouse/touch drag for angle-to-value conversion</li>
+    <li>`aria-valuemin`, `aria-valuemax`, `aria-valuenow` for screen readers</li>
+    <li>Form context integration via `getContext('form')`</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use for general-purpose forms — use Slider instead</li>
+    <li>Don't forget `aria-valuetext` for human-readable value announcements</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Slider, Rating, NumberInput</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Sizes: <code>sm</code> (48px), <code>md</code> (72px), <code>lg</code> (96px).</li>

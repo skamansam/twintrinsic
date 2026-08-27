@@ -51,6 +51,25 @@ const ratingLabels: Record<number, string> = {
   <li><strong>Accessible</strong> — WAI-ARIA slider pattern with <code>aria-valuetext</code> ("4 out of 5 stars").</li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>WAI-ARIA slider pattern with `role=&quot;slider&quot;`</li>
+    <li>Hidden `&lt;input type=&quot;number&quot;&gt;` for form submission</li>
+    <li>`step` prop for half-star increments (0.5)</li>
+    <li>`accent-color` for brand-tinted star color</li>
+    <li>Form context integration via `getContext('form')`</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;input type=&quot;radio&quot;&gt;` for star ratings — slider pattern supports half-stars and drag</li>
+    <li>Don't forget `aria-valuetext` for &quot;4 out of 5 stars&quot; announcements</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Slider, NumberInput</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Sizes: <code>sm</code>, <code>md</code>, <code>lg</code>.</li>

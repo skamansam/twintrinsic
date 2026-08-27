@@ -78,6 +78,25 @@ const languages = [
 </ul>
 
 <!-- ─── Responsiveness ────────────────────────────────── -->
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Native `&lt;select&gt;` element with `appearance: base-select` (Chrome 135+) for customizable styling</li>
+    <li>`::picker(select)` CSS pseudo-element for popover-style option list</li>
+    <li>`&lt;optgroup&gt;` for option grouping via SelectGroup subcomponent</li>
+    <li>Form context integration via `getContext('form')` for `effectiveDisabled`</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't build a custom dropdown from `&lt;div&gt;` — use `&lt;select&gt;` for form participation and keyboard nav</li>
+    <li>Don't forget `appearance: base-select` requires Chrome 135+ — provide fallback styling</li>
+    <li>Don't use for fewer than 5 options — radio buttons are faster to scan</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>SelectGroup, Combobox, Listbox, Dropdown</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>The select fills its container width by default (<code>w-full</code>).</li>

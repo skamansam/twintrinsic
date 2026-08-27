@@ -59,6 +59,24 @@ let temperature = $state(22.5)
   <li><a href="https://ant.design/components/input-number">Ant Design — InputNumber</a></li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Wraps native `&lt;input type=&quot;number&quot;&gt;` with increment/decrement buttons</li>
+    <li>Uses `step`, `min`, `max` for constraints — all native HTML5 validation</li>
+    <li>`aria-live=&quot;polite&quot;` on the value display for screen reader announcements</li>
+    <li>Form context integration via `getContext('form')`</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;input type=&quot;text&quot; inputmode=&quot;numeric&quot;&gt;` when you need step controls</li>
+    <li>Don't forget `aria-label` on increment/decrement buttons</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Input, Slider, Knob</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Fills container width by default (<code>w-full</code>).</li>

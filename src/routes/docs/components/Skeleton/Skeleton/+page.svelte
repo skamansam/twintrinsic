@@ -57,7 +57,26 @@ import * as SkeletonModule from "$lib/components/Skeleton/Skeleton.svelte"
     <li><a href="https://web.dev/articles/content-visibility">web.dev — content-visibility</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>CSS `@keyframes` shimmer animation with `@property` for gradient angle</li>
+    <li>`@starting-style` for smooth entry animation</li>
+    <li>`content-visibility: auto` for off-screen skeleton performance</li>
+    <li>`aria-busy=&quot;true&quot;` and `aria-live=&quot;polite&quot;` on the loading region</li>
+    <li>`transition-behavior: allow-discrete` for exit when content loads</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use spinners for layout-heavy content — skeletons show structure</li>
+    <li>Don't forget `aria-busy=&quot;true&quot;` — screen readers need loading state</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Progress, Lazy, Toast</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Width defaults to <code>100%</code>, filling its container.</li>
     <li>Circle variant uses a fixed <code>size</code> prop (48px default).</li>

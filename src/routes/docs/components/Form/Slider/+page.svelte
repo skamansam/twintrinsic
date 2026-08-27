@@ -53,7 +53,26 @@ import * as SliderModule from "$lib/components/Form/Slider.svelte"
     <li><a href="https://m3.material.io/components/sliders/overview">Material Design 3 — Sliders</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Native `&lt;input type=&quot;range&quot;&gt;` with custom WebKit/Firefox styling</li>
+    <li>`accent-color` for brand-tinted thumb and track</li>
+    <li>`&lt;output&gt;` element for live value display with `aria-live`</li>
+    <li>WAI-ARIA slider pattern — native element already implements it</li>
+    <li>Form context integration via `getContext('form')`</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't build a custom slider from `&lt;div&gt;` — `&lt;input type=&quot;range&quot;&gt;` provides keyboard nav and touch support</li>
+    <li>Don't forget `&lt;output&gt;` for the value display — it's semantically correct and accessible</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>NumberInput, Knob, Rating</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Horizontal sliders fill their container width by default.</li>
     <li>Vertical sliders require an explicit height on the parent.</li>

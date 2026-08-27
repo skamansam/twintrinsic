@@ -58,7 +58,26 @@ Footer documentation page — standardized structure
   </ul>
 
   <!-- ─── Responsiveness ────────────────────────────────── -->
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Semantic `&lt;footer&gt;` element as root</li>
+    <li>Three-region layout: `footer-left`, `footer-center`, `footer-right` via CSS flexbox</li>
+    <li>Accepts `left`, `center`, `right` snippets for flexible content</li>
+    <li>`...rest` spread on `&lt;footer&gt;` for native attributes</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't put primary navigation in the footer — it belongs in the header or sidebar</li>
+    <li>Don't use `&lt;div&gt;` — always `&lt;footer&gt;` for landmark semantics</li>
+    <li>Don't forget copyright year can be dynamic via JS</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>App, AppHeader, Separator</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li><strong>Desktop</strong> — left, center, and right regions are displayed in a
       horizontal row with appropriate spacing.</li>

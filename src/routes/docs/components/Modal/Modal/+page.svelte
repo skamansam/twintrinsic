@@ -68,7 +68,26 @@ let showScrollableModal = writable(false)
     <li><a href="https://m3.material.io/components/dialogs/overview">Material Design 3 — Dialogs</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Native `&lt;dialog closedby=&quot;any&quot;&gt;` for light-dismiss dialogs</li>
+    <li>`@starting-style` + `transition-behavior: allow-discrete` for enter/exit animations</li>
+    <li>`::backdrop` for dimming the background</li>
+    <li>Focus trapping via native `&lt;dialog&gt;` behavior</li>
+    <li>Escape to close (native)</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use a `&lt;div&gt;` overlay — `&lt;dialog&gt;` provides inert background, focus trap, and Escape</li>
+    <li>Don't forget `closedby=&quot;any&quot;` for light-dismiss behavior</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Toast, Popover, Menu</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Centered by default; use <code>size="full"</code> for mobile-friendly full-screen dialogs.</li>
     <li>Body scroll is locked via pure CSS <code>:has()</code> while the dialog is open.</li>

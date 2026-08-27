@@ -56,7 +56,25 @@ import * as MenuItemModule from "$lib/components/Menu/Menu/MenuItem.svelte"
     <li><a href="https://m3.material.io/components/menus/overview">Material Design 3 — Menus</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Uses `popover=&quot;auto&quot;` for the menu panel — top-layer rendering with light-dismiss</li>
+    <li>CSS Anchor Positioning for tethering the menu to the trigger button</li>
+    <li>WAI-ARIA menu pattern: ArrowDown/Up navigate, Enter/Space activates, Escape closes</li>
+    <li>Nested submenus with proper focus management</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use a `&lt;div&gt;` dropdown — `popover=&quot;auto&quot;` handles light-dismiss and z-index</li>
+    <li>Don't forget `aria-expanded` on the trigger button</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Dropdown, Combobox, TreeMenu</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Dropdown opens in the top layer, so it doesn't clip on overflow.</li>
     <li>Touch targets meet 44×44 px minimum.</li>

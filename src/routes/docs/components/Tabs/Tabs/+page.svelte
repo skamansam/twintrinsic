@@ -56,7 +56,26 @@ import * as TabsModule from "$lib/components/Tabs/Tabs.svelte"
     <li><a href="https://m3.material.io/components/tabs/overview">Material Design 3 — Tabs</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>ARIA tablist pattern with `role=&quot;tablist&quot;` / `role=&quot;tab&quot;` / `role=&quot;tabpanel&quot;`</li>
+    <li>4 variants: underline, pills, enclosed, default</li>
+    <li>`aria-selected` on the active tab, `aria-controls` linking to panel</li>
+    <li>Arrow keys navigate between tabs, Enter/Space activates</li>
+    <li>Tab panels use `role=&quot;tabpanel&quot;` with `aria-labelledby`</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;details name&gt;` when you need proper tab semantics (aria-selected, tablist)</li>
+    <li>Don't forget `tabindex=&quot;0&quot;` on the active tab and `tabindex=&quot;-1&quot;` on inactive tabs</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Accordion, Menu, Breadcrumb</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Tabs scroll horizontally when they overflow on mobile.</li>
     <li>Touch targets meet 44×44 px minimum.</li>

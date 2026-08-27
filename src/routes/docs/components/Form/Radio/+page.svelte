@@ -96,6 +96,26 @@ const horizontalCode = `<script>
 </ul>
 
 <!-- ─── Responsiveness ────────────────────────────────── -->
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Native `&lt;input type=&quot;radio&quot;&gt;` with custom wrapper styling</li>
+    <li>RadioGroup uses `&lt;fieldset&gt;` + `&lt;legend&gt;` for accessible grouping</li>
+    <li>`name` attribute for mutual exclusion — native browser behavior</li>
+    <li>Arrow key navigation between radios in a group (native)</li>
+    <li>`accent-color` for brand-tinted appearance</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't forget `name` attribute — without it, radios won't be mutually exclusive</li>
+    <li>Don't use for binary on/off — use Checkbox or Switch</li>
+    <li>Don't use `&lt;div role=&quot;radio&quot;&gt;` — always native `&lt;input type=&quot;radio&quot;&gt;`</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Checkbox, Switch, RadioGroup, FormField</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Radio buttons are inline elements that wrap naturally in flex or grid layouts.</li>

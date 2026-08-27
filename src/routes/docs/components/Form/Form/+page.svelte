@@ -53,7 +53,26 @@ import * as FormFieldModule from "$lib/components/Form/FormField.svelte"
     <li><strong>Developer ergonomics</strong> — programmatic API for reset, validate, setValues, setErrors.</li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>FormField wraps inputs with label, helper text, and error message</li>
+    <li>`:has(:user-valid)` / `:has(:user-invalid)` for CSS-only validation styling</li>
+    <li>`aria-describedby` links input to error/helper text</li>
+    <li>`aria-invalid` on the input when validation fails</li>
+    <li>Form context via `setContext('form')` / `getContext('form')` for shared state</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't show error messages on mount — use `:user-valid`/`:user-invalid` to show after interaction</li>
+    <li>Don't forget `aria-describedby` — screen readers need the error message linked to the input</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Input, Checkbox, Select, InvalidState</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Vertical layout (default) stacks fields vertically.</li>
     <li>Horizontal layout (<code>layout="horizontal"</code>) places labels beside inputs on desktop, stacks on mobile.</li>

@@ -55,7 +55,25 @@ import * as ContainerModule from "$lib/components/Container/Container.svelte"
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/section">MDN — &lt;section&gt;</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Container: CSS Container Queries (`container-type: inline-size`) for responsive child styling</li>
+    <li>Section: `&lt;section&gt;` semantic element with heading</li>
+    <li>Panel: `&lt;div&gt;` with `role=&quot;region&quot;` and `aria-label` if it's a landmark</li>
+    <li>`...rest` spread for native attributes</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div&gt;` for Section — `&lt;section&gt;` is the correct semantic element</li>
+    <li>Don't forget `&lt;section&gt;` needs a heading for proper semantics</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Card, App, Container</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Standard mode uses Tailwind's <code>container</code> class with responsive padding (<code>px-4</code> → <code>px-6</code> → <code>px-8</code>).</li>
     <li>Fluid mode is full-width with no max-width constraint.</li>

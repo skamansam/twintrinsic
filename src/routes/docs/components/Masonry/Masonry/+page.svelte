@@ -68,7 +68,25 @@ import * as MasonryModule from "$lib/components/Masonry/Masonry.svelte"
     <li><a href="https://www.w3.org/TR/css-grid-2/">CSS Grid Level 2</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>CSS columns for masonry-like flow (`columns: 3`)</li>
+    <li>`content-visibility: auto` for off-screen items</li>
+    <li>`break-inside: avoid` on items to prevent splitting</li>
+    <li>Progressive enhancement with `@supports (grid-template-rows: masonry)`</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use JS for layout measurement — CSS columns handle it natively</li>
+    <li>Don't forget `break-inside: avoid` — items can split across columns without it</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Masonry, Container, Card</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Supports responsive breakpoints via the <code>columns</code> prop object.</li>
     <li><code>columnWidth</code> mode auto-calculates column count from container width.</li>

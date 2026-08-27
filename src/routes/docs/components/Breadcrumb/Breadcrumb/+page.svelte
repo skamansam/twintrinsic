@@ -53,7 +53,25 @@ import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem
     <li><a href="https://primer.style/product/components/Breadcrumbs">Primer — Breadcrumbs</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Semantic `&lt;nav aria-label=&quot;Breadcrumb&quot;&gt;` + `&lt;ol&gt;` + `&lt;li&gt;` structure</li>
+    <li>`aria-current=&quot;page&quot;` on the last link (current page)</li>
+    <li>Separator styling via CSS `::before` pseudo-element — no JS needed</li>
+    <li>`&lt;link&gt;` on each item except the last (which uses `&lt;span&gt;` or `&lt;a aria-current=&quot;page&quot;&gt;`)</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div&gt;` for breadcrumbs — always `&lt;nav&gt;` + `&lt;ol&gt;` for landmark semantics</li>
+    <li>Don't forget `aria-current=&quot;page&quot;` on the last item</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>App, AppHeader, Sidebar, Tree</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Wraps naturally on narrow screens.</li>
     <li>Collapsible mode hides middle items on overflow.</li>

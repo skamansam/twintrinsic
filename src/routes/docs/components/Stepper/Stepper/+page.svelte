@@ -59,7 +59,25 @@ import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/">WAI-ARIA APG — Tabs</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>`&lt;ol&gt;` for semantic ordering of steps</li>
+    <li>`aria-current=&quot;step&quot;` on the active step</li>
+    <li>Step states: completed (checkmark), current (active), upcoming (muted)</li>
+    <li>`&lt;nav&gt;` wrapping for landmark semantics</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;ul&gt;` — steps have inherent order, so `&lt;ol&gt;` is correct</li>
+    <li>Don't forget `aria-current=&quot;step&quot;` on the active step</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Timeline, Breadcrumb, Accordion</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Horizontal stepper compresses on narrow screens; use <code>orientation="vertical"</code> for mobile.</li>
     <li>Alternative labels stack below icons on smaller viewports.</li>

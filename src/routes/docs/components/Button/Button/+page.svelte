@@ -58,7 +58,26 @@ import * as ButtonModule from "$lib/components/Button/Button.svelte"
     <li><a href="https://ant.design/components/button">Ant Design — Button</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Conditional `&lt;a&gt;` or `&lt;button&gt;` based on `href` prop</li>
+    <li>`type=&quot;submit&quot;` for form buttons, `type=&quot;button&quot;` for JS-only</li>
+    <li>Native keyboard activation (Enter/Space) — zero JS needed</li>
+    <li>`...rest` spread on every branch (a/button)</li>
+    <li>`disabled` prop with `aria-disabled` for consistent semantics</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div onclick&gt;` — always `&lt;button&gt;` or `&lt;a&gt;` for interactive elements</li>
+    <li>Don't forget `type=&quot;button&quot;` — without it, the button submits forms by default</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>ButtonGroup, Chip, Tag, Link</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Inline by default; use <code>fullWidth</code> for full-width buttons.</li>
     <li>Touch targets meet 44×44 px minimum across all sizes.</li>

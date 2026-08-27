@@ -55,7 +55,25 @@ import * as HeroModule from "$lib/components/Panel/Hero/Hero.svelte"
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/">WAI-ARIA APG — Landmarks</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>`&lt;header&gt;` or `&lt;section&gt;` as root with heading</li>
+    <li>CTA button should be the first focusable element</li>
+    <li>Background images with sufficient contrast (WCAG AA)</li>
+    <li>Responsive layout with CSS Grid or Flexbox</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div&gt;` — `&lt;header&gt;` or `&lt;section&gt;` is correct for landmark semantics</li>
+    <li>Don't forget to check color contrast on text over background images</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>AppHeader, Card, Container</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Full-width by default; padding comes from the inner Container.</li>
     <li>Heading text scales naturally within the document flow.</li>

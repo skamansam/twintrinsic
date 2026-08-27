@@ -71,7 +71,25 @@ const propsData = {
   }}
 />`}</CodeBlock>
 
-  <h2>Props</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Native `&lt;table&gt;` with `&lt;th scope=&quot;col&quot;&gt;` for headers</li>
+    <li>Auto-generated from TypeScript types via `propsMetadata`</li>
+    <li>`&lt;caption&gt;` for table title</li>
+    <li>`content-visibility: auto` for large tables</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div&gt;` — always `&lt;table&gt;` for semantic data display</li>
+    <li>Don't forget `&lt;th scope=&quot;col&quot;&gt;` for column header associations</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>DataTable, CompatibilityMatrix</p>
+
+<h2>Props</h2>
   <PropsTable data={propsData} />
 
   <h2>Accessibility</h2>

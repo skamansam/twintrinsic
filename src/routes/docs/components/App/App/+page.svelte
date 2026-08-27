@@ -62,7 +62,28 @@ App documentation page — standardized structure
   </ul>
 
   <!-- ─── Responsiveness ────────────────────────────────── -->
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Uses CSS Grid with `grid-template-rows` and `grid-template-columns` for the page shell</li>
+    <li>Semantic `&lt;main&gt;` element for the content area</li>
+    <li>Accepts `header`, `footer`, `leftPanel`, `rightPanel` snippets for flexible composition</li>
+    <li>`&lt;svelte:window&gt;` for scroll event handling</li>
+    <li>`data-theme` attribute on root for theme propagation</li>
+    <li>`...rest` spread for native attribute passthrough (`data-*`, `aria-*`)</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't put navigation inside `&lt;main&gt;` — it belongs in `&lt;nav&gt;` within the header or sidebar</li>
+    <li>Don't use `&lt;div&gt;` for the main content area — always use `&lt;main&gt;` for landmark semantics</li>
+    <li>Don't forget `id=&quot;main-content&quot;` for skip-nav links</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>AppHeader, Sidebar, Footer, BottomBar, Container</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li><strong>Desktop (≥ 640 px)</strong> — side panels sit beside the main content in a row layout.</li>
     <li><strong>Mobile (&lt; 640 px)</strong> — side panels expand to full width and stack vertically beneath the main content.</li>

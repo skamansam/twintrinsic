@@ -55,6 +55,24 @@ import * as BadgeModule from "$lib/components/Badge/Badge.svelte"
   <li><a href="https://ant.design/components/badge">Ant Design — Badge</a></li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>`&lt;span&gt;` with variant classes for status/count/category</li>
+    <li>`accent-color` for consistent theming</li>
+    <li>`aria-hidden=&quot;true&quot;` for decorative badges, `aria-label` for informative ones</li>
+    <li>WCAG AA color contrast for status colors</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use a `&lt;div&gt;` — `&lt;span&gt;` is more semantic for inline content</li>
+    <li>Don't rely solely on color to convey status — add text or icons</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Tag, Chip, Avatar</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Badges are inline and grow with content.</li>

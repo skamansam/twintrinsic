@@ -28,4 +28,22 @@ The Card component is a sub-component of Panel used for structuring and organizi
 <style lang="postcss">
 @reference '$lib/twintrinsic.css';
 </style>
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Semantic `&lt;article&gt;` element as root</li>
+    <li>Container Queries for responsive child layout</li>
+    <li>`...rest` spread with `on&#36;&#123;string&#125;` event handler index signature</li>
+    <li>Clickable cards use `&lt;a&gt;` or `&lt;button&gt;` as root (not `&lt;div onclick&gt;`)</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div onclick&gt;` for clickable cards — use `&lt;a&gt;` or `&lt;button&gt;`</li>
+    <li>Don't forget `role=&quot;region&quot;` + `aria-label` if the card is a landmark</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Container, Section, Button</p>
+
 </Container>

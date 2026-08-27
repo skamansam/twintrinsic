@@ -55,7 +55,25 @@ import * as ProgressModule from "$lib/components/Progress/Progress.svelte"
     <li><a href="https://ant.design/components/progress">Ant Design — Progress</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Native `&lt;progress&gt;` element with `aria-valuenow/min/max`</li>
+    <li>CSS styling for track and fill with `accent-color`</li>
+    <li>Indeterminate mode via CSS animation (no `value` attribute)</li>
+    <li>`&lt;meter&gt;` for scalar measurements within a range</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div&gt;` with width animation — `&lt;progress&gt;` is semantic and accessible</li>
+    <li>Don't confuse `&lt;progress&gt;` (task completion) with `&lt;meter&gt;` (scalar measurement)</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Skeleton, Metrics, NumberInput</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Fills container width by default; works in narrow or wide layouts.</li>
     <li>Size variants (sm, md, lg) adjust height for different contexts.</li>

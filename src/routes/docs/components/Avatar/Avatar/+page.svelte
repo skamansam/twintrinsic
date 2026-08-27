@@ -53,6 +53,25 @@ import * as AvatarModule from "$lib/components/Avatar/Avatar.svelte"
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img">MDN — img element</a></li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>`&lt;img&gt;` with `alt` text for user avatars</li>
+    <li>`aspect-ratio: 1` for consistent circular sizing</li>
+    <li>Fallback to initials when no image is provided</li>
+    <li>AvatarGroup with overlap using negative margin</li>
+    <li>`&lt;picture&gt;` with `&lt;source&gt;` for AVIF/WebP responsive images</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't forget `alt` text — even if decorative, use `alt=&quot;&quot;` (empty alt)</li>
+    <li>Don't use `&lt;div&gt;` for the image — always `&lt;img&gt;` for semantics</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Badge, Icon, Image</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Avatars are fixed-size by default; use <code>size</code> prop to control.</li>

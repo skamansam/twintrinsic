@@ -55,7 +55,26 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
     <li><a href="https://primer.style/product/components/TreeView">Primer — TreeView</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>`&lt;details&gt;` + `&lt;summary&gt;` for expand/collapse — native HTML</li>
+    <li>ARIA treeview pattern: `role=&quot;tree&quot;` / `role=&quot;treeitem&quot;` / `role=&quot;group&quot;`</li>
+    <li>`aria-expanded`, `aria-selected`, `aria-level` for screen readers</li>
+    <li>Arrow keys: Right expands, Left collapses, Up/Down navigate siblings</li>
+    <li>`multiSelect` implies `selectable` (fixed in recent commit)</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use a nested `&lt;ul&gt;` without ARIA roles — tree semantics require `role=&quot;tree&quot;`</li>
+    <li>Don't forget `aria-level` — screen readers need depth information</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>TreeMenu, Listbox, Menu</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Scrollable when the tree is taller than the container.</li>
     <li>Touch targets meet 44×44 px minimum.</li>

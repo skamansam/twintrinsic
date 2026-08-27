@@ -57,7 +57,23 @@ import * as MapComponentModule from "$lib/components/Map/Map.svelte"
     <li><a href="https://carto.com/">CartoDB</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Leaflet.js integration — lightweight, mobile-friendly</li>
+    <li>OpenStreetMap tiles by default</li>
+    <li>Kept as-is per user decision — too complex to replicate</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;map&gt;` + `&lt;area&gt;` — those are for image maps, not interactive maps</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Icon, CodeEditor</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Fills container width and height; set via parent CSS.</li>
     <li>Touch gestures for pan and zoom on mobile.</li>

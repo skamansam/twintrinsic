@@ -68,6 +68,26 @@ import Container from "$lib/components/Container/Container.svelte"
 </ul>
 
 <!-- ─── Responsiveness ────────────────────────────────── -->
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Native `&lt;input&gt;` element with `type` prop (text, email, tel, url, search, password, etc.)</li>
+    <li>Floating label via CSS `:has()` + `:placeholder-shown` — zero JS for label animation</li>
+    <li>Form context integration via `getContext('form')` for `effectiveDisabled` and validation</li>
+    <li>`...rest` spread on `&lt;input&gt;` for native attributes (`data-*`, `aria-*`)</li>
+    <li>`id` with `crypto.randomUUID()` default for accessibility</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div contenteditable&gt;` — always `&lt;input&gt;` for form participation</li>
+    <li>Don't forget `type=&quot;email&quot;` for email fields — it enables mobile keyboards and native validation</li>
+    <li>Don't override `id` unless you need label association — the default handles `aria-describedby`</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Textarea, NumberInput, AutoComplete, Combobox, FloatLabel, FormField</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>The input fills its container width by default (<code>w-full</code>).</li>

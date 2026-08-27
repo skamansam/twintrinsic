@@ -68,7 +68,26 @@ const countries = [
     <li><a href="https://m3.material.io/components/menus/overview">Material Design 3 — Exposed dropdown</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Uses `popover=&quot;auto&quot;` for the suggestions panel — top-layer rendering with light-dismiss</li>
+    <li>CSS Anchor Positioning for tethering the popup to the input</li>
+    <li>WAI-ARIA combobox pattern with `role=&quot;combobox&quot;` + `aria-expanded` + `aria-controls`</li>
+    <li>Keyboard: ArrowDown/Up navigate, Enter selects, Escape closes</li>
+    <li>Form context integration via `getContext('form')` for `effectiveDisabled`</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use a `&lt;div&gt;` dropdown — `popover=&quot;auto&quot;` handles top-layer, light-dismiss, and z-index</li>
+    <li>Don't forget `aria-activedescendant` for highlighting the active option</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>AutoComplete, Select, Listbox, Menu</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Fills container width; the dropdown matches the input width via <code>anchor-size()</code>.</li>
     <li>On mobile, the dropdown opens as a full-width overlay.</li>

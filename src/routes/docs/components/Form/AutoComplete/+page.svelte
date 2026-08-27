@@ -75,6 +75,25 @@ function renderAvatar(item: (typeof users)[number]): string {
   <li><a href="https://primer.style/product/components/Autocomplete">Primer — Autocomplete</a></li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Uses `popover=&quot;auto&quot;` for the suggestions panel with CSS Anchor Positioning</li>
+    <li>Supports single and multiple selection with removable chip display</li>
+    <li>Custom `itemTemplate` for rich suggestion rendering (avatars, icons)</li>
+    <li>`highlight` prop for matching text highlighting in suggestions</li>
+    <li>WAI-ARIA combobox pattern with full keyboard navigation</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't confuse with Combobox — AutoComplete is for text completion, Combobox for selection</li>
+    <li>Don't forget to set `multiple=&#123;true&#125;` for tag-input style behavior</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Combobox, Input, Listbox, Chip</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Fills container width; suggestions panel matches input width.</li>

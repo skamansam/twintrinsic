@@ -91,6 +91,25 @@ const templateColumns = [
   <li><a href="https://primer.style/components/data-table">Primer — DataTable</a></li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Native `&lt;table&gt;` + `&lt;thead&gt;` + `&lt;tbody&gt;` + `&lt;th scope&gt;` for semantic structure</li>
+    <li>`aria-sort` on sorted column headers</li>
+    <li>`aria-selected` on selected rows</li>
+    <li>`content-visibility: auto` on `&lt;tbody&gt;` for large table performance</li>
+    <li>`@starting-style` for row entry animations</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div role=&quot;table&quot;&gt;` — always native `&lt;table&gt;` for semantics</li>
+    <li>Don't forget `&lt;th scope=&quot;col&quot;&gt;` — screen readers need column header associations</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Listbox, EventsTable, PropsTable</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Table scrolls horizontally on narrow viewports.</li>

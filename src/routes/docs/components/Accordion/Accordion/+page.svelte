@@ -59,7 +59,27 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
     <li><a href="https://ant.design/components/collapse">Ant Design — Collapse</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Native `&lt;details&gt;` + `&lt;summary&gt;` for expand/collapse — zero JS</li>
+    <li>`&lt;details name=&quot;group&quot;&gt;` for exclusive behavior (only one open at a time)</li>
+    <li>`aria-expanded` on the summary button</li>
+    <li>`aria-controls` linking summary to panel content</li>
+    <li>CSS transitions for smooth expand/collapse animation</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div onclick&gt;` with JS toggle — `&lt;details&gt;` is native and accessible</li>
+    <li>Don't forget `&lt;details name&gt;` for exclusive accordion behavior</li>
+    <li>Don't use Accordion for tab switching — use Tabs component instead</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Tabs, Tree, Menu</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Full-width by default; set max-width via <code>class</code> or parent Container.</li>
     <li>Touch targets meet 44×44 px minimum for the summary header.</li>

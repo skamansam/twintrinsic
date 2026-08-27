@@ -57,6 +57,24 @@ import * as TagGroupModule from "$lib/components/Tag/TagGroup.svelte"
   <li><a href="https://primer.style/components/label">Primer — Label</a></li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>`&lt;span&gt;` with removable button for delete action</li>
+    <li>`role=&quot;group&quot;` with group label for TagGroup</li>
+    <li>Each removable tag has `aria-label=&quot;Remove [tag name]&quot;`</li>
+    <li>`dispatchGroupRemove` helper for consistent removal events</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't forget `aria-label` on remove buttons</li>
+    <li>Don't use `&lt;div&gt;` — `&lt;span&gt;` is more semantic for inline tags</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Chip, ChipGroup, ListInput</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Tags wrap naturally within their container.</li>

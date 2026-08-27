@@ -46,7 +46,25 @@ import * as GaugeChartModule from "$lib/components/Metrics/GaugeChart/GaugeChart
     <li><a href="https://d3js.org/d3-shape/arc">D3.js — Arcs</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>SVG-based semicircular/circular gauge</li>
+    <li>`role=&quot;meter&quot;` with `aria-valuenow/min/max`</li>
+    <li>Text alternative with actual value</li>
+    <li>`conic-gradient` for the fill indicator</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div&gt;` with CSS rotation — always `role=&quot;meter&quot;` for accessibility</li>
+    <li>Don't forget the text alternative — screen readers can't read SVG</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Slider, Progress, NumberInput</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Fills container width by default.</li>
     <li>SVG charts scale to any resolution.</li>

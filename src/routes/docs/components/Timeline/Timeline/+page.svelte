@@ -54,7 +54,25 @@ import * as TimelineModule from "$lib/components/Timeline/Timeline.svelte"
     <li><a href="https://primer.style/components/timeline">Primer — Timeline</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Semantic `&lt;ol&gt;` + `&lt;li&gt;` for chronological ordering</li>
+    <li>`&lt;time datetime=&quot;...&quot;&gt;` for machine-readable dates</li>
+    <li>Connecting lines via CSS `::before` pseudo-element</li>
+    <li>Vertical and horizontal layout variants</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;ul&gt;` — events have inherent order, so `&lt;ol&gt;` is correct</li>
+    <li>Don't forget `&lt;time datetime=&quot;...&quot;&gt;` for screen readers and SEO</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Stepper, Breadcrumb, Listbox</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Full-width by default; items stack vertically.</li>
     <li>Content adapts to container width.</li>

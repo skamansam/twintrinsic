@@ -63,6 +63,24 @@ import Container from "$lib/components/Container/Container.svelte"
 </ul>
 
 <!-- ─── Responsiveness ────────────────────────────────── -->
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Native `&lt;textarea&gt;` element with `field-sizing: content` for auto-grow (Chrome 123+)</li>
+    <li>JS fallback for `autoResize` using `scrollHeight` when `field-sizing` isn't supported</li>
+    <li>`aria-live=&quot;polite&quot;` on character count when `maxLength` is set</li>
+    <li>Form context integration via `getContext('form')`</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div contenteditable&gt;` for multi-line text — always `&lt;textarea&gt;`</li>
+    <li>Don't forget `field-sizing: content` is Chrome-only — provide a JS fallback</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Input, CodeEditor, FloatLabel, FormField</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>The textarea fills its container width by default (<code>w-full</code>).</li>

@@ -57,7 +57,25 @@ import * as CardModule from "$lib/components/Card/Card.svelte"
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/">WAI-ARIA APG</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Semantic `&lt;article&gt;` element as root</li>
+    <li>Container Queries for responsive child layout</li>
+    <li>`...rest` spread with `on&#36;&#123;string&#125;` event handler index signature</li>
+    <li>Clickable cards use `&lt;a&gt;` or `&lt;button&gt;` as root (not `&lt;div onclick&gt;`)</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div onclick&gt;` for clickable cards — use `&lt;a&gt;` or `&lt;button&gt;`</li>
+    <li>Don't forget `role=&quot;region&quot;` + `aria-label` if the card is a landmark</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Container, Section, Button</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Full-width by default; set max-width via <code>class</code> or parent Container.</li>
     <li>Media images use <code>object-cover</code> for consistent aspect ratios.</li>

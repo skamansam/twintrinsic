@@ -55,6 +55,22 @@ import * as CodeEditorModule from "$lib/components/CodeEditor/CodeEditor.svelte"
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea">MDN — textarea element</a></li>
 </ul>
 
+
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>CodeMirror integration — full-featured, battle-tested</li>
+    <li>Syntax highlighting, line numbers, autocomplete, plugins</li>
+    <li>Kept as-is per user decision — too complex to replace</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use for read-only code display — use CodeBlock instead</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>CodeBlock, CodeBlockSpeed</p>
+
 <h2>Responsiveness</h2>
 <ul>
   <li>Editor fills container width; height is configurable via the <code>height</code> prop.</li>

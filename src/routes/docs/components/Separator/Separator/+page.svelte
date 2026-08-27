@@ -54,7 +54,25 @@ import * as SeparatorModule from "$lib/components/Separator/Separator.svelte"
     <li><a href="https://ant.design/components/divider">Ant Design — Divider</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  
+<h2>Twintrinsic Implementation</h2>
+<ul>
+    <li>Native `&lt;hr&gt;` element for semantic thematic breaks</li>
+    <li>CSS-only variants: solid, dashed, dotted, gradient, with text</li>
+    <li>`role=&quot;separator&quot;` when used as a visual divider (not thematic break)</li>
+    <li>`aria-orientation=&quot;vertical&quot;` for vertical separators</li>
+</ul>
+
+<h2>Common Mistakes</h2>
+<ul>
+    <li>Don't use `&lt;div&gt;` — `&lt;hr&gt;` is semantic and accessible</li>
+    <li>Don't forget `role=&quot;separator&quot;` when the `&lt;hr&gt;` is visual, not thematic</li>
+</ul>
+
+<h2>Related Components</h2>
+<p>Container, Section, Card</p>
+
+<h2>Responsiveness</h2>
   <ul>
     <li>Horizontal separator fills container width.</li>
     <li>Vertical separator adapts to container height.</li>
