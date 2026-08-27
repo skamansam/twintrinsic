@@ -256,7 +256,45 @@ The following plan files have been **deleted** (information consolidated above):
 
 ---
 
-## ✅ Plan Complete — All Phases Assessed and Implemented
+## 11. Component Research — In Progress
+
+**Status:** ⬜ Not started — all entries in `COMPONENT_RESEARCH_CHECKLIST.md` are blank.
+
+### What's Needed
+For every component, document **What** it is, **When** to use it, and **Why** — from a design perspective, written for developers. Each entry must cite ≥5 sources.
+
+### Groups to Cover
+1. **App / Layout** (5): App, AppHeader, BottomBar, Sidebar, Footer
+2. **Form** (20): Input, NumberInput, Textarea, Select, SelectGroup, Dropdown, Combobox, AutoComplete, Listbox, Checkbox, Radio, RadioGroup, Switch, Slider, Knob, Rating, Calendar, ColorPicker, FileUpload, FloatLabel, Form/FormField/InvalidState, ListInput
+3. **Navigation** (5): Menu, Tabs, Breadcrumb, Tree, TreeMenu
+4. **Data Display** (8): DataTable, Badge, Avatar, Tag, Chip, Tooltip, EventsTable, CompatibilityMatrix
+5. **Feedback** (5): Modal, Toast, Skeleton, Progress, Stepper
+6. **Layout** (5): Container, Hero, Splitter, Masonry
+7. **Utility** (11): Button, Card, CodeBlock, CodeEditor, Icon, Lazy, Map, Separator, ThemeToggle, Timeline, RenderStringOrSnippet
+8. **Metrics/Charts** (11): AreaChart, BarChart, LineChart, PieChart, DonutChart, HorizontalBarChart, GaugeChart, KPICard, StatsCard, MetricGrid, MetricTrend, ProgressMetric
+
+### Sources
+- S1: WAI-ARIA APG — https://www.w3.org/WAI/ARIA/apg/patterns/
+- S2: MDN Web Docs — https://developer.mozilla.org/
+- S3: Primer (GitHub) — https://primer.style/product/components/
+- S4: Material Design 3 — https://m3.material.io/components
+- S5: modern-web-guidance skill
+- S6: Ant Design — https://ant.design/components/overview
+- S7: Carbon Design System — https://carbondesignsystem.com/components/overview
+
+---
+
+## 12. Plan File Cleanup — In Progress
+
+| File | Status |
+|------|--------|
+| `E2E_TO_STORYBOOK_MIGRATION_PLAN.md` | ⬜ Can be deleted (completed) |
+| `USER_FEEDBACK.md` | ⬜ Review for actionable items |
+| `README.md` | ⬜ Update plan folder index |
+
+---
+
+## ✅ Implementation Complete — All Phases Assessed
 
 All phases of the 2026 Modernization Plan have been reviewed and assessed:
 
@@ -273,4 +311,6 @@ All phases of the 2026 Modernization Plan have been reviewed and assessed:
 | **Icon System** | ✅ Done | Iconify with preload system |
 | **CI Gating** | ✅ Done | unit/storybook/e2e/compat jobs in test.yml |
 
-No further modernization work is required. The library uses the most modern browser APIs available for its Chrome-first target, with Firefox ~80% compatibility.
+### Still TODO
+- Component Research Checklist — fill in What/When/Why for all 40+ components
+- Plan file cleanup — delete completed plans, update index
