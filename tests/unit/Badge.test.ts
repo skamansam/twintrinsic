@@ -91,6 +91,22 @@ describe("Badge", () => {
       },
     })
     const badge = container.querySelector(".badge")
-    expect(badge?.className).toContain("absolute")
+    // Overlay + the default inline=true apply absolute positioning via the
+    // `badge-inline`/`badge-overlay` classes (CSS `@apply absolute`), not a
+    // literal `absolute` class name.
+    expect(badge?.className).toContain("badge-overlay")
+    expect(badge?.className).toContain("badge-inline")
+  })
+
+  it("does not force absolute positioning when inline is false", () => {
+    const { container } = render(Badge, {
+      props: {
+        inline: false,
+        children: () => "Static",
+      },
+    })
+    const badge = container.querySelector(".badge")
+    expect(badge?.className).not.toContain("badge-inline")
+    expect(badge?.className).not.toMatch(/(^|\s)absolute(\s|$)/)
   })
 })

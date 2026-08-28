@@ -113,6 +113,20 @@ import * as FileUploadModule from "$lib/components/Form/FileUpload.svelte"
     </div>
   </ExampleTabs>
 
+  <h3>Camera Capture</h3>
+  <p>On mobile devices, use <code>capture</code> to open the camera directly:</p>
+  <ExampleTabs code={`<FileUpload
+  accept="image/*"
+  capture="environment"
+  multiple={false}
+  dropzoneLabel="Take a photo"
+  browseLabel="Open Camera"
+/>`}>
+    <div class="max-w-md" data-testid="fileupload-camera">
+      <FileUpload accept="image/*" capture="environment" multiple={false} dropzoneLabel="Take a photo" browseLabel="Open Camera" />
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={FileUploadModule} />
 

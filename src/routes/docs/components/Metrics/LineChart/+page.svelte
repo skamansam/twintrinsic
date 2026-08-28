@@ -30,6 +30,25 @@ import * as LineChartModule from "$lib/components/Metrics/LineChart/LineChart.sv
   <h3>When should I use it?</h3>
   <p>Use LineChart for continuous time-series data (sales over time, user growth). For filled volume emphasis, use AreaChart. For categorical comparison, use BarChart.</p>
 
+  <h3>Choosing the Right Chart</h3>
+  <table>
+    <thead><tr><th>Chart</th><th>Best For</th><th>Avoid When</th></tr></thead>
+    <tbody>
+      <tr><td><strong>LineChart</strong></td><td>Trends over time, comparing multiple series, showing rate of change</td><td>Need to emphasize total volume; data is categorical (not sequential)</td></tr>
+      <tr><td><strong>AreaChart</strong></td><td>Volume emphasis, cumulative totals, stacked comparisons</td><td>Multiple overlapping lines make it hard to read</td></tr>
+      <tr><td><strong>BarChart</strong></td><td>Categorical comparison, discrete values, ranking</td><td>Time-series with many data points (too many bars)</td></tr>
+      <tr><td><strong>PieChart</strong></td><td>Part-to-whole (fewer than 7 slices)</td><td>More than 7 categories; comparing similar values</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Use Cases</h3>
+  <ul>
+    <li><strong>Revenue over months</strong> — LineChart (shows growth trend clearly)</li>
+    <li><strong>Website traffic sources</strong> — AreaChart (emphasizes volume contribution)</li>
+    <li><strong>Sales by region</strong> — BarChart (categorical comparison)</li>
+    <li><strong>Market share</strong> — PieChart (part-to-whole with few categories)</li>
+  </ul>
+
   <h3>Why does it exist?</h3>
   <ul>
     <li><strong>SVG rendering</strong> — crisp at any resolution.</li>

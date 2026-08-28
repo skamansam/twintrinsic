@@ -62,6 +62,9 @@ export const propsMetadata = [
 		tics?: TicConfig;
 		/** Color zones for the arc */
 		zones?: ColorZone[];
+		/** Additional props passed through to the root element */
+		[key: `data-${string}`]: unknown
+		[key: `aria-${string}`]: string | undefined
 	}
 
 	let {
@@ -75,7 +78,8 @@ export const propsMetadata = [
 		arcStart = 0,
 		arcEnd = 180,
 		tics = {},
-		zones = []
+		zones = [],
+		...restProps
 	}: Props = $props();
 
 	const colorMap: Record<string, string> = {
@@ -129,7 +133,7 @@ export const propsMetadata = [
 	const formatLabel = $derived(tics.format || ((v: number) => v.toString()));
 </script>
 
-<div class="flex flex-col items-center gap-4">
+<div {...restProps} class="flex flex-col items-center gap-4">
 	{#if label}
 		<h3 class="text-lg font-semibold text-gray-900 dark:text-white">{label}</h3>
 	{/if}

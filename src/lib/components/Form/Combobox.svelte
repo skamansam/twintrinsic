@@ -72,9 +72,9 @@ export const propsMetadata = [
 
 <script lang="ts">
 import { getContext, tick } from "svelte"
-import type { FormContext, FormFieldApi } from "./formContext.js"
 import { getItemLabel } from "../../helpers/itemLabel.js"
 import { getItemValue } from "../../helpers/itemValue.js"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -627,7 +627,7 @@ function clearSelection(event: Event): void {
   .combobox-input-container {
     @apply relative flex items-center;
     @apply w-full;
-    @apply bg-background dark:bg-background;
+    @apply bg-surface dark:bg-surface;
     @apply border border-border dark:border-border;
     @apply rounded-md;
     @apply transition-colors duration-150;
@@ -703,7 +703,7 @@ function clearSelection(event: Event): void {
      anchor-positioning polyfill can handle them too.) */
   .combobox-dropdown {
     @apply overflow-auto;
-    @apply bg-background dark:bg-background;
+    @apply bg-surface dark:bg-surface;
     @apply border border-border dark:border-border;
     @apply rounded-md shadow-lg;
     position: fixed;

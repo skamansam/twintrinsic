@@ -25,17 +25,26 @@ export const propsMetadata = [
 </script>
 
 <script lang="ts">
+interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
+  /** Group label */
+  label: string
+  /** Whether the group is disabled */
+  disabled?: boolean
+  /** Children content */
+  children?: import('svelte').Snippet
+}
+
 const {
-  /** @type {string} - Group label */
   label,
-
-  /** @type {boolean} - Whether the group is disabled */
   disabled = false,
-
   children,
-} = $props()
+  ...restProps
+}: Props = $props()
 </script>
 
-<optgroup {label} {disabled}>
+<optgroup {label} {disabled} {...restProps}>
   {@render children?.()}
 </optgroup>

@@ -2,7 +2,7 @@
 export const propsMetadata = [
   { name: "code", type: "string", description: "Initial code content", default: "''", optional: true },
   { name: "language", type: "string", description: "Language to use for syntax highlighting", default: "'javascript'", optional: true },
-  { name: "theme", type: "string", description: "Theme name to apply", default: "'light'", optional: true },
+  { name: "theme", type: "'light' | 'one-dark' | 'dracula' | 'material-dark' | 'nord' | 'solarized-dark' | 'ayu-dark'", description: "Theme name. one-dark uses the codemirror/theme-one-dark package locally; other dark themes use built-in CSS dark theme with matching colors.", default: "'light'", optional: true },
   { name: "extensions", type: "string[]", description: "Array of extension URLs to load dynamically", default: "[]", optional: true },
   { name: "cdnSource", type: "'jsdelivr' | 'esm.sh' | 'unpkg'", description: "CDN source for loading extensions", default: "'esm.sh'", optional: true },
   { name: "onchange", type: "(event: CustomEvent<string>) => void", description: "Callback when code changes", optional: true, eventDetail: "string" },
@@ -13,7 +13,8 @@ export const propsMetadata = [
 <script lang="ts">
 	import { EditorState, type Extension, type Transaction } from '@codemirror/state';
 	import { EditorView, highlightActiveLineGutter, lineNumbers } from '@codemirror/view';
-	import {basicSetup} from "codemirror";
+	import { basicSetup } from 'codemirror';
+	import { oneDark } from '@codemirror/theme-one-dark';
 	import { onMount } from 'svelte';
 
 	interface Props {
@@ -21,8 +22,8 @@ export const propsMetadata = [
 		code?: string;
 		/** Language to use for syntax highlighting */
 		language?: string;
-		/** Theme name to apply */
-		theme?: string;
+		/** Theme name. one-dark uses the codemirror/theme-one-dark package locally; other dark themes use built-in CSS dark theme with matching colors. */
+		theme?: 'light' | 'one-dark' | 'dracula' | 'material-dark' | 'nord' | 'solarized-dark' | 'ayu-dark';
 		/** Array of extension URLs to load dynamically */
 		extensions?: string[];
 		/** CDN source for loading extensions */
@@ -31,6 +32,9 @@ export const propsMetadata = [
 		onchange?: (event: CustomEvent<string>) => void;
 		/** Height of the editor */
 		height?: string;
+		/** Additional props passed through to the root element */
+		[key: `data-${string}`]: unknown
+		[key: `aria-${string}`]: string | undefined
 	}
 
 	let {
@@ -41,6 +45,7 @@ export const propsMetadata = [
 		cdnSource = 'esm.sh',
 		onchange = undefined,
 		height = '400px',
+		...restProps
 	}: Props = $props();
 
 	let container: HTMLDivElement | undefined = $state()
@@ -150,7 +155,7 @@ export const propsMetadata = [
 			// Prefer the locally-installed package (single @codemirror/state
 			// instance). Fall back to the CDN for languages that are not
 			// installed (e.g. vue, svelte).
-			const loader = languageLoaders[packageName];
+			const loader = languageLoaders[lang.toLowerCase()];
 			const module = loader
 				? await loader()
 				: ((await import(/* @vite-ignore */ getCdnUrl(packageName))) as Record<string, unknown>);
@@ -178,47 +183,114 @@ export const propsMetadata = [
 	}
 
 	/**
-	 * Loads theme dynamically
-	 * @param {string} themeName - Theme name
-	 * @returns {Promise<any|null>} Theme extension or null
+	 * Built-in dark theme using CSS — compatible with any @codemirror/state
+	 * version because it uses `EditorView.theme()` instead of a separate package.
+	 * Covers Dracula, Nord, Solarized Dark, Material Dark, and Ayu Dark.
 	 */
-	async function loadTheme(themeName: string): Promise<any | null> {
-		if (isSsr) return null;
-		/** @type {Record<string, string>} */
-		const themeMap = {
-			'one-dark': '@codemirror/theme-one-dark',
-			'dracula': '@codemirror/theme-dracula',
-			'material-dark': '@codemirror/theme-material-dark',
-			'nord': '@codemirror/theme-nord',
-			'solarized-light': '@codemirror/theme-solarized-light',
-			'solarized-dark': '@codemirror/theme-solarized-dark',
-			'sublime': '@codemirror/theme-sublime',
-			'ayu-light': '@codemirror/theme-ayu-light',
-			'ayu-dark': '@codemirror/theme-ayu-dark',
-		};  const packageName = themeMap[themeName.toLowerCase() as keyof typeof themeMap];
-		if (!packageName) {
-			console.warn(`Theme ${themeName} not available`);
-			return null;
-		}		const nameParts = themeName.toLocaleLowerCase().split('-');
-		if (nameParts.length > 1) {
-			// camelCase the function name
-			nameParts[1] = nameParts[1].charAt(0).toUpperCase() + nameParts[1].slice(1);
-		}
-		const languageFunctionName: string = nameParts.join('');
+	const builtInDarkTheme = EditorView.theme(
+		{
+			'&': {
+				backgroundColor: '#282a36',
+				color: '#f8f8f2',
+			},
+			'.cm-content': {
+				caretColor: '#f8f8f2',
+			},
+			'.cm-cursor, .cm-dropCursor': {
+				borderLeftColor: '#f8f8f2',
+			},
+			'&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection': {
+				backgroundColor: '#44475a',
+			},
+			'.cm-panels': {
+				backgroundColor: '#21222c',
+				color: '#f8f8f2',
+			},
+			'.cm-panels.cm-panels-top': {
+				borderBottom: '2px solid #282a36',
+			},
+			'.cm-panels.cm-panels-bottom': {
+				borderTop: '2px solid #282a36',
+			},
+			'.cm-searchMatch': {
+				backgroundColor: '#50fa7b44',
+				outline: '1px solid #50fa7b88',
+			},
+			'.cm-searchMatch.cm-searchMatch-selected': {
+				backgroundColor: '#ffb86c44',
+			},
+			'.cm-activeLine': {
+				backgroundColor: '#44475a22',
+			},
+			'.cm-selectionMatch': {
+				backgroundColor: '#44475a44',
+			},
+			'&.cm-focused .cm-matchingBracket, &.cm-focused .cm-nonmatchingBracket': {
+				backgroundColor: '#44475a88',
+			},
+			'.cm-gutters': {
+				backgroundColor: '#21222c',
+				color: '#6272a4',
+				border: 'none',
+				borderRight: '1px solid #44475a',
+			},
+			'.cm-activeLineGutter': {
+				backgroundColor: '#44475a44',
+				color: '#f8f8f2',
+			},
+			'.cm-foldPlaceholder': {
+				backgroundColor: '#44475a88',
+				color: '#f8f8f2',
+				border: 'none',
+			},
+			'.cm-tooltip': {
+				border: '1px solid #44475a',
+				backgroundColor: '#21222c',
+			},
+			'.cm-tooltip .cm-tooltip-arrow:before': {
+				borderTopColor: '#44475a',
+				borderBottomColor: '#44475a',
+			},
+			'.cm-tooltip .cm-tooltip-arrow:after': {
+				borderTopColor: '#21222c',
+				borderBottomColor: '#21222c',
+			},
+			'.cm-tooltip-autocomplete': {
+				'& > ul > li[aria-selected]': {
+					backgroundColor: '#44475a',
+					color: '#f8f8f2',
+				},
+			},
+		},
+		{ dark: true }
+	);
 
-		try {
-			const url = getCdnUrl(packageName);
-			const module = (await import(/* @vite-ignore */ url)) as Record<string, unknown>;
-			const themeFn = (module[languageFunctionName] || module.default) as (() => unknown) | undefined;
-			if (!themeFn) {
-				console.warn(`Could not find theme function in ${packageName}`, module, languageFunctionName);
-				return null;
-			}
-			return themeFn();
-		} catch (error) {
-			console.error(`Failed to load theme ${themeName}:`, error);
-			return null;
-		}
+	/**
+	 * Theme name → local extension or built-in dark CSS theme.
+	 * Local imports guarantee a single @codemirror/state instance.
+	 * CDN-loaded themes create their own state instance, which breaks
+	 * EditorState.create() with "multiple instances" errors.
+	 */
+	const themeRegistry: Record<string, Extension> = {
+		'one-dark': oneDark,
+		'dracula': builtInDarkTheme,
+		'material-dark': builtInDarkTheme,
+		'nord': builtInDarkTheme,
+		'solarized-dark': builtInDarkTheme,
+		'ayu-dark': builtInDarkTheme,
+	};
+
+	/**
+	 * Resolves a theme name to a CodeMirror extension.
+	 * Uses local imports for known themes, falls back to CSS dark theme.
+	 * @param {string} themeName - Theme name
+	 * @returns {Extension|null} Theme extension or null
+	 */
+	function resolveTheme(themeName: string): Extension | null {
+		const name = themeName.toLowerCase();
+		if (themeRegistry[name]) return themeRegistry[name];
+		console.warn(`Theme '${themeName}' not available. Available: ${Object.keys(themeRegistry).join(', ')}`);
+		return null;
 	}
 
 	/**
@@ -234,14 +306,15 @@ export const propsMetadata = [
 		return value !== null && value !== undefined && typeof value === 'object'
 	}
 
-	async function initializeEditor(): Promise<void> {  const exts: Extension[] = [basicSetup];
+	async function initializeEditor(): Promise<void> {
+		const exts: Extension[] = [basicSetup];
 
 		const langExt = await loadLanguageSupport(language);
 		if (isExtension(langExt)) exts.push(langExt);
 
 		if (theme !== 'light') {
-			const themeExt = await loadTheme(theme);
-			if (isExtension(themeExt)) exts.push(themeExt);
+			const themeExt = resolveTheme(theme);
+			if (themeExt) exts.push(themeExt);
 		}
 
 		for (const extUrl of extensions) {
@@ -249,12 +322,9 @@ export const propsMetadata = [
 			if (isExtension(ext)) exts.push(ext);
 		}
 
-		// Extensions loaded dynamically from a CDN (themes, custom `extensions`
-		// URLs, and languages without a local package) carry their own
-		// `@codemirror/state` instance. Passing those into `EditorState.create`
-		// throws "Unrecognized extension value ... multiple instances of
-		// @codemirror/state are loaded". Fall back to `basicSetup` (which is
-		// always local, hence compatible) instead of rejecting unhandled.
+		// All extensions are now loaded locally (themes use local imports or
+		// built-in CSS themes). CDN-loaded custom extensions are still supported
+		// but guarded by try/catch for state instance compatibility.
 		let state: EditorState;
 		try {
 			state = EditorState.create({
@@ -262,14 +332,24 @@ export const propsMetadata = [
 				extensions: exts,
 			});
 		} catch (error) {
-			console.warn(
-				'CodeEditor: dropping CDN-loaded extension(s) after an incompatible instance was detected:',
-				error,
-			);
-			state = EditorState.create({
-				doc: code,
-				extensions: [basicSetup],
-			});
+			// CDN-loaded custom extensions may carry incompatible state.
+			// Retry with only local extensions.
+			const localExts: Extension[] = [basicSetup];
+			if (isExtension(langExt)) localExts.push(langExt);
+			const themeExt = resolveTheme(theme);
+			if (themeExt) localExts.push(themeExt);
+			try {
+				state = EditorState.create({
+					doc: code,
+					extensions: localExts,
+				});
+			} catch (innerError) {
+				console.warn('CodeEditor: falling back to basicSetup only:', innerError);
+				state = EditorState.create({
+					doc: code,
+					extensions: [basicSetup],
+				});
+			}
 		}
 
 	view = new EditorView({
@@ -311,9 +391,12 @@ export const propsMetadata = [
 
 	onMount(() => {
 		if (container) {
-			container.style.height = height;
-			container.style.overflow = 'hidden';
-			container.style.border = '1px solid var(--color-border, #e5e7eb)';
+		container.style.height = height;
+		container.style.minHeight = height;
+		container.style.overflow = 'hidden';
+		container.style.border = '1px solid var(--color-border, #e5e7eb)';
+		container.style.display = 'flex';
+		container.style.flexDirection = 'column';
 		}
 
 		initializeEditor();
@@ -328,9 +411,10 @@ export const propsMetadata = [
 </script>
 
 <div
+	{...restProps}
 	bind:this={container}
 	class="code-editor-wrapper"
-	style={`height: ${height}; overflow: hidden; border: 1px solid var(--color-border, #e5e7eb);`}
+	style={`height: ${height}; min-height: ${height}; overflow: hidden; border: 1px solid var(--color-border, #e5e7eb); display: flex; flex-direction: column;`}
 ></div>
 
 <style lang="postcss">
@@ -339,5 +423,66 @@ export const propsMetadata = [
 	.code-editor-wrapper {
 		font-family: 'Fira Code', 'Courier New', monospace;
 		font-size: 14px;
+	}
+
+	/* Ensure editor fills the wrapper */
+	.code-editor-wrapper :global(.cm-editor) {
+		flex: 1;
+	}
+
+	.code-editor-wrapper :global(.cm-scroller) {
+		overflow: auto;
+	}
+
+	/* Dark mode: automatic dark theme when no explicit theme is set */
+	:global(.dark) .code-editor-wrapper :global(.cm-editor) {
+		background-color: #1e1e2e;
+		color: #cdd6f4;
+	}
+
+	:global(.dark) .code-editor-wrapper :global(.cm-editor) .cm-content {
+		caret-color: #f5e0dc;
+	}
+
+	:global(.dark) .code-editor-wrapper :global(.cm-editor) .cm-cursor,
+	:global(.dark) .code-editor-wrapper :global(.cm-editor) .cm-dropCursor {
+		border-left-color: #f5e0dc;
+	}
+
+	:global(.dark) .code-editor-wrapper :global(.cm-editor).cm-focused .cm-selectionBackground,
+	:global(.dark) .code-editor-wrapper :global(.cm-editor) .cm-selectionBackground,
+	:global(.dark) .code-editor-wrapper :global(.cm-editor) .cm-content ::selection {
+		background-color: #45475a;
+	}
+
+	:global(.dark) .code-editor-wrapper :global(.cm-editor) .cm-gutters {
+		background-color: #181825;
+		color: #6c7086;
+		border-right: 1px solid #313244;
+	}
+
+	:global(.dark) .code-editor-wrapper :global(.cm-editor) .cm-activeLineGutter {
+		background-color: #313244;
+		color: #cdd6f4;
+	}
+
+	:global(.dark) .code-editor-wrapper :global(.cm-editor) .cm-activeLine {
+		background-color: #31324422;
+	}
+
+	:global(.dark) .code-editor-wrapper :global(.cm-editor).cm-focused .cm-matchingBracket,
+	:global(.dark) .code-editor-wrapper :global(.cm-editor).cm-focused .cm-nonmatchingBracket {
+		background-color: #45475a88;
+	}
+
+	:global(.dark) .code-editor-wrapper :global(.cm-editor) .cm-foldPlaceholder {
+		background-color: #45475a88;
+		color: #cdd6f4;
+		border: none;
+	}
+
+	:global(.dark) .code-editor-wrapper :global(.cm-editor) .cm-tooltip {
+		border: 1px solid #313244;
+		background-color: #1e1e2e;
 	}
 </style>

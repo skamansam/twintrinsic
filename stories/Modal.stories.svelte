@@ -98,6 +98,29 @@ const { Story } = defineMeta({
   </Modal>
 </Story>
 
+<Story name="Scrollable Content">
+  <button onclick={() => (modalOpen = true)} class="px-4 py-2 bg-primary-500 text-white rounded">
+    Open long content
+  </button>
+  <Modal open={modalOpen} onclose={() => (modalOpen = false)} ariaLabel="Terms of service">
+    {#snippet header()}Terms of Service{/snippet}
+    <div class="space-y-4">
+      {#each Array(20) as _, i}
+        <div>
+          <h4 class="font-medium">Section {i + 1}</h4>
+          <p class="text-sm text-muted mt-1">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+        </div>
+      {/each}
+    </div>
+    {#snippet footer()}
+      <Button variant="outline" onclick={() => (modalOpen = false)}>Cancel</Button>
+      <Button variant="primary" onclick={() => (modalOpen = false)}>Accept</Button>
+    {/snippet}
+  </Modal>
+</Story>
+
 <Story name="Without Close Button">
   <button onclick={() => (modalOpen = true)} class="px-4 py-2 bg-primary-500 text-white rounded">
     Review terms

@@ -117,6 +117,38 @@ import * as TimelineModule from "$lib/components/Timeline/Timeline.svelte"
     </div>
   </ExampleTabs>
 
+  <h3>Horizontal Timeline</h3>
+  <ExampleTabs code={`<Timeline orientation="horizontal" ariaLabel="Sprint timeline">
+  <TimelineItem title="Sprint 1" date="Week 1">Planning</TimelineItem>
+  <TimelineItem title="Sprint 2" date="Week 2" variant="success">Development</TimelineItem>
+  <TimelineItem title="Sprint 3" date="Week 3" variant="info">Testing</TimelineItem>
+  <TimelineItem title="Launch" date="Week 4" variant="success" completed>Shipped</TimelineItem>
+</Timeline>`}>
+    <div class="border border-border rounded-md p-4 overflow-x-auto" data-testid="timeline-horizontal">
+      <Timeline orientation="horizontal" ariaLabel="Sprint timeline">
+        <TimelineItem title="Sprint 1" date="Week 1">Planning</TimelineItem>
+        <TimelineItem title="Sprint 2" date="Week 2" variant="success">Development</TimelineItem>
+        <TimelineItem title="Sprint 3" date="Week 3" variant="info">Testing</TimelineItem>
+        <TimelineItem title="Launch" date="Week 4" variant="success" completed>Shipped</TimelineItem>
+      </Timeline>
+    </div>
+  </ExampleTabs>
+
+  <h3>Alternate Position</h3>
+  <ExampleTabs code={`<Timeline position="alternate" ariaLabel="Project history">
+  <TimelineItem title="Kickoff" date="Jan 2026">Project started</TimelineItem>
+  <TimelineItem title="Alpha" date="Mar 2026" variant="warning">Early preview</TimelineItem>
+  <TimelineItem title="Launch" date="Jun 2026" variant="success" completed>Public release</TimelineItem>
+</Timeline>`}>
+    <div class="border border-border rounded-md p-4" data-testid="timeline-alternate">
+      <Timeline position="alternate" ariaLabel="Project history">
+        <TimelineItem title="Kickoff" date="Jan 2026">Project started</TimelineItem>
+        <TimelineItem title="Alpha" date="Mar 2026" variant="warning">Early preview</TimelineItem>
+        <TimelineItem title="Launch" date="Jun 2026" variant="success" completed>Public release</TimelineItem>
+      </Timeline>
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={TimelineModule} />
 

@@ -40,6 +40,7 @@ export const propsMetadata = [
   { name: "uploadUrl", type: "string", description: "Upload URL for auto upload", optional: true },
   { name: "uploadHeaders", type: "Record<string, string>", description: "Upload headers for auto upload", optional: true },
   { name: "browseLabel", type: "string", description: "Label for the browse button", default: "\"Browse\"", optional: true },
+  { name: "capture", type: "'user' | 'environment' | boolean", description: "Camera capture mode for mobile devices.\n'user' opens front camera, 'environment' opens rear camera.", default: "false", optional: true },
   { name: "dropzoneLabel", type: "string", description: "Label for the dropzone", default: "\"Drag files here or click to browse\"", optional: true },
   { name: "ariaLabel", type: "string", description: "ARIA label for the file input", default: "\"File upload\"", optional: true },
   { name: "onchange", type: "(event: CustomEvent<{ files: File[] }>) => void", description: "Change event handler", optional: true, eventDetail: "{ files: File[] }" },
@@ -55,6 +56,7 @@ export const propsMetadata = [
 import type { Snippet } from "svelte"
 import { getContext, onDestroy } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
+import Icon from "../Icon/Icon.svelte"
 
 interface PreviewsArgs {
   files: File[]
@@ -101,6 +103,11 @@ interface Props {
   uploadHeaders?: Record<string, string>
   /** Label for the browse button */
   browseLabel?: string
+  /**
+   * Camera capture mode for mobile devices.
+   * 'user' opens front camera, 'environment' opens rear camera.
+   */
+  capture?: 'user' | 'environment' | boolean
   /** Label for the dropzone */
   dropzoneLabel?: string
   /** ARIA label for the file input */
@@ -134,6 +141,7 @@ let {
   uploadUrl,
   uploadHeaders,
   browseLabel = "Browse",
+  capture = false,
   dropzoneLabel = "Drag files here or click to browse",
   ariaLabel = "File upload",
   onchange,
@@ -515,40 +523,25 @@ function formatBytes(bytes: number): string {
  * @param {File} file - File to get icon for
  * @returns {string} - Icon HTML
  */
-function getFileIcon(file: File): string {
-  const type = file.type
+const fileIconMap: Record<string, string> = {
+  'image/': 'tabler:photo',
+  'video/': 'tabler:video',
+  'audio/': 'tabler:music',
+  'application/pdf': 'tabler:file-text',
+  'default': 'tabler:file',
+}
 
-  if (type.startsWith("image/")) {
-    return `
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-        </svg>
-      `
-  } else if (type.startsWith("video/")) {
-    return `
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-        </svg>
-      `
-  } else if (type.startsWith("audio/")) {
-    return `
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
-        </svg>
-      `
-  } else if (type === "application/pdf") {
-    return `
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-        </svg>
-      `
-  } else {
-    return `
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-        </svg>
-      `
+/**
+ * Gets the Iconify icon name for a file type
+ * @param {File} file - File to get icon for
+ * @returns {string} Icon name for the Icon component
+ */function getFileIconName(file: File): string {
+  const type = file.type
+  for (const [prefix, icon] of Object.entries(fileIconMap)) {
+    if (prefix === 'default') continue
+    if (type.startsWith(prefix) || type === prefix) return icon
   }
+  return fileIconMap.default
 }
 
 /**
@@ -646,6 +639,7 @@ onDestroy(() => {
     bind:this={inputElement}
     aria-hidden="true"
     tabindex="-1"
+    capture={typeof capture === 'boolean' ? capture : capture}
   />
   
   {#if showPreviews && files.length > 0}
@@ -663,7 +657,7 @@ onDestroy(() => {
                   </div>
                 {:else}
                   <div class="file-upload-preview-icon">
-                    {@html getFileIcon(file)}
+                    <Icon name={getFileIconName(file)} class="w-6 h-6" />
                   </div>
                 {/if}
                 

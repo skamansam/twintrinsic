@@ -3,6 +3,7 @@
 // Data Display Components
 export { default as Accordion } from "./components/Accordion/Accordion.svelte";
 export { default as AccordionItem } from "./components/Accordion/AccordionItem.svelte";
+export { default as Alert } from "./components/Alert/Alert.svelte";
 export { default as App } from "./components/App/App.svelte";
 export { default as AppHeader } from "./components/AppHeader/AppHeader.svelte";
 export { default as Avatar } from "./components/Avatar/Avatar.svelte";
@@ -27,6 +28,8 @@ export { default as CompatibilityMatrix } from "./components/CompatibilityMatrix
 // Layout Components
 export { default as Container } from "./components/Container/Container.svelte";
 export { default as DataTable } from "./components/DataTable/DataTable.svelte";
+export { default as DocPage } from "./components/DocPage/DocPage.svelte";
+export { default as DocSection } from "./components/DocPage/DocSection.svelte";
 export { default as ExampleTabs } from "./components/ExampleTabs/ExampleTabs.svelte";
 export { default as EventsTable } from "./components/EventsTable/EventsTable.svelte";
 export { default as Footer } from "./components/Footer/Footer.svelte";
@@ -111,7 +114,7 @@ export { default as Timeline } from "./components/Timeline/Timeline.svelte";
 export { default as TimelineItem } from "./components/Timeline/TimelineItem.svelte";
 export { default as Toast } from "./components/Toast/Toast.svelte";
 export { default as Tooltip } from "./components/Tooltip/Tooltip.svelte";
-export { default as Tree } from "./components/Tree/Tree.svelte";
+export { default as Tree, type TreeNodeData } from "./components/Tree/Tree.svelte";
 export { default as TreeNode } from "./components/Tree/TreeNode.svelte";
 export {
   default as TreeMenu,

@@ -173,8 +173,8 @@ setContext("table", {
     @apply border border-border dark:border-border;
   }
   
-  .table-striped :global(tbody tr:nth-child(odd)) {
-    @apply bg-surface dark:bg-surface;
+  .table-striped :global(tbody tr:nth-child(even)) {
+    @apply bg-muted/5 dark:bg-muted/10;
   }
   
   .table-hoverable :global(tbody tr) {
@@ -186,6 +186,15 @@ setContext("table", {
     @apply py-1 px-2;
   }
   
+  .table :global(th) {
+    @apply text-start;
+  }
+
+  .table :global(td),
+  .table :global(th) {
+    @apply px-4 py-3;
+  }
+
   .table :global(caption) {
     @apply caption-top text-muted dark:text-muted text-sm py-2;
   }

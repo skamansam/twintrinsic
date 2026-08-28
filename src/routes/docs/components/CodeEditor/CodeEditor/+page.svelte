@@ -151,14 +151,19 @@ console.log(doubled);`}
   </div>
 </ExampleTabs>
 
-<h3>Dracula Theme (TypeScript)</h3>
+<h3>Built-in Dark Theme (Dracula Colors)</h3>
+<p>
+  When a CDN theme can't be loaded, the editor falls back to a built-in CSS
+  dark theme with Dracula-inspired colors. This works offline and has zero
+  CDN dependencies.
+</p>
 <ExampleTabs code={`<CodeEditor
-  code="interface User { id: number; name: string; }"
-  language="typescript"
+  code="const x = 42;"
+  language="javascript"
   theme="dracula"
   height="300px"
 />`}>
-  <div data-testid="code-editor-dracula">
+  <div data-testid="code-editor-dracula-builtin">
     <CodeEditor
       code={`interface User {
   id: number;
@@ -178,11 +183,56 @@ const user: User = {
   </div>
 </ExampleTabs>
 
+<h3>Auto Dark Mode (System Preference)</h3>
+<p>
+  When the page is in dark mode (<code>.dark</code> class on <code>&lt;html&gt;</code>),
+  the editor automatically applies dark colors even with <code>theme="light"</code>.
+  This uses CSS overrides — no JavaScript re-initialization needed.
+</p>
+<ExampleTabs code={`<CodeEditor
+  code="const x = 42;"
+  language="javascript"
+  theme="light"
+  height="300px"
+/>`}>
+  <div data-testid="code-editor-auto-dark">
+    <CodeEditor
+      code={`// This editor auto-adapts to dark mode
+function greet(name) {
+  return \`Hello, \${name}!\`;
+}
+
+console.log(greet('World'));`}
+      language="javascript"
+      theme="light"
+      height="300px"
+    />
+  </div>
+</ExampleTabs>
+
+
+
 <h2>Supported Languages</h2>
 <p>JavaScript, TypeScript, Python, HTML, CSS, JSON, XML, Markdown, SQL, Java, C++, Rust, Go, PHP, Vue, and Svelte.</p>
 
 <h2>Supported Themes</h2>
-<p>light (default), one-dark, dracula, material-dark, nord, solarized-light, solarized-dark, sublime, ayu-light, ayu-dark.</p>
+<table>
+  <thead><tr><th>Theme</th><th>Type</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>light</code></td><td>Default</td><td>Adapts to dark mode via CSS when page is in dark mode</td></tr>
+    <tr><td><code>one-dark</code></td><td>Local</td><td>Installed from <code>@codemirror/theme-one-dark</code></td></tr>
+    <tr><td><code>dracula</code></td><td>Built-in CSS</td><td>Dracula-inspired colors, zero CDN dependency</td></tr>
+    <tr><td><code>material-dark</code></td><td>Built-in CSS</td><td>Material Design dark colors</td></tr>
+    <tr><td><code>nord</code></td><td>Built-in CSS</td><td>Nord palette colors</td></tr>
+    <tr><td><code>solarized-dark</code></td><td>Built-in CSS</td><td>Solarized dark palette</td></tr>
+    <tr><td><code>ayu-dark</code></td><td>Built-in CSS</td><td>Ayu dark palette</td></tr>
+  </tbody>
+</table>
+<p>
+  All dark themes use local or built-in CSS — no CDN loading, no <code>@codemirror/state</code>
+  instance conflicts. The <code>one-dark</code> theme is installed as a local
+  package. Other dark themes share a built-in CSS theme with matching colors.
+</p>
 
 <h2>CDN Sources</h2>
 <ul>

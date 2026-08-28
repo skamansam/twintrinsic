@@ -159,15 +159,16 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
   </ExampleTabs>
 
   <h3>Expanded by Default</h3>
-  <ExampleTabs code={`<Tree>
-  <TreeNode label="Home" expanded>
+  <p>Use <code>expandAll</code> to expand every node at once, or set <code>expanded</code> on individual nodes.</p>
+  <ExampleTabs code={`<Tree expandAll>
+  <TreeNode label="Home">
     <TreeNode label="About" />
     <TreeNode label="Contact" />
   </TreeNode>
 </Tree>`}>
     <div data-testid="tree-expanded">
-      <Tree>
-        <TreeNode label="Home" expanded>
+      <Tree expandAll>
+        <TreeNode label="Home">
           <TreeNode label="About" />
           <TreeNode label="Contact" />
         </TreeNode>
@@ -189,6 +190,48 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
           <TreeNode label="CHANGELOG.md" />
         </TreeNode>
       </Tree>
+    </div>
+  </ExampleTabs>
+
+  <h3>Data-Driven Tree</h3>
+  <p>Use the <code>items</code> prop to render a tree from a data array instead of composing <code>&lt;TreeNode&gt;</code> sub-components. Each item needs a <code>key</code> and <code>label</code>, with optional <code>icon</code>, <code>children</code>, <code>expanded</code>, and <code>disabled</code> fields.</p>
+  <ExampleTabs code={`<Tree expandAll items={[
+  { key: 'src', label: 'src', icon: 'tabler:folder', children: [
+    { key: 'lib', label: 'lib', icon: 'tabler:folder', children: [
+      { key: 'index', label: 'index.ts', icon: 'tabler:file-code' },
+      { key: 'utils', label: 'utils.ts', icon: 'tabler:file-code' },
+    ]},
+    { key: 'app', label: 'App.svelte', icon: 'tabler:brand-svelte' },
+  ]},
+  { key: 'pkg', label: 'package.json', icon: 'tabler:json' },
+]} />`}>
+    <div class="max-w-md" data-testid="tree-data-driven">
+      <Tree expandAll items={[
+        { key: 'src', label: 'src', icon: 'tabler:folder', children: [
+          { key: 'lib', label: 'lib', icon: 'tabler:folder', children: [
+            { key: 'index', label: 'index.ts', icon: 'tabler:file-code' },
+            { key: 'utils', label: 'utils.ts', icon: 'tabler:file-code' },
+          ]},
+          { key: 'app', label: 'App.svelte', icon: 'tabler:brand-svelte' },
+        ]},
+        { key: 'pkg', label: 'package.json', icon: 'tabler:json' },
+      ]} />
+    </div>
+  </ExampleTabs>
+
+  <h3>Data-Driven with Selection</h3>
+  <p>Data-driven trees work with <code>selectable</code> and <code>multiSelect</code> just like the snippet API.</p>
+  <ExampleTabs code={`<Tree selectable items={[
+  { key: 'dashboard', label: 'Dashboard', icon: 'tabler:layout-dashboard' },
+  { key: 'analytics', label: 'Analytics', icon: 'tabler:chart-bar' },
+  { key: 'settings', label: 'Settings', icon: 'tabler:settings', disabled: true },
+]} />`}>
+    <div class="max-w-md" data-testid="tree-data-selectable">
+      <Tree selectable items={[
+        { key: 'dashboard', label: 'Dashboard', icon: 'tabler:layout-dashboard' },
+        { key: 'analytics', label: 'Analytics', icon: 'tabler:chart-bar' },
+        { key: 'settings', label: 'Settings', icon: 'tabler:settings', disabled: true },
+      ]} />
     </div>
   </ExampleTabs>
 

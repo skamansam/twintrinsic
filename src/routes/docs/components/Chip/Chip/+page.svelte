@@ -9,6 +9,16 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as ChipModule from "$lib/components/Chip/Chip.svelte"
+
+let chips = $state([
+  { id: 1, label: 'React', variant: 'primary' },
+  { id: 2, label: 'TypeScript', variant: 'success' },
+  { id: 3, label: 'Svelte', variant: 'error' },
+])
+
+function removeChip(id: number) {
+  chips = chips.filter(c => c.id !== id)
+}
 </script>
 
 <style lang="postcss">
@@ -119,12 +129,16 @@ import * as ChipModule from "$lib/components/Chip/Chip.svelte"
 </ExampleTabs>
 
 <h3>Removable Chips</h3>
-<ExampleTabs code={`<Chip removable>Removable</Chip>
-<Chip variant="primary" removable>Primary</Chip>`}>
+<ExampleTabs code={`<Chip removable onremove={() => {}}>Removable</Chip>`}>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md" data-testid="chip-removable">
-    <Chip removable>Removable</Chip>
-    <Chip variant="primary" removable>Primary</Chip>
-    <Chip variant="error" removable>Error</Chip>
+    {#each chips as chip (chip.id)}
+      <Chip variant={chip.variant} removable onremove={() => removeChip(chip.id)}>
+        {chip.label}
+      </Chip>
+    {/each}
+    {#if chips.length === 0}
+      <span class="text-sm text-muted">All chips removed!</span>
+    {/if}
   </div>
 </ExampleTabs>
 
@@ -145,6 +159,18 @@ import * as ChipModule from "$lib/components/Chip/Chip.svelte"
     <Chip disabled>Disabled</Chip>
     <Chip variant="primary" disabled clickable>Disabled Clickable</Chip>
     <Chip variant="error" disabled removable>Disabled Removable</Chip>
+  </div>
+</ExampleTabs>
+
+<h3>Icons</h3>
+<ExampleTabs code={`<Chip icon="tabler:star">Starred</Chip>
+<Chip icon="tabler:heart" variant="error">Favorite</Chip>
+<Chip icon="tabler:bell" variant="warning">Notifications</Chip>`}>
+  <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md" data-testid="chip-icons">
+    <Chip icon="tabler:star">Starred</Chip>
+    <Chip icon="tabler:heart" variant="error">Favorite</Chip>
+    <Chip icon="tabler:bell" variant="warning">Notifications</Chip>
+    <Chip icon="tabler:rocket" variant="success" clickable>Launch</Chip>
   </div>
 </ExampleTabs>
 

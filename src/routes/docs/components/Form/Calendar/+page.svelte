@@ -9,6 +9,8 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CalendarModule from "$lib/components/Form/Calendar.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+
+
 </script>
 
 <style lang="postcss">
@@ -19,54 +21,55 @@ import Container from "$lib/components/Container/Container.svelte"
 <h1>Calendar</h1>
 
 <p>
-  <strong>Calendar</strong> is a date picker supporting single date and range selection,
-  with month navigation, week numbers, and customizable formatting. Uses
-  <code>popover="auto"</code> for the popup panel with <code>@starting-style</code>
-  entry animation.
+  <strong>Calendar</strong> is a date picker built on the native
+  <code>&lt;input type="date"&gt;</code> element. It uses the browser's built-in
+  date picker for accessibility, validation, and localized formatting — free of charge.
 </p>
 
 <h2>What, When &amp; Why</h2>
 
 <h3>What is it?</h3>
 <p>
-  A month-grid calendar that opens from an input field. Users click a date to select
-  it, or drag to select a range. Navigates between months with arrow buttons.
+  A form control that lets users pick a date using the browser's native date
+  picker. Provides a calendar popup, keyboard navigation, and locale-aware
+  formatting with zero JavaScript overhead.
 </p>
 
 <h3>When should I use it?</h3>
 <p>
-  Use <code>&lt;Calendar&gt;</code> when the user needs to pick a date or date range.
-  For simple date input without a calendar grid, use <code>&lt;Input type="date"&gt;</code>.
-  Custom calendars are needed for range selection, week numbers, or blocked dates.
+  Use <code>&lt;Calendar&gt;</code> when the user needs to pick a single date.
+  The native picker provides ARIA support, keyboard navigation, and validation
+  for free. For date range selection, use two Calendar components side by side.
+  For custom calendar grids with week numbers or blocked dates, consider a
+  dedicated calendar library.
 </p>
 
 <h3>Why does it exist?</h3>
 <ul>
-  <li><strong>Range selection</strong> — native <code>&lt;input type="date"&gt;</code> doesn't support date ranges.</li>
-  <li><strong>Visual selection</strong> — the month grid makes it easy to see the selected date in context.</li>
-  <li><strong>Popover API</strong> — light-dismiss and top-layer rendering with <code>@starting-style</code> animation.</li>
+  <li><strong>Accessible by default</strong> — native date pickers have built-in ARIA, keyboard navigation, and screen reader support.</li>
+  <li><strong>Locale-aware</strong> — the browser formats dates according to the user's locale automatically.</li>
+  <li><strong>Validated</strong> — <code>min</code>/<code>max</code> attributes prevent invalid dates natively.</li>
+  <li><strong>Lightweight</strong> — no custom calendar grid JavaScript needed.</li>
 </ul>
 
 <h3>Sources</h3>
 <ul>
-  <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/#datepickerdialog">WAI-ARIA APG — Date Picker Dialog</a></li>
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date">MDN — date input</a></li>
+  <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/">WAI-ARIA APG — Spinbutton</a></li>
 </ul>
-
 
 <h2>Twintrinsic Implementation</h2>
 <ul>
-    <li>Custom grid-based calendar with `popover=&quot;auto&quot;` for the picker panel</li>
-    <li>`@starting-style` + `transition-behavior: allow-discrete` for entry animation</li>
-    <li>Range selection support with visual highlighting</li>
-    <li>Week numbers via `weekNumber` prop</li>
+    <li>Wraps native `&lt;input type="date"&gt;` with label and icon styling</li>
+    <li>`::-webkit-calendar-picker-indicator` is visually hidden; the Icon component provides the calendar icon</li>
     <li>Form context integration via `getContext('form')`</li>
+    <li>Min/max constraints use native `min`/`max` attributes</li>
 </ul>
 
 <h2>Common Mistakes</h2>
 <ul>
-    <li>Don't use `&lt;input type=&quot;date&quot;&gt;` when you need range selection or custom formatting</li>
-    <li>Don't forget `popover=&quot;auto&quot;` — it handles top-layer rendering and light-dismiss</li>
+    <li>Don't use `&lt;input type="text"&gt;` with a date pattern — `type="date"` gives you the native picker for free</li>
+    <li>Don't forget `aria-label` when the input has no visible label</li>
 </ul>
 
 <h2>Related Components</h2>
@@ -74,17 +77,17 @@ import Container from "$lib/components/Container/Container.svelte"
 
 <h2>Responsiveness</h2>
 <ul>
-  <li>Calendar grid adapts to container width.</li>
-  <li>On mobile, the calendar opens as a full-width overlay.</li>
+  <li>Fills container width by default (<code>w-full</code>).</li>
+  <li>On mobile, the native date picker opens as a system-native overlay.</li>
   <li>Touch targets meet 44×44 px minimum.</li>
 </ul>
 
 <h2>Customization</h2>
 <ul>
-  <li>Date format via <code>format</code> prop (e.g., <code>MM/dd/yyyy</code>).</li>
-  <li>Min/max date constraints.</li>
-  <li>Week numbers via <code>showWeekNumbers</code>.</li>
-  <li>Range selection via <code>range={true}</code>.</li>
+  <li>Min/max date constraints via <code>minDate</code> / <code>maxDate</code>.</li>
+  <li>Disabled state via <code>disabled</code>.</li>
+  <li>Required validation via <code>required</code>.</li>
+  <li>The date format is determined by the user's browser locale.</li>
 </ul>
 
 <h2>Examples</h2>
@@ -96,24 +99,34 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Date Range</h3>
-<ExampleTabs code={`<Calendar label="Date Range" range={true} value={[new Date('2026-04-07'), new Date('2026-04-14')]} />`}>
-  <div class="max-w-md" data-testid="calendar-range">
-    <Calendar label="Date Range" range={true} value={[new Date('2026-04-07'), new Date('2026-04-14')]} />
+<h3>With Pre-selected Date</h3>
+<ExampleTabs code={`<Calendar label="Date" value={new Date('2026-04-07')} />`}>
+  <div class="max-w-md" data-testid="calendar-with-value">
+    <Calendar label="Date" value={new Date('2026-04-07')} />
   </div>
 </ExampleTabs>
 
 <h3>With Min/Max Dates</h3>
-<ExampleTabs code={`<Calendar label="Date" minDate={new Date('2026-04-01')} maxDate={new Date('2026-04-30')} />`}>
+<ExampleTabs code={`<Calendar\n  label="Date"\n  minDate={new Date('2026-04-01')}\n  maxDate={new Date('2026-04-30')}\n/>`}>
   <div class="max-w-md" data-testid="calendar-min-max">
     <Calendar label="Date" minDate={new Date('2026-04-01')} maxDate={new Date('2026-04-30')} />
   </div>
 </ExampleTabs>
 
-<h3>Week Numbers</h3>
-<ExampleTabs code={`<Calendar label="Date" showWeekNumbers={true} />`}>
-  <div class="max-w-md" data-testid="calendar-week-numbers">
-    <Calendar label="Date" showWeekNumbers={true} />
+<h3>With Callback</h3>
+<ExampleTabs code={`<Calendar
+  label="Pick a date"
+  onselect={(e) => console.log('Selected:', e.detail.date)}
+/>`}>
+  <div class="max-w-md" data-testid="calendar-callback">
+    <Calendar label="Pick a date" />
+  </div>
+</ExampleTabs>
+
+<h3>Disabled</h3>
+<ExampleTabs code={`<Calendar label="Date" disabled={true} value={new Date('2026-04-07')} />`}>
+  <div class="max-w-md" data-testid="calendar-disabled">
+    <Calendar label="Date" disabled={true} value={new Date('2026-04-07')} />
   </div>
 </ExampleTabs>
 
@@ -125,22 +138,35 @@ import Container from "$lib/components/Container/Container.svelte"
 
 <h2>Accessibility</h2>
 <ul>
-  <li>Calendar opens in a dialog with proper ARIA labeling.</li>
-  <li>Date grid uses table semantics with row/column headers.</li>
-  <li><code>aria-selected</code> on selected dates.</li>
-  <li>Keyboard: arrow keys navigate days, Enter selects, Escape closes.</li>
+  <li>Uses native <code>&lt;input type="date"&gt;</code> which provides built-in ARIA support.</li>
+  <li>The native date picker includes keyboard navigation and screen reader announcements.</li>
+  <li><code>min</code>/<code>max</code> attributes enforce date constraints at the browser level.</li>
+  <li>Label is associated via <code>for</code>/<code>id</code> pairing.</li>
 </ul>
 
 <h2>Keyboard Support</h2>
+<p>
+  The native date picker provides full keyboard support automatically:
+</p>
 <table>
   <thead><tr><th>Key</th><th>Function</th></tr></thead>
   <tbody>
-    <tr><td><kbd>Arrow Left</kbd></td><td>Previous day</td></tr>
-    <tr><td><kbd>Arrow Right</kbd></td><td>Next day</td></tr>
-    <tr><td><kbd>Arrow Up</kbd></td><td>Previous week</td></tr>
-    <tr><td><kbd>Arrow Down</kbd></td><td>Next week</td></tr>
-    <tr><td><kbd>Enter</kbd></td><td>Select current date</td></tr>
-    <tr><td><kbd>Escape</kbd></td><td>Close calendar</td></tr>
+    <tr><td><kbd>Arrow Left</kbd> / <kbd>Arrow Right</kbd></td><td>Navigate between date segments (month, day, year)</td></tr>
+    <tr><td><kbd>Arrow Up</kbd> / <kbd>Arrow Down</kbd></td><td>Increment/decrement the active segment</td></tr>
+    <tr><td><kbd>Enter</kbd></td><td>Confirm the selected date</td></tr>
+    <tr><td><kbd>Escape</kbd></td><td>Close the date picker</td></tr>
   </tbody>
 </table>
+
+<h2>Date Range Selection</h2>
+<p>
+  The native <code>&lt;input type="date"&gt;</code> does not support date range
+  selection. To pick a date range, use two Calendar components side by side:
+</p>
+<ExampleTabs code={`<div class="flex gap-4">\n  <Calendar label="Start Date" />\n  <Calendar label="End Date" />\n</div>`}>
+  <div class="max-w-md flex gap-4" data-testid="calendar-range">
+    <Calendar label="Start Date" />
+    <Calendar label="End Date" />
+  </div>
+</ExampleTabs>
 </Container>

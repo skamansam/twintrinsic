@@ -8,6 +8,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Panel from "$lib/components/Panel/Panel.svelte"
 import Separator from "$lib/components/Separator/Separator.svelte"
+import ThemeCustomizer from "./ThemeCustomizer.svelte"
 
 const colorScales = ["primary", "secondary", "success", "warning", "error", "info"]
 const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
@@ -335,6 +336,15 @@ var(--color-${color}-500)
   --color-info-900: #1e3a8a;
 }`}
   </CodeBlock>
+
+  <h2>Live Theme Customizer</h2>
+  <p>
+    Pick base colors below and Twintrinsic generates a full 50-900 scale for each accent, previews
+    real components against the result, and prints a ready-to-copy CSS block. Nothing here is saved
+    or applied to the rest of the site — it's scoped to the preview panel via inline CSS custom
+    properties.
+  </p>
+  <ThemeCustomizer />
 
   <h2>Dark Mode</h2>
   <p>

@@ -99,7 +99,7 @@ import * as SeparatorModule from "$lib/components/Separator/Separator.svelte"
 
   <h3>With Text</h3>
   <ExampleTabs code={`<Separator>or</Separator>`}>
-    <div class="max-w-sm" data-testid="separator-with-text">
+    <div data-testid="separator-with-text">
       <Separator>or</Separator>
     </div>
   </ExampleTabs>

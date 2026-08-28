@@ -9,8 +9,18 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import Stepper from "$lib/components/Stepper/Stepper.svelte"
 import StepperStep from "$lib/components/Stepper/StepperStep.svelte"
+import Button from "$lib/components/Button/Button.svelte"
 import * as StepperModule from "$lib/components/Stepper/Stepper.svelte"
 import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
+
+let basicStep = $state(0)
+let verticalStep = $state(0)
+let verticalSteps = [
+  { label: "Personal Information", content: "Enter your name, email, and phone number." },
+  { label: "Address", content: "Enter your shipping and billing address." },
+  { label: "Payment", content: "Select your payment method and enter details." },
+  { label: "Review", content: "Review your order before placing it." },
+]
 </script>
 
 <style lang="postcss">
@@ -97,28 +107,19 @@ import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
   <h2>Examples</h2>
 
   <h3>Basic Stepper</h3>
-  <ExampleTabs code={`<Stepper>
-  <StepperStep label="Shipping">
-    <div class="p-4 mt-4 bg-surface rounded-lg">
-      <h3 class="text-lg font-medium">Shipping Address</h3>
-      <p class="mt-2">We'll send your order to the address you provide here.</p>
-    </div>
-  </StepperStep>
-  <StepperStep label="Payment">
-    <div class="p-4 mt-4 bg-surface rounded-lg">
-      <h3 class="text-lg font-medium">Payment Method</h3>
-      <p class="mt-2">Your card details are encrypted and never stored on our servers.</p>
-    </div>
-  </StepperStep>
-  <StepperStep label="Review">
-    <div class="p-4 mt-4 bg-surface rounded-lg">
-      <h3 class="text-lg font-medium">Review Your Order</h3>
-      <p class="mt-2">Double-check your items and shipping details before placing the order.</p>
-    </div>
-  </StepperStep>
-</Stepper>`}>
-    <div class="max-w-3xl" data-testid="stepper-basic">
-      <Stepper>
+  <ExampleTabs code={`<script>
+  let step = $state(0)
+<\/script>
+
+<Stepper activeStep={step}>
+  <StepperStep label="Shipping">Step 1 content</StepperStep>
+  <StepperStep label="Payment">Step 2 content</StepperStep>
+  <StepperStep label="Review">Step 3 content</StepperStep>
+</Stepper>
+<Button onclick={() => step = Math.max(0, step - 1)}>Previous</Button>
+<Button onclick={() => step = Math.min(2, step + 1)}>Next</Button>`}>
+    <div class="max-w-3xl space-y-4" data-testid="stepper-basic">
+      <Stepper activeStep={basicStep}>
         <StepperStep label="Shipping">
           <div class="p-4 mt-4 bg-surface rounded-lg">
             <h3 class="text-lg font-medium">Shipping Address</h3>
@@ -138,39 +139,39 @@ import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
           </div>
         </StepperStep>
       </Stepper>
+      <div class="flex gap-2">
+        <Button variant="outline" onclick={() => basicStep = Math.max(0, basicStep - 1)}>Previous</Button>
+        <Button onclick={() => basicStep = Math.min(2, basicStep + 1)}>Next</Button>
+      </div>
     </div>
   </ExampleTabs>
 
   <h3>Vertical Stepper</h3>
-  <ExampleTabs code={`<Stepper orientation="vertical">
-  <StepperStep label="Personal Information">
-    <div class="p-4 mt-2 bg-surface rounded-lg">
-      <h3 class="text-lg font-medium">Personal Information</h3>
-      <p class="mt-2">Enter your personal details.</p>
-    </div>
-  </StepperStep>
-  <StepperStep label="Address">
-    <div class="p-4 mt-2 bg-surface rounded-lg">
-      <h3 class="text-lg font-medium">Address</h3>
-      <p class="mt-2">Enter your address details.</p>
-    </div>
-  </StepperStep>
+  <ExampleTabs code={`<script>
+  let step = $state(0)
+  const steps = ["Personal Information", "Address", "Payment", "Review"]
+<\/script>
+
+<Stepper orientation="vertical" activeStep={step}>
+  {#each steps as label, i}
+    <StepperStep {label}>Step {i + 1} content here.</StepperStep>
+  {/each}
 </Stepper>`}>
-    <div class="max-w-3xl" data-testid="stepper-vertical">
-      <Stepper orientation="vertical">
-        <StepperStep label="Personal Information">
-          <div class="p-4 mt-2 bg-surface rounded-lg">
-            <h3 class="text-lg font-medium">Personal Information</h3>
-            <p class="mt-2">Enter your personal details.</p>
-          </div>
-        </StepperStep>
-        <StepperStep label="Address">
-          <div class="p-4 mt-2 bg-surface rounded-lg">
-            <h3 class="text-lg font-medium">Address</h3>
-            <p class="mt-2">Enter your address details.</p>
-          </div>
-        </StepperStep>
+    <div class="max-w-3xl space-y-4" data-testid="stepper-vertical">
+      <Stepper orientation="vertical" activeStep={verticalStep}>
+        {#each verticalSteps as step, i}
+          <StepperStep label={step.label}>
+            <div class="p-4 mt-2 bg-surface rounded-lg">
+              <h3 class="text-lg font-medium">{step.label}</h3>
+              <p class="mt-2">{step.content}</p>
+            </div>
+          </StepperStep>
+        {/each}
       </Stepper>
+      <div class="flex gap-2">
+        <Button variant="outline" onclick={() => verticalStep = Math.max(0, verticalStep - 1)}>Previous</Button>
+        <Button onclick={() => verticalStep = Math.min(verticalSteps.length - 1, verticalStep + 1)}>Next</Button>
+      </div>
     </div>
   </ExampleTabs>
 

@@ -133,8 +133,11 @@ const isLast = $derived(!(stepElement as HTMLElement | undefined)?.nextElementSi
 const isClickable = $derived(!!onClick && !disabled)
 
 // Determine if content should be shown
+// In vertical mode, show content for completed and active steps (or when expanded is set)
 const showContent = $derived(
-  (stepperContext?.orientation as string) === "vertical" && (expanded || (stepState as string) === "active") && !!children
+  (stepperContext?.orientation as string) === "vertical" &&
+  (expanded || (stepState as string) === "active" || (stepState as string) === "completed") &&
+  !!children
 )
 
 // Determine variant from context
@@ -253,18 +256,18 @@ function handleClick(): void {
     @apply relative;
   }
   
-  /* Horizontal layout */
+  /* Horizontal layout — icon and label side by side by default */
   .stepper-step-horizontal {
     @apply flex-1;
   }
   
   .stepper-step-horizontal .stepper-step-header {
-    @apply flex flex-col items-center;
+    @apply flex flex-row items-center;
   }
   
   .stepper-step-horizontal .stepper-step-icon-container {
-    @apply flex-1 flex items-center;
-    @apply w-full;
+    @apply flex items-center;
+    @apply w-auto;
   }
   
   .stepper-step-horizontal .stepper-step-connector {
@@ -281,9 +284,13 @@ function handleClick(): void {
     @apply bg-current;
   }
   
-  /* Alternative labels for horizontal */
+  .stepper-step-horizontal .stepper-step-label {
+    @apply ml-3;
+  }
+  
+  /* Alternative labels for horizontal — labels below icons */
   .stepper-step-horizontal.stepper-step-alternative-labels .stepper-step-header {
-    @apply flex-row items-start;
+    @apply flex-col items-center;
   }
   
   .stepper-step-horizontal.stepper-step-alternative-labels .stepper-step-icon-container {
@@ -291,12 +298,12 @@ function handleClick(): void {
   }
   
   .stepper-step-horizontal.stepper-step-alternative-labels .stepper-step-label {
-    @apply ml-3;
+    @apply ml-0 mt-2 text-center;
   }
   
   /* Vertical layout */
   .stepper-step-vertical {
-    @apply mb-4;
+    @apply mb-2;
   }
   
   .stepper-step-vertical .stepper-step-header {
@@ -305,11 +312,12 @@ function handleClick(): void {
   
   .stepper-step-vertical .stepper-step-icon-container {
     @apply flex flex-col items-center;
+    @apply min-w-8;
   }
   
   .stepper-step-vertical .stepper-step-connector {
-    @apply flex-1 mt-2;
-    @apply h-full min-h-8;
+    @apply mt-2;
+    @apply h-full min-h-10;
   }
   
   .stepper-step-vertical .stepper-step-connector-line {
@@ -323,7 +331,7 @@ function handleClick(): void {
   }
   
   .stepper-step-vertical .stepper-step-label {
-    @apply ml-3;
+    @apply ml-3 mt-0.5;
   }
   
   .stepper-step-vertical .stepper-step-content {

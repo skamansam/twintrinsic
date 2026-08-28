@@ -9,6 +9,16 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as InputModule from "$lib/components/Form/Input.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+
+let showPassword = $state(false)
+let passwordValue = $state('')
+
+function togglePasswordVisibility() {
+  showPassword = !showPassword
+}
+function handlePasswordInput(event: CustomEvent<{ value: string }>) {
+  passwordValue = event.detail.value
+}
 </script>
 
 <style lang="postcss">
@@ -122,14 +132,18 @@ import Container from "$lib/components/Container/Container.svelte"
   type="password"
   leftIcon="lock"
   rightIcon="eye"
+  onrightIconClick={() => togglePassword()}
   placeholder="Enter password"
 />`}>
   <div class="max-w-md" data-testid="input-icons">
     <Input
       label="Password"
-      type="password"
-      leftIcon="lock"
-      rightIcon="eye"
+      type={showPassword ? 'text' : 'password'}
+      leftIcon="tabler:lock"
+      rightIcon={showPassword ? 'tabler:eye-off' : 'tabler:eye'}
+      onrightIconClick={togglePasswordVisibility}
+      value={passwordValue}
+      oninput={handlePasswordInput}
       placeholder="Enter password"
     />
   </div>

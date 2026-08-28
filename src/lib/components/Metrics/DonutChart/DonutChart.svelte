@@ -1,165 +1,59 @@
+<!--
+@component
+DonutChart — Backward-compatible wrapper around PieChart with `hole={0.6}`.
+Prefer using `<PieChart hole={0.6}>` directly for new code.
+-->
 <script module lang="ts">
 export const propsMetadata = [
   { name: "data", type: "number[]", description: "Array of numeric values for each slice", optional: false },
   { name: "labels", type: "string[]", description: "Array of labels for each slice", optional: false },
-  { name: "colors", type: "string[]", description: "Array of colors for each slice (hex or Tailwind class names)", default: "['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899']", optional: true },
-  { name: "title", type: "string", description: "Chart title", optional: true },
+  { name: "colors", type: "string[] | undefined", description: "Array of colors for each slice", optional: true },
+  { name: "title", type: "string | undefined", description: "Chart title", optional: true },
   { name: "innerRadius", type: "number", description: "Width of the donut ring (0-1, where 1 is full circle)", default: "0.6", optional: true },
-  { name: "onsliceclick", type: "(event: MouseEvent | KeyboardEvent, detail: Readonly<{ index: number; label: string; value: number }>) => void", description: "Callback when a slice is clicked (mouse or keyboard activation)", optional: true },
-  { name: "showLegend", type: "boolean", description: "Show legend", default: "true", optional: true },
   { name: "size", type: "number", description: "Size of the chart in pixels", default: "300", optional: true },
+  { name: "showLegend", type: "boolean", description: "Show legend", default: "true", optional: true },
+  { name: "onsliceclick", type: "((event: CustomEvent<{ index: number; value: number; label: string }>) => void) | undefined", description: "Callback when a slice is clicked", optional: true, eventDetail: "{ index: number; value: number; label: string }" },
+  { name: "activeSlice", type: "number | null", description: "Index of the pulled-out active slice (null = none)", default: "null", optional: true },
+  { name: "pullDistance", type: "number", description: "Distance in pixels to pull the active slice outward", default: "12", optional: true },
 ];
 </script>
 
 <script lang="ts">
-	import { onMount } from 'svelte';
+import PieChart from "../PieChart/PieChart.svelte"
 
-	interface Props {
-		/** Array of numeric values for each slice */
-		data: number[];
-		/** Array of labels for each slice */
-		labels: string[];
-		/** Array of colors for each slice (hex or Tailwind class names) */
-		colors?: string[];
-		/** Chart title */
-		title?: string;
-		/** Width of the donut ring (0-1, where 1 is full circle) */
-		innerRadius?: number;
-	/** Callback when a slice is clicked (mouse or keyboard activation) */
-	onsliceclick?: (event: MouseEvent | KeyboardEvent, detail: Readonly<{ index: number; label: string; value: number }>) => void;
-		/** Show legend */
-		showLegend?: boolean;
-		/** Size of the chart in pixels */
-		size?: number;
-	}
-
-	let {
-		data,
-		labels,
-		colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899'],
-		title = undefined,
-		innerRadius = 0.6,
-		onsliceclick = undefined,
-		showLegend = true,
-		size = 300,
-		...rest
-	}: Props = $props();
-
-	let paths: (SVGPathElement | null)[] = $state([]);
-
-	const total = $derived(data.reduce((sum, val) => sum + val, 0));
-	const slices = $derived.by(() => {
-		let currentAngle = -Math.PI / 2;
-		return data.map((value, index) => {
-			const sliceAngle = (value / total) * 2 * Math.PI;
-			const startAngle = currentAngle;
-			const endAngle = currentAngle + sliceAngle;
-			const percentage = ((value / total) * 100).toFixed(1);
-
-			const start = polarToCartesian(size / 2, size / 2, size / 2 - 10, endAngle);
-			const end = polarToCartesian(size / 2, size / 2, size / 2 - 10, startAngle);
-			const innerStart = polarToCartesian(size / 2, size / 2, (size / 2 - 10) * innerRadius, endAngle);
-			const innerEnd = polarToCartesian(size / 2, size / 2, (size / 2 - 10) * innerRadius, startAngle);
-
-			const largeArc = sliceAngle > Math.PI ? 1 : 0;
-
-			const pathData = [
-				`M ${start.x} ${start.y}`,
-				`A ${size / 2 - 10} ${size / 2 - 10} 0 ${largeArc} 0 ${end.x} ${end.y}`,
-				`L ${innerEnd.x} ${innerEnd.y}`,
-				`A ${(size / 2 - 10) * innerRadius} ${(size / 2 - 10) * innerRadius} 0 ${largeArc} 1 ${innerStart.x} ${innerStart.y}`,
-				'Z'
-			].join(' ');
-
-			currentAngle = endAngle;
-
-			return {
-				pathData,
-				color: colors[index % colors.length],
-				label: labels[index],
-				value,
-				percentage
-			};
-		});
-	});
-
-	function polarToCartesian(
-		centerX: number,
-		centerY: number,
-		radius: number,
-		angleInRadians: number
-	) {
-		return {
-			x: centerX + radius * Math.cos(angleInRadians),
-			y: centerY + radius * Math.sin(angleInRadians)
-		};
-	}
-
-	function handleSliceClick(event: MouseEvent | KeyboardEvent, index: number) {
-		onsliceclick?.(event, {
-			index,
-			label: labels[index],
-			value: data[index]
-		});
-	}
-
-	onMount(() => {
-		paths.forEach((path, index) => {
-			path?.addEventListener('click', (event) => handleSliceClick(event, index))
-		});
-	});
+const {
+  /** @type {number[]} - Array of numeric values for each slice */
+  data,
+  /** @type {string[]} - Array of labels for each slice */
+  labels,
+  /** @type {string[] | undefined} - Array of colors for each slice */
+  colors = undefined,
+  /** @type {string | undefined} - Chart title */
+  title = undefined,
+  /** @type {number} - Width of the donut ring (0-1, where 1 is full circle) */
+  innerRadius = 0.6,
+  /** @type {((event: CustomEvent<{ index: number; value: number; label: string }>) => void) | undefined} - Callback when a slice is clicked */
+  onsliceclick = undefined,
+  /** @type {boolean} - Show legend */
+  showLegend = true,
+  /** @type {number} - Size of the chart in pixels */
+  size = 300,
+  /** @type {number | null} - Index of the pulled-out active slice (null = none) */
+  activeSlice = null,
+  /** @type {number} - Distance in pixels to pull the active slice outward */
+  pullDistance = 12,
+  ...restProps
+} = $props()
 </script>
 
-<div class="flex flex-col items-center gap-4" {...rest} role="region" aria-label="Donut chart visualization">
-	{#if title}
-		<h3 class="text-lg font-semibold text-gray-900 dark:text-white">{title}</h3>
-	{/if}
-
-	<svg
-		width={size}
-		height={size}
-		viewBox="0 0 {size} {size}"
-		class="drop-shadow-sm"
-		role="img"
-		aria-label={title || 'Donut chart'}
-	>
-		{#each slices as slice, index}
-			<path
-				bind:this={paths[index]}
-				d={slice.pathData}
-				fill={slice.color}
-				class="cursor-pointer transition-opacity hover:opacity-80"
-				role="button"
-				tabindex="0"
-				aria-label="{slice.label}: {slice.value} ({slice.percentage}%)"
-				onkeydown={(e) => {
-					if (e.key === 'Enter' || e.key === ' ') {
-						handleSliceClick(e, index);
-					}
-				}}
-				onclick={(e) => handleSliceClick(e, index)}
-			></path>
-		{/each}
-	</svg>
-
-	{#if showLegend}
-		<div class="flex flex-wrap justify-center gap-4">
-			{#each slices as slice, index}
-				<div class="flex items-center gap-2">
-					<div
-						class="h-3 w-3 rounded-full"
-						style="background-color: {slice.color}"
-						aria-hidden="true"
-					></div>
-					<span class="text-sm text-gray-700 dark:text-gray-300">
-						{slice.label} ({slice.percentage}%)
-					</span>
-				</div>
-			{/each}
-		</div>
-	{/if}
-</div>
-
-<style lang="postcss">
-	@reference "../../../twintrinsic.css";
-</style>
+<PieChart
+  {data}
+  {labels}
+  {colors}
+  {title}
+  hole={innerRadius}
+  {onsliceclick}
+  {showLegend}
+  {size}
+  {...restProps}
+/>

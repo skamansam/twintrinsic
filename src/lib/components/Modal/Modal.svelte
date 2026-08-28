@@ -267,7 +267,7 @@ const sizeClasses = $derived(
      with @starting-style and fades out via allow-discrete when closed. */
   .modal {
     @apply w-full relative;
-    @apply bg-background text-text;
+    @apply bg-surface text-text;
     @apply rounded-lg shadow-lg overflow-hidden;
     @apply flex flex-col max-h-[calc(100vh-2rem)];
     @apply m-auto;

@@ -127,9 +127,28 @@ import Container from "$lib/components/Container/Container.svelte"
 <h3>Horizontal Layout</h3>
 <ExampleTabs code={`<FormField label="Username" layout="horizontal">
   <TextInput name="username" />
+</FormField>
+
+<FormField label="Email" layout="horizontal">
+  <TextInput type="email" name="email" placeholder="you@example.com" />
 </FormField>`}>
-  <div class="max-w-md" data-testid="formfield-horizontal">
+  <div class="max-w-md space-y-4" data-testid="formfield-horizontal">
     <FormField label="Username" layout="horizontal"><TextInput name="username" /></FormField>
+    <FormField label="Email" layout="horizontal"><TextInput type="email" name="email" placeholder="you@example.com" /></FormField>
+  </div>
+</ExampleTabs>
+
+<h3>Horizontal with Icons</h3>
+<ExampleTabs code={`<FormField label="Search" layout="horizontal">
+  <TextInput name="search" placeholder="Search components..." startIcon="search" />
+</FormField>
+
+<FormField label="URL" layout="horizontal">
+  <TextInput name="url" placeholder="https://example.com" startIcon="link" />
+</FormField>`}>
+  <div class="max-w-md space-y-4" data-testid="formfield-horizontal-icons">
+    <FormField label="Search" layout="horizontal"><TextInput name="search" placeholder="Search components..." startIcon="search" /></FormField>
+    <FormField label="URL" layout="horizontal"><TextInput name="url" placeholder="https://example.com" startIcon="link" /></FormField>
   </div>
 </ExampleTabs>
 

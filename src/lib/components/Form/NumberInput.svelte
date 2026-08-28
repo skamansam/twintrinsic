@@ -40,7 +40,7 @@ export const propsMetadata = [
   { name: "step", type: "number", description: "Step increment/decrement amount", default: "1", optional: true },
   { name: "decimalPlaces", type: "number", description: "Number of decimal places to display", optional: true },
   { name: "prefix", type: "string", description: "Text to display before the number", optional: true },
-  { name: "suffix", type: "string", description: "Text to display after the number", optional: true },
+  { name: "suffix", type: "string", description: "Text or icon name to display after the number.\nStrings longer than 3 characters are treated as icon names\nand rendered via the Icon component (e.g., \"tabler:currency-dollar\").", optional: true },
   { name: "showButtons", type: "boolean", description: "Whether to show increment/decrement buttons", default: "true", optional: true },
   { name: "verticalButtons", type: "boolean", description: "Whether to arrange buttons vertically", default: "false", optional: true },
   { name: "required", type: "boolean", description: "Whether the input is required", default: "false", optional: true },
@@ -57,6 +57,7 @@ export const propsMetadata = [
 
 <script lang="ts">
 import { getContext } from "svelte"
+import Icon from "../Icon/Icon.svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
 
 interface Props {
@@ -83,7 +84,11 @@ interface Props {
   decimalPlaces?: number
   /** Text to display before the number */
   prefix?: string
-  /** Text to display after the number */
+  /**
+   * Text or icon name to display after the number.
+   * Strings longer than 3 characters are treated as icon names
+   * and rendered via the Icon component (e.g., "tabler:currency-dollar").
+   */
   suffix?: string
   /** Whether to show increment/decrement buttons */
   showButtons?: boolean
@@ -404,7 +409,13 @@ const buttonSizeClasses = $derived(
     />
     
     {#if suffix}
-      <span class="number-input-suffix">{suffix}</span>
+      <span class="number-input-suffix">
+        {#if suffix.length > 3}
+          <Icon name={suffix} class="w-4 h-4" />
+        {:else}
+          {suffix}
+        {/if}
+      </span>
     {/if}
     
     {#if showButtons}
@@ -448,7 +459,7 @@ const buttonSizeClasses = $derived(
   
   .number-input-container {
     @apply relative flex items-center;
-    @apply bg-background dark:bg-background;
+    @apply bg-surface dark:bg-surface;
     @apply border border-border dark:border-border rounded-md;
     @apply focus-within:ring-2 focus-within:ring-primary-500 dark:focus-within:ring-primary-400 focus-within:border-primary-500 dark:focus-within:border-primary-400;
     @apply transition-colors duration-200;
@@ -461,11 +472,11 @@ const buttonSizeClasses = $derived(
   }
   
   .number-input-prefix {
-    @apply pl-3 text-muted dark:text-muted;
+    @apply pl-3 text-muted dark:text-muted shrink-0;
   }
   
   .number-input-suffix {
-    @apply pr-3 text-muted dark:text-muted;
+    @apply pr-2 text-muted dark:text-muted shrink-0;
   }
   
   .number-input-buttons {
@@ -477,7 +488,7 @@ const buttonSizeClasses = $derived(
   }
   
   .number-input-horizontal .number-input-field {
-    @apply pr-16;
+    @apply pr-20;
   }
   
   .number-input-horizontal .number-input-buttons {

@@ -23,11 +23,26 @@ export const propsMetadata = [
   { name: "ariaLabel", type: "string", description: "ARIA label for the menu", default: "\"Menu\"", optional: true },
   { name: "trigger", type: "Snippet", description: "Trigger button content", optional: true },
   { name: "content", type: "Snippet", description: "Popup menu content", optional: true },
+  { name: "items", type: "MenuItemData[]", description: "Flat array of menu items (alternative to MenuItem sub-components)", optional: true },
 ];
 </script>
 
 <script lang="ts">
 import type { Snippet } from "svelte"
+import Icon from "../../Icon/Icon.svelte"
+
+interface MenuItemData {
+  /** Display label (required unless divider is true) */
+  label?: string
+  /** Optional icon name */
+  icon?: string
+  /** Click handler */
+  onClick?: () => void
+  /** Whether the item is disabled */
+  disabled?: boolean
+  /** Whether to show a divider before this item */
+  divider?: boolean
+}
 
 interface Props {
   /** Additional props passed through to the root element */
@@ -45,6 +60,8 @@ interface Props {
   trigger?: Snippet
   /** Popup menu content */
   content?: Snippet
+  /** Flat array of menu items (alternative to MenuItem sub-components) */
+  items?: MenuItemData[]
 }
 
 const {
@@ -53,6 +70,7 @@ const {
   ariaLabel = "Menu",
   trigger = undefined,
   content = undefined,
+  items = undefined,
   ...restProps
 }: Props = $props()
 
@@ -183,7 +201,33 @@ function handleFocusOut(e: FocusEvent) {
     onfocusout={handleFocusOut}
     tabindex="-1"
   >
+    {#if items && items.length > 0}
+    {#each items as item}
+      {#if item.divider}
+        <hr class="my-1 border-border" />
+      {/if}
+      <button
+        type="button"
+        class="menu-item-data {item.disabled ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}"
+        role="menuitem"
+        tabindex="-1"
+        disabled={item.disabled}
+        onclick={() => {
+          if (!item.disabled) {
+            item.onClick?.()
+            closeMenu()
+          }
+        }}
+      >
+        {#if item.icon}
+          <Icon name={item.icon} class="inline-block w-4 h-4 mr-2 align-middle text-muted" />
+        {/if}
+        {item.label ?? ''}
+      </button>
+    {/each}
+  {:else}
     {@render content?.()}
+  {/if}
   </div>
 </div>
 
@@ -211,12 +255,19 @@ function handleFocusOut(e: FocusEvent) {
     position-try-fallbacks: flip-block, flip-inline;
 
     @apply w-56 mt-2;
-    @apply bg-background border border-border rounded-md shadow-lg;
+    @apply bg-surface border border-border rounded-md shadow-lg;
     @apply origin-top-right;
   }
 
   /* Polyfill-robust open state: native :popover-open or polyfill's class. */
   .menu-content:is(:popover-open, .\:popover-open) {
     display: block;
+  }
+
+  .menu-item-data {
+    @apply block w-full text-left;
+    @apply px-4 py-2 text-sm;
+    @apply hover:bg-hover focus:outline-none focus:bg-hover;
+    @apply bg-transparent border-none cursor-pointer;
   }
 </style>

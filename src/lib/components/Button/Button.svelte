@@ -51,6 +51,7 @@ export const propsMetadata = [
 
 <script lang="ts">
 import { getContext, onMount } from "svelte"
+import Icon from "../Icon/Icon.svelte"
 
 const {
   /** @type {string} - Additional CSS classes */
@@ -232,7 +233,11 @@ onMount(() => {
   {:else}
     {#if icon && iconPosition === "left"}
       <span class="button-icon button-icon-left {iconSize}" aria-hidden="true">
-        {@html icon}
+        {#if icon.length > 3}
+          <Icon name={icon} class="w-full h-full" />
+        {:else}
+          {@html icon}
+        {/if}
       </span>
     {/if}
 
@@ -244,7 +249,11 @@ onMount(() => {
 
     {#if icon && iconPosition === "right"}
       <span class="button-icon button-icon-right {iconSize}" aria-hidden="true">
-        {@html icon}
+        {#if icon.length > 3}
+          <Icon name={icon} class="w-full h-full" />
+        {:else}
+          {@html icon}
+        {/if}
       </span>
     {/if}
   {/if}

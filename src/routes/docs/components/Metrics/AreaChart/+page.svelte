@@ -29,6 +29,25 @@ import * as AreaChartModule from "$lib/components/Metrics/AreaChart/AreaChart.sv
   <h3>When should I use it?</h3>
   <p>Use AreaChart for showing trends over time where the filled area emphasizes volume (e.g. website traffic, revenue over time). For simple line trends, use LineChart. For categorical comparison, use BarChart.</p>
 
+  <h3>Choosing the Right Chart</h3>
+  <table>
+    <thead><tr><th>Chart</th><th>Best For</th><th>Avoid When</th></tr></thead>
+    <tbody>
+      <tr><td><strong>AreaChart</strong></td><td>Volume emphasis, cumulative totals, stacked comparisons</td><td>Multiple overlapping areas make it hard to read</td></tr>
+      <tr><td><strong>LineChart</strong></td><td>Trends over time, comparing multiple series, showing rate of change</td><td>Need to emphasize total volume; data is categorical</td></tr>
+      <tr><td><strong>BarChart</strong></td><td>Categorical comparison, discrete values, ranking</td><td>Time-series with many data points (too many bars)</td></tr>
+      <tr><td><strong>PieChart</strong></td><td>Part-to-whole (fewer than 7 slices)</td><td>More than 7 categories; comparing similar values</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Use Cases</h3>
+  <ul>
+    <li><strong>Daily active users</strong> — AreaChart (emphasizes volume of users)</li>
+    <li><strong>Revenue breakdown by product</strong> — Stacked AreaChart (cumulative contribution)</li>
+    <li><strong>Temperature over time</strong> — LineChart (simpler, less visual weight)</li>
+    <li><strong>Storage usage over time</strong> — AreaChart (shows capacity filling up)</li>
+  </ul>
+
   <h3>Why does it exist?</h3>
   <ul>
     <li><strong>SVG rendering</strong> — crisp at any resolution.</li>

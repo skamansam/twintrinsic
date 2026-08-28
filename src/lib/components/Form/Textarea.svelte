@@ -219,7 +219,7 @@ function handleBlur(event: FocusEvent): void {
   }
   
   .textarea {
-    @apply w-full rounded-md border-border dark:border-border bg-background dark:bg-background text-text dark:text-text;
+    @apply w-full rounded-md border-border dark:border-border bg-surface dark:bg-surface text-text dark:text-text;
     @apply border focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-primary-500 dark:focus:border-primary-400;
     @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-surface dark:disabled:bg-surface;
     @apply placeholder:text-muted dark:placeholder:text-muted;

@@ -268,7 +268,7 @@ function handleChange(event: Event): void {
 
   .select-input {
     @apply w-full px-3 py-2 rounded-md;
-    @apply bg-background dark:bg-background;
+    @apply bg-surface dark:bg-surface;
     @apply border border-border dark:border-border;
     @apply text-text dark:text-text;
     @apply focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400;

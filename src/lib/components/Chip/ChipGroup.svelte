@@ -107,6 +107,9 @@ interface Props<TItem extends string | Record<string, unknown>> {
   onselect?: (event: CustomEvent<{ selected: TItem[] }>) => void
   /** Remove event handler */
   onremove?: (event: CustomEvent<{ item: TItem; index: number }>) => void
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Static chip content (rendered when `items` is empty) */
   children?: Snippet
 }

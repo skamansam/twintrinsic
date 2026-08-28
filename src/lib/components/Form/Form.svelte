@@ -296,7 +296,7 @@ const formApi = {
   }
   
   .form-vertical {
-    @apply space-y-4;
+    @apply flex flex-col gap-5;
   }
   
   .form-horizontal {

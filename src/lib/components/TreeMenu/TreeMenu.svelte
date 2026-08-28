@@ -46,6 +46,7 @@ export const propsMetadata = [
   { name: "items", type: "MenuItem[]", description: "Menu items to render (supports nested children)", default: "[]", optional: true },
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "showSearch", type: "boolean", description: "Whether to show a search input that filters items", default: "false", optional: true },
+  { name: "currentPath", type: "string", description: "Current URL pathname for active link detection", default: "\"\"", optional: true },
 ];
 </script>
 
@@ -67,6 +68,8 @@ export const propsMetadata = [
     class?: string;
     /** Whether to show a search input that filters items */
     showSearch?: boolean;
+    /** Current URL pathname for active link detection */
+    currentPath?: string;
   }
 
   let {
@@ -74,8 +77,21 @@ export const propsMetadata = [
     items = [],
     class: className = "",
     showSearch = false,
+    currentPath = "",
     ...restProps
   }: Props = $props();
+
+  /** Check if a link is the current page */
+  function isActive(link?: string): boolean {
+    if (!link || !currentPath) return false
+    return currentPath === link || currentPath.startsWith(link + '/')
+  }
+
+  /** Check if any child of this item is active (for auto-expanding) */
+  function hasActiveChild(item: MenuItem): boolean {
+    if (!item.children) return false
+    return item.children.some((child) => child.link ? isActive(child.link) : hasActiveChild(child))
+  }
 
   let searchQuery = $state("");
 
@@ -121,7 +137,7 @@ export const propsMetadata = [
       {/if}
 
       {#if item.children?.length}
-        <details class="tree-menu-details">
+        <details class="tree-menu-details" open={hasActiveChild(item)}>
           <summary class="tree-menu-summary" role="menuitem" aria-haspopup="true" onclick={() => item.onClick?.()}>
             <span class="tree-menu-chevron">
               <Icon name="chevron-right" width="16px" height="16px" />
@@ -140,7 +156,7 @@ export const propsMetadata = [
           </div>
         </details>
       {:else if item.link}
-        <a href={item.link} class="tree-menu-item" role="menuitem" onclick={() => item.onClick?.()}>
+        <a href={item.link} class="tree-menu-item" class:tree-menu-item-active={isActive(item.link)} role="menuitem" aria-current={isActive(item.link) ? 'page' : undefined} onclick={() => item.onClick?.()}>
           {#if item.icon}
             <span class="tree-menu-icon {item.iconClass || ''}">
               <Icon name={item.icon} width="20px" height="20px" />
@@ -255,5 +271,9 @@ export const propsMetadata = [
 
   .tree-menu-children {
     @apply pl-2 border-l border-border;
+  }
+
+  .tree-menu-item-active {
+    @apply bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 font-medium;
   }
 </style>

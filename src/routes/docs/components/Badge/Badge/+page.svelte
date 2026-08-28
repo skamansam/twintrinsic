@@ -190,6 +190,21 @@ import * as BadgeModule from "$lib/components/Badge/Badge.svelte"
   </div>
 </ExampleTabs>
 
+<h2>Badge vs Tag vs Chip</h2>
+<table>
+  <thead><tr><th>Feature</th><th>Badge</th><th>Tag</th><th>Chip</th></tr></thead>
+  <tbody>
+    <tr><td>Purpose</td><td>Count / status indicator</td><td>Label / category</td><td>Interactive selection</td></tr>
+    <tr><td>Interactive</td><td>No</td><td>Optional (clickable)</td><td>Yes (clickable, toggle)</td></tr>
+    <tr><td>Overlay positioning</td><td>Yes</td><td>No</td><td>No</td></tr>
+    <tr><td>Dot mode</td><td>Yes</td><td>No</td><td>No</td></tr>
+    <tr><td>Pulse animation</td><td>Yes</td><td>No</td><td>No</td></tr>
+    <tr><td>Dismissible</td><td>No</td><td>Yes</td><td>Yes (removable)</td></tr>
+    <tr><td>Link support</td><td>No</td><td>Yes (href)</td><td>No</td></tr>
+    <tr><td>Best for</td><td>Notification counts, online/offline status</td><td>Category tags, keywords, status labels</td><td>Filter chips, selectable tags</td></tr>
+  </tbody>
+</table>
+
 <h2>Props</h2>
 <PropsTable component={BadgeModule} />
 

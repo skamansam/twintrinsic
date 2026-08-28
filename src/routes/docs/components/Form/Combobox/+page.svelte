@@ -178,7 +178,27 @@ const countries = [
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>Select vs Combobox</h2>
+<table>
+  <thead>
+    <tr><th>Feature</th><th>Select</th><th>Combobox</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>User types to filter</td><td>No</td><td>Yes</td></tr>
+    <tr><td>Editable text</td><td>No</td><td>Yes</td></tr>
+    <tr><td>Native element</td><td>Yes (<code>&lt;select&gt;</code>)</td><td>No (custom)</td></tr>
+    <tr><td>Best for</td><td>5+ predefined options</td><td>Large datasets, type-ahead search</td></tr>
+    <tr><td>Custom option templates</td><td>No</td><td>Yes (snippet)</td></tr>
+    <tr><td>Async data loading</td><td>No</td><td>Yes</td></tr>
+  </tbody>
+</table>
+<p>
+  <strong>Rule of thumb:</strong> If the user knows the exact value and can type it,
+  use <code>&lt;Combobox&gt;</code>. If the user picks from a fixed list, use
+  <code>&lt;Select&gt;</code>. For action menus, use <code>&lt;Dropdown&gt;</code>.
+</p>
+
+<h2>Props</h2>
   <PropsTable component={ComboboxModule} />
 
   <h2>Events</h2>

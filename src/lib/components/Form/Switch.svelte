@@ -78,8 +78,10 @@ let {
 // Get form context if available
 const formContext = getContext<FormContext | undefined>("form")
 
-// Switch state
-let isChecked = $state(false)
+// Switch state — initialized from the prop so `checked={true}` renders checked
+// on mount (the sync effect below only reacts to prop *changes*).
+// svelte-ignore state_referenced_locally
+let isChecked = $state(checked)
 let fieldApi: FormFieldApi | undefined
 
 // Register with form if available
@@ -105,9 +107,16 @@ $effect(() => {
   }
 })
 
-// Update checked state when prop changes
+// Sync internal state only when the `checked` prop actually changes.
+// (Capturing the prop value here is intentional; this mirrors the
+// NumberInput lastPropValue pattern so user toggles aren't clobbered.)
+// svelte-ignore state_referenced_locally
+let lastCheckedProp = $state(checked)
 $effect(() => {
-  isChecked = checked
+  if (checked !== lastCheckedProp) {
+    lastCheckedProp = checked
+    isChecked = checked
+  }
 })
 
 /**
@@ -144,6 +153,16 @@ const thumbSizeClasses = $derived(
   }[size] || "w-4 h-4"
 )
 
+// Translate distance to push the thumb to the right edge of the track.
+// track_w - thumb_w - (2 × px-0.5 padding) = travel distance.
+const thumbTranslateClasses = $derived(
+  {
+    sm: "translate-x-[8px]",
+    md: "translate-x-[14px]",
+    lg: "translate-x-[18px]",
+  }[size] || "translate-x-[14px]"
+)
+
 const labelSizeClasses = $derived(
   {
     sm: "text-xs",
@@ -172,8 +191,7 @@ const labelSizeClasses = $derived(
     
     <span class="switch-track {switchSizeClasses}" aria-hidden="true">
       <span 
-        class="switch-thumb {thumbSizeClasses}"
-        class:translate-x-full={isChecked}
+        class="switch-thumb {thumbSizeClasses} {isChecked ? thumbTranslateClasses : ''}"
       ></span>
     </span>
   </div>

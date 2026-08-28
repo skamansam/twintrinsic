@@ -4,7 +4,7 @@ export const propsMetadata = [
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
   { name: "variant", type: "string", description: "Visual style variant", default: "\"default\"", optional: true },
   { name: "size", type: "string", description: "Size of the chip", default: "\"md\"", optional: true },
-  { name: "icon", type: "string", description: "Icon to display (HTML or SVG string)", optional: true },
+  { name: "icon", type: "string", description: "Icon to display. Strings longer than 3 characters are treated as\nIconify icon names (e.g., \"tabler:star\") and rendered via the Icon\ncomponent. Shorter strings are rendered as raw HTML/SVG.", optional: true },
   { name: "avatar", type: "string", description: "Avatar to display (HTML or img tag)", optional: true },
   { name: "removable", type: "boolean", description: "Whether the chip is removable", default: "false", optional: true },
   { name: "clickable", type: "boolean", description: "Whether the chip is clickable", default: "false", optional: true },
@@ -62,7 +62,11 @@ interface Props {
   variant?: string
   /** @type {"sm" | "md" | "lg"} - Size of the chip */
   size?: string
-  /** @type {string} - Icon to display (HTML or SVG string) */
+  /**
+   * Icon to display. Strings longer than 3 characters are treated as
+   * Iconify icon names (e.g., "tabler:star") and rendered via the Icon
+   * component. Shorter strings are rendered as raw HTML/SVG.
+   */
   icon?: string
   /** @type {string} - Avatar to display (HTML or img tag) */
   avatar?: string
@@ -89,6 +93,7 @@ interface Props {
 }
 
 import Icon from "../Icon/Icon.svelte"
+import Avatar from "../Avatar/Avatar.svelte"
 
 const {
   class: className = "",
@@ -234,13 +239,21 @@ function handleKeydown(event: KeyboardEvent): void {
 	>
 		{#if avatar}
 			<span class="chip-avatar">
-				{@html avatar}
+				{#if avatar.startsWith('<')}
+					{@html avatar}
+				{:else}
+					<Avatar src={avatar} alt="" size="sm" />
+				{/if}
 			</span>
 		{/if}
 		
 		{#if icon}
 			<span class="chip-icon {iconSizeClasses}" aria-hidden="true">
-				{@html icon}
+				{#if icon.length > 3}
+					<Icon name={icon} class={iconSizeClasses} />
+				{:else}
+					{@html icon}
+				{/if}
 			</span>
 		{/if}
 		
@@ -257,7 +270,11 @@ function handleKeydown(event: KeyboardEvent): void {
 			>
 				{#if removeIcon}
 					<span class="chip-remove-icon {iconSizeClasses}">
-						{@html removeIcon}
+						{#if removeIcon.length > 3}
+							<Icon name={removeIcon} class={iconSizeClasses} />
+						{:else}
+							{@html removeIcon}
+						{/if}
 					</span>
 				{:else}
 					<Icon name="tabler:x" class={iconSizeClasses} />
@@ -282,13 +299,21 @@ function handleKeydown(event: KeyboardEvent): void {
 	>
 		{#if avatar}
 			<span class="chip-avatar">
-				{@html avatar}
+				{#if avatar.startsWith('<')}
+					{@html avatar}
+				{:else}
+					<Avatar src={avatar} alt="" size="sm" />
+				{/if}
 			</span>
 		{/if}
 		
 		{#if icon}
 			<span class="chip-icon {iconSizeClasses}" aria-hidden="true">
-				{@html icon}
+				{#if icon.length > 3}
+					<Icon name={icon} class={iconSizeClasses} />
+				{:else}
+					{@html icon}
+				{/if}
 			</span>
 		{/if}
 		

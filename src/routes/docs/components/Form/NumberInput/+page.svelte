@@ -87,6 +87,7 @@ let temperature = $state(22.5)
 <h2>Customization</h2>
 <ul>
   <li>Prefix/suffix for currency, percentage, or units.</li>
+  <li>Suffix supports icon names — strings longer than 3 characters are auto-detected as Iconify icon names (e.g., <code>"tabler:currency-dollar"</code>).</li>
   <li>Decimal precision via <code>decimalPlaces</code>.</li>
   <li>Vertical or horizontal button layout.</li>
   <li>Sizes: <code>sm</code>, <code>md</code>, <code>lg</code>.</li>
@@ -124,6 +125,15 @@ let temperature = $state(22.5)
 <NumberInput name="percentage" value={percentage} suffix="%" min={0} max={100} />`}>
   <div class="max-w-md" data-testid="numberinput-percentage">
     <NumberInput name="percentage" value={percentage} suffix="%" min={0} max={100} />
+  </div>
+</ExampleTabs>
+
+<h3>Icon Suffix</h3>
+<ExampleTabs code={`<NumberInput name="weight" value={5} suffix="tabler:weight" min={0} />
+<NumberInput name="speed" value={120} suffix="tabler:speed" min={0} />`}>
+  <div class="max-w-md space-y-4" data-testid="numberinput-icon-suffix">
+    <NumberInput name="weight" value={5} suffix="tabler:weight" min={0} />
+    <NumberInput name="speed" value={120} suffix="tabler:speed" min={0} />
   </div>
 </ExampleTabs>
 

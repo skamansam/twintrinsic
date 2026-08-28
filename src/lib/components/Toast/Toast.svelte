@@ -48,6 +48,8 @@ export const propsMetadata = [
     | 'bottom-left'
     | 'top-center'
     | 'bottom-center'
+    | 'middle-left'
+    | 'middle-right'
 
   interface Props {
     /** Additional CSS classes */
@@ -62,6 +64,9 @@ export const propsMetadata = [
     dismissible?: boolean
     /** Whether to pause the auto-dismiss timer on hover */
     pauseOnHover?: boolean
+    /** Additional props passed through to the root element */
+    [key: `data-${string}`]: unknown
+    [key: `aria-${string}`]: string | undefined
   }
 
   let {
@@ -100,7 +105,9 @@ export const propsMetadata = [
     'bottom-right': 'toast-bottom-right',
     'bottom-left': 'toast-bottom-left',
     'top-center': 'toast-top-center',
-    'bottom-center': 'toast-bottom-center'
+    'bottom-center': 'toast-bottom-center',
+    'middle-left': 'toast-middle-left',
+    'middle-right': 'toast-middle-right',
   }[position] || 'toast-bottom-right');
   
   // Subscribe to toast store
@@ -295,6 +302,14 @@ export const propsMetadata = [
   
   .toast-bottom-center {
     @apply bottom-4 left-1/2 -translate-x-1/2;
+  }
+  
+  .toast-middle-left {
+    @apply top-1/2 left-4 -translate-y-1/2;
+  }
+  
+  .toast-middle-right {
+    @apply top-1/2 right-4 -translate-y-1/2;
   }
   
   .toast {

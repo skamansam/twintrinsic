@@ -30,6 +30,7 @@ export const propsMetadata = [
   { name: "size", type: "string|number", description: "Size for circle and square variants (sets both width and height)", optional: true },
   { name: "lines", type: "number", description: "Number of lines for text variant", default: "1", optional: true },
   { name: "animated", type: "boolean", description: "Whether to show the animation", default: "true", optional: true },
+  { name: "animation", type: "\"shimmer\" | \"pulse\" | \"fade\"", description: "Animation style: shimmer (default), pulse, or fade", default: "\"shimmer\"", optional: true },
   { name: "ariaLabel", type: "string", description: "ARIA label for accessibility", default: "\"Loading content\"", optional: true },
 ];
 </script>
@@ -59,6 +60,9 @@ const {
 
   /** @type {boolean} - Whether to show the animation */
   animated = true,
+
+  /** @type {"shimmer" | "pulse" | "fade"} - Animation style: shimmer (default), pulse, or fade */
+  animation = "shimmer",
 
   /** @type {string} - ARIA label for accessibility */
   ariaLabel = "Loading content",
@@ -122,7 +126,7 @@ const isMultiLine = $derived(variant === "text" && lines > 1)
         class="
           skeleton
           skeleton-{variant}
-          {animated ? 'skeleton-animated' : ''}
+          {animated ? `skeleton-animated skeleton-${animation}` : ''}
         "
         style="
           width: {i === lineArray.length - 1 && lineArray.length > 1 ? '80%' : computedWidth};
@@ -142,7 +146,7 @@ const isMultiLine = $derived(variant === "text" && lines > 1)
     class="
       skeleton
       skeleton-{variant}
-      {animated ? 'skeleton-animated' : ''}
+      {animated ? `skeleton-animated skeleton-${animation}` : ''}
       {className}
     "
     style="
@@ -180,7 +184,7 @@ const isMultiLine = $derived(variant === "text" && lines > 1)
     @apply w-full;
   }
   
-  .skeleton-animated {
+  .skeleton-shimmer {
     @apply relative overflow-hidden;
     @apply before:absolute before:inset-0;
     @apply before:translate-x-[-100%];
@@ -188,10 +192,27 @@ const isMultiLine = $derived(variant === "text" && lines > 1)
     @apply before:bg-gradient-to-r;
     @apply before:from-transparent before:via-muted/20 before:to-transparent;
   }
+
+  .skeleton-pulse {
+    @apply animate-pulse;
+  }
+
+  .skeleton-fade {
+    @apply animate-[skeleton-fade_2s_ease-in-out_infinite];
+  }
   
   @keyframes skeleton-loading {
     100% {
       transform: translateX(100%);
+    }
+  }
+
+  @keyframes skeleton-fade {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
     }
   }
 </style>

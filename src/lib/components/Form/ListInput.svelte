@@ -474,7 +474,7 @@ function handleBlur(event: FocusEvent): void {
   
   .list-input-container {
     @apply flex flex-wrap items-center gap-2 p-2;
-    @apply bg-background dark:bg-background;
+    @apply bg-surface dark:bg-surface;
     @apply border border-border dark:border-border rounded-md;
     @apply focus-within:ring-2 focus-within:ring-primary-500 dark:focus-within:ring-primary-400 focus-within:border-primary-500 dark:focus-within:border-primary-400;
     @apply transition-colors duration-200;

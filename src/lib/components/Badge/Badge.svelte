@@ -170,8 +170,8 @@ const positionClasses = $derived(
       {outline ? outlineClasses : variantClasses}
       {dot ? dotSizeClasses : sizeClasses}
       {positionClasses}
-      {      className}
-    absolute"
+      {className}
+    "
     role={dot ? 'status' : 'status'}
     aria-label={dot ? 'Status indicator' : undefined}
   >
@@ -190,8 +190,12 @@ const positionClasses = $derived(
     @apply rounded whitespace-nowrap;
   }
 
-  .badge-inline {
+  .badge-overlay:not(.badge-inline) {
     @apply absolute;
+  }
+
+  .badge-inline {
+    @apply relative;
   }
   
   .badge-pill {
@@ -200,7 +204,7 @@ const positionClasses = $derived(
   
   .badge-dot {
     @apply rounded-full;
-    @apply flex-shrink-0;
+    @apply shrink-0;
   }
   
   .badge-overlay {

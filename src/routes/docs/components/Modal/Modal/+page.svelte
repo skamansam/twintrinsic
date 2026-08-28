@@ -182,9 +182,23 @@ let showScrollableModal = writable(false)
       {/snippet}
       <div class="space-y-4">
         <p>Please read this agreement before using the software. This modal contains scrollable content when it exceeds the available height.</p>
-        <p>You may use the software for evaluation purposes for 14 days. After the trial period, a paid subscription is required for continued use.</p>
-        <p>You may not reverse engineer, decompile, or disassemble the software, except as permitted by law. All rights, title, and interest remain with the licensor.</p>
-        <p>The software is provided "as is" without warranty of any kind, express or implied. The licensor shall not be liable for any damages arising from its use.</p>
+        <h4 class="font-semibold">1. License Grant</h4>
+        <p>Subject to the terms of this Agreement, Licensor grants You a non-exclusive, non-transferable, limited license to use the Software solely for Your internal business purposes. This license is limited to the number of seats or users specified in Your order form.</p>
+        <h4 class="font-semibold">2. Restrictions</h4>
+        <p>You may not reverse engineer, decompile, or disassemble the Software, except as permitted by law. You may not rent, lease, lend, sublicense, distribute, or otherwise transfer the Software or any copies thereof. You may not remove or alter any proprietary notices, labels, or marks on the Software or any copies thereof.</p>
+        <h4 class="font-semibold">3. Intellectual Property</h4>
+        <p>All rights, title, and interest in and to the Software (including all intellectual property rights therein) are and shall remain the exclusive property of Licensor. This Agreement does not convey any ownership rights in or to the Software.</p>
+        <h4 class="font-semibold">4. Warranty Disclaimer</h4>
+        <p>The Software is provided "as is" without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and noninfringement. Licensor does not warrant that the Software will be uninterrupted or error-free.</p>
+        <h4 class="font-semibold">5. Limitation of Liability</h4>
+        <p>In no event shall Licensor be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence) arising in any way out of the use of this Software, even if advised of the possibility of such damage.</p>
+        <h4 class="font-semibold">6. Termination</h4>
+        <p>This Agreement is effective until terminated. Licensor may terminate this Agreement at any time if You fail to comply with any term of this Agreement. Upon termination, You shall destroy all copies of the Software in Your possession or control.</p>
+        <h4 class="font-semibold">7. Governing Law</h4>
+        <p>This Agreement shall be governed by and construed in accordance with the laws of the State of California, without regard to its conflict of law provisions. Any disputes arising under this Agreement shall be resolved in the courts of San Francisco County, California.</p>
+        <h4 class="font-semibold">8. Entire Agreement</h4>
+        <p>This Agreement constitutes the entire agreement between the parties with respect to the subject matter hereof, and supersedes all prior or contemporaneous communications, representations, or agreements, whether written or oral. No amendment to this Agreement shall be effective unless in writing and signed by an authorized representative of each party.</p>
+        <p class="text-muted text-sm mt-6">Last updated: January 1, 2026. Version 2.4.1.</p>
       </div>
       {#snippet footer()}
         <Button onclick={() => showScrollableModal.set(false)}>Close</Button>

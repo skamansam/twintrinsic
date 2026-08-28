@@ -19,11 +19,14 @@ export const propsMetadata = [
   import Icon from '../Icon/Icon.svelte';
 
   interface Props {
+    /** Additional props passed through to the root element */
+    [key: `data-${string}`]: unknown
+    [key: `aria-${string}`]: string | undefined
     /** HTML id for accessibility */
     id?: string;
   }
 
-  let { id = crypto.randomUUID() }: Props = $props();
+  let { id = crypto.randomUUID(), ...restProps }: Props = $props();
 
   let isDarkMode = $state(false);
 
@@ -49,7 +52,7 @@ export const propsMetadata = [
   }
 </script>
 
-<label class="tw-theme-toggle" data-twintrinsic-theme-toggle aria-label="Toggle theme">
+<label {...restProps} class="tw-theme-toggle" data-twintrinsic-theme-toggle aria-label="Toggle theme">
   <input 
     type="checkbox" 
     {id}

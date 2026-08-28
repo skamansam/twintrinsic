@@ -84,6 +84,9 @@ interface Props<TItem extends string | Record<string, unknown>> {
   ariaLabel?: string
   /** Dismiss event handler */
   ondismiss?: (event: CustomEvent<{ item: TItem; index: number }>) => void
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Static tag content (rendered when `items` is empty) */
   children?: Snippet
 }

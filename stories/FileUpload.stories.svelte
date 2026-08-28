@@ -110,6 +110,18 @@ const { Story } = defineMeta({
   </div>
 </Story>
 
+<Story name="Camera Capture">
+  <div class="w-full max-w-xl">
+    <FileUpload 
+      accept="image/*"
+      capture="environment"
+      multiple={false}
+      dropzoneLabel="Take a photo"
+      browseLabel="Open Camera"
+    />
+  </div>
+</Story>
+
 <Story name="Custom Styling">
   <div class="w-full max-w-xl">
     <FileUpload 

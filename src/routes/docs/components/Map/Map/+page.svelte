@@ -129,6 +129,80 @@ import * as MapComponentModule from "$lib/components/Map/Map.svelte"
     </div>
   </ExampleTabs>
 
+  <h3>Custom Markers</h3>
+  <p>Add markers with tooltips and custom icons using the <code>markers</code> prop.</p>
+  <ExampleTabs code={`<Map
+  center={[51.505, -0.09]}
+  zoom={12}
+  markers={[
+    { id: 1, lat: 51.505, lng: -0.09, tooltip: 'London Eye', iconName: 'mdi ferris-wheel', color: '#3b82f6' },
+    { id: 2, lat: 51.51, lng: -0.127, tooltip: 'Buckingham Palace', iconName: 'mdi castle', color: '#ef4444' },
+  ]}
+/>`}>
+    <div class="h-96 w-full rounded-lg border border-border" data-testid="map-markers">
+      <MapComponent
+        center={[51.505, -0.09]}
+        zoom={12}
+        markers={[
+          { id: 1, lat: 51.505, lng: -0.09, tooltip: 'London Eye', iconName: 'mdi:ferris-wheel', color: '#3b82f6' },
+          { id: 2, lat: 51.51, lng: -0.127, tooltip: 'Buckingham Palace', iconName: 'mdi:castle', color: '#ef4444' },
+          { id: 3, lat: 51.5074, lng: -0.1278, tooltip: 'Tower Bridge', iconName: 'mdi:bridge', color: '#10b981' },
+        ]}
+      />
+    </div>
+  </ExampleTabs>
+
+  <h3>Markers with Popups</h3>
+  <p>Pass a <code>popupContent</code> function to render rich popups on marker click.</p>
+  <ExampleTabs code={`<Map
+  center={[51.505, -0.09]}
+  zoom={13}
+  markers={[
+    { id: 1, lat: 51.505, lng: -0.09, tooltip: 'London Eye' },
+  ]}
+  popupContent={(marker) => '<b>' + marker.tooltip + '</b>'}
+/>`}>
+    <div class="h-96 w-full rounded-lg border border-border" data-testid="map-popups">
+      <MapComponent
+        center={[51.505, -0.09]}
+        zoom={13}
+        markers={[
+          { id: 1, lat: 51.505, lng: -0.09, tooltip: 'London Eye' },
+        ]}
+        popupContent={(marker) => `<div class="p-2"><b>${marker.tooltip}</b><br/><span class="text-sm text-muted">Click to interact</span></div>`}
+      />
+    </div>
+  </ExampleTabs>
+
+  <h3>Image Map with CRS</h3>
+  <p>Use <code>customImage</code> with <code>useSimpleCRS</code> for pixel-based coordinates on custom images like game maps, floor plans, or diagrams.</p>
+  <ExampleTabs code={`<Map
+  customImage="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Sample_Of_Map.jpg/800px-Sample_Of_Map.jpg"
+  imageWidth={800}
+  imageHeight={560}
+  center={[280, 400]}
+  zoom={0}
+  maxZoom={4}
+  markers={[
+    { id: 1, lat: 200, lng: 300, tooltip: 'Point of Interest' },
+  ]}
+/>`}>
+    <div class="h-96 w-full rounded-lg border border-border" data-testid="map-image">
+      <MapComponent
+        customImage="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Sample_Of_Map.jpg/800px-Sample_Of_Map.jpg"
+        imageWidth={800}
+        imageHeight={560}
+        center={[280, 400]}
+        zoom={0}
+        maxZoom={4}
+        markers={[
+          { id: 1, lat: 200, lng: 300, tooltip: 'Point of Interest' },
+          { id: 2, lat: 400, lng: 500, tooltip: 'Another Location' },
+        ]}
+      />
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={MapComponentModule} />
 

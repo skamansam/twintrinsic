@@ -67,3 +67,30 @@ export const Interactive: Story = {
 		}
 	}
 };
+
+export const ActiveSlice: Story = {
+	args: {
+		data: [35, 25, 20, 20],
+		labels: ['Chrome', 'Firefox', 'Safari', 'Edge'],
+		title: 'Browser Market Share (Chrome active)',
+		showLegend: true,
+		size: 300,
+		activeSlice: 0,
+		pullDistance: 14
+	}
+};
+
+export const DonutWithActive: Story = {
+	args: {
+		data: [40, 30, 20, 10],
+		labels: ['Enterprise', 'Pro', 'Free', 'Trial'],
+		title: 'Revenue by Tier',
+		hole: 0.6,
+		centerText: '$2.4M',
+		centerSubtext: 'ARR',
+		showLegend: true,
+		size: 300,
+		activeSlice: 0,
+		pullDistance: 12
+	}
+};

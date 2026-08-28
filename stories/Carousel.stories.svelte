@@ -46,20 +46,20 @@ const { Story } = defineMeta({
       {#snippet items()}
         <CarouselItem>
           <div class="h-64 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-2xl font-bold">Unlimited projects</h2>
-            <p class="mt-2">Create as many workspaces and boards as you need.</p>
+            <h2 class="text-2xl font-bold text-text dark:text-white">Unlimited projects</h2>
+            <p class="mt-2 text-text dark:text-gray-300">Create as many workspaces and boards as you need.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
           <div class="h-64 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-2xl font-bold">Real-time collaboration</h2>
-            <p class="mt-2">Invite teammates and edit together, live.</p>
+            <h2 class="text-2xl font-bold text-text dark:text-white">Real-time collaboration</h2>
+            <p class="mt-2 text-text dark:text-gray-300">Invite teammates and edit together, live.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
           <div class="h-64 bg-success-100 dark:bg-success-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-2xl font-bold">Enterprise-grade security</h2>
-            <p class="mt-2">SOC 2, SSO, and granular role-based access control.</p>
+            <h2 class="text-2xl font-bold text-text dark:text-white">Enterprise-grade security</h2>
+            <p class="mt-2 text-text dark:text-gray-300">SOC 2, SSO, and granular role-based access control.</p>
           </div>
         </CarouselItem>
       {/snippet}
@@ -73,20 +73,20 @@ const { Story } = defineMeta({
       {#snippet items()}
         <CarouselItem>
           <div class="h-64 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-2xl font-bold">Announcing Acme 3.0</h2>
-            <p class="mt-2">A faster, more accessible platform is here.</p>
+            <h2 class="text-2xl font-bold text-text dark:text-white">Announcing Acme 3.0</h2>
+            <p class="mt-2 text-text dark:text-gray-300">A faster, more accessible platform is here.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
           <div class="h-64 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-2xl font-bold">New pricing plans</h2>
-            <p class="mt-2">Save 20% when you switch to yearly billing.</p>
+            <h2 class="text-2xl font-bold text-text dark:text-white">New pricing plans</h2>
+            <p class="mt-2 text-text dark:text-gray-300">Save 20% when you switch to yearly billing.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
           <div class="h-64 bg-success-100 dark:bg-success-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-2xl font-bold">Upcoming webinar</h2>
-            <p class="mt-2">Join us to learn the best workflows for your team.</p>
+            <h2 class="text-2xl font-bold text-text dark:text-white">Upcoming webinar</h2>
+            <p class="mt-2 text-text dark:text-gray-300">Join us to learn the best workflows for your team.</p>
           </div>
         </CarouselItem>
       {/snippet}
@@ -100,20 +100,20 @@ const { Story } = defineMeta({
       {#snippet items()}
         <CarouselItem>
           <div class="h-64 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-2xl font-bold">Design</h2>
-            <p class="mt-2">Craft pixel-perfect interfaces with our components.</p>
+            <h2 class="text-2xl font-bold text-text dark:text-white">Design</h2>
+            <p class="mt-2 text-text dark:text-gray-300">Craft pixel-perfect interfaces with our components.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
           <div class="h-64 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-2xl font-bold">Build</h2>
-            <p class="mt-2">Ship accessible, semantic components in record time.</p>
+            <h2 class="text-2xl font-bold text-text dark:text-white">Build</h2>
+            <p class="mt-2 text-text dark:text-gray-300">Ship accessible, semantic components in record time.</p>
           </div>
         </CarouselItem>
         <CarouselItem>
           <div class="h-64 bg-success-100 dark:bg-success-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-            <h2 class="text-2xl font-bold">Scale</h2>
-            <p class="mt-2">Grow from prototype to production without rewrites.</p>
+            <h2 class="text-2xl font-bold text-text dark:text-white">Scale</h2>
+            <p class="mt-2 text-text dark:text-gray-300">Grow from prototype to production without rewrites.</p>
           </div>
         </CarouselItem>
       {/snippet}

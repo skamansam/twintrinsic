@@ -34,14 +34,16 @@ export const propsMetadata = [
   { name: "userMenu", type: "Snippet", description: "Snippet rendered in the user menu", optional: true },
   { name: "onsearch", type: "(payload: { query: string }) => void", description: "Callback fired when the user types in the search input", optional: true },
   { name: "onsignout", type: "() => void", description: "Callback fired when the user signs out", optional: true },
+  { name: "ontoggleMobileMenu", type: "() => void", description: "Callback fired when the mobile menu button is toggled", optional: true },
 ];
 </script>
 
 <script lang="ts">
 import type { Snippet } from "svelte";
 import { slide } from "svelte/transition"
-import ThemeToggle from "../ThemeToggle/ThemeToggle.svelte"
 import Icon from "../Icon/Icon.svelte"
+import ThemeToggle from "../ThemeToggle/ThemeToggle.svelte"
+import Avatar from "../Avatar/Avatar.svelte"
 
 type Brand = string | { name: string; logo?: import("svelte").Snippet<[number]> | string; href?: string; tagline?: string }
 type User = { name: string; avatar?: string; href?: string } | null
@@ -74,6 +76,8 @@ interface Props {
   onsearch?: (payload: { query: string }) => void
   /** Callback fired when the user signs out */
   onsignout?: () => void
+  /** Callback fired when the mobile menu button is toggled */
+  ontoggleMobileMenu?: () => void
 }
 
 const {
@@ -89,6 +93,7 @@ const {
   userMenu = undefined,
   onsearch = undefined,
   onsignout = undefined,
+  ontoggleMobileMenu = undefined,
   ...restProps
 }: Props = $props()
 
@@ -110,6 +115,7 @@ function handleSearch(event: Event) {
 // Handle mobile menu toggle
 function toggleMobileMenu() {
   mobileMenuOpen = !mobileMenuOpen
+  ontoggleMobileMenu?.()
 }
 
 // Handle notifications toggle
@@ -295,19 +301,12 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
             onclick={toggleUserMenu}
           >
             <span class="sr-only">Open user menu</span>
-            {#if user.avatar}
-              <img
-                src={user.avatar}
-                alt=""
-                class="app-header-user-avatar"
-                width="32"
-                height="32"
-              />
-            {:else}
-              <div class="app-header-user-avatar-placeholder">
-                {user.name[0]}
-              </div>
-            {/if}
+            <Avatar
+              src={user.avatar}
+              name={user.name}
+              alt="{user.name}"
+              size="sm"
+            />
           </button>
 
           {#if userMenuOpen}
@@ -334,13 +333,13 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
   }
 
   .app-header-container {
-    @apply max-w-7xl mx-auto px-4 px-6 lg:px-8;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
     @apply flex items-center justify-between h-16;
   }
 
   /* Brand styles */
   .app-header-brand {
-    @apply flex-shrink-0;
+    @apply shrink-0;
   }
 
   .app-header-brand-link {
@@ -432,7 +431,7 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
 
   .app-header-notifications-panel {
     @apply absolute right-0 mt-2 w-80;
-    @apply bg-background border border-border rounded-md shadow-lg;
+    @apply bg-surface border border-border rounded-md shadow-lg;
     @apply origin-top-right;
   }
 
@@ -452,7 +451,7 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
 
   .app-header-user-menu {
     @apply absolute right-0 mt-2 w-48;
-    @apply bg-background border border-border rounded-md shadow-lg;
+    @apply bg-surface border border-border rounded-md shadow-lg;
     @apply origin-top-right;
   }
 

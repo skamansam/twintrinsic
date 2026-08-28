@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build:llms": "node scripts/build-llms-txt.mjs",
+    "build": "pnpm build:llms && vite build",
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
     "prepack": "svelte-kit sync && svelte-package && publint",
@@ -53,6 +54,11 @@
       "types": "./dist/components/Accordion/AccordionItem.svelte.d.ts",
       "svelte": "./dist/components/Accordion/AccordionItem.svelte",
       "default": "./dist/components/Accordion/AccordionItem.svelte"
+    },
+    "./components/Alert": {
+      "types": "./dist/components/Alert/Alert.svelte.d.ts",
+      "svelte": "./dist/components/Alert/Alert.svelte",
+      "default": "./dist/components/Alert/Alert.svelte"
     },
     "./components/App": {
       "types": "./dist/components/App/App.svelte.d.ts",
@@ -203,6 +209,16 @@
       "types": "./dist/components/Form/Dropdown.svelte.d.ts",
       "svelte": "./dist/components/Form/Dropdown.svelte",
       "default": "./dist/components/Form/Dropdown.svelte"
+    },
+    "./components/DocPage": {
+      "types": "./dist/components/DocPage/DocPage.svelte.d.ts",
+      "svelte": "./dist/components/DocPage/DocPage.svelte",
+      "default": "./dist/components/DocPage/DocPage.svelte"
+    },
+    "./components/DocSection": {
+      "types": "./dist/components/DocPage/DocSection.svelte.d.ts",
+      "svelte": "./dist/components/DocPage/DocSection.svelte",
+      "default": "./dist/components/DocPage/DocSection.svelte"
     },
     "./components/EventsTable": {
       "types": "./dist/components/EventsTable/EventsTable.svelte.d.ts",
@@ -648,6 +664,7 @@
     "@codemirror/lang-sql": "^6.10.0",
     "@codemirror/lang-xml": "^6.1.0",
     "@codemirror/state": "^6.7.1",
+    "@codemirror/theme-one-dark": "^6.1.3",
     "@codemirror/view": "^6.43.9",
     "@iconify/svelte": "^5.2.2",
     "@inlang/paraglide-js": "^2.24.1",

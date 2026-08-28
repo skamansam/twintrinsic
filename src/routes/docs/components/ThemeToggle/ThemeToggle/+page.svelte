@@ -20,8 +20,7 @@ import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
   <p>
     <strong>ThemeToggle</strong> is a toggle button for switching between light and dark
     themes. The component automatically syncs with system preferences and persists the
-    user's choice. It also supports nested theming for independent theme states in
-    different sections.
+    user's choice.
   </p>
 
   <h2>What, When &amp; Why</h2>
@@ -45,7 +44,7 @@ import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
   <ul>
     <li><strong>System preference detection</strong> — respects <code>prefers-color-scheme</code>.</li>
     <li><strong>Persistence</strong> — remembers user choice across sessions.</li>
-    <li><strong>Nested theming</strong> — independent theme states for different sections.</li>
+
     <li><strong>Accessible</strong> — proper ARIA labels and keyboard support.</li>
   </ul>
 
@@ -86,7 +85,7 @@ import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
   <h2>Customization</h2>
   <ul>
     <li>CSS classes via <code>class</code> prop.</li>
-    <li>Nested theming via <code>data-theme</code> on ancestor elements.</li>
+
   </ul>
 
   <h2>Examples</h2>
@@ -114,7 +113,7 @@ import ThemeToggle from "$lib/components/ThemeToggle/ThemeToggle.svelte"
     <li>Automatic system theme detection</li>
     <li>Smooth theme transitions</li>
     <li>Persistent theme selection via localStorage</li>
-    <li>Nested theming support</li>
+
     <li>Prevents FOUC with inline initializer in <code>app.html</code></li>
   </ul>
 

@@ -64,6 +64,20 @@ import * as KPICardModule from "$lib/components/Metrics/KPICard/KPICard.svelte"
 <h2>Related Components</h2>
 <p>Progress, GaugeChart, DataTable</p>
 
+<h2>KPICard vs StatsCard</h2>
+<table>
+  <thead><tr><th>Feature</th><th>KPICard</th><th>StatsCard</th></tr></thead>
+  <tbody>
+    <tr><td>Progress bar</td><td>Yes (value/target)</td><td>No</td></tr>
+    <tr><td>Trend indicator</td><td>No</td><td>Yes (up/down arrow)</td></tr>
+    <tr><td>Value type</td><td>Number only</td><td>String or number</td></tr>
+    <tr><td>Unit support</td><td>Yes</td><td>No</td></tr>
+    <tr><td>Status colors</td><td>Auto from percentage</td><td>Manual via color prop</td></tr>
+    <tr><td>Best for</td><td>Goals, targets, quotas</td><td>Snapshot stats, KPIs with trends</td></tr>
+  </tbody>
+</table>
+<p>Use <strong>KPICard</strong> when you need to track progress toward a target (e.g., sales quota, budget). Use <strong>StatsCard</strong> for snapshot metrics with trend arrows (e.g., monthly revenue change, user growth).</p>
+
 <h2>Responsiveness</h2>
   <ul>
     <li>Fills container width by default.</li>

@@ -226,6 +226,7 @@ const themeColors = [
   }}
   {siteMenu}
   {siteLinks}
+  currentPath={page.url.pathname}
 >
   {@render children?.()}
 </App>

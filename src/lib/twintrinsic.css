@@ -255,7 +255,7 @@
 /* Thin, theme-aware scrollbars (Firefox) */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
+  scrollbar-color: color-mix(in srgb, var(--color-muted) 70%, transparent) transparent;
 }
 
 /* Thin, theme-aware scrollbars (WebKit/Blink) */
@@ -269,10 +269,8 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--color-border);
+  background-color: color-mix(in srgb, var(--color-muted) 60%, transparent);
   border-radius: 9999px;
-  border: 2px solid transparent;
-  background-clip: content-box;
 }
 
 *::-webkit-scrollbar-thumb:hover {

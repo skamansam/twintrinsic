@@ -91,6 +91,25 @@ import * as TabsModule from "$lib/components/Tabs/Tabs.svelte"
 
   <h2>Examples</h2>
 
+  <h3>Data-Driven Tabs</h3>
+  <p>
+    Instead of using <code>&lt;Tab&gt;</code> and <code>&lt;TabPanel&gt;</code> sub-components,
+    you can pass a flat array of tab config objects. This is simpler for generated or
+    dynamic tab sets.
+  </p>
+  <ExampleTabs code={`<Tabs tabs={[\n  { label: 'Profile', content: '<p>Manage your profile information.</p>' },\n  { label: 'Security', content: '<p>Change your password and enable 2FA.</p>' },\n  { label: 'Notifications', content: '<p>Configure email and push notifications.</p>' }\n]} />`}>
+    <div class="p-4 bg-surface rounded-md" data-testid="tabs-data-driven">
+      <Tabs tabs={[{ label: 'Profile', content: '<p>Manage your profile information.</p>' }, { label: 'Security', content: '<p>Change your password and enable 2FA.</p>' }, { label: 'Notifications', content: '<p>Configure email and push notifications.</p>' }]} />
+    </div>
+  </ExampleTabs>
+
+  <h3>Data-Driven with Icons</h3>
+  <ExampleTabs code={`<Tabs variant="pills" tabs={[\n  { label: 'Overview', icon: 'tabler:layout-dashboard', content: '<p>Dashboard overview.</p>' },\n  { label: 'Analytics', icon: 'tabler:chart-bar', content: '<p>View detailed analytics.</p>' },\n  { label: 'Reports', icon: 'tabler:file-text', content: '<p>Generate reports.</p>' }\n]} />`}>
+    <div class="p-4 bg-surface rounded-md" data-testid="tabs-data-driven-icons">
+      <Tabs variant="pills" tabs={[{ label: 'Overview', icon: 'tabler:layout-dashboard', content: '<p>Dashboard overview.</p>' }, { label: 'Analytics', icon: 'tabler:chart-bar', content: '<p>View detailed analytics.</p>' }, { label: 'Reports', icon: 'tabler:file-text', content: '<p>Generate reports.</p>' }]} />
+    </div>
+  </ExampleTabs>
+
   <h3>Account Tabs</h3>
   <ExampleTabs code={`<Tabs>
   <TabList>

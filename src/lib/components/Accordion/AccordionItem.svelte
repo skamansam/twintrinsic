@@ -18,7 +18,7 @@ export const propsMetadata = [
   { name: "ariaLabel", type: "string", description: "ARIA label for the header", optional: true },
   { name: "disabled", type: "boolean", description: "Whether to disable the item controls", default: "false", optional: true },
   { name: "showIcon", type: "boolean", description: "Whether to show the expand/collapse icon", default: "true", optional: true },
-  { name: "header", type: "Snippet", description: "Header content rendered in the summary", optional: true },
+  { name: "header", type: "string | Snippet", description: "Header text (string) or content rendered in the summary (snippet)", optional: true },
 ];
 </script>
 
@@ -46,8 +46,11 @@ export const propsMetadata = [
     /** Whether to show the expand/collapse icon */
     showIcon?: boolean;
     children?: Snippet;
-    /** Header content rendered in the summary */
-    header?: Snippet;
+    /** Header text (string) or content rendered in the summary (snippet) */
+    header?: string | Snippet;
+    /** Additional props passed through to the root element */
+    [key: `data-${string}`]: unknown
+    [key: `aria-${string}`]: string | undefined
   }
 
   let {
@@ -113,7 +116,9 @@ export const propsMetadata = [
     aria-label={ariaLabel}
   >
     <div class="flex items-center gap-2">
-      {#if header}
+      {#if typeof header === 'string'}
+        {header}
+      {:else if header}
         {@render header()}
       {:else}
         Item

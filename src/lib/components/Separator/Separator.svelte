@@ -61,26 +61,24 @@ const hasContent = $derived(element !== "hr" && children !== undefined)
 const resolvedColorClass = $derived(colorClasses[color as Color] ?? colorClasses.default)
 </script>
 
-{#if element === "hr"}
+{#if hasContent}
+  <div
+    {...restProps}
+    class="separator separator-with-content {resolvedColorClass} {vertical ? 'separator-vertical' : 'separator-horizontal'} {className}"
+    role="separator"
+    aria-orientation={vertical ? 'vertical' : 'horizontal'}
+    aria-label={ariaLabel}
+  >
+    <div class="separator-content">
+      {@render children()}
+    </div>
+  </div>
+{:else}
   <hr {...restProps}
     class="separator {resolvedColorClass} {vertical ? 'separator-vertical' : 'separator-horizontal'} {className}"
     aria-orientation={vertical ? 'vertical' : 'horizontal'}
     aria-label={ariaLabel}
   />
-{:else}
-  <div
-    {...restProps}
-    class="separator {resolvedColorClass} {vertical ? 'separator-vertical' : 'separator-horizontal'} {hasContent ? 'separator-with-content' : ''} {className}"
-    role="separator"
-    aria-orientation={vertical ? 'vertical' : 'horizontal'}
-    aria-label={ariaLabel}
-  >
-    {#if hasContent}
-      <div class="separator-content">
-        {@render children()}
-      </div>
-    {/if}
-  </div>
 {/if}
 
 <style lang="postcss">

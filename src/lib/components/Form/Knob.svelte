@@ -512,9 +512,9 @@ const fontSizeClasses = $derived(
     <!-- Indicator dot -->
     {#if !showValue}
       <circle
-        cx={50 + (50 - thickness / 2 - 3) * Math.cos((percentage / 100 * 360 - 90) * Math.PI / 180)}
-        cy={50 + (50 - thickness / 2 - 3) * Math.sin((percentage / 100 * 360 - 90) * Math.PI / 180)}
-        r="3"
+        cx={50 + (50 - thickness / 2 - 4) * Math.cos((percentage / 100 * 360 - 90) * Math.PI / 180)}
+        cy={50 + (50 - thickness / 2 - 4) * Math.sin((percentage / 100 * 360 - 90) * Math.PI / 180)}
+        r="4"
         class="knob-indicator"
         style={color ? `fill: ${color}` : ''}
       />
@@ -557,6 +557,7 @@ const fontSizeClasses = $derived(
   
   .knob-svg {
     @apply w-full h-full cursor-pointer;
+    pointer-events: all;
   }
   
   .knob.disabled .knob-svg {
@@ -572,10 +573,12 @@ const fontSizeClasses = $derived(
     stroke-linecap: round;
     transform-origin: center;
     stroke-dashoffset: 0;
+    filter: drop-shadow(0 0 3px rgb(59 130 246 / 0.3));
   }
   
   .knob-indicator {
     @apply fill-primary-500 dark:fill-primary-400;
+    filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.3));
   }
   
   .knob-tick {

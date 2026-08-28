@@ -70,7 +70,7 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
     <li><code>transition</code> — <code>"slide"</code> or <code>"fade"</code>.</li>
     <li><code>autoplay</code> / <code>interval</code> — auto-advance with configurable delay.</li>
     <li><code>showArrows</code> / <code>showIndicators</code> — show/hide controls.</li>
-    <li>Custom arrow and indicator snippets.</li>
+    <li>Slide content should use explicit text colors (e.g., <code>text-text dark:text-white</code>) for dark mode readability.</li>
   </ul>
 
   <h2>Examples</h2>
@@ -95,20 +95,20 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
         {#snippet items()}
           <CarouselItem>
             <div class="h-64 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-              <h2 class="text-2xl font-bold">Unlimited projects</h2>
-              <p class="mt-2">Create as many workspaces and boards as you need.</p>
+              <h2 class="text-2xl font-bold text-text dark:text-white">Unlimited projects</h2>
+              <p class="mt-2 text-text dark:text-gray-300">Create as many workspaces and boards as you need.</p>
             </div>
           </CarouselItem>
           <CarouselItem>
             <div class="h-64 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-              <h2 class="text-2xl font-bold">Real-time collaboration</h2>
-              <p class="mt-2">Invite teammates and edit together, live.</p>
+              <h2 class="text-2xl font-bold text-text dark:text-white">Real-time collaboration</h2>
+              <p class="mt-2 text-text dark:text-gray-300">Invite teammates and edit together, live.</p>
             </div>
           </CarouselItem>
           <CarouselItem>
             <div class="h-64 bg-success-100 dark:bg-success-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-              <h2 class="text-2xl font-bold">Enterprise-grade security</h2>
-              <p class="mt-2">SOC 2, SSO, and granular role-based access control.</p>
+              <h2 class="text-2xl font-bold text-text dark:text-white">Enterprise-grade security</h2>
+              <p class="mt-2 text-text dark:text-gray-300">SOC 2, SSO, and granular role-based access control.</p>
             </div>
           </CarouselItem>
         {/snippet}
@@ -128,14 +128,14 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
         {#snippet items()}
           <CarouselItem>
             <div class="h-64 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-              <h2 class="text-2xl font-bold">Announcing Acme 3.0</h2>
-              <p class="mt-2">A faster, more accessible platform is here.</p>
+              <h2 class="text-2xl font-bold text-text dark:text-white">Announcing Acme 3.0</h2>
+              <p class="mt-2 text-text dark:text-gray-300">A faster, more accessible platform is here.</p>
             </div>
           </CarouselItem>
           <CarouselItem>
             <div class="h-64 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
-              <h2 class="text-2xl font-bold">New pricing plans</h2>
-              <p class="mt-2">Save 20% when you switch to yearly billing.</p>
+              <h2 class="text-2xl font-bold text-text dark:text-white">New pricing plans</h2>
+              <p class="mt-2 text-text dark:text-gray-300">Save 20% when you switch to yearly billing.</p>
             </div>
           </CarouselItem>
         {/snippet}

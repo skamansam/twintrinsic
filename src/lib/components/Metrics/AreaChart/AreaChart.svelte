@@ -41,6 +41,9 @@ export const propsMetadata = [
 		width?: number;
 		/** Height of the chart in pixels */
 		height?: number;
+		/** Additional props passed through to the root element */
+		[key: `data-${string}`]: unknown
+		[key: `aria-${string}`]: string | undefined
 	}
 
 	let {

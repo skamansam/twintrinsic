@@ -39,13 +39,16 @@ interface CompatData {
 }
 
 interface Props {
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Feature names to include; omit to show every tracked feature */
   features?: string[];
   /** URL to fetch the compatibility JSON from */
   src?: string;
 }
 
-const { features = undefined, src = "/browser-compat.json" }: Props = $props();
+const { features = undefined, src = "/browser-compat.json", ...restProps }: Props = $props();
 
 let data = $state<CompatData | null>(null);
 let error = $state<string | null>(null);
@@ -90,7 +93,7 @@ const rows = $derived.by(() => {
 {:else if rows.length === 0}
   <p class="compat-matrix-empty" role="status">No matching compatibility data available.</p>
 {:else}
-  <div class="compat-matrix">
+  <div {...restProps} class="compat-matrix">
     <table>
       <caption class="sr-only">Browser compatibility for modern platform APIs</caption>
       <thead>

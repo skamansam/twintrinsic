@@ -10,12 +10,25 @@ export const propsMetadata = [
   { name: "disabled", type: "boolean", description: "Whether tabs are disabled", default: "false", optional: true },
   { name: "ariaLabel", type: "string", description: "ARIA label for the tablist", default: "\"Tabs\"", optional: true },
   { name: "onchange", type: "(event: CustomEvent) => void", description: "Change event handler", optional: true, eventDetail: "unknown" },
+  { name: "tabs", type: "TabConfig[]", description: "Flat array of tab configs (alternative to Tab/TabPanel sub-components)", optional: true },
 ];
 </script>
 
 <script lang="ts">
 
 import type { Snippet } from "svelte"
+import Icon from "../Icon/Icon.svelte"
+
+interface TabConfig {
+  /** Tab label */
+  label: string
+  /** Optional tab content (HTML string or snippet) */
+  content?: string
+  /** Optional icon name */
+  icon?: string
+  /** Whether the tab is disabled */
+  disabled?: boolean
+}
 /**
  * @component
  * Tabs - A component for organizing content into tabbed sections.
@@ -62,6 +75,8 @@ interface Props {
   ariaLabel?: string
   /** Change event handler */
   onchange?: (event: CustomEvent) => void
+  /** Flat array of tab configs (alternative to Tab/TabPanel sub-components) */
+  tabs?: TabConfig[]
   /** Tabs/TabList/TabPanel children */
   children?: Snippet
 }
@@ -77,6 +92,7 @@ let {
   disabled = false,
   ariaLabel = "Tabs",
   onchange,
+  tabs = undefined,
   children,
   ...restProps
 }: Props = $props()
@@ -223,7 +239,46 @@ const sizeClasses = $derived(
     {className}
   "
 >
-  {@render children?.()}
+  {#if tabs && tabs.length > 0}
+    <div class="tab-list" role="tablist" aria-label={ariaLabel} class:tab-list-full-width={fullWidth}>
+      {#each tabs as tab, i}
+        <button
+          type="button"
+          class="tab {tab.disabled ? 'opacity-50 cursor-not-allowed' : ''}"
+          role="tab"
+          aria-selected={selectedIndex === i}
+          aria-controls="panel-{i}"
+          tabindex={selectedIndex === i ? 0 : -1}
+          disabled={tab.disabled}
+          onclick={() => {
+            if (!tab.disabled) selectTab(i)
+          }}
+          onkeydown={(e) => handleKeydown(e, i)}
+        >
+          {#if tab.icon}
+            <span class="tab-icon" aria-hidden="true"><Icon name={tab.icon} width="16" height="16" /></span>
+          {/if}
+          {tab.label}
+        </button>
+      {/each}
+    </div>
+    {#each tabs as tab, i}
+      <div
+        id="panel-{i}"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-{i}"
+        tabindex="0"
+        hidden={selectedIndex !== i}
+      >
+        {#if tab.content}
+          {@html tab.content}
+        {/if}
+      </div>
+    {/each}
+  {:else}
+    {@render children?.()}
+  {/if}
 </div>
 
 <style lang="postcss">
@@ -316,5 +371,27 @@ const sizeClasses = $derived(
     @apply bg-background dark:bg-background;
     @apply text-text dark:text-text;
     @apply shadow-sm;
+  }
+
+  /* Data-driven tabs (rendered directly, not via sub-components) */
+  .tab-list {
+    @apply flex items-center border-b border-border;
+    @apply overflow-x-auto;
+  }
+
+  .tab-list-full-width {
+    @apply w-full;
+  }
+
+  .tab-panel {
+    @apply w-full py-4 focus:outline-none;
+  }
+
+  .tab-panel[hidden] {
+    @apply hidden;
+  }
+
+  .tab-icon {
+    @apply mr-1.5 inline-flex items-center;
   }
 </style>

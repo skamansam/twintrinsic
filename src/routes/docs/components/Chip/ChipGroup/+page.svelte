@@ -10,6 +10,27 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as ChipGroupModule from "$lib/components/Chip/ChipGroup.svelte"
+
+// Dynamic items state for the interactive demo
+let dynamicItems = $state([
+  { id: 1, label: 'Svelte', variant: 'warning' },
+  { id: 2, label: 'TypeScript', variant: 'info' },
+  { id: 3, label: 'Vite', variant: 'primary' },
+])
+let nextId = $state(4)
+const presets = ['Tailwind CSS', 'Playwright', 'Vitest', 'Storybook', 'ESLint']
+const variantOptions = ['primary', 'secondary', 'success', 'warning', 'error', 'info']
+
+function addRandom() {
+  const available = presets.filter(p => !dynamicItems.some((/** @type {any} */ i) => i.label === p))
+  if (available.length === 0) return
+  const label = available[Math.floor(Math.random() * available.length)]
+  dynamicItems = [...dynamicItems, { id: nextId++, label, variant: variantOptions[Math.floor(Math.random() * variantOptions.length)] }]
+}
+
+function removeItem(id: number) {
+  dynamicItems = dynamicItems.filter((/** @type {any} */ i) => i.id !== id)
+}
 </script>
 
 <style lang="postcss">

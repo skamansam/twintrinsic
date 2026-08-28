@@ -119,7 +119,7 @@
   </div>
 </div>
 
-<div class="-mx-5">
+<div class="-mx-5 overflow-x-hidden">
   <!-- Large hero header with a background image -->
   <header
     class="relative bg-[url('https://images.unsplash.com/photo-1607082349566-187342175e2f?w=1600&h=500&fit=crop')] bg-cover bg-center"
@@ -232,7 +232,7 @@
 </div>
 
 <!-- Large multi-column footer -->
-<div class="-mx-5">
+<div class="-mx-5 overflow-x-hidden">
   <a
     href="#top"
     class="block text-center py-4 bg-muted/20 dark:bg-muted/20 hover:bg-muted/30 dark:hover:bg-muted/30 text-sm font-medium"

@@ -76,6 +76,8 @@ export type SidebarProps = {
   title?: string
   /** Main sidebar content */
   children?: Snippet
+  /** Current URL pathname for active link detection */
+  currentPath?: string
 }
 
 export const propsMetadata = [
@@ -92,6 +94,7 @@ export const propsMetadata = [
   { name: "ontoggle", type: "(payload: { expanded: boolean }) => void", description: "Callback when sidebar is toggled (desktop expand/collapse)", optional: true },
   { name: "header", type: "Snippet", description: "Header content for the Panel", optional: true },
   { name: "title", type: "string", description: "Title text for the sidebar header", optional: true },
+  { name: "currentPath", type: "string", description: "Current URL pathname for active link detection", default: "\"\"", optional: true },
 ];
 </script>
 
@@ -114,6 +117,7 @@ const {
   header = undefined,
   title = undefined,
   children = undefined,
+  currentPath = "",
   ...restProps
 }: SidebarProps = $props()
 
@@ -165,7 +169,7 @@ $effect(() => {
         </div>
       {/if}
       {#if menu}
-        <TreeMenu items={menu} showSearch />
+        <TreeMenu items={menu} showSearch {currentPath} />
       {:else}
         {@render children?.()}
       {/if}
@@ -222,5 +226,31 @@ $effect(() => {
   /* Right position styles */
   .sidebar-right .sidebar {
     @apply right-0;
+  }
+
+  /* Tablet collapsed state — show only icons */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .sidebar-container :global(.tree-menu-label),
+    .sidebar-container :global(.tree-menu-chevron),
+    .sidebar-container :global(.tree-menu-search-header) {
+      @apply hidden;
+    }
+
+    .sidebar-container :global(.tree-menu-item),
+    .sidebar-container :global(.tree-menu-summary) {
+      @apply justify-center px-2;
+    }
+
+    .sidebar-container :global(.tree-menu-icon) {
+      @apply mx-auto;
+    }
+
+    .sidebar-container :global(.tree-menu-children) {
+      @apply border-l-0 pl-0;
+    }
+
+    .sidebar-container :global(.tree-menu-item-active) {
+      @apply bg-primary-50 dark:bg-primary-900/30;
+    }
   }
 </style>

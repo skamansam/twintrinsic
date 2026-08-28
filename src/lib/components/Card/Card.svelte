@@ -147,7 +147,7 @@ const isClickable = $derived(!!href)
   @reference "../../twintrinsic.css";
 
   .card {
-    @apply bg-background text-text rounded-lg overflow-hidden flex flex-col;
+    @apply bg-surface text-text rounded-lg overflow-hidden flex flex-col;
   }
 
   .card-media {
@@ -163,7 +163,7 @@ const isClickable = $derived(!!href)
   }
 
   .card-body {
-    @apply px-6 py-4 flex-grow;
+    @apply px-6 py-4 grow;
   }
 
   .card-footer {

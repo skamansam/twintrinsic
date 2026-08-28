@@ -1,7 +1,7 @@
 <!--
 @component
-ColorPicker - A form component for color selection with RGB, HSL, and hex input support.
-Includes a color wheel, alpha slider, and format switching.
+ColorPicker - A color selection component built on the native `<input type="color">` element.
+Provides the browser's built-in color picker with a text input for direct hex entry.
 
 Usage:
 ```svelte
@@ -11,20 +11,18 @@ Usage:
 />
 
 <ColorPicker
-  value="rgba(255, 0, 0, 0.5)"
-  format="rgba"
-  showAlpha={true}
+  label="Theme Color"
+  value="#3B82F6"
 />
 ```
 -->
 <script module lang="ts">
 export const propsMetadata = [
   { name: "name", type: "string", description: "Name attribute", optional: true },
-  { name: "value", type: "string", description: "Color value in current format", default: "\"#000000\"", optional: true },
-  { name: "format", type: "\"hex\" | \"rgb\" | \"rgba\" | \"hsl\" | \"hsla\"", description: "Color format", default: "\"hex\"", optional: true },
-  { name: "showAlpha", type: "boolean", description: "Whether to show alpha channel", default: "false", optional: true },
+  { name: "value", type: "string", description: "Color value as a hex string (e.g., \"#FF0000\")", default: "\"#000000\"", optional: true },
   { name: "label", type: "string", description: "Label text", default: "\"Color\"", optional: true },
   { name: "disabled", type: "boolean", description: "Whether the picker is disabled", default: "false", optional: true },
+  { name: "required", type: "boolean", description: "Whether the color is required", default: "false", optional: true },
   { name: "error", type: "string", description: "Error message", default: "\"\"", optional: true },
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
@@ -33,9 +31,18 @@ export const propsMetadata = [
 </script>
 
 <script lang="ts">
+/**
+ * @component
+ * ColorPicker - A color selection component built on the native
+ * `<input type="color">` element.
+ *
+ * Uses the browser's native color picker for accessibility, validation,
+ * and cross-platform consistency. A hex text input allows direct value entry.
+ * The native picker provides ARIA support, keyboard navigation, and
+ * platform-native color selection UI for free.
+ */
 import { getContext } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
-import Input from "./Input.svelte"
 
 interface Props {
   /** Additional props passed through to the root element */
@@ -45,16 +52,14 @@ interface Props {
   id?: string
   /** Name attribute */
   name?: string
-  /** Color value in current format */
+  /** Color value as a hex string (e.g., "#FF0000") */
   value?: string
-  /** Color format */
-  format?: "hex" | "rgb" | "rgba" | "hsl" | "hsla"
-  /** Whether to show alpha channel */
-  showAlpha?: boolean
   /** Label text */
   label?: string
   /** Whether the picker is disabled */
   disabled?: boolean
+  /** Whether the color is required */
+  required?: boolean
   /** Error message */
   error?: string
   /** Additional CSS classes */
@@ -67,40 +72,14 @@ let {
   id = crypto.randomUUID(),
   name,
   value = "#000000",
-  format = "hex",
-  showAlpha = false,
   label = "Color",
   disabled = false,
+  required = false,
   error = "",
   class: className = "",
   onchange = undefined,
   ...restProps
 }: Props = $props()
-
-let showPicker = $state(false)
-let pickerPopoverRef: HTMLElement & { togglePopover?: (force?: boolean) => boolean } | undefined = $state()
-
-// Handle popover toggle events
-$effect(() => {
-  if (!pickerPopoverRef) return
-  
-  const handleToggle = (event: Event) => {
-    const toggleEvent = event as ToggleEvent
-    showPicker = toggleEvent.newState === "open"
-  }
-  
-  pickerPopoverRef.addEventListener("toggle", handleToggle)
-  
-  return () => {
-    pickerPopoverRef?.removeEventListener("toggle", handleToggle)
-  }
-})
-let hue = $state(0)
-let saturation = $state(100)
-let lightness = $state(50)
-let alpha = $state(100)
-let inputValue = $state("")
-let pickerRef: HTMLDivElement | undefined = $state()
 
 // Get form context if available
 const formContext = getContext<FormContext | undefined>("form")
@@ -109,7 +88,6 @@ const formContext = getContext<FormContext | undefined>("form")
 let fieldApi: FormFieldApi | undefined
 
 // Disabled from form context takes precedence over the local prop
-// (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
 const effectiveDisabled = $derived(
   disabled || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
 )
@@ -120,398 +98,198 @@ $effect(() => {
   }
 })
 
-// Sync from form (handles form.reset(), form.setValue(), etc.)
-$effect(() => {
-  if (fieldApi) {
-    const formValue = fieldApi.getValue()
-    if (formValue === null || formValue === undefined) {
-      // Form reset: clear to defaults
-      if (hue !== 0 || saturation !== 100 || lightness !== 50 || alpha !== 100) {
-        hue = 0
-        saturation = 100
-        lightness = 50
-        alpha = 100
-        updateInputValue()
-      }
-    } else if (typeof formValue === "string" && formValue) {
-      const color = parseColor(formValue)
-      if (color) {
-        if (
-          color.hue !== hue ||
-          color.saturation !== saturation ||
-          color.lightness !== lightness ||
-          color.alpha !== alpha
-        ) {
-          ;({ hue, saturation, lightness, alpha } = color)
-          updateInputValue()
-        }
-      }
-    }
+/**
+ * Normalize a color string to a 7-character hex string (#RRGGBB)
+ * @param {string} color - Color string to normalize
+ * @returns {string} Normalized hex string
+ */
+function normalizeHex(color: string): string {
+  if (!color) return "#000000"
+  // Already a valid 7-char hex
+  if (/^#[0-9a-fA-F]{6}$/.test(color)) return color
+  // 4-char hex (#RGB) → #RRGGBB
+  if (/^#[0-9a-fA-F]{3}$/.test(color)) {
+    const r = color[1]
+    const g = color[2]
+    const b = color[3]
+    return `#${r}${r}${g}${g}${b}${b}`
   }
-})
-
-// Initialize color from value prop (only when not registered with form)
-$effect(() => {
-  if (!fieldApi && value) {
-    const color = parseColor(value)
-    if (color) {
-      ;({ hue, saturation, lightness, alpha } = color)
-      updateInputValue()
-    }
-  }
-})
-
-// Parse color string to HSL(A) values
-function parseColor(colorStr: string): { hue: number; saturation: number; lightness: number; alpha: number } | null {
+  // Try to parse via canvas
   try {
-    const div = document.createElement("div")
-    div.style.color = colorStr
-    document.body.appendChild(div)
-    const computed = getComputedStyle(div).color
-    document.body.removeChild(div)
-
-    const match = computed.match(/\d+(\.\d+)?/g)
-    if (!match) return null
-
-    const [r, g, b, a = 1] = match.map(Number)
-    const [h, s, l] = rgbToHsl(r, g, b)
-
-    return {
-      hue: h,
-      saturation: s,
-      lightness: l,
-      alpha: a * 100,
+    const ctx = document.createElement("canvas").getContext("2d")
+    if (ctx) {
+      ctx.fillStyle = color
+      return ctx.fillStyle
     }
   } catch {
-    return null
+    // Fall through
   }
+  return "#000000"
 }
 
-// Convert RGB to HSL
-function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
-  r /= 255
-  g /= 255
-  b /= 255
+// Internal hex value for the native input
+// svelte-ignore state_referenced_locally
+let hexValue = $state(normalizeHex(value))
+// svelte-ignore state_referenced_locally
+let textValue = $state(normalizeHex(value))
 
-  const max = Math.max(r, g, b)
-  const min = Math.min(r, g, b)
-  let h = 0,
-    s = 0,
-    l = (max + min) / 2
-
-  if (max === min) {
-    h = s = 0
-  } else {
-    const d = max - min
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
-
-    switch (max) {
-      case r:
-        h = (g - b) / d + (g < b ? 6 : 0)
-        break
-      case g:
-        h = (b - r) / d + 2
-        break
-      case b:
-        h = (r - g) / d + 4
-        break
-    }
-
-    h /= 6
+// Sync from value prop
+$effect(() => {
+  const newHex = normalizeHex(value)
+  if (newHex !== hexValue) {
+    hexValue = newHex
+    textValue = newHex
   }
+})
 
-  return [h * 360, s * 100, l * 100]
-}
+/**
+ * Dispatch change event and update form field
+ * @param {string} newHex - New hex color value
+ */
+function dispatchChange(newHex: string): void {
+  hexValue = newHex
+  textValue = newHex
 
-// Convert HSL to RGB
-function hslToRgb(h: number, s: number, l: number): [number, number, number] {
-  h /= 360
-  s /= 100
-  l /= 100
-
-  let r = 0,
-    g = 0,
-    b = 0
-
-  if (s === 0) {
-    r = g = b = l
-  } else {
-    const hue2rgb = (p: number, q: number, t: number): number => {
-      if (t < 0) t += 1
-      if (t > 1) t -= 1
-      if (t < 1 / 6) return p + (q - p) * 6 * t
-      if (t < 1 / 2) return q
-      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6
-      return p
-    }
-
-    const q = l < 0.5 ? l * (1 + s) : l + s - l * s
-    const p = 2 * l - q
-
-    r = hue2rgb(p, q, h + 1 / 3)
-    g = hue2rgb(p, q, h)
-    b = hue2rgb(p, q, h - 1 / 3)
-  }
-
-  return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)]
-}
-
-// Convert RGB to hex
-function rgbToHex(r: number, g: number, b: number): string {
-  const toHex = (x: number): string => {
-    const hex = x.toString(16)
-    return hex.length === 1 ? "0" + hex : hex
-  }
-
-  return "#" + toHex(r) + toHex(g) + toHex(b)
-}
-
-// Update color from HSL values
-function updateColor(h: number, s: number, l: number, a: number): void {
-  hue = h
-  saturation = s
-  lightness = l
-  alpha = a
-
-  updateInputValue()
-  fieldApi?.setValue(inputValue)
+  fieldApi?.setValue(newHex)
   // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
   // module-scope has `this: void`
-  onchange?.(new CustomEvent("change", { detail: { value: inputValue } }))
+  onchange?.(new CustomEvent("change", { detail: { value: newHex } }))
 }
 
-// Update input value based on current color
-function updateInputValue(): void {
-  const [r, g, b] = hslToRgb(hue, saturation, lightness)
-  const a = alpha / 100
+/**
+ * Handle native color input change
+ * @param {Event} event - Input event
+ */
+function handleColorInput(event: Event): void {
+  const target = event.target as HTMLInputElement
+  dispatchChange(target.value)
+}
 
-  switch (format) {
-    case "hex":
-      inputValue = rgbToHex(r, g, b)
-      break
-    case "rgb":
-      inputValue = `rgb(${r}, ${g}, ${b})`
-      break
-    case "rgba":
-      inputValue = `rgba(${r}, ${g}, ${b}, ${a})`
-      break
-    case "hsl":
-      inputValue = `hsl(${Math.round(hue)}, ${Math.round(saturation)}%, ${Math.round(lightness)}%)`
-      break
-    case "hsla":
-      inputValue = `hsla(${Math.round(hue)}, ${Math.round(saturation)}%, ${Math.round(lightness)}%, ${a})`
-      break
+/**
+ * Handle hex text input change
+ * @param {Event} event - Input event
+ */
+function handleTextInput(event: Event): void {
+  const target = event.target as HTMLInputElement
+  const raw = target.value
+  textValue = raw
+
+  // Only dispatch if it's a valid hex
+  if (/^#[0-9a-fA-F]{6}$/.test(raw)) {
+    dispatchChange(raw)
   }
 }
 
-// Handle color wheel interaction
-function handleColorWheel(event: MouseEvent): void {
-  if (effectiveDisabled) return
-  if (!pickerRef) return
-
-  const rect = pickerRef.getBoundingClientRect()
-  const x = event.clientX - rect.left
-  const y = event.clientY - rect.top
-
-  const centerX = rect.width / 2
-  const centerY = rect.height / 2
-  const radius = Math.min(centerX, centerY)
-
-  const dx = x - centerX
-  const dy = y - centerY
-  const distance = Math.sqrt(dx * dx + dy * dy)
-
-  if (distance <= radius) {
-    const angle = Math.atan2(dy, dx)
-    const newHue = ((angle * 180) / Math.PI + 360) % 360
-    const newSaturation = (distance / radius) * 100
-
-    updateColor(newHue, newSaturation, lightness, alpha)
-  }
-}
-
-// Handle lightness slider
-function handleLightness(event: Event): void {
-  if (effectiveDisabled) return
-  const target = event.target as HTMLInputElement | null
-  if (!target) return
-  const newLightness = Number(target.value)
-  updateColor(hue, saturation, newLightness, alpha)
-}
-
-// Handle alpha slider
-function handleAlpha(event: Event): void {
-  if (effectiveDisabled) return
-  const target = event.target as HTMLInputElement | null
-  if (!target) return
-  const newAlpha = Number(target.value)
-  updateColor(hue, saturation, lightness, newAlpha)
-}
-
-// Handle input change
-function handleInput(event: CustomEvent): void {
-  const newValue = event.detail.value
-  const color = parseColor(newValue)
-
-  if (color) {
-    updateColor(color.hue, color.saturation, color.lightness, color.alpha)
+/**
+ * Handle text input blur — normalize the value
+ */
+function handleTextBlur(): void {
+  const normalized = normalizeHex(textValue)
+  textValue = normalized
+  if (normalized !== hexValue) {
+    dispatchChange(normalized)
   }
 }
 </script>
 
-<div
-  class="color-picker {className}"
->
-  <!-- Only suppress the mousedown while the popover is closed: for an
-       `auto` popover the focus change from clicking the input dismisses
-       it right after it opens. When the popover is already open the
-       input stays focusable so the value can be edited directly. -->
-  <Input
-    {...restProps}
-    {id}
-    {label}
-    disabled={effectiveDisabled}
-    {error}
-    value={inputValue}
-    oninput={handleInput}
-    onclick={() => pickerPopoverRef?.togglePopover()}
-    onmousedown={(event) => {
-      if (!pickerPopoverRef?.matches(":popover-open")) {
-        event.preventDefault()
-      }
-    }}
-    rightIcon="palette"
-    onrightIconClick={() => pickerPopoverRef?.togglePopover()}
-  />
-  
-  <div
-    class="color-picker-popup"
-    popover="auto"
-    role="dialog"
-    aria-label="Color picker"
-    bind:this={pickerPopoverRef}
-  >
-      <div
-        class="color-wheel"
-        bind:this={pickerRef}
-        role="presentation"
-        aria-hidden="true"
-        onmousedown={handleColorWheel}
-        onmousemove={event => {
-          if (event.buttons === 1) handleColorWheel(event);
-        }}
-        style="
-          --hue: {hue}deg;
-          --saturation: {saturation}%;
-          --lightness: {lightness}%;
-        "
-      >
-        <div class="color-wheel-pointer"></div>
-      </div>
-      
-      <div class="color-sliders">
-        <label class="color-slider">
-          <span>Lightness</span>
-          <input
-            type="range"
-            min="0"
-            max="100"
-            value={lightness}
-            disabled={effectiveDisabled}
-            oninput={handleLightness}
-          />
-        </label>
-        
-        {#if showAlpha}
-          <label class="color-slider">
-            <span>Alpha</span>
-            <input
-            type="range"
-            min="0"
-            max="100"
-            value={alpha}
-            disabled={effectiveDisabled}
-            oninput={handleAlpha}
-            />
-          </label>
-        {/if}
-      </div>
-      
-      <div class="color-preview">
-        <div
-          class="color-swatch"
-          style="
-            background-color: hsla({hue}, {saturation}%, {lightness}%, {alpha / 100});
-          "
-        ></div>
-        <div class="color-value">{inputValue}</div>
-      </div>
+<div class="color-picker {className}">
+  {#if label}
+    <label for="{id}-hex" class="color-picker-label">{label}</label>
+  {/if}
+  <div class="color-picker-input-row">
+    <div class="color-picker-native">
+      <input
+        {...restProps}
+        id="{id}-native"
+        {name}
+        type="color"
+        class="color-picker-native-input"
+        value={hexValue}
+        disabled={effectiveDisabled}
+        {required}
+        aria-label={label ? `${label} color swatch` : "Color swatch"}
+        oninput={handleColorInput}
+      />
     </div>
+    <input
+      id="{id}-hex"
+      type="text"
+      class="color-picker-hex-input"
+      class:color-picker-hex-error={!!error}
+      value={textValue}
+      disabled={effectiveDisabled}
+      {required}
+      placeholder="#000000"
+      maxlength="7"
+      aria-label={label ? `${label} hex value` : "Hex color value"}
+      aria-invalid={error ? "true" : undefined}
+      aria-describedby={error ? `${id}-error` : undefined}
+      oninput={handleTextInput}
+      onblur={handleTextBlur}
+    />
+  </div>
+  {#if error}
+    <p id="{id}-error" class="color-picker-error" role="alert">{error}</p>
+  {/if}
 </div>
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";
 
   .color-picker {
-    @apply relative inline-block w-full;
-  }
-
-  .color-picker-popup {
-    @apply z-50 p-4;
-    @apply bg-surface border border-border rounded-md shadow-lg;
-    @apply min-w-[240px];
-  }
-
-  .color-wheel {
-    @apply relative w-48 h-48 mb-4 rounded-full;
-    @apply bg-[conic-gradient(from_var(--hue),red,yellow,lime,aqua,blue,magenta,red)];
-    @apply cursor-crosshair;
-    
-    mask: radial-gradient(white, transparent);
-    -webkit-mask: radial-gradient(white, transparent);
-  }
-
-  .color-wheel-pointer {
-    @apply absolute w-4 h-4 -mt-2 -ml-2;
-    @apply border-2 border-white rounded-full shadow-md;
-    @apply pointer-events-none;
-    
-    left: calc(50% + (var(--saturation) * 0.24px) * cos(var(--hue)));
-    top: calc(50% + (var(--saturation) * 0.24px) * sin(var(--hue)));
-  }
-
-  .color-sliders {
-    @apply flex flex-col gap-4 mb-4;
-  }
-
-  .color-slider {
-    @apply flex flex-col gap-1;
-  }
-
-  .color-slider span {
-    @apply text-xs text-muted;
-  }
-
-  .color-slider input {
     @apply w-full;
   }
 
-  .color-preview {
+  .color-picker-label {
+    @apply block text-sm font-medium text-text dark:text-text mb-1;
+  }
+
+  .color-picker-input-row {
     @apply flex items-center gap-2;
   }
 
-  .color-swatch {
-    @apply w-8 h-8 rounded;
-    @apply border border-border;
-    background-image: linear-gradient(45deg, #808080 25%, transparent 25%),
-                    linear-gradient(-45deg, #808080 25%, transparent 25%),
-                    linear-gradient(45deg, transparent 75%, #808080 75%),
-                    linear-gradient(-45deg, transparent 75%, #808080 75%);
-    background-size: 8px 8px;
-    background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+  .color-picker-native {
+    @apply relative shrink-0;
   }
 
-  .color-value {
-    @apply text-sm font-mono;
+  .color-picker-native-input {
+    @apply w-10 h-10 rounded-md cursor-pointer;
+    @apply border border-border dark:border-border;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply transition-colors duration-200;
+    /* Hide the default browser swatch and use our own */
+    padding: 2px;
+  }
+
+  .color-picker-native-input::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+
+  .color-picker-native-input::-webkit-color-swatch {
+    @apply rounded-sm border-none;
+  }
+
+  .color-picker-native-input::-moz-color-swatch {
+    @apply rounded-sm border-none;
+  }
+
+  .color-picker-hex-input {
+    @apply flex-1 h-10 px-3;
+    @apply bg-surface dark:bg-surface;
+    @apply border border-border dark:border-border rounded-md;
+    @apply text-text dark:text-text font-mono text-sm;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400;
+    @apply focus:border-primary-500 dark:focus:border-primary-400;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply transition-colors duration-200;
+  }
+
+  .color-picker-hex-error {
+    @apply border-error-500 dark:border-error-500;
+    @apply focus:ring-error-500 dark:focus:ring-error-500;
+  }
+
+  .color-picker-error {
+    @apply mt-1 text-sm text-error-500 dark:text-error-500;
   }
 </style>

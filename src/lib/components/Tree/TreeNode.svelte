@@ -70,6 +70,9 @@ interface Props {
   ontoggle?: (event: CustomEvent) => void
   /** Select event handler */
   onselect?: (event: CustomEvent) => void
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
   /** Child node snippet */
   children?: Snippet
 }

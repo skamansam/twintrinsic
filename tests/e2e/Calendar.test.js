@@ -4,14 +4,9 @@ import { waitForHydration } from "./helpers.js";
 /**
  * Docs-site smoke tests for the Calendar component.
  *
- * Component-level behavior (date selection, range picking, min/max
- * enforcement, keyboard navigation, custom formats) is covered by the
- * Storybook vitest suite (`pnpm test:storybook`).
- *
- * These tests verify the docs landing page renders the live examples
- * (`data-testid="calendar-*"` hooks) and that opening/closing the
- * calendar popover works. No hard-coded dates are asserted — the docs
- * examples open on the current month.
+ * The Calendar now wraps a native `<input type="date">` — the browser's
+ * built-in date picker handles the calendar UI, so we verify the input
+ * renders correctly and responds to user interaction.
  */
 test.describe("Calendar docs page", () => {
   test.beforeEach(async ({ page }) => {
@@ -22,44 +17,40 @@ test.describe("Calendar docs page", () => {
   test("renders the docs page with all live examples", async ({ page }) => {
     await expect(page.getByRole("heading", { name: "Calendar", level: 1 })).toBeVisible();
     await expect(page.getByTestId("calendar-basic")).toBeVisible();
-    await expect(page.getByTestId("calendar-range")).toBeVisible();
+    await expect(page.getByTestId("calendar-with-value")).toBeVisible();
     await expect(page.getByTestId("calendar-min-max")).toBeVisible();
-    await expect(page.getByTestId("calendar-week-numbers")).toBeVisible();
+    await expect(page.getByTestId("calendar-disabled")).toBeVisible();
+    await expect(page.getByTestId("calendar-range")).toBeVisible();
   });
 
-  test("opens the calendar popover when the input is clicked", async ({ page }) => {
-    const example = page.getByTestId("calendar-basic");
+  test("renders native date inputs", async ({ page }) => {
+    const basicExample = page.getByTestId("calendar-basic");
+    const input = basicExample.locator("input");
+    await expect(input).toHaveAttribute("type", "date");
+  });
+
+  test("pre-filled example shows the correct value", async ({ page }) => {
+    const example = page.getByTestId("calendar-with-value");
     const input = example.locator("input");
-
-    await input.click();
-    const calendar = example.locator(".calendar");
-    await expect(calendar).toBeVisible();
-
-    // Day-name header row (7 columns)
-    await expect(calendar.locator(".calendar-day").first()).toBeVisible();
-    await expect(calendar.locator(".calendar-title")).toBeVisible();
+    await expect(input).toHaveValue("2026-04-07");
   });
 
-  test("closes the calendar with Escape", async ({ page }) => {
-    const example = page.getByTestId("calendar-basic");
+  test("min/max example has correct attributes", async ({ page }) => {
+    const example = page.getByTestId("calendar-min-max");
     const input = example.locator("input");
-
-    await input.click();
-    await expect(example.locator(".calendar")).toBeVisible();
-
-    await page.keyboard.press("Escape");
-    await expect(example.locator(".calendar")).not.toBeVisible();
+    await expect(input).toHaveAttribute("min", "2026-04-01");
+    await expect(input).toHaveAttribute("max", "2026-04-30");
   });
 
-  test("range example renders its inputs", async ({ page }) => {
+  test("disabled example is disabled", async ({ page }) => {
+    const example = page.getByTestId("calendar-disabled");
+    const input = example.locator("input");
+    await expect(input).toBeDisabled();
+  });
+
+  test("range example shows two date inputs", async ({ page }) => {
     const example = page.getByTestId("calendar-range");
-    await expect(example.locator(".calendar-container").first()).toBeVisible();
-  });
-
-  test("week-numbers example shows the week column when open", async ({ page }) => {
-    const example = page.getByTestId("calendar-week-numbers");
-    await example.locator("input").click();
-    const weekNumbers = example.locator(".calendar-week");
-    await expect(weekNumbers.first()).toBeVisible();
+    const inputs = example.locator("input[type='date']");
+    await expect(inputs).toHaveCount(2);
   });
 });

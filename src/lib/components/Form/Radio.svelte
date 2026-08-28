@@ -215,7 +215,7 @@ const labelSizeClasses = $derived(
   }
   
   .radio-control {
-    @apply rounded-full border-2 border-border dark:border-border bg-background dark:bg-background;
+    @apply rounded-full border-2 border-border dark:border-border bg-surface dark:bg-surface;
     @apply flex items-center justify-center;
     @apply transition-colors duration-200;
   }

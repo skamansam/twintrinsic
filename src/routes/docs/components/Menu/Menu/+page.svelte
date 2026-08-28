@@ -89,6 +89,24 @@ import * as MenuItemModule from "$lib/components/Menu/Menu/MenuItem.svelte"
 
   <h2>Examples</h2>
 
+  <h3>Data-Driven Menu</h3>
+  <p>
+    Instead of using <code>&lt;MenuItem&gt;</code> sub-components, you can pass a flat
+    array of item objects. This is simpler for generated or dynamic menus.
+  </p>
+  <ExampleTabs code={`<Menu
+  ariaLabel="Actions menu"
+  items={[\n    { label: 'Edit', icon: 'tabler:pencil', onClick: () => console.log('edit') },\n    { label: 'Duplicate', icon: 'tabler:copy' },\n    { label: 'Archive', disabled: true },\n    { divider: true },\n    { label: 'Delete', icon: 'tabler:trash', onClick: () => console.log('delete') }\n  ]}
+>
+  {#snippet trigger()}Actions{/snippet}
+</Menu>`}>
+    <div class="p-4 bg-surface rounded-md" data-testid="menu-data-driven">
+      <Menu ariaLabel="Actions menu" items={[{ label: 'Edit', icon: 'tabler:pencil' }, { label: 'Duplicate', icon: 'tabler:copy' }, { label: 'Archive', disabled: true }, { divider: true }, { label: 'Delete', icon: 'tabler:trash' }]}>
+        {#snippet trigger()}Actions{/snippet}
+      </Menu>
+    </div>
+  </ExampleTabs>
+
   <h3>Basic Menu</h3>
   <ExampleTabs code={`<Menu ariaLabel="Account menu">
   {#snippet trigger()}Account{/snippet}

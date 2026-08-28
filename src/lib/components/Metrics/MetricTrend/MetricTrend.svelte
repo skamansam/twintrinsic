@@ -20,6 +20,9 @@ export const propsMetadata = [
 		height?: number;
 	/** Callback when clicked (mouse or keyboard activation) */
 	onclick?: (event: MouseEvent | KeyboardEvent) => void;
+	/** Additional props passed through to the root element */
+	[key: `data-${string}`]: unknown
+	[key: `aria-${string}`]: string | undefined
 	}
 
 	let {

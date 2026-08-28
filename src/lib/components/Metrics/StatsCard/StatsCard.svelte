@@ -3,7 +3,7 @@ export const propsMetadata = [
   { name: "label", type: "string", description: "Card label/title", optional: false },
   { name: "value", type: "string | number", description: "Metric value", optional: false },
   { name: "icon", type: "string", description: "Icon component or name", optional: true },
-  { name: "trend", type: "'up' | 'down'", description: "Trend direction: 'up' or 'down'", optional: true },
+  { name: "trend", type: "'up' | 'down'", description: "Trend direction: 'up' or 'down'. Auto-detected from trendValue if omitted.", optional: true },
   { name: "trendValue", type: "string | number", description: "Trend value (e.g., \"12.5%\")", optional: true },
   { name: "color", type: "'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info'", description: "Color theme: primary, secondary, success, danger, warning, info", default: "'primary'", optional: true },
   { name: "onclick", type: "(event: MouseEvent | KeyboardEvent) => void", description: "Callback when card is clicked (mouse or keyboard activation)", optional: true },
@@ -18,7 +18,7 @@ export const propsMetadata = [
 		value: string | number;
 		/** Icon component or name */
 		icon?: string;
-		/** Trend direction: 'up' or 'down' */
+		/** Trend direction: 'up' or 'down'. Auto-detected from trendValue if omitted. */
 		trend?: 'up' | 'down';
 		/** Trend value (e.g., "12.5%") */
 		trendValue?: string | number;
@@ -26,9 +26,22 @@ export const propsMetadata = [
 		color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
 	/** Callback when card is clicked (mouse or keyboard activation) */
 	onclick?: (event: MouseEvent | KeyboardEvent) => void;
+	/** Additional props passed through to the root element */
+	[key: `data-${string}`]: unknown
+	[key: `aria-${string}`]: string | undefined
 	}
 
-	let { label, value, icon = undefined, trend = undefined, trendValue = undefined, color = 'primary', onclick = undefined, ...rest }: Props = $props();
+	let { label, value, icon = undefined, trend: trendProp = undefined, trendValue = undefined, color = 'primary', onclick = undefined, ...rest }: Props = $props();
+
+	/** Auto-detect trend direction from trendValue when not explicitly set */
+	const trend = $derived.by(() => {
+		if (trendProp !== undefined) return trendProp;
+		if (trendValue === undefined) return undefined;
+		const str = String(trendValue);
+		if (str.startsWith('+') || (!str.startsWith('-') && parseFloat(str) > 0)) return 'up' as const;
+		if (str.startsWith('-') || parseFloat(str) < 0) return 'down' as const;
+		return undefined;
+	});
 
 	const colorMap: Record<string, { bg: string; text: string; border: string }> = {
 		primary: {

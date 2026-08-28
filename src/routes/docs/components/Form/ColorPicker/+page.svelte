@@ -19,31 +19,34 @@ import Container from "$lib/components/Container/Container.svelte"
 <h1>ColorPicker</h1>
 
 <p>
-  <strong>ColorPicker</strong> provides an intuitive interface for color selection with
-  a color wheel, hue/lightness sliders, and alpha channel support. Outputs in HEX,
-  RGB, or HSL formats. Uses <code>popover="auto"</code> for the popup panel.
+  <strong>ColorPicker</strong> is a color selection component built on the native
+  <code>&lt;input type="color"&gt;</code> element. It uses the browser's built-in
+  color picker for accessibility and cross-platform consistency, with a hex text
+  input for precise value entry.
 </p>
 
 <h2>What, When &amp; Why</h2>
 
 <h3>What is it?</h3>
 <p>
-  A color selection widget with a visual color wheel for hue/saturation, sliders for
-  lightness and opacity, and a text input for direct color value entry.
+  A form control that lets users pick a color using the browser's native color
+  picker dialog. A companion hex text input allows direct entry of color values.
 </p>
 
 <h3>When should I use it?</h3>
 <p>
-  Use <code>&lt;ColorPicker&gt;</code> when users need to select a custom color: theme
-  customization, chart colors, design tools. For simple predefined color selection,
-  use a set of radio buttons or swatches.
+  Use <code>&lt;ColorPicker&gt;</code> when users need to select a custom color:
+  theme customization, chart colors, design tools. The native picker provides
+  ARIA support and keyboard navigation for free. For predefined color selection,
+  use a set of radio buttons or color swatches.
 </p>
 
 <h3>Why does it exist?</h3>
 <ul>
-  <li><strong>Visual selection</strong> — the color wheel is more intuitive than typing hex values.</li>
-  <li><strong>Multiple formats</strong> — supports HEX, RGB, RGBA, HSL, HSLA output.</li>
-  <li><strong>Alpha channel</strong> — optional opacity slider for transparent colors.</li>
+  <li><strong>Accessible by default</strong> — native color pickers have built-in ARIA and keyboard support.</li>
+  <li><strong>Cross-platform</strong> — the browser provides a consistent color picker experience.</li>
+  <li><strong>Precise entry</strong> — the hex text input allows exact color values.</li>
+  <li><strong>Lightweight</strong> — no custom color wheel JavaScript needed.</li>
 </ul>
 
 <h3>Sources</h3>
@@ -52,20 +55,18 @@ import Container from "$lib/components/Container/Container.svelte"
   <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/">WAI-ARIA APG — Forms</a></li>
 </ul>
 
-
 <h2>Twintrinsic Implementation</h2>
 <ul>
-    <li>Custom HSL wheel with `conic-gradient` for the color picker</li>
-    <li>`popover=&quot;auto&quot;` for the picker panel with light-dismiss</li>
-    <li>Format switching: hex, RGB, HSL with live preview</li>
-    <li>Alpha/opacity slider for transparent colors</li>
+    <li>Wraps native `&lt;input type="color"&gt;` with a hex text input</li>
+    <li>Color swatch button shows the current color as the native picker's preview</li>
+    <li>Hex input allows direct value entry with normalization (e.g., `#RGB` → `#RRGGBB`)</li>
     <li>Form context integration via `getContext('form')`</li>
 </ul>
 
 <h2>Common Mistakes</h2>
 <ul>
-    <li>Don't use `&lt;input type=&quot;color&quot;&gt;` when you need HSL, alpha, or preset palettes</li>
-    <li>Don't forget to provide a hex input for precise color entry</li>
+    <li>Don't use `&lt;input type="text"&gt;` with a color pattern — `type="color"` gives you the native picker for free</li>
+    <li>Don't forget `aria-label` when the input has no visible label</li>
 </ul>
 
 <h2>Related Components</h2>
@@ -73,16 +74,17 @@ import Container from "$lib/components/Container/Container.svelte"
 
 <h2>Responsiveness</h2>
 <ul>
-  <li>Color wheel and sliders adapt to container width.</li>
-  <li>On mobile, the picker opens as a full-width overlay.</li>
-  <li>Touch targets meet 44×44 px minimum.</li>
+  <li>Fills container width by default (<code>w-full</code>).</li>
+  <li>On mobile, the native color picker opens as a system-native overlay.</li>
+  <li>The hex input and color swatch sit side by side.</li>
 </ul>
 
 <h2>Customization</h2>
 <ul>
-  <li>Output format: <code>hex</code>, <code>rgb</code>, <code>rgba</code>, <code>hsl</code>, <code>hsla</code>.</li>
-  <li>Alpha channel via <code>showAlpha={true}</code>.</li>
-  <li>Error state for invalid colors.</li>
+  <li>Disabled state via <code>disabled</code>.</li>
+  <li>Required validation via <code>required</code>.</li>
+  <li>Error state via <code>error</code> prop.</li>
+  <li>The color format is always hex (the native input's format).</li>
 </ul>
 
 <h2>Examples</h2>
@@ -101,20 +103,6 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h3>RGB Format</h3>
-<ExampleTabs code={`<ColorPicker label="Color" format="rgb" value="rgb(255, 0, 0)" />`}>
-  <div class="max-w-md" data-testid="colorpicker-rgb">
-    <ColorPicker label="Color" format="rgb" value="rgb(255, 0, 0)" />
-  </div>
-</ExampleTabs>
-
-<h3>With Alpha Channel</h3>
-<ExampleTabs code={`<ColorPicker label="Color" format="rgba" showAlpha={true} value="rgba(255, 0, 0, 0.5)" />`}>
-  <div class="max-w-md" data-testid="colorpicker-rgba">
-    <ColorPicker label="Color" format="rgba" showAlpha={true} value="rgba(255, 0, 0, 0.5)" />
-  </div>
-</ExampleTabs>
-
 <h3>Error State</h3>
 <ExampleTabs code={`<ColorPicker label="Color" error="Please select a valid color" />`}>
   <div class="max-w-md" data-testid="colorpicker-error">
@@ -122,12 +110,21 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-  <h3>HSL Format</h3>
-  <ExampleTabs code={`<ColorPicker format="hsl" />`}>
-    <div class="max-w-md" data-testid="colorpicker-hsl">
-      <ColorPicker format="hsl" />
-    </div>
-  </ExampleTabs>
+<h3>Disabled</h3>
+<ExampleTabs code={`<ColorPicker label="Color" value="#FF0000" disabled={true} />`}>
+  <div class="max-w-md" data-testid="colorpicker-disabled">
+    <ColorPicker label="Color" value="#FF0000" disabled={true} />
+  </div>
+</ExampleTabs>
+
+<h3>Theme Colors</h3>
+<ExampleTabs code={`<ColorPicker label="Primary" value="#6366F1" />\n<ColorPicker label="Secondary" value="#8B5CF6" />\n<ColorPicker label="Accent" value="#EC4899" />`}>
+  <div class="max-w-md space-y-4" data-testid="colorpicker-theme">
+    <ColorPicker label="Primary" value="#6366F1" />
+    <ColorPicker label="Secondary" value="#8B5CF6" />
+    <ColorPicker label="Accent" value="#EC4899" />
+  </div>
+</ExampleTabs>
 
 <h2>Props</h2>
 <PropsTable component={ColorPickerModule} />
@@ -137,20 +134,31 @@ import Container from "$lib/components/Container/Container.svelte"
 
 <h2>Accessibility</h2>
 <ul>
-  <li>Color wheel uses proper ARIA roles and labels.</li>
-  <li>Sliders have descriptive labels.</li>
-  <li>Color values displayed in text format.</li>
-  <li>Keyboard: arrow keys adjust sliders, Tab navigates controls.</li>
+  <li>Uses native <code>&lt;input type="color"&gt;</code> which provides built-in ARIA support.</li>
+  <li>The native color picker includes keyboard navigation and screen reader announcements.</li>
+  <li>Hex input is labeled separately for direct value entry.</li>
+  <li>Error messages are linked via <code>aria-describedby</code>.</li>
 </ul>
 
 <h2>Keyboard Support</h2>
+<p>
+  The native color picker provides full keyboard support automatically:
+</p>
 <table>
   <thead><tr><th>Key</th><th>Function</th></tr></thead>
   <tbody>
-    <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Open/close color picker</td></tr>
-    <tr><td><kbd>Tab</kbd></td><td>Navigate through controls</td></tr>
-    <tr><td><kbd>Arrow Keys</kbd></td><td>Adjust slider values</td></tr>
-    <tr><td><kbd>Escape</kbd></td><td>Close color picker</td></tr>
+    <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Open the color picker dialog</td></tr>
+    <tr><td><kbd>Arrow Keys</kbd></td><td>Navigate the color spectrum</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td>Move between color channels</td></tr>
+    <tr><td><kbd>Escape</kbd></td><td>Close the color picker</td></tr>
   </tbody>
 </table>
+
+<h2>Output Format</h2>
+<p>
+  The native <code>&lt;input type="color"&gt;</code> always outputs hex values
+  (<code>#RRGGBB</code>). For RGB, HSL, or alpha channel support, convert the
+  hex value in your application code:
+</p>
+<pre><code>{"// Hex to RGB\nfunction hexToRgb(hex) {\n  const r = parseInt(hex.slice(1, 3), 16)\n  const g = parseInt(hex.slice(3, 5), 16)\n  const b = parseInt(hex.slice(5, 7), 16)\n  return `rgb(${r}, ${g}, ${b})`\n}"}</code></pre>
 </Container>

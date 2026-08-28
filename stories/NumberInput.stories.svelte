@@ -91,3 +91,8 @@ const { Story } = defineMeta({
 />
 
 <Story name="Disabled" args={{ name: "locked", value: 7, disabled: true }} />
+
+<Story
+  name="Icon Suffix"
+  args={{ name: "weight", value: 5, suffix: "tabler:weight", min: 0 }}
+/>

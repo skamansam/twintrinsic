@@ -45,6 +45,9 @@ export const propsMetadata = [
     bordered?: boolean;
     /** Change event handler */
     onchange?: (event: CustomEvent<{ expandedItems: number[] }>) => void;
+    /** Additional props passed through to the root element */
+    [key: `data-${string}`]: unknown
+    [key: `aria-${string}`]: string | undefined
     children?: Snippet;
   }
 

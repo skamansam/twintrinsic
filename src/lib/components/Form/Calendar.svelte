@@ -1,7 +1,8 @@
 <!--
 @component
-Calendar - A date picker component with month navigation, range selection,
-and keyboard controls. Built with accessibility in mind.
+Calendar - A date picker built on the native `<input type="date">` element.
+Uses the browser's built-in date picker for accessibility, validation, and
+localized formatting — free of charge.
 
 Usage:
 ```svelte
@@ -11,37 +12,43 @@ Usage:
 />
 
 <Calendar
-  value={dateRange}
-  range={true}
-  minDate={minDate}
-  maxDate={maxDate}
-  onselect={handleRangeSelect}
+  label="Birthday"
+  minDate={new Date('2026-01-01')}
+  maxDate={new Date('2026-12-31')}
 />
 ```
 -->
 <script module lang="ts">
 export const propsMetadata = [
   { name: "name", type: "string", description: "Name attribute", optional: true },
-  { name: "value", type: "Date | [Date, Date] | Date[] | null", description: "Selected date or date range", default: "null", optional: true },
-  { name: "range", type: "boolean", description: "Whether to allow range selection", default: "false", optional: true },
+  { name: "value", type: "Date | null", description: "Selected date", default: "null", optional: true },
   { name: "minDate", type: "Date | null", description: "Minimum selectable date", default: "null", optional: true },
   { name: "maxDate", type: "Date | null", description: "Maximum selectable date", default: "null", optional: true },
-  { name: "showWeekNumbers", type: "boolean", description: "Whether to show week numbers", default: "false", optional: true },
-  { name: "dayNames", type: "string[]", description: "Custom day names", default: "[\"Su\", \"Mo\", \"Tu\", \"We\", \"Th\", \"Fr\", \"Sa\"]", optional: true },
-  { name: "monthNames", type: "string[]", description: "Custom month names", default: "[\n    \"January\",\n    \"February\",\n    \"March\",\n    \"April\",\n    \"May\",\n    \"June\",\n    \"July\",\n    \"August\",\n    \"September\",\n    \"October\",\n    \"November\",\n    \"December\",\n  ]", optional: true },
   { name: "label", type: "string", description: "Label text", default: "\"Date\"", optional: true },
-  { name: "format", type: "string", description: "Date format for display", default: "\"MM/dd/yyyy\"", optional: true },
   { name: "disabled", type: "boolean", description: "Whether the calendar is disabled", default: "false", optional: true },
+  { name: "required", type: "boolean", description: "Whether the date is required", default: "false", optional: true },
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
-  { name: "onselect", type: "(event: CustomEvent<{ date?: Date; start?: Date; end?: Date | null }>) => void", description: "Select event handler", optional: true, eventDetail: "{ date?: Date; start?: Date; end?: Date | null }" },
+  { name: "onselect", type: "(event: CustomEvent<{ date: Date | null }>) => void", description: "Select event handler", optional: true, eventDetail: "{ date: Date | null }" },
+  { name: "onchange", type: "(event: CustomEvent<{ value: string }>) => void", description: "Change event handler (fires with the ISO date string)", optional: true, eventDetail: "{ value: string }" },
 ];
 </script>
 
 <script lang="ts">
+/**
+ * @component
+ * Calendar - A date picker built on the native `<input type="date">` element.
+ *
+ * Uses the browser's native date picker for maximum accessibility, validation,
+ * and localized formatting. The native picker provides ARIA support, keyboard
+ * navigation, and locale-aware date formatting for free.
+ *
+ * For date range selection, use two Calendar components side by side.
+ * For custom calendar grids with week numbers, consider a dedicated
+ * calendar library.
+ */
 import { getContext } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"
-import Input from "./Input.svelte"
 import Icon from "../Icon/Icon.svelte"
 
 interface Props {
@@ -52,70 +59,40 @@ interface Props {
   id?: string
   /** Name attribute */
   name?: string
-  /** Selected date or date range */
-  value?: Date | [Date, Date] | Date[] | null
-  /** Whether to allow range selection */
-  range?: boolean
+  /** Selected date */
+  value?: Date | null
   /** Minimum selectable date */
   minDate?: Date | null
   /** Maximum selectable date */
   maxDate?: Date | null
-  /** Whether to show week numbers */
-  showWeekNumbers?: boolean
-  /** Custom day names */
-  dayNames?: string[]
-  /** Custom month names */
-  monthNames?: string[]
   /** Label text */
   label?: string
-  /** Date format for display */
-  format?: string
   /** Whether the calendar is disabled */
   disabled?: boolean
+  /** Whether the date is required */
+  required?: boolean
   /** Additional CSS classes */
   class?: string
   /** Select event handler */
-  onselect?: (event: CustomEvent<{ date?: Date; start?: Date; end?: Date | null }>) => void
+  onselect?: (event: CustomEvent<{ date: Date | null }>) => void
+  /** Change event handler (fires with the ISO date string) */
+  onchange?: (event: CustomEvent<{ value: string }>) => void
 }
 
 let {
   id = crypto.randomUUID(),
   name,
   value = null,
-  range = false,
   minDate = null,
   maxDate = null,
-  showWeekNumbers = false,
-  dayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-  monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ],
   label = "Date",
-  format = "MM/dd/yyyy",
   disabled = false,
+  required = false,
   class: className = "",
   onselect,
+  onchange,
   ...restProps
 }: Props = $props()
-
-let currentMonth = $state(new Date())
-let hoverDate: Date | null = $state(null)
-let inputValue = $state("")
-let startDate: Date | null = $state(null)
-let endDate: Date | null = $state(null)
-let showCalendar = $state(false)
-let calendarPopoverRef: HTMLElement | undefined = $state()
 
 // Get form context if available
 const formContext = getContext<FormContext | undefined>("form")
@@ -124,7 +101,6 @@ const formContext = getContext<FormContext | undefined>("form")
 let fieldApi: FormFieldApi | undefined
 
 // Disabled from form context takes precedence over the local prop
-// (fieldApi.isDisabled is a superset of formContext.disabled — check it first)
 const effectiveDisabled = $derived(
   disabled === true || (fieldApi?.isDisabled() ?? false) || (formContext?.disabled() ?? false)
 )
@@ -140,419 +116,147 @@ $effect(() => {
   if (fieldApi) {
     const formValue = fieldApi.getValue()
     if (formValue === null || formValue === undefined) {
-      // Form reset
-      if (startDate !== null || endDate !== null) {
-        startDate = null
-        endDate = null
-        // Reset view to today's month so the calendar doesn't show a stale month
-        currentMonth = new Date()
-        updateInputValue()
-      }
-    } else if (range && Array.isArray(formValue)) {
-      const [start, end] = formValue as [Date | string | number, Date | string | number]
-      const newStart = start instanceof Date ? start : new Date(start)
-      const newEnd = end instanceof Date ? end : new Date(end)
-      const newStartTime = isNaN(newStart.getTime()) ? null : newStart.getTime()
-      const newEndTime = isNaN(newEnd.getTime()) ? null : newEnd.getTime()
-      if (newStartTime === null) {
-        if (startDate !== null) startDate = null
-      } else if (!startDate || startDate.getTime() !== newStartTime) {
-        startDate = newStart
-      }
-      if (newEndTime === null) {
-        if (endDate !== null) endDate = null
-      } else if (!endDate || endDate.getTime() !== newEndTime) {
-        endDate = newEnd
-      }
-      // Anchor view to start of range, or today if cleared
-      currentMonth = startDate ? new Date(startDate) : new Date()
-      updateInputValue()
-    } else if (!range) {
-      const newDate = formValue instanceof Date ? formValue : new Date(formValue as string | number)
-      if (!isNaN(newDate.getTime())) {
-        if (!startDate || startDate.getTime() !== newDate.getTime()) {
-          startDate = newDate
-          currentMonth = new Date(newDate)
-          updateInputValue()
-        }
-      }
+      // Form reset — clear internal value
+    } else if (formValue instanceof Date && !isNaN(formValue.getTime())) {
+      // Form set a Date
     }
   }
 })
 
-// Initialize dates from value prop (only when not registered with form)
-$effect(() => {
-  if (value && !fieldApi) {
-    if (range && Array.isArray(value)) {
-      const [start, end] = value as [Date, Date]
-      startDate = start
-      endDate = end
-      currentMonth = new Date(start)
-    } else if (!range && value instanceof Date) {
-      startDate = value
-      currentMonth = new Date(value)
-    }
-    updateInputValue()
-  }
-})
-
-// Get days in month matrix
-function getDaysInMonth(date: Date): (Date | null)[][] {
+/**
+ * Convert a Date to YYYY-MM-DD string for the native input
+ * @param {Date | null} date - Date to convert
+ * @returns {string} ISO date string or empty string
+ */
+function dateToISOString(date: Date | null): string {
+  if (!date || isNaN(date.getTime())) return ""
+  // Use local time methods — dates created via parseLocalDate() are
+  // already at local midnight, and dates from user interaction are local.
   const year = date.getFullYear()
-  const month = date.getMonth()
-  const firstDay = new Date(year, month, 1)
-  const lastDay = new Date(year, month + 1, 0)
-  const days = []
-  let week = []
-
-  // Fill in leading empty cells
-  for (let i = 0; i < firstDay.getDay(); i++) {
-    week.push(null)
-  }
-
-  // Fill in days
-  for (let day = 1; day <= lastDay.getDate(); day++) {
-    if (week.length === 7) {
-      days.push(week)
-      week = []
-    }
-    week.push(new Date(year, month, day))
-  }
-
-  // Fill in trailing empty cells
-  while (week.length < 7) {
-    week.push(null)
-  }
-  days.push(week)
-
-  return days
+  const month = String(date.getMonth() + 1).padStart(2, "0")
+  const day = String(date.getDate()).padStart(2, "0")
+  return `${year}-${month}-${day}`
 }
 
-// Get week number
-function getWeekNumber(date: Date): number {
-  const target = new Date(date.valueOf())
-  const dayNr = (date.getDay() + 6) % 7
-  target.setDate(target.getDate() - dayNr + 3)
-  const firstThursday = target.valueOf()
-  target.setMonth(0, 1)
-  if (target.getDay() !== 4) {
-    target.setMonth(0, 1 + ((4 - target.getDay() + 7) % 7))
+/**
+ * Parse a YYYY-MM-DD string into a Date at local midnight
+ * (avoids UTC timezone drift that `new Date(iso)` causes)
+ * @param {string} isoString - ISO date string
+ * @returns {Date | null} Date object or null
+ */
+function parseLocalDate(isoString: string): Date | null {
+  if (!isoString) return null
+  const [year, month, day] = isoString.split("-").map(Number)
+  if (isNaN(year) || isNaN(month) || isNaN(day)) return null
+  return new Date(year, month - 1, day)
+}
+
+/**
+ * Convert a YYYY-MM-DD string from the native input to a Date
+ * @param {string} isoString - ISO date string
+ * @returns {Date | null} Date object or null
+ */
+
+
+// Internal ISO string for the native input
+// svelte-ignore state_referenced_locally
+let isoValue = $state(dateToISOString(value))
+
+// Sync from value prop
+$effect(() => {
+  const newIso = dateToISOString(value)
+  if (newIso !== isoValue) {
+    isoValue = newIso
   }
-  return 1 + Math.ceil((firstThursday - target.getTime()) / 604800000)
-}
+})
 
-// Format date for display
-function formatDate(date: Date | null): string {
-  if (!date) return ""
+// Min/max as ISO strings for the native input
+const minISOString = $derived(dateToISOString(minDate))
+const maxISOString = $derived(dateToISOString(maxDate))
 
-  return format
-    .replace("MM", String(date.getMonth() + 1).padStart(2, "0"))
-    .replace("dd", String(date.getDate()).padStart(2, "0"))
-    .replace("yyyy", String(date.getFullYear()))
-}
+/**
+ * Handles input change from the native date picker
+ * @param {Event} event - Input event
+ */
+function handleInput(event: Event): void {
+  const target = event.target as HTMLInputElement
+  const newIso = target.value
+  isoValue = newIso
 
-// Update input value based on selected dates
-function updateInputValue(): void {
-  if (range) {
-    inputValue = startDate && endDate ? `${formatDate(startDate)} - ${formatDate(endDate)}` : ""
-  } else {
-    inputValue = startDate ? formatDate(startDate) : ""
-  }
-}
+  const newDate = parseLocalDate(newIso)
 
-// Handle date selection
-function handleDateSelect(date: Date): void {
-  if (effectiveDisabled) return
-
-  if (range) {
-    if (!startDate || (startDate && endDate) || date < startDate) {
-      startDate = date
-      endDate = null
-    } else {
-      endDate = date
-      showCalendar = false
-    }
-
-    // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
-    // module-scope has `this: void`
-    onselect?.(new CustomEvent("select", { detail: { start: startDate, end: endDate } }))
-    // Only push a complete range to the form; partial selection is in-progress
-    fieldApi?.setValue(startDate && endDate ? [startDate, endDate] : null)
-  } else {
-    startDate = date
-    showCalendar = false
-    // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
-    // module-scope has `this: void`
-    onselect?.(new CustomEvent("select", { detail: { date } }))
-    fieldApi?.setValue(date)
+  // Update form field if available
+  if (fieldApi) {
+    fieldApi.setValue(newDate)
   }
 
-  updateInputValue()
-}
-
-// Handle date hover for range selection
-function handleDateHover(date: Date | null): void {
-  if (range && startDate && !endDate) {
-    hoverDate = date
-  }
-}
-
-// Check if date is in range
-function isInRange(date: Date | null): boolean {
-  if (!date) return false
-  if (range) {
-    if (startDate && !endDate && hoverDate) {
-      return date.getTime() >= startDate.getTime() && date.getTime() <= hoverDate.getTime()
-    }
-    if (startDate && endDate) {
-      return date.getTime() >= startDate.getTime() && date.getTime() <= endDate.getTime()
-    }
-    return false
-  }
-  return false
-}
-
-// Check if date is selected
-function isSelected(date: Date | null): boolean {
-  if (!date) return false
-  if (range) {
-    return !!(
-      (startDate && date.getTime() === startDate.getTime()) ||
-      (endDate && date.getTime() === endDate.getTime())
-    )
-  }
-  return !!(startDate && date.getTime() === startDate.getTime())
-}
-
-// Check if date is disabled
-function isDisabled(date: Date | null): boolean {
-  if (!date) return true
-  if (minDate && date < minDate) return true
-  if (maxDate && date > maxDate) return true
-  return false
-}
-
-// Navigate to previous/next month
-function navigateMonth(delta: number): void {
-  const newMonth = new Date(currentMonth)
-  newMonth.setMonth(newMonth.getMonth() + delta)
-  currentMonth = newMonth
-}
-
-// Handle keyboard navigation
-function handleKeydown(event: KeyboardEvent): void {
-  if (!showCalendar) return
-
-  const key = event.key
-  const newDate = new Date(currentMonth)
-
-  switch (key) {
-    case "ArrowLeft":
-      event.preventDefault()
-      newDate.setDate(newDate.getDate() - 1)
-      break
-    case "ArrowRight":
-      event.preventDefault()
-      newDate.setDate(newDate.getDate() + 1)
-      break
-    case "ArrowUp":
-      event.preventDefault()
-      newDate.setDate(newDate.getDate() - 7)
-      break
-    case "ArrowDown":
-      event.preventDefault()
-      newDate.setDate(newDate.getDate() + 7)
-      break
-    case "Enter":
-      event.preventDefault()
-      handleDateSelect(currentMonth)
-      break
-    case "Escape":
-      event.preventDefault()
-      calendarPopoverRef?.hidePopover()
-      break
-    default:
-      return
-  }
-
-  if (!isDisabled(newDate)) {
-    currentMonth = newDate
-  }
+  // @ts-ignore: DOM lib types CustomEvent with `this: Window` binding;
+  // module-scope has `this: void`
+  onselect?.(new CustomEvent("select", { detail: { date: newDate } }))
+  // @ts-ignore: same as above
+  onchange?.(new CustomEvent("change", { detail: { value: newIso } }))
 }
 </script>
 
-<div
-  class="calendar-container {className}"
->
-  <!-- Prevent the input click from focusing the readonly field: for an
-       `auto` popover the focus change to an element outside the popover
-       dismisses it immediately after it opens. The picker stays open
-       only when the mousedown doesn't move focus. -->
-  <Input
-    {...restProps}
-    {id}
-    {label}
-    disabled={effectiveDisabled}
-    value={inputValue}
-    readonly
-    rightIcon="calendar"
-    onclick={() => calendarPopoverRef?.togglePopover()}
-    onmousedown={(event) => event.preventDefault()}
-    onrightIconClick={() => calendarPopoverRef?.togglePopover()}
-  />
-  
-  <div
-    class="calendar"
-    popover="auto"
-    role="dialog"
-    aria-label="Calendar"
-    bind:this={calendarPopoverRef}
-      tabindex="-1"
-
-      onkeydown={handleKeydown}
-    >
-      <div class="calendar-header">
-        <button
-          type="button"
-          class="calendar-nav-btn"
-          onclick={() => navigateMonth(-1)}
-          aria-label="Previous month"
-          disabled={effectiveDisabled}
-        >
-          <Icon name="tabler:chevron-left" class="w-5 h-5" />
-        </button>
-        
-        <div class="calendar-title">
-          {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
-        </div>
-        
-        <button
-          type="button"
-          class="calendar-nav-btn"
-          onclick={() => navigateMonth(1)}
-          aria-label="Next month"
-          disabled={effectiveDisabled}
-        >
-          <Icon name="tabler:chevron-right" class="w-5 h-5" />
-        </button>
-      </div>
-      
-      <table class="calendar-grid" role="grid">
-        <thead>
-          <tr>
-            {#if showWeekNumbers}
-              <th scope="col">Wk</th>
-            {/if}
-            {#each dayNames as day}
-              <th scope="col">{day}</th>
-            {/each}
-          </tr>
-        </thead>
-        <tbody>
-          {#each getDaysInMonth(currentMonth) as week}
-            <tr>
-              {#if showWeekNumbers}
-                <td class="calendar-week">
-                  {#if week[0]}
-                    {getWeekNumber(week[0])}
-                  {/if}
-                </td>
-              {/if}
-              {#each week as day}
-                <td
-                  class="calendar-day"
-                  class:calendar-day-selected={isSelected(day)}
-                  class:calendar-day-in-range={isInRange(day)}
-                  class:calendar-day-disabled={isDisabled(day)}
-                  aria-selected={day ? isSelected(day) : undefined}
-                >
-                  {#if day}
-                    <button
-                      type="button"
-                      disabled={isDisabled(day) || effectiveDisabled}
-                      onclick={() => handleDateSelect(day)}
-                      onmouseenter={() => handleDateHover(day)}
-                      aria-label={formatDate(day)}
-                    >
-                      {day.getDate()}
-                    </button>
-                  {/if}
-                </td>
-              {/each}
-            </tr>
-          {/each}
-        </tbody>
-      </table>
-    </div>
+<div class="calendar-wrapper {className}">
+  {#if label}
+    <label for={id} class="calendar-label">{label}</label>
+  {/if}
+  <div class="calendar-input-wrapper">
+    <input
+      {...restProps}
+      {id}
+      {name}
+      type="date"
+      class="calendar-input"
+      value={isoValue}
+      min={minISOString || undefined}
+      max={maxISOString || undefined}
+      disabled={effectiveDisabled}
+      {required}
+      aria-label={label}
+      oninput={handleInput}
+    />
+    <span class="calendar-icon" aria-hidden="true">
+      <Icon name="tabler:calendar" class="w-4 h-4" />
+    </span>
+  </div>
 </div>
 
 <style lang="postcss">
   @reference "../../twintrinsic.css";
 
-  .calendar-container {
-    @apply relative inline-block w-full;
+  .calendar-wrapper {
+    @apply w-full;
   }
 
-  .calendar {
-    @apply z-50 p-4;
-    @apply bg-surface border border-border rounded-md shadow-lg;
-    /* Pure CSS entry animation via @starting-style */
-    transition: opacity 150ms ease-out, display 150ms ease-out allow-discrete;
+  .calendar-label {
+    @apply block text-sm font-medium text-text dark:text-text mb-1;
   }
 
-  @starting-style {
-    .calendar {
-      opacity: 0;
-    }
+  .calendar-input-wrapper {
+    @apply relative;
   }
 
-  .calendar-header {
-    @apply flex items-center justify-between mb-4;
-  }
-
-  .calendar-title {
-    @apply text-sm font-medium;
-  }
-
-  .calendar-nav-btn {
-    @apply p-1 rounded-md;
-    @apply hover:bg-hover focus:bg-hover;
+  .calendar-input {
+    @apply w-full h-10 px-3 pr-10;
+    @apply bg-surface dark:bg-surface;
+    @apply border border-border dark:border-border rounded-md;
+    @apply text-text dark:text-text;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400;
+    @apply focus:border-primary-500 dark:focus:border-primary-400;
     @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply transition-colors duration-200;
   }
 
-  .calendar-grid {
-    @apply w-full border-collapse;
+  /* Style the native calendar picker indicator */
+  .calendar-input::-webkit-calendar-picker-indicator {
+    @apply opacity-0 cursor-pointer;
+    @apply absolute right-0 top-0 h-full w-10;
   }
 
-  .calendar-grid th {
-    @apply p-1 text-xs font-medium text-muted text-center;
-  }
-
-  .calendar-week {
-    @apply p-1 text-xs text-muted text-center;
-  }
-
-  .calendar-day {
-    @apply p-0 text-center;
-  }
-
-  .calendar-day button {
-    @apply w-8 h-8 rounded-md text-sm;
-    @apply hover:bg-hover focus:bg-hover;
-    @apply disabled:opacity-50 disabled:cursor-not-allowed;
-  }
-
-  .calendar-day-selected button {
-    @apply bg-primary text-primary-text;
-    @apply hover:bg-primary-hover focus:bg-primary-hover;
-  }
-
-  .calendar-day-in-range {
-    @apply bg-primary-50 dark:bg-primary-900;
-  }
-
-  .calendar-day-disabled button {
-    @apply opacity-50 cursor-not-allowed;
-    @apply hover:bg-transparent focus:bg-transparent;
+  .calendar-icon {
+    @apply absolute right-3 top-1/2 -translate-y-1/2;
+    @apply text-muted dark:text-muted pointer-events-none;
   }
 </style>

@@ -1,6 +1,8 @@
 import { expect, userEvent } from "storybook/test"
 import Input from "$lib/components/Form/Input.svelte"
 
+let passwordVisible = false;
+
 export default {
   title: "Form/Input",
   component: Input,
@@ -38,6 +40,16 @@ export const Default = {
 }
 
 export const WithIcons = {
+  render: (args) => ({
+    Component: Input,
+    props: {
+      ...args,
+      type: passwordVisible ? "text" : "password",
+      onrightIconClick: () => {
+        passwordVisible = !passwordVisible;
+      },
+    },
+  }),
   args: {
     label: "Password",
     type: "password",

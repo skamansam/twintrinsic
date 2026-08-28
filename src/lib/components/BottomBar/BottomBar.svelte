@@ -151,18 +151,22 @@ function handleKeydown(event: KeyboardEvent) {
 <style lang="postcss">
   @reference "../../twintrinsic.css";
   .bottombar-container {
-    @apply relative w-full;
+    @apply relative w-full h-full;
   }
 
-  /* Base bottombar styles */
+  /* Base bottombar styles — absolutely positioned at parent bottom */
   .bottombar {
-    @apply bg-background transition-[height,transform] duration-200 ease-in-out overflow-hidden;
+    @apply bg-background border-t border-border transition-transform duration-200 ease-in-out overflow-hidden;
     height: var(--bottombar-height);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
 
-  /* Collapsed state */
+  /* Collapsed state — slide completely out of view */
   .bottombar-collapsed {
-    @apply translate-y-full;
+    @apply translate-y-full pointer-events-none;
   }
 
   /* Expanded state */

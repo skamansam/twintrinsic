@@ -44,6 +44,7 @@
       "!**/.rts2_cache_umd/",
       "!**/.serverless/",
       "!**/.stylelintcache",
+      "!scripts/build-llms-txt.mjs",
       "!**/.svelte-kit",
       "!**/.temp",
       "!**/.tern-port",

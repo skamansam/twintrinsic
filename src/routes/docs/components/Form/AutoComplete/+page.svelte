@@ -123,6 +123,14 @@ function renderAvatar(item: (typeof users)[number]): string {
   </div>
 </ExampleTabs>
 
+  <h3>Chip Placement</h3>
+  <p>Use <code>chipPlacement="top"</code> to render selected chips above the input instead of below.</p>
+  <ExampleTabs code={`<AutoComplete label="Tags" items={countries} multiple={true} chipPlacement="top" placeholder="Select tags" />`}>
+    <div class="max-w-md" data-testid="autocomplete-chip-top">
+      <AutoComplete label="Tags" items={countries} multiple={true} chipPlacement="top" placeholder="Select tags" />
+    </div>
+  </ExampleTabs>
+
   <h3>Custom Template</h3>
   <ExampleTabs code={"<AutoComplete label=\"Team Member\" items={users} placeholder=\"Search by name...\" itemTemplate={renderAvatar} />"}>
     <div class="max-w-md" data-testid="autocomplete-custom-template">

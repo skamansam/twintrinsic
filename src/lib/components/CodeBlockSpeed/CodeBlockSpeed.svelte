@@ -12,7 +12,7 @@ export const propsMetadata = [
 	import { highlightElement } from '@speed-highlight/core';
 	import { detectLanguage } from '@speed-highlight/core/detect';
 	import type { Snippet } from 'svelte';
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import Icon from '../Icon/Icon.svelte';
 
 	interface Props {
@@ -46,25 +46,27 @@ export const propsMetadata = [
 	let codeElement: HTMLElement | undefined = $state();
 	let renderTime = $state(0);
 
-	onMount(() => {
+	$effect(() => {
 		if (!codeElement) return;
 
-		code = codeProp || codeElement.textContent || '';
+		// Read the code content: either from the prop or from the rendered children text
+		const content = codeProp || codeElement.textContent || '';
+		code = content;
 
-		const detectedLang = language || detectLanguage(code);
+		if (!content) return;
+
+		const detectedLang = language || detectLanguage(content);
 
 		codeElement.className = `shj-lang-${detectedLang}`;
 
-	if (showRenderTime) {
-		const startTime = performance.now();
-		// `@speed-highlight/core` types the language arg as `ShjLanguage | undefined`,
-		// but `detectLanguage` returns a plain `string`. Assert to narrow the type.
-		highlightElement(codeElement, detectedLang as ShjLanguage);
-		const endTime = performance.now();
-		renderTime = Math.round((endTime - startTime) * 100) / 100;
-	} else {
-		highlightElement(codeElement, detectedLang as ShjLanguage);
-	}
+		if (showRenderTime) {
+			const startTime = performance.now();
+			highlightElement(codeElement, detectedLang as ShjLanguage);
+			const endTime = performance.now();
+			renderTime = Math.round((endTime - startTime) * 100) / 100;
+		} else {
+			highlightElement(codeElement, detectedLang as ShjLanguage);
+		}
 	});
 
 	onDestroy(() => {

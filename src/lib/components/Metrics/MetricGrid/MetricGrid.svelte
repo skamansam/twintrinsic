@@ -26,6 +26,9 @@ export const propsMetadata = [
 		columns?: number;
 		/** Gap between items */
 		gap?: 'sm' | 'md' | 'lg';
+		/** Additional props passed through to the root element */
+		[key: `data-${string}`]: unknown
+		[key: `aria-${string}`]: string | undefined
 	}
 
 	let { items, columns = 4, gap = 'md', ...rest }: Props = $props();

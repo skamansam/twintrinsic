@@ -46,6 +46,7 @@ export const propsMetadata = [
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
   { name: "onselect", type: "(event: CustomEvent<{ item?: TItem; items?: TItem[] }>) => void", description: "Select event handler", optional: true, eventDetail: "{ item?: TItem; items?: TItem[] }" },
   { name: "onremove", type: "(event: CustomEvent<{ item: TItem }>) => void", description: "Remove event handler", optional: true, eventDetail: "{ item: TItem }" },
+  { name: "chipPlacement", type: "'top' | 'bottom'", description: "Where selected chips appear relative to the input (multiple mode)", default: "'bottom'", optional: true },
 ];
 </script>
 
@@ -117,6 +118,11 @@ interface Props<TItem extends string | Record<string, unknown> = string | Record
   onselect?: (event: CustomEvent<{ item?: TItem; items?: TItem[] }>) => void
   /** Remove event handler */
   onremove?: (event: CustomEvent<{ item: TItem }>) => void
+  /** Where selected chips appear relative to the input (multiple mode) */
+  chipPlacement?: 'top' | 'bottom'
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
 }
 
 let {
@@ -143,6 +149,7 @@ let {
   loading = false,
   placeholder = "",
   disabled = false,
+  chipPlacement = 'bottom',
   onselect,
   onremove,
   ...restProps
@@ -513,6 +520,27 @@ function renderItemTemplate(item: TItem): string {
 <div
   class="autocomplete {className}"
 >
+  {#if chipPlacement === 'top' && derivedMultiple && Array.isArray(selectedItems) && selectedItems.length > 0}
+    <div class="autocomplete-chips" aria-label="Selected items">
+      {#each selectedItems as item}
+        <div class="autocomplete-chip">
+          <span>{getItemLabel(item, labelField)}</span>
+          <button
+            type="button"
+            class="autocomplete-chip-remove"
+            onclick={() => removeItem(item)}
+            disabled={effectiveDisabled}
+            aria-label="Remove {getItemLabel(item, labelField)}"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+            </svg>
+          </button>
+        </div>
+      {/each}
+    </div>
+  {/if}
+
   <div
     class="autocomplete-anchor"
     bind:this={anchorElement}
@@ -532,7 +560,7 @@ function renderItemTemplate(item: TItem): string {
     />
   </div>
 
-  {#if derivedMultiple && Array.isArray(selectedItems) && selectedItems.length > 0}
+  {#if (chipPlacement === 'bottom' || chipPlacement === undefined) && derivedMultiple && Array.isArray(selectedItems) && selectedItems.length > 0}
     <div class="autocomplete-chips" aria-label="Selected items">
       {#each selectedItems as item}
         <div class="autocomplete-chip">

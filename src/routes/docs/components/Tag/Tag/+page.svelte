@@ -153,6 +153,21 @@ import * as TagGroupModule from "$lib/components/Tag/TagGroup.svelte"
   </div>
 </ExampleTabs>
 
+<h2>Tag vs Badge vs Chip</h2>
+<table>
+  <thead><tr><th>Feature</th><th>Tag</th><th>Badge</th><th>Chip</th></tr></thead>
+  <tbody>
+    <tr><td>Purpose</td><td>Label / category</td><td>Count / status indicator</td><td>Interactive selection</td></tr>
+    <tr><td>Interactive</td><td>Optional (clickable)</td><td>No</td><td>Yes (clickable, toggle)</td></tr>
+    <tr><td>Dismissible</td><td>Yes</td><td>No</td><td>Yes (removable)</td></tr>
+    <tr><td>Link support</td><td>Yes (href)</td><td>No</td><td>No</td></tr>
+    <tr><td>Overlay positioning</td><td>No</td><td>Yes</td><td>No</td></tr>
+    <tr><td>Dot mode</td><td>No</td><td>Yes</td><td>No</td></tr>
+    <tr><td>Pulse animation</td><td>No</td><td>Yes</td><td>No</td></tr>
+    <tr><td>Best for</td><td>Category tags, keywords, status labels</td><td>Notification counts, online/offline status</td><td>Filter chips, selectable tags</td></tr>
+  </tbody>
+</table>
+
 <h2>Tag Props</h2>
 <PropsTable component={TagModule} />
 

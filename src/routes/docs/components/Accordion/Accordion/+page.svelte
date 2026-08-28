@@ -188,6 +188,27 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
     </div>
   </ExampleTabs>
 
+  <h3>String Header (no snippet needed)</h3>
+  <ExampleTabs code={`<Accordion>
+  <AccordionItem header="What is this?">
+    <div class="p-4">A component library for Svelte.</div>
+  </AccordionItem>
+  <AccordionItem header="How do I install it?">
+    <div class="p-4">Run npm install twintrinsic.</div>
+  </AccordionItem>
+</Accordion>`}>
+    <div class="max-w-2xl" data-testid="accordion-string-header">
+      <Accordion>
+        <AccordionItem header="What is this?">
+          <div class="p-4">A component library for Svelte.</div>
+        </AccordionItem>
+        <AccordionItem header="How do I install it?">
+          <div class="p-4">Run npm install twintrinsic.</div>
+        </AccordionItem>
+      </Accordion>
+    </div>
+  </ExampleTabs>
+
   <h3>All Collapsed</h3>
   <ExampleTabs code={`<Accordion defaultExpanded={null}>
   <AccordionItem>

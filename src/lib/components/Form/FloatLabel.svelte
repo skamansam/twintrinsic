@@ -242,12 +242,12 @@ onMount(() => {
     @apply absolute left-3 top-1/2 -translate-y-1/2;
     @apply text-muted dark:text-muted;
     @apply pointer-events-none transition-all duration-200;
-    @apply text-base;
+    @apply text-base z-10;
   }
   
   .is-floating .float-label {
     @apply text-xs top-0 -translate-y-1/2;
-    @apply bg-background dark:bg-background px-1;
+    @apply bg-surface dark:bg-surface px-1;
   }
   
   .is-focused .float-label {

@@ -187,6 +187,7 @@ const derivedValue = $derived(value)
 let currentValue = $state(0)
 let hoverValue = $state(-1)
 let isDragging = $state(false)
+let calculateValueFromLastMouseDown = $state(0)
 let ratingElement: HTMLElement | undefined = $state()
 let inputElement = $state<HTMLInputElement>()
 
@@ -329,6 +330,7 @@ function handleStart(event: MouseEvent | TouchEvent): void {
 
   isDragging = true
   hoverValue = calculateValue(event)
+  calculateValueFromLastMouseDown = hoverValue
 
   // Add document event listeners for drag
   if (event.type === "mousedown" as const) {
@@ -341,18 +343,26 @@ function handleStart(event: MouseEvent | TouchEvent): void {
 }
 
 /**
- * Handles mouse up or touch end events
+ * Handles mouse up or touch end events.
+ * On drag end, commits the current hoverValue if the user actually dragged
+ * (mouse moved from its starting position). On simple click, defers to
+ * handleItemClick which fires on the subsequent click event.
  */
 function handleEnd(): void {
   if (!isInteractive || !isDragging) return
 
-  // Update input and trigger change event
-  if (hoverValue >= min && inputElement) {
+  // Only commit on drag (mouse moved from its starting position).
+  // For simple clicks (no movement), handleItemClick handles it.
+  const didDrag = hoverValue >= min && hoverValue !== calculateValueFromLastMouseDown
+
+  if (didDrag && hoverValue >= min && inputElement) {
+    currentValue = hoverValue
     inputElement.value = String(hoverValue)
     inputElement.dispatchEvent(new Event("change", { bubbles: true }))
   }
 
   isDragging = false
+  hoverValue = -1
 
   // Remove document event listeners
   document.removeEventListener("mousemove", handleMove)
@@ -390,23 +400,24 @@ function handleInputChange(event: Event): void {
 }
 
 /**
- * Handles click events on individual items
+ * Handles click events on individual items.
+ * Simple clicks (no drag) land here after handleEnd fires.
  * @param {number} itemValue - Value of the clicked item
  */
 function handleItemClick(itemValue: number): void {
   if (!isInteractive) return
 
-  // Toggle off if clicking the same value
-  if (currentValue === itemValue && step === 1 && min === 0) {
-    if (inputElement) {
-      inputElement.value = String(min)
-      inputElement.dispatchEvent(new Event("change", { bubbles: true }))
-    }
-  } else {
-    if (inputElement) {
-      inputElement.value = String(itemValue)
-      inputElement.dispatchEvent(new Event("change", { bubbles: true }))
-    }
+  // Skip if a drag just committed a value — handleEnd already set it
+  if (isDragging) return
+
+  // Toggle off if clicking the same value (only when toggling makes sense)
+  const shouldToggle = currentValue === itemValue && step === 1 && min === 0
+  const newValue = shouldToggle ? min : itemValue
+
+  currentValue = newValue
+  if (inputElement) {
+    inputElement.value = String(newValue)
+    inputElement.dispatchEvent(new Event("change", { bubbles: true }))
   }
 }
 

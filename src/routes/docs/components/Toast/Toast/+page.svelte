@@ -88,7 +88,7 @@ import * as ToastModule from "$lib/components/Toast/Toast.svelte"
   <h2>Customization</h2>
   <ul>
     <li>Variants: <code>default</code>, <code>primary</code>, <code>success</code>, <code>warning</code>, <code>error</code>, <code>info</code>.</li>
-    <li>Positions: <code>top-right</code>, <code>top-left</code>, <code>bottom-right</code>, <code>bottom-left</code>, <code>top-center</code>, <code>bottom-center</code>.</li>
+    <li>Positions: <code>top-right</code>, <code>top-left</code>, <code>top-center</code>, <code>bottom-right</code>, <code>bottom-left</code>, <code>bottom-center</code>, <code>middle-left</code>, <code>middle-right</code>.</li>
     <li>Configurable duration, max toasts, dismissible, and pause-on-hover.</li>
     <li>Custom icons and progress bar per toast.</li>
   </ul>
@@ -149,13 +149,21 @@ toastStore.add({ message: "A new version is available", variant: "info" })`}>
   <h3>Toast Positions</h3>
   <ExampleTabs code={`<Toast position="top-right" />
 <Toast position="top-left" />
+<Toast position="top-center" />
 <Toast position="bottom-right" />
-<Toast position="bottom-left" />`}>
+<Toast position="bottom-left" />
+<Toast position="bottom-center" />
+<Toast position="middle-left" />
+<Toast position="middle-right" />`}>
     <div class="flex flex-wrap gap-4" data-testid="toast-positions">
       <Button onclick={() => toastStore.add({ message: "Top Right" })}>Top Right</Button>
       <Button onclick={() => toastStore.add({ message: "Top Left" })}>Top Left</Button>
+      <Button onclick={() => toastStore.add({ message: "Top Center" })}>Top Center</Button>
       <Button onclick={() => toastStore.add({ message: "Bottom Right" })}>Bottom Right</Button>
       <Button onclick={() => toastStore.add({ message: "Bottom Left" })}>Bottom Left</Button>
+      <Button onclick={() => toastStore.add({ message: "Bottom Center" })}>Bottom Center</Button>
+      <Button onclick={() => toastStore.add({ message: "Middle Left" })}>Middle Left</Button>
+      <Button onclick={() => toastStore.add({ message: "Middle Right" })}>Middle Right</Button>
     </div>
   </ExampleTabs>
 

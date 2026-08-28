@@ -116,22 +116,25 @@ import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem
     </div>
   </ExampleTabs>
 
+  <h3>Data-Driven (items prop)</h3>
+  <p>
+    Instead of using <code>&lt;BreadcrumbItem&gt;</code> sub-components, you can pass a
+    flat array of objects. This is simpler for generated or dynamic breadcrumbs.
+  </p>
+  <ExampleTabs code={`<Breadcrumb items={[\n  { name: 'Home', link: '/' },\n  { name: 'Docs', link: '/docs', icon: 'tabler:book' },\n  { name: 'Components', link: '/docs/components' },\n  { name: 'Breadcrumb' }\n]} />`}>
+    <div class="p-4 bg-surface rounded-md" data-testid="breadcrumb-data-driven">
+      <Breadcrumb items={[{ name: 'Home', link: '/' }, { name: 'Docs', link: '/docs', icon: 'tabler:book' }, { name: 'Components', link: '/docs/components' }, { name: 'Breadcrumb' }]} />
+    </div>
+  </ExampleTabs>
+
   <h3>Collapsible</h3>
-  <ExampleTabs code={`<Breadcrumb collapsible maxVisibleItems={1}>
-  <BreadcrumbItem href="/">Home</BreadcrumbItem>
-  <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
-  <BreadcrumbItem href="/docs/components">Components</BreadcrumbItem>
-  <BreadcrumbItem href="/docs/components/navigation">Navigation</BreadcrumbItem>
-  <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
-</Breadcrumb>`}>
+  <ExampleTabs code={`<Breadcrumb
+  collapsible
+  maxVisibleItems={1}
+  items={[\n    { name: 'Home', link: '/' },\n    { name: 'Docs', link: '/docs' },\n    { name: 'Components', link: '/docs/components' },\n    { name: 'Navigation', link: '/docs/components/navigation' },\n    { name: 'Breadcrumb' }\n  ]}
+/>`}>
     <div class="p-4 bg-surface rounded-md" data-testid="breadcrumb-collapsible">
-      <Breadcrumb collapsible maxVisibleItems={1}>
-        <BreadcrumbItem href="/">Home</BreadcrumbItem>
-        <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
-        <BreadcrumbItem href="/docs/components">Components</BreadcrumbItem>
-        <BreadcrumbItem href="/docs/components/navigation">Navigation</BreadcrumbItem>
-        <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
-      </Breadcrumb>
+      <Breadcrumb collapsible maxVisibleItems={1} items={[{ name: 'Home', link: '/' }, { name: 'Docs', link: '/docs' }, { name: 'Components', link: '/docs/components' }, { name: 'Navigation', link: '/docs/components/navigation' }, { name: 'Breadcrumb' }]} />
     </div>
   </ExampleTabs>
 

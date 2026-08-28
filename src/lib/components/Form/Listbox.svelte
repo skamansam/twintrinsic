@@ -94,6 +94,9 @@ interface Props<TOption extends string | Record<string, unknown> = string | Reco
   onchange?: (event: CustomEvent<{ value: TOption | TOption[] | null }>) => void
   /** Filter event handler */
   onfilter?: (event: CustomEvent<{ filter: string }>) => void
+  /** Additional props passed through to the root element */
+  [key: `data-${string}`]: unknown
+  [key: `aria-${string}`]: string | undefined
 }
 
 let {
@@ -455,7 +458,7 @@ const filteredOptions = $derived(filterOptions())
 
   .listbox-filter-input {
     @apply w-full px-3 py-2;
-    @apply bg-background dark:bg-background;
+    @apply bg-surface dark:bg-surface;
     @apply border border-border dark:border-border rounded-md;
     @apply text-text dark:text-text placeholder:text-muted dark:placeholder:text-muted;
     @apply focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-primary-500 dark:focus:border-primary-400;
@@ -465,7 +468,7 @@ const filteredOptions = $derived(filterOptions())
 
   .listbox {
     @apply w-full overflow-y-auto;
-    @apply bg-background dark:bg-background;
+    @apply bg-surface dark:bg-surface;
     @apply border border-border dark:border-border rounded-md;
     @apply focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400;
     @apply transition-colors duration-200;
@@ -500,10 +503,10 @@ const filteredOptions = $derived(filterOptions())
   }
 
   .listbox-checkbox {
-    @apply w-4 h-4 flex-shrink-0;
+    @apply w-4 h-4 shrink-0;
     @apply border border-border dark:border-border rounded;
     @apply flex items-center justify-center;
-    @apply bg-background dark:bg-background;
+    @apply bg-surface dark:bg-surface;
   }
 
   .listbox-option-selected .listbox-checkbox {
@@ -512,11 +515,11 @@ const filteredOptions = $derived(filterOptions())
   }
 
   .listbox-option-icon {
-    @apply flex-shrink-0 w-5 h-5;
+    @apply shrink-0 w-5 h-5;
   }
 
   .listbox-option-label {
-    @apply flex-grow truncate;
+    @apply grow truncate;
   }
 
   .listbox-empty {

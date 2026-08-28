@@ -90,18 +90,25 @@ onMount(() => {
   <!-- ─── Examples ──────────────────────────────────────── -->
   <h2>Examples</h2>
 
+  <!-- 1. Basic Sidebar — full-height left navigation -->
   <h3>Basic Sidebar</h3>
-  <ExampleTabs code={`<Sidebar>
-  {#snippet header()}Navigation{/snippet}
-  <nav class="space-y-2">
-    <a href="/" class="block p-2 rounded hover:bg-hover">Home</a>
-    <a href="/about" class="block p-2 rounded hover:bg-hover">About</a>
-    <a href="/settings" class="block p-2 rounded hover:bg-hover">Settings</a>
-    <a href="/help" class="block p-2 rounded hover:bg-hover">Help</a>
-  </nav>
-</Sidebar>`}>
+  <p>A left-positioned sidebar that fills the full height of its container, with navigation links.</p>
+  <ExampleTabs code={`<div class="flex h-[300px] border border-border rounded-lg overflow-hidden">
+  <Sidebar>
+    {#snippet header()}Navigation{/snippet}
+    <nav class="space-y-2">
+      <a href="/home" class="block p-2 rounded hover:bg-hover">Home</a>
+      <a href="/about" class="block p-2 rounded hover:bg-hover">About</a>
+      <a href="/settings" class="block p-2 rounded hover:bg-hover">Settings</a>
+      <a href="/help" class="block p-2 rounded hover:bg-hover">Help</a>
+    </nav>
+  </Sidebar>
+  <div class="flex-1 p-4">
+    <p>Main content area</p>
+  </div>
+</div>`}>
     {#if showExamples}
-      <div class="h-[300px] bg-surface relative" data-testid="sidebar-basic">
+      <div class="flex h-[300px] border border-border rounded-lg overflow-hidden" data-testid="sidebar-basic">
         <Sidebar>
           {#snippet header()}Navigation{/snippet}
           <nav class="space-y-2">
@@ -111,39 +118,104 @@ onMount(() => {
             <a href="#help" class="block p-2 rounded hover:bg-hover">Help</a>
           </nav>
         </Sidebar>
+        <div class="flex-1 p-4 bg-surface">
+          <p class="text-sm text-muted">Main content area</p>
+        </div>
       </div>
     {/if}
   </ExampleTabs>
 
+  <!-- 2. Right-positioned Sidebar -->
   <h3>Right-positioned Sidebar</h3>
-  <ExampleTabs code={`<Sidebar position="right">
-  {#snippet header()}Settings{/snippet}
-  <div class="space-y-4">
-    <div class="space-y-2">
-      <label for="theme-select" class="block text-sm font-medium">Theme</label>
-      <select id="theme-select" class="w-full rounded-md border-border bg-background">
-        <option>Light</option>
-        <option>Dark</option>
-        <option>System</option>
-      </select>
-    </div>
+  <p>A sidebar positioned on the right side, ideal for settings panels or secondary content.</p>
+  <ExampleTabs code={`<div class="flex h-[300px] border border-border rounded-lg overflow-hidden">
+  <div class="flex-1 p-4">
+    <p>Main content area</p>
   </div>
-</Sidebar>`}>
+  <Sidebar position="right">
+    {#snippet header()}Settings{/snippet}
+    <div class="space-y-4">
+      <div class="space-y-2">
+        <label for="theme-select" class="block text-sm font-medium">Theme</label>
+        <select id="theme-select" class="w-full rounded-md border border-border bg-background p-1">
+          <option>Light</option>
+          <option>Dark</option>
+          <option>System</option>
+        </select>
+      </div>
+      <div class="space-y-2">
+        <label for="lang-select" class="block text-sm font-medium">Language</label>
+        <select id="lang-select" class="w-full rounded-md border border-border bg-background p-1">
+          <option>English</option>
+          <option>Español</option>
+          <option>Français</option>
+        </select>
+      </div>
+    </div>
+  </Sidebar>
+</div>`}>
     {#if showExamples}
-      <div class="h-[300px] bg-surface relative" data-testid="sidebar-right">
+      <div class="flex h-[300px] border border-border rounded-lg overflow-hidden" data-testid="sidebar-right">
+        <div class="flex-1 p-4 bg-surface">
+          <p class="text-sm text-muted">Main content area</p>
+        </div>
         <Sidebar position="right">
           {#snippet header()}Settings{/snippet}
           <div class="space-y-4">
             <div class="space-y-2">
               <label for="theme-select" class="block text-sm font-medium">Theme</label>
-              <select id="theme-select" class="w-full rounded-md border-border bg-background">
+              <select id="theme-select" class="w-full rounded-md border border-border bg-background p-1">
                 <option>Light</option>
                 <option>Dark</option>
                 <option>System</option>
               </select>
             </div>
+            <div class="space-y-2">
+              <label for="lang-select" class="block text-sm font-medium">Language</label>
+              <select id="lang-select" class="w-full rounded-md border border-border bg-background p-1">
+                <option>English</option>
+                <option>Español</option>
+                <option>Français</option>
+              </select>
+            </div>
           </div>
         </Sidebar>
+      </div>
+    {/if}
+  </ExampleTabs>
+
+  <!-- 3. Sidebar with Menu Items -->
+  <h3>Sidebar with TreeMenu</h3>
+  <p>Use the <code>menu</code> prop to pass navigation items directly. Supports nested hierarchies and search.</p>
+  <ExampleTabs code={`<div class="flex h-[300px] border border-border rounded-lg overflow-hidden">
+  <Sidebar menu={[          { label: 'Dashboard', icon: 'tabler:layout-dashboard', link: '/dashboard' },
+          { label: 'Users', icon: 'tabler:users', children: [
+            { label: 'All Users', link: '/users' },
+            { label: 'Roles', link: '/users/roles' },
+            { label: 'Permissions', link: '/users/permissions' },
+          ]},
+          { label: 'Settings', icon: 'tabler:settings', link: '/settings' },
+          { label: 'Help', icon: 'tabler:help', link: '/help' },
+  ]} title="My App" />
+  <div class="flex-1 p-4">
+    <p>Main content area</p>
+  </div>
+</div>`}>
+    {#if showExamples}
+      <div class="flex h-[300px] border border-border rounded-lg overflow-hidden" data-testid="sidebar-menu">
+        <Sidebar menu={[
+          { label: 'Dashboard', icon: 'tabler:layout-dashboard', link: '/dashboard' },
+          { label: 'Users', icon: 'tabler:users', children: [
+            { label: 'All Users', link: '/users' },
+            { label: 'Roles', link: '/users/roles' },
+            { label: 'Permissions', link: '/users/permissions' },
+          ]},
+          { label: 'Settings', icon: 'tabler:settings', link: '/settings' },
+          { label: 'Help', icon: 'tabler:help', link: '/help' },
+        ]} title="My App" />
+        <div class="flex-1 p-4 bg-surface">
+          <p class="text-sm text-muted">Main content area</p>
+        </div>
       </div>
     {/if}
   </ExampleTabs>

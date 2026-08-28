@@ -154,11 +154,13 @@ import * as ButtonModule from "$lib/components/Button/Button.svelte"
   </ExampleTabs>
 
   <h3>With Icons</h3>
-  <ExampleTabs code={`<Button icon="plus">Add Item</Button>
-<Button icon="trash" iconPosition="right">Delete</Button>`}>
+  <ExampleTabs code={`<Button icon="tabler:plus">Add Item</Button>
+<Button icon="tabler:trash" iconPosition="right">Delete</Button>
+<Button icon="tabler:settings" variant="outline">Settings</Button>`}>
     <div class="flex flex-wrap items-center gap-4" data-testid="button-with-icons">
-      <Button icon="plus">Add Item</Button>
-      <Button icon="trash" iconPosition="right">Delete</Button>
+      <Button icon="tabler:plus">Add Item</Button>
+      <Button icon="tabler:trash" iconPosition="right">Delete</Button>
+      <Button icon="tabler:settings" variant="outline">Settings</Button>
     </div>
   </ExampleTabs>
 

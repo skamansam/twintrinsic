@@ -82,6 +82,9 @@ import 'leaflet/dist/leaflet.css';
 		onmove?: (event: CustomEvent<{ center: [number, number] }>) => void;
 		/** Marker click handler */
 		onmarkerclick?: (event: CustomEvent<Marker>) => void;
+		/** Additional props passed through to the root element */
+		[key: `data-${string}`]: unknown
+		[key: `aria-${string}`]: string | undefined
 	}
 
 	let {
@@ -103,6 +106,7 @@ import 'leaflet/dist/leaflet.css';
 		onzoomchange,
 		onmove,
 		onmarkerclick,
+		...restProps
 	}: Props = $props();
 
 	let mapContainer: HTMLDivElement;
@@ -458,4 +462,4 @@ onMount(() => {
 });
 </script>
 
-<div bind:this={mapContainer} class="h-full w-full"></div>
+<div {...restProps} bind:this={mapContainer} class="h-full w-full"></div>
