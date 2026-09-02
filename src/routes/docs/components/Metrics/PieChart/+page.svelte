@@ -225,6 +225,78 @@ const interactiveCode = `<script lang="ts">
     </div>
   </ExampleTabs>
 
+  <h3>Outside Labels with Leader Lines</h3>
+  <p>
+    Set <code>outsideLabels</code> to render labels outside the chart connected by leader lines.
+    Useful when slices are too small for inside labels. The <code>labelFontSize</code> prop
+    controls text size.
+  </p>
+  <ExampleTabs code={`<PieChart
+  data={[35, 25, 20, 15, 5]}
+  labels={["Chrome", "Firefox", "Safari", "Edge", "Other"]}
+  outsideLabels
+  labelFontSize={11}
+  size={300}
+/>`}>
+    <div class="flex justify-center" data-testid="metrics-outside-labels">
+      <PieChart
+        data={[35, 25, 20, 15, 5]}
+        labels={["Chrome", "Firefox", "Safari", "Edge", "Other"]}
+        outsideLabels
+        labelFontSize={11}
+        size={300}
+      />
+    </div>
+  </ExampleTabs>
+
+  <h3>Inside Labels on Slices</h3>
+  <p>
+    Set <code>insideLabels</code> to render percentage labels directly on top of each slice.
+    Works best with larger slices. Combine with <code>outsideLabels</code> for both views.
+  </p>
+  <ExampleTabs code={`<PieChart
+  data={[40, 30, 20, 10]}
+  labels={["Enterprise", "Pro", "Free", "Trial"]}
+  insideLabels
+  size={300}
+/>`}>
+    <div class="flex justify-center" data-testid="metrics-inside-labels">
+      <PieChart
+        data={[40, 30, 20, 10]}
+        labels={["Enterprise", "Pro", "Free", "Trial"]}
+        insideLabels
+        size={300}
+      />
+    </div>
+  </ExampleTabs>
+
+  <h3>Donut with Outside Labels</h3>
+  <p>
+    Outside labels work great with donut charts — center text shows the total while
+    leader lines label each segment.
+  </p>
+  <ExampleTabs code={`<PieChart
+  data={[35, 25, 20, 15, 5]}
+  labels={["Chrome", "Firefox", "Safari", "Edge", "Other"]}
+  hole={0.5}
+  centerText="100%"
+  centerSubtext="Total"
+  outsideLabels
+  size={350}
+/>`}>
+    <div class="flex justify-center" data-testid="metrics-donut-outside-labels">
+      <PieChart
+        data={[35, 25, 20, 15, 5]}
+        labels={["Chrome", "Firefox", "Safari", "Edge", "Other"]}
+        hole={0.5}
+        centerText="100%"
+        centerSubtext="Total"
+        outsideLabels
+        size={350}
+      />
+    </div>
+  </ExampleTabs>
+
   <h2>Props</h2>
   <PropsTable component={PieChartModule} />
   <h2>Events</h2>

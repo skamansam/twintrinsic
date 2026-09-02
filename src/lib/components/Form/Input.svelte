@@ -75,6 +75,8 @@ export type InputProps = {
   maxlength?: number
   /** ARIA description */
   ariaDescription?: string
+  /** Datalist options for native autocomplete. Accepts string[] or { label: string; value?: string }[] */
+  datalist?: (string | { label: string; value?: string })[]
   /** Focus event handler */
   onfocus?: (event: FocusEvent) => void
   /** Blur event handler */
@@ -113,6 +115,7 @@ export const propsMetadata = [
   { name: "minlength", type: "number", description: "Minimum length validation", optional: true },
   { name: "maxlength", type: "number", description: "Maximum length validation", optional: true },
   { name: "ariaDescription", type: "string", description: "ARIA description", default: "\"\"", optional: true },
+  { name: "datalist", type: "(string | { label: string; value?: string })[]", description: "Datalist options for native autocomplete. Accepts string[] or { label: string; value?: string }[]", optional: true },
   { name: "onfocus", type: "(event: FocusEvent) => void", description: "Focus event handler", optional: true },
   { name: "onblur", type: "(event: FocusEvent) => void", description: "Blur event handler", optional: true },
   { name: "onclick", type: "(event: MouseEvent | KeyboardEvent) => void", description: "Click event handler on the input field", optional: true },
@@ -126,9 +129,9 @@ export const propsMetadata = [
 
 <script lang="ts">
 import { getContext } from "svelte"
-import type { FormContext, FormFieldApi } from "./formContext.js"
 import { slide } from "svelte/transition"
 import Icon from "../Icon/Icon.svelte"
+import type { FormContext, FormFieldApi } from "./formContext.js"
 
 const {
   /** @type {string} - Label text */
@@ -169,6 +172,8 @@ const {
   maxlength = undefined,
   /** @type {string} - ARIA description */
   ariaDescription = "",
+  /** @type {(string | { label: string; value?: string })[]} - Datalist options for native autocomplete */
+  datalist = undefined,
   /** @type {(event: Event) => void} - Focus event handler */
   onfocus,
   /** @type {(event: Event) => void} - Blur event handler */
@@ -207,6 +212,7 @@ const effectiveDisabled = $derived(
 let inputValue = $state("")
 let focused = $state(false)
 let touched = $state(false)
+const datalistId = $state(`datalist-${crypto.randomUUID().slice(0, 8)}`)
 
 // Sync input value when prop changes
 $effect(() => {
@@ -342,6 +348,7 @@ const inputClasses = $derived(`
       {required}
       {minlength}
       {maxlength}
+      list={datalist ? datalistId : undefined}
       aria-invalid={!!error}
       aria-describedby={error || helpText ? `${id}-description` : undefined}
       onfocus={handleFocus}
@@ -374,6 +381,18 @@ const inputClasses = $derived(`
     >
       {error || helpText}
     </div>
+  {/if}
+
+  {#if datalist}
+    <datalist id={datalistId}>
+      {#each datalist as option}
+        {#if typeof option === 'string'}
+          <option value={option}></option>
+        {:else}
+          <option value={option.value ?? option.label}>{option.label}</option>
+        {/if}
+      {/each}
+    </datalist>
   {/if}
 </div>
 

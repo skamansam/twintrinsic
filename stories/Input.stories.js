@@ -138,3 +138,25 @@ export const Compact = {
     class: "max-w-xs",
   },
 }
+
+export const WithDatalist = {
+  args: {
+    label: "Browser",
+    placeholder: "Type a browser...",
+    datalist: ["Chrome", "Firefox", "Safari", "Edge", "Opera"],
+  },
+}
+
+export const WithDatalistObjects = {
+  args: {
+    label: "Country",
+    placeholder: "Select a country...",
+    datalist: [
+      { label: "United States", value: "US" },
+      { label: "United Kingdom", value: "UK" },
+      { label: "Germany", value: "DE" },
+      { label: "France", value: "FR" },
+      { label: "Japan", value: "JP" },
+    ],
+  },
+}

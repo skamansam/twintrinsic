@@ -17,6 +17,14 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
+  <div class="not-prose mb-6 p-4 bg-primary-50 dark:bg-primary-950 border border-primary-200 dark:border-primary-800 rounded-lg">
+    <p class="text-sm text-primary-700 dark:text-primary-300 m-0">
+      <strong>AccordionItem</strong> is a sub-component of
+      <a href="/docs/components/Accordion/Accordion" class="underline font-medium">Accordion</a>.
+      See the parent component docs for usage, examples, and full API reference.
+    </p>
+  </div>
+
   <h1>AccordionItem</h1>
 
   <p>

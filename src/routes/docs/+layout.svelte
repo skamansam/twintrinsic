@@ -69,6 +69,7 @@ const siteMenu = [
       { title: "Section", link: "/docs/components/Section/Section" },
       { title: "Separator", link: "/docs/components/Separator/Separator" },
       { title: "Splitter", link: "/docs/components/Splitter/Splitter" },
+      { title: "Tooltip", link: "/docs/components/Tooltip/Tooltip" },
     ],
   },
   {
@@ -112,7 +113,7 @@ const siteMenu = [
       { title: "TagGroup", link: "/docs/components/Tag/TagGroup" },
       { title: "Timeline", link: "/docs/components/Timeline/Timeline" },
       { title: "TimelineItem", link: "/docs/components/Timeline/TimelineItem" },
-      { title: "Tooltip", link: "/docs/components/Tooltip/Tooltip" },
+
       { title: "Tree", link: "/docs/components/Tree/Tree" },
       { title: "TreeNode", link: "/docs/components/Tree/TreeNode" },
     ],

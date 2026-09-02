@@ -31,7 +31,9 @@ export const propsMetadata = [
   { name: "max", type: "number", description: "Maximum value", default: "100", optional: true },
   { name: "variant", type: "string", description: "Visual style variant", default: "\"primary\"", optional: true },
   { name: "size", type: "string", description: "Size of the progress bar (sm, md, lg)", default: "\"md\"", optional: true },
+  { name: "label", type: "string", description: "Label text displayed above the progress bar", optional: true },
   { name: "showValue", type: "boolean", description: "Whether to show the value as text", default: "false", optional: true },
+  { name: "showTooltip", type: "boolean", description: "Show hover tooltip with value and percentage details", default: "false", optional: true },
   { name: "striped", type: "boolean", description: "Whether to show striped pattern", default: "false", optional: true },
   { name: "animated", type: "boolean", description: "Whether to animate the stripes", default: "false", optional: true },
   { name: "indeterminate", type: "boolean", description: "Whether to show indeterminate loading state", default: "false", optional: true },
@@ -75,6 +77,12 @@ const {
   /** @type {Function} - Custom function to format the displayed value */
   format = undefined,
 
+  /** @type {string} - Label text displayed above the progress bar */
+  label = undefined,
+
+  /** @type {boolean} - Show hover tooltip with value and percentage details */
+  showTooltip = false,
+
   /** @type {string} - ARIA label for accessibility */
   ariaLabel = undefined,
   ...restProps
@@ -110,25 +118,52 @@ const variantClasses = $derived(
   }[variant] || "progress-primary"
 )
 
-const progressAriaLabel = $derived(ariaLabel || `Progress: ${formattedValue}`)
+const progressAriaLabel = $derived(ariaLabel || label || `Progress: ${formattedValue}`)
+
+let isHovered = $state(false)
 </script>
 
 <div {...restProps} class="progress-container {className}">
-  {#if showValue}
-    <div class="progress-label">
-      {formattedValue}
+  {#if label || showValue}
+    <div class="flex items-center justify-between">
+      {#if label}
+        <span class="text-sm font-medium text-text dark:text-text">{label}</span>
+      {/if}
+      {#if showValue && !label}
+        <div class="progress-label">
+          {formattedValue}
+        </div>
+      {/if}
+      {#if label && showValue}
+        <span class="text-sm font-semibold text-text dark:text-text">{formattedValue}</span>
+      {/if}
     </div>
   {/if}
   
-  <progress
-    {id}
-    value={isIndeterminate ? undefined : value}
-    {max}
-    aria-label={progressAriaLabel}
-    class="progress {sizeClasses} {variantClasses} {stripedClasses} {animatedClasses}"
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <div
+    class="relative"
+    onmouseenter={() => isHovered = true}
+    onmouseleave={() => isHovered = false}
   >
-    {formattedValue}
-  </progress>
+    <progress
+      {id}
+      value={isIndeterminate ? undefined : value}
+      {max}
+      aria-label={progressAriaLabel}
+      class="progress {sizeClasses} {variantClasses} {stripedClasses} {animatedClasses}"
+    >
+      {formattedValue}
+    </progress>
+
+    {#if showTooltip && isHovered && !isIndeterminate}
+      <div
+        class="absolute top-0 right-0 -mt-8 px-2 py-1 rounded-md text-xs font-medium bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900 shadow-lg whitespace-nowrap pointer-events-none"
+      >
+        {value} / {max} ({percentage.toFixed(1)}%)
+      </div>
+    {/if}
+  </div>
 </div>
 
 <style lang="postcss">

@@ -181,7 +181,9 @@ test.describe("Metrics docs", () => {
 
     const example = page.getByTestId("metrics-basic-progressmetric");
     await expect(example.getByText("CPU Usage", { exact: true })).toBeVisible();
-    await expect(example.locator("[role='progressbar']")).toBeVisible();
+    // ProgressMetric delegates to Progress, which renders a native <progress>
+    // element (implicit progressbar role, no explicit role attribute).
+    await expect(example.getByRole("progressbar")).toBeVisible();
   });
 
   test("StatsCard page renders cards with and without trend", async ({ page }) => {

@@ -17,6 +17,14 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
+  <div class="not-prose mb-6 p-4 bg-primary-50 dark:bg-primary-950 border border-primary-200 dark:border-primary-800 rounded-lg">
+    <p class="text-sm text-primary-700 dark:text-primary-300 m-0">
+      <strong>CarouselItem</strong> is a sub-component of
+      <a href="/docs/components/Carousel/Carousel" class="underline font-medium">Carousel</a>.
+      See the parent component docs for usage, examples, and full API reference.
+    </p>
+  </div>
+
   <h1>CarouselItem</h1>
 
   <p>

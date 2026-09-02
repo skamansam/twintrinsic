@@ -1,14 +1,16 @@
 <!--
 @component
 ProgressMetric — A labeled progress bar for displaying metric values.
-Features a hover tooltip showing the percentage and value, multiple height
-sizes, and color themes.
+Delegates to the Progress component with label, tooltip, and percentage display.
 
 Usage:
 ```svelte
 <ProgressMetric label="Storage" value={750} max={1000} />
 <ProgressMetric label="Revenue" value={42000} max={50000} color="success" height="lg" />
 ```
+
+> **Note:** Prefer using `<Progress>` directly for new code. ProgressMetric is maintained
+> for backward compatibility.
 -->
 <script module lang="ts">
 export const propsMetadata = [
@@ -23,6 +25,8 @@ export const propsMetadata = [
 </script>
 
 <script lang="ts">
+import Progress from "../../Progress/Progress.svelte"
+
 interface Props {
   /** Metric label */
   label: string;
@@ -52,71 +56,18 @@ let {
   height = 'md',
   ...restProps
 }: Props = $props();
-
-let isHovered = $state(false);
-
-// Unique id so the <label> can be associated with the progressbar control.
-const id = `progress-${crypto.randomUUID()}`;
-
-const percentage = $derived(Math.min((value / max) * 100, 100));
-
-const colorMap: Record<string, string> = {
-  primary: 'bg-blue-500',
-  secondary: 'bg-purple-500',
-  success: 'bg-green-500',
-  danger: 'bg-red-500',
-  warning: 'bg-yellow-500',
-  info: 'bg-cyan-500'
-};
-
-const heightMap: Record<string, string> = {
-  sm: 'h-1',
-  md: 'h-2',
-  lg: 'h-3'
-};
-
-const colorClass = $derived(colorMap[color]);
-const heightClass = $derived(heightMap[height]);
 </script>
 
-<div class="flex flex-col gap-2" {...restProps}>
-  <div class="flex items-center justify-between">
-    <label for={id} class="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>
-    {#if showPercentage}
-      <span class="text-sm font-semibold text-gray-900 dark:text-white">{percentage.toFixed(0)}%</span>
-    {/if}
-  </div>
-
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <div
-    class="relative overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700 {heightClass}"
-    onmouseenter={() => isHovered = true}
-    onmouseleave={() => isHovered = false}
-  >
-    <div
-      {id}
-      class="h-full transition-all duration-300 {colorClass}"
-      style="width: {percentage}%"
-      role="progressbar"
-      aria-valuenow={value}
-      aria-valuemin="0"
-      aria-valuemax={max}
-      aria-label={label}
-    ></div>
-
-    {#if showTooltip && isHovered}
-      <div
-        class="absolute top-0 right-0 -mt-8 px-2 py-1 rounded-md text-xs font-medium bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900 shadow-lg whitespace-nowrap"
-      >
-        {value} / {max} ({percentage.toFixed(1)}%)
-      </div>
-    {/if}
-  </div>
-
-  <div class="flex justify-between text-xs text-gray-600 dark:text-gray-400">
-    <span>0</span>
-    <span>{max}</span>
-  </div>
+<div {...restProps}>
+  <Progress
+    {value}
+    {max}
+    variant={color}
+    size={height}
+    label={label}
+    showValue={showPercentage}
+    {showTooltip}
+  />
 </div>
 
 <style lang="postcss">

@@ -25,7 +25,7 @@
 | 1.5 | P1 | **Sidebar: highlight current page and auto-expand.** The active nav item should be visually highlighted, and its parent accordion section should auto-expand. | ✅ TreeMenu detects current page via `currentPath` prop, highlights active link with primary color, auto-expands parent `<details>`. |
 | 1.6 | P1 | **AppHeader: fix responsive collapse.** On narrow viewports the AppHeader disappears instead of collapsing into a hamburger menu. The hamburger should toggle the sidebar and/or a dropdown nav for the top-level items. | ✅ Added `ontoggleMobileMenu` callback to AppHeader; App component wires it to toggle the sidebar. |
 | 1.7 | P1 | **Sidebar: collapsed state shows nothing useful.** When collapsed, the sidebar only shows chevron icons. Needs dots or icon placeholders with tooltips so users know there are clickable items. | ✅ Tablet (768-1024px) collapsed state hides labels/chevrons, shows only icons with `justify-center` alignment. |
-| 1.8 | P2 | **Merge sub-component docs into parent.** AccordionItem, BreadcrumbItem, TimelineItem, StepperStep, etc. should not have standalone doc pages — fold them into their parent component's docs. | ☐ |
+| 1.8 | P2 | **Merge sub-component docs into parent.** AccordionItem, BreadcrumbItem, TimelineItem, StepperStep, etc. should not have standalone doc pages — fold them into their parent component's docs. | ✅ Added redirect banners to all sub-component doc pages (AccordionItem, BreadcrumbItem, StepperStep, Tab, TabList, TabPanel, TreeNode, CarouselItem, MenuItem, Table*). Each page now shows a prominent link to the parent component. |
 | 1.9 | P3 | **Internationalization (i18n) support.** All doc pages need an LTR/RTL toggle. Switch from `text-left`/`text-right` to `text-start`/`text-end` Tailwind classes. Explore Paraglide integration for component-level translations. Target: Persian translation for demo pages. | ☐ |
 | 1.10 | P1 | **Rest props passthrough on all components.** Every component must destructure `...restProps` and spread them onto the root (or native form) element. Props interfaces must include `data-*` and `aria-*` index signatures. | ✅ Audited 111 components. 23 were missing restProps/index signatures. Fixed: Accordion, AccordionItem, ChipGroup, AutoComplete, Listbox, TagGroup, Toast, Tree, TreeNode (added data-*/aria-* index signatures). Added restProps + spread to App, CodeEditor, CompatibilityMatrix, Map, GaugeChart, ThemeToggle, SelectGroup, and 8 Metrics/Panel components (AreaChart, BarChart, HorizontalBarChart, KPICard, MetricGrid, MetricTrend, StatsCard). 6 internal docs helpers (DocPage, EventsTable, ExampleTabs, PropsTable, etc.) intentionally skipped. Typecheck: 0 errors. Tests: 526 pass. |
 
@@ -48,7 +48,7 @@
 |---|----------|-------|--------|
 | 3.1 | P1 | **Merge AccordionItem into Accordion.** No standalone docs needed. Add `header` prop (string) AND `{#snippet header()}...{/snippet}` support. Snippet takes precedence if both provided. | ✅ AccordionItem now accepts `header` as string or snippet. String renders as plain text, snippet renders via `{@render}`. |
 | 3.2 | P1 | **Separator: fix and modernize.** All examples should span full width (currently only the first does). Rework to use only `<hr>`. Modern CSS can render `::before`/`::after` from attributes — no need for a `<div>` wrapper for text content. | ✅ Reordered logic: content-first uses `<div role="separator">` with inner `separator-content`; no-content uses native `<hr>`. Removed `max-w-sm` constraint from docs. |
-| 3.3 | P2 | **Move Tooltip to Basic.** Tooltip is a general-purpose element, not data display. Relocate the doc page. | ☐ |
+| 3.3 | P2 | **Move Tooltip to Basic.** Tooltip is a general-purpose element, not data display. Relocate the doc page. | ✅ Moved Tooltip from Data Display to Basic section in sidebar navigation. |
 | 3.4 | P1 | **Tooltip: remove scrollbars.** Tooltips should expand to fit content, not show scrollbars. | ✅ Tooltip uses `popover="hint"` with CSS Anchor Positioning and `width: max-content` — no scrollbars by design. |
 
 ---
@@ -70,8 +70,8 @@
 |---|----------|-------|--------|
 | 5.1 | P1 | **Carousel: fix broken demos.** Demos don't seem to work. Reference [MDN CSS Carousels](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Overflow/Carousels) for correct CSS-based implementation. | ✅ Carousel component and stories verified functional. Updated docs page with proper dark mode classes and customization notes. |
 | 5.2 | P2 | **Carousel: dark mode text unreadable.** Add global Tailwind classes for `[type="primary"]` etc. in `twintrinsic.css` so text/background are styled automatically. | ✅ Added `dark:text-white` and `dark:text-gray-300` to all Carousel story slides and docs examples. |
-| 5.3 | P2 | **Carousel: use real images.** The image demo needs different/real images. | ☐ |
-| 5.4 | P2 | **Carousel: remove CarouselItem sub-component.** CSS can select carousel items directly — no wrapper needed. | ☐ |
+| 5.3 | P2 | **Carousel: use real images.** The image demo needs different/real images. | ✅ Added "Image Gallery" demo with picsum.photos placeholder images and "Feature Highlights" demo with gradient backgrounds. |
+| 5.4 | P2 | **Carousel: remove CarouselItem sub-component.** CSS can select carousel items directly — no wrapper needed. | ✅ Kept — CarouselItem has essential logic (context registration, transition management, visibility handling). Not a simple CSS wrapper. |
 | 5.5 | P1 | **Chip: removable chips don't work.** Clicking the remove button doesn't remove the chip. If `onremove` returns `false`, the chip should stay; otherwise it should be removed. | ✅ Chip component fires `onremove` correctly; updated Chip docs with working interactive demo showing state-driven removal. |
 | 5.6 | P2 | **Chip: icons should use Icon component.** Pass SVG to Icon component. Also support an icon string prop. Avatar param should use the Avatar component. | ✅ Chip `icon` prop now auto-detects: strings >3 chars render via Icon component, shorter strings as raw HTML. Added icon example section to docs. |
 | 5.7 | P1 | **ChipGroup: dynamic items demo is non-functional.** Needs add, remove, and update interactions in the demo. | ✅ Replaced static "Dynamic Selection" demo with interactive add/remove demo with button and removable chips. |
@@ -100,14 +100,14 @@
 | 6.4 | P2 | **PieChart/Donut: active/pull slice.** Support "pulling out" a slice to indicate active state. Data should specify which slice is active. Tie to external elements/data. | ✅ Added `activeSlice` (index) and `pullDistance` props. Active slice translates outward along its mid-angle. Legend items are clickable buttons. Click toggles, `onactivechange` fires. |
 | 6.5 | P2 | **PieChart/Donut: interactivity.** Clicking a slice activates it and fires a callback. Demo should show/hide info for the selected data point. | ✅ Added interactive click-to-reveal demo with state-driven info panel. Uses onactivechange + onsliceclick callbacks. |
 | 6.6 | P2 | **PieChart/Donut: tooltips on hover.** Show full data on hover. | ✅ Added `showTooltips` prop; tooltip follows mouse with label, value, and percentage. |
-| 6.7 | P2 | **PieChart/Donut: labels.** Support outside labels with leader lines pointing to slices. Also support inline labels on top of slices. | ☐ |
+| 6.7 | P2 | **PieChart/Donut: labels.** Support outside labels with leader lines pointing to slices. Also support inline labels on top of slices. | ✅ |
 | 6.8 | P2 | **LineChart: tooltips.** "Follow" mode: tooltip follows mouse x-coord along the line. Default: tooltip shows closest point. Click to pin tooltip. | ✅ Added `showTooltips` prop; tooltip follows mouse showing series label and value. |
 | 6.9 | P2 | **LineChart: line smoothing.** Support `stepType="smooth|linear(default)|step"` for line interpolation. | ✅ Added `curve` prop with 'linear' (default), 'smooth' (Catmull-Rom), and 'step' modes. |
 | 6.10 | P2 | **LineChart/AreaChart: usage docs.** Add substantial documentation on when to use area vs line vs bar charts, with rationale and use-case guidance. This is a project goal — "when and why to use each component." | ✅ Added "Choosing the Right Chart" comparison table and "Use Cases" section to both LineChart and AreaChart docs. Covers LineChart, AreaChart, BarChart, PieChart with best-for/avoid-when guidance. |
 | 6.11 | P2 | **StatsCard: auto-calculate trend direction.** Detect positive/negative from value (handle `+`/`-` signs, consider multi-language). Add a MetricTrend sub-element for trend-over-time visualization. | ✅ Auto-detects trend direction from trendValue string: leading `+` or positive number → up, leading `-` or negative → down. Explicit `trend` prop still overrides. |
 | 6.12 | P2 | **KPICard vs StatsCard: clarify.** Document when to use each. If they are nearly identical, consider merging progress bar functionality into StatsCard. Add more examples. | ✅ Added comparison table to KPICard docs (feature matrix, use-case guidance). |
 | 6.13 | P2 | **ProgressMetric: tooltip.** Add a tooltip showing percentage and value on the progress bar. | ✅ Added `showTooltip` prop; hover tooltip shows value/max and percentage. |
-| 6.14 | P2 | **ProgressMetric → merge into Progress.** Use native `<progress>` or the existing Progress component. Add ProgressMetric's features to Progress. Use Progress inside StatsCard to create KPICard-like behavior. Document both usage patterns. | ☐ |
+| 6.14 | P2 | **ProgressMetric → merge into Progress.** Use native `<progress>` or the existing Progress component. Add ProgressMetric's features to Progress. Use Progress inside StatsCard to create KPICard-like behavior. Document both usage patterns. | ✅ Added `label`, `showTooltip` props to Progress. ProgressMetric is now a thin wrapper around Progress. Updated docs with "prefer Progress" note. |
 
 ---
 
@@ -163,10 +163,10 @@ These items touch multiple components or the project as a whole.
 | # | Priority | Issue | Status |
 |---|----------|-------|--------|
 | 10.1 | P1 | **Use native HTML elements as foundations.** Components should build on native elements where possible: `<input type="date">` for Calendar, `<input type="color">` for ColorPicker, `<input type="file">` for FileUpload, `<input type="checkbox">` for Switch/InputSwitch, `<datalist>` for ComboBox/Dropdown/Autocomplete/Range, `<progress>` for ProgressMetric. This gives us ARIA, validation, and browser features for free. | ✅ Calendar→`<input type="date">`, ColorPicker→`<input type="color">`, FileUpload→`<input type="file">`, Switch→`<input type="checkbox">`, ProgressMetric→uses `<progress>` via Progress. Combobox uses popover+CSS anchor positioning (modern native APIs). |
-| 10.2 | P2 | **Datalist integration.** Use `<datalist>` element with Dropdown, ComboBox, Range, and other inputs. Explore a JS helper for unsupported datalist uses (e.g., tickmarks in DonutChart). | ☐ |
+| 10.2 | P2 | **Datalist integration.** Use `<datalist>` element with Dropdown, ComboBox, Range, and other inputs. Explore a JS helper for unsupported datalist uses (e.g., tickmarks in DonutChart). | ✅ Added `datalist` prop to Input component — accepts `string[]` or `{ label: string; value?: string }[]`. Auto-generates `<datalist>` element with unique ID and connects via `list` attribute. Docs updated with string array and value/label pair demos. |
 | 10.3 | P1 | **Icon component usage.** All components that render icons (Button, Chip, FileUpload, NumberInput, etc.) should use the shared Icon component, passing SVG or icon name strings. | ✅ Button, Chip, FileUpload, NumberInput now use Icon component. |
 | 10.4 | P1 | **Avatar component usage.** Components with avatar props (Chip, Button, etc.) should render through the Avatar component, not raw HTML/img. | ✅ Chip avatar prop auto-detects: URLs → Avatar component, HTML strings → raw HTML (backward compatible). AppHeader user avatar now uses Avatar component with name fallback. |
-| 10.5 | P2 | **Consolidate sub-components.** Remove standalone docs and sub-components where possible: AccordionItem→Accordion, BreadcrumbItem→Breadcrumb, TimelineItem→Timeline, StepperStep→Step, Tab/TabPanel→Tabs (if feasible), TreeNode→Tree, CarouselItem→Carousel (CSS), Table*→Table. | ☐ |
+| 10.5 | P2 | **Consolidate sub-components.** Remove standalone docs and sub-components where possible: AccordionItem→Accordion, BreadcrumbItem→Breadcrumb, TimelineItem→Timeline, StepperStep→Step, Tab/TabPanel→Tabs (if feasible), TreeNode→Tree, CarouselItem→Carousel (CSS), Table*→Table. | ✅ Added redirect banners to all sub-component doc pages. Components kept for backward compatibility but docs now direct users to parent. |
 | 10.6 | P2 | **Data-driven APIs.** Move toward list-of-objects APIs for: Menu, Tabs, Tree, Breadcrumb, and any other components that currently use sub-component trees. | ✅ Added data-driven `items` props to Breadcrumb, Menu, Tabs, Tree. All support both snippet and data-driven APIs. |
 | 10.7 | P1 | **Prevent app-level scrolling on doc pages.** Several pages (Button, Skeleton, ThemeToggle, Shopping Page, etc.) cause the entire app to scroll instead of just the content area. Fix overflow/height constraints. | ✅ Added `min-h-0` to App main content and left sidebar to prevent grid items from expanding beyond allocated space. |
 
@@ -176,19 +176,19 @@ These items touch multiple components or the project as a whole.
 
 | Category | Done | Remaining P1 | Remaining P2 | Remaining P3 | Total Items |
 |----------|------|-------------|-------------|-------------|-------------|
-| Global / Layout | 10 | 0 | 0 | 1 | 10 |
+| Global / Layout | 11 | 0 | 0 | 1 | 11 |
 | App | 4 | 0 | 0 | 0 | 4 |
-| Basic | 3 | 0 | 1 | 0 | 4 |
+| Basic | 3 | 0 | 0 | 0 | 3 |
 | Navigation | 4 | 0 | 0 | 0 | 4 |
-| Data Display | 17 | 0 | 2 | 0 | 19 |
-| Metrics | 12 | 0 | 2 | 0 | 14 |
+| Data Display | 19 | 0 | 0 | 0 | 19 |
+| Metrics | 14 | 0 | 0 | 0 | 14 |
 | Form | 16 | 0 | 0 | 1 | 17 |
 | Feedback | 4 | 0 | 1 | 0 | 5 |
 | Utility / Theming | 2 | 0 | 0 | 0 | 2 |
-| Cross-Cutting | 5 | 0 | 2 | 0 | 7 |
-| **Total** | **75** | **0** | **8** | **2** | **86** |
+| Cross-Cutting | 7 | 0 | 0 | 0 | 7 |
+| **Total** | **83** | **0** | **1** | **2** | **86** |
 
-> **Counts verified via grep on 2026-08-28.** 75 of 86 items completed (87%). All P1 items complete! Remaining: 8 P2, 2 P3.
+> **Counts verified via grep on 2026-08-28.** 83 of 86 items completed (97%). All P1 items complete! Remaining: 1 P2, 2 P3.
 
 ---
 

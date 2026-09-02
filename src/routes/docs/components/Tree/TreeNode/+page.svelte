@@ -17,6 +17,14 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
+  <div class="not-prose mb-6 p-4 bg-primary-50 dark:bg-primary-950 border border-primary-200 dark:border-primary-800 rounded-lg">
+    <p class="text-sm text-primary-700 dark:text-primary-300 m-0">
+      <strong>TreeNode</strong> is a sub-component of
+      <a href="/docs/components/Tree/Tree" class="underline font-medium">Tree</a>.
+      See the parent component docs for usage, examples, and full API reference.
+    </p>
+  </div>
+
   <h1>TreeNode</h1>
 
   <p>

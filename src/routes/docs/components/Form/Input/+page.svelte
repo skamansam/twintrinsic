@@ -209,6 +209,54 @@ function handlePasswordInput(event: CustomEvent<{ value: string }>) {
   </div>
 </ExampleTabs>
 
+<h3>Datalist Autocomplete</h3>
+<p>
+  The <code>datalist</code> prop connects the input to a native <code>&lt;datalist&gt;</code> element,
+  giving you free browser-native autocomplete suggestions. Accepts an array of strings
+  or objects with <code>label</code> and optional <code>value</code>.
+</p>
+<ExampleTabs code={`<Input
+  label="Browser"
+  placeholder="Type a browser..."
+  datalist={["Chrome", "Firefox", "Safari", "Edge", "Opera"]}
+/>`}>  
+  <div class="max-w-md" data-testid="input-datalist">
+    <Input
+      label="Browser"
+      placeholder="Type a browser..."
+      datalist={["Chrome", "Firefox", "Safari", "Edge", "Opera"]}
+    />
+  </div>
+</ExampleTabs>
+
+<h3>Datalist with Value/Label Pairs</h3>
+<p>Use objects when the display label differs from the stored value.</p>
+<ExampleTabs code={`<Input
+  label="Country"
+  placeholder="Select a country..."
+  datalist={[
+    { label: "United States", value: "US" },
+    { label: "United Kingdom", value: "UK" },
+    { label: "Germany", value: "DE" },
+    { label: "France", value: "FR" },
+    { label: "Japan", value: "JP" }
+  ]}
+/>`}>
+  <div class="max-w-md" data-testid="input-datalist-objects">
+    <Input
+      label="Country"
+      placeholder="Select a country..."
+      datalist={[
+        { label: "United States", value: "US" },
+        { label: "United Kingdom", value: "UK" },
+        { label: "Germany", value: "DE" },
+        { label: "France", value: "FR" },
+        { label: "Japan", value: "JP" }
+      ]}
+    />
+  </div>
+</ExampleTabs>
+
 <!-- ─── Slots ─────────────────────────────────────────── -->
 <h2>Slots</h2>
 <p>

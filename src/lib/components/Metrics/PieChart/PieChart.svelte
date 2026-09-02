@@ -21,6 +21,9 @@ export const propsMetadata = [
   { name: "size", type: "number", description: "Size of the chart in pixels", default: "300", optional: true },
   { name: "activeSlice", type: "number | null", description: "Index of the pulled-out active slice (null = none)", default: "null", optional: true },
   { name: "pullDistance", type: "number", description: "Distance in pixels to pull the active slice outward", default: "12", optional: true },
+  { name: "outsideLabels", type: "boolean", description: "Show labels outside the chart with leader lines pointing to each slice", default: "false", optional: true },
+  { name: "insideLabels", type: "boolean", description: "Show percentage labels on top of each slice", default: "false", optional: true },
+  { name: "labelFontSize", type: "number", description: "Font size in pixels for outside and inside labels", default: "11", optional: true },
   { name: "onactivechange", type: "(event: CustomEvent<{ index: number | null }>) => void", description: "Fired when the active slice changes", optional: true, eventDetail: "{ index: number | null }" },
 ];
 </script>
@@ -75,6 +78,12 @@ interface Props {
   activeSlice?: number | null
   /** Distance in pixels to pull the active slice outward */
   pullDistance?: number
+  /** Show labels outside the chart with leader lines pointing to each slice */
+  outsideLabels?: boolean
+  /** Show percentage labels on top of each slice */
+  insideLabels?: boolean
+  /** Font size in pixels for outside and inside labels */
+  labelFontSize?: number
   /** Fired when the active slice changes */
   onactivechange?: (event: CustomEvent<{ index: number | null }>) => void
   [key: `data-${string}`]: unknown
@@ -97,6 +106,9 @@ let {
   size = 300,
   activeSlice = null,
   pullDistance = 12,
+  outsideLabels = false,
+  insideLabels = false,
+  labelFontSize = 11,
   onactivechange = undefined,
   ...restProps
 }: Props = $props()
@@ -166,7 +178,47 @@ const slices = $derived.by(() => {
       label: labels[index],
       value,
       percentage,
-      isActive
+      isActive,
+      midAngle,
+      cx,
+      cy,
+      outerRadius
+    }
+  })
+})
+
+/** Extra padding around the SVG when outside labels are shown */
+const labelPadding = $derived(outsideLabels ? Math.round(size * 0.25) : 0)
+const svgWidth = $derived(size + labelPadding * 2)
+const svgHeight = $derived(size + labelPadding * 2)
+const svgCx = $derived(size / 2 + labelPadding)
+const svgCy = $derived(size / 2 + labelPadding)
+
+/** Compute leader line geometry for outside labels */
+const leaderLines = $derived.by(() => {
+  if (!outsideLabels) return []
+  const elbowOffset = 20
+  const lineExtension = 30
+  return slices.map((slice) => {
+    const midAngle = slice.midAngle
+    const isRight = Math.cos(midAngle) >= 0
+    // Point on the outer edge of the slice
+    const edgeX = svgCx + Math.cos(midAngle) * (slice.outerRadius + 4)
+    const edgeY = svgCy + Math.sin(midAngle) * (slice.outerRadius + 4)
+    // Elbow point (a bit further out)
+    const elbowX = svgCx + Math.cos(midAngle) * (slice.outerRadius + elbowOffset)
+    const elbowY = svgCy + Math.sin(midAngle) * (slice.outerRadius + elbowOffset)
+    // Horizontal extension to the label
+    const labelX = isRight ? elbowX + lineExtension : elbowX - lineExtension
+    const labelY = elbowY
+    return {
+      edgeX, edgeY,
+      elbowX, elbowY,
+      labelX, labelY,
+      isRight,
+      label: slice.label,
+      percentage: slice.percentage,
+      color: slice.color
     }
   })
 })
@@ -228,9 +280,9 @@ function handleMouseLeave() {
 
   <div class="relative">
     <svg
-      width={size}
-      height={size}
-      viewBox="0 0 {size} {size}"
+      width={svgWidth}
+      height={svgHeight}
+      viewBox="0 0 {svgWidth} {svgHeight}"
       class="drop-shadow-sm"
       role="img"
       aria-label={title || 'Pie chart'}
@@ -254,10 +306,65 @@ function handleMouseLeave() {
           onmouseleave={handleMouseLeave}
         ></path>
       {/each}
+
+      <!-- Outside labels with leader lines -->
+      {#if outsideLabels}
+        {#each leaderLines as line, i}
+          <!-- Leader line: edge → elbow → horizontal -->
+          <polyline
+            points="{line.edgeX},{line.edgeY} {line.elbowX},{line.elbowY} {line.labelX},{line.labelY}"
+            fill="none"
+            stroke={line.color}
+            stroke-width="1.5"
+            stroke-opacity="0.7"
+            class="pointer-events-none"
+          />
+          <!-- Small dot at the edge -->
+          <circle
+            cx={line.edgeX}
+            cy={line.edgeY}
+            r="2.5"
+            fill={line.color}
+            class="pointer-events-none"
+          />
+          <!-- Label text -->
+          <text
+            x={line.labelX + (line.isRight ? 6 : -6)}
+            y={line.labelY}
+            fill="currentColor"
+            font-size={labelFontSize}
+            class="text-gray-700 dark:text-gray-300 pointer-events-none"
+            dominant-baseline="middle"
+            text-anchor={line.isRight ? 'start' : 'end'}
+          >{line.label} ({line.percentage}%)</text>
+        {/each}
+      {/if}
+
+      <!-- Inside labels on top of slices -->
+      {#if insideLabels}
+        {#each slices as slice, i}
+          {@const midR = slice.outerRadius * 0.65}
+          {@const lx = slice.cx + Math.cos(slice.midAngle) * midR}
+          {@const ly = slice.cy + Math.sin(slice.midAngle) * midR}
+          <text
+            x={lx}
+            y={ly}
+            fill="white"
+            font-size={labelFontSize}
+            font-weight="600"
+            class="pointer-events-none select-none"
+            dominant-baseline="middle"
+            text-anchor="middle"
+          >{slice.percentage}%</text>
+        {/each}
+      {/if}
     </svg>
 
     {#if isDonut && (centerText || centerSubtext)}
-      <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+      <div
+        class="absolute pointer-events-none flex flex-col items-center justify-center"
+        style="left: {labelPadding}px; top: {labelPadding}px; width: {size}px; height: {size}px;"
+      >
         {#if centerText}
           <span class="text-2xl font-bold text-text dark:text-text">{centerText}</span>
         {/if}

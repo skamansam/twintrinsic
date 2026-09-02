@@ -91,8 +91,8 @@ describe('ProgressMetric', () => {
 			}
 		});
 
-		const bar = container.querySelector('.rounded-full');
-		expect(bar).toBeTruthy();
+		const progress = container.querySelector('progress');
+		expect(progress).toBeTruthy();
 	});
 
 	it('should render with success color', () => {

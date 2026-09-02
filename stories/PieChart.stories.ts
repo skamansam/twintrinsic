@@ -94,3 +94,37 @@ export const DonutWithActive: Story = {
 		pullDistance: 12
 	}
 };
+
+export const OutsideLabels: Story = {
+	args: {
+		data: [35, 25, 20, 15, 5],
+		labels: ['Chrome', 'Firefox', 'Safari', 'Edge', 'Other'],
+		title: 'Browser Market Share (Outside Labels)',
+		outsideLabels: true,
+		labelFontSize: 11,
+		size: 300
+	}
+};
+
+export const InsideLabels: Story = {
+	args: {
+		data: [40, 30, 20, 10],
+		labels: ['Enterprise', 'Pro', 'Free', 'Trial'],
+		title: 'Revenue by Tier (Inside Labels)',
+		insideLabels: true,
+		size: 300
+	}
+};
+
+export const DonutWithOutsideLabels: Story = {
+	args: {
+		data: [35, 25, 20, 15, 5],
+		labels: ['Chrome', 'Firefox', 'Safari', 'Edge', 'Other'],
+		title: 'Browser Market Share (Donut + Outside)',
+		hole: 0.5,
+		centerText: '100%',
+		centerSubtext: 'Total',
+		outsideLabels: true,
+		size: 350
+	}
+};

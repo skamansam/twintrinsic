@@ -75,18 +75,17 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
 
   <h2>Examples</h2>
 
-  <h3>Basic Carousel</h3>
+  <h3>Image Gallery</h3>
   <ExampleTabs code={`<Carousel>
   {#snippet items()}
     <CarouselItem>
-      <div class="h-64 bg-primary-100 flex items-center justify-center rounded-lg">
-        <h2 class="text-2xl font-bold">Unlimited projects</h2>
-      </div>
+      <img src="https://picsum.photos/id/10/800/400" alt="Forest" class="w-full h-64 object-cover rounded-lg" />
     </CarouselItem>
     <CarouselItem>
-      <div class="h-64 bg-secondary-100 flex items-center justify-center rounded-lg">
-        <h2 class="text-2xl font-bold">Real-time collaboration</h2>
-      </div>
+      <img src="https://picsum.photos/id/20/800/400" alt="Beach" class="w-full h-64 object-cover rounded-lg" />
+    </CarouselItem>
+    <CarouselItem>
+      <img src="https://picsum.photos/id/30/800/400" alt="Mountain" class="w-full h-64 object-cover rounded-lg" />
     </CarouselItem>
   {/snippet}
 </Carousel>`}>
@@ -109,6 +108,51 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
             <div class="h-64 bg-success-100 dark:bg-success-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
               <h2 class="text-2xl font-bold text-text dark:text-white">Enterprise-grade security</h2>
               <p class="mt-2 text-text dark:text-gray-300">SOC 2, SSO, and granular role-based access control.</p>
+            </div>
+          </CarouselItem>
+        {/snippet}
+      </Carousel>
+    </div>
+  </ExampleTabs>
+
+  <h3>Feature Highlights</h3>
+  <ExampleTabs code={`<Carousel autoplay interval={4000}>
+  {#snippet items()}
+    <CarouselItem>
+      <div class="h-64 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center rounded-lg">
+        <div class="text-center text-white">
+          <h2 class="text-3xl font-bold">Lightning Fast</h2>
+          <p class="mt-2 text-blue-100">Built on modern web standards for peak performance.</p>
+        </div>
+      </div>
+    </CarouselItem>
+    <CarouselItem>
+      <div class="h-64 bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center rounded-lg">
+        <div class="text-center text-white">
+          <h2 class="text-3xl font-bold">Fully Accessible</h2>
+          <p class="mt-2 text-emerald-100">WCAG 2.1 compliant with keyboard navigation.</p>
+        </div>
+      </div>
+    </CarouselItem>
+  {/snippet}
+</Carousel>`}>
+    <div class="max-w-2xl" data-testid="carousel-features">
+      <Carousel autoplay interval={4000}>
+        {#snippet items()}
+          <CarouselItem>
+            <div class="h-64 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center rounded-lg">
+              <div class="text-center text-white">
+                <h2 class="text-3xl font-bold">Lightning Fast</h2>
+                <p class="mt-2 text-blue-100">Built on modern web standards for peak performance.</p>
+              </div>
+            </div>
+          </CarouselItem>
+          <CarouselItem>
+            <div class="h-64 bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center rounded-lg">
+              <div class="text-center text-white">
+                <h2 class="text-3xl font-bold">Fully Accessible</h2>
+                <p class="mt-2 text-emerald-100">WCAG 2.1 compliant with keyboard navigation.</p>
+              </div>
             </div>
           </CarouselItem>
         {/snippet}
