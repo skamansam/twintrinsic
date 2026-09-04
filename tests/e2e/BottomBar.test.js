@@ -100,6 +100,27 @@ test.describe("BottomBar docs page", () => {
     await expect(container.locator(".bottombar-handle")).toBeVisible();
   });
 
+  test("external button controls a non-collapsible bar's visibility", async ({ page }) => {
+    const example = page.getByTestId("bottombar-controlled");
+    const container = example.locator(".bottombar-container");
+    const toggle = page.getByTestId("bottombar-controlled-toggle").locator("button");
+
+    // Starts visible (expanded prop).
+    await expect(container.locator(".bottombar")).toHaveClass(/bottombar-expanded/);
+    await expect(example.getByText("Three new notifications are waiting.")).toBeVisible();
+
+    // Hide it via the external button — no header toggle exists, so the bar
+    // slides out entirely and no handle appears.
+    await toggle.click();
+    await expect(container.locator(".bottombar")).toHaveClass(/bottombar-collapsed/);
+    await expect(example.locator(".bottombar-handle")).toHaveCount(0);
+
+    // Show it again from the same external control.
+    await toggle.click();
+    await expect(container.locator(".bottombar")).toHaveClass(/bottombar-expanded/);
+    await expect(example.getByText("Three new notifications are waiting.")).toBeVisible();
+  });
+
   test("console example renders its log content", async ({ page }) => {
     const example = page.getByTestId("bottombar-console");
     const container = example.locator(".bottombar-container");

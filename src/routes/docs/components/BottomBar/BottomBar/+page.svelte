@@ -3,11 +3,13 @@ import { onMount } from "svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import BottomBar from "$lib/components/BottomBar/BottomBar.svelte"
+import Button from "$lib/components/Button/Button.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as BottomBarModule from "$lib/components/BottomBar/BottomBar.svelte"
 
 let showExamples = $state(false)
+let barVisible = $state(true)
 
 onMount(() => {
   setTimeout(() => { showExamples = true }, 100)
@@ -125,7 +127,50 @@ BottomBar documentation page — standardized structure
     {/if}
   </ExampleTabs>
 
-  <!-- 2. Menu Items -->
+  <!-- 2. Controlled Visibility -->
+  <h3>Controlled Visibility</h3>
+  <p>
+    The bar's visibility is driven by the <code>expanded</code> prop, so another
+    component's UX (a menu button, a “show console” action) can show and hide it.
+    Because the bar is <code>collapsible={false}</code> here, the header does not
+    toggle it — the external button is the only control.
+  </p>
+  <ExampleTabs code={`<script>
+  let visible = true
+<\/script>
+
+<Button onclick={() => visible = !visible}>
+  {visible ? 'Hide bar' : 'Show bar'}
+</Button>
+
+<BottomBar expanded={visible}>
+  {#snippet header()}Notifications{/snippet}
+  <div class="p-4">
+    <p>Three new notifications are waiting.</p>
+  </div>
+</BottomBar>`}>
+    {#if showExamples}
+      <div class="space-y-4">
+        <div data-testid="bottombar-controlled-toggle">
+          <Button onclick={() => (barVisible = !barVisible)}>
+            {barVisible ? 'Hide bar' : 'Show bar'}
+          </Button>
+        </div>
+        <div class="h-[300px] bg-surface relative border border-border rounded-lg overflow-hidden" data-testid="bottombar-controlled">
+          <BottomBar expanded={barVisible}>
+            {#snippet header()}
+              <span class="text-sm font-medium">Notifications</span>
+            {/snippet}
+            <div class="p-4">
+              <p>Three new notifications are waiting.</p>
+            </div>
+          </BottomBar>
+        </div>
+      </div>
+    {/if}
+  </ExampleTabs>
+
+  <!-- 3. Menu Items -->
   <h3>Menu Items</h3>
   <p>A bottom bar with navigation menu items, similar to mobile tab bars.</p>
   <ExampleTabs code={`<BottomBar height="auto" expanded={false}>
