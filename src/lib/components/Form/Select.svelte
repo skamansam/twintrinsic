@@ -58,7 +58,9 @@ export const propsMetadata = [
 <script lang="ts">
 interface SelectOption {
   label: string
-  value: string
+  /** Option value — optional on group nodes (entries with `children`) */
+  value?: string
+  /** Nested options rendered as an `<optgroup>` */
   children?: SelectOption[],
   selected?: boolean
 }

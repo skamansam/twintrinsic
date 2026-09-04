@@ -44,15 +44,24 @@ test.describe("Breadcrumb docs page", () => {
     await expect(example.locator(".breadcrumb-separator").first()).toHaveText("›");
   });
 
-  test("collapsible breadcrumb hides middle items", async ({ page }) => {
+  test("collapsible breadcrumb hides middle items behind an ellipsis", async ({ page }) => {
     const example = page.getByTestId("breadcrumb-collapsible");
     const items = example.locator(".breadcrumb-item");
 
-    // With maxVisibleItems={1}, the first and last items stay visible while
-    // at least one middle item is hidden.
-    await expect(items.first()).toBeVisible();
-    await expect(items.last()).toBeVisible();
-    const hidden = await example.locator(".breadcrumb-item-hidden").count();
-    expect(hidden).toBeGreaterThan(0);
+    // With 5 items and maxVisibleItems={1}, the first and last items stay
+    // visible while the middle entries are omitted from the DOM and replaced
+    // by an ellipsis control (no .breadcrumb-item-hidden nodes are rendered
+    // in the items-array form — hidden items are simply not output).
+    await expect(items.first()).toContainText("Home");
+    await expect(items.last()).toContainText("Breadcrumb");
+
+    await expect(
+      example.getByRole("button", { name: "Show hidden breadcrumb items" }),
+    ).toBeVisible();
+
+    // "Components" and "Navigation" are the collapsed middle items.
+    await expect(items.filter({ hasText: "Components" })).toHaveCount(0);
+    await expect(items.filter({ hasText: "Navigation" })).toHaveCount(0);
+    await expect(items).toHaveCount(4); // Home · ellipsis · Docs · Breadcrumb
   });
 });

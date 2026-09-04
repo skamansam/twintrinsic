@@ -17,9 +17,7 @@ test.describe("Stepper docs page", () => {
   });
 
   test("renders the docs page heading", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "Stepper", level: 1 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Stepper", level: 1 })).toBeVisible();
   });
 
   test("basic stepper renders as a nav landmark", async ({ page }) => {
@@ -31,20 +29,12 @@ test.describe("Stepper docs page", () => {
 
   test("basic stepper renders numbered steps", async ({ page }) => {
     const example = page.getByTestId("stepper-basic");
-    await expect(
-      example.getByRole("navigation", { name: "Step progress" }),
-    ).toBeVisible();
+    await expect(example.getByRole("navigation", { name: "Step progress" })).toBeVisible();
 
     for (const title of ["Shipping", "Payment", "Review"]) {
-      await expect(
-        example.locator(".stepper-step-title").getByText(title),
-      ).toBeVisible();
+      await expect(example.locator(".stepper-step-title").getByText(title)).toBeVisible();
     }
-    await expect(example.locator(".stepper-step-number")).toHaveText([
-      "1",
-      "2",
-      "3",
-    ]);
+    await expect(example.locator(".stepper-step-number")).toHaveText(["1", "2", "3"]);
   });
 
   test("active step has aria-current=step", async ({ page }) => {
@@ -53,38 +43,21 @@ test.describe("Stepper docs page", () => {
     await expect(currentStep).toHaveCount(1);
   });
 
-  test("vertical stepper shows only the active step's content", async ({
-    page,
-  }) => {
+  test("vertical stepper shows only the active step's content", async ({ page }) => {
     const example = page.getByTestId("stepper-vertical");
     await expect(
-      example
-        .locator(".stepper-step-title")
-        .getByText("Personal Information"),
+      example.locator(".stepper-step-title").getByText("Personal Information"),
     ).toBeVisible();
-    await expect(
-      example.locator(".stepper-step-title").getByText("Address"),
-    ).toBeVisible();
+    await expect(example.locator(".stepper-step-title").getByText("Address")).toBeVisible();
 
-    await expect(
-      example.getByText("Enter your personal details."),
-    ).toBeVisible();
-    await expect(
-      example.getByText("Enter your address details."),
-    ).not.toBeVisible();
+    await expect(example.getByText("Enter your name, email, and phone number.")).toBeVisible();
+    await expect(example.getByText("Enter your shipping and billing address.")).not.toBeVisible();
   });
 
   test("non-linear stepper marks optional steps", async ({ page }) => {
     const example = page.getByTestId("stepper-nonlinear");
-    for (const title of [
-      "Account",
-      "Profile",
-      "Preferences",
-      "Complete",
-    ]) {
-      await expect(
-        example.locator(".stepper-step-title").getByText(title),
-      ).toBeVisible();
+    for (const title of ["Account", "Profile", "Preferences", "Complete"]) {
+      await expect(example.locator(".stepper-step-title").getByText(title)).toBeVisible();
     }
     await expect(example.locator(".stepper-step-optional")).toHaveCount(2);
   });
@@ -92,9 +65,7 @@ test.describe("Stepper docs page", () => {
   test("alternative-labels stepper renders all steps", async ({ page }) => {
     const example = page.getByTestId("stepper-alternative");
     for (const title of ["Cart", "Shipping", "Payment", "Confirm"]) {
-      await expect(
-        example.locator(".stepper-step-title").getByText(title),
-      ).toBeVisible();
+      await expect(example.locator(".stepper-step-title").getByText(title)).toBeVisible();
     }
     await expect(example.locator(".stepper-step")).toHaveCount(4);
   });

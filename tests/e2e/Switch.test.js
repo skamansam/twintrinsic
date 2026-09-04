@@ -46,4 +46,25 @@ test.describe("Switch docs page", () => {
       "",
     );
   });
+
+  test("sizes example renders the three labeled switches", async ({ page }) => {
+    const example = page.getByTestId("switch-sizes");
+    for (const name of ["Small", "Medium (default)", "Large"]) {
+      await expect(example.getByRole("checkbox", { name })).toBeVisible();
+    }
+  });
+
+  test("disabled (on) switch stays checked but not interactive", async ({ page }) => {
+    await expect(page.getByRole("checkbox", { name: "Disabled (on)" })).toBeChecked();
+    await page.getByText("Disabled (on)", { exact: true }).click({ force: true });
+    await expect(page.getByRole("checkbox", { name: "Disabled (on)" })).toBeChecked();
+  });
+
+  test("label-less switch is reachable through its aria-label", async ({ page }) => {
+    const example = page.getByTestId("switch-no-label");
+    const switchInput = example.getByRole("checkbox", { name: "Toggle airplane mode" });
+    await expect(switchInput).not.toBeChecked();
+    await switchInput.check({ force: true });
+    await expect(switchInput).toBeChecked();
+  });
 });

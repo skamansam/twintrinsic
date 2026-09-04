@@ -20,12 +20,27 @@ const countries = [
 ]
 
 const languages = [
-  { group: "Frontend", value: "js", label: "JavaScript" },
-  { group: "Frontend", value: "ts", label: "TypeScript" },
-  { group: "Backend", value: "python", label: "Python" },
-  { group: "Backend", value: "java", label: "Java" },
-  { group: "Mobile", value: "swift", label: "Swift" },
-  { group: "Mobile", value: "kotlin", label: "Kotlin" },
+  {
+    label: "Frontend",
+    children: [
+      { value: "js", label: "JavaScript" },
+      { value: "ts", label: "TypeScript" },
+    ],
+  },
+  {
+    label: "Backend",
+    children: [
+      { value: "python", label: "Python" },
+      { value: "java", label: "Java" },
+    ],
+  },
+  {
+    label: "Mobile",
+    children: [
+      { value: "swift", label: "Swift" },
+      { value: "kotlin", label: "Kotlin" },
+    ],
+  },
 ]
 </script>
 
@@ -108,7 +123,10 @@ const languages = [
 <h2>Customization</h2>
 <ul>
   <li>Single or multiple selection via the <code>multiple</code> prop.</li>
-  <li>Option groups via the <code>group</code> property on option objects.</li>
+  <li>Option groups via a nested <code>children</code> array on option objects
+    — a group entry carries a <code>label</code> plus a <code>children</code>
+    array and renders as an <code>&lt;optgroup&gt;</code> — or via
+    <code>&lt;SelectGroup&gt;</code> snippets.</li>
   <li>Custom placeholder text via the <code>placeholder</code> prop.</li>
   <li>Theme colors and borders are controlled by the Tailwind theme.</li>
 </ul>
@@ -147,8 +165,20 @@ const languages = [
 <ExampleTabs code={`<Select
   label="Programming Language"
   options={[
-    { group: 'Frontend', value: 'js', label: 'JavaScript' },
-    { group: 'Backend', value: 'python', label: 'Python' }
+    {
+      label: 'Frontend',
+      children: [
+        { value: 'js', label: 'JavaScript' },
+        { value: 'ts', label: 'TypeScript' },
+      ],
+    },
+    {
+      label: 'Backend',
+      children: [
+        { value: 'python', label: 'Python' },
+        { value: 'java', label: 'Java' },
+      ],
+    },
   ]}
   placeholder="Select a language..."
 />`}>

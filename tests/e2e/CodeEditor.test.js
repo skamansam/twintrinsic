@@ -24,7 +24,7 @@ test.describe("CodeEditor docs page", () => {
       "code-editor-javascript",
       "code-editor-python",
       "code-editor-one-dark",
-      "code-editor-dracula",
+      "code-editor-dracula-builtin",
     ]) {
       const wrapper = page.getByTestId(id).locator(".code-editor-wrapper");
       await expect(wrapper).toBeVisible();

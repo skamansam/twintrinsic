@@ -27,12 +27,12 @@ test.describe("Metrics docs", () => {
     // Charts render SVG elements with their titles.
     await expect(page.getByText("Monthly Sales by Product", { exact: true })).toBeVisible();
     await expect(page.getByText("Traffic by Device Type (Stacked)", { exact: true })).toBeVisible();
-    // The donut chart title renders inside its aria-labelledby SVG.
-    await expect(
-      page.getByLabel("Donut chart visualization").getByRole("heading", {
-        name: "Conversion Sources",
-      }),
-    ).toBeVisible();
+    // The donut chart renders as a labeled region whose aria-label is its
+    // title (DonutChart passes title through to PieChart's region). The svg
+    // inside shares the label, so scope to the region role explicitly.
+    const donut = page.getByRole("region", { name: "Conversion Sources" });
+    await expect(donut).toBeVisible();
+    await expect(donut.getByRole("heading", { name: "Conversion Sources" })).toBeVisible();
 
     // Gauges and progress metrics.
     await expect(page.getByText("Performance Score", { exact: true })).toBeVisible();
@@ -206,7 +206,11 @@ test.describe("Metrics docs", () => {
     // Single-series chart title.
     await expect(page.getByRole("heading", { name: "LineChart", level: 1 })).toBeVisible();
     // Legend labels from the series.
-    await expect(page.getByTestId('metrics-linechart-basic').getByText("Product A", { exact: true })).toBeVisible();
-    await expect(page.getByTestId('metrics-linechart-basic').getByText("Product B", { exact: true })).toBeVisible();
+    await expect(
+      page.getByTestId("metrics-linechart-basic").getByText("Product A", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByTestId("metrics-linechart-basic").getByText("Product B", { exact: true }),
+    ).toBeVisible();
   });
 });

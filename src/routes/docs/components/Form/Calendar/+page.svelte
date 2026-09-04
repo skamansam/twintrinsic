@@ -100,16 +100,20 @@ import Container from "$lib/components/Container/Container.svelte"
 </ExampleTabs>
 
 <h3>With Pre-selected Date</h3>
-<ExampleTabs code={`<Calendar label="Date" value={new Date('2026-04-07')} />`}>
+<!-- NOTE: build dates with `new Date(year, monthIndex, day)` (local time)
+     rather than `new Date('YYYY-MM-DD')` (UTC midnight). Calendar formats
+     values with local time methods, so an ISO-string date shifts back a day
+     in timezones behind UTC. -->
+<ExampleTabs code={`<Calendar label="Date" value={new Date(2026, 3, 7)} />`}>
   <div class="max-w-md" data-testid="calendar-with-value">
-    <Calendar label="Date" value={new Date('2026-04-07')} />
+    <Calendar label="Date" value={new Date(2026, 3, 7)} />
   </div>
 </ExampleTabs>
 
 <h3>With Min/Max Dates</h3>
-<ExampleTabs code={`<Calendar\n  label="Date"\n  minDate={new Date('2026-04-01')}\n  maxDate={new Date('2026-04-30')}\n/>`}>
+<ExampleTabs code={`<Calendar\n  label="Date"\n  minDate={new Date(2026, 3, 1)}\n  maxDate={new Date(2026, 3, 30)}\n/>`}>
   <div class="max-w-md" data-testid="calendar-min-max">
-    <Calendar label="Date" minDate={new Date('2026-04-01')} maxDate={new Date('2026-04-30')} />
+    <Calendar label="Date" minDate={new Date(2026, 3, 1)} maxDate={new Date(2026, 3, 30)} />
   </div>
 </ExampleTabs>
 
@@ -124,9 +128,9 @@ import Container from "$lib/components/Container/Container.svelte"
 </ExampleTabs>
 
 <h3>Disabled</h3>
-<ExampleTabs code={`<Calendar label="Date" disabled={true} value={new Date('2026-04-07')} />`}>
+<ExampleTabs code={`<Calendar label="Date" disabled={true} value={new Date(2026, 3, 7)} />`}>
   <div class="max-w-md" data-testid="calendar-disabled">
-    <Calendar label="Date" disabled={true} value={new Date('2026-04-07')} />
+    <Calendar label="Date" disabled={true} value={new Date(2026, 3, 7)} />
   </div>
 </ExampleTabs>
 

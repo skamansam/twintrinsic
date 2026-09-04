@@ -73,6 +73,35 @@ test.describe("Select docs page", () => {
     }
   });
 
+  test("groups example renders option groups via optgroup", async ({ page }) => {
+    // Options carrying a `group` field render as native <optgroup>s
+    // (this is the SelectGroup sub-component's underlying markup).
+    const example = page.getByTestId("select-groups");
+    const select = example.getByLabel("Programming Language");
+
+    for (const [group, labels] of [
+      ["Frontend", ["JavaScript", "TypeScript"]],
+      ["Backend", ["Python", "Java"]],
+      ["Mobile", ["Swift", "Kotlin"]],
+    ]) {
+      const optgroup = select.locator(`optgroup[label="${group}"]`);
+      await expect(optgroup).toHaveCount(1);
+      for (const label of labels) {
+        await expect(optgroup.locator("option", { hasText: new RegExp(`^${label}$`) })).toHaveCount(
+          1,
+        );
+      }
+    }
+  });
+
+  test("selecting a grouped option updates the value", async ({ page }) => {
+    const example = page.getByTestId("select-groups");
+    const select = example.getByLabel("Programming Language");
+
+    await select.selectOption({ label: "Kotlin" });
+    await expect(select).toHaveValue("kotlin");
+  });
+
   test("required example marks the select required", async ({ page }) => {
     const example = page.getByTestId("select-required");
     const select = example.getByLabel("Country");

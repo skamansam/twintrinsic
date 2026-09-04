@@ -26,9 +26,9 @@ BottomBar documentation page — standardized structure
 
   <!-- ─── Description ───────────────────────────────────── -->
   <p>
-    <strong>BottomBar</strong> is a collapsible panel that attaches to the bottom of its
-    parent container. It is ideal for detail panels, console output, media player
-    controls, or any content that should be accessible but out of the way until needed.
+    <strong>BottomBar</strong> is a bar that attaches to the bottom of its parent
+    container. It is ideal for mobile app bars, media player controls, console output,
+    detail panels, or any content that should be on hand but not always on screen.
   </p>
 
   <!-- ─── What / When / Why ─────────────────────────────── -->
@@ -36,21 +36,23 @@ BottomBar documentation page — standardized structure
 
   <h3>What is it?</h3>
   <p>
-    A panel anchored to the bottom edge of its parent with a clickable header snippet
-    that toggles the panel open/closed. It supports float mode (overlay with backdrop)
-    and inline mode (push content up).
+    A bar anchored to the bottom edge of its parent. Its visibility is driven by the
+    <code>expanded</code> prop, so another component's UX (a mobile menu button, a
+    “show console” action, media playback state) decides when it appears. Set
+    <code>collapsible</code> to let the header itself slide the bar down to a small
+    handle and back.
   </p>
 
   <h3>When should I use it?</h3>
   <p>
-    Use BottomBar for secondary content that should be available but not always visible:
-    detail panels in editors, terminal/console output, media player controls, meeting
-    control bars, or bottom-sheet-style actions on mobile.
+    Use BottomBar for content that should be available on demand: a mobile app bar that
+    appears when a menu opens, terminal/console output, media player controls, meeting
+    control bars, or a collapsible detail panel in an editor.
   </p>
 
   <h3>Why does it exist?</h3>
   <ul>
-    <li><strong>Space efficiency</strong> — keeps secondary content collapsed until
+    <li><strong>Space efficiency</strong> — secondary content stays off screen until
       needed, maximizing the main content area.</li>
     <li><strong>Thumb zones</strong> — on mobile, bottom-anchored controls are in the
       natural thumb reach zone (Steven Hoober research).</li>
@@ -82,7 +84,9 @@ BottomBar documentation page — standardized structure
   <h2>Customization</h2>
   <ul>
     <li>Custom header via the <code>header</code> snippet (text, icons, or any markup).</li>
-    <li>Set initial height via the <code>height</code> prop.</li>
+    <li>Show/hide from another component via the <code>expanded</code> prop.</li>
+    <li>Let users collapse the bar to a small handle via <code>collapsible</code>.</li>
+    <li>Set the bar height via the <code>height</code> prop.</li>
     <li>Theme colors, borders, and spacing controlled by the Tailwind theme.</li>
     <li>Pass additional CSS classes via the <code>class</code> prop.</li>
   </ul>
@@ -93,7 +97,7 @@ BottomBar documentation page — standardized structure
   <!-- 1. Basic BottomBar -->
   <h3>Basic BottomBar</h3>
   <p>A simple collapsible detail panel anchored to the bottom. Click the header to toggle.</p>
-  <ExampleTabs code={`<BottomBar height="14rem">
+  <ExampleTabs code={`<BottomBar height="14rem" collapsible>
   {#snippet header()}Details{/snippet}
   <div class="p-4">
     <h3 class="text-lg font-medium mb-2">Project Information</h3>
@@ -106,7 +110,7 @@ BottomBar documentation page — standardized structure
 </BottomBar>`}>
     {#if showExamples}
       <div class="h-[300px] bg-surface relative border border-border rounded-lg overflow-hidden" data-testid="bottombar-basic">
-        <BottomBar height="14rem">
+        <BottomBar height="14rem" collapsible>
           {#snippet header()}Details{/snippet}
           <div class="p-4">
             <h3 class="text-lg font-medium mb-2">Project Information</h3>
@@ -363,8 +367,8 @@ BottomBar documentation page — standardized structure
       <tr><th>Slot</th><th>Description</th></tr>
     </thead>
     <tbody>
-      <tr><td><code>header</code></td><td>Content for the bottom bar header / toggle area</td></tr>
-      <tr><td><code>default</code></td><td>Main expandable content of the bottom bar</td></tr>
+      <tr><td><code>header</code></td><td>Content for the bottom bar header row</td></tr>
+      <tr><td><code>default</code></td><td>Main content of the bottom bar</td></tr>
     </tbody>
   </table>
 
@@ -381,9 +385,12 @@ BottomBar documentation page — standardized structure
   <ul>
     <li>Uses <code>role="complementary"</code> for the container and
       <code>role="region"</code> for the content area.</li>
-    <li>Toggle button uses <code>aria-expanded</code> to communicate open/closed state.</li>
-    <li>Keyboard: Enter/Space toggles the panel; Escape closes it.</li>
-    <li>Focus is managed so that closing the panel returns focus to the toggle button.</li>
+    <li>When <code>collapsible</code>, the header toggle uses
+      <code>aria-expanded</code> to communicate state, and the collapsed state
+      keeps a small, labeled handle (<code>aria-label="Expand …"</code>) so the
+      bar can always be reopened with the mouse or keyboard.</li>
+    <li>Keyboard: Enter/Space on the header toggles a collapsible bar; Escape
+      collapses it; Tab reaches the expand handle when collapsed.</li>
   </ul>
 
   <!-- ─── Keyboard Support ──────────────────────────────── -->
@@ -394,8 +401,8 @@ BottomBar documentation page — standardized structure
     </thead>
     <tbody>
       <tr><td><kbd>Tab</kbd></td><td>Moves focus through interactive elements in the panel</td></tr>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>When focus is on the header, toggles the bottom bar open/closed</td></tr>
-      <tr><td><kbd>Escape</kbd></td><td>Closes the bottom bar</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>On the header of a <code>collapsible</code> bar, toggles open/closed</td></tr>
+      <tr><td><kbd>Escape</kbd></td><td>Collapses a <code>collapsible</code> bar (visibility of non-collapsible bars is prop-driven)</td></tr>
     </tbody>
   </table>
 </Container>

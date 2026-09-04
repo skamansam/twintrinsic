@@ -107,13 +107,16 @@ const {
   ...restProps
 }: PanelProps = $props()
 
-let isExpanded = $state(true)
+// svelte-ignore state_referenced_locally
+let isExpanded = $state(expanded)
 
 // Internal state
 let headerEl = $state<HTMLButtonElement | null>(null)
 let contentEl = $state<HTMLDivElement | null>(null)
 
-// Update expanded state when prop changes
+// Sync expanded state when the prop changes. Initializing from the prop
+// (above) means `expanded={false}` renders collapsed on mount instead of
+// flashing open first.
 $effect(() => {
   isExpanded = expanded
 })
