@@ -1,9 +1,13 @@
 <script lang="ts">
-import App from "$lib/components/App/App.svelte"
-import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
+import App, * as AppModule from "$lib/components/App/App.svelte"
+import BottomBar from "$lib/components/BottomBar/BottomBar.svelte"
+import Button from "$lib/components/Button/Button.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
-import * as AppModule from "$lib/components/App/App.svelte"
+
+/** Drives the controlled BottomBar in the "App Shell with a BottomBar" example */
+let consoleOpen = $state(false)
 </script>
 <!--
 @component
@@ -131,6 +135,81 @@ App documentation page — standardized structure
       <p class="font-medium text-default mb-2">App Shell Preview</p>
       <p>This component is a full-page layout wrapper. See the code tab for the
         typical usage pattern.</p>
+    </div>
+  </ExampleTabs>
+
+  <h3>App Shell with a BottomBar</h3>
+  <p>
+    A real app shell usually wants a bar along its bottom edge — a build
+    console, a mobile tab bar, or media controls. BottomBar is
+    <em>prop-driven</em>: the shell header owns the visibility, so clicking
+    the action in the header below shows and hides the console through
+    <code>expanded</code> — no internal toggle, no imperative call.
+  </p>
+  <p>
+    The framed preview below stands in for the app viewport. In a real page
+    you compose <code>&lt;App&gt;</code> with your content and place the
+    <code>docked</code> BottomBar as its sibling so it pins to the window
+    bottom.
+  </p>
+  <ExampleTabs code={`<script>
+  let consoleOpen = false
+<\/script>
+
+<App appName="Acme Suite" navItems={[{ label: 'Home', href: '/' }]}>
+  <div class="flex items-center justify-between gap-4">
+    <h1 class="text-xl font-semibold">Projects</h1>
+    <Button onclick={() => (consoleOpen = !consoleOpen)}>
+      {consoleOpen ? 'Hide console' : 'Show console'}
+    </Button>
+  </div>
+  <!-- …page content… -->
+</App>
+
+<!-- App-level bar, docked to the viewport bottom. Shown and hidden from
+     the header action above — the expanded prop is the single source of truth. -->
+<BottomBar docked height="12rem" expanded={consoleOpen} ariaLabel="Build console">
+  {#snippet header()}Console{/snippet}
+  <div class="font-mono text-sm space-y-1">
+    <p class="text-success-500">✓ Build completed successfully</p>
+    <p class="text-warning-500">⚠ 2 deprecation warnings</p>
+  </div>
+</BottomBar>`}>
+    <div
+      class="h-[440px] relative overflow-hidden rounded-lg border border-border bg-surface flex flex-col"
+      data-testid="app-shell-console"
+    >
+      <!-- Shell header — in a real app this is <App>'s header region -->
+      <div class="flex items-center justify-between gap-4 px-4 h-14 shrink-0 border-b border-border bg-surface">
+        <p class="font-semibold text-default">Acme Suite</p>
+        <Button onclick={() => (consoleOpen = !consoleOpen)}>
+          {consoleOpen ? "Hide console" : "Show console"}
+        </Button>
+      </div>
+      <!-- Scrollable page content -->
+      <div class="flex-1 min-h-0 overflow-auto p-6 space-y-4 bg-background">
+        <div class="p-4 rounded-lg border border-border bg-surface">
+          <p class="font-medium text-default">Website Redesign</p>
+          <p class="text-sm text-muted mt-1">Updated 2 hours ago</p>
+        </div>
+        <div class="p-4 rounded-lg border border-border bg-surface">
+          <p class="font-medium text-default">Mobile App Launch</p>
+          <p class="text-sm text-muted mt-1">Updated yesterday</p>
+        </div>
+      </div>
+      <!-- Console overlay — covers the shell's bottom edge while shown -->
+      <div
+        class="absolute inset-x-0 bottom-0 h-48 pointer-events-none"
+        data-testid="app-shell-bottombar"
+      >
+        <BottomBar height="12rem" expanded={consoleOpen} ariaLabel="Build console">
+          {#snippet header()}Console{/snippet}
+          <div class="font-mono text-sm space-y-1">
+            <p class="text-success-500">✓ Build completed successfully</p>
+            <p class="text-warning-500">⚠ 2 deprecation warnings</p>
+          </div>
+        </BottomBar>
+      </div>
     </div>
   </ExampleTabs>
 

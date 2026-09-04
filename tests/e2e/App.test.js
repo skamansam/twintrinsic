@@ -2,17 +2,15 @@ import { expect, test } from "@playwright/test";
 import { waitForHydration } from "./helpers.js";
 
 /**
- * Docs-site smoke tests for the App component.
+ * Docs-site tests for the App component.
  *
- * The App docs page (`/docs/components/App/App`) is documentation-only:
- * it does not embed a live <App> example, so there is no DOM instance
- * to exercise here. Full layout behavior (slots, dark mode, panel
- * widths, responsive stacking) is covered by the Storybook vitest
- * suite (`pnpm test:storybook`) via the App stories.
- *
- * These tests verify the docs page itself still renders: the page
- * header, the props/slots documentation tables, and the responsive /
- * accessibility guidance sections.
+ * The docs page (`/docs/components/App/App`) is a full-page layout
+ * wrapper, so it is not embedded as a live <App> instance (full layout
+ * behavior — slots, dark mode, panel widths, responsive stacking — is
+ * covered by the Storybook vitest suite via the App stories). The page
+ * does carry a live "App Shell with a BottomBar" preview: a framed shell
+ * whose header action shows/hides a BottomBar through the `expanded`
+ * prop, exercising the controlled show/hide pattern from the App docs.
  */
 test.describe("App docs page", () => {
   test.beforeEach(async ({ page }) => {
@@ -36,9 +34,7 @@ test.describe("App docs page", () => {
   });
 
   test("documents responsive behavior", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "Responsiveness", level: 2 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Responsiveness", level: 2 })).toBeVisible();
     await expect(page.getByText("side panels expand to full width")).toBeVisible();
   });
 
@@ -47,5 +43,28 @@ test.describe("App docs page", () => {
     await expect(props).toBeVisible();
     await expect(props.locator("td", { hasText: '"Twintrinsic App"' }).first()).toBeVisible();
     await expect(props.locator("td", { hasText: "darkMode" }).first()).toBeVisible();
+  });
+
+  test("controlled BottomBar example toggles from the shell header", async ({ page }) => {
+    const example = page.getByTestId("app-shell-console");
+    await example.scrollIntoViewIfNeeded();
+
+    // The shell header action is the only control: the bar starts hidden.
+    const toggle = example.getByRole("button", { name: "Show console" });
+    await expect(toggle).toBeVisible();
+    const bar = page.getByTestId("app-shell-bottombar").locator(".bottombar");
+    await expect(bar).toHaveClass(/bottombar-collapsed/);
+    await expect(bar).not.toHaveClass(/bottombar-expanded/);
+
+    // Clicking the header action slides the console up (expanded state).
+    await toggle.click();
+    await expect(bar).toHaveClass(/bottombar-expanded/);
+    await expect(bar).not.toHaveClass(/bottombar-collapsed/);
+    await expect(example.getByRole("button", { name: "Hide console" })).toBeVisible();
+    await expect(page.getByText("Build completed successfully")).toBeVisible();
+
+    // And the same header action hides it again.
+    await example.getByRole("button", { name: "Hide console" }).click();
+    await expect(bar).toHaveClass(/bottombar-collapsed/);
   });
 });
