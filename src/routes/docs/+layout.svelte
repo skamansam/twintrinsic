@@ -3,12 +3,31 @@
 Documentation site layout with left navigation and header.
 -->
 <script lang="ts">
+import { onMount } from "svelte"
 import { page } from "$app/state"
 import App from "$lib/components/App/App.svelte"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte"
 import Separator from "$lib/components/Separator/Separator.svelte"
 
 let { children } = $props()
+
+/** Text direction for the docs site (LTR default, persisted) */
+let direction = $state<"ltr" | "rtl">("ltr")
+
+/** Apply and persist the text direction on the document root */
+function setDirection(next: "ltr" | "rtl"): void {
+  direction = next
+  document.documentElement.dir = next
+  localStorage.setItem("twintrinsic-dir", next)
+}
+
+/** Apply the saved direction (or the LTR default) once mounted */
+onMount(() => {
+  const saved = localStorage.getItem("twintrinsic-dir")
+  if (saved === "ltr" || saved === "rtl") setDirection(saved)
+  else document.documentElement.dir = direction
+})
 
 const siteLinks = $derived([
   { label: "Getting Started", href: "/docs", current: page.url.pathname === "/docs" },
@@ -233,6 +252,18 @@ const themeColors = [
 >
   {@render children?.()}
 </App>
+
+<!-- LTR/RTL text-direction toggle for the docs site -->
+<button
+  type="button"
+  class="fixed bottom-4 left-4 z-50 flex items-center gap-2 px-3 py-2 rounded-full border border-border bg-surface text-text text-xs font-medium shadow-lg hover:text-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+  aria-label={direction === "ltr" ? "Switch to right-to-left layout" : "Switch to left-to-right layout"}
+  onclick={() => setDirection(direction === "ltr" ? "rtl" : "ltr")}
+  data-testid="dir-toggle"
+>
+  <Icon name="tabler:arrows-left-right" class="w-4 h-4" />
+  {direction === "ltr" ? "LTR" : "RTL"}
+</button>
 
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';
