@@ -301,6 +301,10 @@ TabPanel - A container for tab content within a Tabs component. Displays content
 
 ThemeToggle - A toggle button for switching between light and dark themes. Supports keyboard interaction and ARIA labels. Usage: ```svelte ```
 
+### Timer/Timer
+
+Timer - A countdown/count-up display with pause/resume/reset controls. Renders a large monospace readout backed by one of three display variants (Progress bar, GaugeChart, or KPICard) plus optional built-in controls. Usage: ```svelte ```
+
 ### Tree/TreeNode
 
 TreeNode - An individual node within a Tree component. Provides consistent styling, accessibility features, and keyboard navigation. Usage: ```svelte ... " expanded selected disabled > ```
@@ -933,6 +937,12 @@ Timeline Timeline displays chronological events or steps as a vertical (or horiz
 TimelineItem is documented as part of the Timeline component. Redirect users to the parent Timeline documentation.
 
 TimelineItem TimelineItem is documented within the Timeline component . Redirecting…
+
+### /docs/components/Timer/Timer
+
+Timer documentation page — standardized structure
+
+Timer Timer displays a countdown or count-up with optional pause, resume, and reset controls. It pairs a large monospace readout with one of three display variants — a Progress bar, a GaugeChart, or a KPICard — so the same timing logic can back anything from a toast countdown to a Pomodoro session. What, When & Why What is it? A self-contained timing component that counts down from a duration or counts up toward one. It fires update events on every tick, fires a complete event when the duration is reached, and can loop automatically. The readout is a live role="timer" region backed by a visual variant. When should I use it? Use <Timer> whenever you need visible, controllable time: toast auto-dismiss countdowns, media or presentation timers, focus sessions, count-up trackers (time on task), or step-limited flows. When the progress is secondary to a number, prefer the bar variant; use gauge for a single-goal readout and kpi when the remaining time belongs in a dashboard card. Why does it exist? Consistent timing — one tick loop with pause/resume/reset semantics shared across display variants. Accessible — the readout uses role="timer" so assistive tech can query the remaining time. Composable — onupdate / oncomplete callbacks wire into toast dismissal, analytics, or state. Deterministic — fixed 100&nbsp;ms ticks keep drift negligible without depending on rAF timing. Responsiveness Centered column layout that scales down to small widths; the readout uses tabular-nums so digits never jitter. The bar variant is constrained with max-w-sm ; gauge and KPI sizes come from the size / card layout. Control buttons meet the 44&times;44 px touch target minimum. Customization Modes: countdown (default) or countup . Variants: bar (Progress), gauge (GaugeChart), kpi (KPICard). Colors: primary , secondary , success , danger , warning , info . format accepts a custom formatter; label titles the display. showControls toggles the built-in buttons; loop restarts on completion. Examples Basic Countdown `}> Count Up `}> Display Variants `}> Loop `}> Custom Format (milliseconds / 1000).toFixed(1) + "s"} />`}> (milliseconds / 1000).toFixed(1) + "s"} /> Without Controls `}> Props Events Accessibility The readout uses role="timer" with aria-live="off" semantics — screen readers announce it on demand instead of being spammed every tick. Control buttons carry explicit aria-label s that flip between "Pause timer" and "Resume timer" so the current action is always announced. The KPI variant is keyboard-operable ( role="button" , Enter/Space toggles pause/resume). Focus rings are visible on all controls. Keyboard Support Key Function Tab Move focus between the pause/resume and reset buttons Enter / Space Activate the focused control (pause/resume or reset) Enter / Space on the KPI card Toggle pause/resume
 
 ### /docs/components/Toast/Toast
 
