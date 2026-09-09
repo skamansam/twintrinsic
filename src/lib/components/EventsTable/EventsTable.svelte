@@ -112,7 +112,7 @@ Usage:
   }
 
   th {
-    @apply px-4 py-2 text-left text-sm font-medium bg-surface border-b border-border;
+    @apply px-4 py-2 text-start text-sm font-medium bg-surface border-b border-border;
   }
 
   td {

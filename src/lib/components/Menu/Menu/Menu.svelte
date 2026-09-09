@@ -265,7 +265,7 @@ function handleFocusOut(e: FocusEvent) {
   }
 
   .menu-item-data {
-    @apply block w-full text-left;
+    @apply block w-full text-start;
     @apply px-4 py-2 text-sm;
     @apply hover:bg-hover focus:outline-none focus:bg-hover;
     @apply bg-transparent border-none cursor-pointer;

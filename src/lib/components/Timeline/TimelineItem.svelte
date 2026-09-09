@@ -335,7 +335,7 @@ onMount(() => {
   
   .timeline-item-vertical.timeline-item-right .timeline-item-content {
     @apply pr-4;
-    @apply text-right;
+    @apply text-end;
   }
   
   .timeline-item-horizontal.timeline-item-left .timeline-item-content {

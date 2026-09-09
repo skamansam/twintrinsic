@@ -150,7 +150,7 @@ function handleKeydown(event: KeyboardEvent) {
     class="
       w-full flex items-center justify-between
       px-4 py-3
-      text-left
+      text-start
       bg-surface dark:bg-surface
       hover:bg-hover dark:hover:bg-hover
       focus:outline-none focus:ring-2 focus:ring-focus-ring dark:focus:ring-focus-ring

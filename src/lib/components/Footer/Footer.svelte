@@ -86,7 +86,7 @@ export const propsMetadata = [
   }
 
   .footer-left {
-    @apply text-left;
+    @apply text-start;
   }
 
   .footer-center {
@@ -94,7 +94,7 @@ export const propsMetadata = [
   }
 
   .footer-right {
-    @apply text-right;
+    @apply text-end;
   }
 
   /* Responsive: Stack on smaller screens */

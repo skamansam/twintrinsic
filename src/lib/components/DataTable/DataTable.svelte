@@ -762,7 +762,7 @@ function formatCell(value: unknown, column: ColumnDef<TRow>, row: TRow): string 
 
   .data-table-header-cell {
     @apply py-3 px-4;
-    @apply font-medium text-left;
+    @apply font-medium text-start;
     @apply whitespace-nowrap;
   }
 
@@ -946,7 +946,7 @@ function formatCell(value: unknown, column: ColumnDef<TRow>, row: TRow): string 
     }
 
     .data-table-responsive tbody td {
-      @apply block text-right;
+      @apply block text-end;
       @apply py-2 px-3;
       @apply border-none;
     }
@@ -957,7 +957,7 @@ function formatCell(value: unknown, column: ColumnDef<TRow>, row: TRow): string 
     }
 
     .data-table-responsive .data-table-selection-cell {
-      @apply w-full text-left;
+      @apply w-full text-start;
     }
 
     .data-table-responsive .data-table-checkbox {

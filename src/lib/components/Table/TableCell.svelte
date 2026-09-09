@@ -51,10 +51,10 @@ const {
 // Determine alignment classes
 const alignClasses = $derived(
   {
-    left: "text-left",
+    left: "text-start",
     center: "text-center",
-    right: "text-right",
-  }[align] || "text-left"
+    right: "text-end",
+  }[align] || "text-start"
 )
 </script>
 

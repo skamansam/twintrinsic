@@ -272,7 +272,7 @@ const describedBy = $derived(
   }
   
   .form-field-horizontal .form-label {
-    @apply col-span-3 pt-2 text-right;
+    @apply col-span-3 pt-2 text-end;
   }
   
   .form-field-horizontal .form-control-container {

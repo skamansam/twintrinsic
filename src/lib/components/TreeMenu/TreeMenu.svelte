@@ -254,7 +254,7 @@ export const propsMetadata = [
   }
 
   .tree-menu-item[type="button"] {
-    @apply bg-transparent border-none cursor-pointer text-left;
+    @apply bg-transparent border-none cursor-pointer text-start;
   }
 
   .tree-menu-text {

@@ -100,7 +100,7 @@ const themes: Theme[] = [
               <div class="text-sm text-muted">Monthly active users</div>
               <div class="text-2xl font-bold text-text mt-1">12,847</div>
             </div>
-            <div class="text-right">
+            <div class="text-end">
               <div class="text-sm font-medium text-success">▲ 8.2%</div>
               <div class="text-xs text-muted">vs last month</div>
             </div>

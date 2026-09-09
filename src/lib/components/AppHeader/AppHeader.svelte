@@ -468,7 +468,7 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
   }
 
   .app-header-user-menu-item {
-    @apply block px-4 py-2 text-sm w-full text-left;
+    @apply block px-4 py-2 text-sm w-full text-start;
     @apply hover:bg-hover focus:outline-none focus:bg-hover;
   }
 
