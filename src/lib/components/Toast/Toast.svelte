@@ -37,8 +37,9 @@ export const propsMetadata = [
  * ```
  */
   import { onDestroy, onMount } from 'svelte';
-  import { toastStore } from './toastStore.js';
   import Icon from '../Icon/Icon.svelte';
+  import Timer from '../Timer/Timer.svelte';
+  import { toastStore } from './toastStore.js';
 
 /** Toast container positions enumerated by `positionClasses` in this component. */
   type ToastPosition =
@@ -147,6 +148,29 @@ export const propsMetadata = [
       toastStore.resume(id);
     }
   }
+
+  /**
+   * Handles the countdown finishing: start the exit animation, then remove
+   * the toast after it completes.
+   * @param {string} id - Toast id
+   */
+  function handleToastComplete(id: string): void {
+    toastStore.setClosing(id);
+    setTimeout(() => removeToast(id), 200); // Match animation duration
+  }
+
+  /** Map Toast variant to the Timer color prop */
+  const timerColor = (variant?: string): 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' => {
+    const colors: Record<string, 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info'> = {
+      default: 'primary',
+      primary: 'primary',
+      success: 'success',
+      warning: 'warning',
+      error: 'danger',
+      info: 'info',
+    };
+    return colors[variant || 'default'] || 'primary';
+  };
   
   // Clean up on component destroy
   onDestroy(() => {
@@ -212,12 +236,17 @@ export const propsMetadata = [
           </span>
         </div>
         
-        {#if toast.progress !== false}
-          <div class="toast-progress-container">
-            <div 
-              class="toast-progress" 
-              style="width: {toast.progress || 100}%"
-            ></div>
+        {#if toast.duration > 0}
+          <div class="toast-timer" class:hidden={toast.progress === false}>
+            <Timer
+              duration={toast.duration / 1000}
+              variant="bar"
+              showControls={false}
+              showReadout={false}
+              running={!toast.paused}
+              color={timerColor(toast.variant)}
+              oncomplete={() => handleToastComplete(toast.id)}
+            />
           </div>
         {/if}
       </button>
@@ -254,12 +283,17 @@ export const propsMetadata = [
           </div>
         </div>
         
-        {#if toast.progress !== false}
-          <div class="toast-progress-container">
-            <div 
-              class="toast-progress" 
-              style="width: {toast.progress || 100}%"
-            ></div>
+        {#if toast.duration > 0}
+          <div class="toast-timer" class:hidden={toast.progress === false}>
+            <Timer
+              duration={toast.duration / 1000}
+              variant="bar"
+              showControls={false}
+              showReadout={false}
+              running={!toast.paused}
+              color={timerColor(toast.variant)}
+              oncomplete={() => handleToastComplete(toast.id)}
+            />
           </div>
         {/if}
       </div>
@@ -363,56 +397,28 @@ export const propsMetadata = [
     @apply transition-colors duration-150;
   }
   
-  .toast-progress-container {
-    @apply h-1 w-full bg-muted/10 dark:bg-muted/10;
-  }
-  
-  .toast-progress {
-    @apply h-full transition-all duration-150 ease-linear;
+  .toast-timer {
+    @apply px-4 pb-3 -mt-1;
   }
   
   /* Variant styles */
-  .toast-default .toast-progress {
-    @apply bg-muted dark:bg-muted;
-  }
-  
   .toast-primary .toast-icon {
     @apply text-primary-500 dark:text-primary-500;
-  }
-  
-  .toast-primary .toast-progress {
-    @apply bg-primary-500 dark:bg-primary-500;
   }
   
   .toast-success .toast-icon {
     @apply text-success-500 dark:text-success-500;
   }
   
-  .toast-success .toast-progress {
-    @apply bg-success-500 dark:bg-success-500;
-  }
-  
   .toast-warning .toast-icon {
     @apply text-warning-500 dark:text-warning-500;
-  }
-  
-  .toast-warning .toast-progress {
-    @apply bg-warning-500 dark:bg-warning-500;
   }
   
   .toast-error .toast-icon {
     @apply text-error-500 dark:text-error-500;
   }
   
-  .toast-error .toast-progress {
-    @apply bg-error-500 dark:bg-error-500;
-  }
-  
   .toast-info .toast-icon {
     @apply text-info-500 dark:text-info-500;
-  }
-  
-  .toast-info .toast-progress {
-    @apply bg-info-500 dark:bg-info-500;
   }
 </style>

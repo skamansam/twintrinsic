@@ -20,6 +20,7 @@ test.describe("Toast docs page", () => {
     await expect(page.getByTestId("toast-basic")).toBeVisible();
     await expect(page.getByTestId("toast-variants")).toBeVisible();
     await expect(page.getByTestId("toast-with-title")).toBeVisible();
+    await expect(page.getByTestId("toast-countdown")).toBeVisible();
   });
 
   test("the toast container is an aria-live region", async ({ page }) => {
@@ -54,10 +55,27 @@ test.describe("Toast docs page", () => {
   });
 
   test("a toast with a title renders both title and message", async ({ page }) => {
-    await page.getByTestId("toast-with-title").getByRole("button", { name: "Payment Success" }).click();
+    await page
+      .getByTestId("toast-with-title")
+      .getByRole("button", { name: "Payment Success" })
+      .click();
 
     const toast = page.getByRole("button", { name: "Dismiss notification" });
     await expect(toast).toContainText("Payment processed");
     await expect(toast).toContainText("Your invoice has been paid");
+  });
+
+  test("a toast with a duration shows a ticking Timer countdown bar", async ({ page }) => {
+    await page.getByTestId("toast-countdown").getByRole("button", { name: "Deploy in 8s" }).click();
+
+    const toast = page.getByRole("button", { name: "Dismiss notification" });
+    await expect(toast).toBeVisible();
+    await expect(toast).toContainText("Deploying release");
+
+    const progress = toast.locator("progress");
+    await expect(progress).toBeVisible();
+    const before = await progress.getAttribute("value");
+    await page.waitForTimeout(1300);
+    expect(await progress.getAttribute("value")).not.toBe(before);
   });
 });

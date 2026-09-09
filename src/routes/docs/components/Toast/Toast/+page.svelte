@@ -6,10 +6,9 @@ Toast documentation page — standardized structure
 import Button from "$lib/components/Button/Button.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
-import Toast from "$lib/components/Toast/Toast.svelte"
-import { toastStore } from "$lib/components/Toast/toastStore.js"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
-import * as ToastModule from "$lib/components/Toast/Toast.svelte"
+import Toast, * as ToastModule from "$lib/components/Toast/Toast.svelte"
+import { toastStore } from "$lib/components/Toast/toastStore.js"
 </script>
 
 <style lang="postcss">
@@ -65,7 +64,7 @@ import * as ToastModule from "$lib/components/Toast/Toast.svelte"
     <li>`@starting-style` + `transition-behavior: allow-discrete` for entry animation</li>
     <li>`content-visibility: auto` for off-screen performance</li>
     <li>`aria-live=&quot;polite&quot;` region for screen reader announcements</li>
-    <li>Auto-dismiss after configurable timeout</li>
+    <li>Auto-dismiss countdown powered by the Timer component (pausable on hover)</li>
     <li>Multiple toasts stack (not limited by Popover API)</li>
 </ul>
 
@@ -89,8 +88,8 @@ import * as ToastModule from "$lib/components/Toast/Toast.svelte"
   <ul>
     <li>Variants: <code>default</code>, <code>primary</code>, <code>success</code>, <code>warning</code>, <code>error</code>, <code>info</code>.</li>
     <li>Positions: <code>top-right</code>, <code>top-left</code>, <code>top-center</code>, <code>bottom-right</code>, <code>bottom-left</code>, <code>bottom-center</code>, <code>middle-left</code>, <code>middle-right</code>.</li>
-    <li>Configurable duration, max toasts, dismissible, and pause-on-hover.</li>
-    <li>Custom icons and progress bar per toast.</li>
+    <li>Configurable duration (ms; `0` = persistent), max toasts, dismissible, and pause-on-hover.</li>
+    <li>The auto-dismiss countdown is rendered by the Timer component; `progress: false` hides the bar.</li>
   </ul>
 
   <h2>Examples</h2>
@@ -146,6 +145,20 @@ toastStore.add({ message: "A new version is available", variant: "info" })`}>
     </div>
   </ExampleTabs>
 
+  <h3>Toast with Countdown</h3>
+  <ExampleTabs code={`toastStore.add({
+  title: "Deploying release",
+  message: "v0.50 ships in 8 seconds",
+  variant: "info",
+  duration: 8000
+})`}>
+    <div class="flex flex-wrap gap-4" data-testid="toast-countdown">
+      <Button onclick={() => toastStore.add({ title: "Deploying release", message: "v0.50 ships in 8 seconds", variant: "info", duration: 8000 })}>
+        Deploy in 8s
+      </Button>
+    </div>
+  </ExampleTabs>
+
   <h3>Toast Positions</h3>
   <ExampleTabs code={`<Toast position="top-right" />
 <Toast position="top-left" />
@@ -176,6 +189,7 @@ toastStore.add({ message: "A new version is available", variant: "info" })`}>
     <tbody>
       <tr><td><code>add()</code></td><td><code>{'{ message, title?, variant?, duration?, icon?, progress? }'}</code></td><td>Add a new toast notification</td></tr>
       <tr><td><code>remove()</code></td><td><code>id: string</code></td><td>Remove a specific toast by ID</td></tr>
+      <tr><td><code>setClosing()</code></td><td><code>id: string</code></td><td>Mark a toast as closing (exit animation)</td></tr>
       <tr><td><code>clear()</code></td><td>None</td><td>Clear all toasts</td></tr>
       <tr><td><code>pause()</code></td><td><code>id: string</code></td><td>Pause a toast's auto-dismiss timer</td></tr>
       <tr><td><code>resume()</code></td><td><code>id: string</code></td><td>Resume a toast's auto-dismiss timer</td></tr>

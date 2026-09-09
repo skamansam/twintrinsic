@@ -7,8 +7,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
-import Timer from "$lib/components/Timer/Timer.svelte"
-import * as TimerModule from "$lib/components/Timer/Timer.svelte"
+import Timer, * as TimerModule from "$lib/components/Timer/Timer.svelte"
 </script>
 
 <style lang="postcss">
@@ -68,6 +67,8 @@ import * as TimerModule from "$lib/components/Timer/Timer.svelte"
     <li>Colors: <code>primary</code>, <code>secondary</code>, <code>success</code>, <code>danger</code>, <code>warning</code>, <code>info</code>.</li>
     <li><code>format</code> accepts a custom formatter; <code>label</code> titles the display.</li>
     <li><code>showControls</code> toggles the built-in buttons; <code>loop</code> restarts on completion.</li>
+    <li><code>running</code> externally controls the countdown (e.g. pause on hover); omit it for self-managed timing via <code>autoStart</code> and the buttons.</li>
+    <li><code>showReadout</code> hides the large time display for bar-only embedding (as used inside Toast).</li>
   </ul>
 
   <h2>Examples</h2>

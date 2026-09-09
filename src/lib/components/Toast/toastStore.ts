@@ -1,43 +1,52 @@
 import { writable } from "svelte/store";
 
+/**
+ * Typed mirror of `toastStore.js`. The runtime module is the `.js` file (Vite
+ * resolves the extension literally); this `.ts` provides the type surface for
+ * imports of `./toastStore.js`. Keep the two in sync.
+ *
+ * Auto-dismissal is driven by the Timer component: each toast with a
+ * `duration > 0` renders a Timer whose `oncomplete` marks the toast closing
+ * (via `setClosing`) and removes it after the exit animation. The store only
+ * tracks the toast list and the paused flag; it no longer owns any timers.
+ */
+
 interface Toast {
   id: string;
   message: string;
   title?: string;
   variant?: "default" | "primary" | "success" | "warning" | "error" | "info";
+  /** Duration in milliseconds; 0 = persistent (no auto-dismiss) */
   duration: number;
   icon?: string | boolean;
   dismissible: boolean;
+  /** 100, or false to hide the countdown bar */
   progress: number | boolean;
   closing: boolean;
   createdAt: number;
-  paused?: boolean;
-  remaining?: number;
+  /** Whether the countdown is paused (drives the Timer's `running` prop) */
+  paused: boolean;
 }
 
 interface ToastInput {
   message: string;
   title?: string;
   variant?: "default" | "primary" | "success" | "warning" | "error" | "info";
+  /** Duration in milliseconds; 0 for a persistent toast */
   duration?: number;
   icon?: string | boolean;
   dismissible?: boolean;
+  /** false to hide the countdown bar */
   progress?: boolean;
-}
-
-interface TimerObject {
-  interval: ReturnType<typeof setInterval>;
-  timeout: ReturnType<typeof setTimeout>;
 }
 
 function createToastStore() {
   const { subscribe, update } = writable<Toast[]>([]);
 
-  const timers = new Map<string, TimerObject>();
-
   function add(toast: ToastInput): string {
     const id = crypto.randomUUID();
-    const duration = toast.duration || 5000;
+    // `??` (not `||`) so duration: 0 is honoured as a persistent toast
+    const duration = toast.duration ?? 5000;
 
     const newToast: Toast = {
       id,
@@ -50,121 +59,37 @@ function createToastStore() {
       progress: toast.progress !== false ? 100 : false,
       closing: false,
       createdAt: Date.now(),
+      paused: false,
     };
 
     update((toasts) => [newToast, ...toasts]);
 
-    if (duration > 0) {
-      const timer = startTimer(id, duration);
-      timers.set(id, timer);
-    }
-
     return id;
   }
 
-  function startTimer(id: string, duration: number): TimerObject {
-    const interval = setInterval(() => {
-      update((toasts) => {
-        return toasts.map((toast) => {
-          if (toast.id === id && toast.progress !== false) {
-            const elapsed = Date.now() - toast.createdAt;
-            const remaining = Math.max(0, duration - elapsed);
-            const progress = (remaining / duration) * 100;
-
-            return { ...toast, progress };
-          }
-          return toast;
-        });
-      });
-    }, 100);
-
-    const timeout = setTimeout(() => {
-      update((toasts) => {
-        return toasts.map((toast) => {
-          if (toast.id === id) {
-            return { ...toast, closing: true };
-          }
-          return toast;
-        });
-      });
-
-      setTimeout(() => {
-        remove(id);
-      }, 200);
-    }, duration);
-
-    return { interval, timeout };
-  }
-
   function remove(id: string): void {
-    if (timers.has(id)) {
-      const timer = timers.get(id)!;
-      clearInterval(timer.interval);
-      clearTimeout(timer.timeout);
-      timers.delete(id);
-    }
-
     update((toasts) => toasts.filter((toast) => toast.id !== id));
   }
 
+  function setClosing(id: string): void {
+    update((toasts) =>
+      toasts.map((toast) => (toast.id === id ? { ...toast, closing: true } : toast)),
+    );
+  }
+
   function pause(id: string): void {
-    if (timers.has(id)) {
-      const timer = timers.get(id)!;
-      clearInterval(timer.interval);
-      clearTimeout(timer.timeout);
-
-      update((toasts) => {
-        return toasts.map((toast) => {
-          if (toast.id === id) {
-            const elapsed = Date.now() - toast.createdAt;
-            const remaining = Math.max(0, toast.duration - elapsed);
-
-            return {
-              ...toast,
-              remaining,
-              paused: true,
-            };
-          }
-          return toast;
-        });
-      });
-    }
+    update((toasts) =>
+      toasts.map((toast) => (toast.id === id ? { ...toast, paused: true } : toast)),
+    );
   }
 
   function resume(id: string): void {
-    update((toasts) => {
-      const toastToResume = toasts.find((toast) => toast.id === id && toast.paused);
-
-      if (toastToResume && toastToResume.remaining !== undefined) {
-        const newCreatedAt = Date.now() - (toastToResume.duration - toastToResume.remaining);
-
-        const timer = startTimer(id, toastToResume.remaining);
-        timers.set(id, timer);
-
-        return toasts.map((toast) => {
-          if (toast.id === id) {
-            return {
-              ...toast,
-              createdAt: newCreatedAt,
-              paused: false,
-              remaining: undefined,
-            };
-          }
-          return toast;
-        });
-      }
-
-      return toasts;
-    });
+    update((toasts) =>
+      toasts.map((toast) => (toast.id === id ? { ...toast, paused: false } : toast)),
+    );
   }
 
   function clear(): void {
-    timers.forEach((timer) => {
-      clearInterval(timer.interval);
-      clearTimeout(timer.timeout);
-    });
-    timers.clear();
-
     update(() => []);
   }
 
@@ -204,6 +129,7 @@ function createToastStore() {
     subscribe,
     add,
     remove,
+    setClosing,
     pause,
     resume,
     clear,

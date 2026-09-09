@@ -30,6 +30,8 @@ export const propsMetadata = [
   { name: "pauseLabel", type: "string", description: "Accessible label for the pause button", default: "\"Pause timer\"", optional: true },
   { name: "resumeLabel", type: "string", description: "Accessible label for the resume button", default: "\"Resume timer\"", optional: true },
   { name: "resetLabel", type: "string", description: "Accessible label for the reset button", default: "\"Reset timer\"", optional: true },
+  { name: "running", type: "boolean", description: "Externally controlled running state (omit for self-managed timing)", optional: true },
+  { name: "showReadout", type: "boolean", description: "Whether to show the large time readout", default: "true", optional: true },
   { name: "onupdate", type: "(event: CustomEvent<{ elapsed: number; remaining: number; percent: number }>) => void", description: "Update event fired on each tick", optional: true, eventDetail: "{ elapsed: number; remaining: number; percent: number }" },
   { name: "oncomplete", type: "(event: CustomEvent<{ elapsed: number; duration: number }>) => void", description: "Complete event fired when the timer reaches its duration", optional: true, eventDetail: "{ elapsed: number; duration: number }" },
 ];
@@ -72,6 +74,10 @@ interface Props {
   resumeLabel?: string;
   /** Accessible label for the reset button */
   resetLabel?: string;
+  /** Externally controlled running state (omit for self-managed timing) */
+  running?: boolean;
+  /** Whether to show the large time readout */
+  showReadout?: boolean;
   /** Update event fired on each tick */
   onupdate?: (event: CustomEvent<{ elapsed: number; remaining: number; percent: number }>) => void;
   /** Complete event fired when the timer reaches its duration */
@@ -97,6 +103,8 @@ let {
   pauseLabel = "Pause timer",
   resumeLabel = "Resume timer",
   resetLabel = "Reset timer",
+  running = undefined,
+  showReadout = true,
   onupdate = undefined,
   oncomplete = undefined,
   ...restProps
@@ -110,7 +118,7 @@ let elapsed = $state(0)
 
 /** Whether the timer is currently running */
 // svelte-ignore state_referenced_locally -- autoStart is intentionally read once at mount
-let isRunning = $state(autoStart)
+let isRunning = $state(running ?? autoStart)
 
 /** Total duration in milliseconds */
 const durationMs = $derived(duration * 1000)
@@ -154,6 +162,11 @@ function tick(): void {
   if (elapsed >= durationMs) complete()
 }
 
+/** Sync the externally controlled `running` prop into local state */
+$effect(() => {
+  if (running !== undefined) isRunning = running
+})
+
 /** Start (or resume) the timer */
 function start(): void {
   if (isRunning) return
@@ -179,7 +192,8 @@ function toggle(): void {
 
 /** Handle timer completion */
 function complete(): void {
-  pause()
+  // Stop the local tick regardless of control mode so completion can't loop
+  isRunning = false
   oncomplete?.(new CustomEvent("complete", { detail: { elapsed, duration } }))
   if (loop) {
     elapsed = 0
@@ -196,12 +210,14 @@ $effect(() => {
 </script>
 
 <div {...restProps} {id} class="timer flex flex-col items-center gap-3 {className}">
-  <div
-    role="timer"
-    class="text-4xl font-mono font-semibold tabular-nums text-text dark:text-text"
-  >
-    {formattedTime}
-  </div>
+  {#if showReadout}
+    <div
+      role="timer"
+      class="text-4xl font-mono font-semibold tabular-nums text-text dark:text-text"
+    >
+      {formattedTime}
+    </div>
+  {/if}
 
   {#if variant === "gauge"}
     <GaugeChart

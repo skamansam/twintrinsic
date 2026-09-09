@@ -2,6 +2,11 @@
  * Toast notification store
  * Manages toast notifications for the application
  *
+ * Auto-dismissal is driven by the Timer component: each toast with a
+ * `duration > 0` renders a Timer whose `oncomplete` marks the toast closing
+ * (via `setClosing`) and removes it after the exit animation. The store only
+ * tracks the toast list and the paused flag; it no longer owns any timers.
+ *
  * @module toastStore
  */
 
@@ -13,14 +18,13 @@ import { writable } from "svelte/store";
  * @property {string} message - Toast message content
  * @property {string} [title] - Optional toast title
  * @property {string} [variant] - Visual style variant (default, primary, success, warning, error, info)
- * @property {number} [duration] - Duration in milliseconds
+ * @property {number} duration - Duration in milliseconds (0 = persistent, no auto-dismiss)
  * @property {string|boolean} [icon] - Custom icon or false to hide icon
  * @property {boolean} [dismissible] - Whether toast can be dismissed by clicking
- * @property {number|boolean} [progress] - Progress percentage (0-100) or false to hide progress
+ * @property {number|boolean} [progress] - 100 or false; false hides the countdown bar
  * @property {boolean} [closing] - Whether toast is in closing animation
  * @property {number} [createdAt] - Timestamp when toast was created
- * @property {boolean} [paused] - Whether toast timer is paused
- * @property {number} [remaining] - Remaining time in milliseconds when paused
+ * @property {boolean} [paused] - Whether the countdown is paused (drives the Timer)
  */
 
 /**
@@ -31,24 +35,22 @@ function createToastStore() {
   // Create writable store
   const { subscribe, update } = writable(/** @type {Toast[]} */ ([]));
 
-  // Timer map to track toast timeouts
-  const timers = new Map();
-
   /**
    * Add a new toast
    * @param {Object} toast - Toast configuration
    * @param {string} toast.message - Toast message
    * @param {string} [toast.title] - Toast title
    * @param {string} [toast.variant] - Toast variant (default, primary, success, warning, error, info)
-   * @param {number} [toast.duration] - Duration in milliseconds
+   * @param {number} [toast.duration] - Duration in milliseconds; 0 for persistent
    * @param {string|boolean} [toast.icon] - Custom icon or false to hide icon
    * @param {boolean} [toast.dismissible] - Whether toast can be dismissed
-   * @param {boolean} [toast.progress] - Whether to show progress
+   * @param {boolean} [toast.progress] - false to hide the countdown bar
    * @returns {string} Toast ID
    */
   function add(toast) {
     const id = crypto.randomUUID();
-    const duration = toast.duration || 5000;
+    // `??` (not `||`) so duration: 0 is honoured as a persistent toast
+    const duration = toast.duration ?? 5000;
 
     // Create toast object
     const newToast = {
@@ -62,62 +64,13 @@ function createToastStore() {
       progress: toast.progress !== false ? 100 : false,
       closing: false,
       createdAt: Date.now(),
+      paused: false,
     };
 
     // Add toast to store
     update((toasts) => [newToast, ...toasts]);
 
-    // Start timer for auto-removal
-    if (duration > 0) {
-      const timer = startTimer(id, duration);
-      timers.set(id, timer);
-    }
-
     return id;
-  }
-
-  /**
-   * Start a timer for toast removal
-   * @param {string} id - Toast ID
-   * @param {number} duration - Duration in milliseconds
-   * @returns {Object} Timer object with interval and timeout
-   */
-  function startTimer(id, duration) {
-    // Progress update interval (update every 100ms)
-    const interval = setInterval(() => {
-      update((toasts) => {
-        return toasts.map((toast) => {
-          if (toast.id === id && toast.progress !== false) {
-            const elapsed = Date.now() - toast.createdAt;
-            const remaining = Math.max(0, duration - elapsed);
-            const progress = (remaining / duration) * 100;
-
-            return { ...toast, progress };
-          }
-          return toast;
-        });
-      });
-    }, 100);
-
-    // Timeout for removal
-    const timeout = setTimeout(() => {
-      // Start closing animation
-      update((toasts) => {
-        return toasts.map((toast) => {
-          if (toast.id === id) {
-            return { ...toast, closing: true };
-          }
-          return toast;
-        });
-      });
-
-      // Remove after animation completes
-      setTimeout(() => {
-        remove(id);
-      }, 200); // Match animation duration
-    }, duration);
-
-    return { interval, timeout };
   }
 
   /**
@@ -125,93 +78,43 @@ function createToastStore() {
    * @param {string} id - Toast ID
    */
   function remove(id) {
-    // Clear timers
-    if (timers.has(id)) {
-      const timer = timers.get(id);
-      clearInterval(timer.interval);
-      clearTimeout(timer.timeout);
-      timers.delete(id);
-    }
-
-    // Remove from store
     update((toasts) => toasts.filter((toast) => toast.id !== id));
   }
 
   /**
-   * Pause a toast's timer
+   * Mark a toast as closing (starts its exit animation)
    * @param {string} id - Toast ID
    */
-  function pause(id) {
-    if (timers.has(id)) {
-      const timer = timers.get(id);
-      clearInterval(timer.interval);
-      clearTimeout(timer.timeout);
-
-      // Store remaining time
-      update((toasts) => {
-        return toasts.map((toast) => {
-          if (toast.id === id) {
-            const elapsed = Date.now() - toast.createdAt;
-            const remaining = Math.max(0, toast.duration - elapsed);
-
-            return {
-              ...toast,
-              remaining,
-              paused: true,
-            };
-          }
-          return toast;
-        });
-      });
-    }
+  function setClosing(id) {
+    update((toasts) =>
+      toasts.map((toast) => (toast.id === id ? { ...toast, closing: true } : toast)),
+    );
   }
 
   /**
-   * Resume a toast's timer
+   * Pause a toast's countdown
+   * @param {string} id - Toast ID
+   */
+  function pause(id) {
+    update((toasts) =>
+      toasts.map((toast) => (toast.id === id ? { ...toast, paused: true } : toast)),
+    );
+  }
+
+  /**
+   * Resume a toast's countdown
    * @param {string} id - Toast ID
    */
   function resume(id) {
-    update((toasts) => {
-      const toastToResume = toasts.find((toast) => toast.id === id && toast.paused);
-
-      if (toastToResume) {
-        // Update creation time to account for pause
-        const newCreatedAt = Date.now() - (toastToResume.duration - toastToResume.remaining);
-
-        // Restart timer
-        const timer = startTimer(id, toastToResume.remaining);
-        timers.set(id, timer);
-
-        // Update toast
-        return toasts.map((toast) => {
-          if (toast.id === id) {
-            return {
-              ...toast,
-              createdAt: newCreatedAt,
-              paused: false,
-              remaining: undefined,
-            };
-          }
-          return toast;
-        });
-      }
-
-      return toasts;
-    });
+    update((toasts) =>
+      toasts.map((toast) => (toast.id === id ? { ...toast, paused: false } : toast)),
+    );
   }
 
   /**
    * Clear all toasts
    */
   function clear() {
-    // Clear all timers
-    timers.forEach((timer) => {
-      clearInterval(timer.interval);
-      clearTimeout(timer.timeout);
-    });
-    timers.clear();
-
-    // Clear store
     update(() => []);
   }
 
@@ -279,6 +182,7 @@ function createToastStore() {
     subscribe,
     add,
     remove,
+    setClosing,
     pause,
     resume,
     clear,
