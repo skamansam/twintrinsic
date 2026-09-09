@@ -545,6 +545,11 @@
       "svelte": "./dist/components/Timeline/TimelineItem.svelte",
       "default": "./dist/components/Timeline/TimelineItem.svelte"
     },
+    "./components/Timer": {
+      "types": "./dist/components/Timer/Timer.svelte.d.ts",
+      "svelte": "./dist/components/Timer/Timer.svelte",
+      "default": "./dist/components/Timer/Timer.svelte"
+    },
     "./components/Toast": {
       "types": "./dist/components/Toast/Toast.svelte.d.ts",
       "svelte": "./dist/components/Toast/Toast.svelte",

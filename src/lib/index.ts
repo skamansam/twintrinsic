@@ -112,6 +112,7 @@ export { default as TagGroup } from "./components/Tag/TagGroup.svelte";
 export { default as ThemeToggle } from "./components/ThemeToggle/ThemeToggle.svelte";
 export { default as Timeline } from "./components/Timeline/Timeline.svelte";
 export { default as TimelineItem } from "./components/Timeline/TimelineItem.svelte";
+export { default as Timer } from "./components/Timer/Timer.svelte";
 export { default as Toast } from "./components/Toast/Toast.svelte";
 export { default as Tooltip } from "./components/Tooltip/Tooltip.svelte";
 export { default as Tree, type TreeNodeData } from "./components/Tree/Tree.svelte";
