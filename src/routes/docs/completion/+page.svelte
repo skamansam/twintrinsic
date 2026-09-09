@@ -213,6 +213,10 @@ const components = [
   ]},
   
   // Feedback
+  { name: "Alert", category: "Feedback", updated: true, apis: [
+    { name: "role=\"alert\" (aria-live announcement)", implemented: true },
+    { name: "aria-label on dismiss button", implemented: true },
+  ]},
   { name: "Modal", category: "Feedback", updated: false, apis: [
     { name: "HTML <dialog> element", implemented: true },
     { name: "dialog closedby attribute", implemented: true },
@@ -220,6 +224,11 @@ const components = [
   ]},
   { name: "Stepper", category: "Feedback", updated: true, apis: [
     { name: "<nav> landmark", implemented: true },
+  ]},
+  { name: "Timer", category: "Feedback", updated: true, apis: [
+    { name: "setInterval-based timing", implemented: true },
+    { name: "role=\"timer\" (ARIA live region)", implemented: true },
+    { name: "CustomEvent callbacks (update/complete)", implemented: true },
   ]},
   { name: "Toast", category: "Feedback", updated: true, apis: [
     { name: "CSS @starting-style entry animation", implemented: true },

@@ -126,9 +126,11 @@ const categories = [
   {
     name: "Feedback",
     items: [
+      { name: "Alert", href: "/docs/components/Alert/Alert" },
       { name: "Modal", href: "/docs/components/Modal/Modal" },
       { name: "Stepper", href: "/docs/components/Stepper/Stepper" },
       { name: "StepperStep", href: "/docs/components/Stepper/StepperStep" },
+      { name: "Timer", href: "/docs/components/Timer/Timer" },
       { name: "Toast", href: "/docs/components/Toast/Toast" },
     ],
   },

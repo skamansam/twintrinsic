@@ -143,7 +143,7 @@
 | 8.2 | P1 | **Modal: scrollable demo broken.** Scroll doesn't show at normal screen resolution. Needs much longer scrollable text content. | ✅ |
 | 8.3 | P1 | **Stepper: demos broken.** Basic stepper: step titles too far down, should be right of step number; other text not shown. Vertical stepper: only first step visible with no way to navigate. Neither page uses the code/demo tabs. Label prop should also accept a snippet. | ✅ |
 | 8.4 | P1 | **Toast: needs overhaul.** Use the Popover API to eliminate most JS. Use twintrinsic components (e.g., Progress component for countdown timer). Fix positioning: support all 8 positions (left, right, top, bottom, top-left, top-right, bottom-left, bottom-right), offsets, and stacking order (bottom, top, one-at-a-time). | ✅ |
-| 8.5 | P2 | **New: Timer component.** Countdown/count-up display with pause/resume/stop. Uses Progress, GaugeChart, KPICard as display variants. Would power Toast timers. Supports different timing modes and can be paused, resumed, and stopped. | ☐ |
+| 8.5 | P2 | **New: Timer component.** Countdown/count-up display with pause/resume/stop. Uses Progress, GaugeChart, KPICard as display variants. Would power Toast timers. Supports different timing modes and can be paused, resumed, and stopped. | ✅ Timer component built (`src/lib/components/Timer/`) with countdown/count-up modes, bar/gauge/kpi display variants, loop, custom format, and pause/resume/reset controls. Unit tests, story, docs page, and e2e coverage added. |
 
 ---
 

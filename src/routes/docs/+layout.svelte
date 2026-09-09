@@ -171,9 +171,11 @@ const siteMenu = [
   {
     title: "Feedback",
     children: [
+      { title: "Alert", link: "/docs/components/Alert/Alert" },
       { title: "Modal", link: "/docs/components/Modal/Modal" },
       { title: "Stepper", link: "/docs/components/Stepper/Stepper" },
       { title: "StepperStep", link: "/docs/components/Stepper/StepperStep" },
+      { title: "Timer", link: "/docs/components/Timer/Timer" },
       { title: "Toast", link: "/docs/components/Toast/Toast" },
     ],
   },
