@@ -20,7 +20,8 @@ Usage:
   export const propsMetadata = [
     { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
     { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
-    { name: "schema", type: "OpenApiSchema", description: "OpenAPI 3.0 Schema Object (type/properties/required/enum/format)", optional: true },
+    { name: "schema", type: "OpenApiSchema", description: "OpenAPI 3.0 Schema Object (type/properties/required/enum/format, plus $ref/allOf/oneOf)", optional: true },
+    { name: "components", type: "Record<string, OpenApiSchema>", description: "OpenAPI document `components.schemas` map used to resolve `$ref`", optional: true },
     { name: "fields", type: "FormFieldDescriptor[]", description: "Explicit field descriptors (takes precedence over `schema`)", optional: true },
     { name: "values", type: "Record<string, unknown>", description: "Initial values used to seed the generated controls", default: "{}", optional: true },
     { name: "submitLabel", type: "string", description: "Text for the submit button", default: "\"Submit\"", optional: true },
@@ -84,6 +85,14 @@ Usage:
     properties?: Record<string, OpenApiSchema>;
     /** Item schema for array types */
     items?: OpenApiSchema;
+    /** Reference to a schema elsewhere in the document (e.g. "#/components/schemas/Pet") */
+    $ref?: string;
+    /** Subschema intersection — merged into a single field set */
+    allOf?: OpenApiSchema[];
+    /** Subschema alternatives — the first concrete variant is rendered */
+    oneOf?: OpenApiSchema[];
+    /** Subschema alternatives (treated like `oneOf`) */
+    anyOf?: OpenApiSchema[];
   }
 </script>
 
@@ -102,8 +111,10 @@ Usage:
     class?: string;
     /** HTML id for accessibility */
     id?: string;
-    /** OpenAPI 3.0 Schema Object (type/properties/required/enum/format) */
+    /** OpenAPI 3.0 Schema Object (type/properties/required/enum/format, plus $ref/allOf/oneOf) */
     schema?: OpenApiSchema;
+    /** OpenAPI document `components.schemas` map used to resolve `$ref` */
+    components?: Record<string, OpenApiSchema>;
     /** Explicit field descriptors (takes precedence over `schema`) */
     fields?: FormFieldDescriptor[];
     /** Initial values used to seed the generated controls */
@@ -127,6 +138,7 @@ Usage:
     class: className = "",
     id = crypto.randomUUID(),
     schema = undefined,
+    components = undefined,
     fields = undefined,
     values = {},
     submitLabel = "Submit",
@@ -144,11 +156,93 @@ Usage:
       .replace(/\b\w/g, (char) => char.toUpperCase())
   }
 
+  /** Resolution context shared across $ref/allOf/oneOf lookups */
+  interface SchemaContext {
+    /** The document's components.schemas map */
+    components?: Record<string, OpenApiSchema>;
+  }
+
+  /** Merge several schemas into one (allOf intersection semantics) */
+  function mergeSchemas(parts: OpenApiSchema[]): OpenApiSchema {
+    const merged: OpenApiSchema = {}
+    for (const part of parts) {
+      if (part.type !== undefined) merged.type = part.type
+      if (part.title !== undefined) merged.title = part.title
+      if (part.description !== undefined) merged.description = part.description
+      if (part.default !== undefined) merged.default = part.default
+      if (part.format !== undefined) merged.format = part.format
+      if (part.enum) merged.enum = [...(merged.enum ?? []), ...part.enum]
+      if (part.minimum !== undefined) merged.minimum = part.minimum
+      if (part.maximum !== undefined) merged.maximum = part.maximum
+      if (part.multipleOf !== undefined) merged.multipleOf = part.multipleOf
+      if (part.required) merged.required = [...(merged.required ?? []), ...part.required]
+      if (part.properties) merged.properties = { ...(merged.properties ?? {}), ...part.properties }
+      if (part.items) merged.items = part.items
+    }
+    return merged
+  }
+
+  /** Resolve a JSON-pointer style $ref against the components map */
+  function resolveRef(ref: string, context: SchemaContext): OpenApiSchema | undefined {
+    const segments = ref.replace(/^#\//, "").split("/")
+    if (segments[0] !== "components" || segments[1] !== "schemas") return undefined
+    let node: unknown = context.components?.[segments[2]]
+    for (const segment of segments.slice(3)) {
+      if (node && typeof node === "object" && segment in (node as Record<string, unknown>)) {
+        node = (node as Record<string, unknown>)[segment]
+      } else {
+        return undefined
+      }
+    }
+    return node as OpenApiSchema | undefined
+  }
+
+  /**
+   * Reduce $ref/allOf/oneOf/anyOf into a concrete schema.
+   * Returns the resolved schema plus the $ref chain used to reach it, so
+   * nested properties can break circular references.
+   */
+  function resolveSchema(
+    schemaObject: OpenApiSchema,
+    context: SchemaContext,
+    refs: string[] = [],
+  ): { schema: OpenApiSchema; refs: string[] } {
+    if (schemaObject.$ref) {
+      if (refs.includes(schemaObject.$ref)) {
+        return { schema: { type: "string", description: `Circular reference: ${schemaObject.$ref}` }, refs }
+      }
+      const target = resolveRef(schemaObject.$ref, context)
+      if (!target) {
+        return { schema: { type: "string", description: `Unresolvable reference: ${schemaObject.$ref}` }, refs }
+      }
+      return resolveSchema(target, context, [...refs, schemaObject.$ref])
+    }
+    if (schemaObject.allOf?.length) {
+      const parts = schemaObject.allOf.map((part) => resolveSchema(part, context, refs))
+      const merged = mergeSchemas(parts.map((part) => part.schema))
+      return resolveSchema(merged, context, refs)
+    }
+    if (schemaObject.oneOf?.length || schemaObject.anyOf?.length) {
+      const variants = (schemaObject.oneOf ?? schemaObject.anyOf ?? []).map((variant) =>
+        resolveSchema(variant, context, refs),
+      )
+      const chosen = variants.find((variant) => variant.schema.type !== undefined) ?? variants[0]
+      return chosen ?? { schema: { type: "string" }, refs }
+    }
+    return { schema: schemaObject, refs }
+  }
+
   /** Convert an OpenAPI Schema Object into field descriptors */
-  function descriptorsFromSchema(schemaObject: OpenApiSchema): FormFieldDescriptor[] {
-    const properties = schemaObject.properties ?? {}
-    const requiredSet = new Set(schemaObject.required ?? [])
-    return Object.entries(properties).map(([name, property]) => {
+  function descriptorsFromSchema(
+    schemaObject: OpenApiSchema,
+    context: SchemaContext,
+    refs: string[] = [],
+  ): FormFieldDescriptor[] {
+    const { schema: resolved, refs: resolvedRefs } = resolveSchema(schemaObject, context, refs)
+    const properties = resolved.properties ?? {}
+    const requiredSet = new Set(resolved.required ?? [])
+    return Object.entries(properties).map(([name, propertySchema]) => {
+      const { schema: property, refs: propertyRefs } = resolveSchema(propertySchema, context, resolvedRefs)
       const descriptor: FormFieldDescriptor = {
         name,
         label: property.title ?? humanize(name),
@@ -176,7 +270,7 @@ Usage:
         if (property.items?.enum) descriptor.options = property.items.enum
       } else if (property.type === "object") {
         descriptor.type = "object"
-        descriptor.children = descriptorsFromSchema(property)
+        descriptor.children = descriptorsFromSchema(property, context, propertyRefs)
       }
 
       return descriptor
@@ -184,7 +278,9 @@ Usage:
   }
 
   /** The effective descriptors (explicit `fields` win over `schema`) */
-  const descriptors = $derived(fields ?? (schema ? descriptorsFromSchema(schema) : []))
+  const descriptors = $derived(
+    fields ?? (schema ? descriptorsFromSchema(schema, { components }) : []),
+  )
 
   /** Initial value for a field: seeded from `values`, else the default */
   function initialValue(descriptor: FormFieldDescriptor): unknown {
