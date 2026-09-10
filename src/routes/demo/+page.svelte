@@ -1,7 +1,7 @@
 <script lang="ts">
+  import LocaleSwitcher from "$lib/components/LocaleSwitcher/LocaleSwitcher.svelte"
   import { m } from "$lib/paraglide/messages.js"
   import { getTextDirection } from "$lib/paraglide/runtime.js"
-  import LocaleSwitcher from "./LocaleSwitcher.svelte"
 
   // Flip the document direction to match the active locale (RTL for Persian)
   $effect(() => {

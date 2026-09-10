@@ -1,8 +1,8 @@
 <script lang="ts">
+  import LocaleSwitcher from "$lib/components/LocaleSwitcher/LocaleSwitcher.svelte"
   import { m } from "$lib/paraglide/messages.js"
   import { getTextDirection } from "$lib/paraglide/runtime.js"
   import DemoBadge from "../DemoBadge.svelte"
-  import LocaleSwitcher from "../LocaleSwitcher.svelte"
 
   /** Count used by the pluralization demo */
   let count = $state(1)
