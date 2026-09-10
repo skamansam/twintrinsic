@@ -97,4 +97,60 @@ test.describe("Docs locale switcher", () => {
     await expect(page.getByText(/توابع کمکی مشترک/)).toBeVisible();
     await expect(page.getByText(/استخراج برچسب/).first()).toBeVisible();
   });
+
+  test("translates the theming page prose", async ({ page }) => {
+    await page.goto("/docs/theming");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Theming");
+    await expect(page.locator("h2", { hasText: "Base Colors" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("تم‌سازی");
+    await expect(page.locator("h2", { hasText: "رنگ‌های پایه" })).toBeVisible();
+    await expect(page.getByText(/متغیرهای CSS/).first()).toBeVisible();
+    await expect(page.getByText(/سفارشی‌سازی/).first()).toBeVisible();
+  });
+
+  test("translates the completion page prose", async ({ page }) => {
+    await page.goto("/docs/completion");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Development Completion");
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("تکمیل توسعه");
+    await expect(page.getByText(/پیشرفت:/)).toBeVisible();
+    await expect(page.getByText(/گام‌های بعدی/).first()).toBeVisible();
+    await expect(page.getByText(/چک‌لیست تکمیل کامپوننت‌ها/).first()).toBeVisible();
+  });
+
+  test("translates the Button docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Button/Button");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Button");
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("دکمه");
+    await expect(page.locator("h2", { hasText: "اشتباهات رایج" })).toBeVisible();
+    await expect(page.locator("h2", { hasText: "دسترس‌پذیری" })).toBeVisible();
+  });
+
+  test("translates the DataTable docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/DataTable/DataTable");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("DataTable");
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("جدول داده‌ها");
+    await expect(page.locator("h2", { hasText: "اسلات‌ها" })).toBeVisible();
+    await expect(page.locator("h2", { hasText: "پشتیبانی صفحه‌کلید" })).toBeVisible();
+  });
 });
