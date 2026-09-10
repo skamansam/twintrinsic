@@ -96,6 +96,87 @@ const json = (value: unknown): string => JSON.stringify(value, null, 2)
     value, and the <code>required</code> list → required markers.
   </p>
 
+  <h2>References &amp; Composition</h2>
+  <p>
+    Pass the OpenAPI document's <code>components.schemas</code> map via the
+    <code>components</code> prop to resolve <code>$ref</code>s. The resolver
+    also handles the composition keywords:
+  </p>
+  <ul>
+    <li><code>$ref</code> — JSON-pointer references (<code>#/components/schemas/Pet</code>) are followed, including nested paths; unresolvable or circular references degrade to a plain text field instead of failing.</li>
+    <li><code>allOf</code> — subschemas are merged into one field set (properties, required list, bounds, enum).</li>
+    <li><code>oneOf</code> / <code>anyOf</code> — the first variant with a concrete type is rendered.</li>
+  </ul>
+
+  <h3>References &amp; allOf</h3>
+  <ExampleTabs
+    code={`const components = {
+  BasePet: {
+    type: "object",
+    required: ["name"],
+    properties: {
+      name: { type: "string", title: "Pet name" },
+    },
+  },
+  Owner: {
+    type: "object",
+    properties: {
+      fullName: { type: "string", title: "Owner name" },
+    },
+  },
+}
+
+<FormBuilder
+  schema={{
+    allOf: [
+      { $ref: "#/components/schemas/BasePet" },
+      {
+        type: "object",
+        required: ["kind"],
+        properties: {
+          kind: { type: "string", enum: ["dog", "cat"], title: "Kind of pet" },
+          owner: { $ref: "#/components/schemas/Owner" },
+        },
+      },
+    ],
+  }}
+  components={components}
+/>`}
+  >
+    <div data-testid="formbuilder-refs">
+      <FormBuilder
+        schema={{
+          allOf: [
+            { $ref: "#/components/schemas/BasePet" },
+            {
+              type: "object",
+              required: ["kind"],
+              properties: {
+                kind: { type: "string", enum: ["dog", "cat", "bird"], title: "Kind of pet" },
+                owner: { $ref: "#/components/schemas/Owner" },
+              },
+            },
+          ],
+        }}
+        components={{
+          BasePet: {
+            type: "object",
+            required: ["name"],
+            properties: {
+              name: { type: "string", title: "Pet name" },
+            },
+          },
+          Owner: {
+            type: "object",
+            properties: {
+              fullName: { type: "string", title: "Owner name" },
+            },
+          },
+        }}
+      />
+    </div>
+  </ExampleTabs>
+
   <h2>Examples</h2>
 
   <h3>From an OpenAPI Schema</h3>
@@ -166,7 +247,8 @@ const json = (value: unknown): string => JSON.stringify(value, null, 2)
 
   <h2>Limitations</h2>
   <ul>
-    <li>Inline schemas only — <code>$ref</code>, <code>allOf</code>/<code>oneOf</code>/<code>anyOf</code> composition are not resolved (v1).</li>
+    <li><code>oneOf</code>/<code>anyOf</code> render the first concrete variant rather than a discriminator-driven choice.</li>
+    <li>Relative external <code>$ref</code>s (files/URLs) are not fetched — provide them via <code>components</code>.</li>
     <li>For deeply custom layouts, compose the controls directly instead.</li>
   </ul>
 </Container>

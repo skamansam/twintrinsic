@@ -50,6 +50,17 @@ test.describe("FormBuilder docs page", () => {
     ).toHaveCount(0);
   });
 
+  test("resolves $ref and allOf composition", async ({ page }) => {
+    const example = page.getByTestId("formbuilder-refs");
+    // allOf merged the $ref'd base + inline fields; required from both parts
+    await expect(example.getByLabel(/Pet name/)).toHaveAttribute("aria-required", "true");
+    await expect(example.getByLabel("Kind of pet")).toBeVisible();
+    // nested $ref resolves into a fieldset group
+    const ownerGroup = example.getByRole("group", { name: "Owner" });
+    await expect(ownerGroup).toBeVisible();
+    await expect(ownerGroup.getByLabel("Owner name")).toBeVisible();
+  });
+
   test("submits the collected data", async ({ page }) => {
     const example = page.getByTestId("formbuilder-submit");
     await expect(example.getByLabel(/Pet name/)).toHaveValue("Rex");
