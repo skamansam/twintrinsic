@@ -102,6 +102,7 @@ const categories = [
       { name: "ColorPicker", href: "/docs/components/Form/ColorPicker" },
       { name: "Combobox", href: "/docs/components/Form/Combobox" },
       { name: "Dropdown", href: "/docs/components/Form/Dropdown" },
+      { name: "FormBuilder", href: "/docs/components/Form/FormBuilder" },
       { name: "FileUpload", href: "/docs/components/Form/FileUpload" },
       { name: "FloatLabel", href: "/docs/components/Form/FloatLabel" },
       { name: "Form", href: "/docs/components/Form/Form" },

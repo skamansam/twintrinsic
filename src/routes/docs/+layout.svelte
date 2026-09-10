@@ -155,6 +155,7 @@ const siteMenu = $derived([
       { title: "ColorPicker", link: "/docs/components/Form/ColorPicker" },
       { title: "Combobox", link: "/docs/components/Form/Combobox" },
       { title: "Dropdown", link: "/docs/components/Form/Dropdown" },
+      { title: "FormBuilder", link: "/docs/components/Form/FormBuilder" },
       { title: "FileUpload", link: "/docs/components/Form/FileUpload" },
       { title: "FloatLabel", link: "/docs/components/Form/FloatLabel" },
       { title: "Form", link: "/docs/components/Form/Form" },

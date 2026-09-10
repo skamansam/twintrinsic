@@ -145,6 +145,11 @@ const components = [
     { name: "File API", implemented: true },
     { name: "Drag and drop", implemented: true },
   ]},
+  { name: "FormBuilder", category: "Form", updated: true, apis: [
+    { name: "OpenAPI 3.0 Schema Object parsing", implemented: true },
+    { name: "<fieldset> + <legend> for nested objects", implemented: true },
+    { name: "Native form validation", implemented: true },
+  ]},
   { name: "FloatLabel", category: "Form", updated: true, apis: [
     { name: "CSS animations", implemented: true },
   ]},
