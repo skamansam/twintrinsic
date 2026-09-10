@@ -244,6 +244,11 @@ const components = [
   { name: "LazyPanel", category: "Utility", updated: true, apis: [
     { name: "Intersection Observer", implemented: true },
   ]},
+  { name: "LocaleSwitcher", category: "Utility", updated: true, apis: [
+    { name: "Paraglide runtime (getLocale/setLocale)", implemented: true },
+    { name: "ARIA toggle-button group (aria-pressed)", implemented: true },
+    { name: "Native <select> variant", implemented: true },
+  ]},
   { name: "Masonry", category: "Utility", updated: false, apis: [
     { name: "CSS columns", implemented: false },
     { name: "CSS Grid", implemented: false },
