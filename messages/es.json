@@ -1,4 +1,14 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-  "hello_world": "Hello, {name} from es!"
+  "hello_world": "¡Hola, {name}!",
+  "demo_title": "Demostraciones de Twintrinsic",
+  "demo_heading": "Demostraciones de componentes",
+  "demo_tagline": "Ejemplos interactivos de todos los componentes de Twintrinsic.",
+  "demo_paraglide_link": "Demostración de i18n con Paraglide",
+  "pg_heading": "Demostración de i18n con Paraglide",
+  "pg_intro": "Esta página funciona con {framework}, que compila los mensajes ICU en funciones tipadas. Cambia el idioma para ver esta página en inglés, español o persa.",
+  "pg_selected": "{count, plural, one {# elemento seleccionado} other {# elementos seleccionados}}",
+  "pg_component_note": "Los mensajes también funcionan dentro de los componentes — esta insignia la renderiza un componente que llama directamente a una función de mensaje:",
+  "pg_badge_label": "Insignia de demostración",
+  "pg_locale_label": "Elige un idioma"
 }

@@ -1,4 +1,14 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-  "hello_world": "Hello, {name} from en!"
+  "hello_world": "Hello, {name}!",
+  "demo_title": "Twintrinsic Demos",
+  "demo_heading": "Component Demos",
+  "demo_tagline": "Interactive examples of every Twintrinsic component.",
+  "demo_paraglide_link": "Paraglide i18n demo",
+  "pg_heading": "Paraglide i18n Demo",
+  "pg_intro": "This page is powered by {framework}, which compiles ICU messages into typed functions. Switch the locale to see this page in English, Spanish, or Persian.",
+  "pg_selected": "{count, plural, one {# item selected} other {# items selected}}",
+  "pg_component_note": "Messages work inside components too — this badge is rendered by a component that calls a message function directly:",
+  "pg_badge_label": "Demo badge",
+  "pg_locale_label": "Choose a language"
 }

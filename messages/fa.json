@@ -1,0 +1,14 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "hello_world": "سلام، {name}!",
+  "demo_title": "دموهای Twintrinsic",
+  "demo_heading": "دموی کامپوننت‌ها",
+  "demo_tagline": "نمونه‌های تعاملی تمام کامپوننت‌های Twintrinsic.",
+  "demo_paraglide_link": "دموی i18n با پاراگلاید",
+  "pg_heading": "دموی i18n با پاراگلاید",
+  "pg_intro": "این صفحه با {framework} ساخته شده که پیام‌های ICU را به توابع تایپ‌شده کامپایل می‌کند. زبان را عوض کنید تا این صفحه را به انگلیسی، اسپانیایی یا فارسی ببینید.",
+  "pg_selected": "{count, plural, one {# مورد انتخاب شده} other {# مورد انتخاب شده}}",
+  "pg_component_note": "پیام‌ها داخل کامپوننت‌ها هم کار می‌کنند — این نشان توسط کامپوننتی رندر شده که مستقیماً یک تابع پیام را صدا می‌زند:",
+  "pg_badge_label": "نشان دمو",
+  "pg_locale_label": "انتخاب زبان"
+}
