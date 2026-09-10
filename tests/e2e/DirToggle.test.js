@@ -69,4 +69,32 @@ test.describe("Docs locale switcher", () => {
 
     await expect(page.locator("h1")).toHaveText("کامپوننت‌ها");
   });
+
+  test("translates the docs home page prose", async ({ page }) => {
+    await page.goto("/docs");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Twintrinsic Documentation");
+    await expect(page.locator("h2", { hasText: "Installation" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("مستندات Twintrinsic");
+    await expect(page.locator("h2", { hasText: "نصب" })).toBeVisible();
+    await expect(page.getByText(/خوش آمدید/)).toBeVisible();
+  });
+
+  test("translates the utilities page prose", async ({ page }) => {
+    await page.goto("/docs/utilities");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Utilities");
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("ابزارها");
+    await expect(page.getByText(/توابع کمکی مشترک/)).toBeVisible();
+    await expect(page.getByText(/استخراج برچسب/).first()).toBeVisible();
+  });
 });
