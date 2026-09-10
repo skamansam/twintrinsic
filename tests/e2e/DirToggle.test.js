@@ -186,4 +186,38 @@ test.describe("Docs locale switcher", () => {
     await expect(page.locator("h2", { hasText: "راه‌اندازی" })).toBeVisible();
     await expect(page.locator("h2", { hasText: "پشتیبانی صفحه‌کلید" })).toBeVisible();
   });
+
+  test("translates the AppHeader docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/AppHeader/AppHeader");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("AppHeader");
+    await expect(page.locator("h2", { hasText: "Responsiveness" })).toBeVisible();
+    await expect(page.locator("h2", { hasText: "Customization" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("هدر برنامه");
+    await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
+    await expect(page.locator("h2", { hasText: "پشتیبانی صفحه‌کلید" })).toBeVisible();
+    await expect(page.getByText(/لوگو\/نام برند/)).toBeVisible();
+  });
+
+  test("translates the Sidebar docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Sidebar/Sidebar");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Sidebar");
+    await expect(page.locator("h2", { hasText: "Customization" })).toBeVisible();
+    await expect(page.locator("h2", { hasText: "Slots" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("نوار کناری");
+    await expect(page.locator("h2", { hasText: "اسلات‌ها" })).toBeVisible();
+    await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
+    await expect(page.getByText(/پنل ناوبری عمودی جمع‌شدنی/)).toBeVisible();
+  });
 });
