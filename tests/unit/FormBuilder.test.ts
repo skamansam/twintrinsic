@@ -108,4 +108,138 @@ describe("FormBuilder", () => {
     render(FormBuilder, { props: { schema: petSchema, showSubmit: false } });
     expect(screen.queryByRole("button", { name: "Submit" })).not.toBeInTheDocument();
   });
+
+  it("resolves a $ref against the components map", () => {
+    const components = {
+      Owner: {
+        type: "object",
+        required: ["fullName"],
+        properties: {
+          fullName: { type: "string", title: "Full name" },
+          phone: { type: "string", title: "Phone" },
+        },
+      },
+    };
+    render(FormBuilder, {
+      props: {
+        schema: { $ref: "#/components/schemas/Owner" },
+        components,
+      },
+    });
+    expect(screen.getByLabelText(/Full name/)).toHaveAttribute("aria-required", "true");
+    expect(screen.getByLabelText("Phone")).toBeInTheDocument();
+  });
+
+  it("resolves a nested $ref path inside properties", () => {
+    const components = {
+      Contact: {
+        type: "object",
+        properties: {
+          email: { type: "string", format: "email", title: "Email" },
+        },
+      },
+    };
+    render(FormBuilder, {
+      props: {
+        schema: {
+          type: "object",
+          properties: {
+            contact: { $ref: "#/components/schemas/Contact" },
+          },
+        },
+        components,
+      },
+    });
+    expect(screen.getByRole("group", { name: "Contact" })).toBeInTheDocument();
+    expect(screen.getByLabelText("Email")).toHaveAttribute("type", "email");
+  });
+
+  it("falls back to a text field for an unresolvable $ref", () => {
+    render(FormBuilder, {
+      props: {
+        schema: {
+          type: "object",
+          properties: {
+            missing: { $ref: "#/components/schemas/DoesNotExist" },
+          },
+        },
+      },
+    });
+    expect(screen.getByLabelText(/Missing/)).toBeInTheDocument();
+  });
+
+  it("breaks circular references without hanging", () => {
+    const components: Record<string, unknown> = {
+      Node: {
+        type: "object",
+        properties: {
+          label: { type: "string", title: "Label" },
+          child: { $ref: "#/components/schemas/Node" },
+        },
+      },
+    };
+    render(FormBuilder, {
+      props: {
+        schema: { $ref: "#/components/schemas/Node" },
+        components: components as never,
+      },
+    });
+    expect(screen.getByLabelText(/Label/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Child/)).toBeInTheDocument();
+  });
+
+  it("merges allOf subschemas into one field set", () => {
+    const components = {
+      BasePet: {
+        type: "object",
+        required: ["name"],
+        properties: {
+          name: { type: "string", title: "Name" },
+        },
+      },
+    };
+    render(FormBuilder, {
+      props: {
+        schema: {
+          allOf: [
+            { $ref: "#/components/schemas/BasePet" },
+            {
+              type: "object",
+              required: ["age"],
+              properties: {
+                age: { type: "integer", title: "Age", minimum: 0 },
+              },
+            },
+          ],
+        },
+        components,
+      },
+    });
+    expect(screen.getByLabelText(/Name/)).toHaveAttribute("aria-required", "true");
+    const ageInput = screen.getByLabelText(/Age/) as HTMLInputElement;
+    expect(ageInput).toHaveAttribute("inputmode", "decimal");
+    expect(ageInput).toHaveAttribute("aria-required", "true");
+  });
+
+  it("renders the first concrete oneOf variant", () => {
+    render(FormBuilder, {
+      props: {
+        schema: {
+          type: "object",
+          properties: {
+            status: {
+              title: "Status",
+              oneOf: [
+                { type: "string", enum: ["draft", "published"], title: "Status" },
+                { type: "string", title: "Status" },
+              ],
+            },
+          },
+        },
+      },
+    });
+    const select = screen.getByLabelText("Status");
+    expect(select.tagName).toBe("SELECT");
+    expect(screen.getByRole("option", { name: "draft" })).toBeInTheDocument();
+  });
 });

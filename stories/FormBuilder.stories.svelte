@@ -71,6 +71,47 @@ const { Story } = defineMeta({
 <Story name="No Submit Button" args={{ showSubmit: false }} />
 
 <Story
+  name="References and Composition"
+  args={{
+    schema: {
+      allOf: [
+        { $ref: "#/components/schemas/BasePet" },
+        {
+          type: "object",
+          required: ["kind"],
+          properties: {
+            kind: { type: "string", enum: ["dog", "cat", "bird"], title: "Kind of pet" },
+            owner: { $ref: "#/components/schemas/Owner" },
+          },
+        },
+      ],
+    },
+    components: {
+      BasePet: {
+        type: "object",
+        required: ["name"],
+        properties: {
+          name: { type: "string", title: "Pet name" },
+        },
+      },
+      Owner: {
+        type: "object",
+        properties: {
+          fullName: { type: "string", title: "Owner name" },
+        },
+      },
+    },
+  }}
+  play={async ({ canvas }) => {
+    // allOf merged the $ref'd base with the inline fields
+    await expect(canvas.getByLabelText(/Pet name/)).toHaveAttribute("aria-required", "true");
+    await expect(canvas.getByLabelText(/Kind of pet/)).toBeInTheDocument();
+    // nested $ref resolves into a fieldset group
+    await expect(canvas.getByRole("group", { name: "Owner" })).toBeInTheDocument();
+  }}
+/>
+
+<Story
   name="Nested Objects"
   args={{
     schema: {
