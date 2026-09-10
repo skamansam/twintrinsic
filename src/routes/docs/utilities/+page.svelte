@@ -7,31 +7,21 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Panel from "$lib/components/Panel/Panel.svelte"
 import Separator from "$lib/components/Separator/Separator.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Utilities</h1>
+  <h1>{m.link_utilities()}</h1>
 
-  <p>
-    Twintrinsic ships a small set of shared helper functions used by the Form
-    select family (<code>AutoComplete</code>, <code>Listbox</code>,
-    <code>Combobox</code>) and the group components (<code>TagGroup</code>,
-    <code>ChipGroup</code>). They are re-exported from the package entry point,
-    so you can import them alongside components:
-  </p>
+  <p>{m.util_intro()}</p>
 
   <CodeBlock language="typescript">
 {`import { getItemLabel, getItemValue, dispatchGroupRemove } from "twintrinsic"`}
   </CodeBlock>
 
-  <p>
-    All helpers accept an item plus an optional <em>field name</em> used to
-    derive the label or value when the item is an object. Always pass the field
-    name explicitly when your objects use a custom key — the helpers default to
-    <code>"label"</code> / <code>"value"</code>.
-  </p>
+  <p>{m.util_intro2()}</p>
 
-  <Separator>Label Extraction</Separator>
+  <Separator>{m.util_label_extraction()}</Separator>
 
   <h2>getItemLabel</h2>
 
@@ -39,12 +29,7 @@ import Separator from "$lib/components/Separator/Separator.svelte"
     {#snippet header()}
       getItemLabel(item, labelField = "label") → string
     {/snippet}
-    <p>
-      Derives a display label for an item. Primitives are stringified as-is;
-      objects yield <code>item[labelField]</code>, with null/undefined field
-      values collapsing to <code>""</code>. This unifies the former
-      per-component <code>?.toString() || ""</code> label pattern.
-    </p>
+    <p>{m.util_getitemlabel_body()}</p>
   </Panel>
 
   <CodeBlock language="svelte">
@@ -65,7 +50,7 @@ import Separator from "$lib/components/Separator/Separator.svelte"
 </ul>`}
   </CodeBlock>
 
-  <Separator>Value Extraction</Separator>
+  <Separator>{m.util_value_extraction()}</Separator>
 
   <h2>getItemValue</h2>
 
@@ -73,14 +58,7 @@ import Separator from "$lib/components/Separator/Separator.svelte"
     {#snippet header()}
       getItemValue(item, valueField = "value") → unknown
     {/snippet}
-    <p>
-      Derives a comparison/submission value for an item. Objects yield
-      <code>item[valueField]</code>; primitives pass through unchanged. Falsy
-      primitives (<code>""</code>, <code>0</code>, <code>false</code>,
-      <code>null</code>, <code>undefined</code>) are intentionally <em>not</em>
-      collapsed — so a numeric option <code>0</code> survives selection
-      comparison.
-    </p>
+    <p>{m.util_getitemvalue_body()}</p>
   </Panel>
 
   <CodeBlock language="typescript">
@@ -91,7 +69,7 @@ const ids = selected.map((item) => getItemValue(item, "id"))
 // → [7]`}
   </CodeBlock>
 
-  <Separator>Group Removal</Separator>
+  <Separator>{m.util_group_removal()}</Separator>
 
   <h2>dispatchGroupRemove</h2>
 
@@ -99,13 +77,7 @@ const ids = selected.map((item) => getItemValue(item, "id"))
     {#snippet header()}
       dispatchGroupRemove(items, index, eventName, handler?)
     {/snippet}
-    <p>
-      Resolves the item at <code>index</code> from the items array and invokes
-      the group's remove/dismiss callback with a <code>CustomEvent</code> whose
-      detail carries <code>{"{ item, index }"}</code>. Shared by
-      <code>TagGroup</code> (<code>"dismiss"</code>) and <code>ChipGroup</code>
-      (<code>"remove"</code>).
-    </p>
+    <p>{m.util_dispatchgroupremove_body()}</p>
   </Panel>
 
   <CodeBlock language="typescript">
@@ -118,7 +90,7 @@ dispatchGroupRemove(items, 1, "remove", (event) => {
 })`}
   </CodeBlock>
 
-  <Separator>Language Detection</Separator>
+  <Separator>{m.util_language_detection()}</Separator>
 
   <h2>detectLanguage</h2>
 
@@ -126,11 +98,7 @@ dispatchGroupRemove(items, 1, "remove", (event) => {
     {#snippet header()}
       detectLanguage(content: string) → string
     {/snippet}
-    <p>
-      Heuristically detects a code language from content patterns (HTML, CSS,
-      JavaScript/TypeScript, JSON, YAML, Markdown, Svelte, shell). Used by
-      <code>CodeBlock</code> when no <code>language</code> prop is provided.
-    </p>
+    <p>{m.util_detectlanguage_body()}</p>
   </Panel>
 
   <CodeBlock language="typescript">
@@ -142,17 +110,13 @@ detectLanguage("<div>hello</div>")                  // "markup"
 detectLanguage("key: value")                        // "yaml"`}
   </CodeBlock>
 
-  <Separator>Documentation Tables</Separator>
+  <Separator>{m.util_docs_tables()}</Separator>
 
   <h2>PropsTable & EventsTable</h2>
 
   <Panel>
     <p>
-      For rendering component props and events in your own docs, Twintrinsic
-      ships two utility components — <code>PropsTable</code> and
-      <code>EventsTable</code>. They auto-derive their rows from a component
-      module at build time, with an explicit-array fallback. See their dedicated
-      pages for full usage:
+      {m.util_propstable_body()}
       <a href="/docs/components/PropsTable/PropsTable">PropsTable</a> and
       <a href="/docs/components/EventsTable/EventsTable">EventsTable</a>.
     </p>

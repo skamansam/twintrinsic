@@ -6,41 +6,29 @@ Documentation home page
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Separator from "$lib/components/Separator/Separator.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 let { children } = $props()
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
   {@render children?.()}
-  <h1>Twintrinsic Documentation</h1>
+  <h1>{m.docs_app_name()}</h1>
   
-  <p>
-    Welcome to the Twintrinsic documentation. Twintrinsic is a collection of
-    accessible, customizable components built with Svelte 5 and Tailwind CSS.
-  </p>
+  <p>{m.docs_welcome()}</p>
 
   <Separator>
-    {@render children?.('Getting Started')}
+    {@render children?.(m.link_getting_started())}
   </Separator>
 
-  <h2>Installation</h2>
+  <h2>{m.docs_installation()}</h2>
   <CodeBlock language="bash">{`npm install twintrinsic`}</CodeBlock>
 
-  <h3>Required Tailwind setup</h3>
-  <p>
-    Twintrinsic is styled with Tailwind CSS v4. The library's theme file
-    (<code>twintrinsic/twintrinsic.css</code>) imports <code>tailwindcss</code>
-    and declares the official <code>@tailwindcss/forms</code> and
-    <code>@tailwindcss/typography</code> plugins via <code>@plugin</code>, so
-    consumer apps must install those packages (they are not bundled):
-  </p>
+  <h3>{m.docs_tailwind_setup()}</h3>
+  <p>{m.docs_tailwind_setup_body()}</p>
   <CodeBlock language="bash">{`npm install -D tailwindcss @tailwindcss/vite @tailwindcss/forms @tailwindcss/typography`}</CodeBlock>
 
-  <p>
-    Then wire up the Tailwind Vite plugin. Components use
-    <code>lang="postcss"</code> styles with <code>@reference</code>, so the
-    Svelte plugin needs its preprocessor:
-  </p>
+  <p>{m.docs_vite_plugin_body()}</p>
   <CodeBlock language="javascript">{`// vite.config.js
 import { defineConfig } from 'vite';
 import { svelte, vitePreprocess } from '@sveltejs/vite-plugin-svelte';
@@ -53,11 +41,8 @@ export default defineConfig({
   ],
 });`}</CodeBlock>
 
-  <h2>Usage</h2>
-  <p>
-    Import the library CSS once, then import components from the root barrel
-    or from subpath exports (deep imports keep your bundle small):
-  </p>
+  <h2>{m.docs_usage()}</h2>
+  <p>{m.docs_usage_body()}</p>
   <CodeBlock language="javascript">{`// In your app entry
 import 'twintrinsic/twintrinsic.css';
 
@@ -70,53 +55,48 @@ import Button from 'twintrinsic/components/Button';
 // Helper subpaths - named imports (getItemLabel, getItemValue, ...)
 import { getItemLabel } from 'twintrinsic/helpers/getItemLabel';`}</CodeBlock>
 
-  <h2>Features</h2>
+  <h2>{m.docs_features()}</h2>
   <ul>
-    <li>Built with Svelte 5 and Tailwind CSS</li>
-    <li>Fully accessible components with ARIA support</li>
-    <li>Responsive design with mobile-first approach</li>
-    <li>Dark mode support out of the box</li>
-    <li>Customizable theming</li>
-    <li>TypeScript support</li>
+    <li>{m.docs_feature_svelte()}</li>
+    <li>{m.docs_feature_a11y()}</li>
+    <li>{m.docs_feature_responsive()}</li>
+    <li>{m.docs_feature_dark()}</li>
+    <li>{m.docs_feature_theming()}</li>
+    <li>{m.docs_feature_ts()}</li>
   </ul>
 
   <Separator>
-    {@render children?.('Components')}
+    {@render children?.(m.link_components())}
   </Separator>
 
-  <p>
-    Twintrinsic provides a set of essential components to build modern web applications:
-  </p>
+  <p>{m.docs_essential_components()}</p>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div class="border border-border rounded-lg p-4">
-      <h3 class="m-0">Layout Components</h3>
+      <h3 class="m-0">{m.docs_layout_components()}</h3>
       <ul class="mt-2">
-        <li>Container - Responsive container with consistent padding</li>
-        <li>AppHeader - Application header with navigation</li>
-        <li>Sidebar - Collapsible side panel</li>
-        <li>BottomBar - Collapsible bottom panel</li>
+        <li>{m.docs_layout_container()}</li>
+        <li>{m.docs_layout_appheader()}</li>
+        <li>{m.docs_layout_sidebar()}</li>
+        <li>{m.docs_layout_bottombar()}</li>
       </ul>
     </div>
 
     <div class="border border-border rounded-lg p-4">
-      <h3 class="m-0">UI Components</h3>
+      <h3 class="m-0">{m.docs_ui_components()}</h3>
       <ul class="mt-2">
-        <li>Panel - Collapsible content panel</li>
-        <li>ButtonDropdown - Accessible dropdown menu</li>
-        <li>Separator - Visual divider with optional content</li>
+        <li>{m.docs_ui_panel()}</li>
+        <li>{m.docs_ui_dropdown()}</li>
+        <li>{m.docs_ui_separator()}</li>
       </ul>
     </div>
   </div>
 
   <Separator>
-    {@render children?.('Theming')}
+    {@render children?.(m.link_theming())}
   </Separator>
 
-  <p>
-    Twintrinsic uses CSS variables for theming. You can customize the look and feel
-    by overriding these variables in your CSS:
-  </p>
+  <p>{m.docs_theming_intro()}</p>
 
   <CodeBlock language="css">{`:root {
   --color-primary-500: 59 130 246;   /* Blue */
@@ -129,11 +109,8 @@ import { getItemLabel } from 'twintrinsic/helpers/getItemLabel';`}</CodeBlock>
   --color-error-bold: 239 68 68;      /* Red */
 }`}</CodeBlock>
 
-  <h2>Dark Mode</h2>
-  <p>
-    Dark mode is supported out of the box. Add the following to your CSS to customize
-    dark mode colors:
-  </p>
+  <h2>{m.docs_dark_mode()}</h2>
+  <p>{m.docs_dark_mode_body()}</p>
 
   <CodeBlock language="css">{`:root[data-theme="dark"] {
   --color-background: 17 24 39;       /* Gray 900 */
@@ -144,8 +121,8 @@ import { getItemLabel } from 'twintrinsic/helpers/getItemLabel';`}</CodeBlock>
 }`}</CodeBlock>
 
   <p>
-    To avoid a brief flash of light mode on load, see the
-    <a href="/docs/theming" class="text-primary-600 hover:underline">Theming docs</a>
-    for the required <code>app.html</code> initializer.
+    {m.docs_dark_mode_note_pre()}
+    <a href="/docs/theming" class="text-primary-600 hover:underline">{m.link_theming()}</a>
+    {m.docs_dark_mode_note_post()}
   </p>
 </Container>
