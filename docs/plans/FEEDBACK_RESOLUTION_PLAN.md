@@ -236,6 +236,6 @@ These items touch multiple components or the project as a whole.
 9. Tree data-driven overhaul
 
 ### Phase 6: Large-Scope Initiatives (P3)
-1. FormBuilder component (OpenAPI spec → form generation)
+1. 🟡 FormBuilder component (OpenAPI spec → form generation) — v1 shipped: inline OpenAPI Schema Object or explicit field-descriptor arrays generate a full accessible form (string/enum/number/boolean/array/object → TextInput/Select/NumberInput/Switch/ListInput/nested fieldset), seeded via `values`, validated natively, submitted through `<Form>`. Open: `$ref` + `allOf`/`oneOf`/`anyOf` resolution and any remaining schema keywords.
 2. ✅ Persian translation of demo pages — `/demo` and `/demo/paraglide` render in fa with RTL
 3. ✅ Paraglide integration for component-level i18n — `LocaleSwitcher` + `DemoBadge` demo the pattern (messages via `m()` inside components); library components themselves stay copy-free via props
