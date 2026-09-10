@@ -6,6 +6,7 @@ Completion and development process documentation
 import CompatibilityMatrix from "$lib/components/CompatibilityMatrix/CompatibilityMatrix.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Separator from "$lib/components/Separator/Separator.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 const components = [
   // App
@@ -279,17 +280,28 @@ function getUpdatedCount() {
 function getTotalCount() {
   return components.length
 }
+
+function categoryLabel(category: string): string {
+  switch (category) {
+    case "App": return m.nav_app()
+    case "Basic": return m.nav_basic()
+    case "Navigation": return m.nav_navigation()
+    case "Data Display": return m.nav_data_display()
+    case "Form": return m.nav_form()
+    case "Feedback": return m.nav_feedback()
+    case "Utility": return m.nav_utility()
+    default: return category
+  }
+}
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Development Completion</h1>
-  
-  <p>
-    This page documents the development process and completion status of the Twintrinsic component library.
-  </p>
+  <h1>{m.completion_heading()}</h1>
+
+  <p>{m.completion_intro()}</p>
   <div class="mb-6 p-4 bg-surface rounded-lg border border-border">
     <p class="m-0 text-sm">
-      <strong>Progress:</strong> {getUpdatedCount()} of {getTotalCount()} components updated
+      {m.completion_progress({ done: getUpdatedCount(), total: getTotalCount() })}
     </p>
     <div class="mt-2 w-full bg-border rounded-full h-2">
       <div 
@@ -299,74 +311,74 @@ function getTotalCount() {
     </div>
   </div>
 
-  <Separator>
-    Development Process
-  </Separator>
+  <Separator>{m.completion_development_process()}</Separator>
 
-  <h2>Development Approach</h2>
+  <h2>{m.completion_approach()}</h2>
   <p>
-    Twintrinsic was developed using various tools and LLMS. The main IDE is <strong>Windsurf/Devin</strong> 
-    with <strong>Claude Haiku 4.5+</strong> and <strong>SWE-1.6+</strong> as an AI pair programmer. I have
-    also used freebuff when I needed to clean up A LOT of code at once, mainly fixing svelte/ts errors 
-    that the other LLMs introduced and adding tests. The development process leveraged AI assistance for:
+    {m.completion_approach_1()}
+    <strong>Windsurf/Devin</strong>
+    {m.completion_approach_2()}
+    <strong>Claude Haiku 4.5+</strong>
+    {m.completion_approach_3()}
+    <strong>SWE-1.6+</strong>
+    {m.completion_approach_4()}
+    <strong>freebuff</strong>
+    {m.completion_approach_5()}
   </p>
 
   <ul>
-    <li><strong>Component Generation</strong> - Initial component scaffolding and implementation</li>
-    <li><strong>Unit Tests</strong> - Vitest-based unit tests for component functionality</li>
-    <li><strong>E2E Tests</strong> - Playwright-based end-to-end tests within Storybook stories</li>
-    <li><strong>Storybook Stories</strong> - Interactive component documentation and testing</li>
-    <li><strong>Demo Site Documentation</strong> - Usage examples and API documentation</li>
+    <li><strong>{m.completion_ai_generation()}</strong> - {m.completion_ai_generation_desc()}</li>
+    <li><strong>{m.completion_ai_unit()}</strong> - {m.completion_ai_unit_desc()}</li>
+    <li><strong>{m.completion_ai_e2e()}</strong> - {m.completion_ai_e2e_desc()}</li>
+    <li><strong>{m.completion_ai_storybook()}</strong> - {m.completion_ai_storybook_desc()}</li>
+    <li><strong>{m.completion_ai_docs()}</strong> - {m.completion_ai_docs_desc()}</li>
   </ul>
 
-  <h2>Manual Updates and Refinements</h2>
+  <h2>{m.completion_manual()}</h2>
   <p>
-    While AI assistance was invaluable for generating initial code, they generate crap code and build
-    components using old technology, sometimes building full-on components from scratch where
-    there already exists standard html compoentns we can use (like a dropdown component). All components 
-    are manually reviewed and updated to ensure they use modern web APIs and best practices. 
-    This is necessary due to:
+    {m.completion_manual_1()}
+    <strong>{m.completion_manual_strong()}</strong>
+    {m.completion_manual_2()}
   </p>
 
   <ul>
-    <li><strong>Outdated Training Data</strong> - LLM training data has a knowledge cutoff, missing recent API improvements</li>
-    <li><strong>LLM Inaccuracies</strong> - AI-generated code may contain subtle bugs or suboptimal patterns</li>
-    <li><strong>Modern API Adoption</strong> - Components have been updated to use modern browser APIs like the Popover API and HTML Dialog elements</li>
-    <li><strong>2026 Best Practices</strong> - Styling and component patterns have been refined to match current web development standards</li>
+    <li><strong>{m.completion_manual_outdated()}</strong> - {m.completion_manual_outdated_desc()}</li>
+    <li><strong>{m.completion_manual_inaccuracies()}</strong> - {m.completion_manual_inaccuracies_desc()}</li>
+    <li><strong>{m.completion_manual_adoption()}</strong> - {m.completion_manual_adoption_desc()}</li>
+    <li><strong>{m.completion_manual_standards()}</strong> - {m.completion_manual_standards_desc()}</li>
   </ul>
 
-  <h2>Key Updates</h2>
+  <h2>{m.completion_key_updates()}</h2>
   <ul>
-    <li>Migration from <code>createEventDispatcher</code> to callback props (Svelte 5 pattern)</li>
-    <li>Implementation of modern dialog and popover APIs where applicable</li>
-    <li>Enhanced accessibility with WCAG 2.1 compliance</li>
-    <li>Refined Tailwind CSS styling with semantic color naming</li>
-    <li>Improved TypeScript type safety and JSDoc documentation</li>
+    <li>{m.completion_key_1_pre()}<code>createEventDispatcher</code>{m.completion_key_1_post()}</li>
+    <li>{m.completion_key_2()}</li>
+    <li>{m.completion_key_3()}</li>
+    <li>{m.completion_key_4()}</li>
+    <li>{m.completion_key_5()}</li>
   </ul>
 
-  <h2>Browser Compatibility</h2>
+  <h2>{m.completion_browser()}</h2>
   <p>
-    Twintrinsic targets <strong>current Chrome</strong> first, since Chrome tends to ship new
-    platform APIs before other engines and most non-Firefox/Safari browsers are Chromium-derived.
-    That said, we aim for roughly <strong>80% Firefox compatibility</strong> on the Tier 0 platform
-    APIs from <code>docs/plans/HTML_SEMANTIC_REPLACEMENT_PLAN.md</code>. The table below is generated
-    by running the same feature-detection probe in Chromium, Firefox, and WebKit via Playwright
-    (<code>pnpm test:compat</code>) and is not hand-maintained.
+    {m.completion_browser_1()}
+    <strong>current Chrome</strong>
+    {m.completion_browser_2()}
+    <strong>80% Firefox compatibility</strong>
+    {m.completion_browser_3()}
+    <code>docs/plans/HTML_SEMANTIC_REPLACEMENT_PLAN.md</code>
+    {m.completion_browser_4()}
+    <code>pnpm test:compat</code>
+    {m.completion_browser_5()}
   </p>
 
   <CompatibilityMatrix />
 
-  <Separator>
-    Component Completion Checklist
-  </Separator>
+  <Separator>{m.completion_checklist()}</Separator>
 
-  <p>
-    The following checklist indicates which components have been manually reviewed and updated with modern APIs and best practices:
-  </p>
+  <p>{m.completion_checklist_body()}</p>
 
 
   {#each categories as category}
-    <h3>{category}</h3>
+    <h3>{categoryLabel(category)}</h3>
     <div class="space-y-4">
       {#each getComponentsByCategory(category) as component}
         <div class="border-l-2 border-border pl-4">
@@ -384,7 +396,7 @@ function getTotalCount() {
               {component.name}
             </label>
             <span class="text-xs text-muted">
-              {component.updated ? '✓ Updated' : 'Pending'}
+              {component.updated ? `✓ ${m.completion_updated()}` : m.completion_pending()}
             </span>
           </div>
           <div class="mt-3 ml-8 space-y-2">
@@ -415,13 +427,9 @@ function getTotalCount() {
     </div>
   {/each}
 
-  <Separator>
-    Next Steps
-  </Separator>
+  <Separator>{m.completion_next()}</Separator>
 
-  <p>
-    As components are manually reviewed and updated, check them off in the list above. This ensures that all components meet the quality standards and use modern APIs appropriate for 2026 web development.
-  </p>
+  <p>{m.completion_next_body()}</p>
 </Container>
 
 <style lang="postcss">

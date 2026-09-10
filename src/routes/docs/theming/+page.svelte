@@ -8,6 +8,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Panel from "$lib/components/Panel/Panel.svelte"
 import Separator from "$lib/components/Separator/Separator.svelte"
+import { m } from "$lib/paraglide/messages.js"
 import ThemeCustomizer from "./ThemeCustomizer.svelte"
 
 const colorScales = ["primary", "secondary", "success", "warning", "error", "info"]
@@ -114,39 +115,72 @@ const buttonOutlineClasses: Record<string, string> = {
   error: "border-error-500 text-error-600 hover:bg-error-50",
   info: "border-info-500 text-info-600 hover:bg-info-50",
 }
+
+// Translated labels for the color-scale panels, example buttons, and combos
+const colorLabels: Record<string, () => string> = {
+  primary: () => m.theming_color_primary(),
+  secondary: () => m.theming_color_secondary(),
+  success: () => m.theming_color_success(),
+  warning: () => m.theming_color_warning(),
+  error: () => m.theming_color_error(),
+  info: () => m.theming_color_info(),
+}
+
+const comboNameLabels: Record<string, () => string> = {
+  Default: () => m.theming_combo_default(),
+  Primary: () => m.theming_color_primary(),
+  "Primary Inverse": () => m.theming_combo_primary_inverse(),
+  Secondary: () => m.theming_color_secondary(),
+  "Secondary Inverse": () => m.theming_combo_secondary_inverse(),
+  Success: () => m.theming_color_success(),
+  Warning: () => m.theming_color_warning(),
+  Error: () => m.theming_color_error(),
+  Info: () => m.theming_color_info(),
+  Muted: () => m.theming_base_muted(),
+}
+
+const comboDescLabels: Record<string, () => string> = {
+  Default: () => m.theming_combo_desc_default(),
+  Primary: () => m.theming_combo_desc_primary(),
+  "Primary Inverse": () => m.theming_combo_desc_primary_inverse(),
+  Secondary: () => m.theming_combo_desc_secondary(),
+  "Secondary Inverse": () => m.theming_combo_desc_secondary_inverse(),
+  Success: () => m.theming_combo_desc_success(),
+  Warning: () => m.theming_combo_desc_warning(),
+  Error: () => m.theming_combo_desc_error(),
+  Info: () => m.theming_combo_desc_info(),
+  Muted: () => m.theming_combo_desc_muted(),
+}
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Theming</h1>
-  
-  <p>
-    Twintrinsic uses CSS variables and Tailwind CSS for theming. You can customize
-    the look and feel of your application by modifying these variables.
-  </p>
+  <h1>{m.link_theming()}</h1>
 
-  <Separator>Color System</Separator>
+  <p>{m.theming_intro()}</p>
 
-  <h2>Base Colors</h2>
+  <Separator>{m.theming_color_system()}</Separator>
+
+  <h2>{m.theming_base_colors()}</h2>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose mb-8">
     <div class="space-y-2">
       <div class="flex items-center gap-2 p-4 rounded-md bg-background border border-border">
         <div class="w-6 h-6 rounded bg-background border border-border"></div>
         <div>
-          <div class="font-medium">Background</div>
+          <div class="font-medium">{m.theming_base_background()}</div>
           <div class="text-sm text-muted">--color-background</div>
         </div>
       </div>
       <div class="flex items-center gap-2 p-4 rounded-md bg-surface border border-border">
         <div class="w-6 h-6 rounded bg-surface border border-border"></div>
         <div>
-          <div class="font-medium">Surface</div>
+          <div class="font-medium">{m.theming_base_surface()}</div>
           <div class="text-sm text-muted">--color-surface</div>
         </div>
       </div>
       <div class="flex items-center gap-2 p-4 rounded-md border border-border">
         <div class="w-6 h-6 rounded border-2 border-border"></div>
         <div>
-          <div class="font-medium">Border</div>
+          <div class="font-medium">{m.theming_base_border()}</div>
           <div class="text-sm text-muted">--color-border</div>
         </div>
       </div>
@@ -155,30 +189,27 @@ const buttonOutlineClasses: Record<string, string> = {
       <div class="flex items-center gap-2 p-4 rounded-md border border-border">
         <div class="w-6 h-6 rounded bg-text"></div>
         <div>
-          <div class="font-medium">Text</div>
+          <div class="font-medium">{m.theming_base_text()}</div>
           <div class="text-sm text-muted">--color-text</div>
         </div>
       </div>
       <div class="flex items-center gap-2 p-4 rounded-md border border-border">
         <div class="w-6 h-6 rounded bg-muted"></div>
         <div>
-          <div class="font-medium">Muted</div>
+          <div class="font-medium">{m.theming_base_muted()}</div>
           <div class="text-sm text-muted">--color-muted</div>
         </div>
       </div>
     </div>
   </div>
 
-  <h2>Color Scales</h2>
-  <p>
-    Twintrinsic provides a comprehensive color system with 10 shades for each color scale (50-900).
-    These color scales provide a consistent palette for your application.
-  </p>
+  <h2>{m.theming_color_scales()}</h2>
+  <p>{m.theming_color_scales_body()}</p>
   <div class="space-y-6 not-prose">
     {#each colorScales as color}
       <Panel>
         {#snippet header()}
-          {color.charAt(0).toUpperCase() + color.slice(1)}
+          {colorLabels[color]()}
         {/snippet}
         <div class="grid grid-cols-10 gap-2">
           {#each shades as shade}
@@ -211,11 +242,8 @@ var(--color-${color}-500)
     {/each}
   </div>
   
-  <h2 class="mt-8">Text & Background Combinations</h2>
-  <p>
-    Here are some common text and background color combinations that provide good contrast and follow
-    accessibility guidelines. Use these combinations for consistent UI elements.
-  </p>
+  <h2 class="mt-8">{m.theming_combos()}</h2>
+  <p>{m.theming_combos_body()}</p>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose mb-8">
     {#each textBgCombinations as combo}
       <div class="border border-border rounded-md overflow-hidden">
@@ -223,36 +251,31 @@ var(--color-${color}-500)
           <span class="text-2xl font-medium">{sampleText}</span>
         </div>
         <div class="p-3 border-t border-border">
-          <div class="font-medium">{combo.name}</div>
-          <div class="text-sm text-muted">{combo.description}</div>
+          <div class="font-medium">{comboNameLabels[combo.name]()}</div>
+          <div class="text-sm text-muted">{comboDescLabels[combo.name]()}</div>
           <div class="text-xs mt-1 font-mono">{combo.textClass} + {combo.bgClass}</div>
         </div>
       </div>
     {/each}
   </div>
   
-  <h2>UI Component Examples</h2>
-  <p>
-    The color system is applied consistently across all UI components. Here are some examples of how
-    the colors are used in buttons:
-  </p>
+  <h2>{m.theming_ui_examples()}</h2>
+  <p>{m.theming_ui_examples_body()}</p>
   <div class="flex flex-wrap gap-2 not-prose mb-8">
     {#each buttonExamples as button}
-      <Button class={buttonColorClasses[button.color]}>{button.label}</Button>
+      <Button class={buttonColorClasses[button.color]}>{colorLabels[button.color]()}</Button>
     {/each}
   </div>
   <div class="flex flex-wrap gap-2 not-prose mb-8">
     {#each buttonExamples as button}
-      <Button class={buttonOutlineClasses[button.color]} variant="outline">{button.label}</Button>
+      <Button class={buttonOutlineClasses[button.color]} variant="outline">{colorLabels[button.color]()}</Button>
     {/each}
   </div>
 
-  <Separator>Customization</Separator>
+  <Separator>{m.theming_customization()}</Separator>
 
-  <h2>CSS Variables</h2>
-  <p>
-    To customize the theme, override these CSS variables in your stylesheet:
-  </p>
+  <h2>{m.theming_css_variables()}</h2>
+  <p>{m.theming_css_variables_body()}</p>
 
   <CodeBlock language="css">
 {`:root {
@@ -337,19 +360,13 @@ var(--color-${color}-500)
 }`}
   </CodeBlock>
 
-  <h2>Live Theme Customizer</h2>
-  <p>
-    Pick base colors below and Twintrinsic generates a full 50-900 scale for each accent, previews
-    real components against the result, and prints a ready-to-copy CSS block. Nothing here is saved
-    or applied to the rest of the site — it's scoped to the preview panel via inline CSS custom
-    properties.
-  </p>
+  <h2>{m.theming_live_customizer()}</h2>
+  <p>{m.theming_live_customizer_body()}</p>
   <ThemeCustomizer />
 
-  <h2>Dark Mode</h2>
+  <h2>{m.docs_dark_mode()}</h2>
   <p>
-    Dark mode is supported through the <code>data-theme="dark"</code> attribute on
-    the root element. Customize dark mode colors by overriding these variables:
+    {m.theming_dark_mode_pre()}<code>data-theme="dark"</code>{m.theming_dark_mode_post()}
   </p>
 
   <CodeBlock language="css">
@@ -389,61 +406,68 @@ var(--color-${color}-500)
 }`}
   </CodeBlock>
 
-  <h2>Additional Themes</h2>
+  <h2>{m.theming_additional()}</h2>
   <p>
-    Beyond the default light/dark pair, the <strong>Storybook demo environment</strong> ships five
-    additional themes (plus a dark variant of each) so you can preview components under different
-    color strategies: a brand-accent theme, a high-contrast theme, and three color-vision-deficiency
-    (CVD) themes. They are <strong>demo themes only</strong> — they live in
-    <code>.storybook/themes.css</code> and are intentionally NOT part of the shipped library CSS, so
-    consumers of Twintrinsic only get the default light/dark pair. The docs site imports the same
-    file so the <a href="/docs/theming/preview">Theme Preview page</a> can render them side by side.
+    {m.theming_additional_body_1()}
+    <strong>Storybook demo environment</strong>
+    {m.theming_additional_body_2()}
+    <strong>demo themes only</strong>
+    {m.theming_additional_body_3()}
+    <code>.storybook/themes.css</code>
+    {m.theming_additional_body_4()}
+    <a href="/docs/theming/preview">{m.theming_preview_link()}</a>
+    {m.theming_additional_body_5()}
   </p>
   <p>
-    Themes are selected via the <code>data-theme</code> attribute on the root element. Every custom
-    theme also has a <strong>dark variant</strong>: append <code>-dark</code> to the theme name (e.g.
-    <code>data-theme="brand-dark"</code>). The <code>dark:</code> custom variant matches any
-    <code>data-theme</code> value ending in <code>-dark</code>, so dark-mode utilities and tokens
-    engage automatically:
+    {m.theming_additional2_1()}
+    <code>data-theme</code>
+    {m.theming_additional2_2()}
+    <strong>dark variant</strong>
+    {m.theming_additional2_3()}
+    <code>-dark</code>
+    {m.theming_additional2_4()}
+    <code>data-theme="brand-dark"</code>
+    {m.theming_additional2_5()}
+    <code>dark:</code>
+    {m.theming_additional2_6()}
+    <code>data-theme</code>
+    {m.theming_additional2_7()}
+    <code>-dark</code>
+    {m.theming_additional2_8()}
   </p>
 
   <ul>
     <li>
-      <code>data-theme="brand"</code> / <code>data-theme="brand-dark"</code> — a teal/cyan accent
-      palette on teal-tinted surfaces that swaps the default purple identity for a cooler,
-      product-style feel. Every component follows along because they all consume the same
-      <code>--color-primary-*</code> / <code>--color-secondary-*</code> / neutral tokens.
+      <code>data-theme="brand"</code> / <code>data-theme="brand-dark"</code>
+      {m.theming_brand_desc()}
+      <code>--color-primary-*</code> / <code>--color-secondary-*</code>
+      {m.theming_brand_end()}
     </li>
     <li>
-      <code>data-theme="high-contrast"</code> / <code>data-theme="high-contrast-dark"</code> — a WCAG
-      AAA-leaning theme with pure black text on white (or pure white on black), near-black/white
-      borders, and tuned accent scales so colored text and filled buttons keep strong contrast.
+      <code>data-theme="high-contrast"</code> / <code>data-theme="high-contrast-dark"</code>
+      {m.theming_contrast_desc()}
     </li>
   </ul>
 
-  <h3>Color Vision Deficiency (CVD) Themes</h3>
+  <h3>{m.theming_cvd()}</h3>
   <p>
-    Three additional themes (plus dark variants, e.g. <code>data-theme="protanopia-dark"</code>) are
-    tuned for the most common color vision deficiencies using the Okabe-Ito blue-orange safe-axis
-    strategy — they never rely on red-vs-green or blue-vs-yellow alone, so status colors stay
-    distinguishable in both light and dark:
+    {m.theming_cvd_body_1()}
+    <code>data-theme="protanopia-dark"</code>
+    {m.theming_cvd_body_2()}
   </p>
 
   <ul>
     <li>
-      <code>data-theme="protanopia"</code> / <code>data-theme="protanopia-dark"</code> — for red-blind
-      users. Success shifts from green to teal (blue-green) and error shifts from red to
-      vermillion-orange; the orange/amber axis stays readable.
+      <code>data-theme="protanopia"</code> / <code>data-theme="protanopia-dark"</code>
+      {m.theming_cvd_protanopia_desc()}
     </li>
     <li>
-      <code>data-theme="deuteranopia"</code> / <code>data-theme="deuteranopia-dark"</code> — for
-      green-blind users. Success shifts to cyan (reads as blue) while error keeps a strong red, which
-      is still visible without the green cone.
+      <code>data-theme="deuteranopia"</code> / <code>data-theme="deuteranopia-dark"</code>
+      {m.theming_cvd_deuteranopia_desc()}
     </li>
     <li>
-      <code>data-theme="tritanopia"</code> / <code>data-theme="tritanopia-dark"</code> — for blue-yellow
-      blind users. Primary becomes magenta, secondary red-purple, warning moves from yellow to orange,
-      and info shifts from blue to teal; success and error keep green and red.
+      <code>data-theme="tritanopia"</code> / <code>data-theme="tritanopia-dark"</code>
+      {m.theming_cvd_tritanopia_desc()}
     </li>
   </ul>
 
@@ -456,22 +480,33 @@ var(--color-${color}-500)
 </html>`}</CodeBlock>
 
   <p>
-    The theme switcher in Storybook is a <strong>grouped light/dark picker</strong>: a <em>Mode</em>
-    dropdown (Light / Dark) plus a <em>Theme</em> dropdown (Default, Brand, High Contrast, Protanopia,
-    Deuteranopia, Tritanopia). Dark + Brand applies <code>data-theme="brand-dark"</code>, and so on
-    for every combination. Both dropdowns are built on Storybook's core <code>globalTypes</code>
-    toolbar mechanism, so there is no addon dependency to manage. You can add your own themes by
-    defining a matching <code>[data-theme="..."]</code> block in
-    <code>src/lib/twintrinsic.css</code> and adding it to the <code>themes</code> map in
-    <code>.storybook/preview.ts</code>.
+    {m.theming_switcher_1()}
+    <strong>grouped light/dark picker</strong>
+    {m.theming_switcher_2()}
+    <em>{m.theming_switcher_mode()}</em>
+    {m.theming_switcher_3()}
+    <em>{m.theming_switcher_theme()}</em>
+    {m.theming_switcher_4()}
+    <code>data-theme="brand-dark"</code>
+    {m.theming_switcher_5()}
+    <code>globalTypes</code>
+    {m.theming_switcher_6()}
+    <code>[data-theme="..."]</code>
+    {m.theming_switcher_7()}
+    <code>src/lib/twintrinsic.css</code>
+    {m.theming_switcher_8()}
+    <code>themes</code>
+    {m.theming_switcher_9()}
+    <code>.storybook/preview.ts</code>
+    {m.theming_switcher_10()}
   </p>
 
-  <h2>Avoiding the Light-Mode Flash</h2>
+  <h2>{m.theming_flash()}</h2>
   <p>
-    Because theme detection happens in client-side JavaScript, the page can briefly render in light
-    mode before <code>ThemeToggle</code> applies the saved or system-preferred theme. To prevent that
-    flash, add this blocking inline script to your SvelteKit <code>app.html</code> <strong>before</strong>
-    <code>%sveltekit.head%</code>:
+    {m.theming_flash_body_1()}
+    <code>ThemeToggle</code>
+    {m.theming_flash_body_2()}
+    <code>app.html</code> <strong>{m.theming_flash_before()}</strong> <code>%sveltekit.head%</code>:
   </p>
 
   <CodeBlock language="html">{`<!-- Add this inside the <head> of app.html, before %sveltekit.head% -->
@@ -494,10 +529,10 @@ var(--color-${color}-500)
   }
 \u003C/script>`}</CodeBlock>
 
-  <h2>Tailwind Configuration</h2>
+  <h2>{m.theming_tailwind()}</h2>
   <p>
-    The theme is also available through Tailwind CSS utility classes. Here's how to
-    configure your <code>tailwind.config.js</code>:
+    {m.theming_tailwind_body_1()}
+    <code>tailwind.config.js</code>:
   </p>
 
   <CodeBlock language="javascript">
@@ -560,10 +595,8 @@ module.exports = {
 }`}
   </CodeBlock>
   
-  <h2>Using Colors in Components</h2>
-  <p>
-    When building components, use the Tailwind classes to apply colors consistently. Here are some examples:
-  </p>
+  <h2>{m.theming_using_colors()}</h2>
+  <p>{m.theming_using_colors_body()}</p>
   
   <CodeBlock language="svelte">
 {`\u003Cscript>
