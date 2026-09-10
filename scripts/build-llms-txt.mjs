@@ -5,6 +5,8 @@ import { join, relative } from "node:path"
 
 const ROOT = process.cwd()
 const OUTPUT = join(ROOT, "static", "llms.txt")
+/** Base-locale messages, used to resolve `m.*()` calls in docs pages. */
+const MESSAGES = JSON.parse(readFileSync(join(ROOT, "messages", "en.json"), "utf-8"))
 
 /**
  * Recursively find files matching an extension.
@@ -33,6 +35,58 @@ function stripBlocks(source) {
 	return source
 		.replace(/<script[\s\S]*?<\/script>/g, "")
 		.replace(/<style[\s\S]*?<\/style>/g, "")
+}
+
+/**
+ * Replace Paraglide `m.messageKey()` calls with the base-locale message text.
+ *
+ * Docs prose is translated at runtime, so the rendered page contains no
+ * human-readable sentences — without this step every translated page would
+ * contribute only its code and demo markup to `llms.txt`.
+ * @param {string} source
+ * @returns {string}
+ */
+/**
+ * Normalise a message value for the plain-text digest: ICU unescapes doubled
+ * apostrophes at runtime, and angle brackets must be entity-encoded so the
+ * downstream tag stripper does not eat `<footer>`-style code spans.
+ * @param {string} value
+ * @returns {string}
+ */
+function normalizeMessage(value) {
+	return value
+		.replace(/''/g, "'")
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+}
+
+function resolveMessages(source) {
+	const resolve = (match, key) => {
+		const value = MESSAGES[key]
+		return typeof value === "string" ? normalizeMessage(value) : match
+	}
+	// Consume the enclosing `{…}` first so the inserted text is not mistaken
+	// for a Svelte expression by the brace stripper downstream.
+	return source
+		.replace(/\{\s*m\.([A-Za-z_$][\w$]*)\(\)\s*\}/g, resolve)
+		.replace(/\bm\.([A-Za-z_$][\w$]*)\(\)/g, resolve)
+}
+
+/**
+ * Remove balanced `{…}` groups (ICU placeholders and Svelte expressions).
+ * Loops so nested groups collapse innermost-first.
+ * @param {string} text
+ * @returns {string}
+ */
+function stripBraces(text) {
+	let previous
+	let out = text
+	do {
+		previous = out
+		out = out.replace(/\{[^{}]*\}/g, " ")
+	} while (out !== previous)
+	return out
 }
 
 /**
@@ -68,10 +122,11 @@ function extractPropsMetadata(source) {
  * @returns {string}
  */
 function htmlToText(html) {
-	return html
-		.replace(/<!--[\s\S]*?-->/g, "")
-		.replace(/<\/?[\w:-]+(?:\s+[^>]*)?>/g, " ")
-		.replace(/{[^{}]*}/g, " ")
+	return stripBraces(
+		html
+			.replace(/<!--[\s\S]*?-->/g, "")
+			.replace(/<\/?[\w:-]+(?:\s+[^>]*)?>/g, " "),
+	)
 		.replace(/&lt;/g, "<")
 		.replace(/&gt;/g, ">")
 		.replace(/&amp;/g, "&")
@@ -133,7 +188,7 @@ async function* docPageEntries() {
 		if (!path.endsWith("+page.svelte")) continue
 		const source = readFileSync(path, "utf-8")
 		const comment = extractComponentComment(source)
-		const prose = stripBlocks(source)
+		const prose = resolveMessages(stripBlocks(source))
 		const text = htmlToText(prose)
 		if (!text && !comment) continue
 
