@@ -5,6 +5,7 @@ Components overview page
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import Separator from "$lib/components/Separator/Separator.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 const categories = [
   {
@@ -141,6 +142,7 @@ const categories = [
       { name: "Icon", href: "/docs/components/Icon/Icon" },
       { name: "Lazy", href: "/docs/components/Lazy/Lazy" },
       { name: "LazyPanel", href: "/docs/components/Lazy/LazyPanel" },
+      { name: "LocaleSwitcher", href: "/docs/components/LocaleSwitcher/LocaleSwitcher" },
       { name: "Masonry", href: "/docs/components/Masonry/Masonry" },
       { name: "PropsTable", href: "/docs/components/PropsTable/PropsTable" },
     ],
@@ -149,13 +151,9 @@ const categories = [
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Components</h1>
+  <h1>{m.docs_components_heading()}</h1>
 
-  <p>
-    Twintrinsic provides a set of accessible, customizable components built with
-    Svelte 5 and Tailwind CSS. Each component is responsive and follows best
-    practices for accessibility.
-  </p>
+  <p>{m.docs_components_intro()}</p>
 
   <div class="space-y-8 not-prose">
     {#each categories as category}

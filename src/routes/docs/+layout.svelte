@@ -3,51 +3,41 @@
 Documentation site layout with left navigation and header.
 -->
 <script lang="ts">
-import { onMount } from "svelte"
 import { page } from "$app/state"
 import App from "$lib/components/App/App.svelte"
-import Icon from "$lib/components/Icon/Icon.svelte"
 import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte"
-import Separator from "$lib/components/Separator/Separator.svelte"
+import LocaleSwitcher from "$lib/components/LocaleSwitcher/LocaleSwitcher.svelte"
+import { m } from "$lib/paraglide/messages.js"
+import { getTextDirection } from "$lib/paraglide/runtime.js"
 
 let { children } = $props()
 
-/** Text direction for the docs site (LTR default, persisted) */
-let direction = $state<"ltr" | "rtl">("ltr")
-
-/** Apply and persist the text direction on the document root */
-function setDirection(next: "ltr" | "rtl"): void {
-  direction = next
-  document.documentElement.dir = next
-  localStorage.setItem("twintrinsic-dir", next)
-}
-
-/** Apply the saved direction (or the LTR default) once mounted */
-onMount(() => {
-  const saved = localStorage.getItem("twintrinsic-dir")
-  if (saved === "ltr" || saved === "rtl") setDirection(saved)
-  else document.documentElement.dir = direction
+// Flip the document direction to match the active locale (RTL for Persian).
+// The locale itself comes from the Paraglide cookie strategy; switching
+// locales (via LocaleSwitcher) reloads the page in the new locale.
+$effect(() => {
+  document.documentElement.dir = getTextDirection()
 })
 
 const siteLinks = $derived([
-  { label: "Getting Started", href: "/docs", current: page.url.pathname === "/docs" },
+  { label: m.link_getting_started(), href: "/docs", current: page.url.pathname === "/docs" },
   {
-    label: "Components",
+    label: m.link_components(),
     href: "/docs/components",
     current: page.url.pathname.startsWith("/docs/components"),
   },
   {
-    label: "Theming",
+    label: m.link_theming(),
     href: "/docs/theming",
     current: page.url.pathname.startsWith("/docs/theming"),
   },
   {
-    label: "Utilities",
+    label: m.link_utilities(),
     href: "/docs/utilities",
     current: page.url.pathname === "/docs/utilities",
   },
   {
-    label: "Completion",
+    label: m.link_completion(),
     href: "/docs/completion",
     current: page.url.pathname === "/docs/completion",
   },
@@ -55,10 +45,10 @@ const siteLinks = $derived([
 
 let leftSidebarExpanded = $state(false)
 
-// Component links for the left sidebar
-const siteMenu = [
+// Component links for the left sidebar (group titles are translated)
+const siteMenu = $derived([
   {
-    title: "Examples",
+    title: m.nav_examples(),
     children: [
       { title: "Data Dashboard", link: "/docs/examples/dashboard" },
       { title: "Game Map", link: "/docs/examples/game-map" },
@@ -66,7 +56,7 @@ const siteMenu = [
     ],
   },
   {
-    title: "App",
+    title: m.nav_app(),
     children: [
       { title: "App", link: "/docs/components/App/App" },
       { title: "AppHeader", link: "/docs/components/AppHeader/AppHeader" },
@@ -77,7 +67,7 @@ const siteMenu = [
     ],
   },
   {
-    title: "Basic",
+    title: m.nav_basic(),
     children: [
       { title: "Accordion", link: "/docs/components/Accordion/Accordion" },
       { title: "AccordionItem", link: "/docs/components/Accordion/AccordionItem" },
@@ -92,7 +82,7 @@ const siteMenu = [
     ],
   },
   {
-    title: "Navigation",
+    title: m.nav_navigation(),
     children: [
       { title: "Breadcrumb", link: "/docs/components/Breadcrumb/Breadcrumb" },
       { title: "BreadcrumbItem", link: "/docs/components/Breadcrumb/BreadcrumbItem" },
@@ -106,7 +96,7 @@ const siteMenu = [
     ],
   },
   {
-    title: "Data Display",
+    title: m.nav_data_display(),
     children: [
       { title: "Avatar", link: "/docs/components/Avatar/Avatar" },
       { title: "AvatarGroup", link: "/docs/components/Avatar/AvatarGroup" },
@@ -138,7 +128,7 @@ const siteMenu = [
     ],
   },
   {
-    title: "Metrics",
+    title: m.nav_metrics(),
     children: [
       { title: "DonutChart", link: "/docs/components/Metrics/DonutChart" },
       { title: "PieChart", link: "/docs/components/Metrics/PieChart" },
@@ -155,7 +145,7 @@ const siteMenu = [
     ],
   },
   {
-    title: "Form",
+    title: m.nav_form(),
     children: [
       { title: "AutoComplete", link: "/docs/components/Form/AutoComplete" },
       { title: "Button", link: "/docs/components/Button/Button" },
@@ -188,7 +178,7 @@ const siteMenu = [
     ],
   },
   {
-    title: "Feedback",
+    title: m.nav_feedback(),
     children: [
       { title: "Alert", link: "/docs/components/Alert/Alert" },
       { title: "Modal", link: "/docs/components/Modal/Modal" },
@@ -199,27 +189,28 @@ const siteMenu = [
     ],
   },
   {
-    title: "Utility",
+    title: m.nav_utility(),
     children: [
       { title: "EventsTable", link: "/docs/components/EventsTable/EventsTable" },
       { title: "Icon", link: "/docs/components/Icon/Icon" },
       { title: "Lazy", link: "/docs/components/Lazy/Lazy" },
       { title: "LazyPanel", link: "/docs/components/Lazy/LazyPanel" },
+      { title: "LocaleSwitcher", link: "/docs/components/LocaleSwitcher/LocaleSwitcher" },
       { title: "Masonry", link: "/docs/components/Masonry/Masonry" },
       { title: "PropsTable", link: "/docs/components/PropsTable/PropsTable" },
     ],
   },
   {
-    title: "APIs",
+    title: m.nav_apis(),
     children: [{ title: "Utilities", link: "/docs/utilities" }],
   },
   {
-    title: "Theming",
+    title: m.nav_theming(),
     children: [
       { title: "Theme Preview", link: "/docs/theming/preview" },
     ],
   },
-]
+])
 
 // Theme colors for the right sidebar
 const themeColors = [
@@ -240,7 +231,7 @@ const themeColors = [
 
 <App
   rightSidebarHidden={true}
-  appName="Twintrinsic Documentation"
+  appName={m.docs_app_name()}
   brand={{
     name: 'Twintrinsic',
     href: '/',
@@ -253,17 +244,10 @@ const themeColors = [
   {@render children?.()}
 </App>
 
-<!-- LTR/RTL text-direction toggle for the docs site -->
-<button
-  type="button"
-  class="fixed bottom-4 left-4 z-50 flex items-center gap-2 px-3 py-2 rounded-full border border-border bg-surface text-text text-xs font-medium shadow-lg hover:text-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
-  aria-label={direction === "ltr" ? "Switch to right-to-left layout" : "Switch to left-to-right layout"}
-  onclick={() => setDirection(direction === "ltr" ? "rtl" : "ltr")}
-  data-testid="dir-toggle"
->
-  <Icon name="tabler:arrows-left-right" class="w-4 h-4" />
-  {direction === "ltr" ? "LTR" : "RTL"}
-</button>
+<!-- Locale switcher for the docs site (drives text direction too) -->
+<div class="fixed bottom-4 left-4 z-50">
+  <LocaleSwitcher data-testid="docs-locale-switcher" />
+</div>
 
 <style lang="postcss">
   @reference '$lib/twintrinsic.css';

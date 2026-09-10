@@ -2,41 +2,71 @@ import { expect, test } from "@playwright/test";
 import { waitForHydration } from "./helpers.js";
 
 /**
- * Docs-site tests for the LTR/RTL text-direction toggle. The toggle sets
- * `document.documentElement.dir` (driving the logical `text-start`/`text-end`
- * utilities) and persists the choice to localStorage.
+ * Docs-site tests for the locale switcher. The switcher drives the
+ * Paraglide locale, which in turn sets `document.documentElement.dir`
+ * (via `getTextDirection`), translates the docs chrome (nav group titles,
+ * header links, app name), and persists via the PARAGLIDE_LOCALE cookie.
  */
-test.describe("Docs direction toggle", () => {
-  test.beforeEach(async ({ page }) => {
+test.describe("Docs locale switcher", () => {
+  test("renders in English (LTR) by default", async ({ page }) => {
     await page.goto("/docs");
     await waitForHydration(page);
-  });
 
-  test("starts in LTR mode", async ({ page }) => {
     await expect(page.locator("html")).toHaveAttribute("dir", "ltr");
-    const toggle = page.getByTestId("dir-toggle");
-    await expect(toggle).toBeVisible();
-    await expect(toggle).toHaveText("LTR");
+    const switcher = page.getByTestId("docs-locale-switcher");
+    await expect(switcher.getByRole("button", { name: "English" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    await expect(switcher.getByRole("button", { name: "فارسی" })).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    );
   });
 
-  test("flips the document direction to RTL and back", async ({ page }) => {
-    const toggle = page.getByTestId("dir-toggle");
-    await toggle.click();
+  test("switches to Persian: RTL direction and translated chrome", async ({ page }) => {
+    await page.goto("/docs");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-    await expect(toggle).toHaveText("RTL");
-
-    await toggle.click();
-    await expect(page.locator("html")).toHaveAttribute("dir", "ltr");
-    await expect(toggle).toHaveText("LTR");
+    await expect(
+      page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }),
+    ).toHaveAttribute("aria-pressed", "true");
+    // Header links translate
+    await expect(page.getByRole("link", { name: "شروع" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "کامپوننت‌ها" })).toBeVisible();
+    // Nav group titles translate (Form -> فرم, Feedback -> بازخورد)
+    await expect(page.getByText("فرم", { exact: true }).first()).toBeVisible();
+    await expect(page.getByText("بازخورد", { exact: true }).first()).toBeVisible();
   });
 
-  test("persists the direction across reloads", async ({ page }) => {
-    await page.getByTestId("dir-toggle").click();
+  test("persists the locale across reloads", async ({ page }) => {
+    await page.goto("/docs");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
 
     await page.reload();
     await waitForHydration(page);
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-    await expect(page.getByTestId("dir-toggle")).toHaveText("RTL");
+    await expect(
+      page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }),
+    ).toHaveAttribute("aria-pressed", "true");
+  });
+
+  test("translates the components index heading", async ({ page }) => {
+    await page.goto("/docs/components");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Components");
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("کامپوننت‌ها");
   });
 });
