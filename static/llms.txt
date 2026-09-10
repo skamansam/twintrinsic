@@ -205,6 +205,10 @@ Lazy - A component that renders its content only when it becomes visible in the 
 
 LazyPanel - A Panel that only renders its body once it becomes visible in the viewport. Useful for expandable panels holding lazy content. Usage: ```svelte Lazy Content Loading... ```
 
+### LocaleSwitcher/LocaleSwitcher
+
+LocaleSwitcher - A language picker that switches the active Paraglide locale. Renders either a group of toggle buttons or a native , driven by the Paraglide runtime (`getLocale`/`setLocale`). Language names are shown in their own language (e.g. "Español", "فارسی") so every option stays readable regardless of the active locale. Requires Paraglide-JS compiled to `$lib/paraglide` with the same locales listed in `messages/ .json` (this repo's setup — see the vite plugin and `project.inlang/settings.json`). Usage: ```svelte ```
+
 ### Masonry/Masonry
 
 Masonry - A component for creating Pinterest-style grid layouts. Provides responsive, dynamic layouts for items of varying heights. Usage: ```svelte Item 1 with some content Item 2 with more content that might be taller Item 3 with less content Item 4 with a different height
@@ -337,8 +341,6 @@ Development Completion This page documents the development process and completio
 ### /docs/components
 
 Components overview page
-
-Components Twintrinsic provides a set of accessible, customizable components built with Svelte 5 and Tailwind CSS. Each component is responsive and follows best practices for accessibility.
 
 ### /docs/components/Accordion/Accordion
 
@@ -667,6 +669,12 @@ Lazy Lazy renders its content only once it scrolls into the viewport, using an I
 LazyPanel documentation page — standardized structure
 
 LazyPanel LazyPanel is a Panel component that only loads its content when it becomes visible in the viewport. Built on top of the Panel component with IntersectionObserver for lazy loading. What, When & Why What is it? A Panel that defers its content rendering until visible. Combines the collapsible Panel with Lazy's IntersectionObserver behavior. Shows a configurable loading state while content is being deferred. When should I use it? Use <LazyPanel> for expensive-to-render Panel content that is off-screen initially: FAQ sections at the bottom of a page, settings panels, or content that requires data fetching. Why does it exist? Performance — defers expensive Panel content. Accessible — inherits Panel's keyboard and ARIA support. Loading states — configurable placeholder while deferring. Sources MDN — IntersectionObserver MDN — <details> Primer — Accordion Ant Design — Collapse web.dev — content-visibility Responsiveness Full-width by default; inherits from parent Container. Touch targets meet 44×44 px minimum for the header button. Customization header snippet — panel header content. loading snippet — content shown while deferring. All Panel props (expanded, disabled, bordered, showIcon, etc.). Examples Basic LazyPanel Billing FAQ Loading FAQ… How do upgrades work? Upgrades take effect immediately. `}> Billing FAQ Loading FAQ… How do upgrades work? Upgrades take effect immediately and are prorated. Custom Loading Spinner Account Settings Manage your profile, notifications, and security. `}> Account Settings Manage your profile, notifications, and security preferences. Slots Slot Description header Panel header content loading Content shown while deferring default Lazily loaded content Props Accessibility Inherits all accessibility features from the base Panel component. Loading states are announced to screen readers. Content updates are announced when lazy loading completes. Keyboard Support Key Function Tab Move focus to the panel header Enter / Space Toggle the panel open/closed
+
+### /docs/components/LocaleSwitcher/LocaleSwitcher
+
+LocaleSwitcher documentation page — standardized structure
+
+LocaleSwitcher LocaleSwitcher is a language picker that switches the active Paraglide locale. It renders either a group of toggle buttons or a native <select> , and each language is shown in its own script (e.g. "Español", "فارسی") so every option stays readable no matter the active locale. What, When & Why What is it? A small component backed by the Paraglide runtime's getLocale / setLocale . Switching a locale uses the cookie strategy (the same one this docs site uses), so the page reloads in the new locale and the server re-renders every message via m() . The onchange event reports the new locale if you need to react client-side. When should I use it? Whenever your app uses Paraglide and needs a visible locale control — a header, settings page, or a floating demo-site pill like the one on this docs site. Pair it with getTextDirection() from the Paraglide runtime to flip the document direction for RTL languages. Why does it exist? Self-naming locales — each language names itself, so the control works before a message is even resolved. Accessible — the button group uses the toggle-button pattern ( aria-pressed ) and the select is a native element. Copy-friendly — it's a pattern component: drop it into your app, adjust the locales union, and it works with your Paraglide setup. Paraglide Setup LocaleSwitcher imports from $lib/paraglide , the output directory Paraglide generates. Wire the Vite plugin and a project.inlang/settings.json exactly like this repo: {`// vite.config.ts import from "@inlang/paraglide-js" plugins: [ // ...your other plugins paraglideVitePlugin( ), ]`} {`// project.inlang/settings.json { "modules": [ "https://cdn.jsdelivr.net/npm/@inlang/plugin-icu1@latest/dist/index.js", "https://cdn.jsdelivr.net/npm/@inlang/plugin-m-function-matcher@2/dist/index.js" ], "plugin.inlang.icu-messageformat-1": { "pathPattern": "./messages/ .json" }, "baseLocale": "en", "locales": ["en", "es", "fa"] }`} Keep the locales in sync with your message files. The component's LocaleCode union should match them too. Examples Buttons `}> Select `}> Custom Locales `}> Custom Label `}> Props Events Accessibility The button group exposes role="group" with an aria-label , and the active locale is marked with aria-pressed (toggle-button pattern). The select variant is a native <select> with a label and aria-label , so it works with any screen reader for free. Focus rings are visible on every control, and the group is a single keyboard tab stop (arrow keys move between buttons). Keyboard Support Key Function Tab Focus the locale group or select → / ↓ Move to the next locale button ← / ↑ Move to the previous locale button Enter / Space Activate the focused locale
 
 ### /docs/components/Map/Map
 
