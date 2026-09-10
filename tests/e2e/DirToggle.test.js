@@ -220,4 +220,20 @@ test.describe("Docs locale switcher", () => {
     await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
     await expect(page.getByText(/پنل ناوبری عمودی جمع‌شدنی/)).toBeVisible();
   });
+
+  test("translates the App docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/App/App");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("App");
+    await expect(page.locator("h2", { hasText: "Common Mistakes" })).toBeVisible();
+    await expect(page.locator("h2", { hasText: "Slots" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "اشتباهات رایج" })).toBeVisible();
+    await expect(page.locator("h2", { hasText: "اسلات‌ها" })).toBeVisible();
+    await expect(page.getByText(/اسکلت صفحه/).first()).toBeVisible();
+  });
 });
