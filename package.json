@@ -230,6 +230,11 @@
       "svelte": "./dist/components/Form/FileUpload.svelte",
       "default": "./dist/components/Form/FileUpload.svelte"
     },
+    "./components/FormBuilder": {
+      "types": "./dist/components/Form/FormBuilder.svelte.d.ts",
+      "svelte": "./dist/components/Form/FormBuilder.svelte",
+      "default": "./dist/components/Form/FormBuilder.svelte"
+    },
     "./components/FloatLabel": {
       "types": "./dist/components/Form/FloatLabel.svelte.d.ts",
       "svelte": "./dist/components/Form/FloatLabel.svelte",

@@ -41,6 +41,11 @@ export { default as ColorPicker } from "./components/Form/ColorPicker.svelte";
 export { default as Combobox } from "./components/Form/Combobox.svelte";
 export { default as Dropdown } from "./components/Form/Dropdown.svelte";
 export { default as FileUpload } from "./components/Form/FileUpload.svelte";
+export {
+  default as FormBuilder,
+  type FormFieldDescriptor,
+  type OpenApiSchema,
+} from "./components/Form/FormBuilder.svelte";
 export { default as FloatLabel } from "./components/Form/FloatLabel.svelte";
 export { default as Form } from "./components/Form/Form.svelte";
 export { default as FormField } from "./components/Form/FormField.svelte";
