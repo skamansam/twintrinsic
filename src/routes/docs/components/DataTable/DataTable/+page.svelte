@@ -5,9 +5,10 @@ DataTable documentation page — standardized structure
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
 import DataTable, * as DataTableModule from "$lib/components/DataTable/DataTable.svelte"
-import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
+import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 const users = [
   { id: 1, name: "Sarah Chen", email: "sarah.chen@acme.io", role: "Admin", status: "Active" },
@@ -51,40 +52,37 @@ const templateColumns = [
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>DataTable</h1>
+<h1>{m.dt_heading()}</h1>
 
 <p>
-  Displays structured data in a tabular format with sorting, filtering,
-  pagination, row selection, and custom cell templates. Built on semantic
-  HTML <code>&lt;table&gt;</code> elements.
+  {m.dt_intro_1()}
+  <code>&lt;table&gt;</code>
+  {m.dt_intro_2()}
 </p>
 
-<h2>What, When &amp; Why</h2>
+<h2>{m.sec_what_when_why()}</h2>
 
-<h3>What is it?</h3>
+<h3>{m.sec_what()}</h3>
+<p>{m.dt_what()}</p>
+
+<h3>{m.sec_when()}</h3>
 <p>
-  A full-featured data grid component that renders tabular data with column
-  headers, sortable columns, text filters, pagination, and selectable rows.
-  Supports custom cell templates for rich content.
+  {m.dt_when_1()}
+  <code>&lt;DataTable&gt;</code>
+  {m.dt_when_2()}
+  <code>&lt;table&gt;</code>
+  {m.dt_when_3()}
 </p>
 
-<h3>When should I use it?</h3>
-<p>
-  Use <code>&lt;DataTable&gt;</code> when you need to display a collection of
-  structured records that users will sort, filter, or paginate through — user
-  lists, product catalogs, transaction logs. For simple static tables, use a
-  plain <code>&lt;table&gt;</code>.
-</p>
-
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Sorting &amp; filtering</strong> — click column headers to sort; type to filter.</li>
-  <li><strong>Pagination</strong> — handles large datasets without DOM overload.</li>
-  <li><strong>Row selection</strong> — single or multi-select with keyboard support.</li>
-  <li><strong>Custom templates</strong> — render badges, links, or any HTML in cells.</li>
+  <li><strong>{m.dt_why_sorting()}</strong> — {m.dt_why_sorting_desc()}.</li>
+  <li><strong>{m.dt_why_pagination()}</strong> — {m.dt_why_pagination_desc()}.</li>
+  <li><strong>{m.dt_why_selection()}</strong> — {m.dt_why_selection_desc()}.</li>
+  <li><strong>{m.dt_why_templates()}</strong> — {m.dt_why_templates_desc()}.</li>
 </ul>
 
-<h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
 <ul>
   <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/grid/">WAI-ARIA APG — Grid</a></li>
   <li><a href="https://m3.material.io/components/data-table/overview">Material Design 3 — Data Table</a></li>
@@ -92,93 +90,93 @@ const templateColumns = [
 </ul>
 
 
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>Native `&lt;table&gt;` + `&lt;thead&gt;` + `&lt;tbody&gt;` + `&lt;th scope&gt;` for semantic structure</li>
-    <li>`aria-sort` on sorted column headers</li>
-    <li>`aria-selected` on selected rows</li>
-    <li>`content-visibility: auto` on `&lt;tbody&gt;` for large table performance</li>
-    <li>`@starting-style` for row entry animations</li>
+    <li>{m.dt_impl_1()}</li>
+    <li>{m.dt_impl_2()}</li>
+    <li>{m.dt_impl_3()}</li>
+    <li>{m.dt_impl_4()}</li>
+    <li>{m.dt_impl_5()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use `&lt;div role=&quot;table&quot;&gt;` — always native `&lt;table&gt;` for semantics</li>
-    <li>Don't forget `&lt;th scope=&quot;col&quot;&gt;` — screen readers need column header associations</li>
+    <li>{m.dt_mistake_1()}</li>
+    <li>{m.dt_mistake_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
+<h2>{m.sec_related()}</h2>
 <p>Listbox, EventsTable, PropsTable</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Table scrolls horizontally on narrow viewports.</li>
-  <li>Column widths respect <code>width</code> definitions.</li>
-  <li>Compact mode reduces row padding for dense layouts.</li>
+  <li>{m.dt_responsive_1()}</li>
+  <li>{m.dt_responsive_2_pre()}<code>width</code>{m.dt_responsive_2_post()}</li>
+  <li>{m.dt_responsive_3()}</li>
 </ul>
 
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li><code>sortable</code> / <code>filterable</code> — enable per-column features.</li>
-  <li><code>pageable</code> / <code>pageSize</code> — pagination controls.</li>
-  <li><code>selectable</code> / <code>multiSelect</code> — row selection.</li>
-  <li><code>striped</code> / <code>bordered</code> / <code>compact</code> — visual variants.</li>
-  <li><code>template</code> — custom cell rendering function.</li>
-  <li><code>class</code> / <code>headerClass</code> / <code>rowClass</code> — custom CSS.</li>
+  <li><code>sortable</code> / <code>filterable</code>{m.dt_custom_features()}</li>
+  <li><code>pageable</code> / <code>pageSize</code>{m.dt_custom_pagination()}</li>
+  <li><code>selectable</code> / <code>multiSelect</code>{m.dt_custom_selection()}</li>
+  <li><code>striped</code> / <code>bordered</code> / <code>compact</code>{m.dt_custom_visual()}</li>
+  <li><code>template</code>{m.dt_custom_template()}</li>
+  <li><code>class</code> / <code>headerClass</code> / <code>rowClass</code>{m.dt_custom_css()}</li>
 </ul>
 
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Basic Table</h3>
+<h3>{m.dt_ex_basic()}</h3>
 <ExampleTabs code={`<DataTable data={users} columns={columns} />`}>
   <div class="not-prose mb-8" data-testid="datatable-basic">
     <DataTable data={users} columns={userColumns} />
   </div>
 </ExampleTabs>
 
-<h3>Sortable and Filterable</h3>
+<h3>{m.dt_ex_sortable()}</h3>
 <ExampleTabs code={`<DataTable data={users} columns={columns} sortable filterable />`}>
   <div class="not-prose mb-8" data-testid="datatable-sortable">
     <DataTable data={users} columns={userColumns} sortable filterable />
   </div>
 </ExampleTabs>
 
-<h3>Pagination</h3>
+<h3>{m.dt_ex_pagination()}</h3>
 <ExampleTabs code={`<DataTable data={users} columns={columns} pageable pageSize={2} pageSizeOptions={[2, 5, 10]} />`}>
   <div class="not-prose mb-8" data-testid="datatable-pagination">
     <DataTable data={users} columns={userColumns} pageable pageSize={2} pageSizeOptions={[2, 5, 10]} />
   </div>
 </ExampleTabs>
 
-<h3>Selectable Rows</h3>
+<h3>{m.dt_ex_selectable()}</h3>
 <ExampleTabs code={`<DataTable data={users} columns={columns} selectable multiSelect />`}>
   <div class="not-prose mb-8" data-testid="datatable-selectable">
     <DataTable data={users} columns={userColumns} selectable multiSelect />
   </div>
 </ExampleTabs>
 
-<h3>Striped and Bordered</h3>
+<h3>{m.dt_ex_striped()}</h3>
 <ExampleTabs code={`<DataTable data={users} columns={columns} striped bordered />`}>
   <div class="not-prose mb-8" data-testid="datatable-striped">
     <DataTable data={users} columns={userColumns} striped bordered />
   </div>
 </ExampleTabs>
 
-<h3>Loading State</h3>
+<h3>{m.dt_ex_loading()}</h3>
 <ExampleTabs code={`<DataTable data={[]} columns={columns} loading />`}>
   <div class="not-prose mb-8" data-testid="datatable-loading">
     <DataTable data={[]} columns={userColumns} loading />
   </div>
 </ExampleTabs>
 
-<h3>Empty State</h3>
+<h3>{m.dt_ex_empty()}</h3>
 <ExampleTabs code={`<DataTable data={[]} columns={columns} emptyMessage="No users found" />`}>
   <div class="not-prose mb-8" data-testid="datatable-empty">
     <DataTable data={[]} columns={userColumns} emptyMessage="No users found" />
   </div>
 </ExampleTabs>
 
-  <h3>Custom Templates</h3>
+  <h3>{m.dt_ex_templates()}</h3>
   <ExampleTabs code={`const productColumns = [
   { field: 'name', header: 'Product' },
   { field: 'price', header: 'Price', template: (v) => "$" + Number(v).toFixed(2) },
@@ -190,39 +188,39 @@ const templateColumns = [
     </div>
   </ExampleTabs>
 
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={DataTableModule} />
 
-<h2>Events</h2>
+<h2>{m.sec_events()}</h2>
 <EventsTable component={DataTableModule} />
 
-<h2>Slots</h2>
+<h2>{m.sec_slots()}</h2>
 <table>
-  <thead><tr><th>Slot</th><th>Props</th><th>Description</th></tr></thead>
+  <thead><tr><th>Slot</th><th>{m.sec_props()}</th><th>{m.sec_description()}</th></tr></thead>
   <tbody>
-    <tr><td><code>header</code></td><td><code>&#123; columns &#125;</code></td><td>Custom table header</td></tr>
-    <tr><td><code>footer</code></td><td><code>&#123; columns, data &#125;</code></td><td>Custom table footer</td></tr>
-    <tr><td><code>empty</code></td><td><code>&#123; emptyMessage &#125;</code></td><td>Custom empty state</td></tr>
-    <tr><td><code>loading</code></td><td><code>&#123; loading &#125;</code></td><td>Custom loading state</td></tr>
-    <tr><td><code>cell</code></td><td><code>&#123; value, row, column, rowIndex, columnIndex &#125;</code></td><td>Custom cell content</td></tr>
+    <tr><td><code>header</code></td><td><code>&#123; columns &#125;</code></td><td>{m.dt_slot_header()}</td></tr>
+    <tr><td><code>footer</code></td><td><code>&#123; columns, data &#125;</code></td><td>{m.dt_slot_footer()}</td></tr>
+    <tr><td><code>empty</code></td><td><code>&#123; emptyMessage &#125;</code></td><td>{m.dt_slot_empty()}</td></tr>
+    <tr><td><code>loading</code></td><td><code>&#123; loading &#125;</code></td><td>{m.dt_slot_loading()}</td></tr>
+    <tr><td><code>cell</code></td><td><code>&#123; value, row, column, rowIndex, columnIndex &#125;</code></td><td>{m.dt_slot_cell()}</td></tr>
   </tbody>
 </table>
 
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Uses semantic <code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>.</li>
-  <li>Sortable columns use <code>aria-sort</code>.</li>
-  <li>Dynamic updates announced via <code>aria-live</code> regions.</li>
-  <li>Focus management for interactive elements.</li>
+  <li>{m.dt_a11y_1_pre()}<code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>{m.dt_a11y_1_post()}</li>
+  <li>{m.dt_a11y_2_pre()}<code>aria-sort</code>{m.dt_a11y_2_post()}</li>
+  <li>{m.dt_a11y_3_pre()}<code>aria-live</code>{m.dt_a11y_3_post()}</li>
+  <li>{m.dt_a11y_4()}</li>
 </ul>
 
-<h2>Keyboard Support</h2>
+<h2>{m.sec_keyboard()}</h2>
 <table>
-  <thead><tr><th>Key</th><th>Function</th></tr></thead>
+  <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
   <tbody>
-    <tr><td><kbd>Tab</kbd></td><td>Move focus through interactive elements</td></tr>
-    <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Toggle sort (on header) or selection (on row)</td></tr>
-    <tr><td><kbd>Arrow Keys</kbd></td><td>Navigate between cells (when cell navigation enabled)</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td>{m.dt_kb_1()}</td></tr>
+    <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.dt_kb_2()}</td></tr>
+    <tr><td><kbd>Arrow Keys</kbd></td><td>{m.dt_kb_3()}</td></tr>
   </tbody>
 </table>
 </Container>
