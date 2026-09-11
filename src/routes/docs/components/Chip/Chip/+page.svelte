@@ -9,6 +9,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as ChipModule from "$lib/components/Chip/Chip.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 let chips = $state([
   { id: 1, label: 'React', variant: 'primary' },
@@ -26,90 +27,79 @@ function removeChip(id: number) {
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>Chip</h1>
+<h1>{m.chip_heading()}</h1>
 
+<p>{m.chip_intro_1()}</p>
+
+<h2>{m.sec_what_when_why()}</h2>
+
+<h3>{m.sec_what()}</h3>
+<p>{m.chip_what_1()}</p>
+
+<h3>{m.sec_when()}</h3>
 <p>
-  A compact element for representing an input, attribute, or action. Chips
-  support selection, removal, and click interactions with full keyboard
-  navigation.
+  {m.chip_when_1()}<code>&lt;Chip&gt;</code>{m.chip_when_2()}<code>&lt;Badge&gt;</code>{m.chip_when_3()}<code>&lt;Tag&gt;</code>{m.chip_when_4()}
 </p>
 
-<h2>What, When &amp; Why</h2>
-
-<h3>What is it?</h3>
-<p>
-  A small, rounded element that can display text, icons, or avatars. Chips can
-  be clickable (toggle selection), removable (with an × button), or static.
-</p>
-
-<h3>When should I use it?</h3>
-<p>
-  Use <code>&lt;Chip&gt;</code> for selected filters, tag inputs, removable
-  categories, or compact action buttons. For purely visual labels, use
-  <code>&lt;Badge&gt;</code>. For dismissible labels in a group, use
-  <code>&lt;Tag&gt;</code>.
-</p>
-
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Interactive selection</strong> — toggle chips on/off for filter states.</li>
-  <li><strong>Removable</strong> — users can dismiss chips with a clear × button.</li>
-  <li><strong>Rich content</strong> — supports icons and avatars inside the chip.</li>
-  <li><strong>Group management</strong> — <code>&lt;ChipGroup&gt;</code> handles layout and selection state.</li>
+  <li><strong>{m.chip_why_selection()}</strong>{m.chip_why_selection_desc()}</li>
+  <li><strong>{m.chip_why_removable()}</strong>{m.chip_why_removable_desc()}</li>
+  <li><strong>{m.chip_why_rich()}</strong>{m.chip_why_rich_desc()}</li>
+  <li><strong>{m.chip_why_group()}</strong>{m.chip_why_group_desc_1()}<code>&lt;ChipGroup&gt;</code>{m.chip_why_group_desc_2()}</li>
 </ul>
 
-<h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
 <ul>
   <li><a href="https://m3.material.io/components/chips/overview">Material Design 3 — Chips</a></li>
   <li><a href="https://primer.style/components/toggle-button">Primer — Toggle Button</a></li>
   <li><a href="https://ant.design/components/tag">Ant Design — Tag</a></li>
 </ul>
 
-
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>`&lt;button&gt;` for clickable chips (more interactive than Tag)</li>
-    <li>`aria-pressed` for toggle chips</li>
-    <li>`aria-live=&quot;polite&quot;` for dynamic chip addition/removal</li>
-    <li>Icons, avatars, and close buttons supported</li>
+  <li>{m.chip_impl_1_0()}<code>&lt;button&gt;</code>{m.chip_impl_1_1()}</li>
+  <li><code>aria-pressed</code>{m.chip_impl_2_1()}</li>
+  <li><code>aria-live=&quot;polite&quot;</code>{m.chip_impl_3_1()}</li>
+  <li>{m.chip_impl_4()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use `&lt;span onclick&gt;` — always `&lt;button&gt;` for interactive chips</li>
-    <li>Don't forget `aria-pressed` for toggle state</li>
+  <li>{m.chip_mistake_1_0()}<code>&lt;span onclick&gt;</code>{m.chip_mistake_1_1()}<code>&lt;button&gt;</code>{m.chip_mistake_1_2()}</li>
+  <li>{m.chip_mistake_2_0()}<code>aria-pressed</code>{m.chip_mistake_2_1()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Tag, TagGroup, Button</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.chip_related_1()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Chips wrap naturally within their container.</li>
-  <li>In <code>&lt;ChipGroup&gt;</code>, chips use flexbox wrap layout.</li>
+  <li>{m.chip_responsive_1()}</li>
+  <li>{m.chip_responsive_2_0()}<code>&lt;ChipGroup&gt;</code>{m.chip_responsive_2_1()}</li>
 </ul>
 
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li>Variants: default, primary, secondary, success, warning, error, info.</li>
-  <li>Sizes: sm, md, lg.</li>
-  <li>Style: <code>outline</code> for bordered chips.</li>
-  <li><code>clickable</code> — makes the chip a toggle button.</li>
-  <li><code>removable</code> — adds a dismiss × button.</li>
-  <li><code>selected</code> — reflects selection state.</li>
-  <li><code>icon</code> and <code>avatar</code> — rich content inside the chip.</li>
+  <li>{m.chip_custom_1()}</li>
+  <li>{m.chip_custom_2()}</li>
+  <li>{m.chip_custom_3_0()}<code>outline</code>{m.chip_custom_3_1()}</li>
+  <li><code>clickable</code>{m.chip_custom_4_1()}</li>
+  <li><code>removable</code>{m.chip_custom_5_1()}</li>
+  <li><code>selected</code>{m.chip_custom_6_1()}</li>
+  <li><code>icon</code>{m.chip_custom_7_1()}<code>avatar</code>{m.chip_custom_7_2()}</li>
 </ul>
 
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Basic Chip</h3>
+<h3>{m.chip_ex_basic()}</h3>
 <ExampleTabs code={`<Chip>Basic Chip</Chip>`}>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md" data-testid="chip-basic">
     <Chip>Basic Chip</Chip>
   </div>
 </ExampleTabs>
 
-<h3>Variants</h3>
+<h3>{m.chip_ex_variants()}</h3>
 <ExampleTabs code={`<Chip variant="default">Default</Chip>
 <Chip variant="primary">Primary</Chip>
 <Chip variant="secondary">Secondary</Chip>
@@ -128,7 +118,7 @@ function removeChip(id: number) {
   </div>
 </ExampleTabs>
 
-<h3>Removable Chips</h3>
+<h3>{m.chip_ex_removable()}</h3>
 <ExampleTabs code={`<Chip removable onremove={() => {}}>Removable</Chip>`}>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md" data-testid="chip-removable">
     {#each chips as chip (chip.id)}
@@ -142,7 +132,7 @@ function removeChip(id: number) {
   </div>
 </ExampleTabs>
 
-<h3>Clickable Chips</h3>
+<h3>{m.chip_ex_clickable()}</h3>
 <ExampleTabs code={`<Chip clickable>Clickable</Chip>
 <Chip variant="success" clickable selected>Selected</Chip>`}>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md" data-testid="chip-clickable">
@@ -152,7 +142,7 @@ function removeChip(id: number) {
   </div>
 </ExampleTabs>
 
-<h3>Disabled</h3>
+<h3>{m.chip_ex_disabled()}</h3>
 <ExampleTabs code={`<Chip disabled>Disabled</Chip>
 <Chip variant="primary" disabled clickable>Disabled Clickable</Chip>`}>
   <div class="flex flex-wrap items-center gap-4 p-4 bg-surface rounded-md" data-testid="chip-disabled">
@@ -162,7 +152,7 @@ function removeChip(id: number) {
   </div>
 </ExampleTabs>
 
-<h3>Icons</h3>
+<h3>{m.chip_ex_icons()}</h3>
 <ExampleTabs code={`<Chip icon="tabler:star">Starred</Chip>
 <Chip icon="tabler:heart" variant="error">Favorite</Chip>
 <Chip icon="tabler:bell" variant="warning">Notifications</Chip>`}>
@@ -174,27 +164,27 @@ function removeChip(id: number) {
   </div>
 </ExampleTabs>
 
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={ChipModule} />
 
-<h2>Events</h2>
+<h2>{m.sec_events()}</h2>
 <EventsTable component={ChipModule} />
 
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Uses <code>role="button"</code> when clickable.</li>
-  <li>Supports Enter and Space keys for activation.</li>
-  <li>Includes <code>aria-disabled="true"</code> when disabled.</li>
-  <li>Remove button has an <code>aria-label</code> for screen readers.</li>
-  <li>Icons are marked <code>aria-hidden="true"</code>.</li>
+  <li>{m.chip_a11y_1_0()}<code>role="button"</code>{m.chip_a11y_1_1()}</li>
+  <li>{m.chip_a11y_2()}</li>
+  <li>{m.chip_a11y_3_0()}<code>aria-disabled="true"</code>{m.chip_a11y_3_1()}</li>
+  <li>{m.chip_a11y_4_0()}<code>aria-label</code>{m.chip_a11y_4_1()}</li>
+  <li>{m.chip_a11y_5_0()}<code>aria-hidden="true"</code>{m.chip_a11y_5_1()}</li>
 </ul>
 
-<h2>Keyboard Support</h2>
+<h2>{m.sec_keyboard()}</h2>
 <table>
-  <thead><tr><th>Key</th><th>Function</th></tr></thead>
+  <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
   <tbody>
-    <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Toggle selection (clickable chips)</td></tr>
-    <tr><td><kbd>Tab</kbd></td><td>Move focus to next interactive chip</td></tr>
+    <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.chip_kb_1()}</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td>{m.chip_kb_2()}</td></tr>
   </tbody>
 </table>
 </Container>

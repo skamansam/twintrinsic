@@ -11,6 +11,7 @@ import Tag from "$lib/components/Tag/Tag.svelte"
 import TagGroup from "$lib/components/Tag/TagGroup.svelte"
 import * as TagModule from "$lib/components/Tag/Tag.svelte"
 import * as TagGroupModule from "$lib/components/Tag/TagGroup.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -18,84 +19,73 @@ import * as TagGroupModule from "$lib/components/Tag/TagGroup.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>Tag</h1>
+<h1>{m.tag_heading()}</h1>
 
+<p>{m.tag_intro_1()}</p>
+
+<h2>{m.sec_what_when_why()}</h2>
+
+<h3>{m.sec_what()}</h3>
+<p>{m.tag_what_1()}</p>
+
+<h3>{m.sec_when()}</h3>
 <p>
-  A label element for displaying categories, statuses, or keywords. Tags
-  support icons, dismissal, click actions, and link navigation with full
-  keyboard support.
+  {m.tag_when_1()}<code>&lt;Tag&gt;</code>{m.tag_when_2()}<code>&lt;Chip&gt;</code>{m.tag_when_3()}<code>&lt;Badge&gt;</code>{m.tag_when_4()}
 </p>
 
-<h2>What, When &amp; Why</h2>
-
-<h3>What is it?</h3>
-<p>
-  A compact label that can be static, clickable, dismissible, or a link. Tags
-  are similar to Chips but lean more toward static labeling than interactive
-  selection.
-</p>
-
-<h3>When should I use it?</h3>
-<p>
-  Use <code>&lt;Tag&gt;</code> for category labels, status indicators, keyword
-  tags, or dismissible items. For filter selection, use <code>&lt;Chip&gt;</code>.
-  For notification counts, use <code>&lt;Badge&gt;</code>.
-</p>
-
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Labeling</strong> — concise, styled labels for content categorization.</li>
-  <li><strong>Dismissible</strong> — users can remove tags with an × button.</li>
-  <li><strong>Linkable</strong> — can render as an <code>&lt;a&gt;</code> tag for navigation.</li>
-  <li><strong>Group support</strong> — <code>&lt;TagGroup&gt;</code> manages layout and ARIA semantics.</li>
+  <li><strong>{m.tag_why_labeling()}</strong>{m.tag_why_labeling_desc()}</li>
+  <li><strong>{m.tag_why_dismissible()}</strong>{m.tag_why_dismissible_desc()}</li>
+  <li><strong>{m.tag_why_linkable()}</strong>{m.tag_why_linkable_desc_1()}<code>&lt;a&gt;</code>{m.tag_why_linkable_desc_2()}</li>
+  <li><strong>{m.tag_why_group()}</strong>{m.tag_why_group_desc_1()}<code>&lt;TagGroup&gt;</code>{m.tag_why_group_desc_2()}</li>
 </ul>
 
-<h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
 <ul>
   <li><a href="https://m3.material.io/components/chips/overview">Material Design 3 — Chips</a></li>
   <li><a href="https://ant.design/components/tag">Ant Design — Tag</a></li>
   <li><a href="https://primer.style/components/label">Primer — Label</a></li>
 </ul>
 
-
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>`&lt;span&gt;` with removable button for delete action</li>
-    <li>`role=&quot;group&quot;` with group label for TagGroup</li>
-    <li>Each removable tag has `aria-label=&quot;Remove [tag name]&quot;`</li>
-    <li>`dispatchGroupRemove` helper for consistent removal events</li>
+  <li><code>&lt;span&gt;</code>{m.tag_impl_1_1()}</li>
+  <li><code>role=&quot;group&quot;</code>{m.tag_impl_2_1()}</li>
+  <li>{m.tag_impl_3_0()}<code>aria-label=&quot;Remove [tag name]&quot;</code>{m.tag_impl_3_1()}</li>
+  <li><code>dispatchGroupRemove</code>{m.tag_impl_4_1()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't forget `aria-label` on remove buttons</li>
-    <li>Don't use `&lt;div&gt;` — `&lt;span&gt;` is more semantic for inline tags</li>
+  <li>{m.tag_mistake_1_0()}<code>aria-label</code>{m.tag_mistake_1_1()}</li>
+  <li>{m.tag_mistake_2_0()}<code>&lt;div&gt;</code>{m.tag_mistake_2_1()}<code>&lt;span&gt;</code>{m.tag_mistake_2_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Chip, ChipGroup, ListInput</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.tag_related_1()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Tags wrap naturally within their container.</li>
-  <li>In <code>&lt;TagGroup&gt;</code>, tags use flexbox wrap.</li>
+  <li>{m.tag_responsive_1()}</li>
+  <li>{m.tag_responsive_2_0()}<code>&lt;TagGroup&gt;</code>{m.tag_responsive_2_1()}</li>
 </ul>
 
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li>Variants: default, primary, secondary, success, warning, error, info.</li>
-  <li>Sizes: sm, md, lg.</li>
-  <li>Shape: <code>pill</code> for fully rounded.</li>
-  <li>Style: <code>outline</code> for bordered tags.</li>
-  <li><code>clickable</code> — makes the tag interactive.</li>
-  <li><code>dismissible</code> — adds a dismiss × button.</li>
-  <li><code>icon</code> — inline SVG icon before the text.</li>
-  <li><code>href</code> — renders as a link.</li>
+  <li>{m.tag_custom_1()}</li>
+  <li>{m.tag_custom_2()}</li>
+  <li>{m.tag_custom_3_0()}<code>pill</code>{m.tag_custom_3_1()}</li>
+  <li>{m.tag_custom_4_0()}<code>outline</code>{m.tag_custom_4_1()}</li>
+  <li><code>clickable</code>{m.tag_custom_5_1()}</li>
+  <li><code>dismissible</code>{m.tag_custom_6_1()}</li>
+  <li><code>icon</code>{m.tag_custom_7_1()}</li>
+  <li><code>href</code>{m.tag_custom_8_1()}</li>
 </ul>
 
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Basic Tags</h3>
+<h3>{m.tag_ex_basic()}</h3>
 <ExampleTabs code={`<Tag>Default</Tag>
 <Tag variant="primary">Primary</Tag>
 <Tag variant="success">Success</Tag>
@@ -112,7 +102,7 @@ import * as TagGroupModule from "$lib/components/Tag/TagGroup.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Sizes</h3>
+<h3>{m.tag_ex_sizes()}</h3>
 <ExampleTabs code={`<Tag size="sm">Small</Tag>
 <Tag size="md">Medium</Tag>
 <Tag size="lg">Large</Tag>`}>
@@ -123,7 +113,7 @@ import * as TagGroupModule from "$lib/components/Tag/TagGroup.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Outline and Pill</h3>
+<h3>{m.tag_ex_outline()}</h3>
 <ExampleTabs code={`<Tag outline>Outline</Tag>
 <Tag variant="primary" pill>Primary Pill</Tag>`}>
   <div class="not-prose mb-8 flex flex-wrap gap-2" data-testid="tag-outline">
@@ -134,7 +124,7 @@ import * as TagGroupModule from "$lib/components/Tag/TagGroup.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Dismissible Tags</h3>
+<h3>{m.tag_ex_dismissible()}</h3>
 <ExampleTabs code={`<Tag dismissible>Dismissible</Tag>
 <Tag variant="primary" dismissible>Primary</Tag>`}>
   <div class="not-prose mb-8 flex flex-wrap gap-2" data-testid="tag-dismissible">
@@ -143,7 +133,7 @@ import * as TagGroupModule from "$lib/components/Tag/TagGroup.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Clickable Tags</h3>
+<h3>{m.tag_ex_clickable()}</h3>
 <ExampleTabs code={`<Tag clickable>Clickable</Tag>
 <Tag href="https://example.com" target="_blank">Link</Tag>`}>
   <div class="not-prose mb-8 flex flex-wrap gap-2" data-testid="tag-clickable">
@@ -153,47 +143,47 @@ import * as TagGroupModule from "$lib/components/Tag/TagGroup.svelte"
   </div>
 </ExampleTabs>
 
-<h2>Tag vs Badge vs Chip</h2>
+<h2>{m.tag_vs_heading()}</h2>
 <table>
-  <thead><tr><th>Feature</th><th>Tag</th><th>Badge</th><th>Chip</th></tr></thead>
+  <thead><tr><th>{m.badge_th_feature()}</th><th>{m.badge_th_tag()}</th><th>{m.badge_th_badge()}</th><th>{m.badge_th_chip()}</th></tr></thead>
   <tbody>
-    <tr><td>Purpose</td><td>Label / category</td><td>Count / status indicator</td><td>Interactive selection</td></tr>
-    <tr><td>Interactive</td><td>Optional (clickable)</td><td>No</td><td>Yes (clickable, toggle)</td></tr>
-    <tr><td>Dismissible</td><td>Yes</td><td>No</td><td>Yes (removable)</td></tr>
-    <tr><td>Link support</td><td>Yes (href)</td><td>No</td><td>No</td></tr>
-    <tr><td>Overlay positioning</td><td>No</td><td>Yes</td><td>No</td></tr>
-    <tr><td>Dot mode</td><td>No</td><td>Yes</td><td>No</td></tr>
-    <tr><td>Pulse animation</td><td>No</td><td>Yes</td><td>No</td></tr>
-    <tr><td>Best for</td><td>Category tags, keywords, status labels</td><td>Notification counts, online/offline status</td><td>Filter chips, selectable tags</td></tr>
+    <tr><td>{m.badge_row_purpose()}</td><td>{m.badge_row_purpose_tag()}</td><td>{m.badge_row_purpose_badge()}</td><td>{m.badge_row_purpose_chip()}</td></tr>
+    <tr><td>{m.badge_row_interactive()}</td><td>{m.badge_row_interactive_tag()}</td><td>{m.badge_no()}</td><td>{m.badge_row_interactive_chip()}</td></tr>
+    <tr><td>{m.badge_row_dismissible()}</td><td>{m.badge_yes()}</td><td>{m.badge_no()}</td><td>{m.badge_row_dismissible_chip()}</td></tr>
+    <tr><td>{m.badge_row_link()}</td><td>{m.badge_row_link_tag()}</td><td>{m.badge_no()}</td><td>{m.badge_no()}</td></tr>
+    <tr><td>{m.badge_row_overlay()}</td><td>{m.badge_no()}</td><td>{m.badge_yes()}</td><td>{m.badge_no()}</td></tr>
+    <tr><td>{m.badge_row_dot()}</td><td>{m.badge_no()}</td><td>{m.badge_yes()}</td><td>{m.badge_no()}</td></tr>
+    <tr><td>{m.badge_row_pulse()}</td><td>{m.badge_no()}</td><td>{m.badge_yes()}</td><td>{m.badge_no()}</td></tr>
+    <tr><td>{m.badge_row_best()}</td><td>{m.badge_row_best_tag()}</td><td>{m.badge_row_best_badge()}</td><td>{m.badge_row_best_chip()}</td></tr>
   </tbody>
 </table>
 
-<h2>Tag Props</h2>
+<h2>{m.tag_props_heading()}</h2>
 <PropsTable component={TagModule} />
 
-<h2>TagGroup Props</h2>
+<h2>{m.taggroup_props_heading()}</h2>
 <PropsTable component={TagGroupModule} />
 
-<h2>Tag Events</h2>
+<h2>{m.tag_events_heading()}</h2>
 <EventsTable component={TagModule} />
 
-<h2>TagGroup Events</h2>
+<h2>{m.taggroup_events_heading()}</h2>
 <EventsTable component={TagGroupModule} />
 
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Static tags use <code>&lt;span&gt;</code>.</li>
-  <li>Clickable tags use <code>&lt;button&gt;</code> or <code>&lt;a&gt;</code>.</li>
-  <li>Dismiss buttons have <code>aria-label</code>.</li>
-  <li>TagGroup uses <code>role="group"</code> with <code>aria-label</code>.</li>
+  <li>{m.tag_a11y_1_0()}<code>&lt;span&gt;</code>{m.tag_a11y_1_1()}</li>
+  <li>{m.tag_a11y_2_0()}<code>&lt;button&gt;</code>{m.tag_a11y_2_1()}<code>&lt;a&gt;</code>{m.tag_a11y_2_2()}</li>
+  <li>{m.tag_a11y_3_0()}<code>aria-label</code>{m.tag_a11y_3_1()}</li>
+  <li>{m.tag_a11y_4_0()}<code>role="group"</code>{m.tag_a11y_4_1()}<code>aria-label</code>{m.tag_a11y_4_2()}</li>
 </ul>
 
-<h2>Keyboard Support</h2>
+<h2>{m.sec_keyboard()}</h2>
 <table>
-  <thead><tr><th>Key</th><th>Function</th></tr></thead>
+  <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
   <tbody>
-    <tr><td><kbd>Tab</kbd></td><td>Move focus to interactive tags</td></tr>
-    <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Activate clickable tag or dismiss button</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td>{m.tag_kb_1()}</td></tr>
+    <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.tag_kb_2()}</td></tr>
   </tbody>
 </table>
 </Container>

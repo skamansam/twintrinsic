@@ -10,6 +10,7 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import Tag from "$lib/components/Tag/Tag.svelte"
 import TagGroup from "$lib/components/Tag/TagGroup.svelte"
 import * as TagGroupModule from "$lib/components/Tag/TagGroup.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 const techTags = ["JavaScript", "TypeScript", "Svelte", "Tailwind CSS"]
 </script>
@@ -19,59 +20,52 @@ const techTags = ["JavaScript", "TypeScript", "Svelte", "Tailwind CSS"]
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>TagGroup</h1>
+<h1>{m.taggroup_heading()}</h1>
 
+<p>{m.taggroup_intro_1()}</p>
+
+<h2>{m.sec_what_when_why()}</h2>
+
+<h3>{m.sec_what()}</h3>
 <p>
-  A container for managing multiple Tag components with consistent spacing,
-  layout, and dismiss handling. Supports dynamic item rendering and ARIA
-  group semantics.
+  {m.taggroup_what_1()}<code>&lt;Tag&gt;</code>{m.taggroup_what_2()}
 </p>
 
-<h2>What, When &amp; Why</h2>
-
-<h3>What is it?</h3>
+<h3>{m.sec_when()}</h3>
 <p>
-  A layout wrapper that arranges <code>&lt;Tag&gt;</code> components in a flex
-  wrap container with centralized dismiss event handling.
+  {m.taggroup_when_1()}<code>&lt;TagGroup&gt;</code>{m.taggroup_when_2()}
 </p>
 
-<h3>When should I use it?</h3>
-<p>
-  Use <code>&lt;TagGroup&gt;</code> when you have a collection of tags that
-  share common properties (variant, size, pill) or need centralized dismiss
-  handling. For a simple list of tags, just use CSS flex wrap.
-</p>
-
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Consistent styling</strong> — apply variant, size, and pill to all tags at once.</li>
-  <li><strong>Dynamic items</strong> — render from a data array with <code>itemTemplate</code>.</li>
-  <li><strong>Dismiss handling</strong> — <code>ondismiss</code> fires with <code>&#123; item, index &#125;</code>.</li>
+  <li><strong>{m.taggroup_why_styling()}</strong>{m.taggroup_why_styling_desc()}</li>
+  <li><strong>{m.taggroup_why_dynamic()}</strong>{m.taggroup_why_dynamic_desc_1()}<code>itemTemplate</code>{m.taggroup_why_dynamic_desc_2()}</li>
+  <li><strong>{m.taggroup_why_dismiss()}</strong>{m.taggroup_why_dismiss_desc_1()}<code>ondismiss</code>{m.taggroup_why_dismiss_desc_2()}<code>&#123; item, index &#125;</code>{m.taggroup_why_dismiss_desc_3()}</li>
 </ul>
 
-<h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
 <ul>
   <li><a href="https://m3.material.io/components/chips/overview">Material Design 3 — Chips</a></li>
   <li><a href="https://ant.design/components/tag">Ant Design — Tag</a></li>
 </ul>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Tags wrap naturally within the group container.</li>
-  <li>Group fills available width.</li>
+  <li>{m.taggroup_responsive_1()}</li>
+  <li>{m.taggroup_responsive_2()}</li>
 </ul>
 
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li><code>variant</code> / <code>size</code> / <code>pill</code> — applied to all child tags.</li>
-  <li><code>items</code> — render from a data array.</li>
-  <li><code>itemTemplate</code> — custom tag rendering per item.</li>
-  <li><code>dismissible</code> — enables dismiss buttons on all tags.</li>
+  <li><code>variant</code>{m.taggroup_custom_1_2()}<code>size</code>{m.taggroup_custom_1_3()}<code>pill</code>{m.taggroup_custom_1_4()}</li>
+  <li><code>items</code>{m.taggroup_custom_2_1()}</li>
+  <li><code>itemTemplate</code>{m.taggroup_custom_3_1()}</li>
+  <li><code>dismissible</code>{m.taggroup_custom_4_1()}</li>
 </ul>
 
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Basic Group</h3>
+<h3>{m.taggroup_ex_basic()}</h3>
 <ExampleTabs code={`<TagGroup>
   <Tag>JavaScript</Tag>
   <Tag>TypeScript</Tag>
@@ -88,7 +82,7 @@ const techTags = ["JavaScript", "TypeScript", "Svelte", "Tailwind CSS"]
   </div>
 </ExampleTabs>
 
-<h3>Dismissible Tags</h3>
+<h3>{m.taggroup_ex_dismissible()}</h3>
 <ExampleTabs code={`<TagGroup items={techTags} dismissible ondismiss={handleDismiss}>
   {#snippet itemTemplate(item)}
     <Tag dismissible>{item}</Tag>
@@ -103,7 +97,7 @@ const techTags = ["JavaScript", "TypeScript", "Svelte", "Tailwind CSS"]
   </div>
 </ExampleTabs>
 
-<h3>Custom Styling</h3>
+<h3>{m.taggroup_ex_styling()}</h3>
 <ExampleTabs code={`<TagGroup variant="primary" size="lg" pill>
   <Tag>Primary</Tag>
   <Tag>Pill</Tag>
@@ -118,7 +112,7 @@ const techTags = ["JavaScript", "TypeScript", "Svelte", "Tailwind CSS"]
   </div>
 </ExampleTabs>
 
-  <h3>Group Role</h3>
+  <h3>{m.taggroup_ex_role()}</h3>
   <ExampleTabs code={`<TagGroup>
   <Tag>Design</Tag>
   <Tag>Development</Tag>
@@ -133,7 +127,7 @@ const techTags = ["JavaScript", "TypeScript", "Svelte", "Tailwind CSS"]
     </div>
   </ExampleTabs>
 
-  <h3>Dynamic Items</h3>
+  <h3>{m.taggroup_ex_dynamic()}</h3>
   <ExampleTabs code={`<TagGroup>
   {#each ['React', 'Vue', 'Svelte'] as framework}
     <Tag>{framework}</Tag>
@@ -148,16 +142,16 @@ const techTags = ["JavaScript", "TypeScript", "Svelte", "Tailwind CSS"]
     </div>
   </ExampleTabs>
 
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={TagGroupModule} />
 
-<h2>Events</h2>
+<h2>{m.sec_events()}</h2>
 <EventsTable component={TagGroupModule} />
 
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Uses <code>role="group"</code> with <code>aria-label</code>.</li>
-  <li>Dismissible tags expose a button with <code>aria-label="Dismiss"</code>.</li>
-  <li>Semantic elements maintain readable contrast and focus states.</li>
+  <li>{m.taggroup_a11y_1_0()}<code>role="group"</code>{m.taggroup_a11y_1_1()}<code>aria-label</code>{m.taggroup_a11y_1_2()}</li>
+  <li>{m.taggroup_a11y_2_0()}<code>aria-label="Dismiss"</code>{m.taggroup_a11y_2_1()}</li>
+  <li>{m.taggroup_a11y_3()}</li>
 </ul>
 </Container>

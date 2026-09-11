@@ -561,4 +561,83 @@ test.describe("Docs locale switcher", () => {
     await expect(page.locator("h2", { hasText: "اشتباهات رایج" })).toBeVisible();
     await expect(page.getByText(/یک عنصر درون‌خطی کوچک/).first()).toBeVisible();
   });
+  test("translates the Chip docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Chip/Chip");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Chip");
+    await expect(page.locator("h2", { hasText: "Responsiveness" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "اشتباهات رایج" })).toBeVisible();
+    await expect(
+      page
+        .getByText(
+          /عنصری کوچک و گرد که می‌تواند متن، شمایل یا تصویر کاربر را نمایش دهد\. Chipها می‌توانند قابل کلیک \(تغییر انتخاب\)، قابل حذف \(با دکمه ×\) یا ایستا باشند\./,
+        )
+        .first(),
+    ).toBeVisible();
+  });
+
+  test("translates the ChipGroup docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Chip/ChipGroup");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("ChipGroup");
+    await expect(page.locator("h2", { hasText: "Responsiveness" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
+    await expect(
+      page
+        .getByText(
+          /محفظه‌ای برای مدیریت چندین компонент Chip با فاصله، چیدمان و وضعیت انتخاب یکسان\. از معناشناسی listbox برای گروه‌های قابل انتخاب دسترس‌پذیر پشتیبانی می‌کند\./,
+        )
+        .first(),
+    ).toBeVisible();
+  });
+
+  test("translates the Tag docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Tag/Tag");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Tag");
+    await expect(page.locator("h2", { hasText: "Responsiveness" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "اشتباهات رایج" })).toBeVisible();
+    await expect(
+      page
+        .getByText(
+          /عنصری برچسب برای نمایش دسته‌ها، وضعیت‌ها یا کلیدواژه‌ها\. Tagها از شمایل، حذف، کنش کلیک و پیمایش پیوند با پشتیبانی کامل صفحه‌کلید پشتیبانی می‌کنند\./,
+        )
+        .first(),
+    ).toBeVisible();
+  });
+
+  test("translates the TagGroup docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Tag/TagGroup");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("TagGroup");
+    await expect(page.locator("h2", { hasText: "Responsiveness" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
+    await expect(
+      page
+        .getByText(
+          /محفظه‌ای برای مدیریت چندین Tag با فاصله، چیدمان و مدیریت حذف یکسان\. از رندر پویای عناصر و معناشناسی گروه ARIA پشتیبانی می‌کند\./,
+        )
+        .first(),
+    ).toBeVisible();
+  });
 });
