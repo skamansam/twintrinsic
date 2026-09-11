@@ -640,4 +640,63 @@ test.describe("Docs locale switcher", () => {
         .first(),
     ).toBeVisible();
   });
+  test("translates the Timeline docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Timeline/Timeline");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Timeline");
+    await expect(page.locator("h2", { hasText: "Responsiveness" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
+    await expect(
+      page
+        .getByText(
+          /کомпонنتی مبتنی بر فهرست که عناصر را به ترتیب زمانی با اتصال‌دهنده‌های بصری \(خط و نقطه\) رندر می‌کند\. هر عنصر می‌تواند عنوان، تاریخ، گونه وضعیت و ناحیه محتوا داشته باشد\./,
+        )
+        .first(),
+    ).toBeVisible();
+  });
+
+  test("translates the Carousel docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Carousel/Carousel");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Carousel");
+    await expect(page.locator("h2", { hasText: "Responsiveness" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
+    await expect(
+      page
+        .getByText(
+          /یک اسلایدر محتوا با انتقال اسلاید\/محو، فلش قبلی\/بعدی، نشانگرهای نقطه‌ای و پشتیبانی پخش خودکار\. از CSS Scroll Snap برای کشیدن روان و از ARIA tablist برای دسترس‌پذیری استفاده می‌کند\./,
+        )
+        .first(),
+    ).toBeVisible();
+  });
+
+  test("translates the CarouselItem docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Carousel/CarouselItem");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("CarouselItem");
+    await expect(page.locator("h2", { hasText: "Responsiveness" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
+    await expect(
+      page
+        .getByText(
+          /یک اسلاید واحد درون Carousel\. هر CarouselItem یک پنل محتواست که می‌تواند تصویر، متن، کارت یا هر نشانه‌گذاری داشته باشد\. Carousel والد انتقال‌ها، ناوبری و وضعیت فعال را مدیریت می‌کند\./,
+        )
+        .first(),
+    ).toBeVisible();
+  });
 });

@@ -11,6 +11,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CarouselModule from "$lib/components/Carousel/Carousel.svelte"
 import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -18,38 +19,30 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Carousel</h1>
+  <h1>{m.carousel_heading()}</h1>
 
   <p>
-    <strong>Carousel</strong> is a slideshow for cycling through elements — images, cards,
-    text, or custom markup. It supports various transition effects, navigation controls,
-    and touch interactions.
+    <strong>{m.carousel_heading()}</strong>{m.carousel_intro_1()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.carousel_what_1()}</p>
+
+  <h3>{m.sec_when()}</h3>
   <p>
-    A content carousel with slide/fade transitions, prev/next arrows, dot indicators, and
-    autoplay support. Uses CSS Scroll Snap for smooth swiping and ARIA tablist for
-    accessibility.
+    {m.carousel_when_1()}<code>&lt;Carousel&gt;</code>{m.carousel_when_2()}<code>&lt;DataTable&gt;</code>{m.carousel_when_3()}
   </p>
 
-  <h3>When should I use it?</h3>
-  <p>
-    Use <code>&lt;Carousel&gt;</code> for image galleries, feature highlights, testimonials,
-    or any content that benefits from sequential browsing. For data grids, use
-    <code>&lt;DataTable&gt;</code>.
-  </p>
-
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Touch-friendly</strong> — swipe gestures on mobile.</li>
-    <li><strong>Accessible</strong> — ARIA tablist with keyboard navigation.</li>
-    <li><strong>Flexible</strong> — slide or fade transitions, autoplay, custom arrows.</li>
+    <li><strong>{m.carousel_why_touch()}</strong>{m.carousel_why_touch_desc()}</li>
+    <li><strong>{m.carousel_why_a11y()}</strong>{m.carousel_why_a11y_desc()}</li>
+    <li><strong>{m.carousel_why_flexible()}</strong>{m.carousel_why_flexible_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/carousel/">WAI-ARIA APG — Carousel</a></li>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-type">MDN — CSS Scroll Snap</a></li>
@@ -58,24 +51,24 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
     <li><a href="https://ant.design/components/carousel">Ant Design — Carousel</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Fills container width; items scale responsively.</li>
-    <li>Touch gestures for swipe on mobile.</li>
-    <li>Autoplay pauses on hover and keyboard interaction.</li>
+    <li>{m.carousel_responsive_1()}</li>
+    <li>{m.carousel_responsive_2()}</li>
+    <li>{m.carousel_responsive_3()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li><code>transition</code> — <code>"slide"</code> or <code>"fade"</code>.</li>
-    <li><code>autoplay</code> / <code>interval</code> — auto-advance with configurable delay.</li>
-    <li><code>showArrows</code> / <code>showIndicators</code> — show/hide controls.</li>
-    <li>Slide content should use explicit text colors (e.g., <code>text-text dark:text-white</code>) for dark mode readability.</li>
+    <li><code>transition</code>{m.carousel_custom_1_1()}<code>&quot;slide&quot;</code>{m.carousel_custom_1_2()}<code>&quot;fade&quot;</code>{m.carousel_custom_1_3()}</li>
+    <li><code>autoplay</code>{m.carousel_custom_2_1()}<code>interval</code>{m.carousel_custom_2_2()}</li>
+    <li><code>showArrows</code>{m.carousel_custom_3_1()}<code>showIndicators</code>{m.carousel_custom_3_2()}</li>
+    <li>{m.carousel_custom_4_1()}<code>text-text dark:text-white</code>{m.carousel_custom_4_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Image Gallery</h3>
+  <h3>{m.carousel_ex_gallery()}</h3>
   <ExampleTabs code={`<Carousel>
   {#snippet items()}
     <CarouselItem>
@@ -115,7 +108,7 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
     </div>
   </ExampleTabs>
 
-  <h3>Feature Highlights</h3>
+  <h3>{m.carousel_ex_features()}</h3>
   <ExampleTabs code={`<Carousel autoplay interval={4000}>
   {#snippet items()}
     <CarouselItem>
@@ -160,7 +153,7 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
     </div>
   </ExampleTabs>
 
-  <h3>Autoplay with Fade</h3>
+  <h3>{m.carousel_ex_autoplay()}</h3>
   <ExampleTabs code={`<Carousel autoplay interval={5000} >
   {#snippet items()}
     <CarouselItem><!-- slide 1 --></CarouselItem>
@@ -187,7 +180,7 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
     </div>
   </ExampleTabs>
 
-  <h3>Fade Transition</h3>
+  <h3>{m.carousel_ex_fade()}</h3>
   <ExampleTabs code={`<Carousel>
   {#snippet items()}
     <CarouselItem><div class="h-48 bg-primary-100 flex items-center justify-center">Slide 1</div></CarouselItem>
@@ -204,7 +197,7 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
     </div>
   </ExampleTabs>
 
-  <h3>No Indicators</h3>
+  <h3>{m.carousel_ex_noindicators()}</h3>
   <ExampleTabs code={`<Carousel showIndicators={false}>
   {#snippet items()}
     <CarouselItem><div class="h-48 bg-primary-100 flex items-center justify-center">Slide 1</div></CarouselItem>
@@ -221,32 +214,32 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
     </div>
   </ExampleTabs>
 
-  <h2>Carousel Props</h2>
+  <h2>{m.carousel_props_heading()}</h2>
   <PropsTable component={CarouselModule} />
 
-  <h2>CarouselItem Props</h2>
+  <h2>{m.carouselitem_props_heading()}</h2>
   <PropsTable component={CarouselItemModule} />
 
-  <h2>Events</h2>
+  <h2>{m.carousel_events_heading()}</h2>
   <EventsTable component={CarouselModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Uses <code>role="region"</code> with <code>aria-label</code>.</li>
-    <li>Indicators use <code>role="tablist"</code> with <code>aria-controls</code>.</li>
-    <li><code>aria-live="polite"</code> announces slide changes.</li>
-    <li>Autoplay pauses on user interaction.</li>
+    <li>{m.carousel_a11y_1_0()}<code>role="region"</code>{m.carousel_a11y_1_1()}<code>aria-label</code>{m.carousel_a11y_1_2()}</li>
+    <li>{m.carousel_a11y_2_0()}<code>role="tablist"</code>{m.carousel_a11y_2_1()}<code>aria-controls</code>{m.carousel_a11y_2_2()}</li>
+    <li><code>aria-live="polite"</code>{m.carousel_a11y_3_1()}</li>
+    <li>{m.carousel_a11y_4()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Left Arrow</kbd></td><td>Previous slide</td></tr>
-      <tr><td><kbd>Right Arrow</kbd></td><td>Next slide</td></tr>
-      <tr><td><kbd>Home</kbd></td><td>First slide</td></tr>
-      <tr><td><kbd>End</kbd></td><td>Last slide</td></tr>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Activate indicator</td></tr>
+      <tr><td><kbd>Left Arrow</kbd></td><td>{m.carousel_kb_1()}</td></tr>
+      <tr><td><kbd>Right Arrow</kbd></td><td>{m.carousel_kb_2()}</td></tr>
+      <tr><td><kbd>Home</kbd></td><td>{m.carousel_kb_3()}</td></tr>
+      <tr><td><kbd>End</kbd></td><td>{m.carousel_kb_4()}</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.carousel_kb_5()}</td></tr>
     </tbody>
   </table>
 </Container>

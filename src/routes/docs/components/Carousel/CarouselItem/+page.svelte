@@ -10,6 +10,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -19,43 +20,35 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <div class="not-prose mb-6 p-4 bg-primary-50 dark:bg-primary-950 border border-primary-200 dark:border-primary-800 rounded-lg">
     <p class="text-sm text-primary-700 dark:text-primary-300 m-0">
-      <strong>CarouselItem</strong> is a sub-component of
-      <a href="/docs/components/Carousel/Carousel" class="underline font-medium">Carousel</a>.
-      See the parent component docs for usage, examples, and full API reference.
+      <strong>{m.carouselitem_heading()}</strong>{m.carouselitem_note_1()}
+      <a href="/docs/components/Carousel/Carousel" class="underline font-medium">Carousel</a>{m.carouselitem_note_2()}
     </p>
   </div>
 
-  <h1>CarouselItem</h1>
+  <h1>{m.carouselitem_heading()}</h1>
 
   <p>
-    <strong>CarouselItem</strong> is a single slide inside a <code>&lt;Carousel&gt;</code>.
-    It registers itself with the parent carousel and renders as a
-    <code>role="tabpanel"</code> with <code>aria-roledescription="slide"</code>.
+    <strong>{m.carouselitem_heading()}</strong>{m.carouselitem_intro_1()}<code>&lt;Carousel&gt;</code>{m.carouselitem_intro_2()}<code>role="tabpanel"</code>{m.carouselitem_intro_3()}<code>aria-roledescription="slide"</code>{m.carouselitem_intro_4()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.carouselitem_what_1()}</p>
+
+  <h3>{m.sec_when()}</h3>
   <p>
-    A single slide within a Carousel. Each CarouselItem is a content panel that can contain
-    images, text, cards, or any markup. The parent Carousel manages transitions, navigation,
-    and active state.
+    {m.carouselitem_when_1()}<code>&lt;CarouselItem&gt;</code>{m.carouselitem_when_2()}<code>&lt;Carousel&gt;</code>{m.carouselitem_when_3()}<code>&lt;CarouselItem&gt;</code>{m.carouselitem_when_4()}
   </p>
 
-  <h3>When should I use it?</h3>
-  <p>
-    Always use <code>&lt;CarouselItem&gt;</code> inside a <code>&lt;Carousel&gt;</code>.
-    Each slide in your carousel gets its own <code>&lt;CarouselItem&gt;</code>.
-  </p>
-
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Self-contained slides</strong> — each item is an independent content panel.</li>
-    <li><strong>Accessible</strong> — <code>role="tabpanel"</code> with <code>aria-roledescription="slide"</code>.</li>
-    <li><strong>Flexible</strong> — accepts any content as children.</li>
+    <li><strong>{m.carouselitem_why_slides()}</strong>{m.carouselitem_why_slides_desc()}</li>
+    <li><strong>{m.carouselitem_why_a11y()}</strong>{m.carouselitem_why_a11y_desc_1()}<code>role="tabpanel"</code>{m.carouselitem_why_a11y_desc_2()}<code>aria-roledescription="slide"</code>{m.carouselitem_why_a11y_desc_3()}</li>
+    <li><strong>{m.carouselitem_why_flexible()}</strong>{m.carouselitem_why_flexible_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/carousel/">WAI-ARIA APG — Carousel</a></li>
     <li><a href="https://m3.material.io/components/carousel/overview">Material Design 3 — Carousel</a></li>
@@ -64,21 +57,21 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
     <li><a href="https://primer.style/components/overlay">Primer — Overlay</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Fills the carousel container width.</li>
-    <li>Content scales naturally within the slide.</li>
+    <li>{m.carouselitem_responsive_1()}</li>
+    <li>{m.carouselitem_responsive_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li>Accepts any content as children.</li>
-    <li>Parent Carousel controls transition, arrows, and indicators.</li>
+    <li>{m.carouselitem_custom_1()}</li>
+    <li>{m.carouselitem_custom_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic Slides</h3>
+  <h3>{m.carouselitem_ex_basic()}</h3>
   <ExampleTabs code={`<Carousel>
   {#snippet items()}
     <CarouselItem>
@@ -119,7 +112,7 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
     </div>
   </ExampleTabs>
 
-  <h3>Fade Transition</h3>
+  <h3>{m.carouselitem_ex_fade()}</h3>
   <ExampleTabs code={`<Carousel transition="fade">
   {#snippet items()}
     <CarouselItem><div class="h-48 bg-primary-100 flex items-center justify-center">Slide 1</div></CarouselItem>
@@ -136,7 +129,7 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
     </div>
   </ExampleTabs>
 
-  <h3>No Controls</h3>
+  <h3>{m.carouselitem_ex_nocontrols()}</h3>
   <ExampleTabs code={`<Carousel showArrows={false} showIndicators={false}>
   {#snippet items()}
     <CarouselItem><div class="h-48 bg-primary-100 flex items-center justify-center">Slide 1</div></CarouselItem>
@@ -153,22 +146,19 @@ import * as CarouselItemModule from "$lib/components/Carousel/CarouselItem.svelt
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={CarouselItemModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={CarouselItemModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Each slide renders <code>role="tabpanel"</code> with <code>aria-roledescription="slide"</code>.</li>
-    <li>Inactive slides are hidden from assistive technology with <code>aria-hidden</code>.</li>
-    <li>Keyboard users navigate with Arrow keys, Home, and End on the carousel region.</li>
+    <li>{m.carouselitem_a11y_1_0()}<code>role="tabpanel"</code>{m.carouselitem_a11y_1_1()}<code>aria-roledescription="slide"</code>{m.carouselitem_a11y_1_2()}</li>
+    <li>{m.carouselitem_a11y_2_0()}<code>aria-hidden</code>{m.carouselitem_a11y_2_1()}</li>
+    <li>{m.carouselitem_a11y_3()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
-  <p>
-    CarouselItem is a content panel and does not require direct keyboard interaction.
-    Navigation is handled by the parent Carousel.
-  </p>
+  <h2>{m.sec_keyboard()}</h2>
+  <p>{m.carouselitem_kb_note()}</p>
 </Container>
