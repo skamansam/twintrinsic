@@ -9,6 +9,7 @@ import TabList from "$lib/components/Tabs/TabList.svelte"
 import TabPanel from "$lib/components/Tabs/TabPanel.svelte"
 import Tabs from "$lib/components/Tabs/Tabs.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -18,43 +19,38 @@ import Container from "$lib/components/Container/Container.svelte"
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <div class="not-prose mb-6 p-4 bg-primary-50 dark:bg-primary-950 border border-primary-200 dark:border-primary-800 rounded-lg">
     <p class="text-sm text-primary-700 dark:text-primary-300 m-0">
-      <strong>TabList</strong> is a sub-component of
-      <a href="/docs/components/Tabs/Tabs" class="underline font-medium">Tabs</a>.
-      See the parent component docs for usage, examples, and full API reference.
+      <strong>TabList</strong>{m.tablist_note_1()}
+      <a href="/docs/components/Tabs/Tabs" class="underline font-medium">Tabs</a>{m.tablist_note_2()}
     </p>
   </div>
 
-<h1>TabList</h1>
+<h1>{m.tablist_heading()}</h1>
 
 <p>
-  <strong>TabList</strong> is a sub-component of Tabs that contains Tab elements.
-  Renders with <code>role="tablist"</code> and handles keyboard navigation
-  between its child Tabs.
+  <strong>{m.tablist_heading()}</strong>{m.tablist_intro_1()}<code>role="tablist"</code>{m.tablist_intro_2()}
 </p>
 
-<h2>What, When &amp; Why</h2>
+<h2>{m.sec_what_when_why()}</h2>
 
-<h3>What is it?</h3>
+<h3>{m.sec_what()}</h3>
 <p>
-  A container for Tab elements that provides the <code>role="tablist"</code>
-  landmark. Arrow keys navigate between Tabs within the TabList.
+  {m.tablist_what_1()}<code>role="tablist"</code>{m.tablist_what_2()}
 </p>
 
-<h3>When should I use it?</h3>
+<h3>{m.sec_when()}</h3>
 <p>
-  Always inside <code>&lt;Tabs&gt;</code>, wrapping the Tab elements. Do not
-  use standalone.
+  {m.tablist_when_1()}<code>&lt;Tabs&gt;</code>{m.tablist_when_2()}
 </p>
 
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Semantics</strong> — <code>role="tablist"</code> groups tabs for screen readers.</li>
-  <li><strong>Keyboard</strong> — arrow key navigation is handled at the TabList level.</li>
+  <li><strong>{m.tablist_why_semantics()}</strong>{m.tablist_why_semantics_desc_1()}<code>role="tablist"</code>{m.tablist_why_semantics_desc_2()}</li>
+  <li><strong>{m.tablist_why_keyboard()}</strong>{m.tablist_why_keyboard_desc()}</li>
 </ul>
 
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Basic Usage</h3>
+<h3>{m.tablist_ex_basic()}</h3>
 <ExampleTabs code={`<Tabs>
   <TabList>
     <Tab>Tab 1</Tab>
@@ -70,10 +66,10 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li><code>role="tablist"</code> groups the tabs semantically.</li>
-  <li>Arrow keys navigate between tabs.</li>
-  <li><code>aria-label</code> or <code>aria-labelledby</code> for the tab list.</li>
+  <li><code>role="tablist"</code>{m.tablist_a11y_1_1()}</li>
+  <li>{m.tablist_a11y_2()}</li>
+  <li><code>aria-label</code>{m.tablist_a11y_3_1()}<code>aria-labelledby</code>{m.tablist_a11y_3_2()}</li>
 </ul>
 </Container>

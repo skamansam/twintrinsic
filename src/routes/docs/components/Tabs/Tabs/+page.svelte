@@ -11,6 +11,7 @@ import TabPanel from "$lib/components/Tabs/TabPanel.svelte"
 import Tabs from "$lib/components/Tabs/Tabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as TabsModule from "$lib/components/Tabs/Tabs.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -18,84 +19,75 @@ import * as TabsModule from "$lib/components/Tabs/Tabs.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Tabs</h1>
+  <h1>{m.tabs_heading()}</h1>
 
   <p>
-    <strong>Tabs</strong> organizes content into tabbed sections where only one
-    panel is visible at a time. Supports 4 variants (default, underline, pills,
-    enclosed) with full WAI-ARIA keyboard navigation.
+    <strong>{m.tabs_heading()}</strong>{m.tabs_intro_1()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A set of clickable tab labels that switch between content panels. Uses
-    <code>role="tablist"</code> / <code>role="tab"</code> / <code>role="tabpanel"</code>
-    with <code>aria-selected</code> and <code>aria-controls</code>.
+    {m.tabs_what_1()}<code>role="tablist"</code>{m.tabs_what_2()}<code>role="tab"</code>{m.tabs_what_3()}<code>role="tabpanel"</code>{m.tabs_what_4()}<code>aria-selected</code>{m.tabs_what_5()}<code>aria-controls</code>{m.tabs_what_6()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use <code>&lt;Tabs&gt;</code> for 2–5 related content sections that occupy the
-    same space: settings panels, content categories, view modes. Use for same-level
-    content switching, not for navigation between pages.
+    {m.tabs_when_1()}<code>&lt;Tabs&gt;</code>{m.tabs_when_2()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Reduces scrolling</strong> — shows one section at a time.</li>
-    <li><strong>Mental model</strong> — users expect tabs for settings/configuration (desktop app convention).</li>
-    <li><strong>Accessible</strong> — WAI-ARIA tab pattern with arrow key navigation.</li>
+    <li><strong>{m.tabs_why_scroll()}</strong>{m.tabs_why_scroll_desc()}</li>
+    <li><strong>{m.tabs_why_mental()}</strong>{m.tabs_why_mental_desc()}</li>
+    <li><strong>{m.tabs_why_a11y()}</strong>{m.tabs_why_a11y_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/">WAI-ARIA APG — Tabs</a></li>
     <li><a href="https://primer.style/product/components/UnderlineNav">Primer — UnderlineNav</a></li>
     <li><a href="https://m3.material.io/components/tabs/overview">Material Design 3 — Tabs</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
-<ul>
-    <li>ARIA tablist pattern with `role=&quot;tablist&quot;` / `role=&quot;tab&quot;` / `role=&quot;tabpanel&quot;`</li>
-    <li>4 variants: underline, pills, enclosed, default</li>
-    <li>`aria-selected` on the active tab, `aria-controls` linking to panel</li>
-    <li>Arrow keys navigate between tabs, Enter/Space activates</li>
-    <li>Tab panels use `role=&quot;tabpanel&quot;` with `aria-labelledby`</li>
-</ul>
-
-<h2>Common Mistakes</h2>
-<ul>
-    <li>Don't use `&lt;details name&gt;` when you need proper tab semantics (aria-selected, tablist)</li>
-    <li>Don't forget `tabindex=&quot;0&quot;` on the active tab and `tabindex=&quot;-1&quot;` on inactive tabs</li>
-</ul>
-
-<h2>Related Components</h2>
-<p>Accordion, Menu, Breadcrumb</p>
-
-<h2>Responsiveness</h2>
+  <h2>{m.sec_implementation()}</h2>
   <ul>
-    <li>Tabs scroll horizontally when they overflow on mobile.</li>
-    <li>Touch targets meet 44×44 px minimum.</li>
+    <li>{m.tabs_impl_1()}<code>role="tablist"</code>{m.tabs_what_2()}<code>role="tab"</code>{m.tabs_what_3()}<code>role="tabpanel"</code>{m.tabs_impl_2()}</li>
+    <li>{m.tabs_impl_3()}</li>
+    <li><code>aria-selected</code>{m.tabs_impl_4()}<code>aria-controls</code>{m.tabs_impl_5()}</li>
+    <li>{m.tabs_impl_6()}</li>
+    <li>{m.tabs_impl_7()}<code>aria-labelledby</code>{m.tabs_impl_8()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_mistakes()}</h2>
   <ul>
-    <li>Variants: <code>default</code>, <code>underline</code>, <code>pills</code>, <code>enclosed</code>.</li>
-    <li>Sizes: <code>sm</code>, <code>md</code>, <code>lg</code>.</li>
-    <li>Full-width via <code>fullWidth</code>.</li>
-    <li>Centered via <code>centered</code>.</li>
+    <li>{m.tabs_mistake_1_1()}<code>aria-selected</code>{m.tabs_mistake_1_2()}</li>
+    <li>{m.tabs_mistake_2_1()}<code>tabindex="0"</code>{m.tabs_mistake_2_2()}<code>tabindex="-1"</code>{m.tabs_mistake_2_3()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_related()}</h2>
+  <p>Accordion, Menu, Breadcrumb</p>
 
-  <h3>Data-Driven Tabs</h3>
+  <h2>{m.sec_responsiveness()}</h2>
+  <ul>
+    <li>{m.tabs_responsive_1()}</li>
+    <li>{m.tabs_responsive_2()}</li>
+  </ul>
+
+  <h2>{m.sec_customization()}</h2>
+  <ul>
+    <li>{m.tabs_custom_1_1()}<code>default</code>{m.tabs_custom_1_2()}<code>underline</code>{m.tabs_custom_1_3()}<code>pills</code>{m.tabs_custom_1_4()}<code>enclosed</code>{m.tabs_custom_1_5()}</li>
+    <li>{m.tabs_custom_2_1()}<code>sm</code>{m.tabs_custom_2_2()}<code>md</code>{m.tabs_custom_2_3()}<code>lg</code>{m.tabs_custom_2_4()}</li>
+    <li>{m.tabs_custom_3_1()}<code>fullWidth</code>{m.tabs_custom_3_2()}</li>
+    <li>{m.tabs_custom_4_1()}<code>centered</code>{m.tabs_custom_4_2()}</li>
+  </ul>
+
+  <h2>{m.sec_examples()}</h2>
+
+  <h3>{m.tabs_ex_datadriven()}</h3>
   <p>
-    Instead of using <code>&lt;Tab&gt;</code> and <code>&lt;TabPanel&gt;</code> sub-components,
-    you can pass a flat array of tab config objects. This is simpler for generated or
-    dynamic tab sets.
+    {m.tabs_ex_datadriven_desc_1()}<code>&lt;Tab&gt;</code>{m.tabs_ex_datadriven_desc_2()}<code>&lt;TabPanel&gt;</code>{m.tabs_ex_datadriven_desc_3()}
   </p>
   <ExampleTabs code={`<Tabs tabs={[\n  { label: 'Profile', content: '<p>Manage your profile information.</p>' },\n  { label: 'Security', content: '<p>Change your password and enable 2FA.</p>' },\n  { label: 'Notifications', content: '<p>Configure email and push notifications.</p>' }\n]} />`}>
     <div class="p-4 bg-surface rounded-md" data-testid="tabs-data-driven">
@@ -103,14 +95,14 @@ import * as TabsModule from "$lib/components/Tabs/Tabs.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Data-Driven with Icons</h3>
+  <h3>{m.tabs_ex_icons()}</h3>
   <ExampleTabs code={`<Tabs variant="pills" tabs={[\n  { label: 'Overview', icon: 'tabler:layout-dashboard', content: '<p>Dashboard overview.</p>' },\n  { label: 'Analytics', icon: 'tabler:chart-bar', content: '<p>View detailed analytics.</p>' },\n  { label: 'Reports', icon: 'tabler:file-text', content: '<p>Generate reports.</p>' }\n]} />`}>
     <div class="p-4 bg-surface rounded-md" data-testid="tabs-data-driven-icons">
       <Tabs variant="pills" tabs={[{ label: 'Overview', icon: 'tabler:layout-dashboard', content: '<p>Dashboard overview.</p>' }, { label: 'Analytics', icon: 'tabler:chart-bar', content: '<p>View detailed analytics.</p>' }, { label: 'Reports', icon: 'tabler:file-text', content: '<p>Generate reports.</p>' }]} />
     </div>
   </ExampleTabs>
 
-  <h3>Account Tabs</h3>
+  <h3>{m.tabs_ex_account()}</h3>
   <ExampleTabs code={`<Tabs>
   <TabList>
     <Tab>Billing</Tab>
@@ -135,7 +127,7 @@ import * as TabsModule from "$lib/components/Tabs/Tabs.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Variants</h3>
+  <h3>{m.tabs_ex_variants()}</h3>
   <ExampleTabs code={`<Tabs variant="underline">
   <TabList><Tab>Docs</Tab><Tab>Examples</Tab></TabList>
   <TabPanel>Guides and API reference.</TabPanel>
@@ -153,25 +145,25 @@ import * as TabsModule from "$lib/components/Tabs/Tabs.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={TabsModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
     <li><code>role="tablist"</code>, <code>role="tab"</code>, <code>role="tabpanel"</code>.</li>
-    <li><code>aria-selected</code> on the active tab.</li>
-    <li><code>aria-controls</code> links tab to its panel.</li>
-    <li>Arrow keys navigate between tabs; Home/End jump to first/last.</li>
+    <li><code>aria-selected</code>{m.tabs_a11y_2_1()}</li>
+    <li><code>aria-controls</code>{m.tabs_a11y_3_1()}</li>
+    <li>{m.tabs_a11y_4()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Arrow Left</kbd> / <kbd>Arrow Right</kbd></td><td>Navigate between tabs</td></tr>
-      <tr><td><kbd>Home</kbd></td><td>Select first tab</td></tr>
-      <tr><td><kbd>End</kbd></td><td>Select last tab</td></tr>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Activate focused tab</td></tr>
+      <tr><td><kbd>Arrow Left</kbd> / <kbd>Arrow Right</kbd></td><td>{m.tabs_kb_1()}</td></tr>
+      <tr><td><kbd>Home</kbd></td><td>{m.tabs_kb_2()}</td></tr>
+      <tr><td><kbd>End</kbd></td><td>{m.tabs_kb_3()}</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.tabs_kb_4()}</td></tr>
     </tbody>
   </table>
 </Container>

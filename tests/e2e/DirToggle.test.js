@@ -453,4 +453,56 @@ test.describe("Docs locale switcher", () => {
     await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
     await expect(page.getByText(/یک مورد تکی درون/).first()).toBeVisible();
   });
+
+  test("translates the Tabs docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Tabs/Tabs");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Tabs");
+    await expect(page.locator("h2", { hasText: "Common Mistakes" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "اشتباهات رایج" })).toBeVisible();
+    await expect(page.getByText(/الگوی tablist در ARIA/).first()).toBeVisible();
+  });
+
+  test("translates the TabList docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Tabs/TabList");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("TabList");
+    await expect(page.locator("h2", { hasText: "What, When & Why" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "چیست، چه زمانی و چرا" })).toBeVisible();
+    await expect(page.getByText(/یک زیرکامپوننت از/).first()).toBeVisible();
+  });
+
+  test("translates the Tab docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Tabs/Tab");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Tab");
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.getByText(/یک زبانهٔ تکی درون/).first()).toBeVisible();
+  });
+
+  test("translates the TabPanel docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Tabs/TabPanel");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("TabPanel");
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.getByText(/پنل محتوای یک زبانه درون/).first()).toBeVisible();
+  });
 });
