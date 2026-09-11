@@ -9,6 +9,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Icon from "$lib/components/Icon/Icon.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as BadgeModule from "$lib/components/Badge/Badge.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -16,90 +17,79 @@ import * as BadgeModule from "$lib/components/Badge/Badge.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>Badge</h1>
+<h1>{m.badge_heading()}</h1>
 
+<p>{m.badge_intro_1()}</p>
+
+<h2>{m.sec_what_when_why()}</h2>
+
+<h3>{m.sec_what()}</h3>
+<p>{m.badge_what_1()}</p>
+
+<h3>{m.sec_when()}</h3>
 <p>
-  A small inline element for displaying counts, status indicators, or labels.
-  Supports variants, sizes, dot indicators, pulse animation, and overlay
-  positioning.
+  {m.badge_when_1()}<code>&lt;Badge&gt;</code>{m.badge_when_2()}<code>&lt;Chip&gt;</code>{m.badge_when_3()}<code>&lt;Tag&gt;</code>{m.badge_when_4()}
 </p>
 
-<h2>What, When &amp; Why</h2>
-
-<h3>What is it?</h3>
-<p>
-  A compact visual element that conveys metadata — a notification count, a
-  status label, or a category tag. Badges are non-interactive by default but
-  can be positioned as overlays on other elements.
-</p>
-
-<h3>When should I use it?</h3>
-<p>
-  Use <code>&lt;Badge&gt;</code> for notification counts on icons/buttons, status
-  indicators next to text, category labels, or version tags. For interactive
-  selectable elements, use <code>&lt;Chip&gt;</code> or <code>&lt;Tag&gt;</code>.
-</p>
-
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Visual emphasis</strong> — draws attention to important counts or statuses.</li>
-  <li><strong>Versatile placement</strong> — inline or overlay (top-right, bottom-left, etc.).</li>
-  <li><strong>Dot mode</strong> — minimal status indicator without text.</li>
-  <li><strong>Pulse animation</strong> — draws attention to new notifications.</li>
+  <li><strong>{m.badge_why_emphasis()}</strong>{m.badge_why_emphasis_desc()}</li>
+  <li><strong>{m.badge_why_placement()}</strong>{m.badge_why_placement_desc()}</li>
+  <li><strong>{m.badge_why_dot()}</strong>{m.badge_why_dot_desc()}</li>
+  <li><strong>{m.badge_why_pulse()}</strong>{m.badge_why_pulse_desc()}</li>
 </ul>
 
-<h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
 <ul>
   <li><a href="https://m3.material.io/components/badges/overview">Material Design 3 — Badges</a></li>
   <li><a href="https://primer.style/components/badge">Primer — Badge</a></li>
   <li><a href="https://ant.design/components/badge">Ant Design — Badge</a></li>
 </ul>
 
-
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>`&lt;span&gt;` with variant classes for status/count/category</li>
-    <li>`accent-color` for consistent theming</li>
-    <li>`aria-hidden=&quot;true&quot;` for decorative badges, `aria-label` for informative ones</li>
-    <li>WCAG AA color contrast for status colors</li>
+  <li>{m.badge_impl_1_1()}<code>&lt;span&gt;</code>{m.badge_impl_1_2()}</li>
+  <li><code>accent-color</code>{m.badge_impl_2_1()}</li>
+  <li><code>aria-hidden="true"</code>{m.badge_impl_3_1()}<code>aria-label</code>{m.badge_impl_3_2()}</li>
+  <li>{m.badge_impl_4()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use a `&lt;div&gt;` — `&lt;span&gt;` is more semantic for inline content</li>
-    <li>Don't rely solely on color to convey status — add text or icons</li>
+  <li>{m.badge_mistake_1_1()}<code>&lt;div&gt;</code>{m.badge_mistake_1_2()}<code>&lt;span&gt;</code>{m.badge_mistake_1_3()}</li>
+  <li>{m.badge_mistake_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
+<h2>{m.sec_related()}</h2>
 <p>Tag, Chip, Avatar</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Badges are inline and grow with content.</li>
-  <li>Overlay badges are positioned absolutely relative to their parent.</li>
+  <li>{m.badge_responsive_1()}</li>
+  <li>{m.badge_responsive_2()}</li>
 </ul>
 
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li>Variants: default, primary, secondary, success, warning, error, info.</li>
-  <li>Sizes: sm, md, lg.</li>
-  <li>Shape: <code>pill</code> for fully rounded.</li>
-  <li>Style: <code>outline</code> for bordered badges.</li>
-  <li><code>dot</code> — minimal dot indicator without text.</li>
-  <li><code>pulse</code> — animated pulse effect.</li>
-  <li><code>overlay</code> with <code>position</code> — positioned over a parent element.</li>
+  <li>{m.badge_custom_1()}</li>
+  <li>{m.badge_custom_2()}</li>
+  <li>{m.badge_custom_3_1()}<code>pill</code>{m.badge_custom_3_2()}</li>
+  <li>{m.badge_custom_4_1()}<code>outline</code>{m.badge_custom_4_2()}</li>
+  <li><code>dot</code>{m.badge_custom_5_1()}</li>
+  <li><code>pulse</code>{m.badge_custom_6_1()}</li>
+  <li><code>overlay</code>{m.badge_custom_7_1()}<code>position</code>{m.badge_custom_7_2()}</li>
 </ul>
 
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Basic Badge</h3>
+<h3>{m.badge_ex_basic()}</h3>
 <ExampleTabs code={`<Badge>New</Badge>`}>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md" data-testid="badge-basic">
     <Badge>New</Badge>
   </div>
 </ExampleTabs>
 
-<h3>Variants</h3>
+<h3>{m.badge_ex_variants()}</h3>
 <ExampleTabs code={`<Badge variant="default">Default</Badge>
 <Badge variant="primary">Primary</Badge>
 <Badge variant="secondary">Secondary</Badge>
@@ -118,7 +108,7 @@ import * as BadgeModule from "$lib/components/Badge/Badge.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Sizes</h3>
+<h3>{m.badge_ex_sizes()}</h3>
 <ExampleTabs code={`<Badge size="sm">Small</Badge>
 <Badge size="md">Medium</Badge>
 <Badge size="lg">Large</Badge>`}>
@@ -129,7 +119,7 @@ import * as BadgeModule from "$lib/components/Badge/Badge.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Pill Shape</h3>
+<h3>{m.badge_ex_pill()}</h3>
 <ExampleTabs code={`<Badge pill>Pill Badge</Badge>
 <Badge variant="primary" pill>Primary Pill</Badge>`}>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md" data-testid="badge-pill">
@@ -138,7 +128,7 @@ import * as BadgeModule from "$lib/components/Badge/Badge.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Outline Style</h3>
+<h3>{m.badge_ex_outline()}</h3>
 <ExampleTabs code={`<Badge outline>Outline</Badge>
 <Badge variant="primary" outline>Primary</Badge>
 <Badge variant="success" outline>Success</Badge>`}>
@@ -149,7 +139,7 @@ import * as BadgeModule from "$lib/components/Badge/Badge.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Dot Indicators</h3>
+<h3>{m.badge_ex_dot()}</h3>
 <ExampleTabs code={`<Badge variant="success" dot></Badge> Online
 <Badge variant="error" dot></Badge> Offline
 <Badge variant="warning" dot></Badge> Away`}>
@@ -160,7 +150,7 @@ import * as BadgeModule from "$lib/components/Badge/Badge.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Pulse Animation</h3>
+<h3>{m.badge_ex_pulse()}</h3>
 <ExampleTabs code={`<Badge variant="primary" pulse>Pulse</Badge>
 <Badge variant="error" dot pulse></Badge>`}>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md" data-testid="badge-pulse">
@@ -169,7 +159,7 @@ import * as BadgeModule from "$lib/components/Badge/Badge.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Overlay Position</h3>
+<h3>{m.badge_ex_overlay()}</h3>
 <ExampleTabs code={`<div class="relative inline-block">
   <div class="w-10 h-10 bg-muted/20 rounded"></div>
   <Badge variant="primary" overlay position="top-right">5</Badge>
@@ -190,29 +180,29 @@ import * as BadgeModule from "$lib/components/Badge/Badge.svelte"
   </div>
 </ExampleTabs>
 
-<h2>Badge vs Tag vs Chip</h2>
+<h2>{m.badge_compare_heading()}</h2>
 <table>
-  <thead><tr><th>Feature</th><th>Badge</th><th>Tag</th><th>Chip</th></tr></thead>
+  <thead><tr><th>{m.badge_th_feature()}</th><th>{m.badge_th_badge()}</th><th>{m.badge_th_tag()}</th><th>{m.badge_th_chip()}</th></tr></thead>
   <tbody>
-    <tr><td>Purpose</td><td>Count / status indicator</td><td>Label / category</td><td>Interactive selection</td></tr>
-    <tr><td>Interactive</td><td>No</td><td>Optional (clickable)</td><td>Yes (clickable, toggle)</td></tr>
-    <tr><td>Overlay positioning</td><td>Yes</td><td>No</td><td>No</td></tr>
-    <tr><td>Dot mode</td><td>Yes</td><td>No</td><td>No</td></tr>
-    <tr><td>Pulse animation</td><td>Yes</td><td>No</td><td>No</td></tr>
-    <tr><td>Dismissible</td><td>No</td><td>Yes</td><td>Yes (removable)</td></tr>
-    <tr><td>Link support</td><td>No</td><td>Yes (href)</td><td>No</td></tr>
-    <tr><td>Best for</td><td>Notification counts, online/offline status</td><td>Category tags, keywords, status labels</td><td>Filter chips, selectable tags</td></tr>
+    <tr><td>{m.badge_row_purpose()}</td><td>{m.badge_row_purpose_badge()}</td><td>{m.badge_row_purpose_tag()}</td><td>{m.badge_row_purpose_chip()}</td></tr>
+    <tr><td>{m.badge_row_interactive()}</td><td>{m.badge_no()}</td><td>{m.badge_row_interactive_tag()}</td><td>{m.badge_row_interactive_chip()}</td></tr>
+    <tr><td>{m.badge_row_overlay()}</td><td>{m.badge_yes()}</td><td>{m.badge_no()}</td><td>{m.badge_no()}</td></tr>
+    <tr><td>{m.badge_row_dot()}</td><td>{m.badge_yes()}</td><td>{m.badge_no()}</td><td>{m.badge_no()}</td></tr>
+    <tr><td>{m.badge_row_pulse()}</td><td>{m.badge_yes()}</td><td>{m.badge_no()}</td><td>{m.badge_no()}</td></tr>
+    <tr><td>{m.badge_row_dismissible()}</td><td>{m.badge_no()}</td><td>{m.badge_yes()}</td><td>{m.badge_row_dismissible_chip()}</td></tr>
+    <tr><td>{m.badge_row_link()}</td><td>{m.badge_no()}</td><td>{m.badge_row_link_tag()}</td><td>{m.badge_no()}</td></tr>
+    <tr><td>{m.badge_row_best()}</td><td>{m.badge_row_best_badge()}</td><td>{m.badge_row_best_tag()}</td><td>{m.badge_row_best_chip()}</td></tr>
   </tbody>
 </table>
 
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={BadgeModule} />
 
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Uses <code>role="status"</code> for screen readers.</li>
-  <li>Dot indicators include <code>aria-label</code> attributes.</li>
-  <li>Color contrast meets WCAG AA standards.</li>
-  <li>Can be hidden when empty to avoid confusing screen readers.</li>
+  <li>{m.badge_a11y_1_1()}<code>role="status"</code>{m.badge_a11y_1_2()}</li>
+  <li>{m.badge_a11y_2_1()}<code>aria-label</code>{m.badge_a11y_2_2()}</li>
+  <li>{m.badge_a11y_3()}</li>
+  <li>{m.badge_a11y_4()}</li>
 </ul>
 </Container>

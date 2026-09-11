@@ -8,6 +8,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as AvatarModule from "$lib/components/Avatar/Avatar.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -15,80 +16,70 @@ import * as AvatarModule from "$lib/components/Avatar/Avatar.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>Avatar</h1>
+<h1>{m.avatar_heading()}</h1>
 
+<p>{m.avatar_intro_1()}</p>
+
+<h2>{m.sec_what_when_why()}</h2>
+
+<h3>{m.sec_what()}</h3>
+<p>{m.avatar_what_1()}</p>
+
+<h3>{m.sec_when()}</h3>
 <p>
-  Displays a user's profile image with intelligent fallback options — initials,
-  Gravatar, or a generic icon. Supports sizes, shapes, status indicators, and
-  notification badges.
+  {m.avatar_when_1()}<code>&lt;Avatar&gt;</code>{m.avatar_when_2()}<code>&lt;AvatarGroup&gt;</code>{m.avatar_when_3()}
 </p>
 
-<h2>What, When &amp; Why</h2>
-
-<h3>What is it?</h3>
-<p>
-  An image component that shows a user's profile picture, with automatic fallback
-  to initials, Gravatar, or a placeholder icon when no image is available.
-</p>
-
-<h3>When should I use it?</h3>
-<p>
-  Use <code>&lt;Avatar&gt;</code> anywhere you need to represent a person or
-  entity visually — user lists, comments, team pages, chat messages, navigation
-  bars. For groups of avatars, use <code>&lt;AvatarGroup&gt;</code>.
-</p>
-
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Consistent sizing</strong> — predefined sizes (xs, sm, md, lg, xl) keep avatars uniform.</li>
-  <li><strong>Graceful fallback</strong> — if the image fails to load, shows initials or a generic icon.</li>
-  <li><strong>Gravatar integration</strong> — generates a Gravatar URL from an email address.</li>
-  <li><strong>Status indicators</strong> — online/offline/away/busy dots with semantic colors.</li>
+  <li><strong>{m.avatar_why_sizing()}</strong>{m.avatar_why_sizing_desc()}</li>
+  <li><strong>{m.avatar_why_fallback()}</strong>{m.avatar_why_fallback_desc()}</li>
+  <li><strong>{m.avatar_why_gravatar()}</strong>{m.avatar_why_gravatar_desc()}</li>
+  <li><strong>{m.avatar_why_status()}</strong>{m.avatar_why_status_desc()}</li>
 </ul>
 
-<h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
 <ul>
   <li><a href="https://m3.material.io/components/avatars/overview">Material Design 3 — Avatars</a></li>
   <li><a href="https://primer.style/components/avatar">Primer — Avatar</a></li>
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img">MDN — img element</a></li>
 </ul>
 
-
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>`&lt;img&gt;` with `alt` text for user avatars</li>
-    <li>`aspect-ratio: 1` for consistent circular sizing</li>
-    <li>Fallback to initials when no image is provided</li>
-    <li>AvatarGroup with overlap using negative margin</li>
-    <li>`&lt;picture&gt;` with `&lt;source&gt;` for AVIF/WebP responsive images</li>
+  <li><code>&lt;img&gt;</code>{m.avatar_impl_1()}<code>alt</code>{m.avatar_impl_1b()}</li>
+  <li><code>aspect-ratio: 1</code>{m.avatar_impl_2()}</li>
+  <li>{m.avatar_impl_3()}</li>
+  <li>{m.avatar_impl_4()}</li>
+  <li><code>&lt;picture&gt;</code>{m.avatar_impl_5()}<code>&lt;source&gt;</code>{m.avatar_impl_5b()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't forget `alt` text — even if decorative, use `alt=&quot;&quot;` (empty alt)</li>
-    <li>Don't use `&lt;div&gt;` for the image — always `&lt;img&gt;` for semantics</li>
+  <li>{m.avatar_mistake_1_1()}<code>alt</code>{m.avatar_mistake_1_2()}<code>alt=""</code>{m.avatar_mistake_1_3()}</li>
+  <li>{m.avatar_mistake_2_1()}<code>&lt;div&gt;</code>{m.avatar_mistake_2_2()}<code>&lt;img&gt;</code>{m.avatar_mistake_2_3()}</li>
 </ul>
 
-<h2>Related Components</h2>
+<h2>{m.sec_related()}</h2>
 <p>Badge, Icon, Image</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Avatars are fixed-size by default; use <code>size</code> prop to control.</li>
-  <li>In <code>&lt;AvatarGroup&gt;</code>, avatars overlap and adapt to container width.</li>
+  <li>{m.avatar_responsive_1_1()}<code>size</code>{m.avatar_responsive_1_2()}</li>
+  <li>{m.avatar_responsive_2_1()}<code>&lt;AvatarGroup&gt;</code>{m.avatar_responsive_2_2()}</li>
 </ul>
 
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li>Shapes: <code>circle</code>, <code>square</code>, <code>rounded</code>.</li>
-  <li>Status indicators: <code>online</code>, <code>offline</code>, <code>away</code>, <code>busy</code>.</li>
-  <li>Badge overlay for notification counts.</li>
-  <li>Bordered and shadowed variants.</li>
+  <li>{m.avatar_custom_1_1()}<code>circle</code>{m.avatar_custom_1_2()}<code>square</code>{m.avatar_custom_1_3()}<code>rounded</code>{m.avatar_custom_1_4()}</li>
+  <li>{m.avatar_custom_2_1()}<code>online</code>{m.avatar_custom_2_2()}<code>offline</code>{m.avatar_custom_2_3()}<code>away</code>{m.avatar_custom_2_4()}<code>busy</code>{m.avatar_custom_2_5()}</li>
+  <li>{m.avatar_custom_3()}</li>
+  <li>{m.avatar_custom_4()}</li>
 </ul>
 
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Basic Image</h3>
+<h3>{m.avatar_ex_basic()}</h3>
 <ExampleTabs code={`<Avatar
   src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300"
   alt="Sarah Chen"
@@ -101,21 +92,21 @@ import * as AvatarModule from "$lib/components/Avatar/Avatar.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Fallback with Initials</h3>
+<h3>{m.avatar_ex_initials()}</h3>
 <ExampleTabs code={`<Avatar name="Marcus Webb" />`}>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md" data-testid="avatar-initials">
     <Avatar name="Marcus Webb" />
   </div>
 </ExampleTabs>
 
-<h3>Custom Fallback</h3>
+<h3>{m.avatar_ex_fallback()}</h3>
 <ExampleTabs code={`<Avatar fallback="MW" bgColor="bg-primary-600" />`}>
   <div class="flex items-center gap-4 p-4 bg-surface rounded-md" data-testid="avatar-fallback">
     <Avatar fallback="MW" bgColor="bg-primary-600" />
   </div>
 </ExampleTabs>
 
-<h3>Gravatar Email</h3>
+<h3>{m.avatar_ex_gravatar()}</h3>
 <ExampleTabs code={`<Avatar
   gravatarEmail="skamansam@gmail.com"
   name="Skaman Sam Tyler"
@@ -130,7 +121,7 @@ import * as AvatarModule from "$lib/components/Avatar/Avatar.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Sizes</h3>
+<h3>{m.avatar_ex_sizes()}</h3>
 <ExampleTabs code={`<Avatar size="xs" name="XS" />
 <Avatar size="sm" name="SM" />
 <Avatar size="md" name="MD" />
@@ -145,7 +136,7 @@ import * as AvatarModule from "$lib/components/Avatar/Avatar.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Shapes</h3>
+<h3>{m.avatar_ex_shapes()}</h3>
 <ExampleTabs code={`<Avatar shape="circle" name="Circle" />
 <Avatar shape="square" name="Square" />
 <Avatar shape="rounded" name="Rounded" />`}>
@@ -156,7 +147,7 @@ import * as AvatarModule from "$lib/components/Avatar/Avatar.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Status Indicators</h3>
+<h3>{m.avatar_ex_status()}</h3>
 <ExampleTabs code={`<Avatar name="Online" status="online" />
 <Avatar name="Offline" status="offline" />
 <Avatar name="Away" status="away" />
@@ -169,7 +160,7 @@ import * as AvatarModule from "$lib/components/Avatar/Avatar.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Badges</h3>
+<h3>{m.avatar_ex_badges()}</h3>
 <ExampleTabs code={`<Avatar name="New" badge="3" />
 <Avatar name="Pro" badge="Pro" badgeVariant="success" />
 <Avatar name="Alert" badge="!" badgeVariant="error" />`}>
@@ -180,7 +171,7 @@ import * as AvatarModule from "$lib/components/Avatar/Avatar.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Styled Avatars</h3>
+<h3>{m.avatar_ex_styled()}</h3>
 <ExampleTabs code={`<Avatar name="Bordered" bordered />
 <Avatar name="Shadowed" shadowed />
 <Avatar name="Both" bordered shadowed />`}>
@@ -191,24 +182,24 @@ import * as AvatarModule from "$lib/components/Avatar/Avatar.svelte"
   </div>
 </ExampleTabs>
 
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={AvatarModule} />
 
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Images have proper <code>alt</code> text.</li>
-  <li>Status indicators include <code>aria-label</code> for screen readers.</li>
-  <li>Fallback text is exposed to assistive technology.</li>
-  <li>Color contrast meets WCAG AA standards.</li>
+  <li>{m.avatar_a11y_1_1()}<code>alt</code>{m.avatar_a11y_1_2()}</li>
+  <li>{m.avatar_a11y_2_1()}<code>aria-label</code>{m.avatar_a11y_2_2()}</li>
+  <li>{m.avatar_a11y_3()}</li>
+  <li>{m.avatar_a11y_4()}</li>
 </ul>
 
-<h2>Fallback Behavior</h2>
-<p>The Avatar has a priority chain:</p>
+<h2>{m.avatar_fallback_heading()}</h2>
+<p>{m.avatar_fallback_intro()}</p>
 <ol>
-  <li><code>src</code> — displays the image if it loads successfully.</li>
-  <li><code>gravatarEmail</code> — generates a Gravatar URL (SHA-256 + identicon fallback).</li>
-  <li><code>fallback</code> — displays the provided fallback text.</li>
-  <li><code>name</code> — auto-generates initials from the name.</li>
-  <li>Generic user icon — if nothing else is available.</li>
+  <li><code>src</code>{m.avatar_fallback_1()}</li>
+  <li><code>gravatarEmail</code>{m.avatar_fallback_2()}</li>
+  <li><code>fallback</code>{m.avatar_fallback_3()}</li>
+  <li><code>name</code>{m.avatar_fallback_4()}</li>
+  <li>{m.avatar_fallback_5()}</li>
 </ol>
 </Container>

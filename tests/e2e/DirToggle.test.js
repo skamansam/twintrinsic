@@ -519,4 +519,46 @@ test.describe("Docs locale switcher", () => {
     await expect(page.locator("h2", { hasText: "اشتباهات رایج" })).toBeVisible();
     await expect(page.getByText(/یک منوی سلسله‌مراتبی/).first()).toBeVisible();
   });
+
+  test("translates the Avatar docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Avatar/Avatar");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Avatar");
+    await expect(page.locator("h2", { hasText: "Fallback Behavior" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "رفتار جایگزین" })).toBeVisible();
+    await expect(page.getByText(/تصویر نمایهٔ کاربر/).first()).toBeVisible();
+  });
+
+  test("translates the AvatarGroup docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Avatar/AvatarGroup");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("AvatarGroup");
+    await expect(page.locator("h2", { hasText: "Responsiveness" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
+    await expect(page.getByText(/چند آواتار را در یک پشتهٔ/).first()).toBeVisible();
+  });
+
+  test("translates the Badge docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Badge/Badge");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Badge");
+    await expect(page.locator("h2", { hasText: "Common Mistakes" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "اشتباهات رایج" })).toBeVisible();
+    await expect(page.getByText(/یک عنصر درون‌خطی کوچک/).first()).toBeVisible();
+  });
 });
