@@ -35,6 +35,22 @@ at the import site.
 - Add JSDoc types where necessary
 - Reference TypeScript types in `*.d.ts` files where possible
 
+### Docs-site i18n
+
+Documentation prose is translated at runtime through Paraglide: every
+human-readable string on a docs page must come from `m.some_key()` (the key
+lives in `messages/{en,es,fa}.json`), never a hard-coded English sentence.
+Code samples, identifiers, HTML/ARIA tokens, source citations, related-
+component links, and brand names intentionally stay English and live inside
+`<CodeBlock>`, `<ExampleTabs>`, `<code>`, `<kbd>`, `<a>`, `<strong>`, or a
+snippet.
+
+`pnpm check:i18n` enforces this for every page that has opted into i18n
+(imports `m`) and reports how many pages are still pending. It runs in CI as
+part of the type-check job. If it flags a string that is deliberately
+English, move it into one of the wrappers above rather than adding it to an
+allowlist.
+
 ## Project Overview
 
 **Twintrinsic** is a Tailwind-based Svelte 5 component library emphasizing accessibility, extensibility, and performance through semantic HTML and CSS-first approaches.
@@ -423,6 +439,7 @@ pnpm test:unit        # Run unit tests
 
 # Code Quality
 pnpm check            # Type check with svelte-check
+pnpm check:i18n       # Fail on untranslated prose in docs pages
 pnpm lint             # Lint with Biome
 pnpm format           # Format with Biome
 ```

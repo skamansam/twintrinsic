@@ -16,6 +16,7 @@
     "validate:exports": "node scripts/validate-exports.mjs",
     "generate:icons": "node scripts/generate-icon-list.mjs",
     "check:a11y": "bash scripts/check-a11y.sh",
+    "check:i18n": "node scripts/check-i18n.mjs",
     "format": "biome format --write .",
     "lint": "biome lint .",
     "test:e2e": "playwright test",

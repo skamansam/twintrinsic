@@ -71,6 +71,7 @@
   "util_detectlanguage_body": "Heuristically detects a code language from content patterns (HTML, CSS, JavaScript/TypeScript, JSON, YAML, Markdown, Svelte, shell). Used by CodeBlock when no language prop is provided.",
   "util_docs_tables": "Documentation Tables",
   "util_propstable_body": "For rendering component props and events in your own docs, Twintrinsic ships two utility components — PropsTable and EventsTable. They auto-derive their rows from a component module at build time, with an explicit-array fallback. See their dedicated pages for full usage:",
+  "util_and": "and",
   "sec_examples": "Examples",
   "sec_sources": "Sources",
   "sec_what_when_why": "What, When & Why",

@@ -117,7 +117,7 @@ detectLanguage("key: value")                        // "yaml"`}
   <Panel>
     <p>
       {m.util_propstable_body()}
-      <a href="/docs/components/PropsTable/PropsTable">PropsTable</a> and
+      <a href="/docs/components/PropsTable/PropsTable">PropsTable</a> {m.util_and()}
       <a href="/docs/components/EventsTable/EventsTable">EventsTable</a>.
     </p>
   </Panel>

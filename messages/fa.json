@@ -71,6 +71,7 @@
   "util_detectlanguage_body": "زبان کد را به صورت ابتکاری از الگوهای محتوا تشخیص می‌دهد (HTML، CSS، JavaScript/TypeScript، JSON، YAML، Markdown، Svelte، shell). وقتی prop زبان تنظیم نشده توسط CodeBlock استفاده می‌شود.",
   "util_docs_tables": "جداول مستندات",
   "util_propstable_body": "برای نمایش props و رویدادهای کامپوننت‌ها در مستندات خودتان، Twintrinsic دو کامپوننت ابزاری ارائه می‌دهد — PropsTable و EventsTable. آن‌ها ردیف‌های خود را در زمان ساخت به صورت خودکار از ماژول کامپوننت استخراج می‌کنند و در صورت نیاز از آرایه صریح استفاده می‌کنند. برای استفاده کامل به صفحات اختصاصی آن‌ها مراجعه کنید:",
+  "util_and": "و",
   "sec_examples": "نمونه‌ها",
   "sec_sources": "منابع",
   "sec_what_when_why": "چیست، چه زمانی و چرا",

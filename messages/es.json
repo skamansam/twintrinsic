@@ -71,6 +71,7 @@
   "util_detectlanguage_body": "Detecta heurísticamente el idioma de un código a partir de patrones de contenido (HTML, CSS, JavaScript/TypeScript, JSON, YAML, Markdown, Svelte, shell). Lo usa CodeBlock cuando no se proporciona la prop language.",
   "util_docs_tables": "Tablas de documentación",
   "util_propstable_body": "Para mostrar props y eventos de componentes en tu propia documentación, Twintrinsic incluye dos componentes de utilidad — PropsTable y EventsTable. Derivan sus filas automáticamente del módulo del componente en tiempo de compilación, con una alternativa de array explícito. Consulta sus páginas dedicadas para el uso completo:",
+  "util_and": "y",
   "sec_examples": "Ejemplos",
   "sec_sources": "Fuentes",
   "sec_what_when_why": "Qué, cuándo y por qué",
