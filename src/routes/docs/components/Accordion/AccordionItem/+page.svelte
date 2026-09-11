@@ -10,6 +10,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -19,43 +20,37 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <div class="not-prose mb-6 p-4 bg-primary-50 dark:bg-primary-950 border border-primary-200 dark:border-primary-800 rounded-lg">
     <p class="text-sm text-primary-700 dark:text-primary-300 m-0">
-      <strong>AccordionItem</strong> is a sub-component of
-      <a href="/docs/components/Accordion/Accordion" class="underline font-medium">Accordion</a>.
-      See the parent component docs for usage, examples, and full API reference.
+      <strong>AccordionItem</strong>{m.accordionitem_note_1()}
+      <a href="/docs/components/Accordion/Accordion" class="underline font-medium">Accordion</a>{m.accordionitem_note_2()}
     </p>
   </div>
 
-  <h1>AccordionItem</h1>
+  <h1>{m.accordionitem_heading()}</h1>
 
   <p>
-    <strong>AccordionItem</strong> is a single collapsible panel inside an
-    <code>&lt;Accordion&gt;</code>. It uses the native <code>&lt;details&gt;</code> /
-    <code>&lt;summary&gt;</code> elements for semantic disclosure.
+    <strong>{m.accordionitem_heading()}</strong>{m.accordionitem_intro_1()}<code>&lt;Accordion&gt;</code>{m.accordionitem_intro_2()}<code>&lt;details&gt;</code>{m.accordionitem_intro_3()}<code>&lt;summary&gt;</code>{m.accordionitem_intro_4()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A single collapsible section within an Accordion. Renders a <code>&lt;details&gt;</code>
-    element with a <code>&lt;summary&gt;</code> header, optional chevron icon, and content
-    area. Supports disabled state and custom header snippets.
+    {m.accordionitem_what_1()}<code>&lt;details&gt;</code>{m.accordionitem_what_2()}<code>&lt;summary&gt;</code>{m.accordionitem_what_3()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Always use <code>&lt;AccordionItem&gt;</code> inside an <code>&lt;Accordion&gt;</code>.
-    Each logical section gets its own <code>&lt;AccordionItem&gt;</code>.
+    {m.accordionitem_when_1()}<code>&lt;AccordionItem&gt;</code>{m.accordionitem_when_2()}<code>&lt;Accordion&gt;</code>{m.accordionitem_when_3()}<code>&lt;AccordionItem&gt;</code>{m.accordionitem_when_4()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Native disclosure</strong> — <code>&lt;details&gt;</code>/<code>&lt;summary&gt;</code> for zero-JS accessibility.</li>
-    <li><strong>Flexible headers</strong> — snippets for custom header markup.</li>
-    <li><strong>Disabled state</strong> — block toggling on specific items.</li>
+    <li><strong>{m.accordionitem_why_native()}</strong> — <code>&lt;details&gt;</code>/<code>&lt;summary&gt;</code> {m.accordionitem_why_native_desc()}</li>
+    <li><strong>{m.accordionitem_why_flexible()}</strong> — {m.accordionitem_why_flexible_desc()}</li>
+    <li><strong>{m.accordionitem_why_disabled()}</strong> — {m.accordionitem_why_disabled_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details">MDN — &lt;details&gt;</a></li>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/accordion/">WAI-ARIA APG — Accordion</a></li>
@@ -64,23 +59,23 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
     <li><a href="https://ant.design/components/collapse">Ant Design — Collapse</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Full-width by default; inherits from parent Accordion.</li>
-    <li>Touch targets meet 44×44 px minimum for the summary header.</li>
+    <li>{m.accordionitem_responsive_1()}</li>
+    <li>{m.accordion_responsive_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li><code>header</code> snippet for custom header content.</li>
-    <li><code>showIcon</code> — show/hide the chevron.</li>
-    <li><code>disabled</code> — disable the item.</li>
-    <li><code>ariaLabel</code> — custom label for the summary.</li>
+    <li><code>header</code>{m.accordionitem_custom_1()}</li>
+    <li><code>showIcon</code>{m.accordionitem_custom_2()}</li>
+    <li><code>disabled</code>{m.accordionitem_custom_3()}</li>
+    <li><code>ariaLabel</code>{m.accordionitem_custom_4()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic Items</h3>
+  <h3>{m.accordionitem_ex_basic()}</h3>
   <ExampleTabs code={`<Accordion>
   <AccordionItem>
     {#snippet header()}Getting started{/snippet}
@@ -105,7 +100,7 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
     </div>
   </ExampleTabs>
 
-  <h3>Disabled Item</h3>
+  <h3>{m.accordionitem_ex_disabled()}</h3>
   <ExampleTabs code={`<Accordion>
   <AccordionItem>
     {#snippet header()}Available{/snippet}
@@ -130,7 +125,7 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
     </div>
   </ExampleTabs>
 
-  <h3>Initially Expanded</h3>
+  <h3>{m.accordionitem_ex_expanded()}</h3>
   <ExampleTabs code={`<Accordion defaultExpanded={0}>
   <AccordionItem>
     {#snippet header()}First question{/snippet}
@@ -155,7 +150,7 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
     </div>
   </ExampleTabs>
 
-  <h3>No Icon</h3>
+  <h3>{m.accordionitem_ex_noicon()}</h3>
   <ExampleTabs code={`<Accordion>
   <AccordionItem showIcon={false}>
     {#snippet header()}Plain header{/snippet}
@@ -172,25 +167,25 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={AccordionItemModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={AccordionItemModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Uses native <code>&lt;details&gt;</code>/<code>&lt;summary&gt;</code> for keyboard-accessible disclosure.</li>
-    <li>Disabled items block toggling and reduce visual emphasis.</li>
-    <li>The <code>ariaLabel</code> prop names the summary for assistive technology.</li>
+    <li>{m.accordion_a11y_1()}<code>&lt;details&gt;</code>/<code>&lt;summary&gt;</code>{m.accordion_a11y_1b()}</li>
+    <li>{m.accordionitem_a11y_2()}</li>
+    <li>{m.accordionitem_a11y_3_1()}<code>ariaLabel</code>{m.accordionitem_a11y_3_2()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Toggle the item open/closed</td></tr>
-      <tr><td><kbd>Tab</kbd></td><td>Move focus to the next item</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.accordionitem_kb_1()}</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>{m.accordionitem_kb_2()}</td></tr>
     </tbody>
   </table>
 </Container>

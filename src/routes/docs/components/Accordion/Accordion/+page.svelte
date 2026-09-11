@@ -11,6 +11,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as AccordionModule from "$lib/components/Accordion/Accordion.svelte"
 import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -18,39 +19,32 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Accordion</h1>
+  <h1>{m.accordion_heading()}</h1>
 
   <p>
-    <strong>Accordion</strong> is a group of collapsible items where only one can be expanded
-    at a time by default. It uses native <code>&lt;details&gt;</code> /
-    <code>&lt;summary&gt;</code> elements for semantic disclosure, with full keyboard
-    navigation and ARIA support.
+    <strong>{m.accordion_heading()}</strong>{m.accordion_intro_1()}<code>&lt;details&gt;</code>{m.accordion_intro_2()}<code>&lt;summary&gt;</code>{m.accordion_intro_3()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A disclosure widget group that allows users to expand and collapse sections of content.
-    Uses the native HTML <code>&lt;details&gt;</code> element with a <code>name</code>
-    attribute for mutually exclusive panels. Supports single or multiple open panels.
+    {m.accordion_what_1()}<code>&lt;details&gt;</code>{m.accordion_what_2()}<code>name</code>{m.accordion_what_3()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use <code>&lt;Accordion&gt;</code> for FAQ sections, settings panels, or any grouped
-    content where only one section should be visible at a time. For independent collapsible
-    panels, use multiple <code>&lt;Panel&gt;</code> components.
+    {m.accordion_when_1()}<code>&lt;Accordion&gt;</code>{m.accordion_when_2()}<code>&lt;Panel&gt;</code>{m.accordion_when_3()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Native HTML</strong> — <code>&lt;details&gt;</code>/<code>&lt;summary&gt;</code> for built-in keyboard and screen reader support.</li>
-    <li><strong>Mutual exclusion</strong> — native <code>name</code> attribute ensures only one panel is open.</li>
-    <li><strong>Progressive enhancement</strong> — works without JavaScript.</li>
+    <li><strong>{m.accordion_why_native()}</strong> — <code>&lt;details&gt;</code>/<code>&lt;summary&gt;</code> {m.accordion_why_native_desc()}</li>
+    <li><strong>{m.accordion_why_exclusive()}</strong> — {m.accordion_why_exclusive_desc_1()}<code>name</code>{m.accordion_why_exclusive_desc_2()}</li>
+    <li><strong>{m.accordion_why_pe()}</strong> — {m.accordion_why_pe_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details">MDN — &lt;details&gt;</a></li>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/accordion/">WAI-ARIA APG — Accordion</a></li>
@@ -59,43 +53,42 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
     <li><a href="https://ant.design/components/collapse">Ant Design — Collapse</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
-<ul>
-    <li>Native `&lt;details&gt;` + `&lt;summary&gt;` for expand/collapse — zero JS</li>
-    <li>`&lt;details name=&quot;group&quot;&gt;` for exclusive behavior (only one open at a time)</li>
-    <li>`aria-expanded` on the summary button</li>
-    <li>`aria-controls` linking summary to panel content</li>
-    <li>CSS transitions for smooth expand/collapse animation</li>
-</ul>
-
-<h2>Common Mistakes</h2>
-<ul>
-    <li>Don't use `&lt;div onclick&gt;` with JS toggle — `&lt;details&gt;` is native and accessible</li>
-    <li>Don't forget `&lt;details name&gt;` for exclusive accordion behavior</li>
-    <li>Don't use Accordion for tab switching — use Tabs component instead</li>
-</ul>
-
-<h2>Related Components</h2>
-<p>Tabs, Tree, Menu</p>
-
-<h2>Responsiveness</h2>
+  <h2>{m.sec_implementation()}</h2>
   <ul>
-    <li>Full-width by default; set max-width via <code>class</code> or parent Container.</li>
-    <li>Touch targets meet 44×44 px minimum for the summary header.</li>
+    <li>{m.accordion_impl_1()}</li>
+    <li>{m.accordion_impl_2()}</li>
+    <li>{m.accordion_impl_3()}</li>
+    <li>{m.accordion_impl_4()}</li>
+    <li>{m.accordion_impl_5()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_mistakes()}</h2>
   <ul>
-    <li><code>allowMultiple</code> — allow multiple panels open simultaneously.</li>
-    <li><code>defaultExpanded</code> — index of initially expanded item, or <code>null</code> for all collapsed.</li>
-    <li><code>bordered</code> — show/hide border.</li>
-    <li>Custom header snippets per item.</li>
+    <li>{m.accordion_mistake_1()}</li>
+    <li>{m.accordion_mistake_2()}</li>
+    <li>{m.accordion_mistake_3()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_related()}</h2>
+  <p>Tabs, Tree, Menu</p>
 
-  <h3>Billing FAQ</h3>
+  <h2>{m.sec_responsiveness()}</h2>
+  <ul>
+    <li>{m.accordion_responsive_1()}</li>
+    <li>{m.accordion_responsive_2()}</li>
+  </ul>
+
+  <h2>{m.sec_customization()}</h2>
+  <ul>
+    <li><code>allowMultiple</code>{m.accordion_custom_1()}</li>
+    <li><code>defaultExpanded</code>{m.accordion_custom_2_1()}<code>null</code>{m.accordion_custom_2_2()}</li>
+    <li><code>bordered</code>{m.accordion_custom_3()}</li>
+    <li>{m.accordion_custom_4()}</li>
+  </ul>
+
+  <h2>{m.sec_examples()}</h2>
+
+  <h3>{m.accordion_ex_faq()}</h3>
   <ExampleTabs code={`<Accordion>
   <AccordionItem>
     {#snippet header()}Is there a free trial?{/snippet}
@@ -134,7 +127,7 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
     </div>
   </ExampleTabs>
 
-  <h3>Multiple Open</h3>
+  <h3>{m.accordion_ex_multiple()}</h3>
   <ExampleTabs code={`<Accordion allowMultiple>
   <AccordionItem>
     {#snippet header()}Our mission{/snippet}
@@ -163,7 +156,7 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
     </div>
   </ExampleTabs>
 
-  <h3>No Border</h3>
+  <h3>{m.accordion_ex_noborder()}</h3>
   <ExampleTabs code={`<Accordion bordered={false}>
   <AccordionItem>
     {#snippet header()}What's included?{/snippet}
@@ -188,7 +181,7 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
     </div>
   </ExampleTabs>
 
-  <h3>String Header (no snippet needed)</h3>
+  <h3>{m.accordion_ex_string()}</h3>
   <ExampleTabs code={`<Accordion>
   <AccordionItem header="What is this?">
     <div class="p-4">A component library for Svelte.</div>
@@ -209,7 +202,7 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
     </div>
   </ExampleTabs>
 
-  <h3>All Collapsed</h3>
+  <h3>{m.accordion_ex_collapsed()}</h3>
   <ExampleTabs code={`<Accordion defaultExpanded={null}>
   <AccordionItem>
     {#snippet header()}First question{/snippet}
@@ -234,29 +227,29 @@ import * as AccordionItemModule from "$lib/components/Accordion/AccordionItem.sv
     </div>
   </ExampleTabs>
 
-  <h2>Accordion Props</h2>
+  <h2>{m.accordion_props()}</h2>
   <PropsTable component={AccordionModule} />
 
-  <h2>AccordionItem Props</h2>
+  <h2>{m.accordionitem_props()}</h2>
   <PropsTable component={AccordionItemModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={AccordionModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Uses native <code>&lt;details&gt;</code>/<code>&lt;summary&gt;</code> for keyboard-accessible disclosure.</li>
-    <li>By default, only one panel opens at a time via the native <code>name</code> grouping.</li>
-    <li>Disabled items block toggling and reduce visual emphasis.</li>
-    <li>Panel state changes are announced to screen readers.</li>
+    <li>{m.accordion_a11y_1()}<code>&lt;details&gt;</code>/<code>&lt;summary&gt;</code>{m.accordion_a11y_1b()}</li>
+    <li>{m.accordion_a11y_2_1()}<code>name</code>{m.accordion_a11y_2_2()}</li>
+    <li>{m.accordion_a11y_3()}</li>
+    <li>{m.accordion_a11y_4()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Toggle panel expansion</td></tr>
-      <tr><td><kbd>Tab</kbd></td><td>Move focus between panels</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.accordion_kb_1()}</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>{m.accordion_kb_2()}</td></tr>
     </tbody>
   </table>
 </Container>
