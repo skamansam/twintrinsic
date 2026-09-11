@@ -791,4 +791,93 @@ test.describe("Docs locale switcher", () => {
         .first(),
     ).toBeVisible();
   });
+  test("translates the Table docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Table/Table");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Table");
+    await expect(page.locator("h2", { hasText: "Accessibility" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "دسترس‌پذیری" })).toBeVisible();
+    await expect(page.getByText(/پوششی سبک‌دار حول عنصر HTML بومی /).first()).toBeVisible();
+  });
+
+  test("translates the TableBody docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Table/TableBody");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("TableBody");
+    await expect(page.locator("h2", { hasText: "Accessibility" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "دسترس‌پذیری" })).toBeVisible();
+    await expect(
+      page.getByText(/پوششی معنایی برای سطرهای بدنه جدول\. به‌صورت /).first(),
+    ).toBeVisible();
+  });
+
+  test("translates the TableCell docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Table/TableCell");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("TableCell");
+    await expect(page.locator("h2", { hasText: "Accessibility" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "دسترس‌پذیری" })).toBeVisible();
+    await expect(page.getByText(/یک سلول داده جدول سبک‌دار\. به‌صورت /).first()).toBeVisible();
+  });
+
+  test("translates the TableHead docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Table/TableHead");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("TableHead");
+    await expect(page.locator("h2", { hasText: "Accessibility" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "دسترس‌پذیری" })).toBeVisible();
+    await expect(
+      page.getByText(/پوششی معنایی برای سطرهای سرصفحه جدول\. به‌صورت /).first(),
+    ).toBeVisible();
+  });
+
+  test("translates the TableHeader docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Table/TableHeader");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("TableHeader");
+    await expect(page.locator("h2", { hasText: "Accessibility" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "دسترس‌پذیری" })).toBeVisible();
+    await expect(page.getByText(/یک سلول سرصفحه جدول سبک‌دار\. به‌صورت /).first()).toBeVisible();
+  });
+
+  test("translates the TableRow docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Table/TableRow");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("TableRow");
+    await expect(page.locator("h2", { hasText: "Accessibility" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "دسترس‌پذیری" })).toBeVisible();
+    await expect(
+      page.getByText(/یک سطر جدول سبک‌دار با حالت‌های اختیاری انتخاب و غیرفعال\. به‌صورت /).first(),
+    ).toBeVisible();
+  });
 });

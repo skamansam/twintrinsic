@@ -8,6 +8,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import Table from "$lib/components/Table/Table.svelte"
 import * as TableModule from "$lib/components/Table/Table.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -15,39 +16,32 @@ import * as TableModule from "$lib/components/Table/Table.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Table</h1>
+  <h1>{m.table_heading()}</h1>
 
   <p>
-    <strong>Table</strong> provides a semantic, accessible way to display structured data
-    in rows and columns. It supports responsive layouts, striped rows, hover effects, and
-    various styling options.
+    <strong>{m.table_heading()}</strong>{m.table_intro_1()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A styled wrapper around the native HTML <code>&lt;table&gt;</code> element. Provides
-    consistent styling with options for striped rows, hover effects, borders, and compact
-    mode. Uses semantic <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>,
-    <code>&lt;th&gt;</code>, and <code>&lt;td&gt;</code> elements.
+    {m.table_what_1()}<code>&lt;table&gt;</code>{m.table_what_2()}<code>&lt;thead&gt;</code>{m.table_what_3()}<code>&lt;tbody&gt;</code>{m.table_what_4()}<code>&lt;th&gt;</code>{m.table_what_5()}<code>&lt;td&gt;</code>{m.table_what_6()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use <code>&lt;Table&gt;</code> for structured data that benefits from column alignment:
-    user lists, product inventories, financial data, or any tabular information. For
-    card-based data display, use <code>&lt;Card&gt;</code> or <code>&lt;DataTable&gt;</code>.
+    {m.table_when_1()}<code>&lt;Table&gt;</code>{m.table_when_2()}<code>&lt;Card&gt;</code>{m.table_when_3()}<code>&lt;DataTable&gt;</code>{m.table_when_4()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Semantic HTML</strong> — native <code>&lt;table&gt;</code> for correct structure.</li>
-    <li><strong>Accessible</strong> — proper heading hierarchy and screen reader support.</li>
-    <li><strong>Flexible</strong> — striped, bordered, hoverable, and compact variants.</li>
+    <li><strong>{m.table_why_semantic()}</strong>{m.table_why_semantic_desc_1()}<code>&lt;table&gt;</code>{m.table_why_semantic_desc_2()}</li>
+    <li><strong>{m.table_why_a11y()}</strong>{m.table_why_a11y_desc()}</li>
+    <li><strong>{m.table_why_flexible()}</strong>{m.table_why_flexible_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table">MDN — &lt;table&gt;</a></li>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/table/">WAI-ARIA APG — Table</a></li>
@@ -56,23 +50,23 @@ import * as TableModule from "$lib/components/Table/Table.svelte"
     <li><a href="https://ant.design/components/table">Ant Design — Table</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Horizontally scrollable on narrow screens via <code>overflow-x-auto</code>.</li>
-    <li>Full-width by default.</li>
+    <li>{m.table_responsive_1_0()}<code>overflow-x-auto</code>{m.table_responsive_1_1()}</li>
+    <li>{m.table_responsive_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li><code>striped</code> — alternating row backgrounds.</li>
-    <li><code>hoverable</code> — row highlight on hover.</li>
-    <li><code>bordered</code> — cell borders.</li>
-    <li><code>compact</code> — reduced padding.</li>
+    <li><code>striped</code>{m.table_custom_1_1()}</li>
+    <li><code>hoverable</code>{m.table_custom_2_1()}</li>
+    <li><code>bordered</code>{m.table_custom_3_1()}</li>
+    <li><code>compact</code>{m.table_custom_4_1()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic Table</h3>
+  <h3>{m.table_ex_basic()}</h3>
   <ExampleTabs code={`<Table>
   <thead>
     <tr>
@@ -124,7 +118,7 @@ import * as TableModule from "$lib/components/Table/Table.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Striped &amp; Hoverable</h3>
+  <h3>{m.table_ex_striped()}</h3>
   <ExampleTabs code={`<Table striped hoverable>
   <thead>
     <tr><th>Product</th><th>Price</th><th>Stock</th></tr>
@@ -164,7 +158,7 @@ import * as TableModule from "$lib/components/Table/Table.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Compact &amp; Bordered</h3>
+  <h3>{m.table_ex_compact()}</h3>
   <ExampleTabs code={`<Table compact bordered>
   <thead>
     <tr><th>Feature</th><th>Status</th></tr>
@@ -196,7 +190,7 @@ import * as TableModule from "$lib/components/Table/Table.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Bordered</h3>
+  <h3>{m.table_ex_bordered()}</h3>
   <ExampleTabs code={`<Table bordered>
   <thead><tr><th>Name</th><th>Role</th></tr></thead>
   <tbody><tr><td>Alice</td><td>Engineer</td></tr></tbody>
@@ -209,7 +203,7 @@ import * as TableModule from "$lib/components/Table/Table.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Hoverable</h3>
+  <h3>{m.table_ex_hoverable()}</h3>
   <ExampleTabs code={`<Table hoverable>
   <thead><tr><th>Task</th><th>Status</th></tr></thead>
   <tbody>
@@ -228,20 +222,17 @@ import * as TableModule from "$lib/components/Table/Table.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={TableModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Uses semantic HTML table elements (<code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, <code>&lt;th&gt;</code>, <code>&lt;td&gt;</code>).</li>
-    <li>Proper heading hierarchy with <code>&lt;th&gt;</code> elements.</li>
-    <li>Supports table captions for context.</li>
-    <li>Responsive design ensures usability on all devices.</li>
+    <li>{m.table_a11y_1_0()}<code>&lt;table&gt;</code>{m.table_a11y_1_1()}<code>&lt;thead&gt;</code>{m.table_a11y_1_2()}<code>&lt;tbody&gt;</code>{m.table_a11y_1_3()}<code>&lt;th&gt;</code>{m.table_a11y_1_4()}<code>&lt;td&gt;</code>{m.table_a11y_1_5()}</li>
+    <li>{m.table_a11y_2_0()}<code>&lt;th&gt;</code>{m.table_a11y_2_1()}</li>
+    <li>{m.table_a11y_3()}</li>
+    <li>{m.table_a11y_4()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
-  <p>
-    Table uses native HTML table elements. Browser default keyboard navigation
-    applies (Tab between cells, arrow keys within cells).
-  </p>
+  <h2>{m.sec_keyboard()}</h2>
+  <p>{m.table_kb_note()}</p>
 </Container>
