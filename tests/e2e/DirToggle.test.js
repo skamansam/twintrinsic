@@ -505,4 +505,18 @@ test.describe("Docs locale switcher", () => {
 
     await expect(page.getByText(/پنل محتوای یک زبانه درون/).first()).toBeVisible();
   });
+
+  test("translates the TreeMenu docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/TreeMenu/TreeMenu");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("TreeMenu");
+    await expect(page.locator("h2", { hasText: "Common Mistakes" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "اشتباهات رایج" })).toBeVisible();
+    await expect(page.getByText(/یک منوی سلسله‌مراتبی/).first()).toBeVisible();
+  });
 });
