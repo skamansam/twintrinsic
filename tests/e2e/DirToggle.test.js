@@ -425,4 +425,32 @@ test.describe("Docs locale switcher", () => {
     await expect(page.locator("h2", { hasText: "دسترس‌پذیری" })).toBeVisible();
     await expect(page.getByText(/یک زیرکامپوننت از/).first()).toBeVisible();
   });
+
+  test("translates the Menu docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Menu/Menu");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Menu");
+    await expect(page.locator("h2", { hasText: "Common Mistakes" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "اشتباهات رایج" })).toBeVisible();
+    await expect(page.getByText(/الگوی منوی WAI-ARIA/).first()).toBeVisible();
+  });
+
+  test("translates the MenuItem docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Menu/MenuItem");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("MenuItem");
+    await expect(page.locator("h2", { hasText: "Responsiveness" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
+    await expect(page.getByText(/یک مورد تکی درون/).first()).toBeVisible();
+  });
 });

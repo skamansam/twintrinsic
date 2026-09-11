@@ -11,6 +11,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as MenuModule from "$lib/components/Menu/Menu/Menu.svelte"
 import * as MenuItemModule from "$lib/components/Menu/Menu/MenuItem.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -18,81 +19,71 @@ import * as MenuItemModule from "$lib/components/Menu/Menu/MenuItem.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Menu</h1>
+  <h1>{m.menu_heading()}</h1>
 
   <p>
-    <strong>Menu</strong> displays a list of actions or options in a dropdown panel.
-    Uses <code>popover="auto"</code> for light-dismiss and top-layer stacking,
-    with CSS Anchor Positioning for viewport-aware placement.
+    <strong>{m.menu_heading()}</strong>{m.menu_intro_1()}<code>popover="auto"</code>{m.menu_intro_2()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.menu_what_1()}</p>
+
+  <h3>{m.sec_when()}</h3>
   <p>
-    A button that opens a dropdown menu containing clickable items. Items can
-    include icons, dividers, submenus, and keyboard shortcuts.
+    {m.menu_when_1()}<code>&lt;Menu&gt;</code>{m.menu_when_2()}<code>&lt;Select&gt;</code>{m.menu_when_3()}<code>&lt;Listbox&gt;</code>{m.menu_when_4()}
   </p>
 
-  <h3>When should I use it?</h3>
-  <p>
-    Use <code>&lt;Menu&gt;</code> for action menus (edit, delete, share),
-    context menus (right-click), or navigation menus (settings, account). For
-    value selection from a list, use <code>&lt;Select&gt;</code> or
-    <code>&lt;Listbox&gt;</code>.
-  </p>
-
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Popover API</strong> — light-dismiss, top-layer, and Esc-to-close with zero JS.</li>
-    <li><strong>WAI-ARIA menu pattern</strong> — arrow keys, Home/End, type-ahead, focus trapping.</li>
-    <li><strong>Rich content</strong> — items can have icons, descriptions, shortcuts, and submenus.</li>
+    <li><strong>{m.menu_why_popover()}</strong>{m.menu_why_popover_desc()}</li>
+    <li><strong>{m.menu_why_aria()}</strong>{m.menu_why_aria_desc()}</li>
+    <li><strong>{m.menu_why_rich()}</strong>{m.menu_why_rich_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/">WAI-ARIA APG — Menu Button</a></li>
     <li><a href="https://primer.style/product/components/ActionMenu">Primer — ActionMenu</a></li>
     <li><a href="https://m3.material.io/components/menus/overview">Material Design 3 — Menus</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
-<ul>
-    <li>Uses `popover=&quot;auto&quot;` for the menu panel — top-layer rendering with light-dismiss</li>
-    <li>CSS Anchor Positioning for tethering the menu to the trigger button</li>
-    <li>WAI-ARIA menu pattern: ArrowDown/Up navigate, Enter/Space activates, Escape closes</li>
-    <li>Nested submenus with proper focus management</li>
-</ul>
-
-<h2>Common Mistakes</h2>
-<ul>
-    <li>Don't use a `&lt;div&gt;` dropdown — `popover=&quot;auto&quot;` handles light-dismiss and z-index</li>
-    <li>Don't forget `aria-expanded` on the trigger button</li>
-</ul>
-
-<h2>Related Components</h2>
-<p>Dropdown, Combobox, TreeMenu</p>
-
-<h2>Responsiveness</h2>
+  <h2>{m.sec_implementation()}</h2>
   <ul>
-    <li>Dropdown opens in the top layer, so it doesn't clip on overflow.</li>
-    <li>Touch targets meet 44×44 px minimum.</li>
+    <li>{m.menu_impl_1()}<code>popover="auto"</code>{m.menu_impl_2()}</li>
+    <li>{m.menu_impl_3()}</li>
+    <li>{m.menu_impl_4()}<code>ArrowDown</code>/<code>ArrowUp</code>{m.menu_impl_5()}</li>
+    <li>{m.menu_impl_6()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_mistakes()}</h2>
   <ul>
-    <li>Trigger content via <code>trigger</code> snippet.</li>
-    <li>Menu content via <code>content</code> snippet.</li>
-    <li>Icons, dividers, disabled items, and submenus on each MenuItem.</li>
+    <li>{m.menu_mistake_1_1()}<code>popover="auto"</code>{m.menu_mistake_1_2()}</li>
+    <li>{m.menu_mistake_2_1()}<code>aria-expanded</code>{m.menu_mistake_2_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_related()}</h2>
+  <p>Dropdown, Combobox, TreeMenu</p>
 
-  <h3>Data-Driven Menu</h3>
+  <h2>{m.sec_responsiveness()}</h2>
+  <ul>
+    <li>{m.menu_responsive_1()}</li>
+    <li>{m.menu_responsive_2()}</li>
+  </ul>
+
+  <h2>{m.sec_customization()}</h2>
+  <ul>
+    <li>{m.menu_custom_1_1()}<code>trigger</code>{m.menu_custom_1_2()}</li>
+    <li>{m.menu_custom_2_1()}<code>content</code>{m.menu_custom_2_2()}</li>
+    <li>{m.menu_custom_3()}</li>
+  </ul>
+
+  <h2>{m.sec_examples()}</h2>
+
+  <h3>{m.menu_ex_datadriven()}</h3>
   <p>
-    Instead of using <code>&lt;MenuItem&gt;</code> sub-components, you can pass a flat
-    array of item objects. This is simpler for generated or dynamic menus.
+    {m.menu_ex_datadriven_desc_1()}<code>&lt;MenuItem&gt;</code>{m.menu_ex_datadriven_desc_2()}
   </p>
   <ExampleTabs code={`<Menu
   ariaLabel="Actions menu"
@@ -107,7 +98,7 @@ import * as MenuItemModule from "$lib/components/Menu/Menu/MenuItem.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Basic Menu</h3>
+  <h3>{m.menu_ex_basic()}</h3>
   <ExampleTabs code={`<Menu ariaLabel="Account menu">
   {#snippet trigger()}Account{/snippet}
   {#snippet content()}
@@ -128,7 +119,7 @@ import * as MenuItemModule from "$lib/components/Menu/Menu/MenuItem.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>With Dividers</h3>
+  <h3>{m.menu_ex_dividers()}</h3>
   <ExampleTabs code={`<Menu>
   {#snippet trigger()}Actions{/snippet}
   {#snippet content()}
@@ -149,7 +140,7 @@ import * as MenuItemModule from "$lib/components/Menu/Menu/MenuItem.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>With Icons</h3>
+  <h3>{m.menu_ex_icons()}</h3>
   <ExampleTabs code={`<Menu>
   {#snippet trigger()}User Menu{/snippet}
   {#snippet content()}
@@ -170,31 +161,31 @@ import * as MenuItemModule from "$lib/components/Menu/Menu/MenuItem.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={MenuModule} />
 
-  <h2>MenuItem Props</h2>
+  <h2>{m.menu_props_item()}</h2>
   <PropsTable component={MenuItemModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={MenuModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Uses <code>popover="auto"</code> for light-dismiss and top-layer.</li>
-    <li><code>role="menu"</code> on container, <code>role="menuitem"</code> on items.</li>
-    <li>Full keyboard navigation: arrows, Home/End, Enter/Space, Escape.</li>
-    <li>Focus trapping within the menu when open.</li>
+    <li>{m.menu_a11y_1_1()}<code>popover="auto"</code>{m.menu_a11y_1_2()}</li>
+    <li><code>role="menu"</code>{m.menu_a11y_2_1()}<code>role="menuitem"</code>{m.menu_a11y_2_2()}</li>
+    <li>{m.menu_a11y_3()}</li>
+    <li>{m.menu_a11y_4()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Open menu or select item</td></tr>
-      <tr><td><kbd>Arrow Up</kbd> / <kbd>Arrow Down</kbd></td><td>Navigate menu items</td></tr>
-      <tr><td><kbd>Escape</kbd></td><td>Close menu</td></tr>
-      <tr><td><kbd>Home</kbd> / <kbd>End</kbd></td><td>Jump to first/last item</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.menu_kb_1()}</td></tr>
+      <tr><td><kbd>Arrow Up</kbd> / <kbd>Arrow Down</kbd></td><td>{m.menu_kb_2()}</td></tr>
+      <tr><td><kbd>Escape</kbd></td><td>{m.menu_kb_3()}</td></tr>
+      <tr><td><kbd>Home</kbd> / <kbd>End</kbd></td><td>{m.menu_kb_4()}</td></tr>
     </tbody>
   </table>
 </Container>
