@@ -595,7 +595,7 @@ test.describe("Docs locale switcher", () => {
     await expect(
       page
         .getByText(
-          /محفظه‌ای برای مدیریت چندین компонент Chip با فاصله، چیدمان و وضعیت انتخاب یکسان\. از معناشناسی listbox برای گروه‌های قابل انتخاب دسترس‌پذیر پشتیبانی می‌کند\./,
+          /محفظه‌ای برای مدیریت چندین کامپوننت Chip با فاصله، چیدمان و وضعیت انتخاب یکسان\. از معناشناسی listbox برای گروه‌های قابل انتخاب دسترس‌پذیر پشتیبانی می‌کند\./,
         )
         .first(),
     ).toBeVisible();
@@ -654,7 +654,7 @@ test.describe("Docs locale switcher", () => {
     await expect(
       page
         .getByText(
-          /کомпонنتی مبتنی بر فهرست که عناصر را به ترتیب زمانی با اتصال‌دهنده‌های بصری \(خط و نقطه\) رندر می‌کند\. هر عنصر می‌تواند عنوان، تاریخ، گونه وضعیت و ناحیه محتوا داشته باشد\./,
+          /کامپوننتی مبتنی بر فهرست که عناصر را به ترتیب زمانی با اتصال‌دهنده‌های بصری \(خط و نقطه\) رندر می‌کند\. هر عنصر می‌تواند عنوان، تاریخ، گونه وضعیت و ناحیه محتوا داشته باشد\./,
         )
         .first(),
     ).toBeVisible();
@@ -695,6 +695,61 @@ test.describe("Docs locale switcher", () => {
       page
         .getByText(
           /یک اسلاید واحد درون Carousel\. هر CarouselItem یک پنل محتواست که می‌تواند تصویر، متن، کارت یا هر نشانه‌گذاری داشته باشد\. Carousel والد انتقال‌ها، ناوبری و وضعیت فعال را مدیریت می‌کند\./,
+        )
+        .first(),
+    ).toBeVisible();
+  });
+  test("translates the Progress docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Progress/Progress");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Progress");
+    await expect(page.locator("h2", { hasText: "Responsiveness" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
+    await expect(
+      page.getByText(/نشانگر پیشرفتی ساخته‌شده بر پایه عنصر بومی /).first(),
+    ).toBeVisible();
+  });
+
+  test("translates the Skeleton docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Skeleton/Skeleton");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Skeleton");
+    await expect(page.locator("h2", { hasText: "Responsiveness" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
+    await expect(
+      page
+        .getByText(
+          /کامپوننتی جای‌نگهدار که شکل محتوایی را که در هنگام بارگذاری جایگزین می‌کند تقلید می‌کند\. از انیمیشن درخشش برای نشان دادن ورود محتوا استفاده می‌کند و پیش از رسیدن داده واقعی، نشانه‌ای بصری از ساختار چیدمان به کاربر می‌دهد\./,
+        )
+        .first(),
+    ).toBeVisible();
+  });
+
+  test("translates the Map docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Map/Map");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Map");
+    await expect(page.locator("h2", { hasText: "Responsiveness" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
+    await expect(
+      page
+        .getByText(
+          /یک نقشه تعاملی مبتنی بر Leaflet با رندر کاشی‌محور، کنترل‌های بزرگ‌نمایی\/جابه‌جایی، نشانگرهای سفارشی و مدیریت رویداد\. از هر دو دستگاه مختصات جغرافیایی \(lat\/lng\) و پیکسلی \(CRS ساده\) برای نقشه‌های تصویری سفارشی پشتیبانی می‌کند\./,
         )
         .first(),
     ).toBeVisible();

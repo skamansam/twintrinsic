@@ -9,6 +9,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import MapComponent from "$lib/components/Map/Map.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as MapComponentModule from "$lib/components/Map/Map.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -16,39 +17,31 @@ import * as MapComponentModule from "$lib/components/Map/Map.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Map</h1>
+  <h1>{m.map_heading()}</h1>
 
   <p>
-    <strong>Map</strong> is an interactive map component built on
-    <a href="https://leafletjs.com/" target="_blank">Leaflet</a>, a lightweight JavaScript
-    library for mobile-friendly interactive maps.
+    <strong>{m.map_heading()}</strong>{m.map_intro_1()}<a href="https://leafletjs.com/" target="_blank">Leaflet</a>{m.map_intro_2()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.map_what_1()}</p>
+
+  <h3>{m.sec_when()}</h3>
   <p>
-    A Leaflet-powered interactive map with tile-based rendering, zoom/pan controls, custom
-    markers, and event handling. Supports both geographic (lat/lng) and pixel-based
-    (Simple CRS) coordinate systems for custom image maps.
+    {m.map_when_1()}<code>&lt;Map&gt;</code>{m.map_when_2()}
   </p>
 
-  <h3>When should I use it?</h3>
-  <p>
-    Use <code>&lt;Map&gt;</code> when you need to display geographic locations, store
-    finders, delivery tracking, or custom image overlays (game maps, floor plans).
-    For simple data visualization, consider chart components.
-  </p>
-
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Leaflet integration</strong> — battle-tested, lightweight mapping library.</li>
-    <li><strong>Custom CRS</strong> — pixel-based coordinates for custom image maps.</li>
-    <li><strong>Event system</strong> — click, zoom, and move handlers for interactivity.</li>
-    <li><strong>Tile providers</strong> — OpenStreetMap, CartoDB, and more.</li>
+    <li><strong>{m.map_why_leaflet()}</strong>{m.map_why_leaflet_desc()}</li>
+    <li><strong>{m.map_why_crs()}</strong>{m.map_why_crs_desc()}</li>
+    <li><strong>{m.map_why_events()}</strong>{m.map_why_events_desc()}</li>
+    <li><strong>{m.map_why_tiles()}</strong>{m.map_why_tiles_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://leafletjs.com/">Leaflet</a></li>
     <li><a href="https://leafletjs.com/reference-2.0.0.html">Leaflet API Reference</a></li>
@@ -57,50 +50,49 @@ import * as MapComponentModule from "$lib/components/Map/Map.svelte"
     <li><a href="https://carto.com/">CartoDB</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>Leaflet.js integration — lightweight, mobile-friendly</li>
-    <li>OpenStreetMap tiles by default</li>
-    <li>Kept as-is per user decision — too complex to replicate</li>
+  <li>{m.map_impl_1()}</li>
+  <li>{m.map_impl_2()}</li>
+  <li>{m.map_impl_3()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use `&lt;map&gt;` + `&lt;area&gt;` — those are for image maps, not interactive maps</li>
+  <li>{m.map_mistake_1_0()}<code>&lt;map&gt;</code>{m.map_mistake_1_1()}<code>&lt;area&gt;</code>{m.map_mistake_1_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Icon, CodeEditor</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.map_related_1()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Fills container width and height; set via parent CSS.</li>
-    <li>Touch gestures for pan and zoom on mobile.</li>
-    <li>Responsive tile loading.</li>
+    <li>{m.map_responsive_1()}</li>
+    <li>{m.map_responsive_2()}</li>
+    <li>{m.map_responsive_3()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li><code>center</code> — initial map center [lat, lng].</li>
-    <li><code>zoom</code> — initial zoom level.</li>
-    <li><code>tileUrl</code> — custom tile provider URL.</li>
-    <li><code>attribution</code> — custom attribution text.</li>
-    <li><code>zoomControl</code> / <code>attributionControl</code> — show/hide controls.</li>
-    <li><code>useSimpleCRS</code> — pixel-based coordinates for custom images.</li>
-    <li><code>customImage</code> / <code>imageWidth</code> / <code>imageHeight</code> — custom image map.</li>
+    <li><code>center</code>{m.map_custom_1_1()}</li>
+    <li><code>zoom</code>{m.map_custom_2_1()}</li>
+    <li><code>tileUrl</code>{m.map_custom_3_1()}</li>
+    <li><code>attribution</code>{m.map_custom_4_1()}</li>
+    <li><code>zoomControl</code>{m.map_custom_5_1()}<code>attributionControl</code>{m.map_custom_5_2()}</li>
+    <li><code>useSimpleCRS</code>{m.map_custom_6_1()}</li>
+    <li><code>customImage</code>{m.map_custom_7_1()}<code>imageWidth</code>{m.map_custom_7_2()}<code>imageHeight</code>{m.map_custom_7_3()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic Map</h3>
+  <h3>{m.map_ex_basic()}</h3>
   <ExampleTabs code={`<Map center={[-25.2637, -57.5759]} zoom={13} />`}>
     <div class="h-96 w-full rounded-lg border border-border" data-testid="map-basic">
       <MapComponent center={[-25.2637, -57.5759]} zoom={13} />
     </div>
   </ExampleTabs>
 
-  <h3>Custom Tile Layer</h3>
+  <h3>{m.map_ex_tiles()}</h3>
   <ExampleTabs code={`<Map
   center={[-25.2637, -57.5759]}
   zoom={13}
@@ -117,7 +109,7 @@ import * as MapComponentModule from "$lib/components/Map/Map.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Without Controls</h3>
+  <h3>{m.map_ex_nocontrols()}</h3>
   <ExampleTabs code={`<Map
   center={[-25.2637, -57.5759]}
   zoom={13}
@@ -129,8 +121,8 @@ import * as MapComponentModule from "$lib/components/Map/Map.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Custom Markers</h3>
-  <p>Add markers with tooltips and custom icons using the <code>markers</code> prop.</p>
+  <h3>{m.map_ex_markers()}</h3>
+  <p>{m.map_markers_note_1()}<code>markers</code>{m.map_markers_note_2()}</p>
   <ExampleTabs code={`<Map
   center={[51.505, -0.09]}
   zoom={12}
@@ -152,8 +144,8 @@ import * as MapComponentModule from "$lib/components/Map/Map.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Markers with Popups</h3>
-  <p>Pass a <code>popupContent</code> function to render rich popups on marker click.</p>
+  <h3>{m.map_ex_popups()}</h3>
+  <p>{m.map_popups_note_1()}<code>popupContent</code>{m.map_popups_note_2()}</p>
   <ExampleTabs code={`<Map
   center={[51.505, -0.09]}
   zoom={13}
@@ -174,8 +166,8 @@ import * as MapComponentModule from "$lib/components/Map/Map.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Image Map with CRS</h3>
-  <p>Use <code>customImage</code> with <code>useSimpleCRS</code> for pixel-based coordinates on custom images like game maps, floor plans, or diagrams.</p>
+  <h3>{m.map_ex_image()}</h3>
+  <p>{m.map_image_note_1()}<code>customImage</code>{m.map_image_note_2()}<code>useSimpleCRS</code>{m.map_image_note_3()}</p>
   <ExampleTabs code={`<Map
   customImage="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Sample_Of_Map.jpg/800px-Sample_Of_Map.jpg"
   imageWidth={800}
@@ -203,34 +195,34 @@ import * as MapComponentModule from "$lib/components/Map/Map.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={MapComponentModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={MapComponentModule} />
 
-  <h2>Tile Layer Providers</h2>
+  <h2>{m.map_tiles_heading()}</h2>
   <ul>
     <li><strong>OpenStreetMap</strong>: <code>https://&#123;s&#125;.tile.openstreetmap.org/&#123;z&#125;/&#123;x&#125;/&#123;y&#125;.png</code></li>
     <li><strong>CartoDB Light</strong>: <code>https://cartodb-basemaps-&#123;s&#125;.global.ssl.fastly.net/light_all/&#123;z&#125;/&#123;x&#125;/&#123;y&#125;.png</code></li>
     <li><strong>CartoDB Dark</strong>: <code>https://cartodb-basemaps-&#123;s&#125;.global.ssl.fastly.net/dark_all/&#123;z&#125;/&#123;x&#125;/&#123;y&#125;.png</code></li>
   </ul>
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Arrow keys to pan the map.</li>
-    <li><kbd>+</kbd> / <kbd>-</kbd> to zoom in and out.</li>
-    <li>Click on the map to interact with markers and popups.</li>
-    <li>Leaflet provides built-in keyboard navigation and screen reader support.</li>
+    <li>{m.map_a11y_1()}</li>
+    <li><kbd>+</kbd>{m.map_a11y_2_1()}<kbd>-</kbd>{m.map_a11y_2_2()}</li>
+    <li>{m.map_a11y_3()}</li>
+    <li>{m.map_a11y_4()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Arrow keys</kbd></td><td>Pan the map</td></tr>
-      <tr><td><kbd>+</kbd> / <kbd>-</kbd></td><td>Zoom in / out</td></tr>
-      <tr><td><kbd>Tab</kbd></td><td>Move focus to controls and markers</td></tr>
+      <tr><td><kbd>Arrow keys</kbd></td><td>{m.map_kb_1()}</td></tr>
+      <tr><td><kbd>+</kbd> / <kbd>-</kbd></td><td>{m.map_kb_2()}</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>{m.map_kb_3()}</td></tr>
     </tbody>
   </table>
 </Container>

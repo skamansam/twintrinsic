@@ -8,6 +8,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Skeleton from "$lib/components/Skeleton/Skeleton.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as SkeletonModule from "$lib/components/Skeleton/Skeleton.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -15,40 +16,31 @@ import * as SkeletonModule from "$lib/components/Skeleton/Skeleton.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Skeleton</h1>
+  <h1>{m.skeleton_heading()}</h1>
 
   <p>
-    <strong>Skeleton</strong> displays loading placeholders while content is being fetched.
-    It provides various shapes and sizes to match different content types and includes
-    smooth CSS-native animations via <code>@starting-style</code>.
+    <strong>{m.skeleton_heading()}</strong>{m.skeleton_intro_1()}<code>@starting-style</code>{m.skeleton_intro_2()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.skeleton_what_1()}</p>
+
+  <h3>{m.sec_when()}</h3>
   <p>
-    A placeholder component that mimics the shape of the content it replaces during loading.
-    It uses a shimmer animation to signal that content is incoming, giving users a visual
-    indication of layout structure before real data arrives.
+    {m.skeleton_when_1()}<code>&lt;Skeleton&gt;</code>{m.skeleton_when_2()}<code>&lt;Progress&gt;</code>{m.skeleton_when_3()}
   </p>
 
-  <h3>When should I use it?</h3>
-  <p>
-    Use <code>&lt;Skeleton&gt;</code> when content is loading asynchronously and you want
-    to preserve layout stability (no content shift). Combine multiple skeletons to match
-    the shape of cards, lists, or articles. For known-duration operations, use
-    <code>&lt;Progress&gt;</code> instead.
-  </p>
-
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Layout stability</strong> — prevents content shift (CLS) during loading.</li>
-    <li><strong>Perceived performance</strong> — users see structure instead of blank space.</li>
-    <li><strong>CSS-native animations</strong> — shimmer via <code>@starting-style</code> and CSS keyframes, no JS.</li>
-    <li><strong>Rendering performance</strong> — <code>content-visibility: auto</code> for off-screen skeletons.</li>
+    <li><strong>{m.skeleton_why_stability()}</strong>{m.skeleton_why_stability_desc()}</li>
+    <li><strong>{m.skeleton_why_perceived()}</strong>{m.skeleton_why_perceived_desc()}</li>
+    <li><strong>{m.skeleton_why_css()}</strong>{m.skeleton_why_css_desc_1()}<code>@starting-style</code>{m.skeleton_why_css_desc_2()}</li>
+    <li><strong>{m.skeleton_why_render()}</strong> — <code>content-visibility: auto</code>{m.skeleton_why_render_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/Performance/Cumulative_layout_shift">MDN — CLS</a></li>
     <li><a href="https://m3.material.io/components/skeleton/overview">Material Design 3 — Skeleton</a></li>
@@ -57,50 +49,49 @@ import * as SkeletonModule from "$lib/components/Skeleton/Skeleton.svelte"
     <li><a href="https://web.dev/articles/content-visibility">web.dev — content-visibility</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>CSS `@keyframes` shimmer animation with `@property` for gradient angle</li>
-    <li>`@starting-style` for smooth entry animation</li>
-    <li>`content-visibility: auto` for off-screen skeleton performance</li>
-    <li>`aria-busy=&quot;true&quot;` and `aria-live=&quot;polite&quot;` on the loading region</li>
-    <li>`transition-behavior: allow-discrete` for exit when content loads</li>
+  <li>{m.skeleton_impl_1_1()}<code>@keyframes</code>{m.skeleton_impl_1_2()}<code>@property</code>{m.skeleton_impl_1_3()}</li>
+  <li><code>@starting-style</code>{m.skeleton_impl_2_1()}</li>
+  <li><code>content-visibility: auto</code>{m.skeleton_impl_3_1()}</li>
+  <li><code>aria-busy=&quot;true&quot;</code>{m.skeleton_impl_4_1()}<code>aria-live=&quot;polite&quot;</code>{m.skeleton_impl_4_2()}</li>
+  <li><code>transition-behavior: allow-discrete</code>{m.skeleton_impl_5_1()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use spinners for layout-heavy content — skeletons show structure</li>
-    <li>Don't forget `aria-busy=&quot;true&quot;` — screen readers need loading state</li>
+  <li>{m.skeleton_mistake_1()}</li>
+  <li>{m.skeleton_mistake_2_0()}<code>aria-busy=&quot;true&quot;</code>{m.skeleton_mistake_2_1()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Progress, Lazy, Toast</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.skeleton_related_1()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Width defaults to <code>100%</code>, filling its container.</li>
-    <li>Circle variant uses a fixed <code>size</code> prop (48px default).</li>
-    <li>Text variant auto-wraps to container width.</li>
+    <li>{m.skeleton_responsive_1_0()}<code>100%</code>{m.skeleton_responsive_1_1()}</li>
+    <li>{m.skeleton_responsive_2_0()}<code>size</code>{m.skeleton_responsive_2_1()}</li>
+    <li>{m.skeleton_responsive_3()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li>Variants: <code>text</code>, <code>rectangle</code>, <code>circle</code>, <code>rounded</code>.</li>
-    <li>Custom width, height, and border radius.</li>
-    <li>Multi-line text via <code>lines</code> prop.</li>
-    <li>Disable animation with <code>animated={false}</code>.</li>
+    <li>{m.skeleton_custom_1_1()}<code>text</code>{m.skeleton_custom_1_2()}<code>rectangle</code>{m.skeleton_custom_1_3()}<code>circle</code>{m.skeleton_custom_1_4()}<code>rounded</code>{m.skeleton_custom_1_5()}</li>
+    <li>{m.skeleton_custom_2()}</li>
+    <li>{m.skeleton_custom_3_0()}<code>lines</code>{m.skeleton_custom_3_1()}</li>
+    <li>{m.skeleton_custom_4_0()}<code>animated=&#123;false&#125;</code>{m.skeleton_custom_4_1()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic Skeleton</h3>
+  <h3>{m.skeleton_ex_basic()}</h3>
   <ExampleTabs code={`<Skeleton width="100%" height="20px" />`}>
     <div data-testid="skeleton-basic">
       <Skeleton width="100%" height="20px" />
     </div>
   </ExampleTabs>
 
-  <h3>Variants</h3>
+  <h3>{m.skeleton_ex_variants()}</h3>
   <ExampleTabs code={`<Skeleton variant="rectangle" width="100%" height="100px" />
 <Skeleton variant="circle" size="48px" />
 <Skeleton variant="rounded" width="100%" height="60px" />
@@ -125,14 +116,14 @@ import * as SkeletonModule from "$lib/components/Skeleton/Skeleton.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Multi-Line Text</h3>
+  <h3>{m.skeleton_ex_multiline()}</h3>
   <ExampleTabs code={`<Skeleton variant="text" lines={3} />`}>
     <div data-testid="skeleton-multi-line">
       <Skeleton variant="text" lines={3} />
     </div>
   </ExampleTabs>
 
-  <h3>Loading Pattern (Card)</h3>
+  <h3>{m.skeleton_ex_pattern()}</h3>
   <ExampleTabs code={`<div class="flex gap-4">
   <Skeleton variant="circle" size="48px" />
   <div class="flex-1">
@@ -149,27 +140,24 @@ import * as SkeletonModule from "$lib/components/Skeleton/Skeleton.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Static (No Animation)</h3>
+  <h3>{m.skeleton_ex_static()}</h3>
   <ExampleTabs code={`<Skeleton width="100%" height="20px" animated={false} />`}>
     <div data-testid="skeleton-static">
       <Skeleton width="100%" height="20px" animated={false} />
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={SkeletonModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Uses <code>role="status"</code> to announce loading state to screen readers.</li>
-    <li>Includes <code>aria-label</code> to describe what is loading.</li>
-    <li>Provides visually hidden text for screen reader users.</li>
-    <li>Skeleton elements are marked with <code>aria-hidden="true"</code> when appropriate.</li>
+    <li>{m.skeleton_a11y_1_0()}<code>role="status"</code>{m.skeleton_a11y_1_1()}</li>
+    <li>{m.skeleton_a11y_2_0()}<code>aria-label</code>{m.skeleton_a11y_2_1()}</li>
+    <li>{m.skeleton_a11y_3()}</li>
+    <li>{m.skeleton_a11y_4_0()}<code>aria-hidden="true"</code>{m.skeleton_a11y_4_1()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
-  <p>
-    The Skeleton component is a static display element and does not require keyboard
-    interaction. It communicates loading state to assistive technology via ARIA attributes.
-  </p>
+  <h2>{m.sec_keyboard()}</h2>
+  <p>{m.skeleton_kb_note()}</p>
 </Container>
