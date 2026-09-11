@@ -236,4 +236,21 @@ test.describe("Docs locale switcher", () => {
     await expect(page.locator("h2", { hasText: "اسلات‌ها" })).toBeVisible();
     await expect(page.getByText(/اسکلت صفحه/).first()).toBeVisible();
   });
+
+  test("translates the BottomBar docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/BottomBar/BottomBar");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("BottomBar");
+    await expect(page.locator("h2", { hasText: "Responsiveness" })).toBeVisible();
+    await expect(page.locator("h2", { hasText: "Accessibility" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("نوار پایین");
+    await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
+    await expect(page.locator("h2", { hasText: "پشتیبانی صفحه‌کلید" })).toBeVisible();
+    await expect(page.getByText(/کارآمدی فضا/)).toBeVisible();
+  });
 });

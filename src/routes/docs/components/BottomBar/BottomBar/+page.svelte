@@ -7,6 +7,7 @@ import Button from "$lib/components/Button/Button.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as BottomBarModule from "$lib/components/BottomBar/BottomBar.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 let showExamples = $state(false)
 let barVisible = $state(true)
@@ -24,45 +25,34 @@ BottomBar documentation page — standardized structure
   @reference '$lib/twintrinsic.css';
 </style>
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>BottomBar</h1>
+  <h1>{m.bottombar_heading()}</h1>
 
   <!-- ─── Description ───────────────────────────────────── -->
   <p>
-    <strong>BottomBar</strong> is a bar that attaches to the bottom of its parent
-    container. It is ideal for mobile app bars, media player controls, console output,
-    detail panels, or any content that should be on hand but not always on screen.
+    <strong>{m.bottombar_heading()}</strong>{m.bottombar_intro_1()}
   </p>
 
   <!-- ─── What / When / Why ─────────────────────────────── -->
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A bar anchored to the bottom edge of its parent. Its visibility is driven by the
-    <code>expanded</code> prop, so another component's UX (a mobile menu button, a
-    “show console” action, media playback state) decides when it appears. Set
-    <code>collapsible</code> to let the header itself slide the bar down to a small
-    handle and back.
+    {m.bottombar_what_1()}<code>expanded</code>{m.bottombar_what_2()}<code>collapsible</code>{m.bottombar_what_3()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use BottomBar for content that should be available on demand: a mobile app bar that
-    appears when a menu opens, terminal/console output, media player controls, meeting
-    control bars, or a collapsible detail panel in an editor.
+    {m.bottombar_when_1()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Space efficiency</strong> — secondary content stays off screen until
-      needed, maximizing the main content area.</li>
-    <li><strong>Thumb zones</strong> — on mobile, bottom-anchored controls are in the
-      natural thumb reach zone (Steven Hoober research).</li>
-    <li><strong>Platform familiarity</strong> — bottom sheets and control bars are
-      standard mobile UI patterns users already know.</li>
+    <li><strong>{m.bottombar_why_space()}</strong> — {m.bottombar_why_space_desc()}</li>
+    <li><strong>{m.bottombar_why_thumb()}</strong> — {m.bottombar_why_thumb_desc()}</li>
+    <li><strong>{m.bottombar_why_platform()}</strong> — {m.bottombar_why_platform_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://m3.material.io/components/bottom-sheets/overview">Material Design 3 — Bottom sheets</a></li>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/">WAI-ARIA APG — Landmarks</a></li>
@@ -70,35 +60,35 @@ BottomBar documentation page — standardized structure
   </ul>
 
   <!-- ─── Responsiveness ────────────────────────────────── -->
-  <h2>Responsiveness</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li><strong>Desktop</strong> — bottom bar sits at the bottom of its parent container.</li>
-    <li><strong>Mobile</strong> — provides two modes:
+    <li><strong>{m.bottombar_responsive_desktop()}</strong>{m.bottombar_responsive_1()}</li>
+    <li><strong>{m.bottombar_responsive_mobile()}</strong>{m.bottombar_responsive_2()}
       <ul>
-        <li><strong>Float mode</strong> (default) — slides up as an overlay with a backdrop.</li>
-        <li><strong>Inline mode</strong> — pushes content up, taking full width.</li>
+        <li><strong>{m.bottombar_responsive_float()}</strong>{m.bottombar_responsive_3()}</li>
+        <li><strong>{m.bottombar_responsive_inline()}</strong>{m.bottombar_responsive_4()}</li>
       </ul>
     </li>
-    <li>Touch targets meet 44×44 px minimum for mobile tap areas.</li>
+    <li>{m.bottombar_responsive_5()}</li>
   </ul>
 
   <!-- ─── Customization ─────────────────────────────────── -->
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li>Custom header via the <code>header</code> snippet (text, icons, or any markup).</li>
-    <li>Show/hide from another component via the <code>expanded</code> prop.</li>
-    <li>Let users collapse the bar to a small handle via <code>collapsible</code>.</li>
-    <li>Set the bar height via the <code>height</code> prop.</li>
-    <li>Theme colors, borders, and spacing controlled by the Tailwind theme.</li>
-    <li>Pass additional CSS classes via the <code>class</code> prop.</li>
+    <li>{m.bottombar_custom_1_1()}<code>header</code>{m.bottombar_custom_1_2()}</li>
+    <li>{m.bottombar_custom_2_1()}<code>expanded</code>{m.bottombar_custom_2_2()}</li>
+    <li>{m.bottombar_custom_3_1()}<code>collapsible</code>{m.bottombar_custom_3_2()}</li>
+    <li>{m.bottombar_custom_4_1()}<code>height</code>{m.bottombar_custom_4_2()}</li>
+    <li>{m.bottombar_custom_5()}</li>
+    <li>{m.bottombar_custom_6_1()}<code>class</code>{m.bottombar_custom_6_2()}</li>
   </ul>
 
   <!-- ─── Examples ──────────────────────────────────────── -->
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
   <!-- 1. Basic BottomBar -->
-  <h3>Basic BottomBar</h3>
-  <p>A simple collapsible detail panel anchored to the bottom. Click the header to toggle.</p>
+  <h3>{m.bottombar_ex_basic()}</h3>
+  <p>{m.bottombar_ex_basic_desc()}</p>
   <ExampleTabs code={`<BottomBar height="14rem" collapsible>
   {#snippet header()}Details{/snippet}
   <div class="p-4">
@@ -128,12 +118,9 @@ BottomBar documentation page — standardized structure
   </ExampleTabs>
 
   <!-- 2. Controlled Visibility -->
-  <h3>Controlled Visibility</h3>
+  <h3>{m.bottombar_ex_controlled()}</h3>
   <p>
-    The bar's visibility is driven by the <code>expanded</code> prop, so another
-    component's UX (a menu button, a “show console” action) can show and hide it.
-    Because the bar is <code>collapsible={false}</code> here, the header does not
-    toggle it — the external button is the only control.
+    {m.bottombar_ex_controlled_desc_1()}<code>expanded</code>{m.bottombar_ex_controlled_desc_2()}<code>collapsible=&#123;false&#125;</code>{m.bottombar_ex_controlled_desc_3()}
   </p>
   <ExampleTabs code={`<script>
   let visible = true
@@ -171,8 +158,8 @@ BottomBar documentation page — standardized structure
   </ExampleTabs>
 
   <!-- 3. Menu Items -->
-  <h3>Menu Items</h3>
-  <p>A bottom bar with navigation menu items, similar to mobile tab bars.</p>
+  <h3>{m.bottombar_ex_menu()}</h3>
+  <p>{m.bottombar_ex_menu_desc()}</p>
   <ExampleTabs code={`<BottomBar height="auto" expanded={false}>
   {#snippet header()}
     <span class="text-sm font-medium">Menu</span>
@@ -218,8 +205,8 @@ BottomBar documentation page — standardized structure
   </ExampleTabs>
 
   <!-- 3. Console Panel -->
-  <h3>Console Panel</h3>
-  <p>A developer console with color-coded output lines and a fixed height.</p>
+  <h3>{m.bottombar_ex_console()}</h3>
+  <p>{m.bottombar_ex_console_desc()}</p>
   <ExampleTabs code={`<BottomBar height="16rem">
   {#snippet header()}
     <div class="flex items-center gap-2">
@@ -261,8 +248,8 @@ BottomBar documentation page — standardized structure
   </ExampleTabs>
 
   <!-- 4. Meeting Control Bar -->
-  <h3>Meeting Control Bar</h3>
-  <p>A meeting/video call control bar with action buttons, similar to Zoom or Teams.</p>
+  <h3>{m.bottombar_ex_meeting()}</h3>
+  <p>{m.bottombar_ex_meeting_desc()}</p>
   <ExampleTabs code={`<BottomBar height="auto" expanded={true}>
   {#snippet header()}
     <span class="text-sm font-medium">Meeting Controls</span>
@@ -314,8 +301,8 @@ BottomBar documentation page — standardized structure
   </ExampleTabs>
 
   <!-- 5. Video Player Controls -->
-  <h3>Video Player Controls</h3>
-  <p>Overlay controls for a video player with play/pause, progress, and volume.</p>
+  <h3>{m.bottombar_ex_video()}</h3>
+  <p>{m.bottombar_ex_video_desc()}</p>
   <ExampleTabs code={`<BottomBar height="auto" expanded={true}>
   {#snippet header()}
     <span class="text-sm font-medium">Video Player</span>
@@ -367,8 +354,8 @@ BottomBar documentation page — standardized structure
   </ExampleTabs>
 
   <!-- 6. Card with Bottom Bar -->
-  <h3>Card with Bottom Bar</h3>
-  <p>A card layout where the bottom bar reveals additional card actions or metadata.</p>
+  <h3>{m.bottombar_ex_card()}</h3>
+  <p>{m.bottombar_ex_card_desc()}</p>
   <ExampleTabs code={`<div class="border border-border rounded-lg overflow-hidden">
   <div class="p-4">
     <h3 class="text-lg font-semibold">Project Alpha</h3>
@@ -406,48 +393,43 @@ BottomBar documentation page — standardized structure
   </ExampleTabs>
 
   <!-- ─── Slots ─────────────────────────────────────────── -->
-  <h2>Slots</h2>
+  <h2>{m.sec_slots()}</h2>
   <table>
     <thead>
-      <tr><th>Slot</th><th>Description</th></tr>
+      <tr><th>{m.sec_slot()}</th><th>{m.sec_description()}</th></tr>
     </thead>
     <tbody>
-      <tr><td><code>header</code></td><td>Content for the bottom bar header row</td></tr>
-      <tr><td><code>default</code></td><td>Main content of the bottom bar</td></tr>
+      <tr><td><code>header</code></td><td>{m.bottombar_slot_header()}</td></tr>
+      <tr><td><code>default</code></td><td>{m.bottombar_slot_default()}</td></tr>
     </tbody>
   </table>
 
   <!-- ─── Props ─────────────────────────────────────────── -->
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={BottomBarModule} />
 
   <!-- ─── Events ────────────────────────────────────────── -->
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={BottomBarModule} />
 
   <!-- ─── Accessibility ─────────────────────────────────── -->
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Uses <code>role="complementary"</code> for the container and
-      <code>role="region"</code> for the content area.</li>
-    <li>When <code>collapsible</code>, the header toggle uses
-      <code>aria-expanded</code> to communicate state, and the collapsed state
-      keeps a small, labeled handle (<code>aria-label="Expand …"</code>) so the
-      bar can always be reopened with the mouse or keyboard.</li>
-    <li>Keyboard: Enter/Space on the header toggles a collapsible bar; Escape
-      collapses it; Tab reaches the expand handle when collapsed.</li>
+    <li>{m.bottombar_a11y_1_1()}<code>role="complementary"</code>{m.bottombar_a11y_1_2()}<code>role="region"</code>{m.bottombar_a11y_1_3()}</li>
+    <li>{m.bottombar_a11y_2_1()}<code>collapsible</code>{m.bottombar_a11y_2_2()}<code>aria-expanded</code>{m.bottombar_a11y_2_3()}<code>aria-label="Expand …"</code>{m.bottombar_a11y_2_4()}</li>
+    <li>{m.bottombar_a11y_3()}</li>
   </ul>
 
   <!-- ─── Keyboard Support ──────────────────────────────── -->
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
     <thead>
-      <tr><th>Key</th><th>Function</th></tr>
+      <tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr>
     </thead>
     <tbody>
-      <tr><td><kbd>Tab</kbd></td><td>Moves focus through interactive elements in the panel</td></tr>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>On the header of a <code>collapsible</code> bar, toggles open/closed</td></tr>
-      <tr><td><kbd>Escape</kbd></td><td>Collapses a <code>collapsible</code> bar (visibility of non-collapsible bars is prop-driven)</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>{m.bottombar_kb_1()}</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.bottombar_kb_2_1()}<code>collapsible</code>{m.bottombar_kb_2_2()}</td></tr>
+      <tr><td><kbd>Escape</kbd></td><td>{m.bottombar_kb_3_1()}<code>collapsible</code>{m.bottombar_kb_3_2()}</td></tr>
     </tbody>
   </table>
 </Container>
