@@ -7,6 +7,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as ContainerModule from "$lib/components/Container/Container.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -14,39 +15,32 @@ import * as ContainerModule from "$lib/components/Container/Container.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Container</h1>
+  <h1>{m.container_heading()}</h1>
 
   <p>
-    <strong>Container</strong> is a fundamental layout component that provides consistent
-    padding and width constraints. It is designed to work seamlessly with Tailwind's
-    responsive breakpoints and supports both fixed-width and fluid layouts.
+    <strong>{m.container_heading()}</strong>{m.container_intro_1()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A polymorphic layout wrapper that renders as a semantic HTML element
-    (<code>&lt;section&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>,
-    etc.) with responsive max-width constraints and padding. It is the foundation for page
-    structure and section layout.
+    {m.container_what_1()}<code>&lt;section&gt;</code>{m.container_what_2()}<code>&lt;main&gt;</code>{m.container_what_3()}<code>&lt;article&gt;</code>{m.container_what_4()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use <code>&lt;Container&gt;</code> to wrap page sections, control max-width, and add
-    responsive padding. For self-contained content units (blog posts, product cards), use
-    <code>&lt;Card&gt;</code>. For collapsible sections, use <code>&lt;Panel&gt;</code>.
+    {m.container_when_1()}<code>&lt;Container&gt;</code>{m.container_when_2()}<code>&lt;Card&gt;</code>{m.container_when_3()}<code>&lt;Panel&gt;</code>{m.container_when_4()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Consistent spacing</strong> — responsive padding across all breakpoints.</li>
-    <li><strong>Polymorphic element</strong> — render as <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, etc. for correct semantics.</li>
-    <li><strong>Fluid option</strong> — <code>fluid</code> mode for full-width layouts.</li>
+    <li><strong>{m.container_why_spacing()}</strong> — {m.container_why_spacing_desc()}</li>
+    <li><strong>{m.container_why_polymorphic()}</strong> — {m.container_why_poly_desc_1()}<code>&lt;main&gt;</code>{m.container_why_poly_desc_2()}<code>&lt;section&gt;</code>{m.container_why_poly_desc_3()}</li>
+    <li><strong>{m.container_why_fluid()}</strong> — <code>fluid</code>{m.container_why_fluid_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://tailwindcss.com/docs/container">Tailwind CSS — Container</a></li>
     <li><a href="https://primer.style/components/box">Primer — Box</a></li>
@@ -55,40 +49,39 @@ import * as ContainerModule from "$lib/components/Container/Container.svelte"
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/section">MDN — &lt;section&gt;</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
-<ul>
-    <li>Container: CSS Container Queries (`container-type: inline-size`) for responsive child styling</li>
-    <li>Section: `&lt;section&gt;` semantic element with heading</li>
-    <li>Panel: `&lt;div&gt;` with `role=&quot;region&quot;` and `aria-label` if it's a landmark</li>
-    <li>`...rest` spread for native attributes</li>
-</ul>
-
-<h2>Common Mistakes</h2>
-<ul>
-    <li>Don't use `&lt;div&gt;` for Section — `&lt;section&gt;` is the correct semantic element</li>
-    <li>Don't forget `&lt;section&gt;` needs a heading for proper semantics</li>
-</ul>
-
-<h2>Related Components</h2>
-<p>Card, App, Container</p>
-
-<h2>Responsiveness</h2>
+  <h2>{m.sec_implementation()}</h2>
   <ul>
-    <li>Standard mode uses Tailwind's <code>container</code> class with responsive padding (<code>px-4</code> → <code>px-6</code> → <code>px-8</code>).</li>
-    <li>Fluid mode is full-width with no max-width constraint.</li>
+    <li>{m.container_impl_1()}</li>
+    <li>{m.container_impl_2()}</li>
+    <li>{m.container_impl_3()}</li>
+    <li>{m.container_impl_4()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_mistakes()}</h2>
   <ul>
-    <li><code>as</code> prop: <code>"section"</code>, <code>"main"</code>, <code>"article"</code>, <code>"div"</code>, <code>"header"</code>, <code>"footer"</code>, <code>"nav"</code>, <code>"aside"</code>.</li>
-    <li><code>fluid</code> for full-width layouts.</li>
-    <li><code>role</code> and <code>ariaLabel</code> for accessibility.</li>
+    <li>{m.container_mistake_1()}</li>
+    <li>{m.container_mistake_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_related()}</h2>
+  <p>Card, App, Section</p>
 
-  <h3>Basic Container</h3>
+  <h2>{m.sec_responsiveness()}</h2>
+  <ul>
+    <li>{m.container_responsive_1()}</li>
+    <li>{m.container_responsive_2()}</li>
+  </ul>
+
+  <h2>{m.sec_customization()}</h2>
+  <ul>
+    <li><code>as</code>{m.container_custom_1_1()}{m.container_custom_1_2()}</li>
+    <li><code>fluid</code>{m.container_custom_2()}</li>
+    <li><code>role</code>{m.container_custom_3_1()}<code>ariaLabel</code>{m.container_custom_3_2()}</li>
+  </ul>
+
+  <h2>{m.sec_examples()}</h2>
+
+  <h3>{m.container_ex_basic()}</h3>
   <ExampleTabs code={`<Container class="bg-surface p-4">
   <div class="bg-primary-100 dark:bg-primary-800 p-4 rounded">
     <p>Content in a basic container</p>
@@ -103,7 +96,7 @@ import * as ContainerModule from "$lib/components/Container/Container.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Fluid Container</h3>
+  <h3>{m.container_ex_fluid()}</h3>
   <ExampleTabs code={`<Container fluid class="bg-surface p-4">
   <div class="bg-primary-100 dark:bg-primary-800 p-4 rounded">
     <p>Content in a fluid container</p>
@@ -118,7 +111,7 @@ import * as ContainerModule from "$lib/components/Container/Container.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Semantic Element</h3>
+  <h3>{m.container_ex_semantic()}</h3>
   <ExampleTabs code={`<Container as="main" role="main" ariaLabel="Main content">
   <!-- Content -->
 </Container>`}>
@@ -129,28 +122,28 @@ import * as ContainerModule from "$lib/components/Container/Container.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>When to Use Container vs Card vs Panel</h2>
+  <h2>{m.container_compare_heading()}</h2>
   <table>
-    <thead><tr><th>Component</th><th>Use When</th><th>HTML Element</th></tr></thead>
+    <thead><tr><th>{m.container_compare_component()}</th><th>{m.container_compare_when()}</th><th>{m.container_compare_el()}</th></tr></thead>
     <tbody>
-      <tr><td><strong>Container</strong></td><td>Page/section layout structure with responsive max-width</td><td><code>&lt;div&gt;</code> / semantic</td></tr>
-      <tr><td><strong>Card</strong></td><td>Self-contained, reusable content (blog post, product listing)</td><td><code>&lt;article&gt;</code></td></tr>
-      <tr><td><strong>Panel</strong></td><td>Collapsible/expandable content (FAQ, settings)</td><td><code>&lt;details&gt;</code></td></tr>
+      <tr><td><strong>Container</strong></td><td>{m.container_compare_container()}</td><td><code>&lt;div&gt;</code> / semantic</td></tr>
+      <tr><td><strong>Card</strong></td><td>{m.container_compare_card()}</td><td><code>&lt;article&gt;</code></td></tr>
+      <tr><td><strong>Panel</strong></td><td>{m.container_compare_panel()}</td><td><code>&lt;details&gt;</code></td></tr>
     </tbody>
   </table>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={ContainerModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Use the <code>as</code> prop to render the correct semantic element (<code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, etc.).</li>
-    <li>Add <code>role</code> and <code>ariaLabel</code> when the element alone doesn't convey semantics.</li>
-    <li>Container is a layout-only wrapper; use semantic elements inside it.</li>
+    <li>{m.container_a11y_1_1()}<code>as</code>{m.container_a11y_1_2()}<code>&lt;main&gt;</code>{m.container_a11y_1_3()}<code>&lt;section&gt;</code>{m.container_a11y_1_4()}</li>
+    <li>{m.container_a11y_2_1()}<code>role</code>{m.container_a11y_2_2()}<code>ariaLabel</code>{m.container_a11y_2_3()}</li>
+    <li>{m.container_a11y_3()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <p>
-    Container is a layout-only element and does not require keyboard interaction.
+    {m.container_kb_1()}
   </p>
 </Container>

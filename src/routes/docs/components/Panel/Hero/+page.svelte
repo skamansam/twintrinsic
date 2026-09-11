@@ -8,6 +8,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Hero from "$lib/components/Panel/Hero/Hero.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as HeroModule from "$lib/components/Panel/Hero/Hero.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -15,38 +16,32 @@ import * as HeroModule from "$lib/components/Panel/Hero/Hero.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Hero</h1>
+  <h1>{m.hero_heading()}</h1>
 
   <p>
-    <strong>Hero</strong> is a themed hero section for landing pages and page headers. It
-    accepts a heading snippet and body content, mapping a <code>type</code> prop to a
-    <code>bg-&#123;type&#125;</code> theme background.
+    <strong>{m.hero_heading()}</strong>{m.hero_intro_1()}<code>type</code>{m.hero_intro_2()}<code>bg-&#123;type&#125;</code>{m.hero_intro_3()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A full-width banner section with a heading and body area, used at the top of pages
-    or sections. Renders a semantic <code>&lt;section&gt;</code> landmark via the
-    <code>&lt;Container&gt;</code> component.
+    {m.hero_what_1()}<code>&lt;section&gt;</code>{m.hero_what_2()}<code>&lt;Container&gt;</code>{m.hero_what_3()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use <code>&lt;Hero&gt;</code> for prominent page headers, landing page banners, or
-    section introductions. For regular page sections with titles, use
-    <code>&lt;Section&gt;</code>.
+    {m.hero_when_1()}<code>&lt;Hero&gt;</code>{m.hero_when_2()}<code>&lt;Section&gt;</code>{m.hero_when_3()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Visual prominence</strong> — themed backgrounds draw attention.</li>
-    <li><strong>Semantic structure</strong> — renders as <code>&lt;section&gt;</code> landmark.</li>
-    <li><strong>Theme integration</strong> — maps to the Twintrinsic color system.</li>
+    <li><strong>{m.hero_why_prominence()}</strong> — {m.hero_why_prominence_desc()}</li>
+    <li><strong>{m.hero_why_semantic()}</strong> — {m.hero_why_semantic_desc_1()}<code>&lt;section&gt;</code>{m.hero_why_semantic_desc_2()}</li>
+    <li><strong>{m.hero_why_theme()}</strong> — {m.hero_why_theme_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/section">MDN — &lt;section&gt;</a></li>
     <li><a href="https://m3.material.io/styles/typography/overview">Material Design 3 — Typography</a></li>
@@ -55,40 +50,39 @@ import * as HeroModule from "$lib/components/Panel/Hero/Hero.svelte"
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/">WAI-ARIA APG — Landmarks</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
-<ul>
-    <li>`&lt;header&gt;` or `&lt;section&gt;` as root with heading</li>
-    <li>CTA button should be the first focusable element</li>
-    <li>Background images with sufficient contrast (WCAG AA)</li>
-    <li>Responsive layout with CSS Grid or Flexbox</li>
-</ul>
-
-<h2>Common Mistakes</h2>
-<ul>
-    <li>Don't use `&lt;div&gt;` — `&lt;header&gt;` or `&lt;section&gt;` is correct for landmark semantics</li>
-    <li>Don't forget to check color contrast on text over background images</li>
-</ul>
-
-<h2>Related Components</h2>
-<p>AppHeader, Card, Container</p>
-
-<h2>Responsiveness</h2>
+  <h2>{m.sec_implementation()}</h2>
   <ul>
-    <li>Full-width by default; padding comes from the inner Container.</li>
-    <li>Heading text scales naturally within the document flow.</li>
+    <li>{m.hero_impl_1()}</li>
+    <li>{m.hero_impl_2()}</li>
+    <li>{m.hero_impl_3()}</li>
+    <li>{m.hero_impl_4()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_mistakes()}</h2>
   <ul>
-    <li><code>type</code> — maps to a <code>bg-&#123;type&#125;</code> theme color (e.g. <code>"primary"</code>).</li>
-    <li><code>heading</code> snippet for custom heading content.</li>
-    <li>Custom CSS classes via <code>class</code> prop.</li>
+    <li>{m.hero_mistake_1()}</li>
+    <li>{m.hero_mistake_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_related()}</h2>
+  <p>AppHeader, Card, Container</p>
 
-  <h3>Basic Hero</h3>
+  <h2>{m.sec_responsiveness()}</h2>
+  <ul>
+    <li>{m.hero_responsive_1()}</li>
+    <li>{m.hero_responsive_2()}</li>
+  </ul>
+
+  <h2>{m.sec_customization()}</h2>
+  <ul>
+    <li><code>type</code>{m.hero_custom_1_1()}<code>bg-&#123;type&#125;</code>{m.hero_custom_1_2()}<code>"primary"</code>{m.hero_custom_1_3()}</li>
+    <li><code>heading</code>{m.hero_custom_2()}</li>
+    <li>{m.hero_custom_3_1()}<code>class</code>{m.hero_custom_3_2()}</li>
+  </ul>
+
+  <h2>{m.sec_examples()}</h2>
+
+  <h3>{m.hero_ex_basic()}</h3>
   <ExampleTabs code={`<Hero>
   {#snippet heading()}
     <h1>Welcome to Twintrinsic</h1>
@@ -105,7 +99,7 @@ import * as HeroModule from "$lib/components/Panel/Hero/Hero.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Custom Background</h3>
+  <h3>{m.hero_ex_type()}</h3>
   <ExampleTabs code={`<Hero type="primary">
   {#snippet heading()}
     <h1>Highlighted Hero</h1>
@@ -120,17 +114,17 @@ import * as HeroModule from "$lib/components/Panel/Hero/Hero.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={HeroModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Renders a semantic <code>&lt;section&gt;</code> landmark.</li>
-    <li>Extra attributes are forwarded to the root element for ARIA wiring.</li>
+    <li>{m.hero_a11y_1_1()}<code>&lt;section&gt;</code>{m.hero_a11y_1_2()}</li>
+    <li>{m.hero_a11y_2()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <p>
-    Hero is a layout-only element and does not require keyboard interaction.
+    {m.hero_kb_1()}
   </p>
 </Container>

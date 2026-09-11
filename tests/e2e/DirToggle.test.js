@@ -285,4 +285,60 @@ test.describe("Docs locale switcher", () => {
     await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
     await expect(page.getByText(/زیرکامپوننت/).first()).toBeVisible();
   });
+
+  test("translates the Container docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Container/Container");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Container");
+    await expect(page.locator("h2", { hasText: "Twintrinsic Implementation" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
+    await expect(page.getByText(/چندشکلی/).first()).toBeVisible();
+  });
+
+  test("translates the Section docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Section/Section");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Section");
+    await expect(page.locator("h2", { hasText: "Accessibility" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "دسترس‌پذیری" })).toBeVisible();
+    await expect(page.getByText(/زیرعنوان/).first()).toBeVisible();
+  });
+
+  test("translates the Separator docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Separator/Separator");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Separator");
+    await expect(page.locator("h2", { hasText: "Common Mistakes" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "اشتباهات رایج" })).toBeVisible();
+    await expect(page.getByText(/جداکننده/).first()).toBeVisible();
+  });
+
+  test("translates the Hero docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Panel/Hero");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1").first()).toHaveText("Hero");
+    await expect(page.locator("h2", { hasText: "Related Components" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "کامپوننت‌های مرتبط" })).toBeVisible();
+    await expect(page.getByText(/صفحات فرود/).first()).toBeVisible();
+  });
 });
