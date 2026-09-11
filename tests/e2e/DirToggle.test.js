@@ -397,4 +397,32 @@ test.describe("Docs locale switcher", () => {
     await expect(page.locator("h2", { hasText: "نحوهٔ کار" })).toBeVisible();
     await expect(page.getByText(/تولتیپ در لایهٔ بالایی/).first()).toBeVisible();
   });
+
+  test("translates the Breadcrumb docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Breadcrumb/Breadcrumb");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Breadcrumb");
+    await expect(page.locator("h2", { hasText: "Common Mistakes" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "اشتباهات رایج" })).toBeVisible();
+    await expect(page.getByText(/ساختار معنایی با/).first()).toBeVisible();
+  });
+
+  test("translates the BreadcrumbItem docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Breadcrumb/BreadcrumbItem");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("BreadcrumbItem");
+    await expect(page.locator("h2", { hasText: "Accessibility" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "دسترس‌پذیری" })).toBeVisible();
+    await expect(page.getByText(/یک زیرکامپوننت از/).first()).toBeVisible();
+  });
 });

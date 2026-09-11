@@ -10,6 +10,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as BreadcrumbModule from "$lib/components/Breadcrumb/Breadcrumb.svelte"
 import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -17,76 +18,66 @@ import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Breadcrumb</h1>
+  <h1>{m.breadcrumb_heading()}</h1>
 
   <p>
-    <strong>Breadcrumb</strong> shows the user's current location within a site
-    hierarchy as a trail of links. Uses native <code>&lt;nav&gt;</code>,
-    <code>&lt;ol&gt;</code>, and <code>&lt;li&gt;</code> elements.
+    <strong>{m.breadcrumb_heading()}</strong>{m.breadcrumb_intro_1()}<code>&lt;nav&gt;</code>{m.breadcrumb_intro_2()}<code>&lt;ol&gt;</code>{m.breadcrumb_intro_3()}<code>&lt;li&gt;</code>{m.breadcrumb_intro_4()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
-  <p>
-    A horizontal list of links separated by visual dividers. The last item
-    represents the current page (not a link). Collapses middle items when the
-    trail is long.
-  </p>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.breadcrumb_what_1()}</p>
 
-  <h3>When should I use it?</h3>
-  <p>
-    Use on every page with 3+ levels of hierarchy. Place at the top of the
-    content area. Not needed for single-level sites.
-  </p>
+  <h3>{m.sec_when()}</h3>
+  <p>{m.breadcrumb_when_1()}</p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Orientation</strong> — helps users understand where they are in the site structure.</li>
-    <li><strong>Navigation</strong> — provides quick access to parent pages.</li>
-    <li><strong>Accessibility</strong> — <code>&lt;nav aria-label="Breadcrumb"&gt;</code> lets screen-reader users jump to the trail.</li>
+    <li><strong>{m.breadcrumb_why_orientation()}</strong>{m.breadcrumb_why_orientation_desc()}</li>
+    <li><strong>{m.breadcrumb_why_navigation()}</strong>{m.breadcrumb_why_navigation_desc()}</li>
+    <li><strong>{m.breadcrumb_why_a11y()}</strong>{m.breadcrumb_why_a11y_desc_1()}<code>&lt;nav aria-label="Breadcrumb"&gt;</code>{m.breadcrumb_why_a11y_desc_2()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/">WAI-ARIA APG — Breadcrumb</a></li>
     <li><a href="https://primer.style/product/components/Breadcrumbs">Primer — Breadcrumbs</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
-<ul>
-    <li>Semantic `&lt;nav aria-label=&quot;Breadcrumb&quot;&gt;` + `&lt;ol&gt;` + `&lt;li&gt;` structure</li>
-    <li>`aria-current=&quot;page&quot;` on the last link (current page)</li>
-    <li>Separator styling via CSS `::before` pseudo-element — no JS needed</li>
-    <li>`&lt;link&gt;` on each item except the last (which uses `&lt;span&gt;` or `&lt;a aria-current=&quot;page&quot;&gt;`)</li>
-</ul>
-
-<h2>Common Mistakes</h2>
-<ul>
-    <li>Don't use `&lt;div&gt;` for breadcrumbs — always `&lt;nav&gt;` + `&lt;ol&gt;` for landmark semantics</li>
-    <li>Don't forget `aria-current=&quot;page&quot;` on the last item</li>
-</ul>
-
-<h2>Related Components</h2>
-<p>App, AppHeader, Sidebar, Tree</p>
-
-<h2>Responsiveness</h2>
+  <h2>{m.sec_implementation()}</h2>
   <ul>
-    <li>Wraps naturally on narrow screens.</li>
-    <li>Collapsible mode hides middle items on overflow.</li>
+    <li>{m.breadcrumb_impl_1()}<code>&lt;nav aria-label="Breadcrumb"&gt;</code>{m.breadcrumb_impl_2()}<code>&lt;ol&gt;</code>{m.breadcrumb_impl_3()}<code>&lt;li&gt;</code>{m.breadcrumb_impl_4()}</li>
+    <li><code>aria-current="page"</code>{m.breadcrumb_impl_5()}</li>
+    <li>{m.breadcrumb_impl_6()}<code>::before</code>{m.breadcrumb_impl_7()}</li>
+    <li>{m.breadcrumb_impl_8()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_mistakes()}</h2>
   <ul>
-    <li>Custom separator via <code>separator</code> prop.</li>
-    <li>Collapsible via <code>collapsible</code> + <code>maxVisibleItems</code>.</li>
-    <li>Icons on individual items.</li>
+    <li>{m.breadcrumb_mistake_1_1()}<code>&lt;nav&gt;</code>{m.breadcrumb_mistake_1_2()}</li>
+    <li>{m.breadcrumb_mistake_2_1()}<code>aria-current="page"</code>{m.breadcrumb_mistake_2_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_related()}</h2>
+  <p>App, AppHeader, Sidebar, Tree</p>
 
-  <h3>Basic Breadcrumb</h3>
+  <h2>{m.sec_responsiveness()}</h2>
+  <ul>
+    <li>{m.breadcrumb_responsive_1()}</li>
+    <li>{m.breadcrumb_responsive_2()}</li>
+  </ul>
+
+  <h2>{m.sec_customization()}</h2>
+  <ul>
+    <li>{m.breadcrumb_custom_1_1()}<code>separator</code>{m.breadcrumb_custom_1_2()}</li>
+    <li>{m.breadcrumb_custom_2_1()}<code>collapsible</code>{m.breadcrumb_custom_2_2()}<code>maxVisibleItems</code>{m.breadcrumb_custom_2_3()}</li>
+    <li>{m.breadcrumb_custom_3()}</li>
+  </ul>
+
+  <h2>{m.sec_examples()}</h2>
+
+  <h3>{m.breadcrumb_ex_basic()}</h3>
   <ExampleTabs code={`<Breadcrumb>
   <BreadcrumbItem href="/">Home</BreadcrumbItem>
   <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
@@ -101,7 +92,7 @@ import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem
     </div>
   </ExampleTabs>
 
-  <h3>Custom Separator</h3>
+  <h3>{m.breadcrumb_ex_separator()}</h3>
   <ExampleTabs code={`<Breadcrumb separator="›">
   <BreadcrumbItem href="/">Home</BreadcrumbItem>
   <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
@@ -116,10 +107,9 @@ import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem
     </div>
   </ExampleTabs>
 
-  <h3>Data-Driven (items prop)</h3>
+  <h3>{m.breadcrumb_ex_datadriven()}</h3>
   <p>
-    Instead of using <code>&lt;BreadcrumbItem&gt;</code> sub-components, you can pass a
-    flat array of objects. This is simpler for generated or dynamic breadcrumbs.
+    {m.breadcrumb_ex_datadriven_desc_1()}<code>&lt;BreadcrumbItem&gt;</code>{m.breadcrumb_ex_datadriven_desc_2()}
   </p>
   <ExampleTabs code={`<Breadcrumb items={[\n  { name: 'Home', link: '/' },\n  { name: 'Docs', link: '/docs', icon: 'tabler:book' },\n  { name: 'Components', link: '/docs/components' },\n  { name: 'Breadcrumb' }\n]} />`}>
     <div class="p-4 bg-surface rounded-md" data-testid="breadcrumb-data-driven">
@@ -127,7 +117,7 @@ import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem
     </div>
   </ExampleTabs>
 
-  <h3>Collapsible</h3>
+  <h3>{m.breadcrumb_ex_collapsible()}</h3>
   <ExampleTabs code={`<Breadcrumb
   collapsible
   maxVisibleItems={1}
@@ -138,7 +128,7 @@ import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem
     </div>
   </ExampleTabs>
 
-  <h3>With Icons</h3>
+  <h3>{m.breadcrumb_ex_icons()}</h3>
   <ExampleTabs code={`<Breadcrumb>
   <BreadcrumbItem href="/" icon="home">Home</BreadcrumbItem>
   <BreadcrumbItem href="/docs" icon="book">Documentation</BreadcrumbItem>
@@ -153,17 +143,17 @@ import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem
     </div>
   </ExampleTabs>
 
-  <h2>Breadcrumb Props</h2>
+  <h2>{m.breadcrumb_props()}</h2>
   <PropsTable component={BreadcrumbModule} />
 
-  <h2>BreadcrumbItem Props</h2>
+  <h2>{m.breadcrumb_props_item()}</h2>
   <PropsTable component={BreadcrumbItemModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Uses <code>&lt;nav aria-label="Breadcrumb"&gt;</code>.</li>
-    <li>Ordered list (<code>&lt;ol&gt;</code>) for proper trail semantics.</li>
-    <li><code>aria-current="page"</code> on the current (last) item.</li>
-    <li>Separators hidden from screen readers via <code>aria-hidden</code>.</li>
+    <li>{m.breadcrumb_a11y_1_1()}<code>&lt;nav aria-label="Breadcrumb"&gt;</code>.</li>
+    <li>{m.breadcrumb_a11y_2_1()}<code>&lt;ol&gt;</code>{m.breadcrumb_a11y_2_2()}</li>
+    <li><code>aria-current="page"</code>{m.breadcrumb_a11y_3()}</li>
+    <li>{m.breadcrumb_a11y_4_1()}<code>aria-hidden</code>{m.breadcrumb_a11y_4_2()}</li>
   </ul>
 </Container>

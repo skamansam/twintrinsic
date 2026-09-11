@@ -10,6 +10,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -19,44 +20,39 @@ import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <div class="not-prose mb-6 p-4 bg-primary-50 dark:bg-primary-950 border border-primary-200 dark:border-primary-800 rounded-lg">
     <p class="text-sm text-primary-700 dark:text-primary-300 m-0">
-      <strong>BreadcrumbItem</strong> is a sub-component of
-      <a href="/docs/components/Breadcrumb/Breadcrumb" class="underline font-medium">Breadcrumb</a>.
-      See the parent component docs for usage, examples, and full API reference.
+      <strong>BreadcrumbItem</strong>{m.breadcrumbitem_note_1()}
+      <a href="/docs/components/Breadcrumb/Breadcrumb" class="underline font-medium">Breadcrumb</a>{m.breadcrumbitem_note_2()}
     </p>
   </div>
 
-  <h1>BreadcrumbItem</h1>
+  <h1>{m.breadcrumbitem_heading()}</h1>
 
   <p>
-    <strong>BreadcrumbItem</strong> is a single item within a Breadcrumb. Items
-    with <code>href</code> render as links; the current item renders as plain text
-    with <code>aria-current="page"</code>.
+    <strong>{m.breadcrumbitem_heading()}</strong>{m.breadcrumbitem_intro_1()}<code>href</code>{m.breadcrumbitem_intro_2()}<code>aria-current="page"</code>{m.breadcrumbitem_intro_3()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A list item in a breadcrumb trail. Renders as an <code>&lt;a&gt;</code> tag when
-    <code>href</code> is provided, or as a <code>&lt;span&gt;</code> for the current page.
+    {m.breadcrumbitem_what_1()}<code>&lt;a&gt;</code>{m.breadcrumbitem_what_2()}<code>href</code>{m.breadcrumbitem_what_3()}<code>&lt;span&gt;</code>{m.breadcrumbitem_what_4()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Always inside a <code>&lt;Breadcrumb&gt;</code>. Each level in the hierarchy
-    gets its own BreadcrumbItem. The last item (current page) should not have an href.
+    {m.breadcrumbitem_when_1()}<code>&lt;Breadcrumb&gt;</code>{m.breadcrumbitem_when_2()}<code>href</code>{m.breadcrumbitem_when_3()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Semantics</strong> — proper <code>&lt;li&gt;</code> inside <code>&lt;ol&gt;</code>.</li>
-    <li><strong>Current page</strong> — <code>aria-current="page"</code> announces the current location.</li>
-    <li><strong>Icons</strong> — optional icon with <code>aria-hidden</code>.</li>
+    <li><strong>{m.breadcrumbitem_why_semantics()}</strong>{m.breadcrumbitem_why_semantics_desc_1()}<code>&lt;li&gt;</code>{m.breadcrumbitem_why_semantics_desc_2()}<code>&lt;ol&gt;</code>{m.breadcrumbitem_why_semantics_desc_3()}</li>
+    <li><strong>{m.breadcrumbitem_why_current()}</strong>{m.breadcrumbitem_why_current_desc_1()}<code>aria-current="page"</code>{m.breadcrumbitem_why_current_desc_2()}</li>
+    <li><strong>{m.breadcrumbitem_why_icons()}</strong>{m.breadcrumbitem_why_icons_desc_1()}<code>aria-hidden</code>{m.breadcrumbitem_why_icons_desc_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic Items</h3>
+  <h3>{m.breadcrumbitem_ex_basic()}</h3>
   <ExampleTabs code={`<Breadcrumb>
   <BreadcrumbItem href="/">Home</BreadcrumbItem>
   <BreadcrumbItem href="/docs">Documentation</BreadcrumbItem>
@@ -71,7 +67,7 @@ import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem
     </div>
   </ExampleTabs>
 
-  <h3>With Icons</h3>
+  <h3>{m.breadcrumbitem_ex_icons()}</h3>
   <ExampleTabs code={`<Breadcrumb separator="›">
   <BreadcrumbItem href="/" icon="home">Home</BreadcrumbItem>
   <BreadcrumbItem href="/docs" icon="book">Docs</BreadcrumbItem>
@@ -86,7 +82,7 @@ import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem
     </div>
   </ExampleTabs>
 
-  <h3>Collapsed</h3>
+  <h3>{m.breadcrumbitem_ex_collapsed()}</h3>
   <ExampleTabs code={`<Breadcrumb collapsible maxVisibleItems={1}>
   <BreadcrumbItem href="/">Home</BreadcrumbItem>
   <BreadcrumbItem>Section A</BreadcrumbItem>
@@ -105,7 +101,7 @@ import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem
     </div>
   </ExampleTabs>
 
-  <h3>Links and Current</h3>
+  <h3>{m.breadcrumbitem_ex_links()}</h3>
   <ExampleTabs code={`<Breadcrumb separator="›">
   <BreadcrumbItem href="/">Home</BreadcrumbItem>
   <BreadcrumbItem href="/products">Products</BreadcrumbItem>
@@ -122,16 +118,16 @@ import * as BreadcrumbItemModule from "$lib/components/Breadcrumb/BreadcrumbItem
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={BreadcrumbItemModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={BreadcrumbItemModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Renders inside <code>&lt;li&gt;</code> within a <code>&lt;ol&gt;</code>.</li>
-    <li>Current item: <code>aria-current="page"</code>, rendered as text.</li>
-    <li>Separators are <code>aria-hidden</code>.</li>
+    <li>{m.breadcrumbitem_a11y_1_1()}<code>&lt;li&gt;</code>{m.breadcrumbitem_a11y_1_2()}<code>&lt;ol&gt;</code>{m.breadcrumbitem_a11y_1_3()}</li>
+    <li>{m.breadcrumbitem_a11y_2_1()}<code>aria-current="page"</code>{m.breadcrumbitem_a11y_2_2()}</li>
+    <li>{m.breadcrumbitem_a11y_3_1()}<code>aria-hidden</code>{m.breadcrumbitem_a11y_3_2()}</li>
   </ul>
 </Container>
