@@ -341,4 +341,60 @@ test.describe("Docs locale switcher", () => {
     await expect(page.locator("h2", { hasText: "کامپوننت‌های مرتبط" })).toBeVisible();
     await expect(page.getByText(/صفحات فرود/).first()).toBeVisible();
   });
+
+  test("translates the Card docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Card/Card");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Card");
+    await expect(page.locator("h2", { hasText: "Common Mistakes" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "اشتباهات رایج" })).toBeVisible();
+    await expect(page.locator("h2", { hasText: "اسلات‌ها" })).toBeVisible();
+  });
+
+  test("translates the Panel docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Panel/Panel");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Panel");
+    await expect(page.locator("h2", { hasText: "Responsiveness" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "واکنش‌گرایی" })).toBeVisible();
+    await expect(page.getByText(/کانتینر تاشو/).first()).toBeVisible();
+  });
+
+  test("translates the Splitter docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Splitter/Splitter");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Splitter");
+    await expect(page.locator("h2", { hasText: "Keyboard Support" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "پشتیبانی صفحه‌کلید" })).toBeVisible();
+    await expect(page.getByText(/کاهش اندازهٔ پنل اول/).first()).toBeVisible();
+  });
+
+  test("translates the Tooltip docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Tooltip/Tooltip");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Tooltip");
+    await expect(page.locator("h2", { hasText: "How It Works" })).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "نحوهٔ کار" })).toBeVisible();
+    await expect(page.getByText(/تولتیپ در لایهٔ بالایی/).first()).toBeVisible();
+  });
 });

@@ -8,6 +8,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Splitter from "$lib/components/Splitter/Splitter.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as SplitterModule from "$lib/components/Splitter/Splitter.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -15,41 +16,33 @@ import * as SplitterModule from "$lib/components/Splitter/Splitter.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Splitter</h1>
+  <h1>{m.splitter_heading()}</h1>
 
   <p>
-    <strong>Splitter</strong> creates a resizable divider between two adjacent containers,
-    allowing users to drag and adjust the width or height of each panel. It is ideal for
-    layouts like code editors, file explorers, or any interface that needs flexible space
-    allocation.
+    <strong>{m.splitter_heading()}</strong>{m.splitter_intro_1()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A two-panel layout with a draggable divider that follows the
-    <a href="https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/">W3C APG window-splitter pattern</a>.
-    The divider uses <code>role="separator"</code>, <code>tabindex="0"</code>, and
-    <code>aria-valuenow/min/max</code> for full keyboard and screen reader support.
+    {m.splitter_what_1()}<a href="https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/">W3C APG window-splitter pattern</a>{m.splitter_what_1b()}<code>role="separator"</code>{m.splitter_what_2()}<code>tabindex="0"</code>{m.splitter_what_3()}<code>aria-valuenow/min/max</code>{m.splitter_what_4()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use <code>&lt;Splitter&gt;</code> when users need to adjust the relative size of two
-    panels: code editor + preview, file tree + content, inbox + message view. For simple
-    side-by-side layouts without resizing, use CSS Grid or Flexbox.
+    {m.splitter_when_1()}<code>&lt;Splitter&gt;</code>{m.splitter_when_2()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>User control</strong> — let users customize their workspace layout.</li>
-    <li><strong>Keyboard accessible</strong> — arrow keys for fine control, per W3C APG.</li>
-    <li><strong>Persistent</strong> — <code>storageKey</code> saves the split position in localStorage.</li>
-    <li><strong>Constrained</strong> — min/max size prevents panels from collapsing.</li>
+    <li><strong>{m.splitter_why_control()}</strong> — {m.splitter_why_control_desc()}</li>
+    <li><strong>{m.splitter_why_keyboard()}</strong> — {m.splitter_why_keyboard_desc()}</li>
+    <li><strong>{m.splitter_why_persistent()}</strong> — <code>storageKey</code>{m.splitter_why_persistent_desc()}</li>
+    <li><strong>{m.splitter_why_constrained()}</strong> — {m.splitter_why_constrained_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/">WAI-ARIA APG — Window Splitter</a></li>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range">MDN — Range input</a></li>
@@ -58,41 +51,40 @@ import * as SplitterModule from "$lib/components/Splitter/Splitter.svelte"
     <li><a href="https://primer.style/components/split-page-layout">Primer — SplitPageLayout</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
-<ul>
-    <li>WAI-ARIA window splitter pattern</li>
-    <li>Keyboard: arrow keys resize, Enter resets</li>
-    <li>`aria-valuenow/min/max` for position</li>
-    <li>CSS `resize` for basic functionality; custom JS for precise control</li>
-</ul>
-
-<h2>Common Mistakes</h2>
-<ul>
-    <li>Don't use CSS `resize` alone — it doesn't support multi-panel layout</li>
-    <li>Don't forget keyboard accessibility — arrow keys must work</li>
-</ul>
-
-<h2>Related Components</h2>
-<p>Container, Section, Card</p>
-
-<h2>Responsiveness</h2>
+  <h2>{m.sec_implementation()}</h2>
   <ul>
-    <li>Fills its container's width and height.</li>
-    <li>Touch targets on the divider meet 44×44 px minimum.</li>
+    <li>{m.splitter_impl_1()}</li>
+    <li>{m.splitter_impl_2()}</li>
+    <li>{m.splitter_impl_3()}</li>
+    <li>{m.splitter_impl_4()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_mistakes()}</h2>
   <ul>
-    <li><code>orientation</code> — <code>"horizontal"</code> (left/right) or <code>"vertical"</code> (top/bottom).</li>
-    <li><code>initialSize</code> — starting percentage for the first panel.</li>
-    <li><code>minSize</code> / <code>maxSize</code> — constrain the resize range.</li>
-    <li><code>storageKey</code> — persist the position across sessions.</li>
+    <li>{m.splitter_mistake_1()}</li>
+    <li>{m.splitter_mistake_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_related()}</h2>
+  <p>Container, Section, Card</p>
 
-  <h3>Horizontal Splitter</h3>
+  <h2>{m.sec_responsiveness()}</h2>
+  <ul>
+    <li>{m.splitter_responsive_1()}</li>
+    <li>{m.splitter_responsive_2()}</li>
+  </ul>
+
+  <h2>{m.sec_customization()}</h2>
+  <ul>
+    <li><code>orientation</code>{m.splitter_custom_1()}<code>"horizontal"</code>{m.splitter_custom_1_2()}<code>"vertical"</code>{m.splitter_custom_1_3()}</li>
+    <li><code>initialSize</code>{m.splitter_custom_2()}</li>
+    <li><code>minSize</code>{m.splitter_custom_3_1()}<code>maxSize</code>{m.splitter_custom_3_2()}</li>
+    <li><code>storageKey</code>{m.splitter_custom_4()}</li>
+  </ul>
+
+  <h2>{m.sec_examples()}</h2>
+
+  <h3>{m.splitter_ex_horizontal()}</h3>
   <ExampleTabs code={`<Splitter orientation="horizontal" initialSize={50}>
   {#snippet first()}
     <div class="p-4">Left Panel</div>
@@ -119,7 +111,7 @@ import * as SplitterModule from "$lib/components/Splitter/Splitter.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Vertical Splitter</h3>
+  <h3>{m.splitter_ex_vertical()}</h3>
   <ExampleTabs code={`<Splitter orientation="vertical" initialSize={50}>
   {#snippet first()}
     <div class="p-4">Top content</div>
@@ -146,35 +138,35 @@ import * as SplitterModule from "$lib/components/Splitter/Splitter.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Slots</h2>
+  <h2>{m.sec_slots()}</h2>
   <table>
-    <thead><tr><th>Slot</th><th>Description</th></tr></thead>
+    <thead><tr><th>{m.sec_slot()}</th><th>{m.sec_description()}</th></tr></thead>
     <tbody>
-      <tr><td><code>first</code></td><td>Content for the first panel (left or top)</td></tr>
-      <tr><td><code>second</code></td><td>Content for the second panel (right or bottom)</td></tr>
+      <tr><td><code>first</code></td><td>{m.splitter_slot_first()}</td></tr>
+      <tr><td><code>second</code></td><td>{m.splitter_slot_second()}</td></tr>
     </tbody>
   </table>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={SplitterModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Divider uses <code>role="separator"</code> with <code>tabindex="0"</code>.</li>
-    <li><code>aria-valuenow</code>, <code>aria-valuemin</code>, <code>aria-valuemax</code> for current state.</li>
-    <li><code>aria-orientation</code> matches the <code>orientation</code> prop.</li>
-    <li>Visual focus indicators for keyboard users.</li>
-    <li>Follows the <a href="https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/">W3C APG window-splitter pattern</a>.</li>
+    <li>{m.splitter_a11y_1_1()}<code>role="separator"</code>{m.splitter_a11y_1_2()}<code>tabindex="0"</code>{m.splitter_a11y_1_3()}</li>
+    <li><code>aria-valuenow</code>{m.splitter_a11y_2_1()}<code>aria-valuemin</code>{m.splitter_a11y_2_2()}<code>aria-valuemax</code>{m.splitter_a11y_2_3()}</li>
+    <li><code>aria-orientation</code>{m.splitter_a11y_3_1()}<code>orientation</code>{m.splitter_a11y_3_2()}</li>
+    <li>{m.splitter_a11y_4()}</li>
+    <li>{m.splitter_a11y_5_1()}<a href="https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/">W3C APG window-splitter pattern</a>{m.splitter_a11y_5_2()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Arrow Left</kbd> / <kbd>Arrow Up</kbd></td><td>Decrease first panel size by 5%</td></tr>
-      <tr><td><kbd>Arrow Right</kbd> / <kbd>Arrow Down</kbd></td><td>Increase first panel size by 5%</td></tr>
-      <tr><td><kbd>Home</kbd></td><td>Set first panel to minimum size</td></tr>
-      <tr><td><kbd>End</kbd></td><td>Set first panel to maximum size</td></tr>
+      <tr><td><kbd>Arrow Left</kbd> / <kbd>Arrow Up</kbd></td><td>{m.splitter_kb_1()}</td></tr>
+      <tr><td><kbd>Arrow Right</kbd> / <kbd>Arrow Down</kbd></td><td>{m.splitter_kb_2()}</td></tr>
+      <tr><td><kbd>Home</kbd></td><td>{m.splitter_kb_3()}</td></tr>
+      <tr><td><kbd>End</kbd></td><td>{m.splitter_kb_4()}</td></tr>
     </tbody>
   </table>
 </Container>

@@ -9,6 +9,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import Panel from "$lib/components/Panel/Panel.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as PanelModule from "$lib/components/Panel/Panel.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -16,42 +17,33 @@ import * as PanelModule from "$lib/components/Panel/Panel.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Panel</h1>
+  <h1>{m.panel_heading()}</h1>
 
   <p>
-    <strong>Panel</strong> is a collapsible container that provides an organized way to
-    show and hide content. It features a header that can be clicked to toggle the
-    visibility of the content section, using native <code>&lt;button&gt;</code> elements
-    for built-in accessibility.
+    <strong>{m.panel_heading()}</strong>{m.panel_intro_1()}<code>&lt;button&gt;</code>{m.panel_intro_2()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A disclosure widget with a clickable header and expandable body. The toggle mechanism
-    uses a <code>&lt;button&gt;</code> element with proper <code>aria-expanded</code> and
-    <code>aria-controls</code> attributes. Content slides open/closed with Svelte's
-    <code>slide</code> transition.
+    {m.panel_what_1()}<code>&lt;button&gt;</code>{m.panel_what_2()}<code>aria-expanded</code>{m.panel_what_3()}<code>aria-controls</code>{m.panel_what_4()}<code>slide</code>{m.panel_what_5()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use <code>&lt;Panel&gt;</code> for content that can be collapsed to save vertical space:
-    FAQ sections, settings panels, advanced options, or collapsible documentation. For
-    always-visible content, use <code>&lt;Card&gt;</code>. For layout wrapping, use
-    <code>&lt;Container&gt;</code>.
+    {m.panel_when_1()}<code>&lt;Panel&gt;</code>{m.panel_when_2()}<code>&lt;Card&gt;</code>{m.panel_when_3()}<code>&lt;Container&gt;</code>{m.panel_when_4()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Space saving</strong> — collapse less-used content to reduce page length.</li>
-    <li><strong>Progressive disclosure</strong> — show details on demand.</li>
-    <li><strong>Keyboard accessible</strong> — toggle with Enter/Space via native button.</li>
-    <li><strong>Smooth animation</strong> — slide transition for expand/collapse.</li>
+    <li><strong>{m.panel_why_space()}</strong> — {m.panel_why_space_desc()}</li>
+    <li><strong>{m.panel_why_progressive()}</strong> — {m.panel_why_progressive_desc()}</li>
+    <li><strong>{m.panel_why_keyboard()}</strong> — {m.panel_why_keyboard_desc()}</li>
+    <li><strong>{m.panel_why_animation()}</strong> — {m.panel_why_animation_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details">MDN — &lt;details&gt;</a></li>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/accordion/">WAI-ARIA APG — Accordion</a></li>
@@ -60,24 +52,24 @@ import * as PanelModule from "$lib/components/Panel/Panel.svelte"
     <li><a href="https://ant.design/components/collapse">Ant Design — Collapse</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Full-width by default; set max-width via <code>class</code>.</li>
-    <li>Touch targets meet 44×44 px minimum for the header button.</li>
+    <li>{m.panel_responsive_1()}</li>
+    <li>{m.panel_responsive_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li><code>expanded</code> — controlled open/close state.</li>
-    <li><code>disabled</code> — disable the toggle.</li>
-    <li><code>bordered</code> — show/hide border.</li>
-    <li><code>showIcon</code> — show/hide the chevron icon.</li>
-    <li>Header, body, and footer snippets for full content control.</li>
+    <li><code>expanded</code>{m.panel_custom_1()}</li>
+    <li><code>disabled</code>{m.panel_custom_2()}</li>
+    <li><code>bordered</code>{m.panel_custom_3()}</li>
+    <li><code>showIcon</code>{m.panel_custom_4()}</li>
+    <li>{m.panel_custom_5()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Order Summary</h3>
+  <h3>{m.panel_ex_basic()}</h3>
   <ExampleTabs code={`<Panel class="max-w-xl">
   {#snippet header()}Order Summary{/snippet}
   <div class="space-y-2">
@@ -98,7 +90,7 @@ import * as PanelModule from "$lib/components/Panel/Panel.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Disabled Panel</h3>
+  <h3>{m.panel_ex_disabled()}</h3>
   <ExampleTabs code={`<Panel disabled class="max-w-xl">
   {#snippet header()}Billing{/snippet}
   <p>Billing is managed by your administrator.</p>
@@ -111,7 +103,7 @@ import * as PanelModule from "$lib/components/Panel/Panel.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Borderless Panel</h3>
+  <h3>{m.panel_ex_borderless()}</h3>
   <ExampleTabs code={`<Panel bordered={false} class="max-w-xl">
   {#snippet header()}Project Guidelines{/snippet}
   <ul class="list-disc pl-5 space-y-1">
@@ -132,17 +124,17 @@ import * as PanelModule from "$lib/components/Panel/Panel.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Slots</h2>
+  <h2>{m.sec_slots()}</h2>
   <table>
-    <thead><tr><th>Slot</th><th>Description</th></tr></thead>
+    <thead><tr><th>{m.sec_slot()}</th><th>{m.sec_description()}</th></tr></thead>
     <tbody>
-      <tr><td><code>header</code></td><td>Content for the panel header</td></tr>
-      <tr><td><code>default</code></td><td>Main panel body content</td></tr>
-      <tr><td><code>footer</code></td><td>Content below the body (actions)</td></tr>
+      <tr><td><code>header</code></td><td>{m.panel_slot_header()}</td></tr>
+      <tr><td><code>default</code></td><td>{m.panel_slot_default()}</td></tr>
+      <tr><td><code>footer</code></td><td>{m.panel_slot_footer()}</td></tr>
     </tbody>
   </table>
 
-  <h3>Custom Header</h3>
+  <h3>{m.panel_ex_custom()}</h3>
   <ExampleTabs code={`<Panel>
   {#snippet header()}Custom Header{/snippet}
   <p>Panel with a custom header snippet.</p>
@@ -155,35 +147,35 @@ import * as PanelModule from "$lib/components/Panel/Panel.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={PanelModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={PanelModule} />
 
-  <h2>When to Use Panel vs Container vs Card</h2>
+  <h2>{m.panel_compare_heading()}</h2>
   <table>
-    <thead><tr><th>Component</th><th>Use When</th><th>HTML Element</th></tr></thead>
+    <thead><tr><th>{m.container_compare_component()}</th><th>{m.container_compare_when()}</th><th>{m.container_compare_el()}</th></tr></thead>
     <tbody>
-      <tr><td><strong>Panel</strong></td><td>Collapsible/expandable content</td><td><code>&lt;button&gt;</code> + <code>&lt;div&gt;</code></td></tr>
-      <tr><td><strong>Container</strong></td><td>Page/section layout with max-width</td><td><code>&lt;section&gt;</code> / semantic</td></tr>
-      <tr><td><strong>Card</strong></td><td>Self-contained, always-visible content</td><td><code>&lt;article&gt;</code></td></tr>
+      <tr><td><strong>Panel</strong></td><td>{m.panel_compare_panel()}</td><td><code>&lt;button&gt;</code> + <code>&lt;div&gt;</code></td></tr>
+      <tr><td><strong>Container</strong></td><td>{m.panel_compare_container()}</td><td><code>&lt;section&gt;</code> / semantic</td></tr>
+      <tr><td><strong>Card</strong></td><td>{m.panel_compare_card()}</td><td><code>&lt;article&gt;</code></td></tr>
     </tbody>
   </table>
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Header uses a native <code>&lt;button&gt;</code> for keyboard accessibility.</li>
-    <li>Proper <code>aria-expanded</code>, <code>aria-controls</code>, and <code>aria-labelledby</code> attributes.</li>
-    <li>Optional <code>ariaLabel</code> prop for custom button labels.</li>
+    <li>{m.panel_a11y_1_1()}<code>&lt;button&gt;</code>{m.panel_a11y_1_2()}</li>
+    <li>{m.panel_a11y_2_1()}<code>aria-expanded</code>{m.panel_a11y_2_2()}<code>aria-controls</code>{m.panel_a11y_2_3()}<code>aria-labelledby</code>{m.panel_a11y_2_4()}</li>
+    <li>{m.panel_a11y_3_1()}<code>ariaLabel</code>{m.panel_a11y_3_2()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Tab</kbd></td><td>Move focus to the panel header button</td></tr>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Toggle the panel open/closed</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>{m.panel_kb_1()}</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.panel_kb_2()}</td></tr>
     </tbody>
   </table>
 </Container>

@@ -9,6 +9,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Tooltip from "$lib/components/Tooltip/Tooltip.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as TooltipModule from "$lib/components/Tooltip/Tooltip.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -16,42 +17,33 @@ import * as TooltipModule from "$lib/components/Tooltip/Tooltip.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>Tooltip</h1>
+<h1>{m.tooltip_heading()}</h1>
 
 <p>
-  Displays additional information on hover or focus. Built on the native
-  <strong>Popover API</strong> (<code>popover="hint"</code>), the
-  <strong><code>interestfor</code></strong> attribute, and <strong>CSS Anchor
-  Positioning</strong> — requiring zero JavaScript for show/hide, positioning,
-  light-dismiss, or accessibility wiring.
+  {m.tooltip_intro_1()}<strong>Popover API</strong>{m.tooltip_intro_2()}<code>popover="hint"</code>{m.tooltip_intro_3()}<strong><code>interestfor</code></strong>{m.tooltip_intro_4()}<strong>CSS Anchor Positioning</strong>{m.tooltip_intro_5()}
 </p>
 
-<h2>What, When &amp; Why</h2>
+<h2>{m.sec_what_when_why()}</h2>
 
-<h3>What is it?</h3>
+<h3>{m.sec_what()}</h3>
 <p>
-  A popup that appears when the user hovers or focuses a trigger element. The
-  tooltip renders in the top layer, is positioned automatically via CSS Anchor
-  Positioning, and is light-dismissed by pressing <kbd>Esc</kbd>.
+  {m.tooltip_what_1()}<kbd>Esc</kbd>{m.tooltip_what_2()}
 </p>
 
-<h3>When should I use it?</h3>
+<h3>{m.sec_when()}</h3>
 <p>
-  Use <code>&lt;Tooltip&gt;</code> for supplementary hints — icon labels,
-  button descriptions, truncated text expansion. For rich interactive popups,
-  use <code>&lt;Popover&gt;</code>. For persistent information, use
-  <code>&lt;Modal&gt;</code>.
+  {m.tooltip_when_1()}<code>&lt;Tooltip&gt;</code>{m.tooltip_when_2()}<code>&lt;Popover&gt;</code>{m.tooltip_when_3()}<code>&lt;Modal&gt;</code>{m.tooltip_when_4()}
 </p>
 
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Zero JS</strong> — browser handles show/hide, positioning, and ARIA wiring.</li>
-  <li><strong>Top-layer</strong> — never clipped by <code>overflow: hidden</code> ancestors.</li>
-  <li><strong>WCAG 1.4.13</strong> — hoverable, dismissible, persistent (users can move to the tooltip).</li>
-  <li><strong>CSS Anchor Positioning</strong> — tethers to the trigger with viewport-edge flipping.</li>
+  <li><strong>{m.tooltip_why_zero_js()}</strong> — {m.tooltip_why_zero_js_desc()}</li>
+  <li><strong>{m.tooltip_why_top_layer()}</strong> — {m.tooltip_why_top_layer_desc_1()}<code>overflow: hidden</code>{m.tooltip_why_top_layer_desc_2()}</li>
+  <li><strong>{m.tooltip_why_wcag()}</strong> — {m.tooltip_why_wcag_desc()}</li>
+  <li><strong>{m.tooltip_why_anchor()}</strong> — {m.tooltip_why_anchor_desc()}</li>
 </ul>
 
-<h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
 <ul>
   <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/">WAI-ARIA APG — Tooltip</a></li>
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/popover">MDN — Popover API</a></li>
@@ -59,40 +51,39 @@ import * as TooltipModule from "$lib/components/Tooltip/Tooltip.svelte"
   <li><a href="https://m3.material.io/components/tooltips/overview">Material Design 3 — Tooltips</a></li>
 </ul>
 
-
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>Uses `popover=&quot;hint&quot;` + `interestfor` for hover-triggered display</li>
-    <li>CSS Anchor Positioning for tethering to the trigger element</li>
-    <li>`role=&quot;tooltip&quot;` + `aria-describedby` on the trigger</li>
-    <li>Escape dismisses; no focus inside tooltip</li>
+    <li>{m.tooltip_impl_1()}</li>
+    <li>{m.tooltip_impl_2()}</li>
+    <li>{m.tooltip_impl_3()}</li>
+    <li>{m.tooltip_impl_4()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't put focusable content in a tooltip — use a dialog/popover instead</li>
-    <li>Don't forget `aria-describedby` — screen readers need the tooltip linked</li>
+    <li>{m.tooltip_mistake_1()}</li>
+    <li>{m.tooltip_mistake_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
+<h2>{m.sec_related()}</h2>
 <p>Menu, Popover, Modal</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Tooltip positions automatically adapt to viewport edges via CSS.</li>
-  <li>On touch devices, tooltips are not practical — use a popover or detail expansion.</li>
+  <li>{m.tooltip_responsive_1()}</li>
+  <li>{m.tooltip_responsive_2()}</li>
 </ul>
 
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li><code>position</code> — top, right, bottom, left.</li>
-  <li><code>content</code> — text or HTML content.</li>
-  <li>Arrow repositioning via CSS <code>position-try-fallbacks</code>.</li>
+  <li><code>position</code>{m.tooltip_custom_1()}</li>
+  <li><code>content</code>{m.tooltip_custom_2()}</li>
+  <li>{m.tooltip_custom_3_1()}<code>position-try-fallbacks</code>{m.tooltip_custom_3_2()}</li>
 </ul>
 
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Basic Tooltip</h3>
+<h3>{m.tooltip_ex_basic()}</h3>
 <ExampleTabs code={`<Tooltip content="Save changes to your profile">
   <Button>Save</Button>
 </Tooltip>`}>
@@ -103,7 +94,7 @@ import * as TooltipModule from "$lib/components/Tooltip/Tooltip.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Tooltip Positions</h3>
+<h3>{m.tooltip_ex_positions()}</h3>
 <ExampleTabs code={`<Tooltip content="Save as draft" position="top">
   <Button>Top</Button>
 </Tooltip>
@@ -132,39 +123,32 @@ import * as TooltipModule from "$lib/components/Tooltip/Tooltip.svelte"
   </div>
 </ExampleTabs>
 
-<h2>How It Works</h2>
+<h2>{m.tooltip_how_heading()}</h2>
 <p>
-  The trigger uses the <code>interestfor</code> attribute to reference the
-  tooltip's ID. On hover/focus, the browser opens the tooltip as a
-  <code>popover="hint"</code> in the top layer. CSS Anchor Positioning
-  (<code>anchor-name</code> / <code>position-anchor</code> + <code>anchor()</code>
-  functions) tethers the tooltip to the trigger — no <code>getBoundingClientRect()</code>
-  or manual coordinate math.
+  {m.tooltip_how_1()}<code>interestfor</code>{m.tooltip_how_2()}<code>popover="hint"</code>{m.tooltip_how_3()}<code>anchor-name</code>{m.tooltip_how_4()}<code>position-anchor</code>{m.tooltip_how_5()}<code>anchor()</code>{m.tooltip_how_6()}<code>getBoundingClientRect()</code>{m.tooltip_how_7()}
 </p>
 <p>
-  For browsers without native support, the <code>@oddbird/popover-polyfill</code>,
-  <code>@oddbird/css-anchor-positioning</code>, and <code>interestfor</code>
-  polyfills are loaded automatically via <code>loadPlatformPolyfills()</code>.
+  {m.tooltip_poly_1()}<code>@oddbird/popover-polyfill</code>{m.tooltip_poly_2()}<code>@oddbird/css-anchor-positioning</code>{m.tooltip_poly_3()}<code>interestfor</code>{m.tooltip_poly_4()}<code>loadPlatformPolyfills()</code>{m.tooltip_poly_5()}
 </p>
 
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={TooltipModule} />
 
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li><strong>Automatic ARIA wiring</strong> — <code>interestfor</code> sets <code>aria-describedby</code> or <code>aria-details</code> on the trigger.</li>
-  <li><strong>WCAG 1.4.13</strong> — Dismissible (Esc), hoverable (pointer can move to tooltip), persistent.</li>
-  <li><strong>Top-layer rendering</strong> — never clipped by overflow ancestors.</li>
-  <li><strong>Mutual exclusion</strong> — <code>popover="hint"</code> auto-closes other hint popovers.</li>
-  <li><strong>Arrow repositioning</strong> — flips automatically via CSS <code>position-try-fallbacks</code>.</li>
+  <li><strong>{m.tooltip_a11y_1_label()}</strong> — <code>interestfor</code>{m.tooltip_a11y_1_desc_1()}<code>aria-describedby</code>{m.tooltip_a11y_1_desc_2()}<code>aria-details</code>{m.tooltip_a11y_1_desc_3()}</li>
+  <li><strong>{m.tooltip_a11y_2_label()}</strong> — {m.tooltip_a11y_2_desc()}</li>
+  <li><strong>{m.tooltip_a11y_3_label()}</strong> — {m.tooltip_a11y_3_desc()}</li>
+  <li><strong>{m.tooltip_a11y_4_label()}</strong> — <code>popover="hint"</code>{m.tooltip_a11y_4_desc()}</li>
+  <li><strong>{m.tooltip_a11y_5_label()}</strong> — {m.tooltip_a11y_5_desc_1()}<code>position-try-fallbacks</code>{m.tooltip_a11y_5_desc_2()}</li>
 </ul>
 
-<h2>Keyboard Support</h2>
+<h2>{m.sec_keyboard()}</h2>
 <table>
-  <thead><tr><th>Key</th><th>Function</th></tr></thead>
+  <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
   <tbody>
-    <tr><td><kbd>Esc</kbd></td><td>Close the tooltip</td></tr>
-    <tr><td><kbd>Tab</kbd></td><td>Focus the trigger (opens tooltip)</td></tr>
+    <tr><td><kbd>Esc</kbd></td><td>{m.tooltip_kb_1()}</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td>{m.tooltip_kb_2()}</td></tr>
   </tbody>
 </table>
 </Container>

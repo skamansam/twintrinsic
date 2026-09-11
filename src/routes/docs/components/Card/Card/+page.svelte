@@ -9,6 +9,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CardModule from "$lib/components/Card/Card.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -16,39 +17,32 @@ import * as CardModule from "$lib/components/Card/Card.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Card</h1>
+  <h1>{m.card_heading()}</h1>
 
   <p>
-    <strong>Card</strong> is a styled container for self-contained content with optional
-    header, media, and footer sections. It renders as an <code>&lt;article&gt;</code>
-    element, indicating that its content is independently meaningful.
+    <strong>{m.card_heading()}</strong>{m.card_intro_1()}<code>&lt;article&gt;</code>{m.card_intro_2()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A content container that groups related information — headers, images, text, and
-    actions — into a visually cohesive unit. Renders as <code>&lt;article&gt;</code>
-    (or <code>&lt;a&gt;</code> when <code>href</code> is set) for correct semantics.
+    {m.card_what_1()}<code>&lt;article&gt;</code>{m.card_what_2()}<code>&lt;a&gt;</code>{m.card_what_3()}<code>href</code>{m.card_what_4()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use <code>&lt;Card&gt;</code> for self-contained content that could stand alone:
-    blog posts, product listings, user profiles, testimonials, dashboard widgets.
-    For layout wrapping, use <code>&lt;Container&gt;</code>. For collapsible content,
-    use <code>&lt;Panel&gt;</code>.
+    {m.card_when_1()}<code>&lt;Card&gt;</code>{m.card_when_2()}<code>&lt;Container&gt;</code>{m.card_when_3()}<code>&lt;Panel&gt;</code>{m.card_when_4()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Semantic HTML</strong> — <code>&lt;article&gt;</code> signals self-contained content.</li>
-    <li><strong>Flexible slots</strong> — header, media, body, and footer for diverse content.</li>
-    <li><strong>Interactive</strong> — <code>hoverable</code> and <code>href</code> for clickable cards.</li>
+    <li><strong>{m.card_why_semantic()}</strong> — <code>&lt;article&gt;</code>{m.card_why_semantic_desc()}</li>
+    <li><strong>{m.card_why_slots()}</strong> — {m.card_why_slots_desc()}</li>
+    <li><strong>{m.card_why_interactive()}</strong> — <code>hoverable</code>{m.card_why_interactive_desc_1()}<code>href</code>{m.card_why_interactive_desc_2()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article">MDN — &lt;article&gt;</a></li>
     <li><a href="https://m3.material.io/components/card/overview">Material Design 3 — Card</a></li>
@@ -57,41 +51,40 @@ import * as CardModule from "$lib/components/Card/Card.svelte"
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/">WAI-ARIA APG</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
-<ul>
-    <li>Semantic `&lt;article&gt;` element as root</li>
-    <li>Container Queries for responsive child layout</li>
-    <li>`...rest` spread with `on&#36;&#123;string&#125;` event handler index signature</li>
-    <li>Clickable cards use `&lt;a&gt;` or `&lt;button&gt;` as root (not `&lt;div onclick&gt;`)</li>
-</ul>
-
-<h2>Common Mistakes</h2>
-<ul>
-    <li>Don't use `&lt;div onclick&gt;` for clickable cards — use `&lt;a&gt;` or `&lt;button&gt;`</li>
-    <li>Don't forget `role=&quot;region&quot;` + `aria-label` if the card is a landmark</li>
-</ul>
-
-<h2>Related Components</h2>
-<p>Container, Section, Button</p>
-
-<h2>Responsiveness</h2>
+  <h2>{m.sec_implementation()}</h2>
   <ul>
-    <li>Full-width by default; set max-width via <code>class</code> or parent Container.</li>
-    <li>Media images use <code>object-cover</code> for consistent aspect ratios.</li>
+    <li>{m.card_impl_1()}</li>
+    <li>{m.card_impl_2()}</li>
+    <li>{m.card_impl_3()}<code>on$&#123;string&#125;</code>{m.card_impl_4()}</li>
+    <li>{m.card_impl_5()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_mistakes()}</h2>
   <ul>
-    <li><code>hoverable</code> — add hover effects for interactive cards.</li>
-    <li><code>href</code> — make the entire card a link (renders as <code>&lt;a&gt;</code>).</li>
-    <li><code>image</code> / <code>imageAlt</code> — simple image prop (or use <code>media</code> snippet).</li>
-    <li><code>bordered</code>, <code>shadowed</code>, <code>compact</code>.</li>
+    <li>{m.card_mistake_1()}</li>
+    <li>{m.card_mistake_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_related()}</h2>
+  <p>Container, Section, Button</p>
 
-  <h3>Basic Card</h3>
+  <h2>{m.sec_responsiveness()}</h2>
+  <ul>
+    <li>{m.card_responsive_1()}</li>
+    <li>{m.card_responsive_2()}</li>
+  </ul>
+
+  <h2>{m.sec_customization()}</h2>
+  <ul>
+    <li><code>hoverable</code>{m.card_custom_1()}</li>
+    <li><code>href</code>{m.card_custom_2_1()}<code>&lt;a&gt;</code>{m.card_custom_2_2()}</li>
+    <li><code>image</code>{m.card_custom_3_1()}<code>imageAlt</code>{m.card_custom_3_2()}<code>media</code>{m.card_custom_3_3()}</li>
+    <li><code>bordered</code>{m.card_custom_4_1()}<code>shadowed</code>{m.card_custom_4_2()}<code>compact</code>{m.card_custom_4_3()}</li>
+  </ul>
+
+  <h2>{m.sec_examples()}</h2>
+
+  <h3>{m.card_ex_basic()}</h3>
   <ExampleTabs code={`<Card>
   {#snippet header()}Product Details{/snippet}
   <div class="p-4">
@@ -112,7 +105,7 @@ import * as CardModule from "$lib/components/Card/Card.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Card with Media</h3>
+  <h3>{m.card_ex_media()}</h3>
   <ExampleTabs code={`<Card hoverable>
   {#snippet media()}
     <img src="image.jpg" alt="Blog post cover" class="w-full h-48 object-cover" />
@@ -141,7 +134,7 @@ import * as CardModule from "$lib/components/Card/Card.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Card with Footer</h3>
+  <h3>{m.card_ex_footer()}</h3>
   <ExampleTabs code={`<Card>
   {#snippet header()}Monthly Report — August 2026{/snippet}
   <div class="p-4">
@@ -172,7 +165,7 @@ import * as CardModule from "$lib/components/Card/Card.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Rest Props Passthrough</h3>
+  <h3>{m.card_ex_rest()}</h3>
   <ExampleTabs
     code={`<Card
   data-rest-pass="card"
@@ -191,44 +184,43 @@ import * as CardModule from "$lib/components/Card/Card.svelte"
         }
       >
         <div class="p-4">
-          Rest props (data-*, aria-*, and native event handlers) land on the root
-          <code>&lt;article&gt;</code> element.
+          {m.card_rest_desc_1()}<code>&lt;article&gt;</code>{m.card_rest_desc_2()}
         </div>
       </Card>
     </div>
   </ExampleTabs>
 
-  <h2>Slots</h2>
+  <h2>{m.sec_slots()}</h2>
   <table>
-    <thead><tr><th>Slot</th><th>Description</th></tr></thead>
+    <thead><tr><th>{m.sec_slot()}</th><th>{m.sec_description()}</th></tr></thead>
     <tbody>
-      <tr><td><code>default</code></td><td>Main card body content</td></tr>
-      <tr><td><code>header</code></td><td>Card header content</td></tr>
-      <tr><td><code>media</code></td><td>Media content (images, video)</td></tr>
-      <tr><td><code>footer</code></td><td>Card footer content</td></tr>
+      <tr><td><code>default</code></td><td>{m.card_slot_default()}</td></tr>
+      <tr><td><code>header</code></td><td>{m.card_slot_header()}</td></tr>
+      <tr><td><code>media</code></td><td>{m.card_slot_media()}</td></tr>
+      <tr><td><code>footer</code></td><td>{m.card_slot_footer()}</td></tr>
     </tbody>
   </table>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={CardModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={CardModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Renders as <code>&lt;article&gt;</code> for self-contained content semantics.</li>
-    <li>Clickable cards (with <code>href</code>) render as <code>&lt;a&gt;</code> with proper keyboard support.</li>
-    <li>Media content requires proper alt text.</li>
-    <li>Interactive elements maintain focus states.</li>
+    <li>{m.card_a11y_1_1()}<code>&lt;article&gt;</code>{m.card_a11y_1_2()}</li>
+    <li>{m.card_a11y_2_1()}<code>href</code>{m.card_a11y_2_2()}<code>&lt;a&gt;</code>{m.card_a11y_2_3()}</li>
+    <li>{m.card_a11y_3()}</li>
+    <li>{m.card_a11y_4()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Tab</kbd></td><td>Move focus to the card (when clickable)</td></tr>
-      <tr><td><kbd>Enter</kbd></td><td>Follow the card link (when <code>href</code> is set)</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>{m.card_kb_1()}</td></tr>
+      <tr><td><kbd>Enter</kbd></td><td>{m.card_kb_2_1()}<code>href</code>{m.card_kb_2_2()}</td></tr>
     </tbody>
   </table>
 </Container>
