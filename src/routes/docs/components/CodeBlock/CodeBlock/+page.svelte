@@ -8,6 +8,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CodeBlockModule from "$lib/components/CodeBlock/CodeBlock.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -15,39 +16,31 @@ import * as CodeBlockModule from "$lib/components/CodeBlock/CodeBlock.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>CodeBlock</h1>
+<h1>{m.codeblock_heading()}</h1>
 
-  <p>
-    <strong>CodeBlock</strong> displays code snippets with syntax highlighting and copy
-    functionality. It supports multiple programming languages, auto-detection, and
-    Prism.js plugins.
-  </p>
+<p>
+  <strong>{m.codeblock_heading()}</strong>{m.codeblock_intro_1()}
+</p>
 
-  <h2>What, When &amp; Why</h2>
+<h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
-  <p>
-    A code display component with Prism.js-powered syntax highlighting, automatic language
-    detection, a copy-to-clipboard button, and configurable CDN sources. Languages are
-    loaded on-demand via the Prism autoloader plugin.
-  </p>
+<h3>{m.sec_what()}</h3>
+<p>{m.codeblock_what_1()}</p>
 
-  <h3>When should I use it?</h3>
-  <p>
-    Use <code>&lt;CodeBlock&gt;</code> whenever you need to display code snippets to users:
-    documentation, tutorials, blog posts, or developer tools. For code editing, use
-    <code>&lt;CodeEditor&gt;</code>.
-  </p>
+<h3>{m.sec_when()}</h3>
+<p>
+  {m.codeblock_when_1()}<code>&lt;CodeBlock&gt;</code>{m.codeblock_when_2()}<code>&lt;CodeEditor&gt;</code>{m.codeblock_when_3()}
+</p>
 
-  <h3>Why does it exist?</h3>
-  <ul>
-    <li><strong>Syntax highlighting</strong> — Prism.js with on-demand grammar loading.</li>
-    <li><strong>Auto-detection</strong> — infers language from content when not specified.</li>
-    <li><strong>Copy button</strong> — one-click clipboard access.</li>
-    <li><strong>Plugin system</strong> — line numbers, toolbar, and more.</li>
-  </ul>
+<h3>{m.sec_why()}</h3>
+<ul>
+  <li><strong>{m.codeblock_why_highlight()}</strong>{m.codeblock_why_highlight_desc()}</li>
+  <li><strong>{m.codeblock_why_auto()}</strong>{m.codeblock_why_auto_desc()}</li>
+  <li><strong>{m.codeblock_why_copy()}</strong>{m.codeblock_why_copy_desc()}</li>
+  <li><strong>{m.codeblock_why_plugins()}</strong>{m.codeblock_why_plugins_desc()}</li>
+</ul>
 
-  <h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://prismjs.com/">Prism.js</a></li>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/code">MDN — &lt;code&gt;</a></li>
@@ -57,41 +50,41 @@ import * as CodeBlockModule from "$lib/components/CodeBlock/CodeBlock.svelte"
   </ul>
 
   
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>`&lt;pre&gt;&lt;code&gt;` with `class=&quot;language-[lang]&quot;` for semantics</li>
-    <li>Prism.js for syntax highlighting</li>
-    <li>Copy-to-clipboard button with `aria-label=&quot;Copy code&quot;`</li>
-    <li>`content-visibility: auto` for large code blocks</li>
+  <li><code>&lt;pre&gt;&lt;code&gt;</code>{m.codeblock_impl_1_2()}<code>class=&quot;language-[lang]&quot;</code>{m.codeblock_impl_1_3()}</li>
+  <li>{m.codeblock_impl_2()}</li>
+  <li>{m.codeblock_impl_3_0()}<code>aria-label=&quot;Copy code&quot;</code></li>
+  <li><code>content-visibility: auto</code>{m.codeblock_impl_4_2()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use `&lt;div&gt;` with `white-space: pre` — always `&lt;pre&gt;&lt;code&gt;`</li>
-    <li>Don't forget the copy button — developers expect it</li>
+  <li>{m.codeblock_mistake_1_0()}<code>&lt;div&gt;</code>{m.codeblock_mistake_1_1()}<code>white-space: pre</code>{m.codeblock_mistake_1_2()}<code>&lt;pre&gt;&lt;code&gt;</code></li>
+  <li>{m.codeblock_mistake_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>CodeEditor, CodeBlockSpeed, Icon</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.codeblock_related_1()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Horizontal scrolling for long lines via <code>overflow-x-auto</code>.</li>
-    <li>Fills container width by default.</li>
-    <li>Font size scales appropriately for mobile.</li>
+    <li>{m.codeblock_responsive_1_0()}<code>overflow-x-auto</code>{m.codeblock_responsive_1_1()}</li>
+    <li>{m.codeblock_responsive_2()}</li>
+    <li>{m.codeblock_responsive_3()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li><code>language</code> — explicit syntax language (or auto-detect).</li>
-    <li><code>title</code> — optional title in the code header.</li>
-    <li><code>pluginSource</code> — CDN choice: <code>"unpkg"</code>, <code>"esm.sh"</code>, <code>"jsdelivr"</code>, or custom path.</li>
-    <li><code>plugins</code> — array of Prism.js plugin names.</li>
+    <li><code>language</code>{m.codeblock_custom_1_1()}</li>
+    <li><code>title</code>{m.codeblock_custom_2_1()}</li>
+    <li><code>pluginSource</code>{m.codeblock_custom_3_1()}<code>&quot;unpkg&quot;</code>{m.codeblock_custom_3_2()}<code>&quot;esm.sh&quot;</code>{m.codeblock_custom_3_3()}<code>&quot;jsdelivr&quot;</code>{m.codeblock_custom_3_4()}</li>
+    <li><code>plugins</code>{m.codeblock_custom_4_1()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>JavaScript</h3>
+  <h3>{m.codeblock_ex_js()}</h3>
   <ExampleTabs code={`<CodeBlock language="javascript">
   {function greet(name) {
     return \`Hello, \${name}!\`;
@@ -107,7 +100,7 @@ const result = greet('world');
 console.log(result); // Hello, world!`}</CodeBlock>
   </ExampleTabs>
 
-  <h3>TypeScript</h3>
+  <h3>{m.codeblock_ex_ts()}</h3>
   <ExampleTabs code={`<CodeBlock language="ts">
   interface Person {
     name: string;
@@ -131,7 +124,7 @@ const person: Person = { name: 'John', age: 30 };
 console.log(greet(person));`}</CodeBlock>
   </ExampleTabs>
 
-  <h3>Svelte</h3>
+  <h3>{m.codeblock_ex_svelte()}</h3>
   <ExampleTabs code={`<CodeBlock language="svelte">
   <script>
     let count = $state(0);
@@ -160,7 +153,7 @@ console.log(greet(person));`}</CodeBlock>
 \u003C/style>`}</CodeBlock>
   </ExampleTabs>
 
-  <h3>Shell</h3>
+  <h3>{m.codeblock_ex_shell()}</h3>
   <ExampleTabs code={`<CodeBlock language="bash">
   npm install
   npm run dev
@@ -177,7 +170,7 @@ npm run dev
 npm test`}</CodeBlock>
   </ExampleTabs>
 
-  <h3>JSON</h3>
+  <h3>{m.codeblock_ex_json()}</h3>
   <ExampleTabs code={`<CodeBlock language="json">
   { "name": "my-app", "version": "1.0.0" }
 </CodeBlock>`}>
@@ -191,23 +184,23 @@ npm test`}</CodeBlock>
 }`}</CodeBlock>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={CodeBlockModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Copy button includes <code>aria-label</code> that updates to "Copied!" after copying.</li>
-    <li>Code is wrapped in <code>&lt;pre&gt;&lt;code&gt;</code> for proper semantics.</li>
-    <li>Focus indicators on the copy button.</li>
+    <li>{m.codeblock_a11y_1_0()}<code>aria-label</code>{m.codeblock_a11y_1_1()}</li>
+    <li>{m.codeblock_a11y_2_0()}<code>&lt;pre&gt;&lt;code&gt;</code>{m.codeblock_a11y_2_1()}</li>
+    <li>{m.codeblock_a11y_3()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Tab</kbd></td><td>Move focus to the copy button</td></tr>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Copy code to clipboard</td></tr>
-      <tr><td><kbd>Ctrl</kbd>+<kbd>C</kbd></td><td>Copy selected text (browser native)</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>{m.codeblock_kb_1()}</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.codeblock_kb_2()}</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>C</kbd></td><td>{m.codeblock_kb_3()}</td></tr>
     </tbody>
   </table>
 </Container>

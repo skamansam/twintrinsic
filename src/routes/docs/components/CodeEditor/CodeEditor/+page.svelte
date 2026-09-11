@@ -9,6 +9,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CodeEditorModule from "$lib/components/CodeEditor/CodeEditor.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -16,79 +17,68 @@ import * as CodeEditorModule from "$lib/components/CodeEditor/CodeEditor.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>CodeEditor</h1>
+<h1>{m.ce_heading()}</h1>
 
+<p>{m.ce_intro_1()}</p>
+
+<h2>{m.sec_what_when_why()}</h2>
+
+<h3>{m.sec_what()}</h3>
+<p>{m.ce_what_1()}</p>
+
+<h3>{m.sec_when()}</h3>
 <p>
-  A powerful code editor component powered by CodeMirror 6. Supports dynamic
-  extension loading from multiple CDNs, syntax highlighting for 15+ languages,
-  and customizable themes.
+  {m.ce_when_1()}<code>&lt;CodeEditor&gt;</code>{m.ce_when_2()}<code>&lt;CodeBlock&gt;</code>{m.ce_when_3()}
 </p>
 
-<h2>What, When &amp; Why</h2>
-
-<h3>What is it?</h3>
-<p>
-  A full-featured code editing widget built on CodeMirror 6. It loads extensions
-  dynamically from CDNs (esm.sh, jsdelivr, unpkg), providing syntax highlighting,
-  line numbers, code folding, and active line highlighting without bundling the
-  entire CodeMirror library.
-</p>
-
-<h3>When should I use it?</h3>
-<p>
-  Use <code>&lt;CodeEditor&gt;</code> when users need to write or edit code directly
-  in the browser — configuration editors, code playgrounds, CMS code fields. For
-  read-only code display, use <code>&lt;CodeBlock&gt;</code> instead.
-</p>
-
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Dynamic loading</strong> — extensions load from CDN on demand, keeping the initial bundle small.</li>
-  <li><strong>15+ languages</strong> — JavaScript, TypeScript, Python, HTML, CSS, JSON, and more.</li>
-  <li><strong>9+ themes</strong> — One Dark, Dracula, Nord, Solarized, and others.</li>
-  <li><strong>Full editor features</strong> — line numbers, code folding, active line highlighting.</li>
+  <li><strong>{m.ce_why_dynamic()}</strong>{m.ce_why_dynamic_desc()}</li>
+  <li><strong>{m.ce_why_langs()}</strong>{m.ce_why_langs_desc()}</li>
+  <li><strong>{m.ce_why_themes()}</strong>{m.ce_why_themes_desc()}</li>
+  <li><strong>{m.ce_why_features()}</strong>{m.ce_why_features_desc()}</li>
 </ul>
 
-<h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
 <ul>
   <li><a href="https://codemirror.net/">CodeMirror 6</a></li>
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea">MDN — textarea element</a></li>
 </ul>
 
 
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>CodeMirror integration — full-featured, battle-tested</li>
-    <li>Syntax highlighting, line numbers, autocomplete, plugins</li>
-    <li>Kept as-is per user decision — too complex to replace</li>
+  <li>{m.ce_impl_1()}</li>
+  <li>{m.ce_impl_2()}</li>
+  <li>{m.ce_impl_3()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use for read-only code display — use CodeBlock instead</li>
+  <li>{m.ce_mistake_1()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>CodeBlock, CodeBlockSpeed</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.ce_related_1()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Editor fills container width; height is configurable via the <code>height</code> prop.</li>
-  <li>Line wrapping can be enabled for narrow viewports.</li>
-  <li>Touch input supported on mobile devices.</li>
+  <li>{m.ce_responsive_1_1()}<code>height</code>{m.ce_responsive_1_2()}</li>
+  <li>{m.ce_responsive_2()}</li>
+  <li>{m.ce_responsive_3()}</li>
 </ul>
 
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li>Theme selection via <code>theme</code> prop (light, one-dark, dracula, nord, etc.).</li>
-  <li>Language via <code>language</code> prop.</li>
-  <li>CDN source via <code>cdnSource</code> prop (esm.sh, jsdelivr, unpkg).</li>
-  <li>Height via <code>height</code> prop.</li>
+  <li>{m.ce_custom_1_1()}<code>theme</code>{m.ce_custom_1_2()}</li>
+  <li>{m.ce_custom_2_1()}<code>language</code>{m.ce_custom_2_2()}</li>
+  <li>{m.ce_custom_3_1()}<code>cdnSource</code>{m.ce_custom_3_2()}</li>
+  <li>{m.ce_custom_4_1()}<code>height</code>{m.ce_custom_4_2()}</li>
 </ul>
 
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>JavaScript Editor</h3>
+<h3>{m.ce_ex_js()}</h3>
 <ExampleTabs code={`<CodeEditor
   code="const greeting = 'Hello, World!';"
   language="javascript"
@@ -110,7 +100,7 @@ console.log(fibonacci(10));`}
   </div>
 </ExampleTabs>
 
-<h3>Python Editor</h3>
+<h3>{m.ce_ex_python()}</h3>
 <ExampleTabs code={`<CodeEditor
   code="def hello_world(): print('Hello!')"
   language="python"
@@ -131,7 +121,7 @@ if __name__ == "__main__":
   </div>
 </ExampleTabs>
 
-<h3>Dark Theme (One Dark)</h3>
+<h3>{m.ce_ex_one_dark()}</h3>
 <ExampleTabs code={`<CodeEditor
   code="const x = 42;"
   language="javascript"
@@ -151,12 +141,8 @@ console.log(doubled);`}
   </div>
 </ExampleTabs>
 
-<h3>Built-in Dark Theme (Dracula Colors)</h3>
-<p>
-  When a CDN theme can't be loaded, the editor falls back to a built-in CSS
-  dark theme with Dracula-inspired colors. This works offline and has zero
-  CDN dependencies.
-</p>
+<h3>{m.ce_ex_dracula()}</h3>
+<p>{m.ce_dracula_note()}</p>
 <ExampleTabs code={`<CodeEditor
   code="const x = 42;"
   language="javascript"
@@ -183,11 +169,9 @@ const user: User = {
   </div>
 </ExampleTabs>
 
-<h3>Auto Dark Mode (System Preference)</h3>
+<h3>{m.ce_ex_auto_dark()}</h3>
 <p>
-  When the page is in dark mode (<code>.dark</code> class on <code>&lt;html&gt;</code>),
-  the editor automatically applies dark colors even with <code>theme="light"</code>.
-  This uses CSS overrides — no JavaScript re-initialization needed.
+  {m.ce_auto_dark_note_1()}<code>.dark</code>{m.ce_auto_dark_note_2()}<code>&lt;html&gt;</code>{m.ce_auto_dark_note_3()}<code>theme=&quot;light&quot;</code>{m.ce_auto_dark_note_4()}
 </p>
 <ExampleTabs code={`<CodeEditor
   code="const x = 42;"
@@ -212,43 +196,41 @@ console.log(greet('World'));`}
 
 
 
-<h2>Supported Languages</h2>
-<p>JavaScript, TypeScript, Python, HTML, CSS, JSON, XML, Markdown, SQL, Java, C++, Rust, Go, PHP, Vue, and Svelte.</p>
+<h2>{m.ce_supported_heading()}</h2>
+<p>{m.ce_supported_body()}</p>
 
-<h2>Supported Themes</h2>
+<h2>{m.ce_themes_heading()}</h2>
 <table>
-  <thead><tr><th>Theme</th><th>Type</th><th>Notes</th></tr></thead>
+  <thead><tr><th>{m.ce_themes_th_theme()}</th><th>{m.ce_themes_th_type()}</th><th>{m.ce_themes_th_notes()}</th></tr></thead>
   <tbody>
-    <tr><td><code>light</code></td><td>Default</td><td>Adapts to dark mode via CSS when page is in dark mode</td></tr>
-    <tr><td><code>one-dark</code></td><td>Local</td><td>Installed from <code>@codemirror/theme-one-dark</code></td></tr>
-    <tr><td><code>dracula</code></td><td>Built-in CSS</td><td>Dracula-inspired colors, zero CDN dependency</td></tr>
-    <tr><td><code>material-dark</code></td><td>Built-in CSS</td><td>Material Design dark colors</td></tr>
-    <tr><td><code>nord</code></td><td>Built-in CSS</td><td>Nord palette colors</td></tr>
-    <tr><td><code>solarized-dark</code></td><td>Built-in CSS</td><td>Solarized dark palette</td></tr>
-    <tr><td><code>ayu-dark</code></td><td>Built-in CSS</td><td>Ayu dark palette</td></tr>
+    <tr><td><code>light</code></td><td>{m.ce_theme_type_default()}</td><td>{m.ce_theme_light_notes()}</td></tr>
+    <tr><td><code>one-dark</code></td><td>{m.ce_theme_type_local()}</td><td>{m.ce_theme_one_dark_notes_1()}<code>@codemirror/theme-one-dark</code>{m.ce_theme_one_dark_notes_2()}</td></tr>
+    <tr><td><code>dracula</code></td><td>{m.ce_theme_type_builtin()}</td><td>{m.ce_theme_dracula_notes()}</td></tr>
+    <tr><td><code>material-dark</code></td><td>{m.ce_theme_type_builtin()}</td><td>{m.ce_theme_material_notes()}</td></tr>
+    <tr><td><code>nord</code></td><td>{m.ce_theme_type_builtin()}</td><td>{m.ce_theme_nord_notes()}</td></tr>
+    <tr><td><code>solarized-dark</code></td><td>{m.ce_theme_type_builtin()}</td><td>{m.ce_theme_solarized_notes()}</td></tr>
+    <tr><td><code>ayu-dark</code></td><td>{m.ce_theme_type_builtin()}</td><td>{m.ce_theme_ayu_notes()}</td></tr>
   </tbody>
 </table>
 <p>
-  All dark themes use local or built-in CSS — no CDN loading, no <code>@codemirror/state</code>
-  instance conflicts. The <code>one-dark</code> theme is installed as a local
-  package. Other dark themes share a built-in CSS theme with matching colors.
+  {m.ce_themes_footnote_1()}<code>@codemirror/state</code>{m.ce_themes_footnote_2()}<code>one-dark</code>{m.ce_themes_footnote_3()}
 </p>
 
-<h2>CDN Sources</h2>
+<h2>{m.ce_cdn_heading()}</h2>
 <ul>
-  <li><strong>esm.sh</strong> (default) — fast and reliable ESM CDN.</li>
-  <li><strong>jsdelivr</strong> — popular CDN with global distribution.</li>
-  <li><strong>unpkg</strong> — fast global content delivery for npm packages.</li>
+  <li><strong>esm.sh</strong>{m.ce_cdn_1()}</li>
+  <li><strong>jsdelivr</strong>{m.ce_cdn_2()}</li>
+  <li><strong>unpkg</strong>{m.ce_cdn_3()}</li>
 </ul>
 
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={CodeEditorModule} />
 
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Keyboard navigation support through CodeMirror.</li>
-  <li>Screen reader compatible.</li>
-  <li>Proper semantic HTML structure.</li>
-  <li>High contrast theme options available.</li>
+  <li>{m.ce_a11y_1()}</li>
+  <li>{m.ce_a11y_2()}</li>
+  <li>{m.ce_a11y_3()}</li>
+  <li>{m.ce_a11y_4()}</li>
 </ul>
 </Container>

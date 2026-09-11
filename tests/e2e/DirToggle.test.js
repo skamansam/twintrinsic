@@ -880,4 +880,60 @@ test.describe("Docs locale switcher", () => {
       page.getByText(/یک سطر جدول سبک‌دار با حالت‌های اختیاری انتخاب و غیرفعال\. به‌صورت /).first(),
     ).toBeVisible();
   });
+  test("translates the CodeBlock docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/CodeBlock/CodeBlock");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("CodeBlock");
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "دسترس‌پذیری" })).toBeVisible();
+    await expect(
+      page
+        .getByText(
+          /یک کامپوننت نمایش کد با برجسته‌سازی نحو مبتنی بر Prism\.js، تشخیص خودکار زبان، دکمه کپی در کلیپ‌بورد و منابع CDN قابل تنظیم\. زبان‌ها به‌صورت درخواستی با افزونه autoloader در Prism بارگذاری می‌شوند\./,
+        )
+        .first(),
+    ).toBeVisible();
+  });
+
+  test("translates the CodeBlockSpeed docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/CodeBlockSpeed/CodeBlockSpeed");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("CodeBlockSpeed");
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "دسترس‌پذیری" })).toBeVisible();
+    await expect(
+      page
+        .getByText(
+          /یک ویجت نمایش کد فقط-خواندنی که از Speed Highlight برای برجسته‌سازی نحو استفاده می‌کند\. برجسته‌ساز را به‌صورت درخواستی بارگذاری می‌کند و در مقایسه با گزینه‌های مبتنی بر Prism حجم بسته را کم نگه می‌دارد\./,
+        )
+        .first(),
+    ).toBeVisible();
+  });
+
+  test("translates the CodeEditor docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/CodeEditor/CodeEditor");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("CodeEditor");
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "دسترس‌پذیری" })).toBeVisible();
+    await expect(
+      page
+        .getByText(
+          /یک ویجت کامل ویرایش کد ساخته‌شده بر پایه CodeMirror 6\. افزونه‌ها را به‌صورت پویا از CDN بارگذاری می‌کند \(esm\.sh، jsdelivr، unpkg\) و برجسته‌سازی نحو، شماره خطوط، تاشدن کد و برجسته‌سازی خط فعال را بدون قرار دادن کل کتابخانه CodeMirror در بسته فراهم می‌کند\./,
+        )
+        .first(),
+    ).toBeVisible();
+  });
 });

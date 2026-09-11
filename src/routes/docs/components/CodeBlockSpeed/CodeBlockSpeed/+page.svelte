@@ -9,6 +9,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CodeBlockSpeedModule from "$lib/components/CodeBlockSpeed/CodeBlockSpeed.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -16,60 +17,50 @@ import * as CodeBlockSpeedModule from "$lib/components/CodeBlockSpeed/CodeBlockS
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>CodeBlockSpeed</h1>
+<h1>{m.cbs_heading()}</h1>
 
+<p>{m.cbs_intro_1()}</p>
+
+<h2>{m.sec_what_when_why()}</h2>
+
+<h3>{m.sec_what()}</h3>
+<p>{m.cbs_what_1()}</p>
+
+<h3>{m.sec_when()}</h3>
 <p>
-  A lightweight code block component powered by Speed Highlight. Faster and
-  smaller than Prism, with support for 13+ languages, automatic language
-  detection, and optional rendering time display.
+  {m.cbs_when_1()}<code>&lt;CodeBlockSpeed&gt;</code>{m.cbs_when_2()}<code>&lt;CodeEditor&gt;</code>{m.cbs_when_3()}
 </p>
 
-<h2>What, When &amp; Why</h2>
-
-<h3>What is it?</h3>
-<p>
-  A read-only code display widget that uses Speed Highlight for syntax
-  highlighting. It loads the highlighter on demand, keeping the bundle size
-  minimal compared to Prism-based alternatives.
-</p>
-
-<h3>When should I use it?</h3>
-<p>
-  Use <code>&lt;CodeBlockSpeed&gt;</code> for read-only code samples in documentation,
-  blog posts, or tutorials where bundle size and rendering speed matter. For a
-  full code editor, use <code>&lt;CodeEditor&gt;</code>.
-</p>
-
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Smaller bundle</strong> — Speed Highlight is significantly lighter than Prism.</li>
-  <li><strong>Faster rendering</strong> — optimized for quick syntax highlighting.</li>
-  <li><strong>Auto detection</strong> — can detect the language automatically from code patterns.</li>
-  <li><strong>Render time display</strong> — optional badge showing highlighting duration.</li>
+  <li><strong>{m.cbs_why_bundle()}</strong>{m.cbs_why_bundle_desc()}</li>
+  <li><strong>{m.cbs_why_faster()}</strong>{m.cbs_why_faster_desc()}</li>
+  <li><strong>{m.cbs_why_auto()}</strong>{m.cbs_why_auto_desc()}</li>
+  <li><strong>{m.cbs_why_time()}</strong>{m.cbs_why_time_desc()}</li>
 </ul>
 
-<h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
 <ul>
   <li><a href="https://SpeedHighlight.dev/">Speed Highlight</a></li>
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/pre">MDN — pre element</a></li>
 </ul>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Code block fills container width with horizontal scroll for long lines.</li>
-  <li>Copy button is accessible on touch devices.</li>
+  <li>{m.cbs_responsive_1()}</li>
+  <li>{m.cbs_responsive_2()}</li>
 </ul>
 
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li>Language via <code>language</code> prop (js, ts, python, html, css, json, etc.).</li>
-  <li>Auto detection when language is omitted.</li>
-  <li>Render time display via <code>showRenderTime</code> prop.</li>
+  <li>{m.cbs_custom_1_1()}<code>language</code>{m.cbs_custom_1_2()}</li>
+  <li>{m.cbs_custom_2()}</li>
+  <li>{m.cbs_custom_3_1()}<code>showRenderTime</code>{m.cbs_custom_3_2()}</li>
 </ul>
 
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>JavaScript</h3>
+<h3>{m.cbs_ex_js()}</h3>
 <ExampleTabs code={`<CodeBlockSpeed language="js">
   const greeting = 'Hello, Speed Highlight!';
   console.log(greeting);
@@ -84,7 +75,7 @@ console.log(fibonacci(10));`}
   </CodeBlockSpeed>
 </ExampleTabs>
 
-<h3>TypeScript</h3>
+<h3>{m.cbs_ex_ts()}</h3>
 <ExampleTabs code={`<CodeBlockSpeed language="ts">
   interface User { id: number; name: string; }
 </CodeBlockSpeed>`}>
@@ -103,7 +94,7 @@ const user: User = {
   </CodeBlockSpeed>
 </ExampleTabs>
 
-<h3>Python</h3>
+<h3>{m.cbs_ex_python()}</h3>
 <ExampleTabs code={`<CodeBlockSpeed language="python">
   def hello_world(): print("Hello!")
 </CodeBlockSpeed>`}>
@@ -116,7 +107,7 @@ if __name__ == "__main__":
   </CodeBlockSpeed>
 </ExampleTabs>
 
-<h3>With Rendering Time</h3>
+<h3>{m.cbs_ex_render_time()}</h3>
 <ExampleTabs code={`<CodeBlockSpeed language="js" showRenderTime={true}>
   const greeting = "Hello!";
 </CodeBlockSpeed>`}>
@@ -126,7 +117,7 @@ console.log(greeting);`}
   </CodeBlockSpeed>
 </ExampleTabs>
 
-<h3>Auto Language Detection</h3>
+<h3>{m.cbs_ex_auto()}</h3>
 <ExampleTabs code={`<CodeBlockSpeed>
   // Language auto-detected from code patterns
   const greeting = "Hello!";
@@ -137,26 +128,19 @@ console.log(greeting);`}
   </CodeBlockSpeed>
 </ExampleTabs>
 
-<h2>Supported Languages</h2>
-<p>JavaScript, TypeScript, JSX, TSX, Python, HTML, CSS, SCSS, JSON, YAML, Markdown, Bash, and Svelte.</p>
+<h2>{m.cbs_supported_heading()}</h2>
+<p>{m.cbs_supported_body()}</p>
 
-<h2>Rendering Time Feature</h2>
+<h2>{m.cbs_render_heading()}</h2>
 <p>
-  The <code>showRenderTime</code> prop displays the time (in milliseconds) it
-  takes for Speed Highlight to syntax highlight the code. The rendering time
-  appears as a badge in the code block header.
+  {m.cbs_render_body_1()}<code>showRenderTime</code>{m.cbs_render_body_2()}
 </p>
 
-<h2>Comparison: CodeBlockSpeed vs CodeBlock</h2>
+<h2>{m.cbs_comparison_heading()}</h2>
 
-<p>
-  Both components render syntax-highlighted, read-only code blocks. Below is a
-  side-by-side comparison with the same code sample rendered by each. Notice the
-  render time badge on CodeBlockSpeed — CodeBlock (Prism) does not expose this
-  metric.
-</p>
+<p>{m.cbs_comparison_lead()}</p>
 
-<h3>Side-by-Side Comparison</h3>
+<h3>{m.cbs_ex_side_by_side()}</h3>
 <ExampleTabs code={`<CodeBlockSpeed language="javascript" showRenderTime={true}>
   {sampleCode}
 </CodeBlockSpeed>
@@ -192,24 +176,24 @@ console.log(sequence);
   </div>
 </ExampleTabs>
 
-<h3>Feature Comparison</h3>
+<h3>{m.cbs_ex_feature_compare()}</h3>
 <table>
-  <thead><tr><th>Feature</th><th>CodeBlock (Prism)</th><th>CodeBlockSpeed</th></tr></thead>
+  <thead><tr><th>{m.cbs_table_th_feature()}</th><th>{m.cbs_table_th_prism()}</th><th>{m.cbs_table_th_speed()}</th></tr></thead>
   <tbody>
-    <tr><td>Bundle Size</td><td>Larger</td><td>Smaller ✓</td></tr>
-    <tr><td>Performance</td><td>Good</td><td>Faster ✓</td></tr>
-    <tr><td>Language Support</td><td>Extensive (150+)</td><td>Core languages (13)</td></tr>
-    <tr><td>Copy Button</td><td>✓</td><td>✓</td></tr>
-    <tr><td>Render Time Badge</td><td>—</td><td>✓</td></tr>
-    <tr><td>Auto Language Detection</td><td>✓ (autoloader)</td><td>✓</td></tr>
-    <tr><td>Line Numbers</td><td>Plugin required</td><td>—</td></tr>
+    <tr><td>{m.cbs_row_bundle()}</td><td>{m.cbs_row_bundle_prism()}</td><td>{m.cbs_row_bundle_speed()}</td></tr>
+    <tr><td>{m.cbs_row_perf()}</td><td>{m.cbs_row_perf_prism()}</td><td>{m.cbs_row_perf_speed()}</td></tr>
+    <tr><td>{m.cbs_row_lang()}</td><td>{m.cbs_row_lang_prism()}</td><td>{m.cbs_row_lang_speed()}</td></tr>
+    <tr><td>{m.cbs_row_copy()}</td><td>✓</td><td>✓</td></tr>
+    <tr><td>{m.cbs_row_time()}</td><td>{m.cbs_row_grid()}</td><td>✓</td></tr>
+    <tr><td>{m.cbs_row_auto()}</td><td>{m.cbs_row_auto_prism()}</td><td>✓</td></tr>
+    <tr><td>{m.cbs_row_lines()}</td><td>{m.cbs_row_lines_prism()}</td><td>{m.cbs_row_grid_speed()}</td></tr>
   </tbody>
 </table>
 
-<h3>When to Use Which</h3>
+<h3>{m.cbs_ex_when_which()}</h3>
 <ul>
-  <li><strong>CodeBlockSpeed</strong> — Documentation, blog posts, tutorials where fast loading and small bundle size matter. Perfect for static code samples.</li>
-  <li><strong>CodeBlock</strong> — Projects already using Prism, or when you need extensive language coverage (150+ languages) or Prism plugins.</li>
+  <li><strong>CodeBlockSpeed</strong> — {m.cbs_when_which_speed()}</li>
+  <li><strong>CodeBlock</strong> — {m.cbs_when_which_prism()}</li>
 </ul>
 
 <style lang="postcss">
@@ -253,15 +237,15 @@ console.log(sequence);
   }
 </style>
 
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={CodeBlockSpeedModule} />
 
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Semantic HTML structure with <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code>.</li>
-  <li>Accessible copy button with proper <code>aria-label</code>.</li>
-  <li>Keyboard navigation support.</li>
-  <li>Screen reader friendly.</li>
-  <li>High contrast support.</li>
+  <li>{m.cbs_a11y_1_0()}<code>&lt;pre&gt;</code>{m.cbs_a11y_1_1()}<code>&lt;code&gt;</code>{m.cbs_a11y_1_2()}</li>
+  <li>{m.cbs_a11y_2_0()}<code>aria-label</code>{m.cbs_a11y_2_1()}</li>
+  <li>{m.cbs_a11y_3()}</li>
+  <li>{m.cbs_a11y_4()}</li>
+  <li>{m.cbs_a11y_5()}</li>
 </ul>
 </Container>
