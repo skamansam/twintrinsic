@@ -11,6 +11,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as TreeModule from "$lib/components/Tree/Tree.svelte"
 import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -18,79 +19,72 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Tree</h1>
+  <h1>{m.tree_heading()}</h1>
 
   <p>
-    <strong>Tree</strong> displays hierarchical data with expandable/collapsible
-    nodes. Ideal for file explorers, org charts, category navigation, and
-    document outlines.
+    <strong>{m.tree_heading()}</strong>{m.tree_intro_1()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A nested list of TreeNode elements with expand/collapse controls, selection
-    modes, connecting lines, and full keyboard navigation. Uses
-    <code>role="tree"</code> / <code>role="treeitem"</code>.
+    {m.tree_what_1()}<code>role="tree"</code>{m.tree_what_2()}<code>role="treeitem"</code>{m.tree_what_3()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use <code>&lt;Tree&gt;</code> when data has a parent-child hierarchy: file
-    systems, org charts, nested categories, document outlines. For flat lists,
-    use a Listbox or Select.
+    {m.tree_when_1()}<code>&lt;Tree&gt;</code>{m.tree_when_2()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Hierarchical navigation</strong> — expand/collapse reveals nested items.</li>
-    <li><strong>Keyboard</strong> — arrow keys, Home/End, Enter/Space, type-ahead.</li>
-    <li><strong>Selection</strong> — single or multi-select modes.</li>
+    <li><strong>{m.tree_why_hierarchy()}</strong>{m.tree_why_hierarchy_desc()}</li>
+    <li><strong>{m.tree_why_keyboard()}</strong>{m.tree_why_keyboard_desc()}</li>
+    <li><strong>{m.tree_why_selection()}</strong>{m.tree_why_selection_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/treeview/">WAI-ARIA APG — Tree View</a></li>
     <li><a href="https://primer.style/product/components/TreeView">Primer — TreeView</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>`&lt;details&gt;` + `&lt;summary&gt;` for expand/collapse — native HTML</li>
-    <li>ARIA treeview pattern: `role=&quot;tree&quot;` / `role=&quot;treeitem&quot;` / `role=&quot;group&quot;`</li>
-    <li>`aria-expanded`, `aria-selected`, `aria-level` for screen readers</li>
-    <li>Arrow keys: Right expands, Left collapses, Up/Down navigate siblings</li>
-    <li>`multiSelect` implies `selectable` (fixed in recent commit)</li>
+  <li><code>&lt;details&gt;</code>{m.tree_impl_1_2()}<code>&lt;summary&gt;</code>{m.tree_impl_1_3()}</li>
+  <li>{m.tree_impl_2_0()}<code>role=&quot;tree&quot;</code>{m.tree_impl_2_1()}<code>role=&quot;treeitem&quot;</code>{m.tree_impl_2_2()}<code>role=&quot;group&quot;</code></li>
+  <li><code>aria-expanded</code>{m.tree_impl_3_1()}<code>aria-selected</code>{m.tree_impl_3_2()}<code>aria-level</code>{m.tree_impl_3_3()}</li>
+  <li>{m.tree_impl_4()}</li>
+  <li><code>multiSelect</code>{m.tree_impl_5_1()}<code>selectable</code>{m.tree_impl_5_2()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use a nested `&lt;ul&gt;` without ARIA roles — tree semantics require `role=&quot;tree&quot;`</li>
-    <li>Don't forget `aria-level` — screen readers need depth information</li>
+  <li>{m.tree_mistake_1_0()}<code>&lt;ul&gt;</code>{m.tree_mistake_1_1()}<code>role=&quot;tree&quot;</code></li>
+  <li>{m.tree_mistake_2_0()}<code>aria-level</code>{m.tree_mistake_2_1()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>TreeMenu, Listbox, Menu</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.tree_related_1()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Scrollable when the tree is taller than the container.</li>
-    <li>Touch targets meet 44×44 px minimum.</li>
+    <li>{m.tree_responsive_1()}</li>
+    <li>{m.tree_responsive_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li>Selection: single (<code>selectable</code>) or multi (<code>multiSelect</code>).</li>
-    <li>Connecting lines via <code>showLines</code>.</li>
-    <li>Expand all by default via <code>expandAll</code>.</li>
-    <li>Icons on individual TreeNodes.</li>
+    <li>{m.tree_custom_1_0()}<code>selectable</code>{m.tree_custom_1_1()}<code>multiSelect</code>{m.tree_custom_1_2()}</li>
+    <li>{m.tree_custom_2_0()}<code>showLines</code>{m.tree_custom_2_1()}</li>
+    <li>{m.tree_custom_3_0()}<code>expandAll</code>{m.tree_custom_3_1()}</li>
+    <li>{m.tree_custom_4()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic Tree</h3>
+  <h3>{m.tree_ex_basic()}</h3>
   <ExampleTabs code={`<Tree>
   <TreeNode label="Acme Website">
     <TreeNode label="Pages">
@@ -121,7 +115,7 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Selectable</h3>
+  <h3>{m.tree_ex_selectable()}</h3>
   <ExampleTabs code={`<Tree selectable>
   <TreeNode label="Projects">
     <TreeNode label="Website" />
@@ -141,7 +135,7 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>With Lines</h3>
+  <h3>{m.tree_ex_lines()}</h3>
   <ExampleTabs code={`<Tree showLines>
   <TreeNode label="Acme Website">
     <TreeNode label="Pages"><TreeNode label="Home" /><TreeNode label="Pricing" /></TreeNode>
@@ -158,8 +152,8 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Expanded by Default</h3>
-  <p>Use <code>expandAll</code> to expand every node at once, or set <code>expanded</code> on individual nodes.</p>
+  <h3>{m.tree_ex_expanded()}</h3>
+  <p>{m.tree_expanded_note_1()}<code>expandAll</code>{m.tree_expanded_note_2()}<code>expanded</code>{m.tree_expanded_note_3()}</p>
   <ExampleTabs code={`<Tree expandAll>
   <TreeNode label="Home">
     <TreeNode label="About" />
@@ -176,7 +170,7 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Multi-Select</h3>
+  <h3>{m.tree_ex_multiselect()}</h3>
   <ExampleTabs code={`<Tree multiSelect>
   <TreeNode label="Documents">
     <TreeNode label="readme.md" />
@@ -193,8 +187,8 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Data-Driven Tree</h3>
-  <p>Use the <code>items</code> prop to render a tree from a data array instead of composing <code>&lt;TreeNode&gt;</code> sub-components. Each item needs a <code>key</code> and <code>label</code>, with optional <code>icon</code>, <code>children</code>, <code>expanded</code>, and <code>disabled</code> fields.</p>
+  <h3>{m.tree_ex_data()}</h3>
+  <p>{m.tree_data_note_1()}<code>items</code>{m.tree_data_note_2()}<code>&lt;TreeNode&gt;</code>{m.tree_data_note_3()}<code>key</code>{m.tree_data_note_4()}<code>label</code>{m.tree_data_note_5()}<code>icon</code>{m.tree_data_note_6()}<code>children</code>{m.tree_data_note_7()}<code>expanded</code>{m.tree_data_note_8()}<code>disabled</code>{m.tree_data_note_9()}</p>
   <ExampleTabs code={`<Tree expandAll items={[
   { key: 'src', label: 'src', icon: 'tabler:folder', children: [
     { key: 'lib', label: 'lib', icon: 'tabler:folder', children: [
@@ -219,8 +213,8 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Data-Driven with Selection</h3>
-  <p>Data-driven trees work with <code>selectable</code> and <code>multiSelect</code> just like the snippet API.</p>
+  <h3>{m.tree_ex_data_select()}</h3>
+  <p>{m.tree_data_select_note_1()}<code>selectable</code>{m.tree_data_select_note_2()}<code>multiSelect</code>{m.tree_data_select_note_3()}</p>
   <ExampleTabs code={`<Tree selectable items={[
   { key: 'dashboard', label: 'Dashboard', icon: 'tabler:layout-dashboard' },
   { key: 'analytics', label: 'Analytics', icon: 'tabler:chart-bar' },
@@ -235,33 +229,33 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={TreeModule} />
 
-  <h2>TreeNode Props</h2>
+  <h2>{m.tree_treenode_props_heading()}</h2>
   <PropsTable component={TreeNodeModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={TreeModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li><code>role="tree"</code>, <code>role="treeitem"</code>, <code>role="group"</code>.</li>
-    <li><code>aria-expanded</code>, <code>aria-selected</code>, <code>aria-level</code>.</li>
-    <li>Arrow keys, Home/End, Enter/Space, type-ahead.</li>
+    <li><code>role="tree"</code>{m.tree_a11y_1_1()}<code>role="treeitem"</code>{m.tree_a11y_1_2()}<code>role="group"</code>{m.tree_a11y_1_3()}</li>
+    <li><code>aria-expanded</code>{m.tree_a11y_2_1()}<code>aria-selected</code>{m.tree_a11y_2_2()}<code>aria-level</code>{m.tree_a11y_2_3()}</li>
+    <li>{m.tree_a11y_3()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Arrow Down</kbd></td><td>Next visible node</td></tr>
-      <tr><td><kbd>Arrow Up</kbd></td><td>Previous visible node</td></tr>
-      <tr><td><kbd>Arrow Right</kbd></td><td>Expand node or move to first child</td></tr>
-      <tr><td><kbd>Arrow Left</kbd></td><td>Collapse node or move to parent</td></tr>
-      <tr><td><kbd>Home</kbd> / <kbd>End</kbd></td><td>First/last visible node</td></tr>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Select the focused node</td></tr>
-      <tr><td><kbd>*</kbd></td><td>Expand all siblings</td></tr>
+      <tr><td><kbd>Arrow Down</kbd></td><td>{m.tree_kb_1()}</td></tr>
+      <tr><td><kbd>Arrow Up</kbd></td><td>{m.tree_kb_2()}</td></tr>
+      <tr><td><kbd>Arrow Right</kbd></td><td>{m.tree_kb_3()}</td></tr>
+      <tr><td><kbd>Arrow Left</kbd></td><td>{m.tree_kb_4()}</td></tr>
+      <tr><td><kbd>Home</kbd> / <kbd>End</kbd></td><td>{m.tree_kb_5()}</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.tree_kb_6()}</td></tr>
+      <tr><td><kbd>*</kbd></td><td>{m.tree_kb_7()}</td></tr>
     </tbody>
   </table>
 </Container>

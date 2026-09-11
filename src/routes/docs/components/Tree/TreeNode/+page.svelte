@@ -10,6 +10,7 @@ import TreeNode from "$lib/components/Tree/TreeNode.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -19,44 +20,37 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <div class="not-prose mb-6 p-4 bg-primary-50 dark:bg-primary-950 border border-primary-200 dark:border-primary-800 rounded-lg">
     <p class="text-sm text-primary-700 dark:text-primary-300 m-0">
-      <strong>TreeNode</strong> is a sub-component of
-      <a href="/docs/components/Tree/Tree" class="underline font-medium">Tree</a>.
-      See the parent component docs for usage, examples, and full API reference.
+      <strong>{m.treenode_heading()}</strong>{m.treenode_note_1()}
+      <a href="/docs/components/Tree/Tree" class="underline font-medium">Tree</a>{m.treenode_note_2()}
     </p>
   </div>
 
-  <h1>TreeNode</h1>
+  <h1>{m.treenode_heading()}</h1>
 
   <p>
-    <strong>TreeNode</strong> is a single node inside a Tree. Renders a
-    WAI-ARIA <code>treeitem</code> with expand/collapse controls, selection,
-    icons, and custom labels.
+    <strong>{m.treenode_heading()}</strong>{m.treenode_intro_1()}<code>treeitem</code>{m.treenode_intro_2()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.treenode_what_1()}</p>
+
+  <h3>{m.sec_when()}</h3>
   <p>
-    A collapsible list item within a Tree. Each node can have children (nested
-    TreeNodes), an icon, and custom label content.
+    {m.treenode_when_1()}<code>&lt;Tree&gt;</code>{m.treenode_when_2()}
   </p>
 
-  <h3>When should I use it?</h3>
-  <p>
-    Always inside a <code>&lt;Tree&gt;</code>. Each item in the hierarchy gets
-    its own TreeNode. Leaf nodes have no children; parent nodes expand/collapse.
-  </p>
-
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Semantics</strong> — <code>role="treeitem"</code> with <code>aria-expanded</code>.</li>
-    <li><strong>Consistency</strong> — shared expand/collapse behavior and focus styling.</li>
-    <li><strong>Accessibility</strong> — keyboard navigation handled by parent Tree.</li>
+    <li><strong>{m.treenode_why_semantics()}</strong>{m.treenode_why_semantics_desc_1()}<code>role="treeitem"</code>{m.treenode_why_semantics_desc_2()}<code>aria-expanded</code>{m.treenode_why_semantics_desc_3()}</li>
+    <li><strong>{m.treenode_why_consistency()}</strong>{m.treenode_why_consistency_desc()}</li>
+    <li><strong>{m.treenode_why_a11y()}</strong>{m.treenode_why_a11y_desc()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic Nodes</h3>
+  <h3>{m.treenode_ex_basic()}</h3>
   <ExampleTabs code={`<Tree>
   <TreeNode label="Projects">
     <TreeNode label="Website" />
@@ -79,7 +73,7 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Expanded and Selected</h3>
+  <h3>{m.treenode_ex_states()}</h3>
   <ExampleTabs code={`<Tree>
   <TreeNode label="Documents" expanded>
     <TreeNode label="Invoices" selected />
@@ -97,7 +91,7 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Disabled Node</h3>
+  <h3>{m.treenode_ex_disabled()}</h3>
   <ExampleTabs code={`<Tree selectable>
   <TreeNode label="Team">
     <TreeNode label="Alice" />
@@ -114,7 +108,7 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>With Icons</h3>
+  <h3>{m.treenode_ex_icons()}</h3>
   <ExampleTabs code={`<TreeNode label="Folder" expanded>
   <TreeNode label="File" />
   <TreeNode label="Settings" />
@@ -127,16 +121,16 @@ import * as TreeNodeModule from "$lib/components/Tree/TreeNode.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={TreeNodeModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={TreeNodeModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li><code>role="treeitem"</code> with <code>aria-expanded</code>, <code>aria-selected</code>, <code>aria-disabled</code>.</li>
-    <li>Expand/collapse buttons labeled for screen readers.</li>
-    <li>Full keyboard navigation via parent Tree.</li>
+    <li><code>role="treeitem"</code>{m.treenode_a11y_1_1()}<code>aria-expanded</code>{m.treenode_a11y_1_2()}<code>aria-selected</code>{m.treenode_a11y_1_3()}<code>aria-disabled</code>{m.treenode_a11y_1_4()}</li>
+    <li>{m.treenode_a11y_2()}</li>
+    <li>{m.treenode_a11y_3()}</li>
   </ul>
 </Container>

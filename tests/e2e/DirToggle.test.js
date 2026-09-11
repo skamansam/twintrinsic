@@ -754,4 +754,41 @@ test.describe("Docs locale switcher", () => {
         .first(),
     ).toBeVisible();
   });
+  test("translates the Tree docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Tree/Tree");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("Tree");
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "چیست، چه زمانی و چرا" })).toBeVisible();
+    await expect(
+      page
+        .getByText(
+          /فهرستی تودرتوی از عناصر TreeNode با کنترل‌های باز\/بستن، حالت‌های انتخاب، خطوط اتصال و پیمایش کامل صفحه‌کلید\. از /,
+        )
+        .first(),
+    ).toBeVisible();
+  });
+
+  test("translates the TreeNode docs page prose", async ({ page }) => {
+    await page.goto("/docs/components/Tree/TreeNode");
+    await waitForHydration(page);
+
+    await expect(page.locator("h1")).toHaveText("TreeNode");
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("h2", { hasText: "چیست، چه زمانی و چرا" })).toBeVisible();
+    await expect(
+      page
+        .getByText(
+          /یک عنصر فهرست جمع‌شدنی درون Tree\. هر گره می‌تواند فرزند \(TreeNodeهای تودرتو\)، شمایل و محتوای برچسب سفارشی داشته باشد\./,
+        )
+        .first(),
+    ).toBeVisible();
+  });
 });
