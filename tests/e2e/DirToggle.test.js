@@ -1146,7 +1146,19 @@ test.describe("Docs locale switcher", () => {
 
     const heading = page.getByRole("heading", { name: "Switch", level: 1 });
     await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");    await expect(page.getByRole("heading", { name: "سفارشی‌سازی", level: 2 })).toBeVisible();
+  });
+
+  test("Slider docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Form/Slider");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "Slider", level: 1 });
+    await expect(heading).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-    await expect(page.getByRole("heading", { name: "Section", level: 2 })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "سفارشی‌سازی", level: 2 })).toBeVisible();
   });
 });
