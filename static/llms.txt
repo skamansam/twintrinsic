@@ -788,7 +788,7 @@ StatsCard StatsCard — A card component for displaying a single metric with opt
 
 Metrics examples page — comprehensive dashboard demo
 
-Dashboard Examples Comprehensive examples showing how to build data dashboards using Metrics components. These demonstrate real-world layouts combining multiple chart types, KPI cards, and progress indicators. Key Metrics Overview Display key performance indicators in a responsive grid layout. KPI Progress Tracking Track progress towards targets with visual progress indicators. Sales Trends Visualize sales performance across multiple products over time. Website Traffic Analysis Track traffic sources and device types with stacked area charts. Conversion Sources Understand where your conversions come from with a donut chart breakdown. Performance Metrics Monitor system and business performance with gauges and progress bars. Resource Utilization Track resource usage with progress metrics. Best Practices Responsive Design: Use responsive grid layouts with MetricGrid to adapt to different screen sizes. Color Consistency: Use consistent colors across related metrics. Leverage the color themes (primary, success, warning, danger) for visual hierarchy. Data Accuracy: Ensure data is up-to-date and clearly indicate refresh times. Accessibility: All Metrics components include ARIA labels and keyboard navigation. Provide text alternatives for visual data.
+: : : :
 
 ### /docs/components/Modal/Modal
 
