@@ -959,4 +959,27 @@ test.describe("Docs locale switcher", () => {
     await expect(heading).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
   });
+  test("LineChart docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Metrics/LineChart");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "انتخاب نمودار مناسب" });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
+
+  test("PieChart docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Metrics/PieChart");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "چیست، چه زمانی و چرا" });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
 });

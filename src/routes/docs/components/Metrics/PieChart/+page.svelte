@@ -9,6 +9,7 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PieChart from "$lib/components/Metrics/PieChart/PieChart.svelte"
 import * as PieChartModule from "$lib/components/Metrics/PieChart/PieChart.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 const pieData = [35, 25, 20, 15, 5]
 const pieLabels = ['Chrome', 'Firefox', 'Safari', 'Edge', 'Other']
@@ -55,32 +56,27 @@ const interactiveCode = `<script lang="ts">
   <h1>PieChart</h1>
 
   <p>
-    <strong>PieChart</strong> displays proportional data as an SVG pie or donut chart.
-    Each slice represents a portion of the whole. Supports donut mode, custom start angles,
-    hover tooltips, and click interactivity.
+    <strong>PieChart</strong> {m.pie_lede()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    An SVG chart for displaying proportional data. Each slice represents a portion of the
-    whole. Set <code>hole</code> to create a donut chart with optional center text.
+    {m.pie_what()} <code>hole</code> {m.pie_what_2()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use PieChart for showing composition or parts of a whole: market share, budget allocation,
-    survey results. For trends over time, use <code>&lt;LineChart&gt;</code>. For single
-    values, use <code>&lt;KPICard&gt;</code>.
+    {m.pie_when_1()} <code>&lt;LineChart&gt;</code>. {m.pie_when_2()} <code>&lt;KPICard&gt;</code>.
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>SVG rendering</strong> — crisp at any resolution, no canvas dependency.</li>
-    <li><strong>Visual composition</strong> — intuitive part-to-whole relationship.</li>
-    <li><strong>Donut mode</strong> — center text for key metrics (total, percentage).</li>
-    <li><strong>Interactive</strong> — hover tooltips, click callbacks, keyboard accessible.</li>
+    <li><strong>{m.pie_why_svg()}</strong>{m.pie_why_svg_desc()}</li>
+    <li><strong>{m.pie_why_composition()}</strong>{m.pie_why_composition_desc()}</li>
+    <li><strong>{m.pie_why_donut()}</strong>{m.pie_why_donut_desc()}</li>
+    <li><strong>{m.pie_why_interactive()}</strong>{m.pie_why_interactive_desc()}</li>
   </ul>
 
   <h3>Sources</h3>
@@ -91,25 +87,25 @@ const interactiveCode = `<script lang="ts">
     <li><a href="https://d3js.org/d3-shape/pie">D3.js — Pie Layouts</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>SVG charts scale to any resolution.</li>
-    <li>Set <code>size</code> to control dimensions; chart is square.</li>
+    <li>{m.chart_responsive_2()}</li>
+    <li>{m.pie_responsive_2()} <code>size</code> {m.pie_responsive_2_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li><code>hole</code> — donut mode (0 = pie, 0.6 = standard donut, 0.8 = thin ring).</li>
-    <li><code>centerText</code> / <code>centerSubtext</code> — text in the center (donut mode).</li>
-    <li><code>start</code> — start angle: <code>'top'</code>, <code>'right'</code>, <code>'bottom'</code>, <code>'left'</code>, or <code>'45deg'</code>.</li>
-    <li><code>counterClockwise</code> — draw slices in reverse direction.</li>
-    <li><code>showTooltips</code> — hover tooltips with label, value, and percentage.</li>
-    <li>Custom colors, labels, and sizes.</li>
+    <li><code>hole</code>{m.pie_custom_hole()}</li>
+    <li><code>centerText</code> / <code>centerSubtext</code>{m.pie_custom_center()}</li>
+    <li><code>start</code>{m.pie_custom_start()} <code>'top'</code>, <code>'right'</code>, <code>'bottom'</code>, <code>'left'</code>, {m.pie_custom_start_2()} <code>'45deg'</code>.</li>
+    <li><code>counterClockwise</code>{m.pie_custom_ccw()}</li>
+    <li><code>showTooltips</code>{m.pie_custom_tooltips()}</li>
+    <li>{m.pie_custom_colors()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic Pie</h3>
+  <h3>{m.pie_ex_basic()}</h3>
   <ExampleTabs code={`<PieChart data={[35, 25, 20, 15, 5]} labels={["Chrome", "Firefox", "Safari", "Edge", "Other"]} size={300} />`}>
     <div class="flex justify-center" data-testid="metrics-basic-piechart">
       <PieChart
@@ -120,7 +116,7 @@ const interactiveCode = `<script lang="ts">
     </div>
   </ExampleTabs>
 
-  <h3>Donut Mode with Center Text</h3>
+  <h3>{m.pie_ex_donut()}</h3>
   <ExampleTabs code={`<PieChart data={[35, 25, 20]} labels={["Desktop", "Mobile", "Tablet"]}
   hole={0.6} centerText="100%" centerSubtext="Total" size={300} />`}>
     <div class="flex justify-center" data-testid="metrics-donut-center">
@@ -135,7 +131,7 @@ const interactiveCode = `<script lang="ts">
     </div>
   </ExampleTabs>
 
-  <h3>Custom Start Angle</h3>
+  <h3>{m.pie_ex_start()}</h3>
   <ExampleTabs code={`<PieChart data={[30, 25, 20, 15]} labels={["Q1", "Q2", "Q3", "Q4"]}
   start="right" size={300} />`}>
     <div class="flex justify-center" data-testid="metrics-start-angle">
@@ -148,7 +144,7 @@ const interactiveCode = `<script lang="ts">
     </div>
   </ExampleTabs>
 
-  <h3>Counter-Clockwise</h3>
+  <h3>{m.pie_ex_ccw()}</h3>
   <ExampleTabs code={`<PieChart data={[35, 25, 20]} labels={["A", "B", "C"]}
   counterClockwise size={300} />`}>
     <div class="flex justify-center" data-testid="metrics-counterclockwise">
@@ -161,7 +157,7 @@ const interactiveCode = `<script lang="ts">
     </div>
   </ExampleTabs>
 
-  <h3>With Title and Legend</h3>
+  <h3>{m.pie_ex_title()}</h3>
   <ExampleTabs code={`<PieChart data={[35, 25, 20, 15, 5]} labels={["Chrome", "Firefox", "Safari", "Edge", "Other"]}
   title="Browser Market Share" showLegend={true} size={300} />`}>
     <div class="flex justify-center" data-testid="metrics-with-title-and-legend">
@@ -175,11 +171,9 @@ const interactiveCode = `<script lang="ts">
     </div>
   </ExampleTabs>
 
-  <h3>Active / Pull Slice</h3>
+  <h3>{m.pie_ex_pull()}</h3>
   <p>
-    Click a slice or legend item to "pull it out" from the chart. The active slice is
-    displaced outward by <code>pullDistance</code> pixels. Click again (or click the same
-    legend item) to deactivate.
+    {m.pie_ex_pull_desc()} <code>pullDistance</code> {m.pie_ex_pull_desc_2()}
   </p>
   <ExampleTabs code={`<PieChart
   data={[35, 25, 20, 15, 5]}
@@ -199,11 +193,9 @@ const interactiveCode = `<script lang="ts">
     </div>
   </ExampleTabs>
 
-  <h3>Interactive Click-to-Reveal</h3>
+  <h3>{m.pie_ex_reveal()}</h3>
   <p>
-    Click any slice to activate it and display its details below the chart.
-    The <code>onactivechange</code> and <code>onsliceclick</code> callbacks drive
-    the info panel.
+    {m.pie_ex_reveal_desc()} <code>onactivechange</code> {m.pie_ex_reveal_desc_2()} <code>onsliceclick</code> {m.pie_ex_reveal_desc_3()}
   </p>
   <ExampleTabs code={interactiveCode}>
     <div class="flex flex-col items-center" data-testid="metrics-interactive">
@@ -225,11 +217,9 @@ const interactiveCode = `<script lang="ts">
     </div>
   </ExampleTabs>
 
-  <h3>Outside Labels with Leader Lines</h3>
+  <h3>{m.pie_ex_outside()}</h3>
   <p>
-    Set <code>outsideLabels</code> to render labels outside the chart connected by leader lines.
-    Useful when slices are too small for inside labels. The <code>labelFontSize</code> prop
-    controls text size.
+    {m.pie_ex_outside_desc()} <code>outsideLabels</code> {m.pie_ex_outside_desc_2()} <code>labelFontSize</code> {m.pie_ex_outside_desc_3()}
   </p>
   <ExampleTabs code={`<PieChart
   data={[35, 25, 20, 15, 5]}
@@ -249,10 +239,9 @@ const interactiveCode = `<script lang="ts">
     </div>
   </ExampleTabs>
 
-  <h3>Inside Labels on Slices</h3>
+  <h3>{m.pie_ex_inside()}</h3>
   <p>
-    Set <code>insideLabels</code> to render percentage labels directly on top of each slice.
-    Works best with larger slices. Combine with <code>outsideLabels</code> for both views.
+    {m.pie_ex_inside_desc()} <code>insideLabels</code> {m.pie_ex_inside_desc_2()} <code>outsideLabels</code> {m.pie_ex_inside_desc_3()}
   </p>
   <ExampleTabs code={`<PieChart
   data={[40, 30, 20, 10]}
@@ -270,10 +259,9 @@ const interactiveCode = `<script lang="ts">
     </div>
   </ExampleTabs>
 
-  <h3>Donut with Outside Labels</h3>
+  <h3>{m.pie_ex_donut_outside()}</h3>
   <p>
-    Outside labels work great with donut charts — center text shows the total while
-    leader lines label each segment.
+    {m.pie_ex_donut_outside_desc()}
   </p>
   <ExampleTabs code={`<PieChart
   data={[35, 25, 20, 15, 5]}
@@ -297,25 +285,25 @@ const interactiveCode = `<script lang="ts">
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={PieChartModule} />
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={PieChartModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>SVG elements include proper ARIA roles and labels.</li>
-    <li>Slices are keyboard-focusable with Enter/Space activation.</li>
-    <li>Each slice has an <code>aria-label</code> with label, value, and percentage.</li>
-    <li>Legend provides text alternative to colors.</li>
+    <li>{m.chart_a11y_1()}</li>
+    <li>{m.pie_a11y_2()}</li>
+    <li>{m.pie_a11y_3()} <code>aria-label</code> {m.pie_a11y_3_2()}</li>
+    <li>{m.chart_a11y_3()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Tab</kbd></td><td>Move focus between slices</td></tr>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Activate the focused slice (fires onsliceclick)</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>{m.pie_kb_slices()}</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.pie_kb_activate()}</td></tr>
     </tbody>
   </table>
 </Container>

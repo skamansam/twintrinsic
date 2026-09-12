@@ -9,6 +9,7 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import LineChart from "$lib/components/Metrics/LineChart/LineChart.svelte"
 import * as LineChartModule from "$lib/components/Metrics/LineChart/LineChart.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -19,45 +20,45 @@ import * as LineChartModule from "$lib/components/Metrics/LineChart/LineChart.sv
   <h1>LineChart</h1>
 
   <p>
-    <strong>LineChart</strong> — An SVG line chart for displaying trends over time. Supports single and multiple data series with smooth curves and data points.
+    <strong>LineChart</strong> — {m.line_lede()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
-  <p>An SVG line chart for displaying trends over time. Supports single and multiple data series with smooth curves and data points.</p>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.line_lede()}</p>
 
-  <h3>When should I use it?</h3>
-  <p>Use LineChart for continuous time-series data (sales over time, user growth). For filled volume emphasis, use AreaChart. For categorical comparison, use BarChart.</p>
+  <h3>{m.sec_when()}</h3>
+  <p>{m.line_when()}</p>
 
-  <h3>Choosing the Right Chart</h3>
+  <h3>{m.chart_ww_heading()}</h3>
   <table>
-    <thead><tr><th>Chart</th><th>Best For</th><th>Avoid When</th></tr></thead>
+    <thead><tr><th>{m.chart_ww_th_chart()}</th><th>{m.chart_ww_th_best()}</th><th>{m.chart_ww_th_avoid()}</th></tr></thead>
     <tbody>
-      <tr><td><strong>LineChart</strong></td><td>Trends over time, comparing multiple series, showing rate of change</td><td>Need to emphasize total volume; data is categorical (not sequential)</td></tr>
-      <tr><td><strong>AreaChart</strong></td><td>Volume emphasis, cumulative totals, stacked comparisons</td><td>Multiple overlapping lines make it hard to read</td></tr>
-      <tr><td><strong>BarChart</strong></td><td>Categorical comparison, discrete values, ranking</td><td>Time-series with many data points (too many bars)</td></tr>
-      <tr><td><strong>PieChart</strong></td><td>Part-to-whole (fewer than 7 slices)</td><td>More than 7 categories; comparing similar values</td></tr>
+      <tr><td><strong>LineChart</strong></td><td>{m.chart_ww_r_line()}</td><td>{m.chart_ww_r_line_avoid_2()}</td></tr>
+      <tr><td><strong>AreaChart</strong></td><td>{m.chart_ww_r_area()}</td><td>{m.chart_ww_r_area_avoid()}</td></tr>
+      <tr><td><strong>BarChart</strong></td><td>{m.chart_ww_r_bar()}</td><td>{m.chart_ww_r_bar_avoid()}</td></tr>
+      <tr><td><strong>PieChart</strong></td><td>{m.chart_ww_r_pie()}</td><td>{m.chart_ww_r_pie_avoid()}</td></tr>
     </tbody>
   </table>
 
-  <h3>Use Cases</h3>
+  <h3>{m.chart_usecases()}</h3>
   <ul>
-    <li><strong>Revenue over months</strong> — LineChart (shows growth trend clearly)</li>
-    <li><strong>Website traffic sources</strong> — AreaChart (emphasizes volume contribution)</li>
-    <li><strong>Sales by region</strong> — BarChart (categorical comparison)</li>
-    <li><strong>Market share</strong> — PieChart (part-to-whole with few categories)</li>
+    <li><strong>{m.line_uc_revenue()}</strong>{m.line_uc_revenue_desc()}</li>
+    <li><strong>{m.line_uc_traffic()}</strong>{m.line_uc_traffic_desc()}</li>
+    <li><strong>{m.line_uc_sales()}</strong>{m.line_uc_sales_desc()}</li>
+    <li><strong>{m.line_uc_share()}</strong>{m.line_uc_share_desc()}</li>
   </ul>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>SVG rendering</strong> — crisp at any resolution.</li>
-    <li><strong>Smooth curves</strong> — visually appealing trend lines.</li>
-    <li><strong>Interactive</strong> — hover tooltips on data points.</li>
-    <li><strong>Multi-series</strong> — compare multiple trends.</li>
+    <li><strong>{m.line_why_svg()}</strong>{m.line_why_svg_desc()}</li>
+    <li><strong>{m.line_why_smooth()}</strong>{m.line_why_smooth_desc()}</li>
+    <li><strong>{m.line_why_interactive()}</strong>{m.line_why_interactive_desc()}</li>
+    <li><strong>{m.line_why_multi()}</strong>{m.line_why_multi_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/SVG">MDN — SVG</a></li>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/">WAI-ARIA APG — Data Visualization</a></li>
@@ -66,20 +67,20 @@ import * as LineChartModule from "$lib/components/Metrics/LineChart/LineChart.sv
     <li><a href="https://ant.design/components/line">Ant Design — Line Chart</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Fills container width by default.</li>
-    <li>SVG charts scale to any resolution.</li>
+    <li>{m.chart_responsive_1()}</li>
+    <li>{m.chart_responsive_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li>Custom colors, labels, and sizes.</li>
-    <li>Grid lines, legends, and axis labels.</li>
+    <li>{m.chart_custom_1()}</li>
+    <li>{m.chart_custom_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
-  
+  <h2>{m.sec_examples()}</h2>
+
   <ExampleTabs code={`<LineChart
   series={[{ label: 'Sales', data: [10, 15, 12, 18, 22, 20, 25], color: '#3b82f6' }]}
   labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
@@ -95,7 +96,7 @@ import * as LineChartModule from "$lib/components/Metrics/LineChart/LineChart.sv
     </div>
   </ExampleTabs>
 
-  <h3>Multiple Series LineChart</h3>
+  <h3>{m.line_ex_multi()}</h3>
   <ExampleTabs code={`<LineChart
   series={[
     { label: 'Product A', data: [10, 15, 12, 18, 22, 20, 25], color: '#3b82f6' },
@@ -115,21 +116,20 @@ import * as LineChartModule from "$lib/components/Metrics/LineChart/LineChart.sv
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={LineChartModule} />
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={LineChartModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>SVG elements include proper ARIA roles and labels.</li>
-    <li>Color contrast meets WCAG AA standards.</li>
-    <li>Legend provides text alternative to colors.</li>
+    <li>{m.chart_a11y_1()}</li>
+    <li>{m.chart_a11y_2()}</li>
+    <li>{m.chart_a11y_3()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <p>
-    Chart components are display-only elements. Interactive data points support
-    focus via Tab and activation via Enter/Space.
+    {m.chart_kb_body()}
   </p>
 </Container>
