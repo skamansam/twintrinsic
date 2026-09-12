@@ -9,6 +9,7 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import StatsCard from "$lib/components/Metrics/StatsCard/StatsCard.svelte"
 import * as StatsCardModule from "$lib/components/Metrics/StatsCard/StatsCard.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -19,23 +20,23 @@ import * as StatsCardModule from "$lib/components/Metrics/StatsCard/StatsCard.sv
   <h1>StatsCard</h1>
 
   <p>
-    <strong>StatsCard</strong> — A card component for displaying a single metric with optional trend indicator. Perfect for dashboards and overview pages.
+    <strong>StatsCard</strong> — {m.stats_lede()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
-  <p>A card component for displaying a single metric with optional trend indicator. Perfect for dashboards and overview pages.</p>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.stats_lede()}</p>
 
-  <h3>When should I use it?</h3>
-  <p>Use StatsCard for displaying key metrics with trend context: total revenue, user count, conversion rate. For KPI tracking with targets, use KPICard.</p>
+  <h3>{m.sec_when()}</h3>
+  <p>{m.stats_when()}</p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Simple display</strong> — label, value, trend in a card.</li>
-    <li><strong>Trend indicator</strong> — up/down with percentage.</li>
-    <li><strong>Customizable</strong> — colors, icons.</li>
-    <li><strong>Interactive</strong> — click events.</li>
+    <li><strong>{m.stats_why_simple()}</strong>{m.stats_why_simple_desc()}</li>
+    <li><strong>{m.stats_why_trend()}</strong>{m.stats_why_trend_desc()}</li>
+    <li><strong>{m.stats_why_custom()}</strong>{m.stats_why_custom_desc()}</li>
+    <li><strong>{m.stats_why_interactive()}</strong>{m.stats_why_interactive_desc()}</li>
   </ul>
 
   <h3>Sources</h3>
@@ -47,19 +48,19 @@ import * as StatsCardModule from "$lib/components/Metrics/StatsCard/StatsCard.sv
     <li><a href="https://carbondesignsystem.com/components/tile/usage">Carbon Design — Tile</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Fills container width by default.</li>
-    <li>SVG charts scale to any resolution.</li>
+    <li>{m.chart_responsive_1()}</li>
+    <li>{m.chart_responsive_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li>Custom colors, labels, and sizes.</li>
-    <li>Grid lines, legends, and axis labels.</li>
+    <li>{m.chart_custom_1()}</li>
+    <li>{m.chart_custom_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
   
   <ExampleTabs code={`<StatsCard label="Total Revenue" value="$124,532.89" color="primary" />`}>
     <div class="flex justify-center" data-testid="metrics-basic-statscard">
@@ -67,7 +68,7 @@ import * as StatsCardModule from "$lib/components/Metrics/StatsCard/StatsCard.sv
     </div>
   </ExampleTabs>
 
-  <h3>With Trend Indicator</h3>
+  <h3>{m.stats_ex_trend()}</h3>
   <ExampleTabs code={`<StatsCard label="Total Users" value="2,543"
   trend="up" trendValue="12.5%" color="success" />`}>
     <div class="flex justify-center" data-testid="metrics-with-trend-indicator">
@@ -75,21 +76,20 @@ import * as StatsCardModule from "$lib/components/Metrics/StatsCard/StatsCard.sv
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={StatsCardModule} />
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={StatsCardModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>SVG elements include proper ARIA roles and labels.</li>
-    <li>Color contrast meets WCAG AA standards.</li>
-    <li>Legend provides text alternative to colors.</li>
+    <li>{m.chart_a11y_1()}</li>
+    <li>{m.chart_a11y_2()}</li>
+    <li>{m.chart_a11y_3()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <p>
-    Chart components are display-only elements. Interactive data points support
-    focus via Tab and activation via Enter/Space.
+    {m.chart_kb_body()}
   </p>
 </Container>

@@ -1017,4 +1017,51 @@ test.describe("Docs locale switcher", () => {
     await expect(heading).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
   });
+  test("KPICard docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Metrics/KPICard");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "چیست، چه زمانی و چرا" });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
+
+  test("StatsCard docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Metrics/StatsCard");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "چیست، چه زمانی و چرا" });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
+
+  test("MetricGrid docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Metrics/MetricGrid");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "چیست، چه زمانی و چرا" });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
+
+  test("MetricTrend docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Metrics/MetricTrend");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "چیست، چه زمانی و چرا" });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
 });

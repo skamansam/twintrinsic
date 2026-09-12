@@ -8,6 +8,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import KPICard from "$lib/components/Metrics/KPICard/KPICard.svelte"
 import * as KPICardModule from "$lib/components/Metrics/KPICard/KPICard.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -18,26 +19,26 @@ import * as KPICardModule from "$lib/components/Metrics/KPICard/KPICard.svelte"
   <h1>KPICard</h1>
 
   <p>
-    <strong>KPICard</strong> — A card component for displaying Key Performance Indicators with progress visualization towards a target.
+    <strong>KPICard</strong> — {m.kpi_lede()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
-  <p>A card component for displaying Key Performance Indicators with progress visualization towards a target.</p>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.kpi_lede()}</p>
 
-  <h3>When should I use it?</h3>
-  <p>Use KPICard for tracking progress towards goals: sales targets, user acquisition, conversion rates. For simple stat display, use StatsCard.</p>
+  <h3>{m.sec_when()}</h3>
+  <p>{m.kpi_when()}</p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Progress visualization</strong> — visual indicator of goal progress.</li>
-    <li><strong>Target comparison</strong> — current vs target display.</li>
-    <li><strong>Customizable</strong> — colors, units, icons.</li>
-    <li><strong>Interactive</strong> — click events for drill-down.</li>
+    <li><strong>{m.kpi_why_progress()}</strong>{m.kpi_why_progress_desc()}</li>
+    <li><strong>{m.kpi_why_target()}</strong>{m.kpi_why_target_desc()}</li>
+    <li><strong>{m.kpi_why_custom()}</strong>{m.kpi_why_custom_desc()}</li>
+    <li><strong>{m.kpi_why_interactive()}</strong>{m.kpi_why_interactive_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://m3.material.io/components/cards/overview">Material Design 3 — Cards</a></li>
     <li><a href="https://ant.design/components/statistic">Ant Design — Statistic</a></li>
@@ -46,52 +47,51 @@ import * as KPICardModule from "$lib/components/Metrics/KPICard/KPICard.svelte"
     <li><a href="https://www.chartjs.org/docs/latest/charts/doughnut.html">Chart.js — Doughnut</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
+  <h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>`&lt;dl&gt;` + `&lt;dt&gt;` + `&lt;dd&gt;` for semantic key-value pairs</li>
-    <li>`&lt;meter&gt;` for scalar measurements within metrics</li>
-    <li>CSS Grid for responsive layout</li>
-    <li>`content-visibility: auto` for off-screen metric cards</li>
+    <li>{m.kpi_impl_dl()}</li>
+    <li>{m.kpi_impl_meter()}</li>
+    <li>{m.kpi_impl_grid()}</li>
+    <li>{m.kpi_impl_cv()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use `&lt;div&gt;` for label-value pairs — `&lt;dl&gt;` is semantic</li>
-    <li>Don't forget `aria-label` on metric containers</li>
+    <li>{m.kpi_mistake_1_1()} <code>&lt;div&gt;</code> {m.kpi_mistake_1_2()} <code>&lt;dl&gt;</code> {m.kpi_mistake_1_3()}</li>
+    <li>{m.kpi_mistake_2_1()} <code>aria-label</code> {m.kpi_mistake_2_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Progress, GaugeChart, DataTable</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.kpi_related()}</p>
 
-<h2>KPICard vs StatsCard</h2>
+<h2>{m.kpi_compare_heading()}</h2>
 <table>
-  <thead><tr><th>Feature</th><th>KPICard</th><th>StatsCard</th></tr></thead>
+  <thead><tr><th>{m.kpi_compare_th_feature()}</th><th>KPICard</th><th>StatsCard</th></tr></thead>
   <tbody>
-    <tr><td>Progress bar</td><td>Yes (value/target)</td><td>No</td></tr>
-    <tr><td>Trend indicator</td><td>No</td><td>Yes (up/down arrow)</td></tr>
-    <tr><td>Value type</td><td>Number only</td><td>String or number</td></tr>
-    <tr><td>Unit support</td><td>Yes</td><td>No</td></tr>
-    <tr><td>Status colors</td><td>Auto from percentage</td><td>Manual via color prop</td></tr>
-    <tr><td>Best for</td><td>Goals, targets, quotas</td><td>Snapshot stats, KPIs with trends</td></tr>
+    <tr><td>{m.kpi_compare_row_progress()}</td><td>{m.kpi_compare_row_progress_kpi()}</td><td>{m.badge_no}</td></tr>
+    <tr><td>{m.kpi_compare_row_trend()}</td><td>{m.kpi_compare_row_trend_kpi()}</td><td>{m.kpi_compare_row_trend_stats()}</td></tr>
+    <tr><td>{m.kpi_compare_row_value()}</td><td>{m.kpi_compare_row_value_kpi()}</td><td>{m.kpi_compare_row_value_stats()}</td></tr>
+    <tr><td>{m.kpi_compare_row_unit()}</td><td>{m.badge_yes}</td><td>{m.badge_no}</td></tr>
+    <tr><td>{m.kpi_compare_row_status()}</td><td>{m.kpi_compare_row_status_kpi()}</td><td>{m.kpi_compare_row_status_stats()}</td></tr>
+    <tr><td>{m.kpi_compare_row_best()}</td><td>{m.kpi_compare_row_best_kpi()}</td><td>{m.kpi_compare_row_best_stats()}</td></tr>
   </tbody>
 </table>
-<p>Use <strong>KPICard</strong> when you need to track progress toward a target (e.g., sales quota, budget). Use <strong>StatsCard</strong> for snapshot metrics with trend arrows (e.g., monthly revenue change, user growth).</p>
+<p>{m.kpi_compare_outro_1()} <strong>KPICard</strong> {m.kpi_compare_outro_2()} <strong>StatsCard</strong> {m.kpi_compare_outro_3()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Fills container width by default.</li>
-    <li>SVG charts scale to any resolution.</li>
+    <li>{m.chart_responsive_1()}</li>
+    <li>{m.chart_responsive_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li>Custom colors, labels, and sizes.</li>
-    <li>Grid lines, legends, and axis labels.</li>
+    <li>{m.chart_custom_1()}</li>
+    <li>{m.chart_custom_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
-  
+  <h2>{m.sec_examples()}</h2>
+
   <ExampleTabs code={`<KPICard label="Q4 Sales Target" value={95000} target={100000}
   unit="$" color="success" />`}>
     <div class="flex justify-center" data-testid="metrics-basic-kpicard">
@@ -99,19 +99,18 @@ import * as KPICardModule from "$lib/components/Metrics/KPICard/KPICard.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={KPICardModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>SVG elements include proper ARIA roles and labels.</li>
-    <li>Color contrast meets WCAG AA standards.</li>
-    <li>Legend provides text alternative to colors.</li>
+    <li>{m.chart_a11y_1()}</li>
+    <li>{m.chart_a11y_2()}</li>
+    <li>{m.chart_a11y_3()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <p>
-    Chart components are display-only elements. Interactive data points support
-    focus via Tab and activation via Enter/Space.
+    {m.chart_kb_body()}
   </p>
 </Container>

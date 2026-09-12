@@ -9,6 +9,7 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import MetricTrend from "$lib/components/Metrics/MetricTrend/MetricTrend.svelte"
 import * as MetricTrendModule from "$lib/components/Metrics/MetricTrend/MetricTrend.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -19,23 +20,23 @@ import * as MetricTrendModule from "$lib/components/Metrics/MetricTrend/MetricTr
   <h1>MetricTrend</h1>
 
   <p>
-    <strong>MetricTrend</strong> — A sparkline-style mini chart for displaying data trends. Perfect for showing quick trend visualizations in compact spaces.
+    <strong>MetricTrend</strong> — {m.trend_lede()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
-  <p>A sparkline-style mini chart for displaying data trends. Perfect for showing quick trend visualizations in compact spaces.</p>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.trend_lede()}</p>
 
-  <h3>When should I use it?</h3>
-  <p>Use MetricTrend for inline sparklines in tables, cards, or dashboards. For full charts, use LineChart or AreaChart.</p>
+  <h3>{m.sec_when()}</h3>
+  <p>{m.trend_when()}</p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Compact</strong> — fits in small spaces.</li>
-    <li><strong>Visual trend</strong> — quick pattern recognition.</li>
-    <li><strong>Customizable</strong> — colors, height, area fill.</li>
-    <li><strong>Responsive</strong> — adapts to container.</li>
+    <li><strong>{m.trend_why_compact()}</strong>{m.trend_why_compact_desc()}</li>
+    <li><strong>{m.trend_why_visual()}</strong>{m.trend_why_visual_desc()}</li>
+    <li><strong>{m.trend_why_custom()}</strong>{m.trend_why_custom_desc()}</li>
+    <li><strong>{m.trend_why_responsive()}</strong>{m.trend_why_responsive_desc()}</li>
   </ul>
 
   <h3>Sources</h3>
@@ -47,19 +48,19 @@ import * as MetricTrendModule from "$lib/components/Metrics/MetricTrend/MetricTr
     <li><a href="https://informationisbeautiful.net/2010/sparklines-instant-charts/">Information is Beautiful — Sparklines</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Fills container width by default.</li>
-    <li>SVG charts scale to any resolution.</li>
+    <li>{m.chart_responsive_1()}</li>
+    <li>{m.chart_responsive_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li>Custom colors, labels, and sizes.</li>
-    <li>Grid lines, legends, and axis labels.</li>
+    <li>{m.chart_custom_1()}</li>
+    <li>{m.chart_custom_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
   
   <ExampleTabs code={`<MetricTrend label="Sales Trend"
   data={[10, 15, 12, 18, 22, 20, 25]} color="#10b981" />`}>
@@ -72,21 +73,20 @@ import * as MetricTrendModule from "$lib/components/Metrics/MetricTrend/MetricTr
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={MetricTrendModule} />
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={MetricTrendModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>SVG elements include proper ARIA roles and labels.</li>
-    <li>Color contrast meets WCAG AA standards.</li>
-    <li>Legend provides text alternative to colors.</li>
+    <li>{m.chart_a11y_1()}</li>
+    <li>{m.chart_a11y_2()}</li>
+    <li>{m.chart_a11y_3()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <p>
-    Chart components are display-only elements. Interactive data points support
-    focus via Tab and activation via Enter/Space.
+    {m.chart_kb_body()}
   </p>
 </Container>

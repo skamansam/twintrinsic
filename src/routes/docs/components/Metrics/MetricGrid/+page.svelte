@@ -8,6 +8,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import MetricGrid from "$lib/components/Metrics/MetricGrid/MetricGrid.svelte"
 import * as MetricGridModule from "$lib/components/Metrics/MetricGrid/MetricGrid.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -18,23 +19,23 @@ import * as MetricGridModule from "$lib/components/Metrics/MetricGrid/MetricGrid
   <h1>MetricGrid</h1>
 
   <p>
-    <strong>MetricGrid</strong> — A responsive grid layout for displaying multiple StatsCard components. Automatically adjusts columns based on screen size.
+    <strong>MetricGrid</strong> — {m.grid_lede()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
-  <p>A responsive grid layout for displaying multiple StatsCard components. Automatically adjusts columns based on screen size.</p>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.grid_lede()}</p>
 
-  <h3>When should I use it?</h3>
-  <p>Use MetricGrid for dashboard overview sections with multiple KPIs. For individual metrics, use StatsCard or KPICard directly.</p>
+  <h3>{m.sec_when()}</h3>
+  <p>{m.grid_when()}</p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Responsive grid</strong> — auto-adjusting columns.</li>
-    <li><strong>Consistent spacing</strong> — uniform gap between cards.</li>
-    <li><strong>Mobile-friendly</strong> — adapts to all screen sizes.</li>
-    <li><strong>Simple API</strong> — pass items array.</li>
+    <li><strong>{m.grid_why_responsive()}</strong>{m.grid_why_responsive_desc()}</li>
+    <li><strong>{m.grid_why_spacing()}</strong>{m.grid_why_spacing_desc()}</li>
+    <li><strong>{m.grid_why_mobile()}</strong>{m.grid_why_mobile_desc()}</li>
+    <li><strong>{m.grid_why_api()}</strong>{m.grid_why_api_desc()}</li>
   </ul>
 
   <h3>Sources</h3>
@@ -46,19 +47,19 @@ import * as MetricGridModule from "$lib/components/Metrics/MetricGrid/MetricGrid
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout">MDN — CSS Grid</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Fills container width by default.</li>
-    <li>SVG charts scale to any resolution.</li>
+    <li>{m.chart_responsive_1()}</li>
+    <li>{m.chart_responsive_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li>Custom colors, labels, and sizes.</li>
-    <li>Grid lines, legends, and axis labels.</li>
+    <li>{m.chart_custom_1()}</li>
+    <li>{m.chart_custom_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
   
   <ExampleTabs code={`<MetricGrid items={[
   { label: 'Total Revenue', value: '$45,231.89', color: 'primary' },
@@ -76,19 +77,18 @@ import * as MetricGridModule from "$lib/components/Metrics/MetricGrid/MetricGrid
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={MetricGridModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>SVG elements include proper ARIA roles and labels.</li>
-    <li>Color contrast meets WCAG AA standards.</li>
-    <li>Legend provides text alternative to colors.</li>
+    <li>{m.chart_a11y_1()}</li>
+    <li>{m.chart_a11y_2()}</li>
+    <li>{m.chart_a11y_3()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <p>
-    Chart components are display-only elements. Interactive data points support
-    focus via Tab and activation via Enter/Space.
+    {m.chart_kb_body()}
   </p>
 </Container>
