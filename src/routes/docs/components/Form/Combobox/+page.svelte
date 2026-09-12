@@ -9,6 +9,7 @@ import Combobox from "$lib/components/Form/Combobox.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as ComboboxModule from "$lib/components/Form/Combobox.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 const cities = [
   "New York", "Los Angeles", "Chicago", "Houston", "Phoenix",
@@ -29,82 +30,72 @@ const countries = [
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Combobox</h1>
+  <h1>{m.combobox_heading()}</h1>
 
   <p>
-    <strong>Combobox</strong> combines a text input with a dropdown list, providing
-    autocomplete functionality. Users type to filter suggestions, then select from
-    the filtered list. Uses <code>popover="auto"</code> for the dropdown panel with
-    CSS Anchor Positioning for tethering.
+    <strong>{m.combobox_heading()}</strong>{m.combobox_lede_1()}<code>popover="auto"</code>{m.combobox_lede_2()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.combobox_what_1()}</p>
+
+  <h3>{m.sec_when()}</h3>
   <p>
-    An editable text input with an associated popup that filters options as the user
-    types. The popup uses the Popover API for top-layer rendering and light-dismiss.
+    {m.combobox_when_1()}<code>&lt;Combobox&gt;</code>{m.combobox_when_2()}<code>&lt;Select&gt;</code>{m.combobox_when_3()}<code>&lt;Dropdown&gt;</code>{m.combobox_when_4()}
   </p>
 
-  <h3>When should I use it?</h3>
-  <p>
-    Use <code>&lt;Combobox&gt;</code> when users need to filter a large dataset while
-    typing (country selector, search with suggestions). For simple dropdown selection
-    without typing, use <code>&lt;Select&gt;</code>. For action menus, use
-    <code>&lt;Dropdown&gt;</code>.
-  </p>
-
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Type-ahead filtering</strong> — narrows options as the user types, faster than scrolling.</li>
-    <li><strong>Rich options</strong> — options can include icons, flags, descriptions.</li>
-    <li><strong>Popover API</strong> — light-dismiss, top-layer, and CSS Anchor Positioning with zero JS.</li>
+    <li><strong>{m.combobox_why_typeahead()}</strong>{m.combobox_why_typeahead_1()}</li>
+    <li><strong>{m.combobox_why_rich()}</strong>{m.combobox_why_rich_1()}</li>
+    <li><strong>{m.combobox_why_popover()}</strong>{m.combobox_why_popover_1()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/">WAI-ARIA APG — Combobox</a></li>
-    <li><a href="https://primer.style/product/components/Autocomplete">Primer — Autocomplete</a></li>
-    <li><a href="https://m3.material.io/components/menus/overview">Material Design 3 — Exposed dropdown</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API">MDN — Popover API</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning">MDN — CSS Anchor Positioning</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
-<ul>
-    <li>Uses `popover=&quot;auto&quot;` for the suggestions panel — top-layer rendering with light-dismiss</li>
-    <li>CSS Anchor Positioning for tethering the popup to the input</li>
-    <li>WAI-ARIA combobox pattern with `role=&quot;combobox&quot;` + `aria-expanded` + `aria-controls`</li>
-    <li>Keyboard: ArrowDown/Up navigate, Enter selects, Escape closes</li>
-    <li>Form context integration via `getContext('form')` for `effectiveDisabled`</li>
-</ul>
-
-<h2>Common Mistakes</h2>
-<ul>
-    <li>Don't use a `&lt;div&gt;` dropdown — `popover=&quot;auto&quot;` handles top-layer, light-dismiss, and z-index</li>
-    <li>Don't forget `aria-activedescendant` for highlighting the active option</li>
-</ul>
-
-<h2>Related Components</h2>
-<p>AutoComplete, Select, Listbox, Menu</p>
-
-<h2>Responsiveness</h2>
+  <h2>{m.sec_implementation()}</h2>
   <ul>
-    <li>Fills container width; the dropdown matches the input width via <code>anchor-size()</code>.</li>
-    <li>On mobile, the dropdown opens as a full-width overlay.</li>
-    <li>Touch targets meet 44×44 px minimum.</li>
+    <li>{m.combobox_impl_1()}</li>
+    <li>{m.combobox_impl_2()}</li>
+    <li>{m.combobox_impl_3()}</li>
+    <li>{m.combobox_impl_4()}</li>
+    <li>{m.combobox_impl_5()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_mistakes()}</h2>
   <ul>
-    <li>Custom option templates via the <code>optionTemplate</code> snippet.</li>
-    <li>Object data with <code>optionLabel</code> and <code>optionValue</code> props.</li>
-    <li>Loading state for async data.</li>
-    <li>Disabled and required states.</li>
+    <li>{m.combobox_mistake_1()}</li>
+    <li>{m.combobox_mistake_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_related()}</h2>
+  <p>{m.combobox_related_1()}</p>
 
-  <h3>Basic Combobox</h3>
+  <h2>{m.sec_responsiveness()}</h2>
+  <ul>
+    <li>{m.combobox_responsive_1_1()}<code>anchor-size()</code>{m.combobox_responsive_1_2()}</li>
+    <li>{m.combobox_responsive_2()}</li>
+    <li>{m.combobox_responsive_3()}</li>
+  </ul>
+
+  <h2>{m.sec_customization()}</h2>
+  <ul>
+    <li>{m.combobox_custom_1_1()}<code>optionTemplate</code>{m.combobox_custom_1_2()}</li>
+    <li>{m.combobox_custom_2_1()}<code>optionLabel</code>{m.combobox_custom_2_2()}<code>optionValue</code>{m.combobox_custom_2_3()}</li>
+    <li>{m.combobox_custom_3()}</li>
+    <li>{m.combobox_custom_4()}</li>
+  </ul>
+
+  <h2>{m.sec_examples()}</h2>
+
+  <h3>{m.combobox_ex_basic()}</h3>
   <ExampleTabs code={`<Combobox
   options={['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix']}
   placeholder="Select a city"
@@ -114,7 +105,7 @@ const countries = [
     </div>
   </ExampleTabs>
 
-  <h3>With Object Data</h3>
+  <h3>{m.combobox_ex_object()}</h3>
   <ExampleTabs code={`<Combobox
   options={countries}
   optionLabel="name"
@@ -126,7 +117,7 @@ const countries = [
     </div>
   </ExampleTabs>
 
-  <h3>Custom Option Template</h3>
+  <h3>{m.combobox_ex_template()}</h3>
   <ExampleTabs code={`<Combobox options={countries} optionLabel="name" optionValue="code" placeholder="Select a country">
   {#snippet optionTemplate(option)}
     <div class="flex items-center">
@@ -149,78 +140,76 @@ const countries = [
     </div>
   </ExampleTabs>
 
-  <h3>Disabled</h3>
+  <h3>{m.combobox_ex_disabled()}</h3>
   <ExampleTabs code={`<Combobox options={cities} placeholder="Select a city" disabled />`}>
     <div class="max-w-md" data-testid="combobox-disabled">
       <Combobox options={cities} placeholder="Select a city" disabled />
     </div>
   </ExampleTabs>
 
-  <h3>Loading State</h3>
+  <h3>{m.combobox_ex_loading()}</h3>
   <ExampleTabs code={`<Combobox options={[]} placeholder="Loading options..." loading />`}>
     <div class="max-w-md" data-testid="combobox-loading">
       <Combobox options={[]} placeholder="Loading options..." loading />
     </div>
   </ExampleTabs>
 
-  <h2>Slots</h2>
+  <h2>{m.sec_slots()}</h2>
   <table>
-    <thead><tr><th>Slot</th><th>Props</th><th>Description</th></tr></thead>
+    <thead><tr><th>{m.sec_slot()}</th><th>{m.sec_props()}</th><th>{m.sec_description()}</th></tr></thead>
     <tbody>
-      <tr><td><code>optionTemplate</code></td><td><code>{'{ option }'}</code></td><td>Custom template for option items</td></tr>
+      <tr><td><code>optionTemplate</code></td><td><code>{'{ option }'}</code></td><td>{m.combobox_slots_1_1()}</td></tr>
     </tbody>
   </table>
 
-  <h3>Initial Value</h3>
+  <h3>{m.combobox_ex_initial()}</h3>
   <ExampleTabs code={`<Combobox options={[...]} value="apple" />`}>
     <div class="max-w-md" data-testid="combobox-initial">
       <Combobox options={[{value: "apple", label: "Apple"}, {value: "banana", label: "Banana"}, {value: "cherry", label: "Cherry"}]} value="apple" />
     </div>
   </ExampleTabs>
 
-  <h2>Select vs Combobox</h2>
+  <h2>{m.combobox_vs_heading()}</h2>
 <table>
   <thead>
-    <tr><th>Feature</th><th>Select</th><th>Combobox</th></tr>
+    <tr><th>{m.combobox_vs_feature()}</th><th>Select</th><th>Combobox</th></tr>
   </thead>
   <tbody>
-    <tr><td>User types to filter</td><td>No</td><td>Yes</td></tr>
-    <tr><td>Editable text</td><td>No</td><td>Yes</td></tr>
-    <tr><td>Native element</td><td>Yes (<code>&lt;select&gt;</code>)</td><td>No (custom)</td></tr>
-    <tr><td>Best for</td><td>5+ predefined options</td><td>Large datasets, type-ahead search</td></tr>
-    <tr><td>Custom option templates</td><td>No</td><td>Yes (snippet)</td></tr>
-    <tr><td>Async data loading</td><td>No</td><td>Yes</td></tr>
+    <tr><td>{m.combobox_vs_types()}</td><td>{m.combobox_vs_no()}</td><td>{m.combobox_vs_yes()}</td></tr>
+    <tr><td>{m.combobox_vs_editable()}</td><td>{m.combobox_vs_no()}</td><td>{m.combobox_vs_yes()}</td></tr>
+    <tr><td>{m.combobox_vs_native()}</td><td>{@html m.combobox_vs_native_select()}</td><td>{@html m.combobox_vs_native_combo()}</td></tr>
+    <tr><td>{m.combobox_vs_best()}</td><td>{m.combobox_vs_best_select()}</td><td>{m.combobox_vs_best_combo()}</td></tr>
+    <tr><td>{m.combobox_vs_templates()}</td><td>{m.combobox_vs_templates_select()}</td><td>{m.combobox_vs_templates_combo()}</td></tr>
+    <tr><td>{m.combobox_vs_async()}</td><td>{m.combobox_vs_no()}</td><td>{m.combobox_vs_yes()}</td></tr>
   </tbody>
 </table>
 <p>
-  <strong>Rule of thumb:</strong> If the user knows the exact value and can type it,
-  use <code>&lt;Combobox&gt;</code>. If the user picks from a fixed list, use
-  <code>&lt;Select&gt;</code>. For action menus, use <code>&lt;Dropdown&gt;</code>.
+  <strong>{m.combobox_vs_rule_label()}</strong>
+  {m.combobox_vs_rule_1()}<code>&lt;Combobox&gt;</code>{m.combobox_vs_rule_2()}<code>&lt;Select&gt;</code>{m.combobox_vs_rule_3()}<code>&lt;Dropdown&gt;</code>{m.combobox_vs_rule_4()}
 </p>
 
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
   <PropsTable component={ComboboxModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={ComboboxModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Uses <code>role="combobox"</code>, <code>role="listbox"</code>, <code>role="option"</code>.</li>
-    <li>Proper <code>aria-expanded</code>, <code>aria-controls</code>,
-      <code>aria-activedescendant</code>, <code>aria-selected</code>.</li>
-    <li>Arrow keys navigate options; Enter selects; Escape closes.</li>
+    <li>{m.combobox_a11y_1_1()}<code>role="combobox"</code>{m.combobox_a11y_1_2()}<code>role="listbox"</code>{m.combobox_a11y_1_3()}<code>role="option"</code>{m.combobox_a11y_1_4()}</li>
+    <li>{m.combobox_a11y_2_1()}<code>aria-expanded</code>{m.combobox_a11y_2_2()}<code>aria-controls</code>{m.combobox_a11y_2_3()}<code>aria-activedescendant</code>{m.combobox_a11y_2_4()}<code>aria-selected</code>{m.combobox_a11y_2_5()}</li>
+    <li>{m.combobox_a11y_3()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Arrow Down</kbd></td><td>Open dropdown or move to next option</td></tr>
-      <tr><td><kbd>Arrow Up</kbd></td><td>Move to previous option</td></tr>
-      <tr><td><kbd>Enter</kbd></td><td>Select highlighted option</td></tr>
-      <tr><td><kbd>Escape</kbd></td><td>Close dropdown</td></tr>
-      <tr><td><kbd>Type</kbd></td><td>Filter options by typed characters</td></tr>
+      <tr><td><kbd>Arrow Down</kbd></td><td>{m.combobox_kb_down()}</td></tr>
+      <tr><td><kbd>Arrow Up</kbd></td><td>{m.combobox_kb_up()}</td></tr>
+      <tr><td><kbd>Enter</kbd></td><td>{m.combobox_kb_enter()}</td></tr>
+      <tr><td><kbd>Escape</kbd></td><td>{m.combobox_kb_escape()}</td></tr>
+      <tr><td><kbd>Type</kbd></td><td>{m.combobox_kb_type()}</td></tr>
     </tbody>
   </table>
 </Container>

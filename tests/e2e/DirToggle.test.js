@@ -1265,4 +1265,30 @@ test.describe("Docs locale switcher", () => {
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
     await expect(page.getByRole("heading", { name: "سفارشی‌سازی", level: 2 })).toBeVisible();
   });
+
+  test("Listbox docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Form/Listbox");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "Listbox", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "سفارشی‌سازی", level: 2 })).toBeVisible();
+  });
+
+  test("Combobox docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Form/Combobox");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "Combobox", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "سفارشی‌سازی", level: 2 })).toBeVisible();
+  });
 });

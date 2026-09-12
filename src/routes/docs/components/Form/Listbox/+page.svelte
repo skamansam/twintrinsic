@@ -10,6 +10,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as ListboxModule from "$lib/components/Form/Listbox.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 const colors = [
   { label: "Red", value: "red" },
@@ -28,92 +29,84 @@ let selectedFruits = $state(["Apple", "Grape"])
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>Listbox</h1>
+<h1>{m.listbox_heading()}</h1>
 
 <p>
-  <strong>Listbox</strong> presents a list of options where the user can select one
-  or more. Unlike a dropdown, options are always visible — no opening required.
-  Supports filtering, icons, and multi-select.
+  <strong>{m.listbox_heading()}</strong>{m.listbox_lede_1()}
 </p>
 
-<h2>What, When &amp; Why</h2>
+<h2>{m.sec_what_when_why()}</h2>
 
-<h3>What is it?</h3>
+<h3>{m.sec_what()}</h3>
+<p>{m.listbox_what_1()}</p>
+
+<h3>{m.sec_when()}</h3>
 <p>
-  A visible list of selectable options with keyboard navigation (arrows, Home/End,
-  type-ahead). Options can contain rich content (icons, descriptions).
+  {m.listbox_when_1()}<code>&lt;Listbox&gt;</code>{m.listbox_when_2()}<code>&lt;Select&gt;</code>{m.listbox_when_3()}<code>&lt;Combobox&gt;</code>{m.listbox_when_4()}
 </p>
 
-<h3>When should I use it?</h3>
-<p>
-  Use <code>&lt;Listbox&gt;</code> for 5–15 options that benefit from being always
-  visible. For fewer options, use radio buttons. For hidden-until-opened options,
-  use <code>&lt;Select&gt;</code> or <code>&lt;Combobox&gt;</code>.
-</p>
-
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Always visible</strong> — no dropdown to open; all options scannable at a glance.</li>
-  <li><strong>Rich content</strong> — options can include icons, avatars, descriptions.</li>
-  <li><strong>Keyboard accessible</strong> — full arrow key navigation, Home/End, type-ahead.</li>
+  <li><strong>{m.listbox_why_visible()}</strong>{m.listbox_why_visible_1()}</li>
+  <li><strong>{m.listbox_why_rich()}</strong>{m.listbox_why_rich_1()}</li>
+  <li><strong>{m.listbox_why_keyboard()}</strong>{m.listbox_why_keyboard_1()}</li>
 </ul>
 
-<h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
 <ul>
   <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/">WAI-ARIA APG — Listbox</a></li>
   <li><a href="https://primer.style/product/components/ActionList">Primer — ActionList</a></li>
 </ul>
 
-
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>Always-visible list of options (no dropdown to open)</li>
-    <li>`filter=&#123;true&#125;` enables a filter input for narrowing options</li>
-    <li>`filterPlaceholder` for the filter input placeholder text</li>
-    <li>WAI-ARIA listbox pattern with `role=&quot;listbox&quot;` + `role=&quot;option&quot;`</li>
-    <li>Form context integration via `getContext('form')`</li>
+    <li>{m.listbox_impl_1()}</li>
+    <li>{m.listbox_impl_2_1()}<code>filter=&#123;true&#125;</code>{m.listbox_impl_2_2()}</li>
+    <li>{m.listbox_impl_3_1()}<code>filterPlaceholder</code>{m.listbox_impl_3_2()}</li>
+    <li>{m.listbox_impl_4()}</li>
+    <li>{m.listbox_impl_5()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use for fewer than 5 options — use radio buttons or checkboxes</li>
-    <li>Don't forget `aria-selected` on the selected option</li>
+    <li>{m.listbox_mistake_1()}</li>
+    <li>{m.listbox_mistake_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Select, Combobox, AutoComplete, Menu</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.listbox_related_1()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Fills container width; scrollable when options overflow.</li>
-  <li>Touch targets meet 44×44 px minimum.</li>
+  <li>{m.listbox_responsive_1()}</li>
+  <li>{m.listbox_responsive_2()}</li>
 </ul>
 
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li>Single or multiple selection.</li>
-  <li>Filterable via <code>filter={true}</code>.</li>
-  <li>Option icons via <code>optionIcon</code>.</li>
-  <li>Wrap with <code>&lt;FormField&gt;</code> for labels and validation.</li>
+  <li>{m.listbox_custom_1()}</li>
+  <li>{m.listbox_custom_2_1()}<code>filter={true}</code>{m.listbox_custom_2_2()}</li>
+  <li>{m.listbox_custom_3_1()}<code>optionIcon</code>{m.listbox_custom_3_2()}</li>
+  <li>{m.listbox_custom_4_1()}<code>&lt;FormField&gt;</code>{m.listbox_custom_4_2()}</li>
 </ul>
 
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Basic Usage</h3>
+<h3>{m.listbox_ex_basic()}</h3>
 <ExampleTabs code={`<Listbox name="color" options={colors} value={selectedColor} />`}>
   <div class="max-w-md" data-testid="listbox-basic">
     <Listbox name="color" options={colors} value={selectedColor} />
   </div>
 </ExampleTabs>
 
-<h3>Multiple Selection</h3>
+<h3>{m.listbox_ex_multiple()}</h3>
 <ExampleTabs code={`<Listbox name="fruits" options={fruits} multiple={true} filter={true} value={selectedFruits} />`}>
   <div class="max-w-md" data-testid="listbox-multiple">
     <Listbox name="fruits" options={['Apple', 'Banana', 'Cherry', 'Date', 'Fig', 'Grape']} multiple={true} filter={true} value={selectedFruits} />
   </div>
 </ExampleTabs>
 
-<h3>With FormField</h3>
+<h3>{m.listbox_ex_formfield()}</h3>
 <ExampleTabs code={`<FormField label="Select a color" required={true}>
   <Listbox name="color-required" options={colors} required={true} />
 </FormField>`}>
@@ -124,14 +117,14 @@ let selectedFruits = $state(["Apple", "Grape"])
   </div>
 </ExampleTabs>
 
-<h3>Disabled</h3>
+<h3>{m.listbox_ex_disabled()}</h3>
 <ExampleTabs code={`<Listbox name="color-disabled" options={colors} disabled={true} />`}>
   <div class="max-w-md" data-testid="listbox-disabled">
     <Listbox name="color-disabled" options={colors} disabled={true} />
   </div>
 </ExampleTabs>
 
-  <h3>With Filter</h3>
+  <h3>{m.listbox_ex_filter()}</h3>
   <ExampleTabs code={`<Listbox
   name="fruit-filter"
   options={[{value:'apple',label:'Apple'},{value:'banana',label:'Banana'},{value:'cherry',label:'Cherry'},{value:'grape',label:'Grape'},{value:'kiwi',label:'Kiwi'}]}
@@ -148,28 +141,28 @@ let selectedFruits = $state(["Apple", "Grape"])
     </div>
   </ExampleTabs>
 
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={ListboxModule} />
 
-<h2>Events</h2>
+<h2>{m.sec_events()}</h2>
 <EventsTable component={ListboxModule} />
 
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Uses <code>role="listbox"</code> and <code>role="option"</code>.</li>
-  <li><code>aria-selected</code> on selected options.</li>
-  <li>Arrow keys, Home/End, type-ahead navigation.</li>
-  <li>Visible focus indicators.</li>
+  <li>{m.listbox_a11y_1_1()}<code>role="listbox"</code>{m.listbox_a11y_1_2()}<code>role="option"</code>{m.listbox_a11y_1_3()}</li>
+  <li><code>aria-selected</code>{m.listbox_a11y_2_2()}</li>
+  <li>{m.listbox_a11y_3()}</li>
+  <li>{m.listbox_a11y_4()}</li>
 </ul>
 
-<h2>Keyboard Support</h2>
+<h2>{m.sec_keyboard()}</h2>
 <table>
-  <thead><tr><th>Key</th><th>Function</th></tr></thead>
+  <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
   <tbody>
-    <tr><td><kbd>Arrow Up</kbd> / <kbd>Arrow Down</kbd></td><td>Navigate between options</td></tr>
-    <tr><td><kbd>Home</kbd> / <kbd>End</kbd></td><td>Move to first/last option</td></tr>
-    <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Select highlighted option</td></tr>
-    <tr><td><kbd>Type</kbd></td><td>Jump to matching option</td></tr>
+    <tr><td><kbd>Arrow Up</kbd> / <kbd>Arrow Down</kbd></td><td>{m.listbox_kb_arrows()}</td></tr>
+    <tr><td><kbd>Home</kbd> / <kbd>End</kbd></td><td>{m.listbox_kb_home()}</td></tr>
+    <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.listbox_kb_enter()}</td></tr>
+    <tr><td><kbd>Type</kbd></td><td>{m.listbox_kb_type()}</td></tr>
   </tbody>
 </table>
 </Container>
