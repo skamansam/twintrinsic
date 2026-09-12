@@ -85,7 +85,7 @@ let runtime = $state<ParaglideRuntime | undefined>(undefined)
 $effect(() => {
   // Dynamic import keeps the runtime optional: if the host app compiled
   // without Paraglide the import rejects and the picker hides itself.
-  import("$lib/paraglide/runtime.js")
+  import(/* @vite-ignore */ "$lib/paraglide/runtime.js")
     .then((mod) => {
       runtime = mod as unknown as ParaglideRuntime
     })

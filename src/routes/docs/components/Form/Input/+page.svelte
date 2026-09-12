@@ -9,6 +9,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as InputModule from "$lib/components/Form/Input.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 let showPassword = $state(false)
 let passwordValue = $state('')
@@ -26,49 +27,34 @@ function handlePasswordInput(event: CustomEvent<{ value: string }>) {
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>Input</h1>
+<h1>{m.input_heading()}</h1>
 
 <!-- ─── Description ───────────────────────────────────── -->
 <p>
-  <strong>Input</strong> is a versatile single-line text form control that supports
-  labels, placeholders, validation states, floating labels, input masking, and icon
-  integration. It wraps the native <code>&lt;input&gt;</code> element with consistent
-  styling and accessibility enhancements.
+  <strong>{m.input_heading()}</strong>{m.input_lede_1()}<code>&lt;input&gt;</code>{m.input_lede_2()}
 </p>
 
 <!-- ─── What / When / Why ─────────────────────────────── -->
-<h2>What, When &amp; Why</h2>
+<h2>{m.sec_what_when_why()}</h2>
 
-<h3>What is it?</h3>
+<h3>{m.sec_what()}</h3>
 <p>
-  A form field for collecting short text data — names, emails, phone numbers, search
-  queries, and more. Supports all standard <code>&lt;input&gt;</code> types
-  (<code>text</code>, <code>email</code>, <code>tel</code>, <code>url</code>,
-  <code>password</code>, <code>search</code>, etc.) with added features like
-  floating labels and input masks.
+  {m.input_what_1()}<code>&lt;input&gt;</code>{m.input_what_2()}<code>text</code>, <code>email</code>, <code>tel</code>, <code>url</code>, <code>password</code>, <code>search</code>{m.input_what_3()}
 </p>
 
-<h3>When should I use it?</h3>
+<h3>{m.sec_when()}</h3>
 <p>
-  Use <code>&lt;Input&gt;</code> for any form field that expects a single line of text.
-  For multi-line text, use <code>&lt;Textarea&gt;</code>. For numeric-only input, use
-  <code>&lt;NumberInput&gt;</code>. For selecting from a list, use
-  <code>&lt;Select&gt;</code> or <code>&lt;Combobox&gt;</code>.
+  {m.input_when_1()}<code>&lt;Input&gt;</code>{m.input_when_2()}<code>&lt;Textarea&gt;</code>{m.input_when_3()}<code>&lt;NumberInput&gt;</code>{m.input_when_4()}<code>&lt;Select&gt;</code>{m.input_when_5()}<code>&lt;Combobox&gt;</code>{m.input_when_6()}
 </p>
 
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Native features</strong> — the underlying <code>&lt;input&gt;</code>
-    provides built-in validation, autocomplete, mobile keyboard types, and screen
-    reader support for free.</li>
-  <li><strong>Consistency</strong> — ensures all text inputs across the app share the
-    same label positioning, error display, and focus styling.</li>
-  <li><strong>Accessibility</strong> — wraps native input with proper
-    <code>&lt;label&gt;</code> association, <code>aria-describedby</code> for error
-    messages, and <code>aria-invalid</code> for validation states.</li>
+  <li><strong>{m.input_why_native()}</strong>{m.input_why_native_1()}<code>&lt;input&gt;</code>{m.input_why_native_2()}</li>
+  <li><strong>{m.input_why_consistency()}</strong>{m.input_why_consistency_desc()}</li>
+  <li><strong>{m.input_why_a11y()}</strong>{m.input_why_a11y_1()}<code>&lt;label&gt;</code>{m.input_why_a11y_2()}<code>aria-describedby</code>{m.input_why_a11y_3()}<code>aria-invalid</code>{m.input_why_a11y_4()}</li>
 </ul>
 
-<h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
 <ul>
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input">MDN — &lt;input&gt;</a></li>
   <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/">WAI-ARIA APG — Forms</a></li>
@@ -77,56 +63,53 @@ function handlePasswordInput(event: CustomEvent<{ value: string }>) {
   <li><a href="https://ant.design/components/input">Ant Design — Input</a></li>
 </ul>
 
-<!-- ─── Responsiveness ────────────────────────────────── -->
-
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>Native `&lt;input&gt;` element with `type` prop (text, email, tel, url, search, password, etc.)</li>
-    <li>Floating label via CSS `:has()` + `:placeholder-shown` — zero JS for label animation</li>
-    <li>Form context integration via `getContext('form')` for `effectiveDisabled` and validation</li>
-    <li>`...rest` spread on `&lt;input&gt;` for native attributes (`data-*`, `aria-*`)</li>
-    <li>`id` with `crypto.randomUUID()` default for accessibility</li>
+    <li>{m.input_impl_1()}</li>
+    <li>{m.input_impl_2()}</li>
+    <li>{m.input_impl_3()}</li>
+    <li>{m.input_impl_4()}</li>
+    <li>{m.input_impl_5()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use `&lt;div contenteditable&gt;` — always `&lt;input&gt;` for form participation</li>
-    <li>Don't forget `type=&quot;email&quot;` for email fields — it enables mobile keyboards and native validation</li>
-    <li>Don't override `id` unless you need label association — the default handles `aria-describedby`</li>
+    <li>{m.input_mistake_1()}</li>
+    <li>{m.input_mistake_2()}</li>
+    <li>{m.input_mistake_3()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Textarea, NumberInput, AutoComplete, Combobox, FloatLabel, FormField</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.input_related_1()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>The input fills its container width by default (<code>w-full</code>).</li>
-  <li>On mobile, <code>type="tel"</code> shows a numeric keypad;
-    <code>type="email"</code> shows the email keyboard.</li>
-  <li>Touch targets meet 44×44 px minimum for mobile tap areas.</li>
+  <li>{m.input_responsive_1()}</li>
+  <li>{m.input_responsive_2_1()}</li>
+  <li>{m.input_responsive_3()}</li>
 </ul>
 
 <!-- ─── Customization ─────────────────────────────────── -->
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li>Set the input type via the <code>type</code> prop for appropriate mobile keyboards.</li>
-  <li>Use <code>floating={true}</code> for a label that animates above the input when focused.</li>
-  <li>Add left/right icons via <code>leftIcon</code> and <code>rightIcon</code> props.</li>
-  <li>Apply input masks for formatted input (phone, date, credit card).</li>
-  <li>Theme colors and borders are controlled by the Tailwind theme.</li>
+  <li>{m.input_custom_1()}</li>
+  <li>{m.input_custom_2_1()}<code>floating={'{true}'}</code>{m.input_custom_2_2()}</li>
+  <li>{m.input_custom_3_1()}</li>
+  <li>{m.input_custom_4()}</li>
+  <li>{m.input_custom_5()}</li>
 </ul>
 
 <!-- ─── Examples ──────────────────────────────────────── -->
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Basic Usage</h3>
+<h3>{m.input_ex_basic()}</h3>
 <ExampleTabs code={`<Input label="Username" placeholder="Enter username" />`}>
   <div class="max-w-md" data-testid="input-basic">
     <Input label="Username" placeholder="Enter username" />
   </div>
 </ExampleTabs>
 
-<h3>With Icons</h3>
+<h3>{m.input_ex_icons()}</h3>
 <ExampleTabs code={`<Input
   label="Password"
   type="password"
@@ -149,7 +132,7 @@ function handlePasswordInput(event: CustomEvent<{ value: string }>) {
   </div>
 </ExampleTabs>
 
-<h3>Floating Label</h3>
+<h3>{m.input_ex_floating()}</h3>
 <ExampleTabs code={`<Input
   label="Email"
   type="email"
@@ -166,7 +149,7 @@ function handlePasswordInput(event: CustomEvent<{ value: string }>) {
   </div>
 </ExampleTabs>
 
-<h3>Validation &amp; Error States</h3>
+<h3>{m.input_ex_validation()}</h3>
 <ExampleTabs code={`<Input
   label="Email"
   type="email"
@@ -185,7 +168,7 @@ function handlePasswordInput(event: CustomEvent<{ value: string }>) {
   </div>
 </ExampleTabs>
 
-<h3>Input Masking</h3>
+<h3>{m.input_ex_mask()}</h3>
 <ExampleTabs code={`<Input
   label="Phone"
   type="tel"
@@ -202,18 +185,16 @@ function handlePasswordInput(event: CustomEvent<{ value: string }>) {
   </div>
 </ExampleTabs>
 
-<h3>Rest Props Passthrough</h3>
+<h3>{m.input_ex_rest()}</h3>
 <ExampleTabs code={`<Input data-rest-pass="input" aria-label="Rest props input" placeholder="Enter value" />`}>
   <div class="max-w-md" data-testid="input-rest-props">
     <Input data-rest-pass="input" aria-label="Rest props input" placeholder="Enter value" />
   </div>
 </ExampleTabs>
 
-<h3>Datalist Autocomplete</h3>
+<h3>{m.input_ex_datalist()}</h3>
 <p>
-  The <code>datalist</code> prop connects the input to a native <code>&lt;datalist&gt;</code> element,
-  giving you free browser-native autocomplete suggestions. Accepts an array of strings
-  or objects with <code>label</code> and optional <code>value</code>.
+  {m.input_datalist_desc_1()}<code>datalist</code>{m.input_datalist_desc_2()}<code>&lt;datalist&gt;</code>{m.input_datalist_desc_3()}<code>label</code>{m.input_datalist_desc_4()}<code>value</code>{m.input_datalist_desc_5()}
 </p>
 <ExampleTabs code={`<Input
   label="Browser"
@@ -229,8 +210,8 @@ function handlePasswordInput(event: CustomEvent<{ value: string }>) {
   </div>
 </ExampleTabs>
 
-<h3>Datalist with Value/Label Pairs</h3>
-<p>Use objects when the display label differs from the stored value.</p>
+<h3>{m.input_ex_datalist_pairs()}</h3>
+<p>{m.input_datalist_pairs_desc()}</p>
 <ExampleTabs code={`<Input
   label="Country"
   placeholder="Select a country..."
@@ -258,59 +239,56 @@ function handlePasswordInput(event: CustomEvent<{ value: string }>) {
 </ExampleTabs>
 
 <!-- ─── Slots ─────────────────────────────────────────── -->
-<h2>Slots</h2>
+<h2>{m.sec_slots()}</h2>
 <p>
-  The Input component does not expose named slots. Use props for customization.
-  For more complex content, consider using <code>&lt;FormField&gt;</code> with a
-  raw <code>&lt;input&gt;</code>.
+  {m.input_slot_none_1()}<code>&lt;FormField&gt;</code>{m.input_slot_none_2()}<code>&lt;input&gt;</code>{m.input_slot_none_3()}
 </p>
 
 <!-- ─── Props ─────────────────────────────────────────── -->
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={InputModule} />
 
 <!-- ─── Events ────────────────────────────────────────── -->
-<h2>Events</h2>
+<h2>{m.sec_events()}</h2>
 <EventsTable component={InputModule} />
 
 <!-- ─── Accessibility ─────────────────────────────────── -->
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Labels are properly associated with inputs using <code>for</code> attributes.</li>
-  <li>Required fields are marked with both visual indicators and
-    <code>aria-required="true"</code>.</li>
-  <li>Error messages are linked to inputs via <code>aria-describedby</code>.</li>
-  <li>Invalid states use <code>aria-invalid="true"</code>.</li>
-  <li>Decorative icons are hidden from screen readers with <code>aria-hidden="true"</code>.</li>
+  <li>{m.input_a11y_1()}</li>
+  <li>{m.input_a11y_2_1()}<code>aria-required="true"</code>{m.input_a11y_2_2()}</li>
+  <li>{m.input_a11y_3_1()}<code>aria-describedby</code>{m.input_a11y_3_2()}</li>
+  <li>{m.input_a11y_4_1()}<code>aria-invalid="true"</code>{m.input_a11y_4_2()}</li>
+  <li>{m.input_a11y_5_1()}<code>aria-hidden="true"</code>{m.input_a11y_5_2()}</li>
 </ul>
 
 <!-- ─── Keyboard Support ──────────────────────────────── -->
-<h2>Keyboard Support</h2>
+<h2>{m.sec_keyboard()}</h2>
 <table>
   <thead>
-    <tr><th>Key</th><th>Function</th></tr>
+    <tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr>
   </thead>
   <tbody>
-    <tr><td><kbd>Tab</kbd></td><td>Moves focus into and out of the input</td></tr>
-    <tr><td><kbd>Enter</kbd></td><td>Submits the enclosing form (if applicable)</td></tr>
-    <tr><td><kbd>Escape</kbd></td><td>Clears the input (in some implementations)</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td>{m.input_kb_tab()}</td></tr>
+    <tr><td><kbd>Enter</kbd></td><td>{m.input_kb_enter()}</td></tr>
+    <tr><td><kbd>Escape</kbd></td><td>{m.input_kb_escape()}</td></tr>
   </tbody>
 </table>
 
 <!-- ─── Input Masking Reference ───────────────────────── -->
-<h2>Input Masking Reference</h2>
-<p>The mask pattern uses these special characters:</p>
+<h2>{m.sec_masking_ref()}</h2>
+<p>{m.input_mask_intro()}</p>
 <ul>
-  <li><code>#</code> — Matches a digit (0–9)</li>
-  <li><code>A</code> — Matches a letter (a–z, A–Z)</li>
-  <li><code>*</code> — Matches any character</li>
-  <li>Any other character is treated as a literal</li>
+  <li><code>#</code> — {m.input_mask_digit()}</li>
+  <li><code>A</code> — {m.input_mask_letter()}</li>
+  <li><code>*</code> — {m.input_mask_any()}</li>
+  <li>{m.input_mask_literal()}</li>
 </ul>
-<p>Common patterns:</p>
+<p>{m.input_mask_patterns()}</p>
 <ul>
-  <li>Phone: <code>(###) ###-####</code></li>
-  <li>Date: <code>##/##/####</code></li>
-  <li>Credit Card: <code>#### #### #### ####</code></li>
-  <li>Serial Number: <code>AA-##-**</code></li>
+  <li>{m.input_mask_phone()} <code>(###) ###-####</code></li>
+  <li>{m.input_mask_date()} <code>##/##/####</code></li>
+  <li>{m.input_mask_card()} <code>#### #### #### ####</code></li>
+  <li>{m.input_mask_serial()} <code>AA-##-**</code></li>
 </ul>
 </Container>
