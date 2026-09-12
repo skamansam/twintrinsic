@@ -11,6 +11,7 @@ import TextInput from "$lib/components/Form/TextInput.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as FloatLabelModule from "$lib/components/Form/FloatLabel.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -18,70 +19,69 @@ import Container from "$lib/components/Container/Container.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>FloatLabel</h1>
+<h1>{m.floatlabel_heading()}</h1>
 
 <p>
-  <strong>FloatLabel</strong> wraps form inputs with an animated label that floats
-  above the field when focused or filled, saving vertical space while maintaining
-  clear context.
+  <strong>{m.floatlabel_heading()}</strong>{m.floatlabel_lede_1()}
 </p>
 
-<h2>What, When &amp; Why</h2>
+<h2>{m.sec_what_when_why()}</h2>
 
-<h3>What is it?</h3>
+<h3>{m.sec_what()}</h3>
 <p>
-  A form field wrapper that positions the label inside the input when empty, then
-  animates it above the input when focused or filled. Uses CSS <code>:has()</code>
-  for the float animation — no JavaScript needed.
+  {m.floatlabel_what_1()}<code>:has()</code>{m.floatlabel_what_2()}
 </p>
 
-<h3>When should I use it?</h3>
+<h3>{m.sec_when()}</h3>
 <p>
-  Use <code>&lt;FloatLabel&gt;</code> for dense forms where vertical space is at a
-  premium: mobile forms, side panels, modal forms. For standard forms with ample
-  space, prefer <code>&lt;FormField&gt;</code> with a separate label above.
+  {m.floatlabel_when_1()}<code>&lt;FloatLabel&gt;</code>{m.floatlabel_when_2()}<code>&lt;FormField&gt;</code>{m.floatlabel_when_3()}
 </p>
 
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Space efficiency</strong> — combines label and placeholder into one element.</li>
-  <li><strong>Persistent context</strong> — the floating label is always visible, even after typing.</li>
-  <li><strong>Modern CSS</strong> — <code>:has()</code> enables the float animation without JS.</li>
+  <li><strong>{m.floatlabel_why_space()}</strong>{m.floatlabel_why_space_1()}</li>
+  <li><strong>{m.floatlabel_why_context()}</strong>{m.floatlabel_why_context_1()}</li>
+  <li><strong>{m.floatlabel_why_css()}</strong>{m.floatlabel_why_css_1()}<code>:has()</code>{m.floatlabel_why_css_2()}</li>
 </ul>
 
-
-<h2>Twintrinsic Implementation</h2>
+<h3>{m.sec_sources()}</h3>
 <ul>
-    <li>CSS `:has()` + `:placeholder-shown` for label float animation — zero JS</li>
-    <li>`@starting-style` for smooth label transition on mount</li>
-    <li>Wraps any form input (Input, Select, Textarea) with floating label behavior</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:has">MDN — :has()</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:placeholder-shown">MDN — :placeholder-shown</a></li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>Don't use JS for the float animation — CSS `:has()` handles it natively</li>
-    <li>Don't forget proper `&lt;label&gt;` + `for` association for accessibility</li>
+    <li>{m.floatlabel_impl_1()}</li>
+    <li>{m.floatlabel_impl_2()}</li>
+    <li>{m.floatlabel_impl_3()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Input, FormField, Select</p>
-
-<h2>Responsiveness</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-  <li>Fills container width by default.</li>
-  <li>Works with any input type (text, email, password, textarea, select).</li>
+    <li>{m.floatlabel_mistake_1()}</li>
+    <li>{m.floatlabel_mistake_2()}</li>
 </ul>
 
-<h2>Customization</h2>
+<h2>{m.sec_related()}</h2>
+<p>{m.floatlabel_related_1()}</p>
+
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Wrap any input component (TextInput, Textarea, Select).</li>
-  <li>Add help text, error messages, required indicators via props.</li>
-  <li>Disabled state via prop.</li>
+  <li>{m.floatlabel_responsive_1()}</li>
+  <li>{m.floatlabel_responsive_2()}</li>
 </ul>
 
-<h2>Examples</h2>
+<h2>{m.sec_customization()}</h2>
+<ul>
+  <li>{m.floatlabel_custom_1_1()}<code>TextInput</code>, <code>Textarea</code>, <code>Select</code>{m.floatlabel_custom_1_2()}</li>
+  <li>{m.floatlabel_custom_2()}</li>
+  <li>{m.floatlabel_custom_3_1()}</li>
+</ul>
 
-<h3>Basic Usage</h3>
+<h2>{m.sec_examples()}</h2>
+
+<h3>{m.floatlabel_ex_basic()}</h3>
 <ExampleTabs code={`<FloatLabel label="Username">
   <TextInput name="username" />
 </FloatLabel>`}>
@@ -90,7 +90,7 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h3>With Different Input Types</h3>
+<h3>{m.floatlabel_ex_types()}</h3>
 <ExampleTabs code={`<FloatLabel label="Email">
   <TextInput type="email" name="email" />
 </FloatLabel>
@@ -107,7 +107,7 @@ import Container from "$lib/components/Container/Container.svelte"
     <FloatLabel label="Password"><TextInput type="password" name="password" /></FloatLabel>
     <FloatLabel label="Message"><Textarea name="message" rows={3} /></FloatLabel>
   </div>
-</ExampleTabs>  <h3>Required</h3>
+</ExampleTabs>  <h3>{m.floatlabel_ex_required()}</h3>
   <ExampleTabs code={`<FloatLabel label="Email" required>
   <TextInput type="email" name="email" required />
 </FloatLabel>`}>
@@ -116,7 +116,7 @@ import Container from "$lib/components/Container/Container.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Help Text</h3>
+  <h3>{m.floatlabel_ex_help()}</h3>
   <ExampleTabs code={`<FloatLabel label="Password" helpText="Password must be at least 8 characters long">
   <TextInput type="password" name="password" />
 </FloatLabel>`}>
@@ -125,7 +125,7 @@ import Container from "$lib/components/Container/Container.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Initial Value</h3>
+  <h3>{m.floatlabel_ex_initial()}</h3>
   <ExampleTabs code={`<FloatLabel label="Username">
   <TextInput name="username" value="johndoe" />
 </FloatLabel>`}>
@@ -134,7 +134,7 @@ import Container from "$lib/components/Container/Container.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>With Error &amp; Help Text</h3>
+  <h3>{m.floatlabel_ex_error()}</h3>
 <ExampleTabs code={`<FloatLabel label="Email" error="Please enter a valid email">
   <TextInput type="email" name="email" />
 </FloatLabel>
@@ -148,14 +148,14 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={FloatLabelModule} />
 
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Labels are properly associated via <code>for</code>/<code>id</code>.</li>
-  <li>Labels remain visible at all times (never hidden).</li>
-  <li>Error messages use <code>role="alert"</code> for screen reader announcements.</li>
-  <li>Preserves accessibility features of wrapped input components.</li>
+  <li>{m.floatlabel_a11y_1_1()}<code>for</code>/<code>id</code>{m.floatlabel_a11y_1_2()}</li>
+  <li>{m.floatlabel_a11y_2()}</li>
+  <li>{m.floatlabel_a11y_3_1()}<code>role="alert"</code>{m.floatlabel_a11y_3_2()}</li>
+  <li>{m.floatlabel_a11y_4()}</li>
 </ul>
 </Container>
