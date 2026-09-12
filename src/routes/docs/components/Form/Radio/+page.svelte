@@ -10,13 +10,14 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as RadioModule from "$lib/components/Form/Radio.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 let theme = $state("light")
 let fruit = $state("apple")
 
 const radioGroupCode = `<script>
   let theme = 'light'
-<\/script>
+<\\/script>
 
 <div class="flex flex-col gap-2">
   <Radio name="theme" value="light" label="Light"
@@ -30,7 +31,7 @@ const radioGroupCode = `<script>
 
 const horizontalCode = `<script>
   let fruit = 'apple'
-<\/script>
+<\\/script>
 
 <div class="flex gap-4">
   <Radio name="fruit" value="apple" label="Apple"
@@ -47,46 +48,32 @@ const horizontalCode = `<script>
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>Radio</h1>
+<h1>{m.radio_heading()}</h1>
 
 <!-- ─── Description ───────────────────────────────────── -->
 <p>
-  <strong>Radio</strong> is a form control for selecting exactly one option from a
-  small set of mutually exclusive choices. It wraps the native
-  <code>&lt;input type="radio"&gt;</code> with consistent styling and accessibility
-  enhancements.
+  <strong>{m.radio_heading()}</strong>{m.radio_lede_1()}<code>&lt;input type="radio"&gt;</code>{m.radio_lede_2()}
 </p>
 
 <!-- ─── What / When / Why ─────────────────────────────── -->
-<h2>What, When &amp; Why</h2>
+<h2>{m.sec_what_when_why()}</h2>
 
-<h3>What is it?</h3>
+<h3>{m.sec_what()}</h3>
+<p>{m.radio_what_1()}</p>
+
+<h3>{m.sec_when()}</h3>
 <p>
-  A circular toggle that, when selected, deselects all other radio buttons in the same
-  named group. All options are always visible — the user doesn't need to open a
-  dropdown to see choices.
+  {m.radio_when_1()}<code>&lt;Radio&gt;</code>{m.radio_when_2()}<code>&lt;Select&gt;</code>{m.radio_when_3()}<code>&lt;Combobox&gt;</code>{m.radio_when_4()}<code>&lt;Checkbox&gt;</code>{m.radio_when_5()}<code>&lt;Switch&gt;</code>{m.radio_when_6()}
 </p>
 
-<h3>When should I use it?</h3>
-<p>
-  Use <code>&lt;Radio&gt;</code> when the user must choose exactly one option from a
-  small set (2–6 options). All options should be visible for faster scanning. For
-  7+ options, use <code>&lt;Select&gt;</code> or <code>&lt;Combobox&gt;</code>. For
-  independent on/off toggles, use <code>&lt;Checkbox&gt;</code> or
-  <code>&lt;Switch&gt;</code>.
-</p>
-
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Visibility</strong> — all options are visible at once, enabling faster
-      decision-making than dropdowns (Nielsen Norman Group research).</li>
-  <li><strong>Mutual exclusion</strong> — the <code>name</code> attribute ensures
-      exactly one option can be selected per group.</li>
-  <li><strong>Keyboard intuitive</strong> — arrow keys navigate between options in a
-      group, matching user expectations.</li>
+  <li><strong>{m.radio_why_visibility()}</strong>{m.radio_why_visibility_1()}</li>
+  <li><strong>{m.radio_why_exclusion()}</strong>{m.radio_why_exclusion_1()}<code>name</code>{m.radio_why_exclusion_2()}</li>
+  <li><strong>{m.radio_why_keyboard()}</strong>{m.radio_why_keyboard_1()}</li>
 </ul>
 
-<h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
 <ul>
   <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/radio/">WAI-ARIA APG — Radio Group</a></li>
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio">MDN — radio input</a></li>
@@ -95,48 +82,44 @@ const horizontalCode = `<script>
   <li><a href="https://ant.design/components/radio">Ant Design — Radio</a></li>
 </ul>
 
-<!-- ─── Responsiveness ────────────────────────────────── -->
-
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>Native `&lt;input type=&quot;radio&quot;&gt;` with custom wrapper styling</li>
-    <li>RadioGroup uses `&lt;fieldset&gt;` + `&lt;legend&gt;` for accessible grouping</li>
-    <li>`name` attribute for mutual exclusion — native browser behavior</li>
-    <li>Arrow key navigation between radios in a group (native)</li>
-    <li>`accent-color` for brand-tinted appearance</li>
+    <li>{m.radio_impl_1()}</li>
+    <li>{m.radio_impl_2()}</li>
+    <li>{m.radio_impl_3()}</li>
+    <li>{m.radio_impl_4()}</li>
+    <li>{m.radio_impl_5()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't forget `name` attribute — without it, radios won't be mutually exclusive</li>
-    <li>Don't use for binary on/off — use Checkbox or Switch</li>
-    <li>Don't use `&lt;div role=&quot;radio&quot;&gt;` — always native `&lt;input type=&quot;radio&quot;&gt;`</li>
+    <li>{m.radio_mistake_1()}</li>
+    <li>{m.radio_mistake_2()}</li>
+    <li>{m.radio_mistake_3()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Checkbox, Switch, RadioGroup, FormField</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.radio_related_1()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Radio buttons are inline elements that wrap naturally in flex or grid layouts.</li>
-  <li>Use horizontal layout (<code>flex gap-4</code>) for 2–3 short options, vertical
-      layout for longer labels.</li>
-  <li>Touch targets meet 44×44 px minimum for mobile tap areas.</li>
+  <li>{m.radio_responsive_1()}</li>
+  <li>{m.radio_responsive_2_1()}<code>flex gap-4</code>{m.radio_responsive_2_2()}</li>
+  <li>{m.radio_responsive_3()}</li>
 </ul>
 
 <!-- ─── Customization ─────────────────────────────────── -->
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li>Size: <code>sm</code>, <code>md</code> (default), or <code>lg</code>.</li>
-  <li>Use <code>&lt;FormField&gt;</code> to wrap a group with a shared label and
-      required indicator.</li>
-  <li>Theme colors and borders are controlled by the Tailwind theme.</li>
+  <li>{m.radio_custom_1_1()}<code>sm</code>, <code>md</code>{m.radio_custom_1_2()}<code>lg</code>{m.radio_custom_1_3()}</li>
+  <li>{m.radio_custom_2_1()}<code>&lt;FormField&gt;</code>{m.radio_custom_2_2()}</li>
+  <li>{m.radio_custom_3()}</li>
 </ul>
 
 <!-- ─── Examples ──────────────────────────────────────── -->
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Radio Group</h3>
+<h3>{m.radio_ex_group()}</h3>
 <ExampleTabs code={radioGroupCode}>
   <div class="max-w-md" data-testid="radio-group">
     <div class="flex flex-col gap-2">
@@ -144,11 +127,11 @@ const horizontalCode = `<script>
       <Radio name="theme-group" value="dark" label="Dark" checked={theme === 'dark'} onchange={() => theme = 'dark'} />
       <Radio name="theme-group" value="system" label="System" checked={theme === 'system'} onchange={() => theme = 'system'} />
     </div>
-    <p class="text-sm text-muted mt-2">Selected theme: {theme}</p>
+    <p class="text-sm text-muted mt-2">{m.radio_selected_theme()} {theme}</p>
   </div>
 </ExampleTabs>
 
-<h3>Horizontal Layout</h3>
+<h3>{m.radio_ex_horizontal()}</h3>
 <ExampleTabs code={horizontalCode}>
   <div class="max-w-md" data-testid="radio-horizontal">
     <div class="flex gap-4">
@@ -156,11 +139,11 @@ const horizontalCode = `<script>
       <Radio name="fruit" value="banana" label="Banana" checked={fruit === 'banana'} onchange={() => fruit = 'banana'} />
       <Radio name="fruit" value="cherry" label="Cherry" checked={fruit === 'cherry'} onchange={() => fruit = 'cherry'} />
     </div>
-    <p class="text-sm text-muted mt-2">Selected fruit: {fruit}</p>
+    <p class="text-sm text-muted mt-2">{m.radio_selected_fruit()} {fruit}</p>
   </div>
 </ExampleTabs>
 
-<h3>Different Sizes</h3>
+<h3>{m.radio_ex_sizes()}</h3>
 <ExampleTabs code={`<Radio name="sm" value="sm" label="Small" size="sm" />
 <Radio name="md" value="md" label="Medium (default)" size="md" />
 <Radio name="lg" value="lg" label="Large" size="lg" />`}>
@@ -171,7 +154,7 @@ const horizontalCode = `<script>
   </div>
 </ExampleTabs>
 
-<h3>With FormField</h3>
+<h3>{m.radio_ex_formfield()}</h3>
 <ExampleTabs code={`<FormField label="Select theme" required={true}>
   <div class="flex gap-4">
     <Radio name="theme-required" value="light" label="Light" required={true} />
@@ -188,7 +171,7 @@ const horizontalCode = `<script>
   </div>
 </ExampleTabs>
 
-<h3>Disabled</h3>
+<h3>{m.radio_ex_disabled()}</h3>
 <ExampleTabs code={`<Radio name="disabled" value="disabled" label="Disabled option" disabled={true} />`}>
   <div class="max-w-md" data-testid="radio-disabled">
     <Radio name="disabled" value="disabled" label="Disabled option" disabled={true} />
@@ -196,48 +179,47 @@ const horizontalCode = `<script>
 </ExampleTabs>
 
 <!-- ─── Slots ─────────────────────────────────────────── -->
-<h2>Slots</h2>
+<h2>{m.sec_slots()}</h2>
 <p>
-  The Radio component does not expose named slots. Use props for customization.
-  For complex label content, wrap with <code>&lt;FormField&gt;</code>.
+  {m.radio_slot_none_1()}<code>&lt;FormField&gt;</code>{m.radio_slot_none_2()}
 </p>
 
 <!-- ─── Props ─────────────────────────────────────────── -->
-  <h3>Basic with Label</h3>
-  <ExampleTabs code={`<Radio name="theme" value="light" label="Light theme" checked />`}>
-    <div data-testid="radio-basic">
-      <Radio name="theme" value="light" label="Light theme" checked />
-    </div>
-  </ExampleTabs>
+<h3>{m.radio_ex_group()}</h3>
+<ExampleTabs code={`<Radio name="theme" value="light" label="Light theme" checked />`}>
+  <div data-testid="radio-basic">
+    <Radio name="theme" value="light" label="Light theme" checked />
+  </div>
+</ExampleTabs>
 
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={RadioModule} />
 
 <!-- ─── Events ────────────────────────────────────────── -->
-<h2>Events</h2>
+<h2>{m.sec_events()}</h2>
 <EventsTable component={RadioModule} />
 
 <!-- ─── Accessibility ─────────────────────────────────── -->
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Uses native <code>&lt;input type="radio"&gt;</code> for proper semantics.</li>
-  <li>Arrow keys navigate within a radio group (up/down or left/right).</li>
-  <li>Visible focus indicators on all radio buttons.</li>
-  <li>Proper disabled states with visual indicators.</li>
-  <li>Maintains WCAG AA color contrast for all states.</li>
+  <li>{m.radio_a11y_1_1()}<code>&lt;input type="radio"&gt;</code>{m.radio_a11y_1_2()}</li>
+  <li>{m.radio_a11y_2()}</li>
+  <li>{m.radio_a11y_3()}</li>
+  <li>{m.radio_a11y_4()}</li>
+  <li>{m.radio_a11y_5()}</li>
 </ul>
 
 <!-- ─── Keyboard Support ──────────────────────────────── -->
-<h2>Keyboard Support</h2>
+<h2>{m.sec_keyboard()}</h2>
 <table>
   <thead>
-    <tr><th>Key</th><th>Function</th></tr>
+    <tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr>
   </thead>
   <tbody>
-    <tr><td><kbd>Tab</kbd></td><td>Move focus to the radio group</td></tr>
-    <tr><td><kbd>Space</kbd></td><td>Select the focused radio button</td></tr>
-    <tr><td><kbd>Arrow Up</kbd> / <kbd>Arrow Left</kbd></td><td>Move to and select the previous radio</td></tr>
-    <tr><td><kbd>Arrow Down</kbd> / <kbd>Arrow Right</kbd></td><td>Move to and select the next radio</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td>{m.radio_kb_tab()}</td></tr>
+    <tr><td><kbd>Space</kbd></td><td>{m.radio_kb_space()}</td></tr>
+    <tr><td><kbd>Arrow Up</kbd> / <kbd>Arrow Left</kbd></td><td>{m.radio_kb_prev()}</td></tr>
+    <tr><td><kbd>Arrow Down</kbd> / <kbd>Arrow Right</kbd></td><td>{m.radio_kb_next()}</td></tr>
   </tbody>
 </table>
 </Container>
