@@ -16,9 +16,7 @@ test.describe("AppHeader docs page", () => {
   });
 
   test("renders the docs page with all live examples", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "AppHeader", level: 1 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "AppHeader", level: 1 })).toBeVisible();
     await expect(page.getByTestId("app-header-basic")).toBeVisible();
     await expect(page.getByTestId("app-header-with-logo")).toBeVisible();
     await expect(page.getByTestId("app-header-full-featured")).toBeVisible();
@@ -102,9 +100,7 @@ test.describe("AppHeader docs page", () => {
   });
 
   test("keyboard Tab navigates through header actions", async ({ page }) => {
-    const header = page
-      .getByTestId("app-header-full-featured")
-      .locator(".app-header");
+    const header = page.getByTestId("app-header-full-featured").locator(".app-header");
 
     const searchInput = header.locator(".app-header-search-input");
     await expect(searchInput).toBeVisible();
@@ -119,9 +115,7 @@ test.describe("AppHeader docs page", () => {
   });
 
   test("full-featured header shows search and user menu", async ({ page }) => {
-    const header = page
-      .getByTestId("app-header-full-featured")
-      .locator(".app-header");
+    const header = page.getByTestId("app-header-full-featured").locator(".app-header");
 
     await expect(header.locator(".app-header-search-input")).toBeVisible();
     await expect(header.locator(".app-header-user-button")).toBeVisible();
@@ -133,9 +127,7 @@ test.describe("AppHeader docs page", () => {
   });
 
   test("user menu button has aria-expanded", async ({ page }) => {
-    const header = page
-      .getByTestId("app-header-full-featured")
-      .locator(".app-header");
+    const header = page.getByTestId("app-header-full-featured").locator(".app-header");
     const userBtn = header.locator(".app-header-user-button");
 
     await expect(userBtn).toHaveAttribute("aria-expanded", "false");
@@ -148,9 +140,7 @@ test.describe("AppHeader docs page", () => {
   });
 
   test("notifications button has aria-expanded and toggles panel", async ({ page }) => {
-    const header = page
-      .getByTestId("app-header-full-featured")
-      .locator(".app-header");
+    const header = page.getByTestId("app-header-full-featured").locator(".app-header");
     const notifBtn = header.locator(".app-header-notifications-button");
 
     await expect(notifBtn).toBeVisible();
@@ -162,9 +152,7 @@ test.describe("AppHeader docs page", () => {
   });
 
   test("search input has associated label", async ({ page }) => {
-    const header = page
-      .getByTestId("app-header-full-featured")
-      .locator(".app-header");
+    const header = page.getByTestId("app-header-full-featured").locator(".app-header");
     const searchInput = header.locator(".app-header-search-input");
     await expect(searchInput).toBeVisible();
 
@@ -174,5 +162,37 @@ test.describe("AppHeader docs page", () => {
       const label = header.locator(`label[for="${inputId}"]`);
       await expect(label).toBeVisible();
     }
+  });
+
+  test("locale switcher renders a language button with a flag", async ({ page }) => {
+    const header = page.getByTestId("app-header-full-featured").locator(".app-header");
+    const picker = header.locator(".language-picker");
+    await expect(picker).toBeVisible();
+
+    const trigger = picker.locator(".language-picker-trigger");
+    await expect(trigger).toHaveAttribute("aria-haspopup", "menu");
+    await expect(trigger).toHaveAttribute("aria-expanded", "false");
+    // The current language's flag (circle-flags iconset) loads asynchronously.
+    await expect(trigger.locator("svg").first()).toBeAttached();
+  });
+
+  test("locale switcher opens a menu of languages and closes on Escape", async ({ page }) => {
+    const header = page.getByTestId("app-header-full-featured").locator(".app-header");
+    const trigger = header.locator(".language-picker-trigger");
+
+    await trigger.click();
+    await expect(trigger).toHaveAttribute("aria-expanded", "true");
+    const menu = header.locator(".language-picker-menu");
+    await expect(menu).toBeVisible();
+
+    const items = menu.locator(".language-picker-item");
+    await expect(items).toHaveCount(3);
+    // Every item shows its language's own flag and native name.
+    for (let i = 0; i < 3; i++) {
+      await expect(items.nth(i).locator("svg").first()).toBeAttached();
+    }
+
+    await page.keyboard.press("Escape");
+    await expect(trigger).toHaveAttribute("aria-expanded", "false");
   });
 });

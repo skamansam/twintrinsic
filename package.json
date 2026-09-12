@@ -301,6 +301,11 @@
       "svelte": "./dist/components/Form/Knob.svelte",
       "default": "./dist/components/Form/Knob.svelte"
     },
+    "./components/LanguagePicker": {
+      "types": "./dist/components/LanguagePicker/LanguagePicker.svelte.d.ts",
+      "svelte": "./dist/components/LanguagePicker/LanguagePicker.svelte",
+      "default": "./dist/components/LanguagePicker/LanguagePicker.svelte"
+    },
     "./components/Lazy": {
       "types": "./dist/components/Lazy/Lazy.svelte.d.ts",
       "svelte": "./dist/components/Lazy/Lazy.svelte",

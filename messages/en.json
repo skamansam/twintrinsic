@@ -2756,5 +2756,14 @@
   "mex_bp_accuracy": "Data Accuracy",
   "mex_bp_accuracy_desc": "Ensure data is up-to-date and clearly indicate refresh times.",
   "mex_bp_a11y": "Accessibility",
-  "mex_bp_a11y_desc": "All Metrics components include ARIA labels and keyboard navigation. Provide text alternatives for visual data."
+  "mex_bp_a11y_desc": "All Metrics components include ARIA labels and keyboard navigation. Provide text alternatives for visual data.",
+  "appheader_custom_locale_1_1": "Set ",
+  "appheader_custom_locale_1_2": " to render a ",
+  "appheader_custom_locale_1_3": " beside the theme toggle. Locales are auto-detected from the Paraglide runtime — apps using Paraglide need no configuration. Pass ",
+  "appheader_custom_locale_1_4": " to override the list, and ",
+  "appheader_custom_locale_1_5": " to observe switches.",
+  "app_custom_locale_1_1": "Set ",
+  "app_custom_locale_1_2": " to show the language picker in the ",
+  "app_custom_locale_1_3": " header. Locales auto-detect from Paraglide; pass ",
+  "app_custom_locale_1_4": " to override them."
 }

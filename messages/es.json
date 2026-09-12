@@ -2756,5 +2756,14 @@
   "mex_bp_accuracy": "Precisión de los datos",
   "mex_bp_accuracy_desc": "Asegúrate de que los datos están actualizados e indica claramente las horas de refresco.",
   "mex_bp_a11y": "Accesibilidad",
-  "mex_bp_a11y_desc": "Todos los componentes Metrics incluyen etiquetas ARIA y navegación por teclado. Ofrece alternativas textuales para los datos visuales."
+  "mex_bp_a11y_desc": "Todos los componentes Metrics incluyen etiquetas ARIA y navegación por teclado. Ofrece alternativas textuales para los datos visuales.",
+  "appheader_custom_locale_1_1": "Establece ",
+  "appheader_custom_locale_1_2": " para mostrar un ",
+  "appheader_custom_locale_1_3": " junto al conmutador de tema. Los idiomas se autodetectan desde el runtime de Paraglide — las apps que usan Paraglide no necesitan configuración. Pasa ",
+  "appheader_custom_locale_1_4": " para anular la lista, y ",
+  "appheader_custom_locale_1_5": " para observar los cambios.",
+  "app_custom_locale_1_1": "Establece ",
+  "app_custom_locale_1_2": " para mostrar el selector de idioma en la cabecera de ",
+  "app_custom_locale_1_3": ". Los idiomas se autodetectan desde Paraglide; pasa ",
+  "app_custom_locale_1_4": " para anularlos."
 }

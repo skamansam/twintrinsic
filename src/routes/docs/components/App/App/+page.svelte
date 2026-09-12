@@ -86,6 +86,7 @@ App documentation page — standardized structure
     <li>{m.app_custom_1_1()}<code>twintrinsic.css</code>{m.app_custom_1_2()}</li>
     <li>{m.app_custom_2_1()}<code>class</code>{m.app_custom_2_2()}</li>
     <li>{m.app_custom_3()}</li>
+    <li>{m.app_custom_locale_1_1()}<code>showLocaleSwitcher</code>{m.app_custom_locale_1_2()}<code>&lt;AppHeader&gt;</code>{m.app_custom_locale_1_3()}<code>locales</code>{m.app_custom_locale_1_4()}</li>
   </ul>
 
   <!-- ─── Examples ──────────────────────────────────────── -->

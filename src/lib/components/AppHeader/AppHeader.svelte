@@ -27,6 +27,9 @@ export const propsMetadata = [
   { name: "showSearch", type: "boolean", description: "Whether to show the search input", default: "false", optional: true },
   { name: "showNotifications", type: "boolean", description: "Whether to show the notifications button", default: "false", optional: true },
   { name: "themeToggleHidden", type: "boolean", description: "Whether to hide the theme toggle", default: "false", optional: true },
+  { name: "showLocaleSwitcher", type: "boolean", description: "Whether to show the language picker beside the theme toggle (requires the Paraglide runtime; renders nothing without it)", default: "false", optional: true },
+  { name: "locales", type: "string[]", description: "Locale codes offered by the language picker. Defaults to the Paraglide runtime's locales", optional: true },
+  { name: "onlocalechange", type: "(event: CustomEvent<{ locale: string }>) => void", description: "Callback fired after the language picker switches locale", optional: true, eventDetail: "{ locale: string }" },
   { name: "navItems", type: "NavItem[]", description: "Navigation items shown in the header", default: "[]", optional: true },
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
@@ -43,6 +46,7 @@ import type { Snippet } from "svelte";
 import { slide } from "svelte/transition"
 import Icon from "../Icon/Icon.svelte"
 import ThemeToggle from "../ThemeToggle/ThemeToggle.svelte"
+import LanguagePicker from "../LanguagePicker/LanguagePicker.svelte"
 import Avatar from "../Avatar/Avatar.svelte"
 
 type Brand = string | { name: string; logo?: import("svelte").Snippet<[number]> | string; href?: string; tagline?: string }
@@ -62,6 +66,12 @@ interface Props {
   showNotifications?: boolean
   /** Whether to hide the theme toggle */
   themeToggleHidden?: boolean
+  /** Whether to show the language picker beside the theme toggle (requires the Paraglide runtime; renders nothing without it) */
+  showLocaleSwitcher?: boolean
+  /** Locale codes offered by the language picker. Defaults to the Paraglide runtime's locales */
+  locales?: string[]
+  /** Callback fired after the language picker switches locale */
+  onlocalechange?: (event: CustomEvent<{ locale: string }>) => void
   /** Navigation items shown in the header */
   navItems?: NavItem[]
   /** Additional CSS classes */
@@ -86,6 +96,9 @@ const {
   showSearch = false,
   showNotifications = false,
   themeToggleHidden = false,
+  showLocaleSwitcher = false,
+  locales = undefined,
+  onlocalechange = undefined,
   navItems = [],
   class: className = "",
   id = crypto.randomUUID(),
@@ -247,6 +260,9 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
 
     <!-- Actions -->
     <div class="app-header-actions">
+      {#if showLocaleSwitcher}
+        <LanguagePicker {locales} onchange={onlocalechange} />
+      {/if}
       {#if !themeToggleHidden}
         <ThemeToggle />
       {/if}

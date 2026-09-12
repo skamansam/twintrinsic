@@ -20,6 +20,9 @@ export const propsMetadata = [
   { name: "header", type: "Snippet | null", description: "Custom header snippet (overrides the default AppHeader)", optional: true },
   { name: "footer", type: "Snippet | null", description: "Footer snippet rendered below the main content", optional: true },
   { name: "themeToggleHidden", type: "boolean", description: "Whether to hide the theme toggle in the header", default: "false", optional: true },
+  { name: "showLocaleSwitcher", type: "boolean", description: "Whether to show the language picker beside the theme toggle (requires the Paraglide runtime; renders nothing without it)", default: "false", optional: true },
+  { name: "locales", type: "string[]", description: "Locale codes offered by the language picker. Defaults to the Paraglide runtime's locales", optional: true },
+  { name: "onlocalechange", type: "(event: CustomEvent<{ locale: string }>) => void", description: "Callback fired after the language picker switches locale", optional: true, eventDetail: "{ locale: string }" },
   { name: "onsearch", type: "(payload: { query: string }) => void", description: "Callback fired when the user types in the header search input", optional: true },
   { name: "onsignout", type: "() => void", description: "Callback fired when the user signs out", optional: true },
   { name: "onleftSidebarToggle", type: "(payload: { expanded: boolean }) => void", description: "Callback fired when the left sidebar is toggled", optional: true },
@@ -85,6 +88,12 @@ interface Props {
   children?: Snippet | null
   /** Whether to hide the theme toggle in the header */
   themeToggleHidden?: boolean
+  /** Whether to show the language picker beside the theme toggle (requires the Paraglide runtime; renders nothing without it) */
+  showLocaleSwitcher?: boolean
+  /** Locale codes offered by the language picker. Defaults to the Paraglide runtime's locales */
+  locales?: string[]
+  /** Callback fired after the language picker switches locale */
+  onlocalechange?: (event: CustomEvent<{ locale: string }>) => void
   /** Callback fired when the user types in the header search input */
   onsearch?: (payload: { query: string }) => void
   /** Callback fired when the user signs out */
@@ -121,6 +130,9 @@ let {
   onsearch,
   onsignout,
   themeToggleHidden = false,
+  showLocaleSwitcher = false,
+  locales = undefined,
+  onlocalechange = undefined,
   onleftSidebarToggle,
   onrightSidebarToggle,
   currentPath = "",
@@ -168,6 +180,9 @@ $effect(() => {
       {onsearch}
       {onsignout}
       {themeToggleHidden}
+      {showLocaleSwitcher}
+      {locales}
+      {onlocalechange}
       ontoggleMobileMenu={() => { mobileSidebarVisible = !mobileSidebarVisible }}
       class="appHeader col-span-full overflow-x-hidden"
     />

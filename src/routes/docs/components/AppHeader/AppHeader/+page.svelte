@@ -69,6 +69,7 @@ AppHeader documentation page — standardized structure
     <li>{m.appheader_custom_3_1()}<code>showSearch</code>{m.appheader_custom_3_2()}<code>showNotifications</code>{m.appheader_custom_3_3()}</li>
     <li>{m.appheader_custom_4()}</li>
     <li>{m.appheader_custom_5()}</li>
+    <li>{m.appheader_custom_locale_1_1()}<code>showLocaleSwitcher</code>{m.appheader_custom_locale_1_2()}<code>&lt;LanguagePicker&gt;</code>{m.appheader_custom_locale_1_3()}<code>locales</code>{m.appheader_custom_locale_1_4()}<code>onlocalechange</code>{m.appheader_custom_locale_1_5()}</li>
   </ul>
 
   <!-- ─── Examples ──────────────────────────────────────── -->
@@ -120,6 +121,7 @@ AppHeader documentation page — standardized structure
   user={{ name: 'Sarah Chen', avatar: '/avatar.svg' }}
   showSearch={true}
   showNotifications={true}
+  showLocaleSwitcher={true}
   navItems={[
     { label: 'Home', href: '/', current: true },
     { label: 'Dashboard', href: '/dashboard' },
@@ -132,6 +134,7 @@ AppHeader documentation page — standardized structure
         user={{ name: 'Sarah Chen', avatar: '/avatar.svg' }}
         showSearch={true}
         showNotifications={true}
+        showLocaleSwitcher={true}
         navItems={[
           { label: 'Home', href: '#', current: true },
           { label: 'Dashboard', href: '#' },
