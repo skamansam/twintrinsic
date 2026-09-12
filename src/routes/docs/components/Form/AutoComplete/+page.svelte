@@ -9,6 +9,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as AutoCompleteModule from "$lib/components/Form/AutoComplete.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 const countries = [
   { label: "United States", value: "US" },
@@ -39,99 +40,91 @@ function renderAvatar(item: (typeof users)[number]): string {
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>AutoComplete</h1>
+<h1>{m.autocomplete_heading()}</h1>
 
 <p>
-  <strong>AutoComplete</strong> provides text-based suggestions as the user types,
-  supporting single and multiple selections. Uses <code>popover="auto"</code> for
-  the suggestions panel with CSS Anchor Positioning.
+  <strong>{m.autocomplete_heading()}</strong>{m.autocomplete_lede_1()}<code>popover="auto"</code>{m.autocomplete_lede_2()}
 </p>
 
-<h2>What, When &amp; Why</h2>
+<h2>{m.sec_what_when_why()}</h2>
 
-<h3>What is it?</h3>
+<h3>{m.sec_what()}</h3>
+<p>{m.autocomplete_what_1()}</p>
+
+<h3>{m.sec_when()}</h3>
 <p>
-  An input field that shows a filtered list of suggestions below it as the user types.
-  Suggestions can include rich content (avatars, descriptions) via custom templates.
+  {m.autocomplete_when_1()}<code>&lt;AutoComplete&gt;</code>{m.autocomplete_when_2()}<code>&lt;Combobox&gt;</code>{m.autocomplete_when_3()}<code>&lt;Select&gt;</code>{m.autocomplete_when_4()}
 </p>
 
-<h3>When should I use it?</h3>
-<p>
-  Use <code>&lt;AutoComplete&gt;</code> for search fields, tag inputs, or any field
-  where suggesting completions saves typing. For simpler dropdown selection, use
-  <code>&lt;Combobox&gt;</code> or <code>&lt;Select&gt;</code>.
-</p>
-
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Speed</strong> — reduces typing errors and speeds up form completion.</li>
-  <li><strong>Rich suggestions</strong> — options can include avatars, icons, descriptions.</li>
-  <li><strong>Popover API</strong> — light-dismiss and top-layer rendering with zero JS.</li>
+  <li><strong>{m.autocomplete_why_speed()}</strong>{m.autocomplete_why_speed_1()}</li>
+  <li><strong>{m.autocomplete_why_rich()}</strong>{m.autocomplete_why_rich_1()}</li>
+  <li><strong>{m.autocomplete_why_popover()}</strong>{m.autocomplete_why_popover_1()}</li>
 </ul>
 
-<h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
 <ul>
   <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/">WAI-ARIA APG — Combobox</a></li>
-  <li><a href="https://primer.style/product/components/Autocomplete">Primer — Autocomplete</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API">MDN — Popover API</a></li>
 </ul>
 
-
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>Uses `popover=&quot;auto&quot;` for the suggestions panel with CSS Anchor Positioning</li>
-    <li>Supports single and multiple selection with removable chip display</li>
-    <li>Custom `itemTemplate` for rich suggestion rendering (avatars, icons)</li>
-    <li>`highlight` prop for matching text highlighting in suggestions</li>
-    <li>WAI-ARIA combobox pattern with full keyboard navigation</li>
+    <li>{m.autocomplete_impl_1()}</li>
+    <li>{m.autocomplete_impl_2()}</li>
+    <li>{m.autocomplete_impl_3()}</li>
+    <li>{m.autocomplete_impl_4()}</li>
+    <li>{m.autocomplete_impl_5()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't confuse with Combobox — AutoComplete is for text completion, Combobox for selection</li>
-    <li>Don't forget to set `multiple=&#123;true&#125;` for tag-input style behavior</li>
+    <li>{m.autocomplete_mistake_1()}</li>
+    <li>{m.autocomplete_mistake_2_1()}<code>multiple=&#123;true&#125;</code>{m.autocomplete_mistake_2_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Combobox, Input, Listbox, Chip</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.autocomplete_related_1()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Fills container width; suggestions panel matches input width.</li>
-  <li>On mobile, suggestions open as a full-width overlay.</li>
+  <li>{m.autocomplete_responsive_1()}</li>
+  <li>{m.autocomplete_responsive_2()}</li>
 </ul>
 
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li>Custom option templates via <code>itemTemplate</code>.</li>
-  <li>Single or multiple selection.</li>
-  <li>Object data with label/value mapping.</li>
+  <li>{m.autocomplete_custom_1_1()}<code>itemTemplate</code>{m.autocomplete_custom_1_2()}</li>
+  <li>{m.autocomplete_custom_2()}</li>
+  <li>{m.autocomplete_custom_3()}</li>
 </ul>
 
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Basic Usage</h3>
+<h3>{m.autocomplete_ex_basic()}</h3>
 <ExampleTabs code={`<AutoComplete label="Country" items={countries} placeholder="Select a country" />`}>
   <div class="max-w-md" data-testid="autocomplete-basic">
     <AutoComplete label="Country" items={countries} placeholder="Select a country" />
   </div>
 </ExampleTabs>
 
-<h3>Multiple Selection</h3>
+<h3>{m.autocomplete_ex_multiple()}</h3>
 <ExampleTabs code={`<AutoComplete label="Countries" items={countries} multiple={true} placeholder="Select countries" />`}>
   <div class="max-w-md" data-testid="autocomplete-multiple">
     <AutoComplete label="Countries" items={countries} multiple={true} placeholder="Select countries" />
   </div>
 </ExampleTabs>
 
-  <h3>Chip Placement</h3>
-  <p>Use <code>chipPlacement="top"</code> to render selected chips above the input instead of below.</p>
+  <h3>{m.autocomplete_ex_chip()}</h3>
+  <p>{m.autocomplete_ex_chip_intro_1()}<code>chipPlacement="top"</code>{m.autocomplete_ex_chip_intro_2()}</p>
   <ExampleTabs code={`<AutoComplete label="Tags" items={countries} multiple={true} chipPlacement="top" placeholder="Select tags" />`}>
     <div class="max-w-md" data-testid="autocomplete-chip-top">
       <AutoComplete label="Tags" items={countries} multiple={true} chipPlacement="top" placeholder="Select tags" />
     </div>
   </ExampleTabs>
 
-  <h3>Custom Template</h3>
+  <h3>{m.autocomplete_ex_template()}</h3>
   <ExampleTabs code={"<AutoComplete label=\"Team Member\" items={users} placeholder=\"Search by name...\" itemTemplate={renderAvatar} />"}>
     <div class="max-w-md" data-testid="autocomplete-custom-template">
       <AutoComplete
@@ -143,27 +136,27 @@ function renderAvatar(item: (typeof users)[number]): string {
     </div>
   </ExampleTabs>
 
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={AutoCompleteModule} />
 
-<h2>Events</h2>
+<h2>{m.sec_events()}</h2>
 <EventsTable component={AutoCompleteModule} />
 
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Uses WAI-ARIA combobox/listbox roles.</li>
-  <li>Arrow keys navigate suggestions; Enter selects; Escape closes.</li>
-  <li>Screen reader announcements for loading and empty states.</li>
+  <li>{m.autocomplete_a11y_1()}</li>
+  <li>{m.autocomplete_a11y_2()}</li>
+  <li>{m.autocomplete_a11y_3()}</li>
 </ul>
 
-<h2>Keyboard Support</h2>
+<h2>{m.sec_keyboard()}</h2>
 <table>
-  <thead><tr><th>Key</th><th>Function</th></tr></thead>
+  <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
   <tbody>
-    <tr><td><kbd>Arrow Down</kbd></td><td>Highlight next suggestion</td></tr>
-    <tr><td><kbd>Arrow Up</kbd></td><td>Highlight previous suggestion</td></tr>
-    <tr><td><kbd>Enter</kbd></td><td>Select highlighted suggestion</td></tr>
-    <tr><td><kbd>Escape</kbd></td><td>Close suggestions</td></tr>
+    <tr><td><kbd>Arrow Down</kbd></td><td>{m.autocomplete_kb_down()}</td></tr>
+    <tr><td><kbd>Arrow Up</kbd></td><td>{m.autocomplete_kb_up()}</td></tr>
+    <tr><td><kbd>Enter</kbd></td><td>{m.autocomplete_kb_enter()}</td></tr>
+    <tr><td><kbd>Escape</kbd></td><td>{m.autocomplete_kb_escape()}</td></tr>
   </tbody>
 </table>
 </Container>
