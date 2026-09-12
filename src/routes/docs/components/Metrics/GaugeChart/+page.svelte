@@ -8,6 +8,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import GaugeChart from "$lib/components/Metrics/GaugeChart/GaugeChart.svelte"
 import * as GaugeChartModule from "$lib/components/Metrics/GaugeChart/GaugeChart.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -18,23 +19,23 @@ import * as GaugeChartModule from "$lib/components/Metrics/GaugeChart/GaugeChart
   <h1>GaugeChart</h1>
 
   <p>
-    <strong>GaugeChart</strong> — An SVG gauge chart for displaying a value within a range. Features configurable arcs, needle indicator, tic marks, and color zones.
+    <strong>GaugeChart</strong> — {m.gauge_lede()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
-  <p>An SVG gauge chart for displaying a value within a range. Features configurable arcs, needle indicator, tic marks, and color zones.</p>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.gauge_lede()}</p>
 
-  <h3>When should I use it?</h3>
-  <p>Use GaugeChart for single metric displays: performance scores, satisfaction ratings, or any value within a defined range. For progress bars, use ProgressMetric.</p>
+  <h3>{m.sec_when()}</h3>
+  <p>{m.gauge_when()}</p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>SVG rendering</strong> — crisp at any resolution.</li>
-    <li><strong>Needle indicator</strong> — precise value display.</li>
-    <li><strong>Color zones</strong> — visual status ranges.</li>
-    <li><strong>Configurable</strong> — arc angles, tic marks, labels.</li>
+    <li><strong>{m.gauge_why_svg()}</strong>{m.gauge_why_svg_desc()}</li>
+    <li><strong>{m.gauge_why_needle()}</strong>{m.gauge_why_needle_desc()}</li>
+    <li><strong>{m.gauge_why_zones()}</strong>{m.gauge_why_zones_desc()}</li>
+    <li><strong>{m.gauge_why_config()}</strong>{m.gauge_why_config_desc()}</li>
   </ul>
 
   <h3>Sources</h3>
@@ -46,37 +47,36 @@ import * as GaugeChartModule from "$lib/components/Metrics/GaugeChart/GaugeChart
     <li><a href="https://d3js.org/d3-shape/arc">D3.js — Arcs</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
+  <h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>SVG-based semicircular/circular gauge</li>
-    <li>`role=&quot;meter&quot;` with `aria-valuenow/min/max`</li>
-    <li>Text alternative with actual value</li>
-    <li>`conic-gradient` for the fill indicator</li>
+    <li>{m.gauge_impl_shape()}</li>
+    <li>{m.gauge_impl_role()}</li>
+    <li>{m.gauge_impl_text()}</li>
+    <li>{m.gauge_impl_gradient()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use `&lt;div&gt;` with CSS rotation — always `role=&quot;meter&quot;` for accessibility</li>
-    <li>Don't forget the text alternative — screen readers can't read SVG</li>
+    <li>{m.gauge_mistake_1_1()} <code>&lt;div&gt;</code> {m.gauge_mistake_1_2()}</li>
+    <li>{m.gauge_mistake_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Slider, Progress, NumberInput</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.gauge_related()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Fills container width by default.</li>
-    <li>SVG charts scale to any resolution.</li>
+    <li>{m.chart_responsive_1()}</li>
+    <li>{m.chart_responsive_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li>Custom colors, labels, and sizes.</li>
-    <li>Grid lines, legends, and axis labels.</li>
+    <li>{m.chart_custom_1()}</li>
+    <li>{m.chart_custom_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
   
   <ExampleTabs code={`<GaugeChart value={75} min={0} max={100}
   label="Performance Score" unit="%" color="primary" />`}>
@@ -85,7 +85,7 @@ import * as GaugeChartModule from "$lib/components/Metrics/GaugeChart/GaugeChart
     </div>
   </ExampleTabs>
 
-  <h3>With Tic Marks</h3>
+  <h3>{m.gauge_ex_ticks()}</h3>
   <ExampleTabs code={`<GaugeChart value={82} min={0} max={100}
   label="Customer Satisfaction" unit="%" color="primary" showTicks={true} size={300} />`}>
     <div class="flex justify-center" data-testid="metrics-with-tic-marks">
@@ -93,7 +93,7 @@ import * as GaugeChartModule from "$lib/components/Metrics/GaugeChart/GaugeChart
     </div>
   </ExampleTabs>
 
-  <h3>With Color Zones</h3>
+  <h3>{m.gauge_ex_zones()}</h3>
   <ExampleTabs code={`<GaugeChart value={71} min={0} max={100}
   label="Walmart's Customer Satisfaction Score" unit="%" color="primary" size={300}
   zones={[
@@ -107,7 +107,7 @@ import * as GaugeChartModule from "$lib/components/Metrics/GaugeChart/GaugeChart
     </div>
   </ExampleTabs>
 
-  <h3>Full Circle</h3>
+  <h3>{m.gauge_ex_circle()}</h3>
   <ExampleTabs code={`<GaugeChart value={92} min={0} max={100}
   label="System Health" unit="%" color="success" fullCircle={true} size={300} />`}>
     <div class="flex justify-center" data-testid="metrics-full-circle-gauge">
@@ -115,19 +115,18 @@ import * as GaugeChartModule from "$lib/components/Metrics/GaugeChart/GaugeChart
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={GaugeChartModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>SVG elements include proper ARIA roles and labels.</li>
-    <li>Color contrast meets WCAG AA standards.</li>
-    <li>Legend provides text alternative to colors.</li>
+    <li>{m.chart_a11y_1()}</li>
+    <li>{m.chart_a11y_2()}</li>
+    <li>{m.chart_a11y_3()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <p>
-    Chart components are display-only elements. Interactive data points support
-    focus via Tab and activation via Enter/Space.
+    {m.chart_kb_body()}
   </p>
 </Container>

@@ -8,6 +8,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import ProgressMetric from "$lib/components/Metrics/ProgressMetric/ProgressMetric.svelte"
 import * as ProgressMetricModule from "$lib/components/Metrics/ProgressMetric/ProgressMetric.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -18,23 +19,23 @@ import * as ProgressMetricModule from "$lib/components/Metrics/ProgressMetric/Pr
   <h1>ProgressMetric</h1>
 
   <p>
-    <strong>ProgressMetric</strong> — A horizontal progress bar component for displaying progress towards a goal. Ideal for tracking completion, resource usage, or linear progress.
+    <strong>ProgressMetric</strong> — {m.progress_lede()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
-  <p>A horizontal progress bar component for displaying progress towards a goal. Ideal for tracking completion, resource usage, or linear progress.</p>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.progress_lede()}</p>
 
-  <h3>When should I use it?</h3>
-  <p>Use ProgressMetric for linear progress tracking: CPU usage, disk space, task completion. For circular progress, use GaugeChart. For step-based progress, use Stepper.</p>
+  <h3>{m.sec_when()}</h3>
+  <p>{m.progress_when()}</p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Linear display</strong> — intuitive progress visualization.</li>
-    <li><strong>Customizable</strong> — colors, height, percentage.</li>
-    <li><strong>Accessible</strong> — ARIA progressbar role.</li>
-    <li><strong>Responsive</strong> — adapts to container width.</li>
+    <li><strong>{m.progress_why_linear()}</strong>{m.progress_why_linear_desc()}</li>
+    <li><strong>{m.progress_why_custom()}</strong>{m.progress_why_custom_desc()}</li>
+    <li><strong>{m.progress_why_accessible()}</strong>{m.progress_why_accessible_desc()}</li>
+    <li><strong>{m.progress_why_responsive()}</strong>{m.progress_why_responsive_desc()}</li>
   </ul>
 
   <h3>Sources</h3>
@@ -46,19 +47,19 @@ import * as ProgressMetricModule from "$lib/components/Metrics/ProgressMetric/Pr
     <li><a href="https://m3.material.io/components/progress-indicators/overview">Material Design 3 — Linear Progress</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Fills container width by default.</li>
-    <li>SVG charts scale to any resolution.</li>
+    <li>{m.chart_responsive_1()}</li>
+    <li>{m.chart_responsive_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li>Custom colors, labels, and sizes.</li>
-    <li>Grid lines, legends, and axis labels.</li>
+    <li>{m.chart_custom_1()}</li>
+    <li>{m.chart_custom_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
   
   <ExampleTabs code={`<ProgressMetric label="CPU Usage" value={65} max={100}
   color="primary" showPercentage={true} />`}>
@@ -67,19 +68,18 @@ import * as ProgressMetricModule from "$lib/components/Metrics/ProgressMetric/Pr
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={ProgressMetricModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>SVG elements include proper ARIA roles and labels.</li>
-    <li>Color contrast meets WCAG AA standards.</li>
-    <li>Legend provides text alternative to colors.</li>
+    <li>{m.chart_a11y_1()}</li>
+    <li>{m.chart_a11y_2()}</li>
+    <li>{m.chart_a11y_3()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <p>
-    Chart components are display-only elements. Interactive data points support
-    focus via Tab and activation via Enter/Space.
+    {m.chart_kb_body()}
   </p>
 </Container>

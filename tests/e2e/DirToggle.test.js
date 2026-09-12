@@ -982,4 +982,39 @@ test.describe("Docs locale switcher", () => {
     await expect(heading).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
   });
+  test("DonutChart docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Metrics/DonutChart");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "چیست، چه زمانی و چرا" });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
+
+  test("GaugeChart docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Metrics/GaugeChart");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "چیست، چه زمانی و چرا" });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
+
+  test("ProgressMetric docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Metrics/ProgressMetric");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "چیست، چه زمانی و چرا" });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
 });
