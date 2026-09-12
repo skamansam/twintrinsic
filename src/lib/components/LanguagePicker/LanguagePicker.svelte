@@ -85,7 +85,10 @@ let runtime = $state<ParaglideRuntime | undefined>(undefined)
 $effect(() => {
   // Dynamic import keeps the runtime optional: if the host app compiled
   // without Paraglide the import rejects and the picker hides itself.
-  import(/* @vite-ignore */ "$lib/paraglide/runtime.js")
+  // The path is assigned to a variable so Vite cannot statically analyze
+  // the import and attempt (and fail) to resolve it in the host app's $lib.
+  const paraglidePath = "$lib/paraglide/runtime.js"
+  import(/* @vite-ignore */ paraglidePath)
     .then((mod) => {
       runtime = mod as unknown as ParaglideRuntime
     })

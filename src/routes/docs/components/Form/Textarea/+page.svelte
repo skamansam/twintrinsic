@@ -9,6 +9,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as TextareaModule from "$lib/components/Form/Textarea.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -16,44 +17,34 @@ import Container from "$lib/components/Container/Container.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>Textarea</h1>
+<h1>{m.textarea_heading()}</h1>
 
 <!-- ─── Description ───────────────────────────────────── -->
 <p>
-  <strong>Textarea</strong> is a multi-line text input for collecting longer text
-  content — descriptions, messages, comments, or any content that spans more than
-  one line. It wraps the native <code>&lt;textarea&gt;</code> with auto-resize,
-  validation support, and consistent styling.
+  <strong>{m.textarea_heading()}</strong>{m.textarea_lede_1()}<code>&lt;textarea&gt;</code>{m.textarea_lede_2()}
 </p>
 
 <!-- ─── What / When / Why ─────────────────────────────── -->
-<h2>What, When &amp; Why</h2>
+<h2>{m.sec_what_when_why()}</h2>
 
-<h3>What is it?</h3>
+<h3>{m.sec_what()}</h3>
 <p>
-  A multi-line text field that handles line breaks, scrolling, and resizing natively.
-  The <code>autoResize</code> prop enables CSS-based auto-grow behavior using
-  <code>field-sizing: content</code> — no JavaScript required.
+  {m.textarea_what_1()}<code>autoResize</code>{m.textarea_what_2()}<code>field-sizing: content</code>{m.textarea_what_3()}
 </p>
 
-<h3>When should I use it?</h3>
+<h3>{m.sec_when()}</h3>
 <p>
-  Use <code>&lt;Textarea&gt;</code> whenever the user needs to enter more than one
-  line of text: product descriptions, comments, messages, bio fields, address lines.
-  For single-line input, use <code>&lt;Input&gt;</code> instead.
+  {m.textarea_when_1()}<code>&lt;Textarea&gt;</code>{m.textarea_when_2()}<code>&lt;Input&gt;</code>{m.textarea_when_3()}
 </p>
 
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Native handling</strong> — the <code>&lt;textarea&gt;</code> element
-    natively handles line breaks, text wrapping, and resizing.</li>
-  <li><strong>Auto-grow</strong> — <code>field-sizing: content</code> (CSS) auto-expands
-    the field to fit content without JavaScript.</li>
-  <li><strong>Consistency</strong> — ensures all textareas share the same label
-    positioning, error display, and focus styling.</li>
+  <li><strong>{m.textarea_why_native()}</strong>{m.textarea_why_native_1()}<code>&lt;textarea&gt;</code>{m.textarea_why_native_2()}</li>
+  <li><strong>{m.textarea_why_autogrow()}</strong>{m.textarea_why_autogrow_1()}<code>field-sizing: content</code>{m.textarea_why_autogrow_2()}</li>
+  <li><strong>{m.textarea_why_consistency()}</strong>{m.textarea_why_consistency_desc()}</li>
 </ul>
 
-<h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
 <ul>
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea">MDN — &lt;textarea&gt;</a></li>
   <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/">WAI-ARIA APG — Forms</a></li>
@@ -62,60 +53,58 @@ import Container from "$lib/components/Container/Container.svelte"
   <li><a href="https://ant.design/components/input">Ant Design — Input.TextArea</a></li>
 </ul>
 
-<!-- ─── Responsiveness ────────────────────────────────── -->
-
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>Native `&lt;textarea&gt;` element with `field-sizing: content` for auto-grow (Chrome 123+)</li>
-    <li>JS fallback for `autoResize` using `scrollHeight` when `field-sizing` isn't supported</li>
-    <li>`aria-live=&quot;polite&quot;` on character count when `maxLength` is set</li>
-    <li>Form context integration via `getContext('form')`</li>
+    <li>{m.textarea_impl_1()}</li>
+    <li>{m.textarea_impl_2()}</li>
+    <li>{m.textarea_impl_3()}</li>
+    <li>{m.textarea_impl_4()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use `&lt;div contenteditable&gt;` for multi-line text — always `&lt;textarea&gt;`</li>
-    <li>Don't forget `field-sizing: content` is Chrome-only — provide a JS fallback</li>
+    <li>{m.textarea_mistake_1()}</li>
+    <li>{m.textarea_mistake_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Input, CodeEditor, FloatLabel, FormField</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.textarea_related_1()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>The textarea fills its container width by default (<code>w-full</code>).</li>
-  <li>Users can resize vertically (default) or both directions via the <code>resize</code> CSS prop.</li>
-  <li>Touch targets meet 44×44 px minimum for mobile tap areas.</li>
+  <li>{m.textarea_responsive_1()}</li>
+  <li>{m.textarea_responsive_2_1()}<code>resize</code>{m.textarea_responsive_2_2()}</li>
+  <li>{m.textarea_responsive_3()}</li>
 </ul>
 
 <!-- ─── Customization ─────────────────────────────────── -->
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li>Set initial rows via the <code>rows</code> prop.</li>
-  <li>Enable auto-grow with <code>autoResize={true}</code> (uses CSS <code>field-sizing: content</code>).</li>
-  <li>Limit input with <code>maxlength</code>.</li>
-  <li>Use <code>readonly</code> for display-only content that should still be selectable/copyable.</li>
-  <li>Theme colors and borders are controlled by the Tailwind theme.</li>
+  <li>{m.textarea_custom_1_1()}<code>rows</code>{m.textarea_custom_1_2()}</li>
+  <li>{m.textarea_custom_2_1()}<code>autoResize={'{true}'}</code>{m.textarea_custom_2_2()}<code>field-sizing: content</code>{m.textarea_custom_2_3()}</li>
+  <li>{m.textarea_custom_3_1()}<code>maxlength</code>{m.textarea_custom_3_2()}</li>
+  <li>{m.textarea_custom_4_1()}<code>readonly</code>{m.textarea_custom_4_2()}</li>
+  <li>{m.textarea_custom_5()}</li>
 </ul>
 
 <!-- ─── Examples ──────────────────────────────────────── -->
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Basic Usage</h3>
+<h3>{m.textarea_ex_basic()}</h3>
 <ExampleTabs code={`<Textarea placeholder="Enter your message here" rows={3} />`}>
   <div class="max-w-md" data-testid="textarea-basic">
     <Textarea placeholder="Enter your message here" rows={3} />
   </div>
 </ExampleTabs>
 
-<h3>With Initial Value</h3>
+<h3>{m.textarea_ex_prefilled()}</h3>
 <ExampleTabs code={`<Textarea value="This is a pre-filled textarea with some initial content." rows={3} />`}>
   <div class="max-w-md" data-testid="textarea-prefilled">
     <Textarea value="This is a pre-filled textarea with some initial content." rows={3} />
   </div>
 </ExampleTabs>
 
-<h3>Auto-resize</h3>
+<h3>{m.textarea_ex_autoresize()}</h3>
 <ExampleTabs code={`<Textarea
   placeholder="This textarea will grow as you type..."
   autoResize={true}
@@ -126,14 +115,14 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Disabled</h3>
+<h3>{m.textarea_ex_disabled()}</h3>
 <ExampleTabs code={`<Textarea value="This textarea is disabled and cannot be edited." disabled={true} rows={3} />`}>
   <div class="max-w-md" data-testid="textarea-disabled">
     <Textarea value="This textarea is disabled and cannot be edited." disabled={true} rows={3} />
   </div>
 </ExampleTabs>
 
-<h3>Read-only</h3>
+<h3>{m.textarea_ex_readonly()}</h3>
 <ExampleTabs code={`<Textarea
   value="This textarea is read-only but can still be focused and copied."
   readonly={true}
@@ -144,14 +133,14 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h3>With Character Limit</h3>
+<h3>{m.textarea_ex_maxlength()}</h3>
 <ExampleTabs code={`<Textarea placeholder="Maximum 100 characters allowed" maxlength="100" rows={3} />`}>
   <div class="max-w-md" data-testid="textarea-maxlength">
     <Textarea placeholder="Maximum 100 characters allowed" maxlength="100" rows={3} />
   </div>
 </ExampleTabs>
 
-<h3>Required</h3>
+<h3>{m.textarea_ex_required()}</h3>
 <ExampleTabs code={`<Textarea placeholder="This field is required" required={true} rows={3} />`}>
   <div class="max-w-md" data-testid="textarea-required">
     <Textarea placeholder="This field is required" required={true} rows={3} />
@@ -159,40 +148,38 @@ import Container from "$lib/components/Container/Container.svelte"
 </ExampleTabs>
 
 <!-- ─── Slots ─────────────────────────────────────────── -->
-<h2>Slots</h2>
-<p>
-  The Textarea component does not expose named slots. Use props for customization.
-</p>
+<h2>{m.sec_slots()}</h2>
+<p>{m.textarea_slot_none()}</p>
 
 <!-- ─── Props ─────────────────────────────────────────── -->
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={TextareaModule} />
 
 <!-- ─── Events ────────────────────────────────────────── -->
-<h2>Events</h2>
+<h2>{m.sec_events()}</h2>
 <EventsTable component={TextareaModule} />
 
 <!-- ─── Accessibility ─────────────────────────────────── -->
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Uses native <code>&lt;textarea&gt;</code> for maximum compatibility.</li>
-  <li>Proper focus states with visible indicators.</li>
-  <li>Labels associated via <code>for</code>/<code>id</code>.</li>
-  <li>Error messages linked via <code>aria-describedby</code>.</li>
-  <li>Compatible with screen readers and assistive technologies.</li>
-  <li>Integrates with form validation (<code>required</code>, <code>maxlength</code>).</li>
+  <li>{m.textarea_a11y_1()}</li>
+  <li>{m.textarea_a11y_2()}</li>
+  <li>{m.textarea_a11y_3_1()}<code>for</code>/<code>id</code>{m.textarea_a11y_3_2()}</li>
+  <li>{m.textarea_a11y_4_1()}<code>aria-describedby</code>{m.textarea_a11y_4_2()}</li>
+  <li>{m.textarea_a11y_5()}</li>
+  <li>{m.textarea_a11y_6_1()}<code>required</code>{m.textarea_a11y_6_2()}<code>maxlength</code>{m.textarea_a11y_6_3()}</li>
 </ul>
 
 <!-- ─── Keyboard Support ──────────────────────────────── -->
-<h2>Keyboard Support</h2>
+<h2>{m.sec_keyboard()}</h2>
 <table>
   <thead>
-    <tr><th>Key</th><th>Function</th></tr>
+    <tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr>
   </thead>
   <tbody>
-    <tr><td><kbd>Tab</kbd></td><td>Move focus into or out of the textarea</td></tr>
-    <tr><td><kbd>Enter</kbd></td><td>Insert a new line (does not submit the form)</td></tr>
-    <tr><td><kbd>Ctrl+Enter</kbd></td><td>Submit form (if configured)</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td>{m.textarea_kb_tab()}</td></tr>
+    <tr><td><kbd>Enter</kbd></td><td>{m.textarea_kb_enter()}</td></tr>
+    <tr><td><kbd>Ctrl+Enter</kbd></td><td>{m.textarea_kb_ctrl_enter()}</td></tr>
   </tbody>
 </table>
 </Container>
