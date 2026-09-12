@@ -9,6 +9,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as SwitchModule from "$lib/components/Form/Switch.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -16,44 +17,32 @@ import Container from "$lib/components/Container/Container.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>Switch</h1>
+<h1>{m.switch_heading()}</h1>
 
 <!-- ─── Description ───────────────────────────────────── -->
 <p>
-  <strong>Switch</strong> is a toggle control that switches between on and off states.
-  It is visually styled as a sliding track with a thumb, and semantically distinct from
-  a checkbox — it represents an immediate state change rather than a form value.
+  <strong>{m.switch_heading()}</strong>{m.switch_lede_1()}
 </p>
 
 <!-- ─── What / When / Why ─────────────────────────────── -->
-<h2>What, When &amp; Why</h2>
+<h2>{m.sec_what_when_why()}</h2>
 
-<h3>What is it?</h3>
+<h3>{m.sec_what()}</h3>
+<p>{m.switch_what_1()}</p>
+
+<h3>{m.sec_when()}</h3>
 <p>
-  A binary toggle with a sliding animation. Unlike a checkbox (which represents
-  "checked" or "unchecked"), a switch represents "on" or "off" — the semantics
-  communicate that the setting takes effect immediately.
+  {m.switch_when_1()}<code>&lt;Switch&gt;</code>{m.switch_when_2()}<code>&lt;Checkbox&gt;</code>{m.switch_when_3()}
 </p>
 
-<h3>When should I use it?</h3>
-<p>
-  Use <code>&lt;Switch&gt;</code> for settings that activate/deactivate something
-  immediately: dark mode, notifications on/off, auto-save, airplane mode. Use
-  <code>&lt;Checkbox&gt;</code> for form values that are submitted with the form
-  (e.g., "I agree to terms").
-</p>
-
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Better semantics</strong> — screen readers announce "on/off" instead of
-    "checked/unchecked", which is clearer for settings.</li>
-  <li><strong>Visual metaphor</strong> — the sliding track communicates instant effect
-    better than a static checkbox.</li>
-  <li><strong>Platform familiarity</strong> — switches are the standard toggle
-    pattern in iOS and Android settings.</li>
+  <li><strong>{m.switch_why_semantics()}</strong>{m.switch_why_semantics_1()}</li>
+  <li><strong>{m.switch_why_visual()}</strong>{m.switch_why_visual_1()}</li>
+  <li><strong>{m.switch_why_platform()}</strong>{m.switch_why_platform_1()}</li>
 </ul>
 
-<h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
 <ul>
   <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/switch/">WAI-ARIA APG — Switch</a></li>
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/switch_role">MDN — switch role</a></li>
@@ -64,57 +53,57 @@ import Container from "$lib/components/Container/Container.svelte"
 
 <!-- ─── Responsiveness ────────────────────────────────── -->
 
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>Uses `&lt;input type=&quot;checkbox&quot; role=&quot;switch&quot;&gt;` — native checkbox with switch semantics</li>
-    <li>Screen readers announce &quot;on/off&quot; instead of &quot;checked/unchecked&quot;</li>
-    <li>CSS transition on the track for smooth sliding animation</li>
-    <li>`accent-color` for brand-tinted track color</li>
-    <li>Form context integration via `getContext('form')`</li>
+    <li>{m.switch_impl_1()}</li>
+    <li>{m.switch_impl_2()}</li>
+    <li>{m.switch_impl_3()}</li>
+    <li>{m.switch_impl_4()}</li>
+    <li>{m.switch_impl_5()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use `&lt;div role=&quot;switch&quot;&gt;` — always `&lt;input type=&quot;checkbox&quot; role=&quot;switch&quot;&gt;`</li>
-    <li>Don't use for form values — use Checkbox for checked/unchecked semantics</li>
+    <li>{m.switch_mistake_1()}</li>
+    <li>{m.switch_mistake_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Checkbox, FormField</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.switch_related_1()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Switches are inline elements that sit naturally alongside their labels.</li>
-  <li>Touch targets meet 44×44 px minimum for mobile tap areas.</li>
-  <li>Use <code>size</code> prop ("sm", "md", "lg") for different contexts.</li>
+  <li>{m.switch_responsive_1()}</li>
+  <li>{m.switch_responsive_2()}</li>
+  <li>{m.switch_responsive_3_1()}<code>size</code>{m.switch_responsive_3_2()}</li>
 </ul>
 
 <!-- ─── Customization ─────────────────────────────────── -->
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li>Size: <code>sm</code>, <code>md</code> (default), or <code>lg</code>.</li>
-  <li>For label-less switches, use <code>ariaLabel</code> for screen readers.</li>
-  <li>Theme colors (track, thumb, focus ring) are controlled by the Tailwind theme.</li>
+  <li>{m.switch_custom_1_1()}<code>sm</code>, <code>md</code>{m.switch_custom_1_2()}<code>lg</code>{m.switch_custom_1_3()}</li>
+  <li>{m.switch_custom_2_1()}<code>ariaLabel</code>{m.switch_custom_2_2()}</li>
+  <li>{m.switch_custom_3()}</li>
 </ul>
 
 <!-- ─── Examples ──────────────────────────────────────── -->
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Basic Usage</h3>
+<h3>{m.switch_ex_basic()}</h3>
 <ExampleTabs code={`<Switch label="Enable notifications" />`}>
   <div class="max-w-md" data-testid="switch-basic">
     <Switch label="Enable notifications" />
   </div>
 </ExampleTabs>
 
-<h3>With Initial Value</h3>
+<h3>{m.switch_ex_initial()}</h3>
 <ExampleTabs code={`<Switch label="Dark mode" checked={true} />`}>
   <div class="max-w-md" data-testid="switch-initial">
     <Switch label="Dark mode" checked={true} />
   </div>
 </ExampleTabs>
 
-<h3>Different Sizes</h3>
+<h3>{m.switch_ex_sizes()}</h3>
 <ExampleTabs code={`<Switch label="Small" size="sm" />
 <Switch label="Medium (default)" size="md" />
 <Switch label="Large" size="lg" />`}>
@@ -125,7 +114,7 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Disabled States</h3>
+<h3>{m.switch_ex_disabled()}</h3>
 <ExampleTabs code={`<Switch label="Disabled (off)" disabled={true} />
 <Switch label="Disabled (on)" checked={true} disabled={true} />`}>
   <div class="max-w-md flex flex-col gap-4" data-testid="switch-disabled">
@@ -134,14 +123,14 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Required Field</h3>
+<h3>{m.switch_ex_required()}</h3>
 <ExampleTabs code={`<Switch label="I agree to the terms" required={true} />`}>
   <div class="max-w-md" data-testid="switch-required">
     <Switch label="I agree to the terms" required={true} />
   </div>
 </ExampleTabs>
 
-<h3>Without Label</h3>
+<h3>{m.switch_ex_nolabel()}</h3>
 <ExampleTabs code={`<div class="flex items-center gap-2">
   <span>Airplane mode</span>
   <Switch ariaLabel="Toggle airplane mode" />
@@ -153,40 +142,37 @@ import Container from "$lib/components/Container/Container.svelte"
 </ExampleTabs>
 
 <!-- ─── Slots ─────────────────────────────────────────── -->
-<h2>Slots</h2>
-<p>
-  The Switch component does not expose named slots. Use props for customization.
-</p>
+<h2>{m.sec_slots()}</h2>
+<p>{m.switch_slot_none()}</p>
 
 <!-- ─── Props ─────────────────────────────────────────── -->
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={SwitchModule} />
 
 <!-- ─── Events ────────────────────────────────────────── -->
-<h2>Events</h2>
+<h2>{m.sec_events()}</h2>
 <EventsTable component={SwitchModule} />
 
 <!-- ─── Accessibility ─────────────────────────────────── -->
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Uses a native <code>&lt;input type="checkbox" role="switch"&gt;</code> for
-    maximum compatibility.</li>
-  <li>Screen readers announce "on/off" instead of "checked/unchecked".</li>
-  <li>Visible focus indicators with sufficient contrast.</li>
-  <li>Labels properly associated via <code>for</code>/<code>id</code>.</li>
-  <li>High contrast between track and thumb colors.</li>
+  <li>{m.switch_a11y_1_1()}<code>&lt;input type="checkbox" role="switch"&gt;</code>{m.switch_a11y_1_2()}</li>
+  <li>{m.switch_a11y_2()}</li>
+  <li>{m.switch_a11y_3()}</li>
+  <li>{m.switch_a11y_4_1()}<code>for</code>/<code>id</code>{m.switch_a11y_4_2()}</li>
+  <li>{m.switch_a11y_5()}</li>
 </ul>
 
 <!-- ─── Keyboard Support ──────────────────────────────── -->
-<h2>Keyboard Support</h2>
+<h2>{m.sec_keyboard()}</h2>
 <table>
   <thead>
-    <tr><th>Key</th><th>Function</th></tr>
+    <tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr>
   </thead>
   <tbody>
-    <tr><td><kbd>Space</kbd></td><td>Toggle the switch state</td></tr>
-    <tr><td><kbd>Enter</kbd></td><td>Toggle the switch state (optional)</td></tr>
-    <tr><td><kbd>Tab</kbd></td><td>Move focus to the switch</td></tr>
+    <tr><td><kbd>Space</kbd></td><td>{m.switch_kb_space()}</td></tr>
+    <tr><td><kbd>Enter</kbd></td><td>{m.switch_kb_enter()}</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td>{m.switch_kb_tab()}</td></tr>
   </tbody>
 </table>
 </Container>
