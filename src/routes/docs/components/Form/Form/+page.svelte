@@ -14,6 +14,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as FormModule from "$lib/components/Form/Form.svelte"
 import * as FormFieldModule from "$lib/components/Form/FormField.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -21,73 +22,72 @@ import * as FormFieldModule from "$lib/components/Form/FormField.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Form</h1>
+  <h1>{m.form_heading()}</h1>
 
   <p>
-    <strong>Form</strong> is a container component that provides form submission,
-    validation, layout, and state management. <strong>FormField</strong> wraps
-    individual inputs with labels, help text, and error messages.
+    <strong>{m.form_heading()}</strong>{m.form_lede_1()}<strong>{m.form_lede_2_component()}</strong>{m.form_lede_2()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    <code>&lt;Form&gt;</code> handles submission, validation, disabled/loading states,
-    and layout (vertical or horizontal). <code>&lt;FormField&gt;</code> wraps each
-    input with a label, help text, error message, and required indicator.
+    <code>&lt;Form&gt;</code>{m.form_what_1_2()}<code>&lt;FormField&gt;</code>{m.form_what_1_3()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Wrap every form in <code>&lt;Form&gt;</code>. Wrap every input in
-    <code>&lt;FormField&gt;</code> — even simple fields benefit from consistent
-    label positioning and error display.
+    {m.form_when_1()}<code>&lt;Form&gt;</code>{m.form_when_2()}<code>&lt;FormField&gt;</code>{m.form_when_3()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Consistency</strong> — all forms share the same validation, error display, and layout.</li>
-    <li><strong>Accessibility</strong> — <code>&lt;fieldset&gt;</code> + <code>&lt;legend&gt;</code>
-      for groups, <code>aria-describedby</code> for error messages.</li>
-    <li><strong>Developer ergonomics</strong> — programmatic API for reset, validate, setValues, setErrors.</li>
+    <li><strong>{m.form_why_consistency()}</strong>{m.form_why_consistency_1()}</li>
+    <li><strong>{m.form_why_a11y()}</strong>{m.form_why_a11y_1_1()}<code>&lt;fieldset&gt;</code> + <code>&lt;legend&gt;</code>{m.form_why_a11y_2_1()}<code>aria-describedby</code>{m.form_why_a11y_2_2()}</li>
+    <li><strong>{m.form_why_ergonomics()}</strong>{m.form_why_ergonomics_1()}</li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
-<ul>
-    <li>FormField wraps inputs with label, helper text, and error message</li>
-    <li>`:has(:user-valid)` / `:has(:user-invalid)` for CSS-only validation styling</li>
-    <li>`aria-describedby` links input to error/helper text</li>
-    <li>`aria-invalid` on the input when validation fails</li>
-    <li>Form context via `setContext('form')` / `getContext('form')` for shared state</li>
-</ul>
-
-<h2>Common Mistakes</h2>
-<ul>
-    <li>Don't show error messages on mount — use `:user-valid`/`:user-invalid` to show after interaction</li>
-    <li>Don't forget `aria-describedby` — screen readers need the error message linked to the input</li>
-</ul>
-
-<h2>Related Components</h2>
-<p>Input, Checkbox, Select, InvalidState</p>
-
-<h2>Responsiveness</h2>
+  <h3>{m.sec_sources()}</h3>
   <ul>
-    <li>Vertical layout (default) stacks fields vertically.</li>
-    <li>Horizontal layout (<code>layout="horizontal"</code>) places labels beside inputs on desktop, stacks on mobile.</li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form">MDN — form element</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:user-invalid">MDN — :user-invalid</a></li>
+    <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/">WAI-ARIA APG — Forms</a></li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_implementation()}</h2>
   <ul>
-    <li>Layout: <code>vertical</code> (default) or <code>horizontal</code>.</li>
-    <li>States: <code>disabled</code>, <code>loading</code>, <code>validate</code>.</li>
-    <li>FormField: <code>label</code>, <code>helpText</code>, <code>error</code>, <code>required</code>, <code>hideLabel</code>.</li>
+    <li>{m.form_impl_1()}</li>
+    <li>{m.form_impl_2()}</li>
+    <li>{m.form_impl_3()}</li>
+    <li>{m.form_impl_4()}</li>
+    <li>{m.form_impl_5()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_mistakes()}</h2>
+  <ul>
+    <li>{m.form_mistake_1()}</li>
+    <li>{m.form_mistake_2()}</li>
+  </ul>
 
-  <h3>Basic Form</h3>
+  <h2>{m.sec_related()}</h2>
+  <p>{m.form_related_1()}</p>
+
+  <h2>{m.sec_responsiveness()}</h2>
+  <ul>
+    <li>{m.form_responsive_1()}</li>
+    <li>{m.form_responsive_2_1()}<code>layout="horizontal"</code>{m.form_responsive_2_2()}</li>
+  </ul>
+
+  <h2>{m.sec_customization()}</h2>
+  <ul>
+    <li>{m.form_custom_1_1()}<code>vertical</code>{m.form_custom_1_2()}<code>horizontal</code>{m.form_custom_1_3()}</li>
+    <li>{m.form_custom_2_1()}<code>disabled</code>{m.form_custom_2_2()}<code>loading</code>{m.form_custom_2_3()}<code>validate</code>{m.form_custom_2_4()}</li>
+    <li>{m.form_custom_3_1()}<code>label</code>{m.form_custom_3_2()}<code>helpText</code>{m.form_custom_3_3()}<code>error</code>{m.form_custom_3_4()}<code>required</code>, <code>hideLabel</code>{m.form_custom_3_5()}</li>
+  </ul>
+
+  <h2>{m.sec_examples()}</h2>
+
+  <h3>{m.form_ex_basic()}</h3>
   <ExampleTabs code={`<Form>
   <FormField label="Username" name="username" required>
     <Input placeholder="Enter username" />
@@ -110,7 +110,7 @@ import * as FormFieldModule from "$lib/components/Form/FormField.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Horizontal Layout</h3>
+  <h3>{m.form_ex_horizontal()}</h3>
   <ExampleTabs code={`<Form layout="horizontal">
   <FormField label="First Name" name="firstName">
     <Input placeholder="Enter first name" />
@@ -129,7 +129,7 @@ import * as FormFieldModule from "$lib/components/Form/FormField.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Form States</h3>
+  <h3>{m.form_ex_states()}</h3>
   <ExampleTabs code={`<Form >
   <FormField label="Username"><Input name="username" /></FormField>
   <Button type="submit">Submit</Button>
@@ -142,7 +142,7 @@ import * as FormFieldModule from "$lib/components/Form/FormField.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Validation</h3>
+  <h3>{m.form_ex_validation()}</h3>
   <ExampleTabs code={`<Form >
   <FormField label="Username" required><Input name="username" required /></FormField>
   <Button type="submit">Submit</Button>
@@ -155,20 +155,20 @@ import * as FormFieldModule from "$lib/components/Form/FormField.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Form Props</h2>
+  <h2>{m.form_props_form()}</h2>
   <PropsTable component={FormModule} />
 
-  <h2>FormField Props</h2>
+  <h2>{m.form_props_formfield()}</h2>
   <PropsTable component={FormFieldModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={FormModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Labels associated via <code>for</code>/<code>id</code>.</li>
-    <li>Required fields use <code>aria-required</code>.</li>
-    <li>Error messages use <code>role="alert"</code> and <code>aria-describedby</code>.</li>
-    <li>Disabled state communicated via <code>aria-disabled</code>.</li>
+    <li>{m.form_a11y_1_1()}<code>for</code>/<code>id</code>{m.form_a11y_1_2()}</li>
+    <li>{m.form_a11y_2_1()}<code>aria-required</code>{m.form_a11y_2_2()}</li>
+    <li>{m.form_a11y_3_1()}<code>role="alert"</code>{m.form_a11y_3_2()}<code>aria-describedby</code>{m.form_a11y_3_3()}</li>
+    <li>{m.form_a11y_4_1()}<code>aria-disabled</code>{m.form_a11y_4_2()}</li>
   </ul>
 </Container>

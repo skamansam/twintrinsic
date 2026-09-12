@@ -10,6 +10,7 @@ import FormField from "$lib/components/Form/FormField.svelte"
 import ListInput from "$lib/components/Form/ListInput.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as ListInputModule from "$lib/components/Form/ListInput.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -17,76 +18,75 @@ import * as ListInputModule from "$lib/components/Form/ListInput.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>ListInput</h1>
+  <h1>{m.listinput_heading()}</h1>
 
   <p>
-    <strong>ListInput</strong> manages a list of values rendered as removable chips
-    with a text input. Users type a value and press Enter/Tab/comma to add it to the list.
+    <strong>{m.listinput_heading()}</strong>{m.listinput_lede_1()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.listinput_what_1()}</p>
+
+  <h3>{m.sec_when()}</h3>
   <p>
-    A text input that converts typed values into discrete, removable chip elements.
-    Supports validation, disabled state, and form integration.
+    {m.listinput_when_1()}<code>&lt;ListInput&gt;</code>{m.listinput_when_2()}<code>&lt;Listbox&gt;</code>{m.listinput_when_3()}
   </p>
 
-  <h3>When should I use it?</h3>
-  <p>
-    Use <code>&lt;ListInput&gt;</code> when users need to enter multiple short values:
-    tags, email recipients, skills, keywords. For selecting from a predefined list,
-    use <code>&lt;Listbox&gt;</code>.
-  </p>
-
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Discrete values</strong> — each value is a separate, removable chip.</li>
-    <li><strong>Validation</strong> — reject invalid values before adding them.</li>
-    <li><strong>Keyboard friendly</strong> — Enter/Tab/comma to add, Backspace to remove.</li>
+    <li><strong>{m.listinput_why_discrete()}</strong>{m.listinput_why_discrete_1()}</li>
+    <li><strong>{m.listinput_why_validation()}</strong>{m.listinput_why_validation_1()}</li>
+    <li><strong>{m.listinput_why_keyboard()}</strong>{m.listinput_why_keyboard_1()}</li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
-<ul>
-    <li>Maintains a list of values (tags, chips, tokens)</li>
-    <li>Enter/comma adds a new item, Backspace removes the last</li>
-    <li>Each tag has a Remove button with `aria-label=&quot;Remove [value]&quot;`</li>
-    <li>`role=&quot;list&quot;` on the container, `role=&quot;listitem&quot;` on each tag</li>
-</ul>
-
-<h2>Common Mistakes</h2>
-<ul>
-    <li>Don't use a comma-separated text field — discrete items are more accessible</li>
-    <li>Don't forget `aria-label` on remove buttons</li>
-</ul>
-
-<h2>Related Components</h2>
-<p>Chip, Tag, Input, AutoComplete</p>
-
-<h2>Responsiveness</h2>
+  <h3>{m.sec_sources()}</h3>
   <ul>
-    <li>Fills container width; chips wrap to the next line when space runs out.</li>
-    <li>Touch targets meet 44×44 px minimum.</li>
+    <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/tag/">WAI-ARIA APG — Tag/Chip patterns</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/list_role">MDN — list role</a></li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_implementation()}</h2>
   <ul>
-    <li>Validation via <code>validator</code> function.</li>
-    <li>Error message via <code>errorMessage</code>.</li>
-    <li>Wrap with <code>&lt;FormField&gt;</code> for labels.</li>
+    <li>{m.listinput_impl_1()}</li>
+    <li>{m.listinput_impl_2()}</li>
+    <li>{m.listinput_impl_3()}</li>
+    <li>{m.listinput_impl_4()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_mistakes()}</h2>
+  <ul>
+    <li>{m.listinput_mistake_1()}</li>
+    <li>{m.listinput_mistake_2()}</li>
+  </ul>
 
-  <h3>Basic Usage</h3>
+  <h2>{m.sec_related()}</h2>
+  <p>{m.listinput_related_1()}</p>
+
+  <h2>{m.sec_responsiveness()}</h2>
+  <ul>
+    <li>{m.listinput_responsive_1()}</li>
+    <li>{m.listinput_responsive_2()}</li>
+  </ul>
+
+  <h2>{m.sec_customization()}</h2>
+  <ul>
+    <li>{m.listinput_custom_1_1()}<code>validator</code>{m.listinput_custom_1_2()}</li>
+    <li>{m.listinput_custom_2_1()}<code>errorMessage</code>{m.listinput_custom_2_2()}</li>
+    <li>{m.listinput_custom_3_1()}<code>&lt;FormField&gt;</code>{m.listinput_custom_3_2()}</li>
+  </ul>
+
+  <h2>{m.sec_examples()}</h2>
+
+  <h3>{m.listinput_ex_basic()}</h3>
   <ExampleTabs code={`<ListInput name="tags" ariaLabel="Add a tag" placeholder="Type and press Enter..." values={['svelte', 'typescript']} />`}>
     <div class="max-w-md" data-testid="list-input-basic">
       <ListInput name="tags" ariaLabel="Add a tag" placeholder="Type and press Enter..." values={["svelte", "typescript"]} />
     </div>
   </ExampleTabs>
 
-  <h3>With Validation</h3>
+  <h3>{m.listinput_ex_validation()}</h3>
   <ExampleTabs code={`<ListInput
   name="emails"
   ariaLabel="Add an email"
@@ -101,14 +101,14 @@ import * as ListInputModule from "$lib/components/Form/ListInput.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Disabled</h3>
+  <h3>{m.listinput_ex_disabled()}</h3>
   <ExampleTabs code={`<ListInput name="readonly" ariaLabel="Readonly tags" values={['locked', 'frozen']} disabled />`}>
     <div class="max-w-md" data-testid="list-input-disabled">
       <ListInput name="readonly" ariaLabel="Readonly tags" values={["locked", "frozen"]} disabled />
     </div>
   </ExampleTabs>
 
-  <h3>With FormField</h3>
+  <h3>{m.listinput_ex_formfield()}</h3>
   <ExampleTabs code={`<FormField label="Tags">
   <ListInput name="tags" placeholder="Add a tag" />
 </FormField>`}>
@@ -119,17 +119,17 @@ import * as ListInputModule from "$lib/components/Form/ListInput.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={ListInputModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={ListInputModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Each chip is a <code>role="button"</code> with descriptive <code>aria-label</code>.</li>
-    <li>Text field has accessible name via <code>ariaLabel</code>.</li>
-    <li>Validation errors use <code>role="alert"</code>.</li>
-    <li>Full keyboard: Enter/Tab/comma to add, Backspace to remove, arrows to navigate chips.</li>
+    <li>{m.listinput_a11y_1_1()}<code>role="button"</code>{m.listinput_a11y_1_2()}<code>aria-label</code>{m.listinput_a11y_1_3()}</li>
+    <li>{m.listinput_a11y_2_1()}<code>ariaLabel</code>{m.listinput_a11y_2_2()}</li>
+    <li>{m.listinput_a11y_3_1()}<code>role="alert"</code>{m.listinput_a11y_3_2()}</li>
+    <li>{m.listinput_a11y_4()}</li>
   </ul>
 </Container>
