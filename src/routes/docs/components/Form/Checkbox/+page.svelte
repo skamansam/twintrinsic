@@ -9,6 +9,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CheckboxModule from "$lib/components/Form/Checkbox.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -16,45 +17,32 @@ import Container from "$lib/components/Container/Container.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>Checkbox</h1>
+<h1>{m.checkbox_heading()}</h1>
 
 <!-- ─── Description ───────────────────────────────────── -->
 <p>
-  <strong>Checkbox</strong> is a form control for toggling between two states
-  (checked/unchecked) or three states (checked/unchecked/indeterminate). It wraps
-  the native <code>&lt;input type="checkbox"&gt;</code> with consistent styling,
-  labels, descriptions, and validation support.
+  <strong>{m.checkbox_heading()}</strong>{m.checkbox_lede_1()}<code>&lt;input type="checkbox"&gt;</code>{m.checkbox_lede_2()}
 </p>
 
 <!-- ─── What / When / Why ─────────────────────────────── -->
-<h2>What, When &amp; Why</h2>
+<h2>{m.sec_what_when_why()}</h2>
 
-<h3>What is it?</h3>
+<h3>{m.sec_what()}</h3>
+<p>{m.checkbox_what_1()}</p>
+
+<h3>{m.sec_when()}</h3>
 <p>
-  A toggle control that lets the user select or deselect an option. Supports binary
-  (on/off) and tri-state (on/off/partial) modes. The tri-state variant is useful for
-  parent checkboxes that control a group of child checkboxes.
+  {m.checkbox_when_1()}<code>&lt;Checkbox&gt;</code>{m.checkbox_when_2()}<code>&lt;Radio&gt;</code>{m.checkbox_when_3()}<code>&lt;Switch&gt;</code>{m.checkbox_when_4()}
 </p>
 
-<h3>When should I use it?</h3>
-<p>
-  Use <code>&lt;Checkbox&gt;</code> for independent binary choices — "Remember me",
-  "I agree to terms", "Enable feature X". For mutually exclusive choices (exactly one
-  must be selected), use <code>&lt;Radio&gt;</code>. For on/off settings that take
-  effect immediately, consider <code>&lt;Switch&gt;</code>.
-</p>
-
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Native features</strong> — the underlying <code>&lt;input type="checkbox"&gt;</code>
-    provides built-in toggle behavior, form participation, and screen reader support.</li>
-  <li><strong>Tri-state support</strong> — the indeterminate state is useful for
-    "select all" patterns where some (but not all) children are checked.</li>
-  <li><strong>Consistency</strong> — ensures all checkboxes across the app share the
-    same styling, label positioning, and error display.</li>
+  <li><strong>{m.checkbox_why_native()}</strong>{m.checkbox_why_native_1()}<code>&lt;input type="checkbox"&gt;</code>{m.checkbox_why_native_2()}</li>
+  <li><strong>{m.checkbox_why_tristate()}</strong>{m.checkbox_why_tristate_1()}</li>
+  <li><strong>{m.checkbox_why_consistency()}</strong>{m.checkbox_why_consistency_desc()}</li>
 </ul>
 
-<h3>Sources</h3>
+<h3>{m.sec_sources()}</h3>
 <ul>
   <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/">WAI-ARIA APG — Checkbox</a></li>
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox">MDN — checkbox input</a></li>
@@ -63,54 +51,52 @@ import Container from "$lib/components/Container/Container.svelte"
   <li><a href="https://ant.design/components/checkbox">Ant Design — Checkbox</a></li>
 </ul>
 
-<!-- ─── Responsiveness ────────────────────────────────── -->
-
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>Native `&lt;input type=&quot;checkbox&quot;&gt;` with custom wrapper styling</li>
-    <li>Supports indeterminate state via JS `element.indeterminate = true`</li>
-    <li>`accent-color` for brand-tinted checkbox appearance</li>
-    <li>Form context integration via `getContext('form')` for `effectiveDisabled`</li>
-    <li>`id` with `crypto.randomUUID()` default for label association</li>
+    <li>{m.checkbox_impl_1()}</li>
+    <li>{m.checkbox_impl_2()}</li>
+    <li>{m.checkbox_impl_3()}</li>
+    <li>{m.checkbox_impl_4()}</li>
+    <li>{m.checkbox_impl_5()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use `&lt;div onclick&gt;` — always `&lt;input type=&quot;checkbox&quot;&gt;` for form participation</li>
-    <li>Don't forget `aria-describedby` for error messages</li>
-    <li>Don't use for on/off settings — use Switch instead</li>
+    <li>{m.checkbox_mistake_1()}</li>
+    <li>{m.checkbox_mistake_2()}</li>
+    <li>{m.checkbox_mistake_3()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Radio, RadioGroup, Switch, FormField</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.checkbox_related_1()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Checkboxes are inline elements that wrap naturally within text or flex layouts.</li>
-  <li>Touch targets meet 44×44 px minimum for mobile tap areas.</li>
-  <li>Use <code>size</code> prop ("sm", "md", "lg") to adjust for different contexts.</li>
+  <li>{m.checkbox_responsive_1()}</li>
+  <li>{m.checkbox_responsive_2()}</li>
+  <li>{m.checkbox_responsive_3_1()}<code>size</code>{m.checkbox_responsive_3_2()}</li>
 </ul>
 
 <!-- ─── Customization ─────────────────────────────────── -->
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li>Size: <code>sm</code>, <code>md</code> (default), or <code>lg</code>.</li>
-  <li>Add descriptive text below the label via the <code>description</code> prop.</li>
-  <li>Use <code>accent-color</code> (set in <code>twintrinsic.css</code>) for brand-consistent check colors.</li>
-  <li>Group checkboxes with <code>&lt;FormField&gt;</code> for shared labels and validation.</li>
+  <li>{m.checkbox_custom_1_1()}<code>sm</code>, <code>md</code>{m.checkbox_custom_1_2()}<code>lg</code>{m.checkbox_custom_1_3()}</li>
+  <li>{m.checkbox_custom_2_1()}<code>description</code>{m.checkbox_custom_2_2()}</li>
+  <li>{m.checkbox_custom_3_1()}<code>accent-color</code>{m.checkbox_custom_3_2()}<code>twintrinsic.css</code>{m.checkbox_custom_3_3()}</li>
+  <li>{m.checkbox_custom_4_1()}<code>&lt;FormField&gt;</code>{m.checkbox_custom_4_2()}</li>
 </ul>
 
 <!-- ─── Examples ──────────────────────────────────────── -->
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Basic Usage</h3>
+<h3>{m.checkbox_ex_basic()}</h3>
 <ExampleTabs code={`<Checkbox label="Accept terms and conditions" />`}>
   <div class="max-w-md" data-testid="checkbox-basic">
     <Checkbox label="Accept terms and conditions" />
   </div>
 </ExampleTabs>
 
-<h3>With Description</h3>
+<h3>{m.checkbox_ex_description()}</h3>
 <ExampleTabs code={`<Checkbox
   label="Subscribe to newsletter"
   description="Receive updates about new features and announcements"
@@ -120,7 +106,7 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Indeterminate State</h3>
+<h3>{m.checkbox_ex_indeterminate()}</h3>
 <ExampleTabs code={`<Checkbox
   label="Select all items"
   indeterminate={true}
@@ -129,14 +115,16 @@ import Container from "$lib/components/Container/Container.svelte"
   <div class="max-w-md" data-testid="checkbox-indeterminate">
     <Checkbox label="Select all items" indeterminate={true} description="Some items are selected" />
   </div>
-</ExampleTabs>  <h3>Required</h3>
-  <ExampleTabs code={`<Checkbox label="Accept terms" required={true} />`}>
-    <div class="max-w-md" data-testid="checkbox-required">
-      <Checkbox label="Accept terms" required={true} />
-    </div>
-  </ExampleTabs>
+</ExampleTabs>
 
-  <h3>Required with Error</h3>
+<h3>{m.checkbox_ex_required()}</h3>
+<ExampleTabs code={`<Checkbox label="Accept terms" required={true} />`}>
+  <div class="max-w-md" data-testid="checkbox-required">
+    <Checkbox label="Accept terms" required={true} />
+  </div>
+</ExampleTabs>
+
+<h3>{m.checkbox_ex_required_error()}</h3>
 <ExampleTabs code={`<Checkbox
   label="Accept privacy policy"
   error="You must accept the privacy policy"
@@ -147,7 +135,7 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Disabled States</h3>
+<h3>{m.checkbox_ex_disabled()}</h3>
 <ExampleTabs code={`<Checkbox label="Unavailable option" disabled={true} description="This option is currently unavailable" />
 <Checkbox label="Completed task" disabled={true} checked={true} description="This task has been completed" />`}>
   <div class="max-w-md flex flex-col gap-4" data-testid="checkbox-disabled">
@@ -156,7 +144,7 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Checkbox Group</h3>
+<h3>{m.checkbox_ex_group()}</h3>
 <ExampleTabs code={`<div class="flex flex-col gap-2">
   <Checkbox label="Email notifications" name="notifications" value="email" />
   <Checkbox label="SMS notifications" name="notifications" value="sms" />
@@ -170,40 +158,38 @@ import Container from "$lib/components/Container/Container.svelte"
 </ExampleTabs>
 
 <!-- ─── Slots ─────────────────────────────────────────── -->
-<h2>Slots</h2>
+<h2>{m.sec_slots()}</h2>
 <p>
-  The Checkbox component does not expose named slots. Use props for customization.
-  For complex label content, use a raw <code>&lt;input type="checkbox"&gt;</code> with
-  a <code>&lt;label&gt;</code>.
+  {m.checkbox_slot_none_1()}<code>&lt;input type="checkbox"&gt;</code>{m.checkbox_slot_none_2()}<code>&lt;label&gt;</code>{m.checkbox_slot_none_3()}
 </p>
 
 <!-- ─── Props ─────────────────────────────────────────── -->
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={CheckboxModule} />
 
 <!-- ─── Events ────────────────────────────────────────── -->
-<h2>Events</h2>
+<h2>{m.sec_events()}</h2>
 <EventsTable component={CheckboxModule} />
 
 <!-- ─── Accessibility ─────────────────────────────────── -->
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Uses native <code>&lt;input type="checkbox"&gt;</code> for maximum compatibility.</li>
-  <li>Labels are properly associated via <code>for</code>/<code>id</code> attributes.</li>
-  <li>Error messages linked via <code>aria-describedby</code>.</li>
-  <li>Invalid states use <code>aria-invalid="true"</code>.</li>
-  <li>Indeterminate state is set programmatically (not via HTML attribute).</li>
+  <li>{m.checkbox_a11y_1_1()}<code>&lt;input type="checkbox"&gt;</code>{m.checkbox_a11y_1_2()}</li>
+  <li>{m.checkbox_a11y_2_1()}<code>for</code>/<code>id</code>{m.checkbox_a11y_2_2()}</li>
+  <li>{m.checkbox_a11y_3_1()}<code>aria-describedby</code>{m.checkbox_a11y_3_2()}</li>
+  <li>{m.checkbox_a11y_4_1()}<code>aria-invalid="true"</code>{m.checkbox_a11y_4_2()}</li>
+  <li>{m.checkbox_a11y_5()}</li>
 </ul>
 
 <!-- ─── Keyboard Support ──────────────────────────────── -->
-<h2>Keyboard Support</h2>
+<h2>{m.sec_keyboard()}</h2>
 <table>
   <thead>
-    <tr><th>Key</th><th>Function</th></tr>
+    <tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr>
   </thead>
   <tbody>
-    <tr><td><kbd>Space</kbd></td><td>Toggle checkbox state</td></tr>
-    <tr><td><kbd>Tab</kbd></td><td>Move focus to the checkbox</td></tr>
+    <tr><td><kbd>Space</kbd></td><td>{m.checkbox_kb_space()}</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td>{m.checkbox_kb_tab()}</td></tr>
   </tbody>
 </table>
 </Container>
