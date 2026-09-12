@@ -936,4 +936,27 @@ test.describe("Docs locale switcher", () => {
         .first(),
     ).toBeVisible();
   });
+  test("AreaChart docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Metrics/AreaChart");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "انتخاب نمودار مناسب" });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
+
+  test("BarChart docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Metrics/BarChart");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "چیست، چه زمانی و چرا" });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
 });

@@ -8,6 +8,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import AreaChart from "$lib/components/Metrics/AreaChart/AreaChart.svelte"
 import * as AreaChartModule from "$lib/components/Metrics/AreaChart/AreaChart.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -18,45 +19,45 @@ import * as AreaChartModule from "$lib/components/Metrics/AreaChart/AreaChart.sv
   <h1>AreaChart</h1>
 
   <p>
-    <strong>AreaChart</strong> — An SVG area chart for displaying trends over time with filled areas. Supports single and multiple data series with optional stacking.
+    <strong>AreaChart</strong> — {m.area_lede()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
-  <p>An SVG area chart for displaying trends over time with filled areas. Supports single and multiple data series with optional stacking.</p>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.area_lede()}</p>
 
-  <h3>When should I use it?</h3>
-  <p>Use AreaChart for showing trends over time where the filled area emphasizes volume (e.g. website traffic, revenue over time). For simple line trends, use LineChart. For categorical comparison, use BarChart.</p>
+  <h3>{m.sec_when()}</h3>
+  <p>{m.area_when()}</p>
 
-  <h3>Choosing the Right Chart</h3>
+  <h3>{m.chart_ww_heading()}</h3>
   <table>
-    <thead><tr><th>Chart</th><th>Best For</th><th>Avoid When</th></tr></thead>
+    <thead><tr><th>{m.chart_ww_th_chart()}</th><th>{m.chart_ww_th_best()}</th><th>{m.chart_ww_th_avoid()}</th></tr></thead>
     <tbody>
-      <tr><td><strong>AreaChart</strong></td><td>Volume emphasis, cumulative totals, stacked comparisons</td><td>Multiple overlapping areas make it hard to read</td></tr>
-      <tr><td><strong>LineChart</strong></td><td>Trends over time, comparing multiple series, showing rate of change</td><td>Need to emphasize total volume; data is categorical</td></tr>
-      <tr><td><strong>BarChart</strong></td><td>Categorical comparison, discrete values, ranking</td><td>Time-series with many data points (too many bars)</td></tr>
-      <tr><td><strong>PieChart</strong></td><td>Part-to-whole (fewer than 7 slices)</td><td>More than 7 categories; comparing similar values</td></tr>
+      <tr><td><strong>AreaChart</strong></td><td>{m.chart_ww_r_area()}</td><td>{m.chart_ww_r_area_avoid()}</td></tr>
+      <tr><td><strong>LineChart</strong></td><td>{m.chart_ww_r_line()}</td><td>{m.chart_ww_r_line_avoid_1()}</td></tr>
+      <tr><td><strong>BarChart</strong></td><td>{m.chart_ww_r_bar()}</td><td>{m.chart_ww_r_bar_avoid()}</td></tr>
+      <tr><td><strong>PieChart</strong></td><td>{m.chart_ww_r_pie()}</td><td>{m.chart_ww_r_pie_avoid()}</td></tr>
     </tbody>
   </table>
 
-  <h3>Use Cases</h3>
+  <h3>{m.chart_usecases()}</h3>
   <ul>
-    <li><strong>Daily active users</strong> — AreaChart (emphasizes volume of users)</li>
-    <li><strong>Revenue breakdown by product</strong> — Stacked AreaChart (cumulative contribution)</li>
-    <li><strong>Temperature over time</strong> — LineChart (simpler, less visual weight)</li>
-    <li><strong>Storage usage over time</strong> — AreaChart (shows capacity filling up)</li>
+    <li><strong>{m.area_uc_dau()}</strong>{m.area_uc_dau_desc()}</li>
+    <li><strong>{m.area_uc_revenue()}</strong>{m.area_uc_revenue_desc()}</li>
+    <li><strong>{m.area_uc_temp()}</strong>{m.area_uc_temp_desc()}</li>
+    <li><strong>{m.area_uc_storage()}</strong>{m.area_uc_storage_desc()}</li>
   </ul>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>SVG rendering</strong> — crisp at any resolution.</li>
-    <li><strong>Multi-series</strong> — stacked or overlapping areas.</li>
-    <li><strong>Interactive</strong> — hover tooltips and click events.</li>
-    <li><strong>Responsive</strong> — adapts to container size.</li>
+    <li><strong>{m.area_why_svg()}</strong>{m.area_why_svg_desc()}</li>
+    <li><strong>{m.area_why_multi()}</strong>{m.area_why_multi_desc()}</li>
+    <li><strong>{m.area_why_interactive()}</strong>{m.area_why_interactive_desc()}</li>
+    <li><strong>{m.area_why_responsive()}</strong>{m.area_why_responsive_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/SVG">MDN — SVG</a></li>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/">WAI-ARIA APG — Data Visualization</a></li>
@@ -65,38 +66,37 @@ import * as AreaChartModule from "$lib/components/Metrics/AreaChart/AreaChart.sv
     <li><a href="https://ant.design/components/area">Ant Design — Area Chart</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
+  <h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>SVG-based chart rendering for Area, Bar, Line, Pie, Donut, HorizontalBar</li>
-    <li>`aria-label` on chart container for screen readers</li>
-    <li>Accessible data tables as alternatives</li>
-    <li>`content-visibility: auto` for off-screen charts</li>
+    <li>{m.area_impl_svg()}</li>
+    <li>{m.area_impl_aria()}</li>
+    <li>{m.area_impl_tables()}</li>
+    <li>{m.area_impl_cv()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use `&lt;canvas&gt;` without a text alternative — SVG is more accessible</li>
-    <li>Don't forget to provide an accessible data table alternative</li>
+    <li>{m.area_mistake_1_1()}<code>&lt;canvas&gt;</code>{m.area_mistake_1_2()}</li>
+    <li>{m.area_mistake_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>KPICard, MetricGrid, GaugeChart</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.area_related()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Fills container width by default.</li>
-    <li>SVG charts scale to any resolution.</li>
+    <li>{m.chart_responsive_1()}</li>
+    <li>{m.chart_responsive_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li>Custom colors, labels, and sizes.</li>
-    <li>Grid lines, legends, and axis labels.</li>
+    <li>{m.chart_custom_1()}</li>
+    <li>{m.chart_custom_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
-  
+  <h2>{m.sec_examples()}</h2>
+
   <ExampleTabs code={`<AreaChart
   series={[{ label: 'Website Traffic', data: [10, 15, 12, 18, 22, 20, 25], color: '#3b82f6' }]}
   labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
@@ -113,7 +113,7 @@ import * as AreaChartModule from "$lib/components/Metrics/AreaChart/AreaChart.sv
     </div>
   </ExampleTabs>
 
-  <h3>Stacked AreaChart</h3>
+  <h3>{m.area_ex_basic()}</h3>
   <ExampleTabs code={`<AreaChart
   series={[
     { label: 'Desktop', data: [10, 15, 12, 18, 22, 20, 25], color: '#3b82f6' },
@@ -137,19 +137,18 @@ import * as AreaChartModule from "$lib/components/Metrics/AreaChart/AreaChart.sv
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={AreaChartModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>SVG elements include proper ARIA roles and labels.</li>
-    <li>Color contrast meets WCAG AA standards.</li>
-    <li>Legend provides text alternative to colors.</li>
+    <li>{m.chart_a11y_1()}</li>
+    <li>{m.chart_a11y_2()}</li>
+    <li>{m.chart_a11y_3()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <p>
-    Chart components are display-only elements. Interactive data points support
-    focus via Tab and activation via Enter/Space.
+    {m.chart_kb_body()}
   </p>
 </Container>
