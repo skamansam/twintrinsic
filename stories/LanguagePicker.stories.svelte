@@ -1,6 +1,10 @@
 <script module>
 import { defineMeta } from "@storybook/addon-svelte-csf"
 import { expect, fireEvent, waitFor, within } from "storybook/test"
+// The REAL compiled runtime — imported here so the RuntimeAutodetection
+// story can assert the picker auto-detected *these* locales/locale, rather
+// than anything passed through props.
+import * as paraglide from "$lib/paraglide/runtime.js"
 import LanguagePicker from "$lib/components/LanguagePicker/LanguagePicker.svelte"
 
 const { Story } = defineMeta({
@@ -111,5 +115,53 @@ async function expectFlags(menu) {
     await waitFor(() => {
       expect(canvas.queryByRole("menu")).not.toBeInTheDocument()
     })
+  }}
+/>
+
+<Story
+  name="RuntimeAutodetection"
+  play={async ({ canvas }) => {
+    // Source of truth: the REAL compiled Paraglide runtime imported above.
+    // These are exactly what the picker should autodetect.
+    const expectedLocales = [...paraglide.locales]
+    const expectedActive = paraglide.getLocale()
+
+    // With no `locales` prop, the trigger appears only once the runtime has
+    // been resolved through the component's `import.meta.glob` autodetection
+    // — findByRole waits for that dynamic import to land. (The previous
+    // `import(/* @vite-ignore */ …)` approach could never resolve under
+    // Vite, so this story would hang here — it is the regression guard.)
+    const trigger = await canvas.findByRole("button", { name: /change language/i })
+    await expect(trigger).toHaveAttribute("aria-label", `Change language (${expectedActive})`)
+
+    await fireEvent.click(trigger)
+    const menu = canvas.getByRole("menu")
+
+    // Every runtime locale is offered — matched via each item's `lang`
+    // attribute so this stays valid as locales are added — and exactly the
+    // runtime's active locale is checked.
+    const items = menu.querySelectorAll('[role="menuitemradio"]')
+    await expect(items.length).toBe(expectedLocales.length)
+    for (const item of items) {
+      expect(expectedLocales).toContain(item.getAttribute("lang"))
+    }
+    await expect(menu.querySelector('[role="menuitemradio"][aria-checked="true"]')).toHaveAttribute(
+      "lang",
+      expectedActive,
+    )
+
+    // Flags render asynchronously from the circle-flags iconset.
+    await expectFlags(menu)
+
+    // Close via Escape: focus returns to the trigger (WAI-ARIA APG). Note
+    // the picker intentionally no-ops when the already-active locale is
+    // clicked (switchLocale early-returns), so Escape is the deterministic
+    // close path here.
+    const activeItem = menu.querySelector(`[role="menuitemradio"][lang="${expectedActive}"]`)
+    await fireEvent.keyDown(activeItem, { key: "Escape" })
+    await waitFor(() => {
+      expect(canvas.queryByRole("menu")).not.toBeInTheDocument()
+    })
+    await expect(trigger).toHaveFocus()
   }}
 />

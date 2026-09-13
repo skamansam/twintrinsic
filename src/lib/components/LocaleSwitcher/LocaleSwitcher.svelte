@@ -6,9 +6,12 @@ Paraglide runtime (`getLocale`/`setLocale`). Language names are shown in their
 own language (e.g. "Español", "فارسی") so every option stays readable
 regardless of the active locale.
 
-Requires Paraglide-JS compiled to `$lib/paraglide` with the same locales
-listed in `messages/{locale}.json` (this repo's setup — see the vite plugin
-and `project.inlang/settings.json`).
+When no `locales` prop is provided the available locales and the active one
+are auto-detected from the compiled Paraglide runtime
+(`$lib/paraglide/runtime.js` — `locales`, `getLocale`, `setLocale`), so apps
+that use Paraglide only need to render `<LocaleSwitcher />`. When the runtime
+is unavailable the component renders nothing, so non-Paraglide apps can keep
+it in the tree without errors.
 
 Usage:
 ```svelte
@@ -21,32 +24,34 @@ Usage:
   export const propsMetadata = [
     { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
     { name: "id", type: "string", description: "HTML id for accessibility", default: "crypto.randomUUID()", optional: true },
-    { name: "locales", type: "LocaleCode[]", description: "Locale codes to offer, in display order", default: "[\"en\", \"es\", \"fa\"]", optional: true },
+    { name: "locales", type: "string[]", description: "Locale codes to offer, in display order. Defaults to the Paraglide runtime's locales", optional: true },
     { name: "variant", type: "\"buttons\" | \"select\"", description: "Presentation: toggle-button group or native select", default: "\"buttons\"", optional: true },
     { name: "ariaLabel", type: "string", description: "Accessible label for the group/select", default: "\"Choose a language\"", optional: true },
-    { name: "onchange", type: "(event: CustomEvent<{ locale: LocaleCode }>) => void", description: "Change event fired after the locale switches", optional: true, eventDetail: "{ locale: LocaleCode }" },
+    { name: "onchange", type: "(event: CustomEvent<{ locale: string }>) => void", description: "Change event fired after the locale switches", optional: true, eventDetail: "{ locale: string }" },
   ];
 </script>
 
 <script lang="ts">
-  import { getLocale, setLocale } from "$lib/paraglide/runtime.js"
-
-  /** Locale codes this site supports — adjust to your project's locales */
-  type LocaleCode = "en" | "es" | "fa"
+  /** Minimal shape the switcher needs from the Paraglide runtime */
+  interface ParaglideRuntime {
+    locales: readonly string[]
+    getLocale: () => string
+    setLocale: (locale: string, options?: { reload?: boolean }) => void
+  }
 
   interface Props {
     /** Additional CSS classes */
     class?: string;
     /** HTML id for accessibility */
     id?: string;
-    /** Locale codes to offer, in display order */
-    locales?: LocaleCode[];
+    /** Locale codes to offer, in display order. Defaults to the Paraglide runtime's locales */
+    locales?: string[];
     /** Presentation: toggle-button group or native select */
     variant?: "buttons" | "select";
     /** Accessible label for the group/select */
     ariaLabel?: string;
     /** Change event fired after the locale switches */
-    onchange?: (event: CustomEvent<{ locale: LocaleCode }>) => void;
+    onchange?: (event: CustomEvent<{ locale: string }>) => void;
     /** Additional props passed through to the root element */
     [key: `data-${string}`]: unknown;
   }
@@ -54,63 +59,99 @@ Usage:
   let {
     class: className = "",
     id = crypto.randomUUID(),
-    locales = ["en", "es", "fa"],
+    locales = undefined,
     variant = "buttons",
     ariaLabel = "Choose a language",
     onchange = undefined,
     ...restProps
   }: Props = $props()
 
-  /** The active locale (resolved per render — switching reloads the page) */
-  const activeLocale = getLocale()
+  /** Paraglide runtime, resolved lazily so non-Paraglide apps never crash */
+  let runtime = $state<ParaglideRuntime | undefined>(undefined)
+
+  $effect(() => {
+    // Dynamic import keeps the runtime optional: if the host app compiled
+    // without Paraglide the glob resolves to an empty map and the switcher
+    // hides itself. The `$lib` alias is intentional: components ship as
+    // source, so a consumer's build resolves it to THEIR
+    // `src/lib/paraglide/runtime.js`; apps without the alias (or without
+    // Paraglide) simply match nothing and the glob stays empty.
+    const runtimeModules = import.meta.glob("$lib/paraglide/runtime.js")
+    const loaders = Object.values(runtimeModules)
+    if (loaders.length === 0) {
+      runtime = undefined
+    } else {
+      loaders[0]()
+        .then((mod) => {
+          runtime = mod as unknown as ParaglideRuntime
+        })
+        .catch(() => {
+          runtime = undefined
+        })
+    }
+  })
+
+  /** Locales to display: explicit prop, or the runtime's list once loaded */
+  const availableLocales = $derived(locales ?? runtime?.locales ?? [])
+  /** The active locale, re-read whenever the runtime resolves */
+  const activeLocale = $derived(runtime?.getLocale() ?? "")
+  /** True once the runtime has resolved AND exposed at least one locale */
+  const ready = $derived(availableLocales.length > 0 && activeLocale !== "")
 
   /** Native name per locale (each language names itself); falls back to the code */
-  function localeLabel(code: LocaleCode): string {
-    const names: Record<LocaleCode, string> = { en: "English", es: "Español", fa: "فارسی" }
-    return names[code] ?? code
+  const LOCALE_NAMES: Record<string, string> = {
+    en: "English",
+    es: "Español",
+    fa: "فارسی",
+  }
+
+  function localeLabel(code: string): string {
+    return LOCALE_NAMES[code] ?? code
   }
 
   /** Switch locale — the cookie strategy reloads the page in the new locale */
-  function switchLocale(code: LocaleCode): void {
-    if (code === getLocale()) return
-    setLocale(code)
+  function switchLocale(code: string): void {
+    if (!runtime || code === activeLocale) return
+    runtime.setLocale(code)
     onchange?.(new CustomEvent("change", { detail: { locale: code } }))
   }
 </script>
 
-{#if variant === "select"}
-  <label {...restProps} {id} class="inline-flex items-center gap-2 {className}">
-    <span class="sr-only">{ariaLabel}</span>
-    <select
-      value={activeLocale}
-      aria-label={ariaLabel}
-      onchange={(event) => switchLocale(event.currentTarget.value as LocaleCode)}
-      class="rounded-md border border-border bg-surface px-3 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary-500"
-    >
-      {#each locales as code}
-        <option value={code}>{localeLabel(code)}</option>
-      {/each}
-    </select>
-  </label>
-{:else}
-  <div
-    {...restProps}
-    {id}
-    role="group"
-    aria-label={ariaLabel}
-    class="inline-flex items-center gap-1 rounded-lg border border-border bg-surface p-1 {className}"
-  >
-    {#each locales as code}
-      <button
-        type="button"
-        aria-pressed={activeLocale === code}
-        onclick={() => switchLocale(code)}
-        class="rounded-md px-3 py-1 text-sm transition-colors {activeLocale === code
-          ? 'bg-primary-500 text-white'
-          : 'text-text hover:bg-hover'}"
+{#if ready}
+  {#if variant === "select"}
+    <label {...restProps} {id} class="inline-flex items-center gap-2 {className}">
+      <span class="sr-only">{ariaLabel}</span>
+      <select
+        value={activeLocale}
+        aria-label={ariaLabel}
+        onchange={(event) => switchLocale(event.currentTarget.value)}
+        class="rounded-md border border-border bg-surface px-3 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary-500"
       >
-        {localeLabel(code)}
-      </button>
-    {/each}
-  </div>
+        {#each availableLocales as code (code)}
+          <option value={code}>{localeLabel(code)}</option>
+        {/each}
+      </select>
+    </label>
+  {:else}
+    <div
+      {...restProps}
+      {id}
+      role="group"
+      aria-label={ariaLabel}
+      class="inline-flex items-center gap-1 rounded-lg border border-border bg-surface p-1 {className}"
+    >
+      {#each availableLocales as code (code)}
+        <button
+          type="button"
+          aria-pressed={activeLocale === code}
+          onclick={() => switchLocale(code)}
+          class="rounded-md px-3 py-1 text-sm transition-colors {activeLocale === code
+            ? 'bg-primary-500 text-white'
+            : 'text-text hover:bg-hover'}"
+        >
+          {localeLabel(code)}
+        </button>
+      {/each}
+    </div>
+  {/if}
 {/if}
