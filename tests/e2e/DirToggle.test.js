@@ -1434,4 +1434,221 @@ test.describe("Docs locale switcher", () => {
     await expect(heading).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
   });
+
+  // ─── Final i18n sweep batches (1.9) — component pages ───────────────────
+
+  test("Timer docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Timer/Timer");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "Timer", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+  });
+
+  test("Lazy docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Lazy/Lazy");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "Lazy", level: 1, exact: true });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+  });
+
+  test("LazyPanel docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Lazy/LazyPanel");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "LazyPanel", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+  });
+
+  test("LocaleSwitcher docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/LocaleSwitcher/LocaleSwitcher");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "LocaleSwitcher", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+  });
+
+  test("Masonry docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Masonry/Masonry");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "Masonry", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+  });
+
+  test("TextInput docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Form/TextInput");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "TextInput", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "سفارشی‌سازی", level: 2 })).toBeVisible();
+  });
+
+  test("InvalidState docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Form/InvalidState");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "InvalidState", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+  });
+
+  test("RadioGroup docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Form/RadioGroup");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "RadioGroup", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+  });
+
+  test("FormField docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Form/FormField");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "FormField", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+  });
+
+  test("FormBuilder docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Form/FormBuilder");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "FormBuilder", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+  });
+
+  test("PropsTable docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/PropsTable/PropsTable");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "PropsTable", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "استفاده", level: 2 })).toBeVisible();
+  });
+
+  // ─── Final i18n sweep batches (1.9) — example & theming pages ────────────
+
+  test("dashboard example page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/examples/dashboard");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.getByRole("heading", { name: "خودتان این را بسازید!" })).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
+
+  test("dashboard guide page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/examples/dashboard/guide");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "داشبورد", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
+
+  test("game-map example page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/examples/game-map");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "مثال نقشه بازی", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
+
+  test("shopping example page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/examples/shopping");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.getByRole("heading", { name: "خودتان این را بسازید!" })).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
+
+  test("shopping guide page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/examples/shopping/guide");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "صفحه خرید", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
+
+  test("theme preview page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/theming/preview");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "پیش‌نمایش تم", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
 });
