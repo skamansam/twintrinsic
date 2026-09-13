@@ -349,13 +349,13 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
   }
 
   .app-header-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply mx-auto;
     @apply flex items-center justify-between h-16;
   }
 
   /* Brand styles */
   .app-header-brand {
-    @apply shrink-0;
+    @apply shrink-0 ps-4 sm:ps-6 lg:ps-8;
   }
 
   .app-header-brand-link {
@@ -417,7 +417,7 @@ const brandHref = $derived(typeof brand === "string" ? "/" : brand.href || "/")
 
   /* Actions styles */
   .app-header-actions {
-    @apply flex items-center gap-4;
+    @apply flex items-center gap-4 pe-4 sm:pe-6 lg:pe-8;
   }
 
   /* Search styles */
