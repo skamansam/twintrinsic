@@ -9,6 +9,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Icon from "$lib/components/Icon/Icon.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as IconModule from "$lib/components/Icon/Icon.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -16,39 +17,33 @@ import * as IconModule from "$lib/components/Icon/Icon.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Icon</h1>
+  <h1>{m.icon_heading()}</h1>
 
   <p>
-    <strong>Icon</strong> is a wrapper around the Iconify SVG icon library that integrates
-    with Twintrinsic's global icon management system. It provides access to over 275,000
-    icons from 200+ icon sets with a single default iconset configuration.
+    <strong>{m.icon_heading()}</strong>{m.icon_lede_1()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    An SVG icon component powered by Iconify. Icons are loaded on-demand from the Iconify
-    CDN and cached in the browser. The global <code>setIconset()</code> function sets the
-    default icon set, and individual icons can override it.
+    {m.icon_what_1()}<code>setIconset()</code>{m.icon_what_2()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use <code>&lt;Icon&gt;</code> whenever you need to display an icon in your UI:
-    buttons, navigation, status indicators, or decorative elements. Use the Icon component
-    instead of inline SVGs for consistency and lazy loading.
+    {m.icon_when_1()}<code>&lt;Icon&gt;</code>{m.icon_when_2()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>275,000+ icons</strong> — access to every major icon set via Iconify.</li>
-    <li><strong>On-demand loading</strong> — only fetches icons that are actually used.</li>
-    <li><strong>Global config</strong> — set once, use everywhere.</li>
-    <li><strong>Preloading</strong> — <code>preloadIcons()</code> for critical icons.</li>
+    <li><strong>{m.icon_why_icons()}</strong>{m.icon_why_icons_1()}</li>
+    <li><strong>{m.icon_why_ondemand()}</strong>{m.icon_why_ondemand_1()}</li>
+    <li><strong>{m.icon_why_config()}</strong>{m.icon_why_config_1()}</li>
+    <li><strong>{m.icon_why_preload()}</strong>{m.icon_why_preload_1()}<code>preloadIcons()</code>{m.icon_why_preload_2()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://iconify.design/">Iconify</a></li>
     <li><a href="https://icon-sets.iconify.design/">Icon Sets Browser</a></li>
@@ -57,44 +52,43 @@ import * as IconModule from "$lib/components/Icon/Icon.svelte"
     <li><a href="https://primer.style/components/octicon">Primer — Octicon</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
-<ul>
-    <li>Wraps `@iconify/svelte` for 150,000+ icons from 100+ icon sets</li>
-    <li>`preloadIcons()` for runtime prefetching</li>
-    <li>`preloadManifest` for build-time registration</li>
-    <li>`addLinkPreloads` for `&lt;link rel=&quot;preload&quot;&gt;` injection</li>
-    <li>`aria-hidden=&quot;true&quot;` for decorative icons</li>
-</ul>
-
-<h2>Common Mistakes</h2>
-<ul>
-    <li>Don't use inline SVGs — use the Icon component for consistency</li>
-    <li>Don't forget `aria-hidden=&quot;true&quot;` for decorative icons</li>
-</ul>
-
-<h2>Related Components</h2>
-<p>Avatar, Badge, Button</p>
-
-<h2>Responsiveness</h2>
+  <h2>{m.sec_implementation()}</h2>
   <ul>
-    <li>Icons scale via <code>width</code> and <code>height</code> props.</li>
-    <li>Default size inherits from the font-size of the parent element.</li>
+    <li>{m.icon_impl_1()}</li>
+    <li>{m.icon_impl_2()}</li>
+    <li>{m.icon_impl_3()}</li>
+    <li>{m.icon_impl_4()}</li>
+    <li>{m.icon_impl_5()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_mistakes()}</h2>
   <ul>
-    <li><code>name</code> — icon name (with or without iconset prefix).</li>
-    <li><code>iconset</code> — override the default iconset for specific icons.</li>
-    <li><code>color</code> — set icon color.</li>
-    <li><code>width</code> / <code>height</code> — control icon size.</li>
-    <li><code>rotate</code> — rotate icon (0–3 for 0°–270°).</li>
-    <li><code>hFlip</code> / <code>vFlip</code> — flip icon horizontally or vertically.</li>
+    <li>{m.icon_mistake_1()}</li>
+    <li>{m.icon_mistake_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_related()}</h2>
+  <p>{m.icon_related_1()}</p>
 
-  <h3>Basic Icons</h3>
+  <h2>{m.sec_responsiveness()}</h2>
+  <ul>
+    <li>{m.icon_responsive_1_1()}<code>width</code>{m.icon_responsive_1_2()}<code>height</code>{m.icon_responsive_1_3()}</li>
+    <li>{m.icon_responsive_2()}</li>
+  </ul>
+
+  <h2>{m.sec_customization()}</h2>
+  <ul>
+    <li>{m.icon_custom_1_1()}<code>name</code>{m.icon_custom_1_2()}</li>
+    <li>{m.icon_custom_2_1()}<code>iconset</code>{m.icon_custom_2_2()}</li>
+    <li>{m.icon_custom_3_1()}<code>color</code>{m.icon_custom_3_2()}</li>
+    <li>{m.icon_custom_4_1()}<code>width</code>{m.icon_custom_4_2()}<code>height</code>{m.icon_custom_4_3()}</li>
+    <li>{m.icon_custom_5_1()}<code>rotate</code>{m.icon_custom_5_2()}</li>
+    <li>{m.icon_custom_6_1()}<code>hFlip</code>{m.icon_custom_6_2()}<code>vFlip</code>{m.icon_custom_6_3()}</li>
+  </ul>
+
+  <h2>{m.sec_examples()}</h2>
+
+  <h3>{m.icon_ex_basic()}</h3>
   <ExampleTabs code={`<Icon name="home" />
 <Icon name="settings" />
 <Icon name="star" />`}>
@@ -105,7 +99,7 @@ import * as IconModule from "$lib/components/Icon/Icon.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Different Iconsets</h3>
+  <h3>{m.icon_ex_iconsets()}</h3>
   <ExampleTabs code={`<Icon name="home" />
 <Icon name="fa:home" />
 <Icon name="heroicons:home" />
@@ -130,7 +124,7 @@ import * as IconModule from "$lib/components/Icon/Icon.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Styled Icons</h3>
+  <h3>{m.icon_ex_styled()}</h3>
   <ExampleTabs code={`<Icon name="home" color="red" />
 <Icon name="settings" color="blue" width="32px" height="32px" />
 <Icon name="star" color="yellow-500" />
@@ -155,7 +149,7 @@ import * as IconModule from "$lib/components/Icon/Icon.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Transformations</h3>
+  <h3>{m.icon_ex_transforms()}</h3>
   <ExampleTabs code={`<Icon name="arrow-right" />
 <Icon name="arrow-right" rotate={1} />
 <Icon name="arrow-right" rotate={2} />
@@ -180,45 +174,41 @@ import * as IconModule from "$lib/components/Icon/Icon.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Setup</h2>
-  <p>Set the default iconset once in your app root or layout:</p>
-  <CodeBlock language="svelte">{`\u003Cscript>
+  <h2>{m.sec_setup()}</h2>
+  <p>{m.icon_setup_1()}</p>
+  <CodeBlock language="svelte">{`\\u003Cscript>
   import { setIconset } from 'twintrinsic'
   setIconset('mdi-light')
-\u003C/script>`}</CodeBlock>
+\\u003C/script>`}</CodeBlock>
 
-  <h2>Preloading Icons</h2>
+  <h2>{m.icon_preload_heading()}</h2>
   <p>
-    Call <code>preloadIcons()</code> during app initialization to fetch icon data early
-    so icons render from cache by the time they mount:
+    {m.icon_preload_1()}<code>preloadIcons()</code>{m.icon_preload_2()}
   </p>
-  <CodeBlock language="svelte">{`\u003Cscript>
+  <CodeBlock language="svelte">{`\\u003Cscript>
   import { preloadIcons, DEFAULT_PRELOAD_ICONS } from 'twintrinsic'
   preloadIcons()
   preloadIcons([...DEFAULT_PRELOAD_ICONS, 'shopping-cart', 'heart'])
-\u003C/script>`}</CodeBlock>
+\\u003C/script>`}</CodeBlock>
 
-  <h3>Iconset Switcher</h3>
+  <h3>{m.icon_ex_switcher()}</h3>
   <ExampleTabs code={`<Icon name="check" />`}>
     <div data-testid="icon-iconset-changer">
       <Icon name="check" />
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={IconModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Icons are rendered as SVG elements with proper semantic structure.</li>
-    <li>Use descriptive icon names that indicate their purpose.</li>
-    <li>Provide context through surrounding text or ARIA labels when icons are used alone.</li>
-    <li>Ensure sufficient color contrast for icon visibility.</li>
+    <li>{m.icon_a11y_1()}</li>
+    <li>{m.icon_a11y_2()}</li>
+    <li>{m.icon_a11y_3()}</li>
+    <li>{m.icon_a11y_4()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
-  <p>
-    Icons are static display elements. Interactive elements containing icons
-    (buttons, links) maintain their native keyboard behavior.
-  </p>
+  <h2>{m.sec_keyboard()}</h2>
+  <p>{m.icon_kb_1()}</p>
 </Container>
