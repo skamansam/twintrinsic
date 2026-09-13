@@ -195,4 +195,78 @@ test.describe("AppHeader docs page", () => {
     await page.keyboard.press("Escape");
     await expect(trigger).toHaveAttribute("aria-expanded", "false");
   });
+
+  test("locale switcher autodetects the runtime locales and reports the active one", async ({ page }) => {
+    const header = page.getByTestId("app-header-full-featured").locator(".app-header");
+    const trigger = header.locator(".language-picker-trigger");
+
+    // Autodetection: with no `locales` prop, the picker exposes exactly the
+    // compiled Paraglide runtime's locales (messages/{en,es,fa}.json).
+    await trigger.click();
+    const menu = header.locator(".language-picker-menu");
+    const items = menu.locator('.language-picker-item[role="menuitemradio"]');
+    await expect(items).toHaveCount(3);
+    const langs = [];
+    for (let i = 0; i < 3; i++) {
+      langs.push(await items.nth(i).getAttribute("lang"));
+    }
+    expect([...langs].sort()).toEqual(["en", "es", "fa"]);
+
+    // Exactly one active locale: Paraglide's cookie detect strategy resolves
+    // one from browser preferences even without an explicit setLocale, and
+    // the trigger label mirrors it ("Change language (en)").
+    const checked = menu.locator('[role="menuitemradio"][aria-checked="true"]');
+    await expect(checked).toHaveCount(1);
+    const label = await trigger.getAttribute("aria-label");
+    const activeLocale = /\((\w+)\)$/.exec(label ?? "")?.[1];
+    expect(activeLocale).toBeTruthy();
+    await expect(checked).toHaveAttribute("lang", activeLocale);
+
+    await page.keyboard.press("Escape");
+    await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  });
+
+  test("locale switcher switches the page locale via the runtime", async ({ page }) => {
+    const header = page.getByTestId("app-header-full-featured").locator(".app-header");
+    const trigger = header.locator(".language-picker-trigger");
+
+    await trigger.click();
+    const menu = header.locator(".language-picker-menu");
+    const items = menu.locator('.language-picker-item[role="menuitemradio"]');
+    await expect(items).toHaveCount(3);
+
+    // Selecting a different locale calls the runtime's setLocale, which
+    // (default cookie strategy) reloads the page in the new locale.
+    await items.nth(1).click();
+    await page.waitForLoadState("load");
+    await waitForHydration(page);
+
+    // Paraglide set the <html lang> attribute on the reloaded page…
+    const htmlLang = await page.locator("html").getAttribute("lang");
+    expect(htmlLang).not.toBe("en");
+
+    // …and the docs shell re-rendered in the new locale. The AppHeader demo
+    // state resets on reload, so reopen the menu to confirm the runtime now
+    // reports the switched locale as checked.
+    const trigger2 = page.getByTestId("app-header-full-featured").locator(".language-picker-trigger");
+    await trigger2.click();
+    const menu2 = page.getByTestId("app-header-full-featured").locator(".language-picker-menu");
+    await expect(menu2).toBeVisible();
+    const items2 = menu2.locator('.language-picker-item[role="menuitemradio"]');
+    await expect(items2).toHaveCount(3);
+    const activeIndex = await items2.evaluateAll((nodes) =>
+      nodes.findIndex((node) => node.getAttribute("aria-checked") === "true"),
+    );
+    expect(activeIndex).toBeGreaterThanOrEqual(0);
+    await expect(items2.nth(activeIndex)).toHaveAttribute("lang", htmlLang);
+
+    // Restore English so later tests keep deterministic locale state.
+    const enIndex = await items2.evaluateAll((nodes) =>
+      nodes.findIndex((node) => node.getAttribute("lang") === "en"),
+    );
+    await items2.nth(enIndex).click();
+    await page.waitForLoadState("load");
+    await waitForHydration(page);
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  });
 });

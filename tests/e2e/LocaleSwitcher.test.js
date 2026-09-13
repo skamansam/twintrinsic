@@ -48,9 +48,10 @@ test.describe("LocaleSwitcher docs page", () => {
   test("renders the Props and Events tables", async ({ page }) => {
     await expect(page.locator("h2", { hasText: "Props" })).toBeVisible();
     await expect(page.locator("h2", { hasText: "Events" })).toBeVisible();
-    // PropsTable renders the documented props
-    await expect(page.getByRole("cell", { name: "locales" })).toBeVisible();
-    await expect(page.getByRole("cell", { name: "variant" })).toBeVisible();
+    // PropsTable renders the documented props. Match the backticked prop-name
+    // cell exactly — the description column also contains the word "locales".
+    await expect(page.getByRole("cell", { name: "`locales`", exact: true })).toBeVisible();
+    await expect(page.getByRole("cell", { name: "`variant`", exact: true })).toBeVisible();
     // EventsTable renders the change event
     await expect(page.locator(".event-name").first()).toContainText("onchange");
   });
