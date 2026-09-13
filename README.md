@@ -8,6 +8,10 @@ A Tailwind-based Svelte 5 component library emphasizing accessibility, extensibi
 
 **Current Focus**: Svelte 5 migration - migrating 40 components from `createEventDispatcher` to callback props. 12 of 40 components completed.
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the documentation/i18n (Paraglide) workflow, and [AGENTS.md](AGENTS.md) for the coding standards (Svelte 5 runes, Tailwind, testing requirements).
+
 ## Philosophy
 
 Twintrinsic was created to provide a flexible, accessible UI library that extends HTML elements rather than replacing them. Since HTML elements already have built-in accessibility, using them as the foundation ensures better a11y support. Combined with Tailwind CSS for theming and customization, the name reflects this approach: `tailwind + intrinsic = twintrinsic`.
