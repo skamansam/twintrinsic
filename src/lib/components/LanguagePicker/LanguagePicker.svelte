@@ -84,17 +84,28 @@ let runtime = $state<ParaglideRuntime | undefined>(undefined)
 
 $effect(() => {
   // Dynamic import keeps the runtime optional: if the host app compiled
-  // without Paraglide the import rejects and the picker hides itself.
-  // The path is assigned to a variable so Vite cannot statically analyze
-  // the import and attempt (and fail) to resolve it in the host app's $lib.
-  const paraglidePath = "$lib/paraglide/runtime.js"
-  import(/* @vite-ignore */ paraglidePath)
-    .then((mod) => {
-      runtime = mod as unknown as ParaglideRuntime
-    })
-    .catch(() => {
-      runtime = undefined
-    })
+  // without Paraglide the glob resolves to an empty map and the picker
+  // hides itself. `import.meta.glob` is resolved at BUILD time by Vite —
+  // the previous `import(/* @vite-ignore */ variablePath)` approach could
+  // never resolve under Vite (runtime specifier, no static analysis), so
+  // the picker silently rendered nothing even in Paraglide apps. The
+  // `$lib` alias is intentional: components ship as source, so a
+  // consumer's build resolves it to THEIR `src/lib/paraglide/runtime.js`;
+  // apps without the alias (or without Paraglide) simply match nothing
+  // and the glob stays empty.
+  const runtimeModules = import.meta.glob("$lib/paraglide/runtime.js")
+  const loaders = Object.values(runtimeModules)
+  if (loaders.length === 0) {
+    runtime = undefined
+  } else {
+    loaders[0]()
+      .then((mod) => {
+        runtime = mod as unknown as ParaglideRuntime
+      })
+      .catch(() => {
+        runtime = undefined
+      })
+  }
 })
 
 /** Locales to display: explicit prop, or the runtime's list once loaded */

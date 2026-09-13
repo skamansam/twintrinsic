@@ -118,7 +118,7 @@ import { m } from "$lib/paraglide/messages.js"
     <a href="https://icon-sets.iconify.design/" target="_blank">icon-sets.iconify.design</a>{m.iconify_browse_2()}
   </p>
 
-  <h2>{m.sec_props}</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={IconModule} />
 
   <h2>{m.sec_accessibility()}</h2>

@@ -4,17 +4,19 @@ import { waitForHydration } from "./helpers.js";
 /**
  * Comprehensive docs-site tests for Panel and Card snippet usage.
  *
- * Verifies that Panel and Card components render correctly when used
- * with snippet props (header, footer, media slots).
+ * Verifies that Panel (with its Card alias) renders correctly when used
+ * with snippet props (header, footer, media slots). Targets the Panel
+ * docs page — `/docs/components/Panel/Card` is now a redirect stub to
+ * `/docs/components/Panel/Panel` (sub-component docs consolidation).
  */
 test.describe("Panel + Card snippets docs page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/docs/components/Panel/Card");
+    await page.goto("/docs/components/Panel/Panel");
     await waitForHydration(page);
   });
 
   test("renders the docs page heading", async ({ page }) => {
-    await expect(page.getByRole("heading", { name: "Card", level: 1 })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Panel", level: 1 })).toBeVisible();
   });
 
   test("card with header snippet renders the header content", async ({ page }) => {

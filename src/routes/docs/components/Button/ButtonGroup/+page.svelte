@@ -130,10 +130,10 @@ import { m } from "$lib/paraglide/messages.js"
     </div>
   </ExampleTabs>
 
-  <h2>{m.sec_props}</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={ButtonGroupModule} />
 
-  <h2>{m.sec_events}</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={ButtonGroupModule} />
 
   <h2>{m.sec_accessibility()}</h2>
@@ -143,9 +143,9 @@ import { m } from "$lib/paraglide/messages.js"
     <li>{m.buttongroup_a11y_5()}</li>
   </ul>
 
-  <h2>{m.sec_keyboard}</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>{m.sec_key}</th><th>{m.sec_function}</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
       <tr><td><kbd>Tab</kbd></td><td>{m.buttongroup_kb_1()}</td></tr>
       <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.buttongroup_kb_2()}</td></tr>

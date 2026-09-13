@@ -68,10 +68,10 @@ import { m } from "$lib/paraglide/messages.js"
 <table>
   <thead><tr><th>{m.kpi_compare_th_feature()}</th><th>KPICard</th><th>StatsCard</th></tr></thead>
   <tbody>
-    <tr><td>{m.kpi_compare_row_progress()}</td><td>{m.kpi_compare_row_progress_kpi()}</td><td>{m.badge_no}</td></tr>
+    <tr><td>{m.kpi_compare_row_progress()}</td><td>{m.kpi_compare_row_progress_kpi()}</td><td>{m.badge_no()}</td></tr>
     <tr><td>{m.kpi_compare_row_trend()}</td><td>{m.kpi_compare_row_trend_kpi()}</td><td>{m.kpi_compare_row_trend_stats()}</td></tr>
     <tr><td>{m.kpi_compare_row_value()}</td><td>{m.kpi_compare_row_value_kpi()}</td><td>{m.kpi_compare_row_value_stats()}</td></tr>
-    <tr><td>{m.kpi_compare_row_unit()}</td><td>{m.badge_yes}</td><td>{m.badge_no}</td></tr>
+    <tr><td>{m.kpi_compare_row_unit()}</td><td>{m.badge_yes()}</td><td>{m.badge_no()}</td></tr>
     <tr><td>{m.kpi_compare_row_status()}</td><td>{m.kpi_compare_row_status_kpi()}</td><td>{m.kpi_compare_row_status_stats()}</td></tr>
     <tr><td>{m.kpi_compare_row_best()}</td><td>{m.kpi_compare_row_best_kpi()}</td><td>{m.kpi_compare_row_best_stats()}</td></tr>
   </tbody>
