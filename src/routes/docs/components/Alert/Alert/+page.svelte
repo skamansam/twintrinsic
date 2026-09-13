@@ -10,6 +10,7 @@ import Button from "$lib/components/Button/Button.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import * as AlertModule from "$lib/components/Alert/Alert.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -17,58 +18,58 @@ import * as AlertModule from "$lib/components/Alert/Alert.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Alert</h1>
+  <h1>{m.alert_heading()}</h1>
 
   <p>
-    <strong>Alert</strong> displays inline notifications, important information, or warnings.
-    It features a colored background with a thick one-side border for visual emphasis,
-    and can be dismissed by the user when appropriate.
+    <strong>{m.alert_heading()}</strong>{m.alert_lede_1()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.alert_what_1()}</p>
+
+  <h3>{m.sec_when()}</h3>
   <p>
-    An inline notification component that renders important information with visual emphasis.
-    It uses a colored background and a thick border on one side to draw attention. Alerts can
-    include an icon, title, and dismissible close button.
+    {m.alert_when_1()}<code>&lt;Alert&gt;</code>{m.alert_when_2()}<code>&lt;Modal&gt;</code>{m.alert_when_3()}<code>&lt;Toast&gt;</code>{m.alert_when_4()}
   </p>
 
-  <h3>When should I use it?</h3>
-  <p>
-    Use <code>&lt;Alert&gt;</code> for contextual information that doesn't block the user's
-    workflow: "You have 3 new messages", "Your account is almost full", informational callouts
-    in page sections, or best-practices guidance. For blocking notifications that require user
-    action, use <code>&lt;Modal&gt;</code>. For transient feedback, use <code>&lt;Toast&gt;</code>.
-  </p>
-
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Visual emphasis</strong> — thick one-side border and colored background immediately draw attention.</li>
-    <li><strong>Non-blocking</strong> — inline content that doesn't interrupt the user's flow.</li>
-    <li><strong>Accessible</strong> — uses <code>role="alert"</code> for screen reader announcements.</li>
-    <li><strong>Flexible</strong> — four severity levels, customizable border side, optional dismiss.</li>
+    <li><strong>{m.alert_why_emphasis()}</strong>{m.alert_why_emphasis_1()}</li>
+    <li><strong>{m.alert_why_nonblocking()}</strong>{m.alert_why_nonblocking_1()}</li>
+    <li><strong>{m.alert_why_accessible()}</strong>{m.alert_why_accessible_1()}<code>role="alert"</code>{m.alert_why_accessible_2()}</li>
+    <li><strong>{m.alert_why_flexible()}</strong>{m.alert_why_flexible_1()}</li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  <h3>{m.sec_sources()}</h3>
   <ul>
-    <li>Full-width by default; use <code>max-w-*</code> classes to constrain.</li>
-    <li>Text wraps naturally on narrow viewports.</li>
-    <li>Close button meets 44×44 px touch target minimum.</li>
+    <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/alert/">WAI-ARIA APG — Alert</a></li>
+    <li><a href="https://m3.material.io/components/banners/overview">Material Design 3 — Banners</a></li>
+    <li><a href="https://primer.style/components/flash">Primer — Flash</a></li>
+    <li><a href="https://ant.design/components/alert">Ant Design — Alert</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/alert_role">MDN — alert role</a></li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Variants: <code>info</code>, <code>success</code>, <code>warning</code>, <code>error</code>, <code>default</code>.</li>
-    <li>Border side: <code>left</code>, <code>right</code>, <code>top</code>, <code>bottom</code>.</li>
-    <li>Optional <code>title</code> for bold heading text.</li>
-    <li>Optional <code>icon</code> — auto-selected per variant, or custom Iconify name.</li>
-    <li><code>dismissible</code> prop adds a close button.</li>
+    <li>{m.alert_responsive_1_1()}<code>max-w-*</code>{m.alert_responsive_1_2()}</li>
+    <li>{m.alert_responsive_2()}</li>
+    <li>{m.alert_responsive_3()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_customization()}</h2>
+  <ul>
+    <li>{m.alert_custom_1_1()}<code>info</code>, <code>success</code>, <code>warning</code>, <code>error</code>, <code>default</code>{m.alert_custom_1_2()}</li>
+    <li>{m.alert_custom_2_1()}<code>left</code>, <code>right</code>, <code>top</code>, <code>bottom</code>{m.alert_custom_2_2()}</li>
+    <li>{m.alert_custom_3_1()}<code>title</code>{m.alert_custom_3_2()}</li>
+    <li>{m.alert_custom_4_1()}<code>icon</code>{m.alert_custom_4_2()}</li>
+    <li>{m.alert_custom_5_1()}<code>dismissible</code>{m.alert_custom_5_2()}</li>
+  </ul>
 
-  <h3>Variants</h3>
+  <h2>{m.sec_examples()}</h2>
+
+  <h3>{m.alert_ex_variants()}</h3>
   <ExampleTabs code={`<Alert variant="info">A new version of the app is available for download.</Alert>
 <Alert variant="success">Profile saved successfully.</Alert>
 <Alert variant="warning">Storage is 95% full. Upgrade your plan.</Alert>
@@ -81,7 +82,7 @@ import * as AlertModule from "$lib/components/Alert/Alert.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>With Title</h3>
+  <h3>{m.alert_ex_title()}</h3>
   <ExampleTabs code={`<Alert variant="warning" title="Storage almost full">
   Your account has used 95% of its storage quota.
   Delete unused files or upgrade your plan to continue.
@@ -94,14 +95,14 @@ import * as AlertModule from "$lib/components/Alert/Alert.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Dismissible</h3>
+  <h3>{m.alert_ex_dismissible()}</h3>
   <ExampleTabs code={`<Alert variant="info" dismissible>You have 3 new messages.</Alert>`}>
     <div data-testid="alert-dismissible">
       <Alert variant="info" dismissible>You have 3 new messages.</Alert>
     </div>
   </ExampleTabs>
 
-  <h3>Border Sides</h3>
+  <h3>{m.alert_ex_borders()}</h3>
   <ExampleTabs code={`<Alert variant="info" border="left">Left border (default)</Alert>
 <Alert variant="success" border="top">Top border</Alert>
 <Alert variant="warning" border="right">Right border</Alert>
@@ -114,7 +115,7 @@ import * as AlertModule from "$lib/components/Alert/Alert.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Best Practices Callout</h3>
+  <h3>{m.alert_ex_best()}</h3>
   <ExampleTabs code={`<Alert variant="info" title="Best Practice">
   Use <code>role="alert"</code> for important messages that need immediate
   screen reader attention. For less urgent updates, use <code>role="status"</code>.
@@ -127,26 +128,26 @@ import * as AlertModule from "$lib/components/Alert/Alert.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props}</h2>
   <PropsTable component={AlertModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events}</h2>
   <EventsTable component={AlertModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Uses <code>role="alert"</code> for immediate screen reader announcement.</li>
-    <li>Close button includes <code>aria-label="Dismiss alert"</code>.</li>
-    <li>Color contrast meets WCAG AA requirements for all variants.</li>
-    <li>Keyboard-accessible close button with visible focus ring.</li>
+    <li>{m.alert_a11y_1()}<code>role="alert"</code>{m.alert_a11y_2()}</li>
+    <li>{m.alert_a11y_3()}<code>aria-label="Dismiss alert"</code>{m.alert_a11y_4()}</li>
+    <li>{m.alert_a11y_5()}</li>
+    <li>{m.alert_a11y_6()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key}</th><th>{m.sec_function}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Tab</kbd></td><td>Move focus to the close button (when dismissible)</td></tr>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Dismiss the alert</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>{m.alert_kb_1()}</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.alert_kb_2()}</td></tr>
     </tbody>
   </table>
 </Container>
