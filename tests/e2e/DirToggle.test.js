@@ -1422,4 +1422,16 @@ test.describe("Docs locale switcher", () => {
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
     await expect(page.getByRole("heading", { name: "سفارشی‌سازی", level: 2 })).toBeVisible();
   });
+
+  test("EventsTable docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/EventsTable/EventsTable");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "EventsTable", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  });
 });

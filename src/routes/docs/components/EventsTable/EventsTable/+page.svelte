@@ -5,6 +5,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import Input from "$lib/components/Form/Input.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as InputModule from "$lib/components/Form/Input.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 const propsData = {
   component: {
@@ -21,23 +22,15 @@ const propsData = {
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>EventsTable</h1>
+  <h1>{m.events_heading()}</h1>
 
   <p>
-    A utility component that renders a component's events (Svelte 5 callback
-    props) as a documentation table. Like <code>PropsTable</code>, it reads the
-    events directly from a component module's <code>propsMetadata</code> export
-    (keeping the entries that dispatch a <code>CustomEvent</code>), or renders a
-    <code>data</code> hash as a fallback.
+    {m.events_lede_1()}<code>PropsTable</code>{m.events_lede_2()}<code>propsMetadata</code>{m.events_lede_3()}<code>CustomEvent</code>{m.events_lede_4()}<code>data</code>{m.events_lede_5()}
   </p>
 
-  <h2>Usage</h2>
+  <h2>{m.events_usage()}</h2>
 
-  <h3>Auto-derived events</h3>
-  <p>
-    Pass the component module to list its <code>on*</code> callback props that
-    dispatch a <code>CustomEvent</code>:
-  </p>
+  <h3>{m.events_auto_1()}<code>on*</code>{m.events_auto_2()}<code>CustomEvent</code>{m.events_auto_3()}</h3>
 
   <div class="not-prose" data-testid="eventstable-auto">
     <EventsTable component={InputModule} />
@@ -50,12 +43,7 @@ const propsData = {
 
 <EventsTable component={Input} />`}</CodeBlock>
 
-  <h3>Explicit data hash</h3>
-  <p>
-    When a component doesn't export <code>propsMetadata</code>, pass a plain
-    <code>data</code> hash of event name → descriptor (names are written without
-    the <code>on</code> prefix):
-  </p>
+  <h3>{m.events_explicit_1()}<code>propsMetadata</code>{m.events_explicit_2()}<code>data</code>{m.events_explicit_3()}<code>on</code>{m.events_explicit_4()}</h3>
 
   <div class="not-prose" data-testid="eventstable-explicit">
     <EventsTable
@@ -71,31 +59,28 @@ const propsData = {
   }}
 />`}</CodeBlock>
 
-  
-<h2>Twintrinsic Implementation</h2>
+  <h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>Native `&lt;table&gt;` with `&lt;th scope=&quot;col&quot;&gt;` for headers</li>
-    <li>Auto-generated from TypeScript types via `propsMetadata`</li>
-    <li>`&lt;caption&gt;` for table title</li>
-    <li>`content-visibility: auto` for large tables</li>
+    <li>{m.events_impl_1()}</li>
+    <li>{m.events_impl_2()}</li>
+    <li>{m.events_impl_3()}</li>
+    <li>{m.events_impl_4()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use `&lt;div&gt;` — always `&lt;table&gt;` for semantic data display</li>
-    <li>Don't forget `&lt;th scope=&quot;col&quot;&gt;` for column header associations</li>
+    <li>{m.events_mistake_1()}</li>
+    <li>{m.events_mistake_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>DataTable, CompatibilityMatrix</p>
-
-<h2>Props</h2>
+<h2>{m.sec_related()}</h2>
+<p>{m.events_related_1()}</p>  <h2>{m.sec_props()}</h2>
   <PropsTable data={propsData} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Uses a semantic <code>&lt;table&gt;</code> with header cells for each column</li>
-    <li>Event names are rendered as their <code>on*</code> callback prop form</li>
-    <li>The table scrolls horizontally on narrow viewports instead of overflowing</li>
+    <li>{m.events_a11y_1()}<code>&lt;table&gt;</code>{m.events_a11y_2()}</li>
+    <li>{m.events_a11y_3()}<code>on*</code>{m.events_a11y_4()}</li>
+    <li>{m.events_a11y_5()}</li>
   </ul>
 </Container>
