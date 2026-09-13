@@ -3,6 +3,16 @@ import { defineConfig, devices } from "@playwright/test"
 export default defineConfig({
   testDir: "tests/e2e",
   testMatch: "**/*.test.{js,ts}",
+  // Debugging artifacts: on failure, keep a screenshot, a video of the run,
+  // and the Playwright trace (open with `npx playwright show-trace
+  // test-results/<...>/trace.zip`). Artifacts land in `test-results/`,
+  // which is gitignored. `retry` stays off — these are smokes against a
+  // locally built site, where a failure is actionable on first sight.
+  use: {
+    screenshot: "only-on-failure",
+    video: "retain-on-failure",
+    trace: "retain-on-failure",
+  },
   // E2E tests target the documentation site (SvelteKit preview). The port
   // lives in the user-assigned 8020–8070 band so it cannot collide with
   // other dev servers on this machine (a `dnanything` vite dev server
