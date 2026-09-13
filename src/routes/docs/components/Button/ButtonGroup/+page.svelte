@@ -10,6 +10,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as ButtonGroupModule from "$lib/components/Button/ButtonGroup.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -17,37 +18,32 @@ import * as ButtonGroupModule from "$lib/components/Button/ButtonGroup.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>ButtonGroup</h1>
+  <h1>{m.buttongroup_heading()}</h1>
 
   <p>
-    <strong>ButtonGroup</strong> groups related Button components together with consistent
-    spacing, connected corners, and shared styling. Variant and size can be set once on the
-    group and are inherited by every child button.
+    <strong>{m.buttongroup_heading()}</strong>{m.buttongroup_lede_1()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A layout wrapper that groups buttons into a visually connected unit with shared
-    variant/size inheritance and connected corners. Uses <code>role="group"</code> with
-    <code>aria-label</code> for accessibility.
+    {m.buttongroup_what_1()}<code>role="group"</code>{m.buttongroup_what_2()}<code>aria-label</code>{m.buttongroup_what_3()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use <code>&lt;ButtonGroup&gt;</code> for toolbars (bold/italic/underline), pagination,
-    toggle groups, or any set of related buttons that should appear visually connected.
+    {m.buttongroup_when_1()}<code>&lt;ButtonGroup&gt;</code>{m.buttongroup_when_2()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Visual grouping</strong> — connected corners and shared styling.</li>
-    <li><strong>Variant inheritance</strong> — set variant/size once for all child buttons.</li>
-    <li><strong>Accessible</strong> — <code>role="group"</code> with <code>aria-label</code>.</li>
+    <li><strong>{m.buttongroup_why_grouping()}</strong>{m.buttongroup_why_grouping_1()}</li>
+    <li><strong>{m.buttongroup_why_inheritance()}</strong>{m.buttongroup_why_inheritance_1()}</li>
+    <li><strong>{m.buttongroup_why_accessible()}</strong>{m.buttongroup_why_accessible_1()}<code>role="group"</code>{m.buttongroup_why_accessible_2()}<code>aria-label</code>{m.buttongroup_why_accessible_3()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/">WAI-ARIA APG — Button</a></li>
     <li><a href="https://m3.material.io/components/button-groups/overview">Material Design 3 — Button groups</a></li>
@@ -56,23 +52,23 @@ import * as ButtonGroupModule from "$lib/components/Button/ButtonGroup.svelte"
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/group_role">MDN — group role</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Inline by default; use <code>vertical</code> for stacked layout.</li>
-    <li><code>fullWidth</code> stretches buttons to fill the container.</li>
+    <li>{m.buttongroup_responsive_1_1()}<code>vertical</code>{m.buttongroup_responsive_1_2()}</li>
+    <li>{m.buttongroup_responsive_2_1()}<code>fullWidth</code>{m.buttongroup_responsive_2_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li><code>variant</code> — inherit variant to all child buttons.</li>
-    <li><code>size</code> — inherit size to all child buttons.</li>
-    <li><code>vertical</code> — stack buttons vertically.</li>
-    <li><code>fullWidth</code> — stretch to container width.</li>
+    <li>{m.buttongroup_custom_1_1()}<code>variant</code>{m.buttongroup_custom_1_2()}</li>
+    <li>{m.buttongroup_custom_2_1()}<code>size</code>{m.buttongroup_custom_2_2()}</li>
+    <li>{m.buttongroup_custom_3_1()}<code>vertical</code>{m.buttongroup_custom_3_2()}</li>
+    <li>{m.buttongroup_custom_4_1()}<code>fullWidth</code>{m.buttongroup_custom_4_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic Group</h3>
+  <h3>{m.buttongroup_ex_basic()}</h3>
   <ExampleTabs code={`<ButtonGroup ariaLabel="Text alignment">
   <Button>Left</Button>
   <Button>Center</Button>
@@ -87,7 +83,7 @@ import * as ButtonGroupModule from "$lib/components/Button/ButtonGroup.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Shared Variant</h3>
+  <h3>{m.buttongroup_ex_variant()}</h3>
   <ExampleTabs code={`<ButtonGroup ariaLabel="Pagination" variant="outline" size="sm">
   <Button>Previous</Button>
   <Button>1</Button>
@@ -106,7 +102,7 @@ import * as ButtonGroupModule from "$lib/components/Button/ButtonGroup.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Vertical Group</h3>
+  <h3>{m.buttongroup_ex_vertical()}</h3>
   <ExampleTabs code={`<ButtonGroup ariaLabel="File actions" vertical>
   <Button>Copy</Button>
   <Button>Move</Button>
@@ -121,7 +117,7 @@ import * as ButtonGroupModule from "$lib/components/Button/ButtonGroup.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Full Width</h3>
+  <h3>{m.buttongroup_ex_fullwidth()}</h3>
   <ExampleTabs code={`<ButtonGroup ariaLabel="Sign in options" fullWidth>
   <Button variant="primary">Sign in</Button>
   <Button>Create account</Button>
@@ -134,25 +130,25 @@ import * as ButtonGroupModule from "$lib/components/Button/ButtonGroup.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props}</h2>
   <PropsTable component={ButtonGroupModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events}</h2>
   <EventsTable component={ButtonGroupModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Uses <code>role="group"</code> with an <code>aria-label</code> describing the group.</li>
-    <li>Child buttons remain individually focusable and keyboard operable.</li>
-    <li>Connected corners preserve a clean visual group without hiding focus.</li>
+    <li>{m.buttongroup_a11y_1()}<code>role="group"</code>{m.buttongroup_a11y_2()}<code>aria-label</code>{m.buttongroup_a11y_3()}</li>
+    <li>{m.buttongroup_a11y_4()}</li>
+    <li>{m.buttongroup_a11y_5()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key}</th><th>{m.sec_function}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Tab</kbd></td><td>Move focus between buttons in the group</td></tr>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Activate the focused button</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>{m.buttongroup_kb_1()}</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.buttongroup_kb_2()}</td></tr>
     </tbody>
   </table>
 </Container>
