@@ -8,6 +8,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import Toast, * as ToastModule from "$lib/components/Toast/Toast.svelte"
+import { m } from "$lib/paraglide/messages.js"
 import { toastStore } from "$lib/components/Toast/toastStore.js"
 </script>
 
@@ -16,40 +17,31 @@ import { toastStore } from "$lib/components/Toast/toastStore.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Toast</h1>
+  <h1>{m.toast_heading()}</h1>
 
   <p>
-    <strong>Toast</strong> displays temporary, non-blocking notifications. Entry/exit animations
-    use pure CSS (<code>@starting-style</code> + <code>transition-behavior: allow-discrete</code>)
-    with no JavaScript animation logic. The container uses <code>content-visibility: auto</code>
-    for rendering performance.
+    <strong>{m.toast_heading()}</strong>{m.toast_lede_1()}<code>@starting-style</code>{m.toast_lede_2()}<code>transition-behavior: allow-discrete</code>{m.toast_lede_3()}<code>content-visibility: auto</code>{m.toast_lede_4()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.toast_what_1()}</p>
+
+  <h3>{m.sec_when()}</h3>
   <p>
-    A lightweight notification component that appears temporarily to inform users of an
-    action's result. Toasts auto-dismiss after a configurable duration and can be paused
-    on hover. They are managed via a global store, so any component can trigger them.
+    {m.toast_when_1()}<code>&lt;Toast&gt;</code>{m.toast_when_2()}<code>&lt;Modal&gt;</code>{m.toast_when_3()}
   </p>
 
-  <h3>When should I use it?</h3>
-  <p>
-    Use <code>&lt;Toast&gt;</code> for feedback that doesn't require user action:
-    "Profile saved", "File uploaded", "Connection restored". For critical messages that
-    block the workflow until acknowledged, use <code>&lt;Modal&gt;</code>.
-  </p>
-
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Non-blocking</strong> — doesn't interrupt the user's current task.</li>
-    <li><strong>Global store</strong> — any component can trigger a toast without prop drilling.</li>
-    <li><strong>CSS-native animations</strong> — <code>@starting-style</code> and <code>allow-discrete</code> for smooth entry/exit with zero JS.</li>
-    <li><strong>Rendering performance</strong> — <code>content-visibility: auto</code> skips off-screen containers.</li>
+    <li><strong>{m.toast_why_nonblocking()}</strong>{m.toast_why_nonblocking_1()}</li>
+    <li><strong>{m.toast_why_store()}</strong>{m.toast_why_store_1()}</li>
+    <li><strong>{m.toast_why_css()}</strong>{m.toast_why_css_1()}<code>@starting-style</code>{m.toast_why_css_2()}<code>allow-discrete</code>{m.toast_why_css_3()}</li>
+    <li><strong>{m.toast_why_perf()}</strong>{m.toast_why_perf_1()}<code>content-visibility: auto</code>{m.toast_why_perf_2()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/alert/">WAI-ARIA APG — Alert</a></li>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/alert_role">MDN — alert role</a></li>
@@ -59,42 +51,40 @@ import { toastStore } from "$lib/components/Toast/toastStore.js"
   </ul>
 
   
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>`@starting-style` + `transition-behavior: allow-discrete` for entry animation</li>
-    <li>`content-visibility: auto` for off-screen performance</li>
-    <li>`aria-live=&quot;polite&quot;` region for screen reader announcements</li>
-    <li>Auto-dismiss countdown powered by the Timer component (pausable on hover)</li>
-    <li>Multiple toasts stack (not limited by Popover API)</li>
+    <li>{m.toast_impl_1()}</li>
+    <li>{m.toast_impl_2()}</li>
+    <li>{m.toast_impl_3()}</li>
+    <li>{m.toast_impl_4()}</li>
+    <li>{m.toast_impl_5()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use Popover API for toasts — it's one-at-a-time, conflicts with stacking</li>
-    <li>Don't forget `aria-live=&quot;polite&quot;` — screen readers need to announce new toasts</li>
+    <li>{m.toast_mistake_1()}</li>
+    <li>{m.toast_mistake_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Modal, Skeleton, Progress</p>
-
-<h2>Responsiveness</h2>
+<h2>{m.sec_related()}</h2>
+<p>{m.toast_related_1()}</p>  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Max width <code>max-w-sm</code> (384px); collapses on small screens.</li>
-    <li>Positioned in corners or centered; doesn't overlap the viewport edge.</li>
-    <li>Touch targets meet 44×44 px minimum for close button.</li>
+    <li>{m.toast_responsive_1_1()}<code>max-w-sm</code>{m.toast_responsive_1_2()}</li>
+    <li>{m.toast_responsive_2()}</li>
+    <li>{m.toast_responsive_3()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li>Variants: <code>default</code>, <code>primary</code>, <code>success</code>, <code>warning</code>, <code>error</code>, <code>info</code>.</li>
-    <li>Positions: <code>top-right</code>, <code>top-left</code>, <code>top-center</code>, <code>bottom-right</code>, <code>bottom-left</code>, <code>bottom-center</code>, <code>middle-left</code>, <code>middle-right</code>.</li>
-    <li>Configurable duration (ms; `0` = persistent), max toasts, dismissible, and pause-on-hover.</li>
-    <li>The auto-dismiss countdown is rendered by the Timer component; `progress: false` hides the bar.</li>
+    <li>{m.toast_custom_1_1()}<code>default</code>, <code>primary</code>, <code>success</code>, <code>warning</code>, <code>error</code>, <code>info</code>{m.toast_custom_1_2()}</li>
+    <li>{m.toast_custom_2_1()}<code>top-right</code>, <code>top-left</code>, <code>top-center</code>, <code>bottom-right</code>, <code>bottom-left</code>, <code>bottom-center</code>, <code>middle-left</code>, <code>middle-right</code>{m.toast_custom_2_2()}</li>
+    <li>{m.toast_custom_3()}</li>
+    <li>{m.toast_custom_4_1()}<code>progress: false</code>{m.toast_custom_4_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic Toast</h3>
+  <h3>{m.toast_ex_basic()}</h3>
   <ExampleTabs code={`<script>
   import { toastStore } from "$lib/components/Toast/toastStore.js"
 <\/script>
@@ -111,7 +101,7 @@ import { toastStore } from "$lib/components/Toast/toastStore.js"
     </div>
   </ExampleTabs>
 
-  <h3>Toast Variants</h3>
+  <h3>{m.toast_ex_variants()}</h3>
   <ExampleTabs code={`toastStore.add({ message: "Profile saved successfully", variant: "success" })
 toastStore.add({ message: "Could not reach server", variant: "error" })
 toastStore.add({ message: "Storage almost full — 90% used", variant: "warning" })
@@ -132,7 +122,7 @@ toastStore.add({ message: "A new version is available", variant: "info" })`}>
     </div>
   </ExampleTabs>
 
-  <h3>Toast with Title</h3>
+  <h3>{m.toast_ex_title()}</h3>
   <ExampleTabs code={`toastStore.add({
   title: "Payment processed",
   message: "Your invoice has been paid",
@@ -145,7 +135,7 @@ toastStore.add({ message: "A new version is available", variant: "info" })`}>
     </div>
   </ExampleTabs>
 
-  <h3>Toast with Countdown</h3>
+  <h3>{m.toast_ex_countdown()}</h3>
   <ExampleTabs code={`toastStore.add({
   title: "Deploying release",
   message: "v0.50 ships in 8 seconds",
@@ -159,7 +149,7 @@ toastStore.add({ message: "A new version is available", variant: "info" })`}>
     </div>
   </ExampleTabs>
 
-  <h3>Toast Positions</h3>
+  <h3>{m.toast_ex_positions()}</h3>
   <ExampleTabs code={`<Toast position="top-right" />
 <Toast position="top-left" />
 <Toast position="top-center" />
@@ -180,46 +170,46 @@ toastStore.add({ message: "A new version is available", variant: "info" })`}>
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={ToastModule} />
 
-  <h2>Store Methods</h2>
+  <h2>{m.toast_store_heading()}</h2>
   <table>
-    <thead><tr><th>Method</th><th>Parameters</th><th>Description</th></tr></thead>
+    <thead><tr><th>{m.toast_store_method()}</th><th>{m.toast_store_params()}</th><th>{m.sec_description()}</th></tr></thead>
     <tbody>
-      <tr><td><code>add()</code></td><td><code>{'{ message, title?, variant?, duration?, icon?, progress? }'}</code></td><td>Add a new toast notification</td></tr>
-      <tr><td><code>remove()</code></td><td><code>id: string</code></td><td>Remove a specific toast by ID</td></tr>
-      <tr><td><code>setClosing()</code></td><td><code>id: string</code></td><td>Mark a toast as closing (exit animation)</td></tr>
-      <tr><td><code>clear()</code></td><td>None</td><td>Clear all toasts</td></tr>
-      <tr><td><code>pause()</code></td><td><code>id: string</code></td><td>Pause a toast's auto-dismiss timer</td></tr>
-      <tr><td><code>resume()</code></td><td><code>id: string</code></td><td>Resume a toast's auto-dismiss timer</td></tr>
+      <tr><td><code>add()</code></td><td><code>{'{ message, title?, variant?, duration?, icon?, progress? }'}</code></td><td>{m.toast_store_add()}</td></tr>
+      <tr><td><code>remove()</code></td><td><code>id: string</code></td><td>{m.toast_store_remove()}</td></tr>
+      <tr><td><code>setClosing()</code></td><td><code>id: string</code></td><td>{m.toast_store_closing()}</td></tr>
+      <tr><td><code>clear()</code></td><td>{m.sec_none()}</td><td>{m.toast_store_clear()}</td></tr>
+      <tr><td><code>pause()</code></td><td><code>id: string</code></td><td>{m.toast_store_pause()}</td></tr>
+      <tr><td><code>resume()</code></td><td><code>id: string</code></td><td>{m.toast_store_resume()}</td></tr>
     </tbody>
   </table>
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Error toasts use <code>role="alert"</code> for immediate announcement.</li>
-    <li>Other variants use <code>aria-live="polite"</code>.</li>
-    <li>Container uses <code>aria-atomic="true"</code> to announce complete toast content.</li>
-    <li>Close button includes proper <code>aria-label</code>.</li>
-    <li>Keyboard navigation for close button.</li>
+    <li>{m.toast_a11y_1_1()}<code>role="alert"</code>{m.toast_a11y_1_2()}</li>
+    <li>{m.toast_a11y_2_1()}<code>aria-live="polite"</code>{m.toast_a11y_2_2()}</li>
+    <li>{m.toast_a11y_3_1()}<code>aria-atomic="true"</code>{m.toast_a11y_3_2()}</li>
+    <li>{m.toast_a11y_4_1()}<code>aria-label</code>{m.toast_a11y_4_2()}</li>
+    <li>{m.toast_a11y_5()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Tab</kbd></td><td>Move focus to the toast close button</td></tr>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Dismiss the focused toast</td></tr>
-      <tr><td><kbd>Escape</kbd></td><td>Dismiss the focused toast</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>{m.toast_kb_tab()}</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.toast_kb_enter()}</td></tr>
+      <tr><td><kbd>Escape</kbd></td><td>{m.toast_kb_escape()}</td></tr>
     </tbody>
   </table>
 
-  <h2>Modern CSS APIs</h2>
+  <h2>{m.toast_css_heading()}</h2>
   <ul>
-    <li><code>@starting-style</code> — CSS-native entry animation (no JavaScript).</li>
-    <li><code>transition-behavior: allow-discrete</code> — animates <code>display</code> property on exit.</li>
-    <li><code>content-visibility: auto</code> — skips rendering of off-screen toast containers.</li>
+    <li><code>@starting-style</code>{m.toast_css_1_1()}</li>
+    <li><code>transition-behavior: allow-discrete</code>{m.toast_css_2_1()}<code>display</code>{m.toast_css_2_2()}</li>
+    <li><code>content-visibility: auto</code>{m.toast_css_3_1()}</li>
   </ul>
 </Container>
 
