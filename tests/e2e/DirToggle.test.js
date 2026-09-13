@@ -1146,7 +1146,8 @@ test.describe("Docs locale switcher", () => {
 
     const heading = page.getByRole("heading", { name: "Switch", level: 1 });
     await expect(heading).toBeVisible();
-    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");    await expect(page.getByRole("heading", { name: "سفارشی‌سازی", level: 2 })).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "سفارشی‌سازی", level: 2 })).toBeVisible();
   });
 
   test("Slider docs page switches to Persian", async ({ page }) => {
@@ -1339,6 +1340,32 @@ test.describe("Docs locale switcher", () => {
     await waitForHydration(page);
 
     const heading = page.getByRole("heading", { name: "Toast", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "سفارشی‌سازی", level: 2 })).toBeVisible();
+  });
+
+  test("Stepper docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Stepper/Stepper");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "Stepper", level: 1 });
+    await expect(heading).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("heading", { name: "سفارشی‌سازی", level: 2 })).toBeVisible();
+  });
+
+  test("StepperStep docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Stepper/StepperStep");
+    await waitForHydration(page);
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "StepperStep", level: 1 });
     await expect(heading).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
     await expect(page.getByRole("heading", { name: "سفارشی‌سازی", level: 2 })).toBeVisible();

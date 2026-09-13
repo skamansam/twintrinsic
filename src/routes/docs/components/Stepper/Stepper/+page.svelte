@@ -12,6 +12,7 @@ import StepperStep from "$lib/components/Stepper/StepperStep.svelte"
 import Button from "$lib/components/Button/Button.svelte"
 import * as StepperModule from "$lib/components/Stepper/Stepper.svelte"
 import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 let basicStep = $state(0)
 let verticalStep = $state(0)
@@ -28,39 +29,31 @@ let verticalSteps = [
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Stepper</h1>
+  <h1>{m.stepper_heading()}</h1>
 
   <p>
-    <strong>Stepper</strong> displays progress through a sequence of logical and numbered steps.
-    It is commonly used for multi-step forms, wizards, or any process that requires users to
-    complete steps in a specific order.
+    <strong>{m.stepper_heading()}</strong>{m.stepper_lede_1()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
+  <p>{m.stepper_what_1()}</p>
+
+  <h3>{m.sec_when()}</h3>
   <p>
-    A sequential navigation component that shows the user's current position in a multi-step
-    process. Each step can be completed, active, pending, or in error. Supports horizontal
-    and vertical orientations with optional step content display.
+    {m.stepper_when_1()}<code>&lt;Stepper&gt;</code>{m.stepper_when_2()}<code>&lt;Tabs&gt;</code>{m.stepper_when_3()}
   </p>
 
-  <h3>When should I use it?</h3>
-  <p>
-    Use <code>&lt;Stepper&gt;</code> for workflows with 3+ sequential steps: checkout flows,
-    registration wizards, onboarding sequences, or configuration steps. For tabbed content
-    that can be accessed in any order, use <code>&lt;Tabs&gt;</code>.
-  </p>
-
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Progress visibility</strong> — users always know where they are in the process.</li>
-    <li><strong>Linear and non-linear modes</strong> — enforce sequential steps or allow free navigation.</li>
-    <li><strong>Vertical and horizontal orientations</strong> — adapts to different layout contexts.</li>
-    <li><strong>Error state</strong> — clearly marks failed steps for user attention.</li>
+    <li><strong>{m.stepper_why_progress()}</strong>{m.stepper_why_progress_1()}</li>
+    <li><strong>{m.stepper_why_modes()}</strong>{m.stepper_why_modes_1()}</li>
+    <li><strong>{m.stepper_why_orientations()}</strong>{m.stepper_why_orientations_1()}</li>
+    <li><strong>{m.stepper_why_error()}</strong>{m.stepper_why_error_1()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://m3.material.io/components/steppers/overview">Material Design 3 — Steppers</a></li>
     <li><a href="https://ant.design/components/steps">Ant Design — Steps</a></li>
@@ -70,43 +63,41 @@ let verticalSteps = [
   </ul>
 
   
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>`&lt;ol&gt;` for semantic ordering of steps</li>
-    <li>`aria-current=&quot;step&quot;` on the active step</li>
-    <li>Step states: completed (checkmark), current (active), upcoming (muted)</li>
-    <li>`&lt;nav&gt;` wrapping for landmark semantics</li>
+    <li>{m.stepper_impl_1()}</li>
+    <li>{m.stepper_impl_2()}</li>
+    <li>{m.stepper_impl_3()}</li>
+    <li>{m.stepper_impl_4()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use `&lt;ul&gt;` — steps have inherent order, so `&lt;ol&gt;` is correct</li>
-    <li>Don't forget `aria-current=&quot;step&quot;` on the active step</li>
+    <li>{m.stepper_mistake_1()}</li>
+    <li>{m.stepper_mistake_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Timeline, Breadcrumb, Accordion</p>
-
-<h2>Responsiveness</h2>
+<h2>{m.sec_related()}</h2>
+<p>{m.stepper_related_1()}</p>  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Horizontal stepper compresses on narrow screens; use <code>orientation="vertical"</code> for mobile.</li>
-    <li>Alternative labels stack below icons on smaller viewports.</li>
-    <li>Vertical stepper content is full-width and scrollable.</li>
+    <li>{m.stepper_responsive_1_1()}<code>orientation="vertical"</code>{m.stepper_responsive_1_2()}</li>
+    <li>{m.stepper_responsive_2()}</li>
+    <li>{m.stepper_responsive_3()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li>Orientations: <code>horizontal</code>, <code>vertical</code>.</li>
-    <li>Variants: <code>primary</code>, <code>success</code>, <code>warning</code>, <code>error</code>.</li>
-    <li><code>alternativeLabels</code> — labels below step icons instead of beside them.</li>
-    <li><code>linear={false}</code> — non-linear mode for free step navigation.</li>
-    <li>Custom icons via the <code>icon</code> prop on <code>&lt;StepperStep&gt;</code>.</li>
-    <li>Optional, disabled, and error states per step.</li>
+    <li>{m.stepper_custom_1_1()}<code>horizontal</code>, <code>vertical</code>{m.stepper_custom_1_2()}</li>
+    <li>{m.stepper_custom_2_1()}<code>primary</code>, <code>success</code>, <code>warning</code>, <code>error</code>{m.stepper_custom_2_2()}</li>
+    <li><code>alternativeLabels</code>{m.stepper_custom_3_2()}</li>
+    <li><code>linear={false}</code>{m.stepper_custom_4_2()}</li>
+    <li>{m.stepper_custom_5_1()}<code>icon</code>{m.stepper_custom_5_2()}<code>&lt;StepperStep&gt;</code>{m.stepper_custom_5_3()}</li>
+    <li>{m.stepper_custom_6()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic Stepper</h3>
+  <h3>{m.stepper_ex_basic()}</h3>
   <ExampleTabs code={`<script>
   let step = $state(0)
 <\/script>
@@ -146,7 +137,7 @@ let verticalSteps = [
     </div>
   </ExampleTabs>
 
-  <h3>Vertical Stepper</h3>
+  <h3>{m.stepper_ex_vertical()}</h3>
   <ExampleTabs code={`<script>
   let step = $state(0)
   const steps = ["Personal Information", "Address", "Payment", "Review"]
@@ -175,7 +166,7 @@ let verticalSteps = [
     </div>
   </ExampleTabs>
 
-  <h3>Non-Linear Stepper</h3>
+  <h3>{m.stepper_ex_nonlinear()}</h3>
   <ExampleTabs code={`<Stepper linear={false}>
   <StepperStep label="Account" optional>Account Setup</StepperStep>
   <StepperStep label="Profile" optional>Profile Information</StepperStep>
@@ -212,7 +203,7 @@ let verticalSteps = [
     </div>
   </ExampleTabs>
 
-  <h3>Alternative Labels</h3>
+  <h3>{m.stepper_ex_alternative()}</h3>
   <ExampleTabs code={`<Stepper alternativeLabels>
   <StepperStep label="Cart">Shopping Cart</StepperStep>
   <StepperStep label="Shipping">Shipping Information</StepperStep>
@@ -249,7 +240,7 @@ let verticalSteps = [
     </div>
   </ExampleTabs>
 
-  <h3>Custom Icons</h3>
+  <h3>{m.stepper_ex_icons()}</h3>
   <ExampleTabs code={`<Stepper>
   <StepperStep title="Upload">Upload files here.</StepperStep>
   <StepperStep title="Process">Processing data.</StepperStep>
@@ -264,49 +255,49 @@ let verticalSteps = [
     </div>
   </ExampleTabs>
 
-  <h2>Stepper Props</h2>
+  <h2>{m.stepper_props_stepper()}</h2>
   <PropsTable component={StepperModule} />
 
-  <h2>StepperStep Props</h2>
+  <h2>{m.stepper_props_step()}</h2>
   <PropsTable component={StepperStepModule} />
 
-  <h2>Stepper Events</h2>
+  <h2>{m.stepper_events_stepper()}</h2>
   <EventsTable component={StepperModule} />
 
-  <h2>StepperStep Events</h2>
+  <h2>{m.stepper_events_step()}</h2>
   <EventsTable component={StepperStepModule} />
 
-  <h2>Slots</h2>
+  <h2>{m.sec_slots()}</h2>
   <table>
-    <thead><tr><th>Slot</th><th>Description</th></tr></thead>
+    <thead><tr><th>{m.sec_slot()}</th><th>{m.sec_description()}</th></tr></thead>
     <tbody>
-      <tr><td><code>icon</code></td><td>Custom icon content for the step marker</td></tr>
-      <tr><td><code>label</code></td><td>Custom label content for the step</td></tr>
-      <tr><td><code>default</code></td><td>Step content (shown when active in vertical mode)</td></tr>
+      <tr><td><code>icon</code></td><td>{m.stepper_slots_icon()}</td></tr>
+      <tr><td><code>label</code></td><td>{m.stepper_slots_label()}</td></tr>
+      <tr><td><code>default</code></td><td>{m.stepper_slots_default()}</td></tr>
     </tbody>
   </table>
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Uses <code>role="tablist"</code> for the stepper container.</li>
-    <li>Uses <code>role="tab"</code> for step headers.</li>
-    <li>Uses <code>role="tabpanel"</code> for step content.</li>
-    <li>Proper <code>aria-selected</code>, <code>aria-controls</code>, and <code>aria-labelledby</code> attributes.</li>
-    <li>Active step marked with <code>aria-current="step"</code>.</li>
-    <li>Completed steps show check icon; error steps show error icon.</li>
-    <li>Disabled steps expose <code>aria-disabled</code> and are skipped by interaction.</li>
+    <li>{m.stepper_a11y_1_1()}<code>role="tablist"</code>{m.stepper_a11y_1_2()}</li>
+    <li>{m.stepper_a11y_2_1()}<code>role="tab"</code>{m.stepper_a11y_2_2()}</li>
+    <li>{m.stepper_a11y_3_1()}<code>role="tabpanel"</code>{m.stepper_a11y_3_2()}</li>
+    <li>{m.stepper_a11y_4_1()}<code>aria-selected</code>{m.stepper_a11y_4_2()}<code>aria-controls</code>{m.stepper_a11y_4_3()}<code>aria-labelledby</code>{m.stepper_a11y_4_4()}</li>
+    <li>{m.stepper_a11y_5_1()}<code>aria-current="step"</code>{m.stepper_a11y_5_2()}</li>
+    <li>{m.stepper_a11y_6()}</li>
+    <li>{m.stepper_a11y_7_1()}<code>aria-disabled</code>{m.stepper_a11y_7_2()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Tab</kbd></td><td>Moves focus to the stepper</td></tr>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Activates the focused step</td></tr>
-      <tr><td><kbd>Left Arrow</kbd> / <kbd>Up Arrow</kbd></td><td>Moves focus to the previous step</td></tr>
-      <tr><td><kbd>Right Arrow</kbd> / <kbd>Down Arrow</kbd></td><td>Moves focus to the next step</td></tr>
-      <tr><td><kbd>Home</kbd></td><td>Moves focus to the first step</td></tr>
-      <tr><td><kbd>End</kbd></td><td>Moves focus to the last step</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>{m.stepper_kb_tab()}</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.stepper_kb_enter()}</td></tr>
+      <tr><td><kbd>Left Arrow</kbd> / <kbd>Up Arrow</kbd></td><td>{m.stepper_kb_prev()}</td></tr>
+      <tr><td><kbd>Right Arrow</kbd> / <kbd>Down Arrow</kbd></td><td>{m.stepper_kb_next()}</td></tr>
+      <tr><td><kbd>Home</kbd></td><td>{m.stepper_kb_home()}</td></tr>
+      <tr><td><kbd>End</kbd></td><td>{m.stepper_kb_end()}</td></tr>
     </tbody>
   </table>
 </Container>

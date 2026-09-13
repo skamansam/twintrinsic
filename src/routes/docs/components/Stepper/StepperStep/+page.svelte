@@ -10,6 +10,7 @@ import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import Stepper from "$lib/components/Stepper/Stepper.svelte"
 import StepperStep from "$lib/components/Stepper/StepperStep.svelte"
 import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -19,45 +20,37 @@ import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <div class="not-prose mb-6 p-4 bg-primary-50 dark:bg-primary-950 border border-primary-200 dark:border-primary-800 rounded-lg">
     <p class="text-sm text-primary-700 dark:text-primary-300 m-0">
-      <strong>StepperStep</strong> is a sub-component of
-      <a href="/docs/components/Stepper/Stepper" class="underline font-medium">Stepper</a>.
-      See the parent component docs for usage, examples, and full API reference.
+      <strong>{m.step_heading()}</strong>{m.step_redirect_1()}
+      <a href="/docs/components/Stepper/Stepper" class="underline font-medium">Stepper</a>{m.step_redirect_2()}
     </p>
   </div>
 
-  <h1>StepperStep</h1>
+  <h1>{m.step_heading()}</h1>
 
   <p>
-    <strong>StepperStep</strong> is an individual step within a <code>&lt;Stepper&gt;</code>.
-    It renders a numbered (or icon) marker, a title, an optional subtitle, and — for vertical
-    steppers — the step's content when active or expanded. Steps derive their
-    completed/active/pending state from the parent <code>&lt;Stepper&gt;</code>'s
-    <code>activeStep</code>, or from their own explicit props.
+    <strong>{m.step_heading()}</strong>{m.step_lede_1()}<code>&lt;Stepper&gt;</code>{m.step_lede_2()}<code>&lt;Stepper&gt;</code>{m.step_lede_3()}<code>activeStep</code>{m.step_lede_4()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A single step within a <code>&lt;Stepper&gt;</code> container. It manages its own visual
-    state (completed, active, pending, error, optional, disabled) and renders the step
-    marker (number or custom icon), label, optional subtitle, and content area.
+    {m.step_what_1()}<code>&lt;Stepper&gt;</code>{m.step_what_2()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Always use <code>&lt;StepperStep&gt;</code> inside a <code>&lt;Stepper&gt;</code>.
-    Each logical step in your process gets its own <code>&lt;StepperStep&gt;</code>.
+    {m.step_when_1()}<code>&lt;StepperStep&gt;</code>{m.step_when_2()}<code>&lt;Stepper&gt;</code>{m.step_when_3()}<code>&lt;StepperStep&gt;</code>{m.step_when_4()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Self-contained state</strong> — manages completed/active/pending/error per step.</li>
-    <li><strong>Context-driven</strong> — inherits state from the parent Stepper when not explicitly set.</li>
-    <li><strong>Rich content</strong> — supports custom icons, subtitles, and inline content.</li>
+    <li><strong>{m.step_why_state()}</strong>{m.step_why_state_1()}</li>
+    <li><strong>{m.step_why_context()}</strong>{m.step_why_context_1()}</li>
+    <li><strong>{m.step_why_rich()}</strong>{m.step_why_rich_1()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://m3.material.io/components/steppers/overview">Material Design 3 — Steppers</a></li>
     <li><a href="https://ant.design/components/steps">Ant Design — Steps</a></li>
@@ -66,24 +59,24 @@ import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-current">MDN — aria-current</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>In horizontal mode, steps compress and labels may wrap on narrow screens.</li>
-    <li>In vertical mode, content is full-width and naturally responsive.</li>
-    <li>Alternative labels stack below icons on small viewports.</li>
+    <li>{m.step_responsive_1()}</li>
+    <li>{m.step_responsive_2()}</li>
+    <li>{m.step_responsive_3()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li><code>title</code> and <code>subtitle</code> for step text.</li>
-    <li><code>icon</code> prop accepts HTML/SVG for custom markers.</li>
-    <li><code>optional</code>, <code>disabled</code>, <code>completed</code>, <code>active</code>, <code>error</code> states.</li>
-    <li>Clickable steps via <code>onClick</code> handler.</li>
+    <li><code>title</code>{m.step_custom_1_2()}<code>subtitle</code>{m.step_custom_1_3()}</li>
+    <li><code>icon</code>{m.step_custom_2_2()}</li>
+    <li><code>optional</code>, <code>disabled</code>, <code>completed</code>, <code>active</code>, <code>error</code>{m.step_custom_3_6()}</li>
+    <li>{m.step_custom_4_1()}<code>onClick</code>{m.step_custom_4_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic Steps</h3>
+  <h3>{m.step_ex_basic()}</h3>
   <ExampleTabs code={`<Stepper>
   <StepperStep title="Account">Account details</StepperStep>
   <StepperStep title="Profile">Profile information</StepperStep>
@@ -98,7 +91,7 @@ import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Subtitles and Icons</h3>
+  <h3>{m.step_ex_subtitles()}</h3>
   <ExampleTabs code={`<Stepper>
   <StepperStep title="Contact" subtitle="Your email address" icon="<svg ...>">
     Contact details
@@ -121,7 +114,7 @@ import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Explicit States</h3>
+  <h3>{m.step_ex_states()}</h3>
   <ExampleTabs code={`<Stepper>
   <StepperStep title="Completed" completed>Done</StepperStep>
   <StepperStep title="Active" active>In progress</StepperStep>
@@ -140,7 +133,7 @@ import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Vertical Steps with Content</h3>
+  <h3>{m.step_ex_vertical()}</h3>
   <ExampleTabs code={`<Stepper orientation="vertical">
   <StepperStep title="Personal Information">
     <p class="mt-2 text-sm">Enter your personal details.</p>
@@ -161,26 +154,26 @@ import * as StepperStepModule from "$lib/components/Stepper/StepperStep.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={StepperStepModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={StepperStepModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Each step renders <code>role="listitem"</code> with <code>aria-current="step"</code> on the active step.</li>
-    <li>Completed steps swap their marker for a check icon; error steps show an error icon.</li>
-    <li>Steps with an <code>onClick</code> handler render as a real button (Enter/Space activates).</li>
-    <li>Disabled steps expose <code>aria-disabled</code> and are skipped by interaction.</li>
+    <li>{m.step_a11y_1_1()}<code>role="listitem"</code>{m.step_a11y_1_2()}<code>aria-current="step"</code>{m.step_a11y_1_3()}</li>
+    <li>{m.step_a11y_2()}</li>
+    <li>{m.step_a11y_3_1()}<code>onClick</code>{m.step_a11y_3_2()}</li>
+    <li>{m.step_a11y_4_1()}<code>aria-disabled</code>{m.step_a11y_4_2()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Tab</kbd></td><td>Move focus between steps</td></tr>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Activate the focused step (if clickable)</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>{m.step_kb_tab()}</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.step_kb_enter()}</td></tr>
     </tbody>
   </table>
 </Container>
