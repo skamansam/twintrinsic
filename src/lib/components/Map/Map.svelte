@@ -231,6 +231,20 @@ async function initializeMap() {
 		// biome-ignore lint/suspicious/noExplicitAny: Leaflet types not fully available in alpha
 		const leaflet = (leafletModule as any).default || leafletModule;
 
+		// Pin the default-marker asset path. Leaflet auto-detects the marker
+		// images by sniffing a `leaflet-default-icon-path` element's CSS
+		// background, which only works when leaflet.css is loaded via a
+		// <link> tag — under Vite's injected styles the detection returns an
+		// empty path and marker URLs resolve against the page URL (e.g.
+		// `/docs/examples/marker-icon.png` → 404). The three PNGs are served
+		// from `static/leaflet/` (regression-tested in tests/e2e/docs.test.js).
+		// Markers that fall back to the default icon are those whose Iconify
+		// fetch failed or that specify neither `icon` nor `iconName`.
+		const IconDefault = (leaflet as any).Icon?.Default;
+		if (IconDefault && !IconDefault.imagePath) {
+			IconDefault.imagePath = '/leaflet/';
+		}
+
 		// biome-ignore lint/suspicious/noExplicitAny: Leaflet types not fully available in alpha
 		const mapOptions: any = {
 			zoom,

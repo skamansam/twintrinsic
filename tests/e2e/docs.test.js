@@ -204,6 +204,39 @@ test.describe("docs pages render correctly", () => {
     await expect(page.getByRole("heading", { name: "Game Map", level: 1 })).toBeVisible();
   });
 
+  test("Game Map example serves Leaflet marker assets without 404s", async ({ page }) => {
+    // Regression: Leaflet's Icon.Default auto-detection fails under Vite
+    // (no <link> stylesheet to sniff), so default-marker URLs used to
+    // resolve against the page URL (`/docs/examples/marker-icon.png`) and
+    // 404. Map.svelte now pins `Icon.Default.imagePath` to the copies in
+    // `static/leaflet/`.
+    const marker404s = [];
+    page.on("response", (response) => {
+      if (response.status() === 404 && response.url().includes("marker-")) {
+        marker404s.push(response.url());
+      }
+    });
+
+    await page.goto("/docs/examples/game-map");
+    await waitForHydration(page);
+
+    // Wait for the map to mount markers (custom Iconify icons or the
+    // default-icon fallback when the Iconify fetch fails) before judging
+    // the request log — the fallback path is exactly what used to 404.
+    await expect(page.locator(".leaflet-marker-icon").first()).toBeVisible({ timeout: 15000 });
+    // Settle window for any in-flight late marker-image requests.
+    await page.waitForTimeout(1000);
+
+    expect(marker404s, `marker asset 404s: ${marker404s.join(", ")}`).toEqual([]);
+  });
+
+  test("Leaflet default marker assets are served from /leaflet/", async ({ request }) => {
+    for (const asset of ["marker-icon.png", "marker-icon-2x.png", "marker-shadow.png"]) {
+      const response = await request.get(`/leaflet/${asset}`);
+      expect(response.status(), asset).toBe(200);
+    }
+  });
+
   test("Shopping example page renders", async ({ page }) => {
     await page.goto("/docs/examples/shopping");
     await waitForHydration(page);
