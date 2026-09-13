@@ -11,6 +11,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import Modal from "$lib/components/Modal/Modal.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as ModalModule from "$lib/components/Modal/Modal.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 let showBasicModal = writable(false)
 let showSizedModal = writable(false)
@@ -22,44 +23,33 @@ let showScrollableModal = writable(false)
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Modal</h1>
+  <h1>{m.modal_heading()}</h1>
 
   <p>
-    <strong>Modal</strong> displays content in a native HTML <code>&lt;dialog&gt;</code> element that
-    requires user attention. It uses <code>closedby="any"</code> for built-in light-dismiss
-    (Escape, backdrop click, and platform close gestures), native focus management with an inert
-    background, and <code>@starting-style</code> entry/exit animations — no manual focus trap,
-    backdrop div, or Escape listener.
+    <strong>{m.modal_heading()}</strong>{m.modal_lede_1()}<code>&lt;dialog&gt;</code>{m.modal_lede_2()}<code>closedby="any"</code>{m.modal_lede_3()}<code>@starting-style</code>{m.modal_lede_4()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A dialog overlay built on the native <code>&lt;dialog&gt;</code> element. It renders in the
-    top layer, manages focus automatically, and traps keyboard interaction within the dialog.
-    The <code>closedby="any"</code> attribute gives native light-dismiss (Escape + backdrop click +
-    platform close gestures like the mobile back button).
+    {m.modal_what_1_1()}<code>&lt;dialog&gt;</code>{m.modal_what_1_2()}<code>closedby="any"</code>{m.modal_what_1_3()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use <code>&lt;Modal&gt;</code> for critical tasks that require the user's full attention:
-    confirmations (delete, discard), forms that must be completed before continuing, or
-    displaying detailed information that shouldn't be mixed with the page content. For
-    non-blocking notifications, use <code>&lt;Toast&gt;</code>. For inline expandable content,
-    use an Accordion.
+    {m.modal_when_1()}<code>&lt;Modal&gt;</code>{m.modal_when_2()}<code>&lt;Toast&gt;</code>{m.modal_when_3()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Native <code>&lt;dialog&gt;</code></strong> — built-in focus management, inert background, and light-dismiss.</li>
-    <li><strong><code>closedby="any"</code></strong> — native Escape, backdrop click, and platform close gestures with zero JS.</li>
-    <li><strong>Entry/exit animations</strong> — <code>@starting-style</code> + <code>transition-behavior: allow-discrete</code> for smooth transitions.</li>
-    <li><strong>CSS <code>:has()</code></strong> — prevents body scroll while open without body-class bookkeeping.</li>
+    <li><strong>Native <code>&lt;dialog&gt;</code></strong>{m.modal_why_dialog_1()}</li>
+    <li><strong><code>closedby="any"</code></strong>{m.modal_why_closedby_1()}</li>
+    <li><strong>Entry/exit animations</strong>{m.modal_why_anim_1()}<code>@starting-style</code>{m.modal_why_anim_2()}<code>transition-behavior: allow-discrete</code>{m.modal_why_anim_3()}</li>
+    <li><strong>CSS <code>:has()</code></strong>{m.modal_why_has_1()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/">WAI-ARIA APG — Dialog (Modal)</a></li>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog">MDN — &lt;dialog&gt; element</a></li>
@@ -68,43 +58,40 @@ let showScrollableModal = writable(false)
     <li><a href="https://m3.material.io/components/dialogs/overview">Material Design 3 — Dialogs</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
+  <h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>Native `&lt;dialog closedby=&quot;any&quot;&gt;` for light-dismiss dialogs</li>
-    <li>`@starting-style` + `transition-behavior: allow-discrete` for enter/exit animations</li>
-    <li>`::backdrop` for dimming the background</li>
-    <li>Focus trapping via native `&lt;dialog&gt;` behavior</li>
-    <li>Escape to close (native)</li>
+    <li>{m.modal_impl_1()}</li>
+    <li>{m.modal_impl_2()}</li>
+    <li>{m.modal_impl_3()}</li>
+    <li>{m.modal_impl_4()}</li>
+    <li>{m.modal_impl_5()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use a `&lt;div&gt;` overlay — `&lt;dialog&gt;` provides inert background, focus trap, and Escape</li>
-    <li>Don't forget `closedby=&quot;any&quot;` for light-dismiss behavior</li>
+    <li>{m.modal_mistake_1()}</li>
+    <li>{m.modal_mistake_2()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Toast, Popover, Menu</p>
-
-<h2>Responsiveness</h2>
+<h2>{m.sec_related()}</h2>
+<p>{m.modal_related_1()}</p>  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Centered by default; use <code>size="full"</code> for mobile-friendly full-screen dialogs.</li>
-    <li>Body scroll is locked via pure CSS <code>:has()</code> while the dialog is open.</li>
-    <li>Touch targets meet 44×44 px minimum for close and action buttons.</li>
+    <li>{m.modal_responsive_1_1()}<code>size="full"</code>{m.modal_responsive_1_2()}</li>
+    <li>{m.modal_responsive_2_1()}<code>:has()</code>{m.modal_responsive_2_2()}</li>
+    <li>{m.modal_responsive_3()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li>Sizes: <code>sm</code>, <code>md</code>, <code>lg</code>, <code>xl</code>, <code>2xl</code>–<code>7xl</code>, <code>full</code>.</li>
-    <li>Header, body, and footer snippets for full content control.</li>
-    <li>Configurable close behavior via <code>closeOnEscape</code> and <code>closeOnOutsideClick</code>.</li>
-    <li>Custom ARIA labels via <code>ariaLabel</code> and <code>ariaDescription</code>.</li>
+    <li>{m.modal_custom_1_1()}<code>sm</code>, <code>md</code>, <code>lg</code>, <code>xl</code>, <code>2xl</code>–<code>7xl</code>{m.modal_custom_1_2()}<code>full</code>{m.modal_custom_1_3()}</li>
+    <li>{m.modal_custom_2()}</li>
+    <li>{m.modal_custom_3_1()}<code>closeOnEscape</code>{m.modal_custom_3_2()}<code>closeOnOutsideClick</code>{m.modal_custom_3_3()}</li>
+    <li>{m.modal_custom_4_1()}<code>ariaLabel</code>{m.modal_custom_4_2()}<code>ariaDescription</code>{m.modal_custom_4_3()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Confirm Delete</h3>
+  <h3>{m.modal_ex_confirm()}</h3>
   <ExampleTabs code={`<script>
   let open = false
 <\/script>
@@ -142,7 +129,7 @@ let showScrollableModal = writable(false)
     </Modal>
   </ExampleTabs>
 
-  <h3>Modal Sizes</h3>
+  <h3>{m.modal_ex_sizes()}</h3>
   <ExampleTabs code={`<Modal open={true} size="sm"><!-- Small modal --></Modal>
 <Modal open={true} size="md"><!-- Medium modal (default) --></Modal>
 <Modal open={true} size="lg"><!-- Large modal --></Modal>
@@ -162,7 +149,7 @@ let showScrollableModal = writable(false)
     </Modal>
   </ExampleTabs>
 
-  <h3>Scrollable Content</h3>
+  <h3>{m.modal_ex_scrollable()}</h3>
   <ExampleTabs code={`<Modal open={true}>
   {#snippet header()}
     Software License Agreement
@@ -206,48 +193,45 @@ let showScrollableModal = writable(false)
     </Modal>
   </ExampleTabs>
 
-  <h2>Slots</h2>
+  <h2>{m.sec_slots()}</h2>
   <table>
-    <thead><tr><th>Slot</th><th>Description</th></tr></thead>
+    <thead><tr><th>{m.sec_slot()}</th><th>{m.sec_description()}</th></tr></thead>
     <tbody>
-      <tr><td><code>header</code></td><td>Modal header content (title area)</td></tr>
-      <tr><td><code>default</code></td><td>Main modal body content</td></tr>
-      <tr><td><code>footer</code></td><td>Modal footer content (action buttons)</td></tr>
+      <tr><td><code>header</code></td><td>{m.modal_slots_header()}</td></tr>
+      <tr><td><code>default</code></td><td>{m.modal_slots_default()}</td></tr>
+      <tr><td><code>footer</code></td><td>{m.modal_slots_footer()}</td></tr>
     </tbody>
   </table>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={ModalModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={ModalModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Built on the native <code>&lt;dialog&gt;</code> element (implicit <code>role="dialog"</code> and <code>aria-modal</code>).</li>
-    <li><code>closedby="any"</code> gives native light-dismiss: Escape, backdrop click, and platform close gestures.</li>
-    <li>Native focus management — focus moves into the dialog on open and is restored on close.</li>
-    <li>Content outside the dialog becomes <strong>inert</strong> while it is open.</li>
-    <li>Includes proper ARIA labels and descriptions (<code>aria-label</code>, <code>aria-labelledby</code>, <code>aria-describedby</code>).</li>
-    <li>Body scroll prevented via pure CSS <code>:has()</code> — no body-class bookkeeping.</li>
-    <li>Entry/exit animations via <code>@starting-style</code> + <code>transition-behavior: allow-discrete</code>.</li>
+    <li>{m.modal_a11y_1_1()}<code>&lt;dialog&gt;</code>{m.modal_a11y_1_2()}<code>role="dialog"</code>{m.modal_a11y_1_3()}<code>aria-modal</code>{m.modal_a11y_1_4()}</li>
+    <li><code>closedby="any"</code>{m.modal_a11y_2_2()}</li>
+    <li>{m.modal_a11y_3()}</li>
+    <li>{m.modal_a11y_4_1()}<strong>inert</strong>{m.modal_a11y_4_2()}</li>
+    <li>{m.modal_a11y_5_1()}<code>aria-label</code>{m.modal_a11y_5_2()}<code>aria-labelledby</code>{m.modal_a11y_5_3()}<code>aria-describedby</code>{m.modal_a11y_5_4()}</li>
+    <li>{m.modal_a11y_6_1()}<code>:has()</code>{m.modal_a11y_6_2()}</li>
+    <li>{m.modal_a11y_7_1()}<code>@starting-style</code>{m.modal_a11y_7_2()}<code>transition-behavior: allow-discrete</code>{m.modal_a11y_7_3()}</li>
   </ul>
 
-  <h3>Close behavior</h3>
+  <h3>{m.modal_close_heading()}</h3>
   <p>
-    The <code>closeOnEscape</code> and <code>closeOnOutsideClick</code> props map onto the native
-    <code>closedby</code> attribute: both enabled maps to <code>any</code>, Escape-only maps to
-    <code>closerequest</code>, and outside-click-only (or neither) maps to <code>none</code> with
-    the backdrop click handled manually.
+    {m.modal_close_1_1()}<code>closeOnEscape</code>{m.modal_close_1_2()}<code>closeOnOutsideClick</code>{m.modal_close_1_3()}<code>closedby</code>{m.modal_close_1_4()}<code>any</code>{m.modal_close_1_5()}<code>closerequest</code>{m.modal_close_1_6()}<code>none</code>{m.modal_close_1_7()}
   </p>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Escape</kbd></td><td>Close the dialog (when <code>closedby</code> is <code>any</code> or <code>closerequest</code>)</td></tr>
-      <tr><td><kbd>Tab</kbd></td><td>Move focus within the dialog (focus is trapped)</td></tr>
-      <tr><td><kbd>Shift+Tab</kbd></td><td>Move focus backwards within the dialog</td></tr>
+      <tr><td><kbd>Escape</kbd></td><td>{m.modal_kb_escape_1()}<code>closedby</code>{m.modal_kb_escape_2()}<code>any</code>{m.modal_kb_escape_3()}<code>closerequest</code>{m.modal_kb_escape_4()}</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>{m.modal_kb_tab()}</td></tr>
+      <tr><td><kbd>Shift+Tab</kbd></td><td>{m.modal_kb_shift_tab()}</td></tr>
     </tbody>
   </table>
 </Container>
