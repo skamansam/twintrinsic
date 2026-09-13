@@ -7,6 +7,7 @@
 	import LineChart from '$lib/components/Metrics/LineChart/LineChart.svelte'
 	import MetricGrid from '$lib/components/Metrics/MetricGrid/MetricGrid.svelte'
 	import ProgressMetric from '$lib/components/Metrics/ProgressMetric/ProgressMetric.svelte'
+	import { m } from '$lib/paraglide/messages.js'
 
 	// Sample data for the dashboard
 	const salesData = {
@@ -106,13 +107,13 @@
 <div class="mb-8 bg-blue-50 dark:bg-blue-950 border-l-4 border-blue-500 p-4 rounded">
 	<div class="flex items-center justify-between">
 		<div>
-			<h3 class="font-semibold text-blue-900 dark:text-blue-100">Build this yourself!</h3>
+			<h3 class="font-semibold text-blue-900 dark:text-blue-100">{m.exdash_banner_h()}</h3>
 			<p class="text-sm text-blue-800 dark:text-blue-200 mt-1">
-				Learn how to create this dashboard with our comprehensive guide and component documentation.
+				{m.exdash_banner_p()}
 			</p>
 		</div>
 		<a href="/docs/examples/dashboard/guide" class="ml-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium whitespace-nowrap transition-colors">
-			View Guide
+			{m.ex_viewguide()}
 		</a>
 	</div>
 </div>
@@ -120,7 +121,7 @@
 <div class="space-y-8">
 	<!-- Key Metrics Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Key Metrics Overview</h2>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_metrics()}</h2>
 		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
 			<MetricGrid columns={4} gap="md" items={statsCards} />
 		</div>
@@ -128,7 +129,7 @@
 
 	<!-- KPI Cards Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">KPI Progress Tracking</h2>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_kpi()}</h2>
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 			{#each kpiData as kpi}
 				<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
@@ -140,7 +141,7 @@
 
 	<!-- Sales Trends Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Sales Trends</h2>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_sales()}</h2>
 		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
 			<BarChart
 				series={salesData.series}
@@ -157,7 +158,7 @@
 
 	<!-- Traffic Analysis Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Website Traffic Analysis</h2>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_traffic()}</h2>
 		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
 			<AreaChart
 				series={trafficData.series}
@@ -175,7 +176,7 @@
 
 	<!-- Conversion Breakdown Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Conversion Sources</h2>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_conversion()}</h2>
 		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6 flex justify-center">
 			<DonutChart
 				data={conversionData.data}
@@ -189,7 +190,7 @@
 
 	<!-- Performance Metrics Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Performance Metrics</h2>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_perf()}</h2>
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 			<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
 				<GaugeChart
@@ -229,7 +230,7 @@
 
 	<!-- Progress Tracking Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Resource Utilization</h2>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_resource()}</h2>
 		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6 space-y-6">
 			<ProgressMetric label="CPU Usage" value={65} max={100} color="primary" showPercentage={true} />
 			<ProgressMetric label="Memory Usage" value={78} max={100} color="warning" showPercentage={true} />

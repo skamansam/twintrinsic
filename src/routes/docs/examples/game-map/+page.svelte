@@ -8,6 +8,7 @@ Game Map Example - Interactive map with markers, popups, and editing
 	import Container from '$lib/components/Container/Container.svelte'
 	import MapComponent from '$lib/components/Map/Map.svelte'
 	import fallout4Locations from './fallout4-locations.json';
+	import { m } from '$lib/paraglide/messages.js'
 
 	interface GameMarker {
 		id: string;
@@ -202,48 +203,47 @@ Game Map Example - Interactive map with markers, popups, and editing
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-	<h1>Game Map Example</h1>
+	<h1>{m.exmap_h1()}</h1>
 
 	<p>
-		An interactive game map with markers, popups, and editing capabilities. Click on the map to create
-		new markers, click on existing markers to edit them.
+		{m.exmap_lede()}
 	</p>
 
-	<h2>How It Works</h2>
-	<p>This example demonstrates the <code>&lt;Map&gt;</code> component's custom image mode using <code>customImage</code> with <code>imageWidth</code>/<code>imageHeight</code> props. This enables pixel-based coordinates via Leaflet's Simple CRS, perfect for game maps, floor plans, and diagrams.</p>
+	<h2>{m.exmap_how_h()}</h2>
+	<p>{m.exmap_how_1()}<code>&lt;Map&gt;</code>{m.exmap_how_2()}<code>customImage</code>{m.exmap_how_3()}<code>imageWidth</code>{m.exmap_how_4()}<code>imageHeight</code>{m.exmap_how_5()}</p>
 
-	<h3>Key Features</h3>
+	<h3>{m.exmap_features_h()}</h3>
 	<ul>
-		<li><strong>Custom image overlay</strong> — Any image can be used as a map layer. The <code>customImage</code> prop loads the image and maps pixel coordinates to map positions.</li>
-		<li><strong>Interactive markers</strong> — Click on the map to create new markers. Each marker type (treasure, enemy, NPC, location) has a unique icon and color.</li>
-		<li><strong>Edit popups</strong> — Click a marker to open an edit popup. Modify the name, description, or type. Save or delete directly from the popup.</li>
-		<li><strong>JSON sync</strong> — The JSON editor on the right shows all markers in real-time. Edit the JSON directly to update the map, or modify markers on the map to update the JSON.</li>
+		<li><strong>{m.exmap_feat_img()}</strong>{m.exmap_feat_img_1()}<code>customImage</code>{m.exmap_feat_img_2()}</li>
+		<li><strong>{m.exmap_feat_markers()}</strong>{m.exmap_feat_markers_p()}</li>
+		<li><strong>{m.exmap_feat_popups()}</strong>{m.exmap_feat_popups_p()}</li>
+		<li><strong>{m.exmap_feat_json()}</strong>{m.exmap_feat_json_p()}</li>
 	</ul>
 
-	<h3>How to Build This</h3>
+	<h3>{m.exmap_build_h()}</h3>
 	<ol>
-		<li>Start with the <code>&lt;Map&gt;</code> component and pass your image via <code>customImage</code>.</li>
-		<li>Set <code>imageWidth</code> and <code>imageHeight</code> to match your image dimensions.</li>
-		<li>Use the <code>markers</code> prop to define marker positions using pixel coordinates.</li>
-		<li>Provide a <code>popupContent</code> function to render rich HTML popups with edit forms.</li>
-		<li>Handle <code>onclick</code> to capture new marker positions when the user clicks the map.</li>
-		<li>Use <code>onmarkerclick</code> to handle marker saves, edits, and deletions.</li>
+		<li>{m.exmap_build_1_1()}<code>&lt;Map&gt;</code>{m.exmap_build_1_2()}<code>customImage</code>{m.exmap_build_1_3()}</li>
+		<li>{m.exmap_build_2_1()}<code>imageWidth</code>{m.exmap_build_2_2()}<code>imageHeight</code>{m.exmap_build_2_3()}</li>
+		<li>{m.exmap_build_3_1()}<code>markers</code>{m.exmap_build_3_2()}</li>
+		<li>{m.exmap_build_4_1()}<code>popupContent</code>{m.exmap_build_4_2()}</li>
+		<li>{m.exmap_build_5_1()}<code>onclick</code>{m.exmap_build_5_2()}</li>
+		<li>{m.exmap_build_6_1()}<code>onmarkerclick</code>{m.exmap_build_6_2()}</li>
 	</ol>
 
-	<h3>Marker Types</h3>
+	<h3>{m.exmap_types_h()}</h3>
 	<table>
 		<thead>
-			<tr><th>Type</th><th>Icon</th><th>Use Case</th></tr>
+			<tr><th>{m.exmap_th_type()}</th><th>{m.exmap_th_icon()}</th><th>{m.exmap_th_use()}</th></tr>
 		</thead>
 		<tbody>
-			<tr><td>Treasure</td><td>💎</td><td>Loot, collectibles, hidden items</td></tr>
-			<tr><td>Enemy</td><td>⚔️</td><td>Enemy spawn points, boss locations</td></tr>
-			<tr><td>NPC</td><td>🧑</td><td>Quest givers, shopkeepers, allies</td></tr>
-			<tr><td>Location</td><td>📍</td><td>Points of interest, landmarks, fast travel</td></tr>
+			<tr><td>{m.exmap_t_treasure()}</td><td>💎</td><td>{m.exmap_u_treasure()}</td></tr>
+			<tr><td>{m.exmap_t_enemy()}</td><td>⚔️</td><td>{m.exmap_u_enemy()}</td></tr>
+			<tr><td>{m.exmap_t_npc()}</td><td>🧑</td><td>{m.exmap_u_npc()}</td></tr>
+			<tr><td>{m.exmap_t_location()}</td><td>📍</td><td>{m.exmap_u_location()}</td></tr>
 		</tbody>
 	</table>
 
-	<h2>Interactive Demo</h2>
+	<h2>{m.exmap_demo_h()}</h2>
 
 	<div class="grid grid-cols-1 gap-8 lg:grid-cols-4">
 		<!-- Map -->
@@ -277,7 +277,7 @@ Game Map Example - Interactive map with markers, popups, and editing
 		<!-- JSON Editor -->
 		<div class="lg:col-span-2">
 			<div class="not-prose rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900 h-96 flex flex-col">
-				<h3 class="mb-3 text-lg font-semibold">Markers JSON</h3>
+				<h3 class="mb-3 text-lg font-semibold">{m.exmap_json_h()}</h3>
 				{#if jsonError}
 					<div class="mb-2 rounded bg-red-100 p-2 text-sm text-red-700 dark:bg-red-900 dark:text-red-200">
 						{jsonError}
@@ -295,7 +295,7 @@ Game Map Example - Interactive map with markers, popups, and editing
 					/>
 				</div>
 				<p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
-					Edit the JSON to update markers in real-time. Changes are reflected on the map immediately.
+					{m.exmap_json_p()}
 				</p>
 			</div>
 		</div>

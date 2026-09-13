@@ -8,6 +8,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Masonry from "$lib/components/Masonry/Masonry.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as MasonryModule from "$lib/components/Masonry/Masonry.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -29,37 +30,32 @@ import * as MasonryModule from "$lib/components/Masonry/Masonry.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Masonry</h1>
+  <h1>{m.masonry_heading()}</h1>
 
   <p>
-    <strong>Masonry</strong> creates Pinterest-style grid layouts with items of varying
-    heights. It provides responsive, dynamic layouts that automatically adjust to different
-    screen sizes and content dimensions.
+    <strong>{m.masonry_heading()}</strong>{m.masonry_intro()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A JavaScript-based masonry layout engine that positions items of varying heights into
-    columns, always placing the next item in the shortest column. Uses
-    <code>ResizeObserver</code> and <code>MutationObserver</code> for dynamic content.
+    {m.masonry_what_1()}<code>ResizeObserver</code>{m.masonry_what_2()}<code>MutationObserver</code>{m.masonry_what_3()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use <code>&lt;Masonry&gt;</code> for image galleries, card grids, dashboards, or any
-    layout where items have different heights. For uniform-height grids, use CSS Grid.
+    {m.masonry_when_1()}<code>&lt;Masonry&gt;</code>{m.masonry_when_2()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Variable heights</strong> — CSS Grid/Flexbox can't natively do true masonry.</li>
-    <li><strong>Responsive</strong> — breakpoint-based column counts.</li>
-    <li><strong>Dynamic</strong> — auto-positions items when content changes.</li>
+    <li><strong>{m.masonry_why_variable()}</strong>{m.masonry_why_variable_desc()}</li>
+    <li><strong>{m.masonry_why_responsive()}</strong>{m.masonry_why_responsive_desc()}</li>
+    <li><strong>{m.masonry_why_dynamic()}</strong>{m.masonry_why_dynamic_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout/Masonry_layout">MDN — CSS Masonry Layout</a></li>
     <li><a href="https://masonry.desandro.com/">Masonry.js</a></li>
@@ -68,43 +64,42 @@ import * as MasonryModule from "$lib/components/Masonry/Masonry.svelte"
     <li><a href="https://www.w3.org/TR/css-grid-2/">CSS Grid Level 2</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>CSS columns for masonry-like flow (`columns: 3`)</li>
-    <li>`content-visibility: auto` for off-screen items</li>
-    <li>`break-inside: avoid` on items to prevent splitting</li>
-    <li>Progressive enhancement with `@supports (grid-template-rows: masonry)`</li>
+  <li>{m.masonry_impl_1_1()}<code>columns: 3</code>{m.masonry_impl_1_2()}</li>
+  <li>{m.masonry_impl_2_1()}<code>content-visibility: auto</code>{m.masonry_impl_2_2()}</li>
+  <li>{m.masonry_impl_3_1()}<code>break-inside: avoid</code>{m.masonry_impl_3_2()}</li>
+  <li>{m.masonry_impl_4_1()}<code>@supports (grid-template-rows: masonry)</code>{m.masonry_impl_4_2()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use JS for layout measurement — CSS columns handle it natively</li>
-    <li>Don't forget `break-inside: avoid` — items can split across columns without it</li>
+  <li>{m.masonry_mistake_1()}</li>
+  <li>{m.masonry_mistake_2_0()}<code>break-inside: avoid</code>{m.masonry_mistake_2_1()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Masonry, Container, Card</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.masonry_related()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Supports responsive breakpoints via the <code>columns</code> prop object.</li>
-    <li><code>columnWidth</code> mode auto-calculates column count from container width.</li>
-    <li>Re-layouts on container resize via <code>ResizeObserver</code>.</li>
+    <li>{m.masonry_responsive_1_1()}<code>columns</code>{m.masonry_responsive_1_2()}</li>
+    <li>{m.masonry_responsive_2_1()}<code>columnWidth</code>{m.masonry_responsive_2_2()}</li>
+    <li>{m.masonry_responsive_3_1()}<code>ResizeObserver</code>{m.masonry_responsive_3_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li><code>columns</code> — fixed number or responsive breakpoints object.</li>
-    <li><code>gap</code> — gap between items in pixels.</li>
-    <li><code>columnWidth</code> — fixed column width (overrides <code>columns</code>).</li>
-    <li><code>centered</code> — center the grid.</li>
-    <li><code>animated</code> — animate item positions.</li>
+    <li>{m.masonry_custom_1_1()}<code>columns</code>{m.masonry_custom_1_2()}</li>
+    <li>{m.masonry_custom_2_1()}<code>gap</code>{m.masonry_custom_2_2()}</li>
+    <li>{m.masonry_custom_3_1()}<code>columnWidth</code>{m.masonry_custom_3_2()}<code>columns</code>{m.masonry_custom_3_3()}</li>
+    <li>{m.masonry_custom_4_1()}<code>centered</code>{m.masonry_custom_4_2()}</li>
+    <li>{m.masonry_custom_5_1()}<code>animated</code>{m.masonry_custom_5_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic Masonry</h3>
+  <h3>{m.masonry_ex_basic()}</h3>
   <ExampleTabs code={`<Masonry columns={3} gap={16}>
   <div class="item">Sketch: login flow</div>
   <div class="item">Photo: team offsite</div>
@@ -125,7 +120,7 @@ import * as MasonryModule from "$lib/components/Masonry/Masonry.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Responsive Columns</h3>
+  <h3>{m.masonry_ex_responsive()}</h3>
   <ExampleTabs code={`<Masonry
   columns={{ default: 1, sm: 2, md: 3, lg: 4 }}
   gap={16}
@@ -147,7 +142,7 @@ import * as MasonryModule from "$lib/components/Masonry/Masonry.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Fixed Width</h3>
+  <h3>{m.masonry_ex_fixed()}</h3>
   <ExampleTabs code={`<Masonry gap={16}>
   <div class="p-4 bg-surface rounded">Item 1</div>
   <div class="p-4 bg-surface rounded">Item 2</div>
@@ -162,19 +157,16 @@ import * as MasonryModule from "$lib/components/Masonry/Masonry.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={MasonryModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Uses <code>role="grid"</code> to indicate the grid layout.</li>
-    <li>Includes customizable <code>aria-label</code> for screen readers.</li>
-    <li>Maintains proper focus order for keyboard navigation.</li>
+    <li>{m.masonry_a11y_1_1()}<code>role="grid"</code>{m.masonry_a11y_1_2()}</li>
+    <li>{m.masonry_a11y_2_1()}<code>aria-label</code>{m.masonry_a11y_2_2()}</li>
+    <li>{m.masonry_a11y_3()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
-  <p>
-    Masonry is a layout-only element. Items within the masonry maintain their native
-    keyboard behavior.
-  </p>
+  <h2>{m.sec_keyboard()}</h2>
+  <p>{m.masonry_kb()}</p>
 </Container>

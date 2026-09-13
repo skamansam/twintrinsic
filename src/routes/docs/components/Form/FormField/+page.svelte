@@ -11,6 +11,7 @@ import TextInput from "$lib/components/Form/TextInput.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as FormFieldModule from "$lib/components/Form/FormField.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -18,56 +19,49 @@ import Container from "$lib/components/Container/Container.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>FormField</h1>
+<h1>{m.ff_heading()}</h1>
 
 <p>
-  <strong>FormField</strong> wraps form inputs with a consistent label, help text,
-  error message, and required indicator. It provides the standard structure that
-  every form field needs.
+  <strong>{m.ff_heading()}</strong>{m.ff_intro()}
 </p>
 
-<h2>What, When &amp; Why</h2>
+<h2>{m.sec_what_when_why()}</h2>
 
-<h3>What is it?</h3>
+<h3>{m.sec_what()}</h3>
 <p>
-  A container that associates a label with an input, displays help text below the
-  field, and shows error messages when validation fails. Uses <code>:has(:user-valid)</code>
-  and <code>:has(:user-invalid)</code> CSS for validation styling.
+  {m.ff_what_1()}<code>:has(:user-valid)</code>{m.ff_what_2()}<code>:has(:user-invalid)</code>{m.ff_what_3()}
 </p>
 
-<h3>When should I use it?</h3>
+<h3>{m.sec_when()}</h3>
 <p>
-  Wrap every form input in <code>&lt;FormField&gt;</code> — even simple fields
-  benefit from consistent label positioning and error display. For complex field
-  groups (radio groups, checkbox groups), use <code>&lt;fieldset&gt;</code> +
-  <code>&lt;legend&gt;</code>.
+  {m.ff_when_1()}<code>&lt;FormField&gt;</code>{m.ff_when_2()}<code>&lt;fieldset&gt;</code>{m.ff_when_3()}<code>&lt;legend&gt;</code>{m.ff_when_4()}
 </p>
 
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Consistency</strong> — all fields share the same label position, error style, and spacing.</li>
-  <li><strong>Accessibility</strong> — proper <code>&lt;label&gt;</code> association, <code>aria-describedby</code> for help/error text.</li>
-  <li><strong>Validation CSS</strong> — <code>:has(:user-valid)</code> / <code>:has(:user-invalid)</code> shows validation only after user interaction.</li>
+  <li><strong>{m.ff_why_consistency()}</strong>{m.ff_why_consistency_desc()}</li>
+  <li><strong>{m.ff_why_a11y()}</strong>{m.ff_why_a11y_1()}<code>&lt;label&gt;</code>{m.ff_why_a11y_2()}<code>aria-describedby</code>{m.ff_why_a11y_3()}</li>
+  <li><strong>{m.ff_why_validation()}</strong>{m.ff_why_validation_1()}<code>:has(:user-valid)</code>{m.ff_why_validation_2()}<code>:has(:user-invalid)</code>{m.ff_why_validation_3()}</li>
 </ul>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Fills container width by default.</li>
-  <li>Horizontal layout places labels beside inputs on desktop.</li>
+  <li>{m.ff_responsive_1()}</li>
+  <li>{m.ff_responsive_2()}</li>
 </ul>
 
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li>Layout: <code>vertical</code> (default) or <code>horizontal</code>.</li>
-  <li>Help text via <code>helpText</code> prop.</li>
-  <li>Error message via <code>error</code> prop.</li>
-  <li>Required indicator via <code>required</code> prop.</li>
-  <li>Visually hidden label via <code>hideLabel</code> prop.</li>
+  <li>{m.ff_custom_1_1()}<code>vertical</code>{m.ff_custom_1_2()}<code>horizontal</code>{m.ff_custom_1_3()}</li>
+  <li>{m.ff_custom_2_1()}<code>helpText</code>{m.ff_custom_2_2()}</li>
+  <li>{m.ff_custom_3_1()}<code>error</code>{m.ff_custom_3_2()}</li>
+  <li>{m.ff_custom_4_1()}<code>required</code>{m.ff_custom_4_2()}</li>
+  <li>{m.ff_custom_5_1()}<code>hideLabel</code>{m.ff_custom_5_2()}</li>
 </ul>
 
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Basic Usage</h3>
+<h3>{m.ff_ex_basic()}</h3>
 <ExampleTabs code={`<FormField label="Username">
   <TextInput name="username" />
 </FormField>`}>
@@ -76,14 +70,16 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h3>With Help Text</h3>
+<h3>{m.ff_ex_help()}</h3>
 <ExampleTabs code={`<FormField label="Password" helpText="Must be at least 8 characters">
   <TextInput type="password" name="password" />
 </FormField>`}>
   <div class="max-w-md" data-testid="formfield-help">
     <FormField label="Password" helpText="Must be at least 8 characters"><TextInput type="password" name="password" /></FormField>
   </div>
-</ExampleTabs>  <h3>Required</h3>
+</ExampleTabs>
+
+  <h3>{m.ff_ex_required()}</h3>
   <ExampleTabs code={`<FormField label="Email" required>
   <TextInput type="email" name="email" required />
 </FormField>`}>
@@ -92,7 +88,7 @@ import Container from "$lib/components/Container/Container.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Different Input Types</h3>
+  <h3>{m.ff_ex_types()}</h3>
   <ExampleTabs code={`<FormField label="Email">
   <TextInput type="email" name="email" />
 </FormField>
@@ -106,7 +102,7 @@ import Container from "$lib/components/Container/Container.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Hidden Label</h3>
+  <h3>{m.ff_ex_hidden()}</h3>
   <ExampleTabs code={`<FormField label="Search" hideLabel>
   <TextInput name="search" placeholder="Search..." />
 </FormField>`}>
@@ -115,7 +111,7 @@ import Container from "$lib/components/Container/Container.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Error State</h3>
+  <h3>{m.ff_ex_error()}</h3>
 <ExampleTabs code={`<FormField label="Email" error="Please enter a valid email address">
   <TextInput type="email" name="email" />
 </FormField>`}>
@@ -124,7 +120,7 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Horizontal Layout</h3>
+<h3>{m.ff_ex_horizontal()}</h3>
 <ExampleTabs code={`<FormField label="Username" layout="horizontal">
   <TextInput name="username" />
 </FormField>
@@ -138,7 +134,7 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Horizontal with Icons</h3>
+<h3>{m.ff_ex_icons()}</h3>
 <ExampleTabs code={`<FormField label="Search" layout="horizontal">
   <TextInput name="search" placeholder="Search components..." startIcon="search" />
 </FormField>
@@ -152,7 +148,7 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Disabled</h3>
+<h3>{m.ff_ex_disabled()}</h3>
 <ExampleTabs code={`<FormField label="Username" disabled={true}>
   <TextInput name="username" disabled={true} />
 </FormField>`}>
@@ -161,15 +157,15 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={FormFieldModule} />
 
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li>Labels associated via <code>for</code>/<code>id</code>.</li>
-  <li>Hidden labels still accessible to screen readers.</li>
-  <li>Error messages use <code>role="alert"</code>.</li>
-  <li><code>aria-describedby</code> links help text and errors to the input.</li>
-  <li><code>aria-invalid</code> and <code>aria-required</code> set appropriately.</li>
+  <li>{m.ff_a11y_1_1()}<code>for</code>{m.ff_a11y_1_2()}<code>id</code>{m.ff_a11y_1_3()}</li>
+  <li>{m.ff_a11y_2()}</li>
+  <li>{m.ff_a11y_3_1()}<code>role="alert"</code>{m.ff_a11y_3_2()}</li>
+  <li>{m.ff_a11y_4_1()}<code>aria-describedby</code>{m.ff_a11y_4_2()}</li>
+  <li>{m.ff_a11y_5_1()}<code>aria-invalid</code>{m.ff_a11y_5_2()}<code>aria-required</code>{m.ff_a11y_5_3()}</li>
 </ul>
 </Container>

@@ -1,31 +1,17 @@
+<!--
+@component
+LazyPanel is documented with the Lazy component family.
+Redirect users to the LazyPanel documentation.
+-->
 <script lang="ts">
-import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
-import Container from "$lib/components/Container/Container.svelte"
+import { onMount } from "svelte"
+import { goto } from "$app/navigation"
+import { m } from "$lib/paraglide/messages.js"
+
+onMount(() => {
+  goto("/docs/components/Lazy/LazyPanel", { replaceState: true })
+})
 </script>
 
-<Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>LazyPanel</h1>
-
-<p>
-The LazyPanel component is a sub-component of Panel used for structuring and organizing content.
-</p>
-
-<h2>Features</h2>
-<ul>
-<li>Semantic HTML structure</li>
-<li>Full accessibility support</li>
-<li>Responsive design</li>
-<li>Dark mode support</li>
-</ul>
-
-<h2>Accessibility</h2>
-<ul>
-<li>Semantic HTML with proper role attributes</li>
-<li>Keyboard navigation support</li>
-<li>Screen reader friendly</li>
-</ul>
-
-<style lang="postcss">
-@reference '$lib/twintrinsic.css';
-</style>
-</Container>
+<h1>{m.panellazy_heading()}</h1>
+<p>{m.panellazy_lede_1()}<a href="/docs/components/Lazy/LazyPanel">{m.panellazy_link()}</a>{m.panellazy_lede_2()}</p>

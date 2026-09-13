@@ -7,6 +7,7 @@
 	import LineChart from '$lib/components/Metrics/LineChart/LineChart.svelte'
 	import MetricGrid from '$lib/components/Metrics/MetricGrid/MetricGrid.svelte'
 	import ProgressMetric from '$lib/components/Metrics/ProgressMetric/ProgressMetric.svelte'
+	import { m } from '$lib/paraglide/messages.js'
 
 	// Sample data for the dashboard
 	const salesData = {
@@ -106,17 +107,17 @@
 
 <div class="space-y-8">
 	<div>
-		<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Dashboard</h1>
+		<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">{m.exdashg_h1()}</h1>
 		<p class="text-gray-600 dark:text-gray-400">
-			Comprehensive examples showing how to build data dashboards using Metrics components.
+			{m.exdashg_lede()}
 		</p>
 	</div>
 
 	<!-- Key Metrics Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Key Metrics Overview</h2>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_metrics()}</h2>
 		<p class="text-gray-600 dark:text-gray-400">
-			Display key performance indicators in a responsive grid layout.
+			{m.exdashg_metrics_p()}
 		</p>
 		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
 			<MetricGrid columns={4} gap="md" items={statsCards} />
@@ -125,9 +126,9 @@
 
 	<!-- KPI Cards Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">KPI Progress Tracking</h2>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_kpi()}</h2>
 		<p class="text-gray-600 dark:text-gray-400">
-			Track progress towards targets with visual progress indicators.
+			{m.exdashg_kpi_p()}
 		</p>
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 			{#each kpiData as kpi}
@@ -140,9 +141,9 @@
 
 	<!-- Sales Trends Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Sales Trends</h2>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_sales()}</h2>
 		<p class="text-gray-600 dark:text-gray-400">
-			Visualize sales performance across multiple products over time.
+			{m.exdashg_sales_p()}
 		</p>
 		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
 			<BarChart
@@ -160,9 +161,9 @@
 
 	<!-- Traffic Analysis Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Website Traffic Analysis</h2>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_traffic()}</h2>
 		<p class="text-gray-600 dark:text-gray-400">
-			Track traffic sources and device types with stacked area charts.
+			{m.exdashg_traffic_p()}
 		</p>
 		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
 			<AreaChart
@@ -181,9 +182,9 @@
 
 	<!-- Conversion Breakdown Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Conversion Sources</h2>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_conversion()}</h2>
 		<p class="text-gray-600 dark:text-gray-400">
-			Understand where your conversions come from with a donut chart breakdown.
+			{m.exdashg_conversion_p()}
 		</p>
 		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6 flex justify-center">
 			<DonutChart
@@ -198,9 +199,9 @@
 
 	<!-- Performance Metrics Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Performance Metrics</h2>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_perf()}</h2>
 		<p class="text-gray-600 dark:text-gray-400">
-			Monitor system and business performance with gauges and progress bars.
+			{m.exdashg_perf_p()}
 		</p>
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 			<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
@@ -241,9 +242,9 @@
 
 	<!-- Progress Tracking Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Resource Utilization</h2>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_resource()}</h2>
 		<p class="text-gray-600 dark:text-gray-400">
-			Track resource usage with progress metrics.
+			{m.exdashg_resource_p()}
 		</p>
 		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6 space-y-6">
 			<ProgressMetric label="CPU Usage" value={65} max={100} color="primary" showPercentage={true} />
@@ -255,9 +256,9 @@
 
 	<!-- Code Example Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Implementation Example</h2>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdashg_impl_h()}</h2>
 		<p class="text-gray-600 dark:text-gray-400">
-			Here's how to build a dashboard with Metrics components:
+			{m.exdashg_impl_p()}
 		</p>
 		<div class="bg-gray-900 dark:bg-gray-950 rounded-lg p-6 overflow-x-auto">
 			<pre class="text-gray-100 text-sm"><code>{`\u003Cscript lang="ts">
@@ -311,30 +312,30 @@
 
 	<!-- Best Practices Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Best Practices</h2>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.ex_bestpractices()}</h2>
 		<div class="space-y-3">
 			<div class="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-				<h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-2">Responsive Design</h3>
+				<h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-2">{m.ex_bp_responsive_h()}</h3>
 				<p class="text-blue-800 dark:text-blue-200 text-sm">
-					Use responsive grid layouts with MetricGrid to adapt to different screen sizes. Adjust columns based on viewport width.
+					{m.exdashg_bp_responsive_p()}
 				</p>
 			</div>
 			<div class="bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-lg p-4">
-				<h3 class="font-semibold text-green-900 dark:text-green-100 mb-2">Color Consistency</h3>
+				<h3 class="font-semibold text-green-900 dark:text-green-100 mb-2">{m.ex_bp_colors_h()}</h3>
 				<p class="text-green-800 dark:text-green-200 text-sm">
-					Use consistent colors across related metrics. Leverage the color themes (primary, success, warning, danger) for visual hierarchy.
+					{m.exdashg_bp_colors_p()}
 				</p>
 			</div>
 			<div class="bg-purple-50 dark:bg-purple-950 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-				<h3 class="font-semibold text-purple-900 dark:text-purple-100 mb-2">Data Accuracy</h3>
+				<h3 class="font-semibold text-purple-900 dark:text-purple-100 mb-2">{m.ex_bp_data_h()}</h3>
 				<p class="text-purple-800 dark:text-purple-200 text-sm">
-					Ensure data is up-to-date and accurate. Use real-time data sources when possible and clearly indicate data refresh times.
+					{m.exdashg_bp_data_p()}
 				</p>
 			</div>
 			<div class="bg-orange-50 dark:bg-orange-950 border border-orange-200 dark:border-orange-800 rounded-lg p-4">
-				<h3 class="font-semibold text-orange-900 dark:text-orange-100 mb-2">Accessibility</h3>
+				<h3 class="font-semibold text-orange-900 dark:text-orange-100 mb-2">{m.ex_bp_a11y_h()}</h3>
 				<p class="text-orange-800 dark:text-orange-200 text-sm">
-					All Metrics components include ARIA labels and keyboard navigation. Ensure sufficient color contrast and provide text alternatives for visual data.
+					{m.exdashg_bp_a11y_p()}
 				</p>
 			</div>
 		</div>

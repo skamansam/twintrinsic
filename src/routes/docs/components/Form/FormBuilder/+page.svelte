@@ -9,6 +9,7 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import FormBuilder, * as FormBuilderModule from "$lib/components/Form/FormBuilder.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 /** Example OpenAPI schema covering every generated control type */
 const petSchema = {
@@ -40,75 +41,77 @@ const json = (value: unknown): string => JSON.stringify(value, null, 2)
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>FormBuilder</h1>
+  <h1>{m.fb_heading()}</h1>
 
   <p>
-    <strong>FormBuilder</strong> generates an accessible form from an
-    <a href="https://spec.openapis.org/oas/v3.0.3#schema-object">OpenAPI 3.0 Schema Object</a>
-    or an explicit field-descriptor array. It maps each schema property onto
-    the matching Twintrinsic control, wires up labels, help text, and native
-    validation, and renders everything inside a <code>&lt;Form&gt;</code> so
-    submission "just works".
+    <strong>{m.fb_heading()}</strong>{m.fb_intro_1()}<a href="https://spec.openapis.org/oas/v3.0.3#schema-object">OpenAPI 3.0 Schema Object</a>{m.fb_intro_2()}<code>&lt;Form&gt;</code>{m.fb_intro_3()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A declarative form generator: give it a schema, get a complete,
-    accessible form back. Every field gets a <code>FormField</code> wrapper
-    (label, required indicator, help text, error styling), and the generated
-    controls register with the <code>Form</code> context so native
-    validation and the submit payload are handled for you.
+    {m.fb_what_1()}<code>FormField</code>{m.fb_what_2()}<code>Form</code>{m.fb_what_3()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    When your form's shape comes from data — an API contract, a config
-    document, or a JSON schema your backend already publishes. For hand-crafted
-    forms with bespoke layouts, compose <code>Form</code> +
-    <code>FormField</code> + the individual controls directly instead.
+    {m.fb_when_1()}<code>Form</code>{m.fb_when_2()}<code>FormField</code>{m.fb_when_3()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Single source of truth</strong> — the schema drives the UI, so the form can never drift from the API contract.</li>
-    <li><strong>Accessible by construction</strong> — labels, <code>aria-required</code>, and error wiring come from the field metadata automatically.</li>
-    <li><strong>Composable</strong> — the generated controls are the same public components you'd write by hand.</li>
+    <li><strong>{m.fb_why_singlesource()}</strong>{m.fb_why_singlesource_desc()}</li>
+    <li><strong>{m.fb_why_construct()}</strong>{m.fb_why_construct_1()}<code>aria-required</code>{m.fb_why_construct_2()}</li>
+    <li><strong>{m.fb_why_composable()}</strong>{m.fb_why_composable_desc()}</li>
   </ul>
 
-  <h2>Schema Mapping</h2>
-  <p>The OpenAPI types map onto controls as follows:</p>
+  <h2>{m.fb_schema_mapping()}</h2>
+  <p>{m.fb_schema_intro()}</p>
   <table>
-    <thead><tr><th>Schema</th><th>Control</th></tr></thead>
+    <thead><tr><th>{m.fb_th_schema()}</th><th>{m.fb_th_control()}</th></tr></thead>
     <tbody>
-      <tr><td><code>string</code></td><td><code>TextInput</code> (<code>format: email</code> → email, <code>password</code> → password)</td></tr>
-      <tr><td><code>string</code> + <code>enum</code></td><td><code>Select</code></td></tr>
-      <tr><td><code>integer</code> / <code>number</code></td><td><code>NumberInput</code> (<code>minimum</code>/<code>maximum</code>/<code>multipleOf</code> → min/max/step)</td></tr>
-      <tr><td><code>boolean</code></td><td><code>Switch</code></td></tr>
-      <tr><td><code>array</code></td><td><code>ListInput</code> (or <code>Select multiple</code> when <code>items.enum</code> is present)</td></tr>
-      <tr><td><code>object</code></td><td>Nested <code>&lt;fieldset&gt;</code> group</td></tr>
+      <tr>
+        <td><code>string</code></td>
+        <td><code>TextInput</code>{m.fb_schema_string_1()}<code>format: email</code>{m.fb_schema_string_2()}<code>password</code>{m.fb_schema_string_3()}</td>
+      </tr>
+      <tr>
+        <td><code>string</code>{m.fb_schema_stringenum_1()}<code>enum</code></td>
+        <td><code>Select</code></td>
+      </tr>
+      <tr>
+        <td><code>integer</code>{m.fb_schema_int_1()}<code>number</code></td>
+        <td><code>NumberInput</code>{m.fb_schema_int_2()}<code>minimum</code>{m.fb_schema_int_3()}<code>maximum</code>{m.fb_schema_int_4()}<code>multipleOf</code>{m.fb_schema_int_5()}</td>
+      </tr>
+      <tr>
+        <td><code>boolean</code></td>
+        <td><code>Switch</code></td>
+      </tr>
+      <tr>
+        <td><code>array</code></td>
+        <td><code>ListInput</code>{m.fb_schema_array_1()}<code>Select multiple</code>{m.fb_schema_array_2()}<code>items.enum</code>{m.fb_schema_array_3()}</td>
+      </tr>
+      <tr>
+        <td><code>object</code></td>
+        <td>{m.fb_schema_object_1()}<code>&lt;fieldset&gt;</code>{m.fb_schema_object_2()}</td>
+      </tr>
     </tbody>
   </table>
   <p>
-    <code>title</code> → label (falling back to a humanized property name),
-    <code>description</code> → help text, <code>default</code> → initial
-    value, and the <code>required</code> list → required markers.
+    {m.fb_schema_meta_1()}<code>title</code>{m.fb_schema_meta_2()}<code>description</code>{m.fb_schema_meta_3()}<code>default</code>{m.fb_schema_meta_4()}<code>required</code>{m.fb_schema_meta_5()}
   </p>
 
-  <h2>References &amp; Composition</h2>
+  <h2>{m.fb_refs()}</h2>
   <p>
-    Pass the OpenAPI document's <code>components.schemas</code> map via the
-    <code>components</code> prop to resolve <code>$ref</code>s. The resolver
-    also handles the composition keywords:
+    {m.fb_refs_intro_1()}<code>components.schemas</code>{m.fb_refs_intro_2()}<code>components</code>{m.fb_refs_intro_3()}<code>$ref</code>{m.fb_refs_intro_4()}
   </p>
   <ul>
-    <li><code>$ref</code> — JSON-pointer references (<code>#/components/schemas/Pet</code>) are followed, including nested paths; unresolvable or circular references degrade to a plain text field instead of failing.</li>
-    <li><code>allOf</code> — subschemas are merged into one field set (properties, required list, bounds, enum).</li>
-    <li><code>oneOf</code> / <code>anyOf</code> — the first variant with a concrete type is rendered.</li>
+    <li><code>$ref</code>{m.fb_refs_list_ref_1()}<code>#/components/schemas/Pet</code>{m.fb_refs_list_ref_2()}</li>
+    <li><code>allOf</code>{m.fb_refs_list_allof()}</li>
+    <li><code>oneOf</code>{m.fb_refs_oneof_1()}<code>anyOf</code>{m.fb_refs_oneof_2()}</li>
   </ul>
 
-  <h3>References &amp; allOf</h3>
+  <h3>{m.fb_refs_allof_h()}</h3>
   <ExampleTabs
     code={`const components = {
   BasePet: {
@@ -177,19 +180,18 @@ const json = (value: unknown): string => JSON.stringify(value, null, 2)
     </div>
   </ExampleTabs>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>From an OpenAPI Schema</h3>
+  <h3>{m.fb_ex_schema()}</h3>
   <ExampleTabs code={`<FormBuilder schema={petSchema} onsubmit={handleSubmit} />`}>
     <div data-testid="formbuilder-schema">
       <FormBuilder schema={petSchema} submitLabel="Create pet" />
     </div>
   </ExampleTabs>
 
-  <h3>Field Descriptors</h3>
+  <h3>{m.fb_ex_fields()}</h3>
   <p>
-    Prefer explicit control? Pass a <code>fields</code> array — it takes
-    precedence over <code>schema</code>:
+    {m.fb_fields_1()}<code>fields</code>{m.fb_fields_2()}<code>schema</code>{m.fb_fields_3()}
   </p>
   <ExampleTabs code={`<FormBuilder\n  fields={[\n    { name: "username", label: "Username", type: "text", required: true },\n    { name: "role", label: "Role", type: "select", options: ["admin", "user"] },\n  ]}\n/>`}>
     <div data-testid="formbuilder-fields">
@@ -202,21 +204,21 @@ const json = (value: unknown): string => JSON.stringify(value, null, 2)
     </div>
   </ExampleTabs>
 
-  <h3>Seeded Values</h3>
+  <h3>{m.fb_ex_seeded()}</h3>
   <ExampleTabs code={`<FormBuilder schema={petSchema} values={{ name: "Luna", age: 4 }} />`}>
     <div data-testid="formbuilder-seeded">
       <FormBuilder schema={petSchema} values={{ name: "Luna", age: 4 }} />
     </div>
   </ExampleTabs>
 
-  <h3>Without a Submit Button</h3>
+  <h3>{m.fb_ex_nosubmit()}</h3>
   <ExampleTabs code={`<FormBuilder schema={petSchema} showSubmit={false} />`}>
     <div data-testid="formbuilder-no-submit">
       <FormBuilder schema={petSchema} showSubmit={false} />
     </div>
   </ExampleTabs>
 
-  <h3>Submit Handler</h3>
+  <h3>{m.fb_ex_submit()}</h3>
   <ExampleTabs
     code={`<FormBuilder\n  schema={petSchema}\n  onsubmit={(event) => {\n    console.log(event.detail.data)\n  }}\n/>`}
   >
@@ -231,24 +233,24 @@ const json = (value: unknown): string => JSON.stringify(value, null, 2)
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={FormBuilderModule} />
 
-  <h2>Events</h2>
+  <h2>{m.sec_events()}</h2>
   <EventsTable component={FormBuilderModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Every generated field is wrapped in a <code>FormField</code> with a real <code>&lt;label&gt;</code> targeting the control.</li>
-    <li>Required fields get <code>aria-required</code> and a visible asterisk; error states apply <code>aria-invalid</code> + an <code>aria-live</code> message.</li>
-    <li>Object groups render as semantic <code>&lt;fieldset&gt;</code>/<code>&lt;legend&gt;</code> so nested fields are announced as a group.</li>
-    <li>Native validation means keyboard and screen-reader behavior matches the platform.</li>
+    <li>{m.fb_a11y_1_1()}<code>FormField</code>{m.fb_a11y_1_2()}<code>&lt;label&gt;</code>{m.fb_a11y_1_3()}</li>
+    <li>{m.fb_a11y_2_1()}<code>aria-required</code>{m.fb_a11y_2_2()}<code>aria-invalid</code>{m.fb_a11y_2_3()}<code>aria-live</code>{m.fb_a11y_2_4()}</li>
+    <li>{m.fb_a11y_3_1()}<code>&lt;fieldset&gt;</code>{m.fb_a11y_3_2()}<code>&lt;legend&gt;</code>{m.fb_a11y_3_3()}</li>
+    <li>{m.fb_a11y_4()}</li>
   </ul>
 
-  <h2>Limitations</h2>
+  <h2>{m.fb_limitations()}</h2>
   <ul>
-    <li><code>oneOf</code>/<code>anyOf</code> render the first concrete variant rather than a discriminator-driven choice.</li>
-    <li>Relative external <code>$ref</code>s (files/URLs) are not fetched — provide them via <code>components</code>.</li>
-    <li>For deeply custom layouts, compose the controls directly instead.</li>
+    <li><code>oneOf</code>{m.fb_lim_1_1()}<code>anyOf</code>{m.fb_lim_1_2()}</li>
+    <li>{m.fb_lim_2_1()}<code>$ref</code>{m.fb_lim_2_2()}<code>components</code>{m.fb_lim_2_3()}</li>
+    <li>{m.fb_lim_3()}</li>
   </ul>
 </Container>

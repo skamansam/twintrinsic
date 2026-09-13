@@ -8,6 +8,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import LazyPanel from "$lib/components/Panel/LazyPanel.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as LazyPanelModule from "$lib/components/Panel/LazyPanel.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -15,38 +16,32 @@ import * as LazyPanelModule from "$lib/components/Panel/LazyPanel.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>LazyPanel</h1>
+  <h1>{m.lazypanel_heading()}</h1>
 
   <p>
-    <strong>LazyPanel</strong> is a Panel component that only loads its content when it
-    becomes visible in the viewport. Built on top of the Panel component with
-    <code>IntersectionObserver</code> for lazy loading.
+    <strong>{m.lazypanel_heading()}</strong>{m.lazypanel_intro_1()}<code>IntersectionObserver</code>{m.lazypanel_intro_2()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A Panel that defers its content rendering until visible. Combines the collapsible
-    Panel with Lazy's <code>IntersectionObserver</code> behavior. Shows a configurable
-    loading state while content is being deferred.
+    {m.lazypanel_what_1()}<code>IntersectionObserver</code>{m.lazypanel_what_2()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use <code>&lt;LazyPanel&gt;</code> for expensive-to-render Panel content that is
-    off-screen initially: FAQ sections at the bottom of a page, settings panels, or
-    content that requires data fetching.
+    {m.lazypanel_when_1()}<code>&lt;LazyPanel&gt;</code>{m.lazypanel_when_2()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Performance</strong> — defers expensive Panel content.</li>
-    <li><strong>Accessible</strong> — inherits Panel's keyboard and ARIA support.</li>
-    <li><strong>Loading states</strong> — configurable placeholder while deferring.</li>
+    <li><strong>{m.lazypanel_why_perf()}</strong>{m.lazypanel_why_perf_desc()}</li>
+    <li><strong>{m.lazypanel_why_accessible()}</strong>{m.lazypanel_why_accessible_desc()}</li>
+    <li><strong>{m.lazypanel_why_loading()}</strong>{m.lazypanel_why_loading_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API">MDN — IntersectionObserver</a></li>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details">MDN — &lt;details&gt;</a></li>
@@ -55,22 +50,22 @@ import * as LazyPanelModule from "$lib/components/Panel/LazyPanel.svelte"
     <li><a href="https://web.dev/articles/content-visibility">web.dev — content-visibility</a></li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Full-width by default; inherits from parent Container.</li>
-    <li>Touch targets meet 44×44 px minimum for the header button.</li>
+    <li>{m.lazypanel_responsive_1()}</li>
+    <li>{m.lazypanel_responsive_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li><code>header</code> snippet — panel header content.</li>
-    <li><code>loading</code> snippet — content shown while deferring.</li>
-    <li>All Panel props (expanded, disabled, bordered, showIcon, etc.).</li>
+    <li>{m.lazypanel_custom_1_1()}<code>header</code>{m.lazypanel_custom_1_2()}</li>
+    <li>{m.lazypanel_custom_2_1()}<code>loading</code>{m.lazypanel_custom_2_2()}</li>
+    <li>{m.lazypanel_custom_3()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic LazyPanel</h3>
+  <h3>{m.lazypanel_ex_basic()}</h3>
   <ExampleTabs code={`<LazyPanel>
   {#snippet header()}Billing FAQ{/snippet}
   {#snippet loading()}Loading FAQ…{/snippet}
@@ -89,7 +84,7 @@ import * as LazyPanelModule from "$lib/components/Panel/LazyPanel.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Custom Loading Spinner</h3>
+  <h3>{m.lazypanel_ex_spinner()}</h3>
   <ExampleTabs code={`<LazyPanel>
   {#snippet header()}Account Settings{/snippet}
   {#snippet loading()}
@@ -116,32 +111,32 @@ import * as LazyPanelModule from "$lib/components/Panel/LazyPanel.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Slots</h2>
+  <h2>{m.sec_slots()}</h2>
   <table>
-    <thead><tr><th>Slot</th><th>Description</th></tr></thead>
+    <thead><tr><th>{m.sec_slot()}</th><th>{m.sec_description()}</th></tr></thead>
     <tbody>
-      <tr><td><code>header</code></td><td>Panel header content</td></tr>
-      <tr><td><code>loading</code></td><td>Content shown while deferring</td></tr>
-      <tr><td><code>default</code></td><td>Lazily loaded content</td></tr>
+      <tr><td><code>header</code></td><td>{m.lazypanel_slot_header()}</td></tr>
+      <tr><td><code>loading</code></td><td>{m.lazypanel_slot_loading()}</td></tr>
+      <tr><td><code>default</code></td><td>{m.lazypanel_slot_default()}</td></tr>
     </tbody>
   </table>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={LazyPanelModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Inherits all accessibility features from the base Panel component.</li>
-    <li>Loading states are announced to screen readers.</li>
-    <li>Content updates are announced when lazy loading completes.</li>
+    <li>{m.lazypanel_a11y_1()}</li>
+    <li>{m.lazypanel_a11y_2()}</li>
+    <li>{m.lazypanel_a11y_3()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
+  <h2>{m.sec_keyboard()}</h2>
   <table>
-    <thead><tr><th>Key</th><th>Function</th></tr></thead>
+    <thead><tr><th>{m.sec_key()}</th><th>{m.sec_function()}</th></tr></thead>
     <tbody>
-      <tr><td><kbd>Tab</kbd></td><td>Move focus to the panel header</td></tr>
-      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Toggle the panel open/closed</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>{m.lazypanel_kb_1()}</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>{m.lazypanel_kb_2()}</td></tr>
     </tbody>
   </table>
 </Container>

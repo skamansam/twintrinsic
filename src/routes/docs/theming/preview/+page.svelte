@@ -11,6 +11,7 @@ import Input from "$lib/components/Form/Input.svelte"
 import Progress from "$lib/components/Progress/Progress.svelte"
 import Separator from "$lib/components/Separator/Separator.svelte"
 import Switch from "$lib/components/Form/Switch.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 interface Theme {
   /** Display name */
@@ -40,18 +41,13 @@ const themes: Theme[] = [
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Theme Preview</h1>
+  <h1>{m.themepv_heading()}</h1>
 
   <p>
-    Every built-in theme rendered side by side. Each panel is a self-contained
-    <code>&lt;div data-theme="..."&gt;</code> scoping its own token set, so the
-    components inside follow that theme exactly — including the
-    <code>-dark</code> variants, which engage the <code>dark:</code> custom
-    variant via the <code>[data-theme$="-dark"]</code> selector. Apply any of
-    these to your root element to theme a whole app.
+    {m.themepv_intro_1()}<code>&lt;div data-theme="..."&gt;</code>{m.themepv_intro_2()}<code>-dark</code>{m.themepv_intro_3()}<code>dark:</code>{m.themepv_intro_4()}<code>[data-theme$="-dark"]</code>{m.themepv_intro_5()}
   </p>
 
-  <Separator>Themes</Separator>
+  <Separator>{m.themepv_themes()}</Separator>
 
   <div class="not-prose grid grid-cols-1 lg:grid-cols-2 gap-6">
     {#each themes as theme}
@@ -110,11 +106,10 @@ const themes: Theme[] = [
     {/each}
   </div>
 
-  <Separator>Usage</Separator>
+  <Separator>{m.themepv_usage()}</Separator>
 
   <p>
-    Apply a theme to an entire app by setting <code>data-theme</code> on the
-    root element, exactly like the docs site and Storybook do:
+    {m.themepv_usage_1()}<code>data-theme</code>{m.themepv_usage_2()}
   </p>
 
   <pre class="not-prose rounded-md bg-surface border border-border p-4 text-sm overflow-x-auto"><code>{`<!-- Root element of your app -->
@@ -123,7 +118,6 @@ const themes: Theme[] = [
 </html>`}</code></pre>
 
   <p>
-    See the <a href="/docs/theming" class="text-primary-500 hover:text-primary-600 underline">Theming</a>
-    page for the full token reference and how to add your own themes.
+    {m.themepv_outro_1()}<a href="/docs/theming" class="text-primary-500 hover:text-primary-600 underline">Theming</a>{m.themepv_outro_2()}
   </p>
 </Container>

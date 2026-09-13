@@ -10,6 +10,7 @@ import TextInput from "$lib/components/Form/TextInput.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as InvalidStateModule from "$lib/components/Form/InvalidState.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -17,57 +18,53 @@ import Container from "$lib/components/Container/Container.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>InvalidState</h1>
+<h1>{m.invalid_heading()}</h1>
 
 <p>
-  <strong>InvalidState</strong> displays validation error messages with consistent
-  styling, icons, and accessibility attributes.
+  <strong>{m.invalid_heading()}</strong>{m.invalid_intro()}
 </p>
 
-<h2>What, When &amp; Why</h2>
+<h2>{m.sec_what_when_why()}</h2>
 
-<h3>What is it?</h3>
+<h3>{m.sec_what()}</h3>
 <p>
-  An error message component with <code>role="alert"</code> and
-  <code>aria-live="assertive"</code> so screen readers announce it immediately.
-  Includes a warning icon and red styling by default.
+  {m.invalid_what_1()}<code>role="alert"</code>{m.invalid_what_2()}<code>aria-live="assertive"</code>{m.invalid_what_3()}
 </p>
 
-<h3>When should I use it?</h3>
+<h3>{m.sec_when()}</h3>
 <p>
-  Use <code>&lt;InvalidState&gt;</code> inside <code>&lt;FormField&gt;</code> to
-  display validation errors. Show it conditionally when a field fails validation.
+  {m.invalid_when_1()}<code>&lt;InvalidState&gt;</code>{m.invalid_when_2()}<code>&lt;FormField&gt;</code>{m.invalid_when_3()}
 </p>
 
-<h3>Why does it exist?</h3>
+<h3>{m.sec_why()}</h3>
 <ul>
-  <li><strong>Accessibility</strong> — <code>role="alert"</code> announces errors to screen readers.</li>
-  <li><strong>Consistency</strong> — all error messages share the same icon, color, and spacing.</li>
-  <li><strong>Visibility</strong> — red color + icon draws attention without being disruptive.</li>
+  <li><strong>{m.invalid_why_a11y()}</strong>{m.invalid_why_a11y_1()}<code>role="alert"</code>{m.invalid_why_a11y_2()}</li>
+  <li><strong>{m.invalid_why_consistency()}</strong>{m.invalid_why_consistency_desc()}</li>
+  <li><strong>{m.invalid_why_visibility()}</strong>{m.invalid_why_visibility_desc()}</li>
 </ul>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
 <ul>
-  <li>Fills container width; text wraps naturally on narrow screens.</li>
+  <li>{m.invalid_responsive()}</li>
 </ul>
 
-<h2>Customization</h2>
+<h2>{m.sec_customization()}</h2>
 <ul>
-  <li>Message via <code>message</code> prop or default slot.</li>
-  <li>Hide icon via <code>showIcon={false}</code>.</li>
-  <li>Custom icon via <code>icon</code> prop.</li>
+  <li>{m.invalid_custom_1_1()}<code>message</code>{m.invalid_custom_1_2()}</li>
+  <li>{m.invalid_custom_2_1()}<code>showIcon={false}</code>{m.invalid_custom_2_2()}</li>
+  <li>{m.invalid_custom_3_1()}<code>icon</code>{m.invalid_custom_3_2()}</li>
 </ul>
 
-<h2>Examples</h2>
+<h2>{m.sec_examples()}</h2>
 
-<h3>Basic Usage</h3>
+<h3>{m.invalid_ex_basic()}</h3>
 <ExampleTabs code={`<InvalidState message="This field is required" />`}>
   <div class="max-w-md" data-testid="invalidstate-basic-usage">
     <InvalidState message="This field is required" />
   </div>
 </ExampleTabs>
 
-<h3>With FormField</h3>
+<h3>{m.invalid_ex_formfield()}</h3>
 <ExampleTabs code={`<FormField label="Email">
   <TextInput type="email" name="email" />
   <InvalidState message="Please enter a valid email address" />
@@ -80,7 +77,7 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-<h3>Multiple Errors</h3>
+<h3>{m.invalid_ex_multiple()}</h3>
 <ExampleTabs code={`<div class="flex flex-col gap-1">
   <InvalidState message="Password must be at least 8 characters" />
   <InvalidState message="Password must include a number" />
@@ -93,29 +90,28 @@ import Container from "$lib/components/Container/Container.svelte"
   </div>
 </ExampleTabs>
 
-  <h3>Without Icon</h3>
+  <h3>{m.invalid_ex_noicon()}</h3>
   <ExampleTabs code={`<InvalidState message="This field is required" showIcon={false} />`}>
     <div class="max-w-md" data-testid="invalidstate-no-icon">
       <InvalidState message="This field is required" showIcon={false} />
     </div>
   </ExampleTabs>
 
-  <h3>Custom Children</h3>
+  <h3>{m.invalid_ex_children()}</h3>
   <ExampleTabs code={`<InvalidState><strong>required</strong> — please fill in this field</InvalidState>`}>
     <div class="max-w-md" data-testid="invalidstate-children">
-      <InvalidState><strong>required</strong> — please fill in this field</InvalidState>
+      <InvalidState><strong>{m.invalid_children_required()}</strong>{m.invalid_children_rest()}</InvalidState>
     </div>
   </ExampleTabs>
 
-
-<h2>Props</h2>
+<h2>{m.sec_props()}</h2>
 <PropsTable component={InvalidStateModule} />
 
-<h2>Accessibility</h2>
+<h2>{m.sec_accessibility()}</h2>
 <ul>
-  <li><code>role="alert"</code> ensures screen readers announce the error.</li>
-  <li><code>aria-live="assertive"</code> for immediate announcement.</li>
-  <li>Red color + icon for visual indication.</li>
-  <li>Sufficient color contrast (WCAG AA).</li>
+  <li><code>role="alert"</code>{m.invalid_a11y_1_2()}</li>
+  <li><code>aria-live="assertive"</code>{m.invalid_a11y_2_2()}</li>
+  <li>{m.invalid_a11y_3()}</li>
+  <li>{m.invalid_a11y_4()}</li>
 </ul>
 </Container>

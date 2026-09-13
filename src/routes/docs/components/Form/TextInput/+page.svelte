@@ -8,6 +8,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import TextInput from "$lib/components/Form/TextInput.svelte"
 import * as TextInputModule from "$lib/components/Form/TextInput.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -15,58 +16,53 @@ import * as TextInputModule from "$lib/components/Form/TextInput.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>TextInput</h1>
+  <h1>{m.ti_heading()}</h1>
 
   <p>
-    <strong>TextInput</strong> is a styled single-line text input with support for
-    icons, clearable values, sizing, and form integration. It forwards standard
-    attributes to the native <code>&lt;input&gt;</code> element.
+    <strong>{m.ti_heading()}</strong>{m.ti_intro_1()}<code>&lt;input&gt;</code>{m.ti_intro_2()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A styled wrapper around <code>&lt;input&gt;</code> that adds start/end icons,
-    a clear button, and size variants while preserving all native input behavior.
+    {m.ti_what_1()}<code>&lt;input&gt;</code>{m.ti_what_2()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use <code>&lt;TextInput&gt;</code> for any single-line text field. For more
-    features (floating labels, masks), use <code>&lt;Input&gt;</code>. For
-    multi-line, use <code>&lt;Textarea&gt;</code>.
+    {m.ti_when_1()}<code>&lt;TextInput&gt;</code>{m.ti_when_2()}<code>&lt;Input&gt;</code>{m.ti_when_3()}<code>&lt;Textarea&gt;</code>{m.ti_when_4()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Simplicity</strong> — lightweight input with just the essentials.</li>
-    <li><strong>Icons</strong> — start/end icons for search, password toggle, etc.</li>
-    <li><strong>Clearable</strong> — one-click clear button for search fields.</li>
+    <li><strong>{m.ti_why_simplicity()}</strong>{m.ti_why_simplicity_desc()}</li>
+    <li><strong>{m.ti_why_icons()}</strong>{m.ti_why_icons_desc()}</li>
+    <li><strong>{m.ti_why_clearable()}</strong>{m.ti_why_clearable_desc()}</li>
   </ul>
 
-  <h2>Responsiveness</h2>
+  <h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Fills container width by default.</li>
-    <li>Touch targets meet 44×44 px minimum.</li>
+    <li>{m.ti_responsive_1()}</li>
+    <li>{m.ti_responsive_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li>All standard <code>&lt;input&gt;</code> types and attributes.</li>
-    <li>Sizes: <code>sm</code>, <code>md</code>, <code>lg</code>.</li>
-    <li>Start/end icons via <code>startIcon</code>/<code>endIcon</code> props.</li>
-    <li>Clearable via <code>clearable</code> prop.</li>
+    <li>{m.ti_custom_1_1()}<code>&lt;input&gt;</code>{m.ti_custom_1_2()}</li>
+    <li>{m.ti_custom_2_1()}<code>sm</code>{m.ti_custom_2_2()}<code>md</code>{m.ti_custom_2_3()}<code>lg</code>{m.ti_custom_2_4()}</li>
+    <li>{m.ti_custom_3_1()}<code>startIcon</code>{m.ti_custom_3_2()}<code>endIcon</code>{m.ti_custom_3_3()}</li>
+    <li>{m.ti_custom_4_1()}<code>clearable</code>{m.ti_custom_4_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic Usage</h3>
+  <h3>{m.ti_ex_basic()}</h3>
   <ExampleTabs code={`<TextInput name="username" placeholder="Enter your username" />`}>
     <div class="max-w-md" data-testid="textinput-basic"><TextInput name="username" placeholder="Enter your username" /></div>
   </ExampleTabs>
 
-  <h3>With Icons</h3>
+  <h3>{m.ti_ex_icons()}</h3>
   <ExampleTabs code={`<TextInput name="search" placeholder="Search..." startIcon="tabler:search" />
 <TextInput name="password" type="password" placeholder="Password" endIcon="tabler:eye" />`}>
     <div class="max-w-md flex flex-col gap-4" data-testid="textinput-icons">
@@ -75,12 +71,12 @@ import * as TextInputModule from "$lib/components/Form/TextInput.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Clearable</h3>
+  <h3>{m.ti_ex_clearable()}</h3>
   <ExampleTabs code={`<TextInput name="search" placeholder="Type then clear..." clearable />`}>
     <div class="max-w-md" data-testid="textinput-clearable"><TextInput name="search" placeholder="Type then clear..." clearable /></div>
   </ExampleTabs>
 
-  <h3>Different Sizes</h3>
+  <h3>{m.ti_ex_sizes()}</h3>
   <ExampleTabs code={`<TextInput name="small" size="sm" placeholder="Small" />
 <TextInput name="medium" size="md" placeholder="Medium (default)" />
 <TextInput name="large" size="lg" placeholder="Large" />`}>
@@ -91,25 +87,25 @@ import * as TextInputModule from "$lib/components/Form/TextInput.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>Disabled</h3>
+  <h3>{m.ti_ex_disabled()}</h3>
   <ExampleTabs code={`<TextInput name="disabled" value="Cannot edit" disabled />`}>
     <div class="max-w-md" data-testid="textinput-disabled"><TextInput name="disabled" value="Cannot edit" disabled /></div>
   </ExampleTabs>
 
-  <h3>With Value</h3>
+  <h3>{m.ti_ex_value()}</h3>
   <ExampleTabs code={`<TextInput value="hello@world.com" />`}>
     <div data-testid="textinput-value">
       <TextInput value="hello@world.com" />
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={TextInputModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Renders a native <code>&lt;input&gt;</code> for maximum compatibility.</li>
-    <li>Clear button is labeled and keyboard-reachable.</li>
-    <li>Supports <code>aria-label</code> and forwards ARIA attributes.</li>
+    <li>{m.ti_a11y_1()}<code>&lt;input&gt;</code>{m.ti_a11y_2()}</li>
+    <li>{m.ti_a11y_3()}</li>
+    <li>{m.ti_a11y_4_1()}<code>aria-label</code>{m.ti_a11y_4_2()}</li>
   </ul>
 </Container>

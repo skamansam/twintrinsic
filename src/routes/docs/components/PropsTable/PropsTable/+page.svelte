@@ -4,6 +4,7 @@ import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as ButtonModule from "$lib/components/Button/Button.svelte"
+import { m } from "$lib/paraglide/messages.js"
 
 const propsData = {
   component: {
@@ -20,21 +21,17 @@ const propsData = {
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>PropsTable</h1>
+  <h1>{m.pt_heading()}</h1>
 
   <p>
-    A utility component that renders a component's props as a documentation
-    table. It reads the props directly from a component module that exports
-    <code>propsMetadata</code>, or renders a <code>data</code> hash as a
-    fallback. If neither is available, it logs a <code>console.warn</code>.
+    {m.pt_lede_1()}<code>propsMetadata</code>{m.pt_lede_2()}<code>data</code>{m.pt_lede_3()}<code>console.warn</code>{m.pt_lede_4()}
   </p>
 
-  <h2>Usage</h2>
+  <h2>{m.pt_usage()}</h2>
 
-  <h3>Auto-derived props</h3>
+  <h3>{m.pt_usage_auto_h()}</h3>
   <p>
-    Pass the component module (namespace import) to render its
-    <code>propsMetadata</code> export:
+    {m.pt_usage_auto_1()}<code>propsMetadata</code>{m.pt_usage_auto_2()}
   </p>
 
   <div class="not-prose" data-testid="propstable-auto">
@@ -48,10 +45,9 @@ const propsData = {
 
 <PropsTable component={Button} />`}</CodeBlock>
 
-  <h3>Explicit data hash</h3>
+  <h3>{m.pt_usage_explicit_h()}</h3>
   <p>
-    When a component doesn't export <code>propsMetadata</code>, pass a plain
-    <code>data</code> hash of prop name → descriptor:
+    {m.pt_usage_explicit_1()}<code>propsMetadata</code>{m.pt_usage_explicit_2()}<code>data</code>{m.pt_usage_explicit_3()}
   </p>
 
   <div class="not-prose" data-testid="propstable-explicit">
@@ -70,13 +66,13 @@ const propsData = {
   }}
 />`}</CodeBlock>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable data={propsData} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Uses a semantic <code>&lt;table&gt;</code> with header cells for each column</li>
-    <li>Prop names and types are rendered in <code>&lt;code&gt;</code> for clarity</li>
-    <li>The table scrolls horizontally on narrow viewports instead of overflowing</li>
+    <li>{m.pt_a11y_1()}<code>&lt;table&gt;</code>{m.pt_a11y_2()}</li>
+    <li>{m.pt_a11y_3()}<code>&lt;code&gt;</code>{m.pt_a11y_4()}</li>
+    <li>{m.pt_a11y_5()}</li>
   </ul>
 </Container>

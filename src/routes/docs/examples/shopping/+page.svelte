@@ -5,6 +5,7 @@
   import Rating from "$lib/components/Form/Rating.svelte"
   import Slider from "$lib/components/Form/Slider.svelte"
   import MenuItem from "$lib/components/Menu/Menu/MenuItem.svelte"
+  import { m } from "$lib/paraglide/messages.js"
 
   // Mega-footer link columns, similar to a large retail site's footer.
   const footerColumns = [
@@ -104,17 +105,16 @@
 <div id="top" class="mb-8 bg-blue-50 dark:bg-blue-950 border-l-4 border-blue-500 p-4 rounded">
   <div class="flex items-center justify-between">
     <div>
-      <h3 class="font-semibold text-blue-900 dark:text-blue-100">Build this yourself!</h3>
+      <h3 class="font-semibold text-blue-900 dark:text-blue-100">{m.exshop_banner_h()}</h3>
       <p class="text-sm text-blue-800 dark:text-blue-200 mt-1">
-        An Amazon-style shopping page built from <code>Card</code>, <code>Checkbox</code>,
-        <code>Slider</code>, <code>Rating</code>, and <code>MenuItem</code>.
+        {m.exshop_banner_p_1()}<code>Card</code>{m.exshop_banner_p_2()}<code>Checkbox</code>{m.exshop_banner_p_3()}<code>Slider</code>{m.exshop_banner_p_4()}<code>Rating</code>{m.exshop_banner_p_5()}<code>MenuItem</code>{m.exshop_banner_p_6()}
       </p>
     </div>
     <a
       href="/docs/examples/shopping/guide"
       class="ml-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium whitespace-nowrap transition-colors"
     >
-      View Guide
+      {m.ex_viewguide()}
     </a>
   </div>
 </div>
@@ -127,16 +127,16 @@
     <div class="bg-black/50">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <h1 class="text-3xl sm:text-5xl font-bold text-white max-w-xl">
-          Big Deals on Everything You Need
+          {m.exshop_hero_h1()}
         </h1>
         <p class="mt-4 text-white/90 max-w-lg">
-          Shop electronics, apparel, home goods and more — all in one place.
+          {m.exshop_hero_p()}
         </p>
         <a
           href="#products"
           class="inline-block mt-6 px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-md font-medium"
         >
-          Shop Now
+          {m.exshop_hero_cta()}
         </a>
       </div>
     </div>
@@ -161,7 +161,7 @@
     <!-- Left filter sidebar -->
     <aside aria-label="Filters" class="space-y-8">
       <div>
-        <h2 class="font-semibold mb-3">Department</h2>
+        <h2 class="font-semibold mb-3">{m.exshop_f_department()}</h2>
         <div class="space-y-2">
           {#each departments as department (department)}
             <Checkbox
@@ -174,7 +174,7 @@
       </div>
 
       <div>
-        <h2 class="font-semibold mb-3">Max Price</h2>
+        <h2 class="font-semibold mb-3">{m.exshop_f_maxprice()}</h2>
         <Slider
           value={maxPrice}
           min={0}
@@ -188,7 +188,7 @@
       </div>
 
       <div>
-        <h2 class="font-semibold mb-3">Customer Rating</h2>
+        <h2 class="font-semibold mb-3">{m.exshop_f_rating()}</h2>
         <Rating
           value={minRating}
           max={5}
@@ -199,7 +199,7 @@
       </div>
 
       <div>
-        <h2 class="font-semibold mb-3">Brand</h2>
+        <h2 class="font-semibold mb-3">{m.exshop_f_brand()}</h2>
         <div class="space-y-2">
           {#each brands as brand (brand)}
             <Checkbox
@@ -218,11 +218,11 @@
         <Card href="#" hoverable image={product.image} imageAlt={product.imageAlt}>
           {#snippet header()}{product.name}{/snippet}
           <Rating value={product.rating} max={5} step={0.5} readonly size="sm" showValue />
-          <p class="text-sm text-muted mt-1">{product.reviews.toLocaleString()} reviews</p>
+          <p class="text-sm text-muted mt-1">{product.reviews.toLocaleString()} {m.exshop_reviews()}</p>
           <p class="text-lg font-semibold mt-2">{product.price}</p>
           {#snippet footer()}
             <button class="w-full px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded font-medium">
-              Add to Cart
+              {m.exshop_addtocart()}
             </button>
           {/snippet}
         </Card>
@@ -237,7 +237,7 @@
     href="#top"
     class="block text-center py-4 bg-muted/20 dark:bg-muted/20 hover:bg-muted/30 dark:hover:bg-muted/30 text-sm font-medium"
   >
-    Back to top
+    {m.exshop_backtotop()}
   </a>
   <Footer class="block! px-0! py-0! bg-gray-900 text-white">
     {#snippet center()}
@@ -257,7 +257,7 @@
         {/each}
       </div>
       <div class="border-t border-white/10 py-4 text-center text-sm">
-        © {new Date().getFullYear()} Twintrinsic Shop Example. For demonstration purposes only.
+        © {new Date().getFullYear()} {m.exshop_copyright()}
       </div>
     {/snippet}
   </Footer>

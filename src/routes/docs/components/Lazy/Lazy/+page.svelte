@@ -8,6 +8,7 @@ import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Lazy from "$lib/components/Lazy/Lazy.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as LazyModule from "$lib/components/Lazy/Lazy.svelte"
+import { m } from "$lib/paraglide/messages.js"
 </script>
 
 <style lang="postcss">
@@ -15,38 +16,32 @@ import * as LazyModule from "$lib/components/Lazy/Lazy.svelte"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>Lazy</h1>
+  <h1>{m.lazy_heading()}</h1>
 
   <p>
-    <strong>Lazy</strong> renders its content only once it scrolls into the viewport, using
-    an <code>IntersectionObserver</code>. Use it to defer off-screen content and keep
-    initial page loads fast.
+    <strong>{m.lazy_heading()}</strong>{m.lazy_intro_1()}<code>IntersectionObserver</code>{m.lazy_intro_2()}
   </p>
 
-  <h2>What, When &amp; Why</h2>
+  <h2>{m.sec_what_when_why()}</h2>
 
-  <h3>What is it?</h3>
+  <h3>{m.sec_what()}</h3>
   <p>
-    A deferral wrapper that uses <code>IntersectionObserver</code> to mount content only
-    when it becomes visible. Supports a placeholder snippet shown during the loading state.
-    Falls back to immediate rendering when <code>IntersectionObserver</code> is unavailable.
+    {m.lazy_what_1()}<code>IntersectionObserver</code>{m.lazy_what_2()}<code>IntersectionObserver</code>{m.lazy_what_3()}
   </p>
 
-  <h3>When should I use it?</h3>
+  <h3>{m.sec_when()}</h3>
   <p>
-    Use <code>&lt;Lazy&gt;</code> for below-the-fold content: charts, heavy components, or
-    anything that doesn't need to be in the initial paint. For panel-level lazy loading,
-    use <code>&lt;LazyPanel&gt;</code>.
+    {m.lazy_when_1()}<code>&lt;Lazy&gt;</code>{m.lazy_when_2()}<code>&lt;LazyPanel&gt;</code>{m.lazy_when_3()}
   </p>
 
-  <h3>Why does it exist?</h3>
+  <h3>{m.sec_why()}</h3>
   <ul>
-    <li><strong>Performance</strong> — reduces initial page weight.</li>
-    <li><strong>Scroll-triggered</strong> — content mounts when visible.</li>
-    <li><strong>Graceful fallback</strong> — immediate render when observer is unavailable.</li>
+    <li><strong>{m.lazy_why_perf()}</strong>{m.lazy_why_perf_desc()}</li>
+    <li><strong>{m.lazy_why_scroll()}</strong>{m.lazy_why_scroll_desc()}</li>
+    <li><strong>{m.lazy_why_fallback()}</strong>{m.lazy_why_fallback_desc()}</li>
   </ul>
 
-  <h3>Sources</h3>
+  <h3>{m.sec_sources()}</h3>
   <ul>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API">MDN — IntersectionObserver</a></li>
     <li><a href="https://web.dev/articles/content-visibility">web.dev — content-visibility</a></li>
@@ -55,39 +50,38 @@ import * as LazyModule from "$lib/components/Lazy/Lazy.svelte"
     <li><a href="https://www.w3.org/TR/intersection-observer/">W3C — IntersectionObserver</a></li>
   </ul>
 
-  
-<h2>Twintrinsic Implementation</h2>
+<h2>{m.sec_implementation()}</h2>
 <ul>
-    <li>Intersection Observer for viewport detection</li>
-    <li>`&lt;img loading=&quot;lazy&quot;&gt;` for native image lazy loading</li>
-    <li>`content-visibility: auto` for off-screen content skipping</li>
-    <li>LazyPanel variant for tab panels</li>
+  <li>{m.lazy_impl_1()}</li>
+  <li>{m.lazy_impl_2_1()}<code>&lt;img loading="lazy"&gt;</code>{m.lazy_impl_2_2()}</li>
+  <li>{m.lazy_impl_3_1()}<code>content-visibility: auto</code>{m.lazy_impl_3_2()}</li>
+  <li>{m.lazy_impl_4()}</li>
 </ul>
 
-<h2>Common Mistakes</h2>
+<h2>{m.sec_mistakes()}</h2>
 <ul>
-    <li>Don't use JS timers for lazy loading — Intersection Observer is the standard</li>
-    <li>Don't forget `content-visibility: auto` as a CSS-only alternative for simple cases</li>
+  <li>{m.lazy_mistake_1_0()}<code>Intersection Observer</code>{m.lazy_mistake_1_1()}</li>
+  <li>{m.lazy_mistake_2_0()}<code>content-visibility: auto</code>{m.lazy_mistake_2_1()}</li>
 </ul>
 
-<h2>Related Components</h2>
-<p>Skeleton, Card, Container</p>
+<h2>{m.sec_related()}</h2>
+<p>{m.lazy_related()}</p>
 
-<h2>Responsiveness</h2>
+<h2>{m.sec_responsiveness()}</h2>
   <ul>
-    <li>Fills container width by default.</li>
-    <li>Placeholder content adapts to the container.</li>
+    <li>{m.lazy_responsive_1()}</li>
+    <li>{m.lazy_responsive_2()}</li>
   </ul>
 
-  <h2>Customization</h2>
+  <h2>{m.sec_customization()}</h2>
   <ul>
-    <li><code>placeholder</code> snippet — content shown while loading.</li>
-    <li>Custom <code>rootMargin</code> to start loading before the element is visible.</li>
+    <li>{m.lazy_custom_1_1()}<code>placeholder</code>{m.lazy_custom_1_2()}</li>
+    <li>{m.lazy_custom_2_1()}<code>rootMargin</code>{m.lazy_custom_2_2()}</li>
   </ul>
 
-  <h2>Examples</h2>
+  <h2>{m.sec_examples()}</h2>
 
-  <h3>Basic Lazy</h3>
+  <h3>{m.lazy_ex_basic()}</h3>
   <ExampleTabs code={`<Lazy>
   <div class="p-8 bg-surface rounded-lg">
     <h3 class="font-medium">Monthly revenue chart</h3>
@@ -104,7 +98,7 @@ import * as LazyModule from "$lib/components/Lazy/Lazy.svelte"
     </div>
   </ExampleTabs>
 
-  <h3>With Placeholder</h3>
+  <h3>{m.lazy_ex_placeholder()}</h3>
   <ExampleTabs code={`<Lazy>
   {#snippet placeholder()}
     <p class="text-muted">Loading chart…</p>
@@ -127,19 +121,16 @@ import * as LazyModule from "$lib/components/Lazy/Lazy.svelte"
     </div>
   </ExampleTabs>
 
-  <h2>Props</h2>
+  <h2>{m.sec_props()}</h2>
   <PropsTable component={LazyModule} />
 
-  <h2>Accessibility</h2>
+  <h2>{m.sec_accessibility()}</h2>
   <ul>
-    <li>Falls back to immediate rendering when <code>IntersectionObserver</code> is unavailable.</li>
-    <li>Loading state exposes <code>aria-live="polite"</code> and <code>aria-busy</code>.</li>
-    <li>Deferred content is only mounted when visible.</li>
+    <li>{m.lazy_a11y_1()}<code>IntersectionObserver</code>{m.lazy_a11y_2()}</li>
+    <li>{m.lazy_a11y_3()}<code>aria-live="polite"</code>{m.lazy_a11y_4()}<code>aria-busy</code>{m.lazy_a11y_5()}</li>
+    <li>{m.lazy_a11y_6()}</li>
   </ul>
 
-  <h2>Keyboard Support</h2>
-  <p>
-    Lazy is a behavior wrapper and does not require keyboard interaction.
-    Deferred content maintains its native keyboard behavior once mounted.
-  </p>
+  <h2>{m.sec_keyboard()}</h2>
+  <p>{m.lazy_kb()}</p>
 </Container>
