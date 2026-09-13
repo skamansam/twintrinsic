@@ -121,4 +121,25 @@ detectLanguage("key: value")                        // "yaml"`}
       <a href="/docs/components/EventsTable/EventsTable">EventsTable</a>.
     </p>
   </Panel>
+
+  <Separator>{m.util_assets_heading()}</Separator>
+
+  <h2><code>check:assets</code></h2>
+
+  <p>{m.util_assets_body_1()}</p>
+
+  <CodeBlock language="bash">
+{`pnpm check:assets
+# ✔ All 3 static-asset reference(s) across docs demos resolve under static/.`}
+  </CodeBlock>
+
+  <p>{m.util_assets_body_2()}</p>
+  <p>{m.util_assets_body_3()}</p>
+
+  <CodeBlock language="bash">
+{`# Suppress a known false positive
+pnpm check:assets -- --ignore=/banner.jpg
+# List every reference found, including resolving ones
+pnpm check:assets -- --list`}
+  </CodeBlock>
 </Container>
