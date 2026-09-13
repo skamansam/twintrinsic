@@ -100,6 +100,26 @@ import { m } from "$lib/paraglide/messages.js"
     </div>
   </ExampleTabs>
 
+  <h3>{m.bar_ex_percolor()}</h3>
+  <p>{m.bar_ex_percolor_p()}</p>
+  <ExampleTabs code={`<BarChart
+  series={[{ label: 'Revenue', data: [45, 52, 48, 61, 55, 67], color: '#3b82f6' }]}
+  labels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']}
+  barColors={[undefined, undefined, undefined, undefined, undefined, '#10b981']}
+  title="Best Month Highlighted" showGrid={true} showLegend={true}
+/>`}>
+    <div class="flex justify-center" data-testid="metrics-per-bar-colors-barchart">
+      <BarChart
+        series={[{ label: "Revenue", data: [45, 52, 48, 61, 55, 67], color: "#3b82f6" }]}
+        labels={["Jan", "Feb", "Mar", "Apr", "May", "Jun"]}
+        barColors={[undefined, undefined, undefined, undefined, undefined, "#10b981"]}
+        title="Best Month Highlighted"
+        showGrid={true}
+        showLegend={true}
+      />
+    </div>
+  </ExampleTabs>
+
   <h2>{m.sec_props()}</h2>
   <PropsTable component={BarChartModule} />
   <h2>{m.sec_events()}</h2>

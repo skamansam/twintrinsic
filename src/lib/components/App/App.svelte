@@ -157,7 +157,7 @@ $effect(() => {
   <title>{appName}</title>
 </svelte:head>
 
-<div {...restProps} class='app bg-background text-text h-screen overflow-hidden grid gap-0 grid-rows-[var(--header-height,120px)_minmax(0,1fr)_var(--footer-height,60px)] grid-cols-[var(--leftbar-width,300px)_1fr_var(--rightbar-width,300px)]' style="--rightbar-width: {rightPanel ? rightSidebarWidth : 'auto'}; --leftbar-width: {(leftPanel || siteMenu) ? leftSidebarWidth : 'auto'}; --header-height: auto; --footer-height: auto;" data-theme>
+<div {...restProps} class='app bg-background text-text h-screen overflow-hidden grid gap-0 grid-rows-[var(--header-height,120px)_minmax(0,1fr)_var(--footer-height,60px)]' style="--leftbar-width: {leftSidebarWidth}; --rightbar-width: {rightSidebarWidth}; --header-height: auto; --footer-height: auto; grid-template-columns: {(!leftSidebarHidden && (leftPanel || siteMenu)) ? 'var(--leftbar-width) ' : ''}1fr{(!rightSidebarHidden && rightPanel) ? ' var(--rightbar-width)' : ''};" data-theme>
 
 <!-- Skip to main content link for accessibility -->
 <a

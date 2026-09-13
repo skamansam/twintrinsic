@@ -13,6 +13,7 @@ const meta = {
 		yAxisLabel: { control: 'text' },
 		showGrid: { control: 'boolean' },
 		showLegend: { control: 'boolean' },
+		barColors: { control: 'object', description: 'Per-bar color overrides (one per label index). Takes precedence over series color.' },
 		width: { control: { type: 'range', min: 400, max: 800, step: 50 } },
 		height: { control: { type: 'range', min: 200, max: 500, step: 50 } }
 	}
@@ -84,6 +85,24 @@ export const LargeDataset: Story = {
 		showLegend: true,
 		width: 700,
 		height: 350
+	}
+};
+
+export const PerBarColors: Story = {
+	args: {
+		series: [
+			{
+				label: 'Revenue',
+				data: [45, 52, 48, 61, 55, 67],
+				color: '#3b82f6'
+			}
+		],
+		labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+		title: 'Monthly Revenue (highlighted best month)',
+		yAxisLabel: 'Revenue ($K)',
+		showGrid: true,
+		showLegend: true,
+		barColors: [undefined, undefined, undefined, undefined, undefined, '#10b981']
 	}
 };
 

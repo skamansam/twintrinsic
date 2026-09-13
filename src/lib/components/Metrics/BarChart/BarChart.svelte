@@ -9,6 +9,7 @@ export const propsMetadata = [
   { name: "showLegend", type: "boolean", description: "Show legend", default: "true", optional: true },
   { name: "width", type: "number", description: "Size of the chart in pixels", default: "500", optional: true },
   { name: "height", type: "number", description: "Height of the chart in pixels", default: "300", optional: true },
+  { name: "barColors", type: "(string | undefined)[]", description: "Per-bar color overrides (one per label index, undefined falls back to series color). Takes precedence over series color.", optional: true },
 ];
 </script>
 
@@ -38,6 +39,8 @@ export const propsMetadata = [
 		width?: number;
 		/** Height of the chart in pixels */
 		height?: number;
+		/** Per-bar color overrides (one per label index, undefined falls back to series color). Takes precedence over series color. */
+		barColors?: (string | undefined)[];
 		/** Additional props passed through to the root element */
 		[key: `data-${string}`]: unknown
 		[key: `aria-${string}`]: string | undefined
@@ -53,6 +56,7 @@ export const propsMetadata = [
 		showLegend = true,
 		width = 500,
 		height = 300,
+		barColors = undefined,
 		...rest
 	}: Props = $props();
 
@@ -199,7 +203,7 @@ export const propsMetadata = [
 					y={y}
 					width={barWidth - 2}
 					height={barHeight}
-					fill={s.color}
+					fill={barColors?.[barIndex] ?? s.color}
 					class="cursor-pointer transition-opacity hover:opacity-80"
 					role="button"
 					tabindex="0"

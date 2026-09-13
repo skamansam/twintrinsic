@@ -115,4 +115,21 @@ describe('BarChart', () => {
 
 		expect(container.querySelector('svg')).toBeTruthy();
 	});
+
+	it('should apply per-bar color overrides', () => {
+		const { container } = render(BarChart, {
+			props: {
+				series: singleSeries,
+				labels,
+				barColors: ['#ff0000', '#00ff00', undefined, '#0000ff']
+			}
+		});
+
+		const bars = container.querySelectorAll('rect[role="button"]');
+		expect(bars.length).toBeGreaterThan(0);
+		expect((bars[0] as SVGElement).getAttribute('fill')).toBe('#ff0000');
+		expect((bars[1] as SVGElement).getAttribute('fill')).toBe('#00ff00');
+		// Bars without an override fall back to the series color
+		expect((bars[2] as SVGElement).getAttribute('fill')).toBe('#3b82f6');
+	});
 });
