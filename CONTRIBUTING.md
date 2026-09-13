@@ -117,6 +117,7 @@ Keep the stub minimal: heading + one paragraph with the target link.
 
 ```bash
 pnpm check:i18n        # no untranslated prose; backlog must not grow
+pnpm check:assets      # every docs demo asset URL resolves under static/
 pnpm check             # 0 errors after recompiling paraglide
 pnpm test:unit         # 105+ test files
 ```
@@ -157,7 +158,7 @@ and commit the result alongside your message-file changes.
 
 ## Pull requests
 
-- Run `pnpm check`, `pnpm test:unit`, and `pnpm check:i18n` before pushing.
+- Run `pnpm check`, `pnpm test:unit`, `pnpm check:i18n`, and `pnpm check:assets` before pushing.
 - Component changes additionally need `pnpm test:e2e` and updated
   Storybook stories + docs pages (see the checklist in AGENTS.md).
 - Keep commits focused; the repo uses conventional-commit subjects
