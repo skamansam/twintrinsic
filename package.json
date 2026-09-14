@@ -649,7 +649,6 @@
     "@oddbird/css-anchor-positioning": "^0.10.2",
     "@oddbird/popover-polyfill": "^0.7.2",
     "@playwright/test": "^1.62.1",
-    "@speed-highlight/core": "^1.2.24",
     "@storybook/addon-a11y": "^10.5.8",
     "@storybook/addon-docs": "^10.5.8",
     "@storybook/addon-mcp": "^0.6.0",
@@ -694,6 +693,7 @@
   ],
   "dependencies": {
     "@iconify/svelte": "^5.2.2",
+    "@speed-highlight/core": "^1.2.24",
     "prismjs": "^1.30.0"
   },
   "pnpm": {

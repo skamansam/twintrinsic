@@ -11,6 +11,9 @@ importers:
       '@iconify/svelte':
         specifier: ^5.2.2
         version: 5.2.2(svelte@5.56.9)
+      '@speed-highlight/core':
+        specifier: ^1.2.24
+        version: 1.2.24
       prismjs:
         specifier: ^1.30.0
         version: 1.30.0
@@ -81,9 +84,6 @@ importers:
       '@playwright/test':
         specifier: ^1.62.1
         version: 1.62.1
-      '@speed-highlight/core':
-        specifier: ^1.2.24
-        version: 1.2.24
       '@storybook/addon-a11y':
         specifier: ^10.5.8
         version: 10.5.8(storybook@10.5.8(@types/react@19.2.8)(prettier@3.7.4)(react@19.2.8))
