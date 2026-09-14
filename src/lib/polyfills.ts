@@ -34,17 +34,17 @@ export function loadPlatformPolyfills(): Promise<void> {
     const tasks: Array<Promise<unknown>> = []
 
     if (!("popover" in HTMLElement.prototype)) {
-      tasks.push(import("@oddbird/popover-polyfill"))
+      tasks.push(import(/* @vite-ignore */ "@oddbird/popover-polyfill"))
     }
 
     if (!("anchorName" in document.documentElement.style)) {
-      tasks.push(import("@oddbird/css-anchor-positioning"))
+      tasks.push(import(/* @vite-ignore */ "@oddbird/css-anchor-positioning"))
     }
 
     // Interest Invokers (interestfor attribute) — Chrome 142+, Edge 142+.
     // Polyfill for Firefox / Safari where the attribute is not yet supported.
     if (!HTMLButtonElement.prototype.hasOwnProperty("interestForElement")) {
-      tasks.push(import("interestfor"))
+      tasks.push(import(/* @vite-ignore */ "interestfor"))
     }
 
     await Promise.all(tasks)
