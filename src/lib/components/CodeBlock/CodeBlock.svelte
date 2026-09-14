@@ -180,7 +180,7 @@ onMount(async () => {
   // module instance as a global before importing it.
   if (!Prism.languages.svelte) {
     (globalThis as { Prism?: typeof Prism }).Prism = Prism;
-    await import("prism-svelte");
+    await import(/* @vite-ignore */ "prism-svelte");
   }
   if (plugins.length > 0) {
     await loadPlugins(plugins);
