@@ -26,6 +26,12 @@ importers:
       codemirror:
         specifier: ^6.0.2
         version: 6.0.2
+      leaflet:
+        specifier: 2.0.0-alpha.1
+        version: 2.0.0-alpha.1
+      prism-svelte:
+        specifier: ^0.5.0
+        version: 0.5.0
       prismjs:
         specifier: ^1.30.0
         version: 1.30.0
@@ -162,15 +168,9 @@ importers:
       jsdom:
         specifier: ^29.1.1
         version: 29.1.1
-      leaflet:
-        specifier: 2.0.0-alpha.1
-        version: 2.0.0-alpha.1
       playwright:
         specifier: ^1.62.1
         version: 1.62.1
-      prism-svelte:
-        specifier: ^0.5.0
-        version: 0.5.0
       prismjs-themes:
         specifier: ^2.0.0
         version: 2.0.0

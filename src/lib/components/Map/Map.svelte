@@ -227,7 +227,7 @@ async function initializeMap() {
 	if (!container) return undefined;
 
 		// Dynamically import leaflet to avoid type issues
-		const leafletModule = await import('leaflet');
+		const leafletModule = await import(/* @vite-ignore */ 'leaflet');
 		// biome-ignore lint/suspicious/noExplicitAny: Leaflet types not fully available in alpha
 		const leaflet = (leafletModule as any).default || leafletModule;
 

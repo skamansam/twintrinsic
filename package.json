@@ -671,9 +671,7 @@
     "globals": "^17.11.0",
     "interestfor": "^1.0.8",
     "jsdom": "^29.1.1",
-    "leaflet": "2.0.0-alpha.1",
     "playwright": "^1.62.1",
-    "prism-svelte": "^0.5.0",
     "prismjs-themes": "^2.0.0",
     "publint": "^0.3.23",
     "storybook": "^10.5.8",
@@ -694,6 +692,8 @@
     "@iconify/svelte": "^5.2.2",
     "@speed-highlight/core": "^1.2.24",
     "codemirror": "^6.0.2",
+    "leaflet": "2.0.0-alpha.1",
+    "prism-svelte": "^0.5.0",
     "prismjs": "^1.30.0"
   },
   "pnpm": {

@@ -107,20 +107,20 @@ export const propsMetadata = [
 	 * CDN loader below.
 	 */
 	const languageLoaders: Record<string, () => Promise<Record<string, unknown>>> = {
-		javascript: () => import('@codemirror/lang-javascript'),
-		typescript: () => import('@codemirror/lang-javascript'),
-		python: () => import('@codemirror/lang-python'),
-		html: () => import('@codemirror/lang-html'),
-		css: () => import('@codemirror/lang-css'),
-		json: () => import('@codemirror/lang-json'),
-		xml: () => import('@codemirror/lang-xml'),
-		markdown: () => import('@codemirror/lang-markdown'),
-		sql: () => import('@codemirror/lang-sql'),
-		java: () => import('@codemirror/lang-java'),
-		cpp: () => import('@codemirror/lang-cpp'),
-		rust: () => import('@codemirror/lang-rust'),
-		go: () => import('@codemirror/lang-go'),
-		php: () => import('@codemirror/lang-php'),
+		javascript: () => import(/* @vite-ignore */ '@codemirror/lang-javascript'),
+		typescript: () => import(/* @vite-ignore */ '@codemirror/lang-javascript'),
+		python: () => import(/* @vite-ignore */ '@codemirror/lang-python'),
+		html: () => import(/* @vite-ignore */ '@codemirror/lang-html'),
+		css: () => import(/* @vite-ignore */ '@codemirror/lang-css'),
+		json: () => import(/* @vite-ignore */ '@codemirror/lang-json'),
+		xml: () => import(/* @vite-ignore */ '@codemirror/lang-xml'),
+		markdown: () => import(/* @vite-ignore */ '@codemirror/lang-markdown'),
+		sql: () => import(/* @vite-ignore */ '@codemirror/lang-sql'),
+		java: () => import(/* @vite-ignore */ '@codemirror/lang-java'),
+		cpp: () => import(/* @vite-ignore */ '@codemirror/lang-cpp'),
+		rust: () => import(/* @vite-ignore */ '@codemirror/lang-rust'),
+		go: () => import(/* @vite-ignore */ '@codemirror/lang-go'),
+		php: () => import(/* @vite-ignore */ '@codemirror/lang-php'),
 	};
 
 	/** @type {Record<string, string>} */
