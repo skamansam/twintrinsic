@@ -9,6 +9,26 @@ describe("CodeEditor", () => {
     expect(wrapper).toBeTruthy()
   })
 
+  // The editor instance is created after the async language-support import
+  // resolves (locally-installed @codemirror/lang-* packages), so mounting a
+  // real `.cm-editor` with the initial code is the meaningful async
+  // assertion — the sync wrapper check above can pass while init fails.
+  it("should mount a CodeMirror instance with the initial code after async init", async () => {
+    const { container } = render(CodeEditor, {
+      props: {
+        code: "const x = 1;",
+        language: "javascript",
+      },
+    })
+
+    await waitFor(() => {
+      expect(container.querySelector(".cm-editor")).toBeTruthy()
+    })
+    await waitFor(() => {
+      expect(container.querySelector(".cm-content")?.textContent).toContain("const x = 1;")
+    })
+  })
+
   it("should apply custom height", async () => {
     const { container } = render(CodeEditor, {
       props: {

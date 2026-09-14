@@ -1,4 +1,4 @@
-import { render } from "@testing-library/svelte";
+import { render, waitFor } from "@testing-library/svelte";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import MapComponent from "$lib/components/Map/Map.svelte";
 
@@ -111,5 +111,34 @@ describe("Map", () => {
 		});
 		const mapElement = container.querySelector(".h-full.w-full");
 		expect(mapElement).toBeTruthy();
+	});
+
+	// initializeMap() is fire-and-forget: the dynamic `import('leaflet')` and
+	// all Leaflet construction happen after the mount tick, so the sync
+	// assertions above only prove the wrapper rendered. These tests await the
+	// async init through the mocked Leaflet instance.
+	it("initializes the map asynchronously and attaches interaction listeners", async () => {
+		render(MapComponent);
+
+		await waitFor(() => {
+			expect(mockMapInstance.on).toHaveBeenCalledWith("click", expect.any(Function));
+			expect(mockMapInstance.on).toHaveBeenCalledWith("zoomend", expect.any(Function));
+			expect(mockMapInstance.on).toHaveBeenCalledWith("moveend", expect.any(Function));
+		});
+	});
+
+	it("adds markers and binds their tooltips after async init", async () => {
+		render(MapComponent, {
+			props: {
+				markers: [{ lat: 51.5, lng: -0.09, tooltip: "Central London" }],
+			},
+		});
+
+		await waitFor(() => {
+			expect(mockMarkerInstance.addTo).toHaveBeenCalled();
+			expect(mockMarkerInstance.bindTooltip).toHaveBeenCalledWith("Central London", {
+				permanent: false,
+			});
+		});
 	});
 });

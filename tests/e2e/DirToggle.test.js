@@ -98,6 +98,27 @@ test.describe("Docs locale switcher", () => {
     await expect(page.getByText(/استخراج برچسب/).first()).toBeVisible();
   });
 
+  test("translates the utilities docs-tooling section", async ({ page }) => {
+    await page.goto("/docs/utilities");
+    await waitForHydration(page);
+
+    // The check:assets section heading renders as an h2 wrapping a <code>
+    // element — the accessible name is the bare script name.
+    const assetsHeading = page.getByRole("heading", { name: "check:assets" });
+    await expect(assetsHeading).toBeVisible();
+    await expect(assetsHeading.locator("code")).toHaveText("check:assets");
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    // The section separator and prose translate (the h2 stays an
+    // untranslatable script name, matching the convention of bare English
+    // identifiers in <code>).
+    await expect(page.getByText("ابزارهای مستندسازی")).toBeVisible();
+    await expect(page.getByText(/اسکریپت check:assets/)).toBeVisible();
+    await expect(assetsHeading).toBeVisible();
+  });
+
   test("translates the theming page prose", async ({ page }) => {
     await page.goto("/docs/theming");
     await waitForHydration(page);

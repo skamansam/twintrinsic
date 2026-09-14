@@ -89,6 +89,17 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:e2e
+      # Debugging artifacts (screenshot/video/trace per failed test — see
+      # playwright.config.ts `use`). Uploaded only when the job fails;
+      # `test-results/` is gitignored, and `if-no-files-found: ignore` keeps
+      # green runs artifact-free.
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-artifacts
+          path: test-results/
+          retention-days: 7
+          if-no-files-found: ignore
 
   browser-compat:
     # Cross-browser feature-detection probe (Part 1.5 of

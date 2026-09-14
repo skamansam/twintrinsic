@@ -1,6 +1,7 @@
-import { render } from "@testing-library/svelte"
+import { render, waitFor } from "@testing-library/svelte"
 import { describe, expect, it, vi } from "vitest"
 import CodeBlock from "../../src/lib/components/CodeBlock/CodeBlock.svelte"
+import CodeBlockWithCode from "./helpers/CodeBlockWithCode.svelte"
 
 describe("CodeBlock", () => {
   it("renders code block container", () => {
@@ -56,6 +57,24 @@ describe("CodeBlock", () => {
       },
     })
     expect(component).toBeTruthy()
+  })
+
+  // Highlighting happens after the async onMount (prism-svelte pre-load,
+  // plugin loading), so token markup only appears once the promise chain
+  // settles. The code itself must be passed as snippet children (see
+  // helpers/CodeBlockWithCode.svelte) — CodeBlock reads it from the DOM.
+  it("highlights code with Prism tokens after the async mount", async () => {
+    const { container } = render(CodeBlockWithCode, {
+      props: {
+        code: "const x = 1;",
+        language: "javascript",
+      },
+    })
+
+    await waitFor(() => {
+      expect(container.querySelector(".token.keyword")).toBeTruthy()
+    })
+    expect(container.querySelector("code")?.textContent).toContain("const x = 1;")
   })
 
   it("accepts full plugin URLs", () => {
