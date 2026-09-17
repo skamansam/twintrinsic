@@ -134,6 +134,11 @@
       "svelte": "./dist/components/Form/CalendarInput.svelte",
       "default": "./dist/components/Form/CalendarInput.svelte"
     },
+    "./components/CalendarView": {
+      "types": "./dist/components/CalendarView/CalendarView.svelte.d.ts",
+      "svelte": "./dist/components/CalendarView/CalendarView.svelte",
+      "default": "./dist/components/CalendarView/CalendarView.svelte"
+    },
     "./components/Card": {
       "types": "./dist/components/Card/Card.svelte.d.ts",
       "svelte": "./dist/components/Card/Card.svelte",
