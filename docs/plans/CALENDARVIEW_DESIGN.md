@@ -1,8 +1,10 @@
 # CalendarView — Design Note
 
 > Design for plan item **11.1** in `FEEDBACK_RESOLUTION_PLAN.md` (P1, ⬜ Planned).
-> Status: Draft — not started. Owner: TBD.
+> Status: **Final** — open questions resolved 2026-09-17. Owner: TBD.
 > Companion rename: existing `Form/Calendar.svelte` → **CalendarInput**.
+> Policy: **native APIs only** — Twintrinsic ships zero polyfills; browser-support
+> gaps (Temporal, `Intl.Locale.weekInfo`) are documented so consumers can fill them.
 
 ---
 
@@ -35,19 +37,24 @@ docs/redirect work.
 month arithmetic across DST, weeks per locale, "same instant" comparisons
 across time zones, or date-only values (no midnight trap). Temporal gives
 us all of it natively. Per `CONSOLIDATED_PLAN.md`, native support is
-Chrome/Edge 131+ but **not yet universal** → ship the polyfill.
+Chrome/Edge 131+ but not yet universal — **we code against the native API
+and document the polyfill as a consumer opt-in** (see the consumer note
+under Shared helpers below).
 
-### Dependency
+### Runtime support (no polyfill shipped)
 
-```jsonc
-// package.json
-"@js-temporal/polyfill": "^0.2.1"
+Twintrinsic installs **no polyfill and no date library** — zero new
+dependencies. The component targets native Temporal directly and treats
+`Temporal` as a global, typed via a local ambient declaration:
+
+```ts
+// src/lib/temporal.d.ts — types only, no runtime import
+/// <reference types="@js-temporal/polyfill" />
 ```
 
-Load it as a real dependency (not a lazy polyfill): the component's type
-surface *is* Temporal, and `@js-temporal/polyfill` is a pure-JS,
-no-DOM package that installs globals only when the runtime lacks them.
-When native support is universal, bump `targets`/browserslist and drop it.
+That reference is dev-dependency-only (types for the editor); it
+contributes nothing to the bundle. When Temporal support is universal,
+the only cleanup is deleting the declaration file.
 
 ### The three types, and when each is used
 
@@ -76,37 +83,46 @@ Per-file modules, imported relatively inside components, `.js` extensions
 
 ```
 src/lib/helpers/
-  temporalPolyfill.ts   // side-effect import of the polyfill + re-export of Temporal
-  calendarGrid.ts       // buildMonthGrid(), weekdayHeaders()
+  calendarGrid.ts       // buildMonthGrid(), weekdayHeaders() — native Temporal only
   eventNormalize.ts     // toInterval(event): { startDay, endDay, startTime?, endTime? }
   eventGroup.ts         // groupEvents(events, { grouping }): GroupedEvent[]
 ```
 
-`temporalPolyfill.ts` is the single import site:
+All helpers read `Temporal` as a **global** (typed by
+`src/lib/temporal.d.ts`) — there is no import site to swap and nothing to
+rewrite when the polyfill era ends.
+
+**Consumer polyfill note (docs requirement).** The component and its docs
+page must carry a **Browser support** callout (same pattern as the
+Baseline-status notes used on the Tabs page): CalendarView requires
+**native Temporal** (Chrome/Edge 131+; check current Baseline status when
+shipping), and consumers targeting older browsers install the polyfill
+themselves — typically as the first import of their app entry or layout:
 
 ```ts
-// Every CalendarView-adjacent file imports Temporal from here, never
-// directly from the polyfill package, so a future native-only build
-// touches exactly one file.
-import { Temporal } from "@js-temporal/polyfill";
-export { Temporal };
+// consumer's app entry — their choice, their bundle
+import "@js-temporal/polyfill";
 ```
+
+The polyfill only defines `Temporal` where the runtime lacks it, so it is
+a no-op on evergreen browsers. Twintrinsic never imports it, never
+installs it, and does not global-patch anything.
 
 ---
 
 ## 2. Month grid algorithm
 
 A month grid is **42 `PlainDate`s, no `Date`, no loops over days-as-ints**.
-All arithmetic is calendar-aware by construction (TemporaI knows months
+All arithmetic is calendar-aware by construction (Temporal knows months
 have different lengths and that `dayOfWeek` is ISO Mon=1…Sun=7).
 
 ```ts
-import { Temporal } from "./temporalPolyfill.js";
+// Temporal is a typed global (src/lib/temporal.d.ts) — no import, no polyfill.
 
 /** Options for buildMonthGrid. */
 interface GridOptions {
-  /** 0 = Sunday … 6 = Saturday. `undefined` = derive from Temporal locale. */
-  weekStart?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  /** 0 = Sunday … 6 = Saturday. `"auto"` = derive from the Temporal locale. */
+  weekStart?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | "auto";
 }
 
 /**
@@ -116,12 +132,15 @@ interface GridOptions {
  */
 function buildMonthGrid(
   month: Temporal.PlainDate,            // any date inside the target month
-  { weekStart = 1 }: GridOptions = {},
+  { weekStart = "auto" }: GridOptions = {},
 ): Temporal.PlainDate[] {
+  // "auto": Intl.Locale.prototype.weekInfo.firstDay where available
+  // (Chromium 131+/Safari 18.4+); ISO Monday fallback elsewhere.
+  const start = weekStart === "auto" ? localeFirstDay() : weekStart;
   const first = month.with({ day: 1 });
   // Days to step back from the 1st to reach the configured week start.
   // ISO dayOfWeek is Mon=1..Sun=7; map into weekStart space and shift.
-  const back = (first.dayOfWeek - 1 - weekStart + 7) % 7;
+  const back = (first.dayOfWeek - 1 - start + 7) % 7;
   const gridStart = first.subtract({ days: back });
   return Array.from({ length: 42 }, (_, i) => gridStart.add({ days: i }));
 }
@@ -129,9 +148,10 @@ function buildMonthGrid(
 
 Details that matter:
 
-- **`weekStart` default: derive from locale.** `new Intl.Locale(navigator.language)`
-  exposes `weekInfo.firstDay` in Chrome 131+/Safari 18.4+; fall back to
-  `1` (Monday) where absent. The prop overrides the locale.
+- **`weekStart` default: derive from locale (`"auto"`).**
+  `new Intl.Locale(navigator.language).weekInfo?.firstDay` where available
+  (Chromium 131+/Safari 18.4+); **ISO Monday fallback** where absent
+  (Firefox) — resolved decision #2. The prop overrides the locale.
 - **42 fixed cells** (6 rows × 7) — simplifies CSS (`grid-rows-6`), e2e
   selectors, and keyboard End-key math. Some months leave a fully-bleed
   final row; that row is hidden with CSS (`:has()` on the row container
@@ -250,7 +270,7 @@ with static multi-source data, which is also how tests and stories demo it.
 
 ---
 
-## 5. Component API
+## 5. Component API (no polyfill shipped)
 
 ```svelte
 <CalendarView
@@ -330,18 +350,29 @@ with static multi-source data, which is also how tests and stories demo it.
 | # | Deliverable | Includes |
 |---|---|---|
 | 1 | **CalendarInput rename** | §0 table, zero behavior change, docs redirect, e2e/unit/story renames green |
-| 2 | **Month grid MVP** | `temporalPolyfill` + `calendarGrid` helpers, header/weekday/cell rendering, today/selection, paging, ARIA grid + keyboard, unit tests for the grid math (42 cells, weekStart variants, month-length clamping) |
+| 2 | **Month grid MVP** | `calendarGrid` helpers (native Temporal global + `temporal.d.ts`), header/weekday/cell rendering, today/selection, paging, ARIA grid + keyboard, unit tests for the grid math (42 cells, weekStart variants, month-length clamping); **no polyfill installed** |
 | 3 | **Events** | `eventNormalize`, static `events` render, chips with icon/badge/color/status, `eventContent` snippet, `+N more` popover |
 | 4 | **Grouping** | `eventGroup` (uid key → fallback key), count badge, color dots, `grouping` toggle demo with two fake calendars |
 | 5 | **Import** | `parseICal` (+ tests with real Google-export samples), recurring-flag marker |
 | 6 | **Connectivity recipe** | `calendars`/`fetchEvents` contract, docs recipes for Google/Outlook/Apple, `week`/`day` views, RRULE expansion |
 | 7 | **Checklist close-out** | Storybook story, docs page (i18n en/es/fa), e2e (render, keyboard, grouping toggle), `check`/`check:i18n`/`check:assets` green, completion page updated |
 
-## Open questions
+## Resolved decisions (2026-09-17)
 
-1. **RRULE expansion** in v1 (milestone 5) or defer to 6? Proposal: defer —
-   grouping and import don't need it.
-2. **`Intl.Locale.weekInfo`** absence (Firefox): acceptable to default
-   Monday, or ship a tiny locale→firstDay map for the top 20 locales?
-3. **Event editing** (drag to reschedule): explicitly out of scope for
-   11.1; revisit as a separate plan item if requested.
+1. **RRULE expansion — deferred to milestone 6.** Milestone 5 ships .ics
+   parsing with recurring events marked (`recurring: true` + icon marker,
+   base instance only). Grouping and import don't need expansion, and a
+   correct RRULE engine deserves its own reviewed milestone.
+2. **`weekStart: "auto"` falls back to ISO Monday** where
+   `Intl.Locale.prototype.weekInfo` is missing (currently Firefox).
+   Consumers override with `weekStart={0}` or `{1}` — the prop is the
+   documented remedy, so no locale→firstDay lookup table ships. The docs
+   **Browser support** callout lists `weekInfo` alongside Temporal.
+3. **Event editing (drag to reschedule) is out of scope for 11.1.**
+   CalendarView is a read-centric view in v1; revisit as a separate plan
+   item if requested.
+
+**Finalized:** the design is ready for milestone 1 (CalendarInput rename).
+The no-polyfill policy is reflected throughout: zero runtime dependencies,
+`Temporal` as a typed global, and a required **Browser support** consumer
+note in the docs page.
