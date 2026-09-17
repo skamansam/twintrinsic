@@ -116,10 +116,11 @@ Keep the stub minimal: heading + one paragraph with the target link.
 ### Checking your work
 
 ```bash
-pnpm check:i18n        # no untranslated prose; backlog must not grow
-pnpm check:assets      # every docs demo asset URL resolves under static/
-pnpm check             # 0 errors after recompiling paraglide
-pnpm test:unit         # 105+ test files
+pnpm check:i18n          # no untranslated prose; backlog must not grow
+pnpm check:assets        # every docs demo asset URL resolves under static/
+pnpm check:placeholders  # no placeholder tests (expect(true), …) anywhere under tests/
+pnpm check               # 0 errors after recompiling paraglide
+pnpm test:unit           # 105+ test files
 ```
 
 The e2e suite (`pnpm test:e2e`) includes `tests/e2e/DirToggle.test.js`,
@@ -158,7 +159,8 @@ and commit the result alongside your message-file changes.
 
 ## Pull requests
 
-- Run `pnpm check`, `pnpm test:unit`, `pnpm check:i18n`, and `pnpm check:assets` before pushing.
+- Run `pnpm check`, `pnpm test:unit`, `pnpm check:i18n`, `pnpm check:assets`, and
+  `pnpm check:placeholders` before pushing.
 - Component changes additionally need `pnpm test:e2e` and updated
   Storybook stories + docs pages (see the checklist in AGENTS.md).
 - Keep commits focused; the repo uses conventional-commit subjects

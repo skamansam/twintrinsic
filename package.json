@@ -19,6 +19,7 @@
     "check:a11y": "bash scripts/check-a11y.sh",
     "check:i18n": "node scripts/check-i18n.mjs",
     "check:assets": "node scripts/check-static-assets.mjs",
+    "check:placeholders": "node scripts/check-test-placeholders.mjs",
     "format": "biome format --write .",
     "lint": "biome lint .",
     "test:e2e": "playwright test",

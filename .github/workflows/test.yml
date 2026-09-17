@@ -50,6 +50,7 @@ jobs:
       - run: pnpm check:a11y
       - run: pnpm check:i18n
       - run: pnpm check:assets
+      - run: pnpm check:placeholders
       - run: pnpm validate:exports
 
   storybook:
