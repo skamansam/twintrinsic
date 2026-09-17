@@ -350,8 +350,8 @@ with static multi-source data, which is also how tests and stories demo it.
 
 | # | Deliverable | Includes |
 |---|---|---|
-| 1 | **CalendarInput rename** | §0 table, zero behavior change, docs redirect, e2e/unit/story renames green |
-| 2 | **Month grid MVP** | `calendarGrid` helpers (native Temporal global + `temporal.d.ts`), header/weekday/cell rendering, today/selection, paging, ARIA grid + keyboard, unit tests for the grid math (42 cells, weekStart variants, month-length clamping); **no polyfill installed** |
+| 1 | **CalendarInput rename** ✅ | §0 table, zero behavior change, docs redirect, e2e/unit/story renames green |
+| 2 | **Month grid MVP** 🚧 | `calendarGrid` helpers (native Temporal global + `temporal.d.ts`) ✅ with 22 passing unit tests; header/weekday/cell rendering, today/selection, paging, ARIA grid + keyboard remaining; **no polyfill installed** |
 | 3 | **Events** | `eventNormalize`, static `events` render, chips with icon/badge/color/status, `eventContent` snippet, `+N more` popover |
 | 4 | **Grouping** | `eventGroup` (uid key → fallback key), count badge, color dots, `grouping` toggle demo with two fake calendars |
 | 5 | **Import** | `parseICal` (+ tests with real Google-export samples), recurring-flag marker |

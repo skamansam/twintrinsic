@@ -631,6 +631,7 @@
     "@biomejs/biome": "2.5.0",
     "@chromatic-com/storybook": "^5.3.0",
     "@inlang/paraglide-js": "^2.24.1",
+    "@js-temporal/polyfill": "^0.5.1",
     "@oddbird/css-anchor-positioning": "^0.10.2",
     "@oddbird/popover-polyfill": "^0.7.2",
     "@playwright/test": "^1.62.1",
