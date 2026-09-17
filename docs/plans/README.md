@@ -9,6 +9,7 @@ This folder contains planning documents for Twintrinsic.
 | **[CONSOLIDATED_PLAN.md](./CONSOLIDATED_PLAN.md)** | Single source of truth — project status, completed work, future plans, API reference |
 | **[COMPONENT_MODERNIZATION_PLAN_2026.md](./COMPONENT_MODERNIZATION_PLAN_2026.md)** | Detailed 2026 modernization plan — minimal JS, maximum native APIs |
 | **[E2E_TO_STORYBOOK_MIGRATION_PLAN.md](./E2E_TO_STORYBOOK_MIGRATION_PLAN.md)** | E2E test migration strategy (Draft — Phase A complete, B/C pending) |
+| **[CALENDARVIEW_DESIGN.md](./CALENDARVIEW_DESIGN.md)** | CalendarView design note — Temporal date model, month grid, event grouping, connectivity (plan item 11.1, Draft) |
 
 ## Guidelines for Planning Files
 
