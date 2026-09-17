@@ -43,7 +43,7 @@ export function loadPlatformPolyfills(): Promise<void> {
 
     // Interest Invokers (interestfor attribute) — Chrome 142+, Edge 142+.
     // Polyfill for Firefox / Safari where the attribute is not yet supported.
-    if (!HTMLButtonElement.prototype.hasOwnProperty("interestForElement")) {
+    if (!Object.hasOwn(HTMLButtonElement.prototype, "interestForElement")) {
       tasks.push(import(/* @vite-ignore */ "interestfor"))
     }
 

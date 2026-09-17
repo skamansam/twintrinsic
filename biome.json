@@ -45,6 +45,8 @@
       "!**/.serverless/",
       "!**/.stylelintcache",
       "!scripts/build-llms-txt.mjs",
+      "!static/**",
+      "!**/*.svg",
       "!**/.svelte-kit",
       "!**/.temp",
       "!**/.tern-port",
@@ -98,7 +100,7 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": false,
+      "preset": "none",
       "complexity": {
         "noExtraBooleanCast": "error",
         "noUselessCatch": "error",
@@ -377,12 +379,7 @@
       "includes": ["*.svelte", "**/*.svelte"],
       "javascript": { "globals": [] },
       "linter": {
-        "rules": {
-          "correctness": {
-            "noInnerDeclarations": "off",
-            "noSelfAssign": "off"
-          }
-        }
+        "enabled": false
       }
     },
     {

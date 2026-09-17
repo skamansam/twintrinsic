@@ -26,8 +26,7 @@ test.describe("ThemeToggle docs page", () => {
   test("a single toggle has proper ARIA label and hidden checkbox", async ({
     page,
   }) => {
-    const toggle = page.getByTestId("theme-basic");
-    const button = toggle.locator(".tw-theme-toggle-button").first();
+    const button = page.getByTestId("theme-basic").locator(".tw-theme-toggle-button").first();
     await expect(button).toBeVisible();
     const checkbox = toggle.locator("input[type='checkbox']").first();
     await expect(checkbox).toBeAttached();
@@ -36,8 +35,7 @@ test.describe("ThemeToggle docs page", () => {
   });
 
   test("moon and sun icons are attached", async ({ page }) => {
-    const toggle = page.getByTestId("theme-basic");
-    const button = toggle.locator(".tw-theme-toggle-button").first();
+    const button = page.getByTestId("theme-basic").locator(".tw-theme-toggle-button").first();
 
     const moonIcon = button.locator(".tw-theme-toggle-icon-moon");
     const sunIcon = button.locator(".tw-theme-toggle-icon-sun");
@@ -46,8 +44,7 @@ test.describe("ThemeToggle docs page", () => {
   });
 
   test("clicking the toggle swaps the checked state", async ({ page }) => {
-    const toggle = page.getByTestId("theme-basic");
-    const button = toggle.locator(".tw-theme-toggle-button").first();
+    const button = page.getByTestId("theme-basic").locator(".tw-theme-toggle-button").first();
     const checkbox = toggle.locator("input[type='checkbox']").first();
 
     const checkedBefore = await checkbox.isChecked();
@@ -90,8 +87,7 @@ test.describe("ThemeToggle docs page", () => {
   });
 
   test("toggle changes the document data-theme attribute", async ({ page }) => {
-    const toggle = page.getByTestId("theme-basic");
-    const button = toggle.locator(".tw-theme-toggle-button").first();
+    const button = page.getByTestId("theme-basic").locator(".tw-theme-toggle-button").first();
 
     const themeBefore = await page.evaluate(() =>
       document.documentElement.getAttribute("data-theme"),
@@ -104,7 +100,8 @@ test.describe("ThemeToggle docs page", () => {
       document.documentElement.getAttribute("data-theme"),
     );
 
-    // The theme should have changed (or at least the attribute should exist).
+    // The theme should have flipped to the other value, not just exist.
     expect(themeAfter).toBeTruthy();
+    expect(themeAfter).not.toBe(themeBefore);
   });
 });

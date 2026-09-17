@@ -27,7 +27,7 @@ const mockMarkerInstance = {
 const mockLayerInstance = { addTo: vi.fn() };
 
 vi.mock("leaflet", () => {
-	function Map() {
+	function LMap() {
 		return mockMapInstance;
 	}
 	function Icon() {
@@ -46,8 +46,8 @@ vi.mock("leaflet", () => {
 		return mockMarkerInstance;
 	}
 	return {
-		default: { Map, Icon, DivIcon, ImageOverlay, TileLayer, Marker, CRS: { Simple: {} } },
-		Map,
+		default: { Map: LMap, Icon, DivIcon, ImageOverlay, TileLayer, Marker, CRS: { Simple: {} } },
+		Map: LMap,
 		Icon,
 		DivIcon,
 		ImageOverlay,

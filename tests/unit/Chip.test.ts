@@ -26,8 +26,8 @@ describe("Chip", () => {
   it("renders chip with deletable", () => {
     const { container } = render(Chip, {
       props: {
-        onclick: () => {},
-        onremove: () => {},
+        onclick: () => { /* stub */ },
+        onremove: () => { /* stub */ },
         children: () => "Deletable",
       },
     })

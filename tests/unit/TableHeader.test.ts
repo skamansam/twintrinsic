@@ -7,7 +7,7 @@ describe("TableHeader", () => {
     const { container } = render(TableHeader, {
       props: {
         width: 100,
-        onsort: (dir: string) => {},
+        onsort: (dir: string) => { /* stub */ },
         children: () => "Header",
       },
     })
@@ -18,7 +18,7 @@ describe("TableHeader", () => {
     const { container } = render(TableHeader, {
       props: {
         width: 100,
-        onsort: (dir: string) => {},
+        onsort: (dir: string) => { /* stub */ },
         children: () => "Header content",
       },
     })

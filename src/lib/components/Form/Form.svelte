@@ -214,7 +214,6 @@ function handleSubmit(event: Event): void {
   const resetSubmitting = (): void => {
     isSubmitting = false
   }
-  // biome-ignore lint/suspicious/noExplicitAny: setTimeout this context workaround
   globalThis.setTimeout(resetSubmitting, 100)
 }
 

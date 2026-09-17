@@ -15,10 +15,9 @@
  * ## Scope
  *
  * Every `*.test.*` / `*.spec.*` file under `tests/` — unit (jsdom) and
- * e2e (Playwright) alike, since both share the placeholder pattern.
- * Storybook interaction tests live in `stories/*.stories.svelte` and are
- * not scanned (no placeholder has ever lived there; extend the walk if
- * that changes).
+ * e2e (Playwright) alike, since both share the placeholder pattern —
+ * plus every `*.stories.svelte` / `*.stories.ts` under `stories/`:
+ * Storybook interaction tests are tests and rot the same way.
  *
  * ## What counts as a placeholder
  *
@@ -47,10 +46,13 @@ import { readdir, readFile } from "node:fs/promises";
 import { join, relative, sep } from "node:path";
 
 const ROOT = process.cwd();
-const TESTS_DIR = join(ROOT, "tests");
+const SCAN_DIRS = [join(ROOT, "tests"), join(ROOT, "stories")];
 
 /** Files considered test files. */
 const TEST_FILE_RE = /\.(test|spec)\.[cm]?[jt]sx?$/;
+
+/** Storybook story files (interaction tests live here too). */
+const STORIES_FILE_RE = /\.stories\.[cm]?[jt]sx?$/;
 
 /**
  * Regions removed wholesale before scanning: block comments and line-start
@@ -80,7 +82,7 @@ function stripInPlace(source, regex) {
 }
 
 /**
- * Recursively find test files under a directory.
+ * Recursively find test and story files under a directory.
  * @param {string} dir
  * @yields {string}
  */
@@ -93,7 +95,8 @@ async function* walkTests(dir) {
       yield* walkTests(path);
       continue;
     }
-    if (entry.isFile() && TEST_FILE_RE.test(entry.name)) yield path;
+    if (entry.isFile() && (TEST_FILE_RE.test(entry.name) || STORIES_FILE_RE.test(entry.name)))
+      yield path;
   }
 }
 
@@ -144,18 +147,20 @@ async function main() {
   const byFile = new Map();
   let fileCount = 0;
 
-  for await (const path of walkTests(TESTS_DIR)) {
-    fileCount++;
-    const source = await readFile(path, "utf-8");
-    const found = findPlaceholders(source);
-    if (found.length === 0) continue;
-    if (allowed.has(relative(ROOT, path))) continue;
-    byFile.set(relative(ROOT, path), found);
+  for (const dir of SCAN_DIRS) {
+    for await (const path of walkTests(dir)) {
+      fileCount++;
+      const source = await readFile(path, "utf-8");
+      const found = findPlaceholders(source);
+      if (found.length === 0) continue;
+      if (allowed.has(relative(ROOT, path))) continue;
+      byFile.set(relative(ROOT, path), found);
+    }
   }
 
   if (byFile.size > 0) {
     const total = [...byFile.values()].reduce((sum, list) => sum + list.length, 0);
-    console.error(`\n✖ ${total} placeholder assertion(s) in ${byFile.size} test file(s):\n`);
+    console.error(`\n✖ ${total} placeholder assertion(s) in ${byFile.size} test/story file(s):\n`);
     for (const [file, found] of byFile) {
       console.error(`  ${file}`);
       for (const { line, snippet } of found) {
@@ -174,7 +179,7 @@ async function main() {
   }
 
   console.log(
-    `✔ No placeholder assertions across ${fileCount} test file(s) under tests/.`,
+    `✔ No placeholder assertions across ${fileCount} test/story file(s) under tests/ and stories/.`,
   );
 }
 

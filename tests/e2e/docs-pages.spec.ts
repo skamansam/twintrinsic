@@ -149,17 +149,6 @@ const componentPages: [string, string, string[]][] = [
 ];
 
 /**
- * Standardised section headings that every docs page should have.
- * We check for h2 headings matching these patterns.
- */
-const requiredSections = [
-  { pattern: /description|overview|what/i, label: "Description" },
-  { pattern: /example/i, label: "Examples" },
-  { pattern: /prop/i, label: "Props" },
-  { pattern: /accessibility|a11y/i, label: "Accessibility" },
-];
-
-/**
  * Interactive components should additionally have keyboard docs.
  */
 const interactiveComponents = new Set([

@@ -62,7 +62,7 @@ describe("FormField", () => {
   })
 
   it("shows a standalone error immediately with role=alert and aria-invalid", () => {
-    const { getByRole, getByText } = render(FormFieldHarness, {
+    const { getByRole } = render(FormFieldHarness, {
       props: {
         field: TextInput,
         fieldProps: { id: "user-input", ariaLabel: "Username" },

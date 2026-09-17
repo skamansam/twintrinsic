@@ -216,7 +216,7 @@ describe("Select (native HTML wrapper)", () => {
 		// Note: The current Select component does not support optionLabel/optionValue
 		// props — options must use { value, label } directly. These tests are skipped
 		// until the feature is added (see docs/plans/BUILD_WARNINGS_PLAN.md).
-		it.skip("uses custom optionLabel property", () => {});
-		it.skip("uses custom optionValue for value attribute", () => {});
+		it.skip("uses custom optionLabel property", () => { /* unimplemented: see BUILD_WARNINGS_PLAN.md */ });
+		it.skip("uses custom optionValue for value attribute", () => { /* unimplemented: see BUILD_WARNINGS_PLAN.md */ });
 	});
 });

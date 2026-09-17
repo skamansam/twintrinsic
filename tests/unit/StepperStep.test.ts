@@ -9,7 +9,7 @@ describe("StepperStep", () => {
         title: "Step 1",
         subtitle: "Subtitle",
         icon: undefined,
-        onClick: () => {},
+        onClick: () => { /* stub */ },
         children: () => "Step",
       },
     })
@@ -22,7 +22,7 @@ describe("StepperStep", () => {
         title: "Step 1",
         subtitle: "Subtitle",
         icon: undefined,
-        onClick: () => {},
+        onClick: () => { /* stub */ },
         children: () => "StepperStep content",
       },
     })

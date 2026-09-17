@@ -22,9 +22,9 @@ beforeEach(() => {
 			constructor(cb: (entries: FakeEntry[]) => void) {
 				observerCallback = cb;
 			}
-			observe() {}
-			unobserve() {}
-			disconnect() {}
+			observe() { /* tests fire the callback manually */ }
+			unobserve() { /* no-op */ }
+			disconnect() { /* no-op */ }
 			takeRecords() {
 				return [];
 			}

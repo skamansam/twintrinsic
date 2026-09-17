@@ -11,9 +11,9 @@ if (typeof globalThis.ResizeObserver === "undefined") {
   // Minimal no-op ResizeObserver — components only call .observe() and
   // .disconnect(), and read layout from the DOM directly.
   globalThis.ResizeObserver = class ResizeObserver {
-    observe() {}
-    unobserve() {}
-    disconnect() {}
+    observe() { /* jsdom has no layout; nothing to track */ }
+    unobserve() { /* no-op */ }
+    disconnect() { /* no-op */ }
   } as unknown as typeof ResizeObserver;
 }
 
@@ -22,9 +22,9 @@ if (typeof globalThis.IntersectionObserver === "undefined") {
     readonly root: Element | null = null;
     readonly rootMargin = "0px";
     readonly thresholds: ReadonlyArray<number> = [];
-    observe() {}
-    unobserve() {}
-    disconnect() {}
+    observe() { /* jsdom has no layout; tests fire the callback manually */ }
+    unobserve() { /* no-op */ }
+    disconnect() { /* no-op */ }
     takeRecords(): IntersectionObserverEntry[] {
       return [];
     }
@@ -53,7 +53,7 @@ if (typeof window !== "undefined" && typeof window.Element.prototype.animate !==
       addEventListener(type: string, listener: (event?: unknown) => void) {
         if (type === "finish") queueMicrotask(() => listener());
       },
-      removeEventListener() {},
+      removeEventListener() { /* no-op */ },
     };
     queueMicrotask(() => animation.onfinish?.());
     return animation as unknown as Animation;

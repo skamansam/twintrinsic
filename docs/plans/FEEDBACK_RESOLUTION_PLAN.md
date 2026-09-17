@@ -173,6 +173,16 @@ These items touch multiple components or the project as a whole.
 
 ---
 
+## 11. New Feature Requests
+
+New components/features requested after the original feedback sweep.
+
+| # | Priority | Issue | Status |
+|---|----------|-------|--------|
+| 11.1 | P1 | **New: CalendarView component built on the Temporal API, with the existing Calendar renamed to CalendarInput.** The current date-picking Calendar becomes **CalendarInput** (rename component, `src/lib/index.ts` + `twintrinsic/components/CalendarInput` subpath export, stories/tests, docs route `docs/components/CalendarInput/CalendarInput`, redirect stub left at the old Calendar route per the 1.8 convention). The new **CalendarView** renders a regular calendar grid (month grid minimum; week/day views desirable) and supports: **(a) Events** — add events via a data-driven `events` prop and snippet/event-content slots; **(b) Temporal API foundation** — `Temporal.PlainDate` / `PlainDateTime` / `ZonedDateTime` for date math, time zones, and ranges (polyfill via `@js-temporal/polyfill` until native support is universal); **(c) External calendar connectivity** — adapters for Google Calendar, Microsoft (Outlook/365), Apple (iCal/CalDAV), and other popular calendaring applications, with iCalendar (.ics) as the common-denominator sync format; **(d) Import** — accept Google Calendar exports (.ics/CSV), iCalendar (.ics), and other common formats; **(e) Event grouping (headline feature)** — a toggle that merges the same event appearing on multiple calendars into one visual event, with a badge showing the number of sources/people (dedup via iCal UID first, title+time fallback); **(f) Rich event display** — events can carry badges, icons, per-calendar colors, and status markers (recurring, cancelled, …), with snippet slots for full custom rendering. Must follow the standard component checklist: ARIA grid pattern with full keyboard navigation, WCAG 2.1 AA, restProps + `data-*`/`aria-*` index signatures, unit + e2e tests, Storybook story, docs page, i18n for all three locales. | ⬜ Planned |
+
+---
+
 ## Summary
 
 | Category | Done | Remaining P1 | Remaining P2 | Remaining P3 | Total Items |
@@ -187,9 +197,10 @@ These items touch multiple components or the project as a whole.
 | Feedback | 5 | 0 | 0 | 0 | 5 |
 | Utility / Theming | 2 | 0 | 0 | 0 | 2 |
 | Cross-Cutting | 7 | 0 | 0 | 0 | 7 |
-| **Total** | **81** | **0** | **2** | **2** | **85** |
+| New Feature Requests | 0 | 1 | 0 | 0 | 1 |
+| **Total** | **82** | **1** | **2** | **2** | **86** |
 
-> **Last counted 2026-09-13.** 87 of 87 items completed (100%). All P1, P2, and P3 items complete — including the i18n sweep (1.9: all 120 docs pages i18n-enabled, 0 untranslated prose per `pnpm check:i18n`), `llms.txt` prose resolution (1.11), and FormBuilder `$ref`/composition resolution (7.10). The USER_FEEDBACK.md backlog is fully resolved.
+> **Last counted 2026-09-17.** 87 of 88 items completed — the USER_FEEDBACK.md backlog is fully resolved (100%); the single open item is the new **11.1 CalendarView** feature request (Temporal-API calendar grid with external-calendar connectivity, import, event grouping, and rich event display).
 
 ---
 
@@ -240,3 +251,14 @@ These items touch multiple components or the project as a whole.
 1. ✅ FormBuilder component (OpenAPI spec → form generation) — inline OpenAPI Schema Object or explicit field-descriptor arrays generate a full accessible form (string/enum/number/boolean/array/object → TextInput/Select/NumberInput/Switch/ListInput/nested fieldset), seeded via `values`, validated natively, submitted through `<Form>`. `$ref` (JSON-pointer incl. nested paths), `allOf` (merged field sets), and `oneOf`/`anyOf` (first concrete variant) resolution shipped via the `components` prop.
 2. ✅ Persian translation of demo pages — `/demo` and `/demo/paraglide` render in fa with RTL
 3. ✅ Paraglide integration for component-level i18n — `LocaleSwitcher` + `DemoBadge` demo the pattern (messages via `m()` inside components); library components themselves stay copy-free via props
+
+### Phase 7: Next (New Feature Requests)
+1. **CalendarView component (11.1):**
+  1. Rename existing Calendar → CalendarInput (component, exports, stories, tests, docs route + redirect stub)
+  2. Build CalendarView month grid on Temporal types (`@js-temporal/polyfill`); add week/day views
+  3. Event model: data-driven `events` prop + snippet content slots, badges/icons/colors/status markers
+  4. Import: iCalendar (.ics) parser; Google Calendar CSV/ics export support
+  5. Connectivity adapters: Google Calendar, Microsoft Outlook/365, Apple CalDAV/iCal (iCal UID as dedup key)
+  6. Event grouping toggle: merge same-event-across-calendars into one display event with a source-count badge
+  7. Accessibility: ARIA grid pattern, keyboard navigation, WCAG 2.1 AA
+  8. Ship the full component checklist: unit + e2e tests, story, docs page (i18n en/es/fa), restProps/index signatures

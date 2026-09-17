@@ -7,7 +7,7 @@ describe("TableRow", () => {
     const { container } = render(TableRow, {
       props: {
         data: {},
-        onclick: (row: any) => {},
+        onclick: (row: unknown) => { /* stub */ },
         children: () => "Row",
       },
     })
@@ -18,7 +18,7 @@ describe("TableRow", () => {
     const { container } = render(TableRow, {
       props: {
         data: {},
-        onclick: (row: any) => {},
+        onclick: (row: unknown) => { /* stub */ },
         children: () => "Row content",
       },
     })
