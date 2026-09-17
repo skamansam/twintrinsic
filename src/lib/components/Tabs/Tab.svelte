@@ -98,11 +98,15 @@ function handleKeydown(event: KeyboardEvent): void {
   }
 }
 
-// Generate unique ID if not provided (read prop directly — no shadowing $derived needed)
-const tabId = $derived(id || `tab-${crypto.randomUUID()}`)
+// Generate unique ID if not provided. Auto ids derive from the tab's
+// registration index so the Tab/TabPanel id references resolve: the tab
+// button is `tab-{index}` and its panel is `panel-{index}` (mirrored in
+// TabPanel.svelte). Before registration (index = -1) a placeholder id is
+// used; onMount corrects it before user interaction.
+const tabId = $derived(id || `tab-${index}`)
 
 // Panel ID for aria-controls
-const panelId = $derived(`panel-${tabId}`)
+const panelId = $derived(`panel-${id ?? index}`)
 </script>
 
 <button {...restProps}

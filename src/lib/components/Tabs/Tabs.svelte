@@ -244,6 +244,7 @@ const sizeClasses = $derived(
       {#each tabs as tab, i}
         <button
           type="button"
+          id="tab-{i}"
           class="tab {tab.disabled ? 'opacity-50 cursor-not-allowed' : ''}"
           role="tab"
           aria-selected={selectedIndex === i}

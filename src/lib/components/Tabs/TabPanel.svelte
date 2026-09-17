@@ -101,11 +101,14 @@ $effect(() => {
 // Determine if content should be rendered
 const shouldRenderContent = $derived(isSelected || (keepAlive && hasBeenSelected) || !lazy)
 
-// Generate unique ID if not provided (read prop directly — no shadowing $derived needed)
-const panelId = $derived(id || `panel-${crypto.randomUUID()}`)
+// Generate unique ID if not provided. Auto ids derive from the panel's
+// registration index so the references resolve: this element is
+// `panel-{index}` and its tab button is `tab-{index}` (mirrored in
+// Tab.svelte). A consumer-supplied `id` keeps prior behavior.
+const panelId = $derived(id || `panel-${index}`)
 
 // Tab ID for aria-labelledby
-const tabId = $derived(`tab-${panelId.replace("panel-", "")}`)
+const tabId = $derived(`tab-${id ?? index}`)
 </script>
 
 <div {...restProps}

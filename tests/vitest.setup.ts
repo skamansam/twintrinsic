@@ -31,6 +31,35 @@ if (typeof globalThis.IntersectionObserver === "undefined") {
   } as unknown as typeof IntersectionObserver;
 }
 
+if (typeof window !== "undefined" && typeof window.Element.prototype.animate !== "function") {
+  // jsdom predates the Web Animations API. Svelte's transitions (slide,
+  // fade) call element.animate() during intro/outro: without a stub,
+  // components using them crash at render — and with a fully inert stub,
+  // outros never finish, so leaving elements stay mounted forever
+  // (duplicating keepAlive content). The stub therefore completes every
+  // animation immediately: onfinish fires on a microtask, after Svelte
+  // has assigned the handler.
+  window.Element.prototype.animate = function () {
+    const animation = {
+      cancel() {
+        animation.oncancel?.();
+      },
+      finish() {
+        animation.onfinish?.();
+      },
+      paused: false,
+      onfinish: null as ((event?: unknown) => void) | null,
+      oncancel: null as ((event?: unknown) => void) | null,
+      addEventListener(type: string, listener: (event?: unknown) => void) {
+        if (type === "finish") queueMicrotask(() => listener());
+      },
+      removeEventListener() {},
+    };
+    queueMicrotask(() => animation.onfinish?.());
+    return animation as unknown as Animation;
+  };
+}
+
 if (typeof window !== "undefined" && typeof window.matchMedia === "undefined") {
   Object.defineProperty(window, "matchMedia", {
     writable: true,

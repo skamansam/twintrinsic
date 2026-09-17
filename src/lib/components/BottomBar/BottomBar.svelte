@@ -171,7 +171,7 @@ function handleKeydown(event: KeyboardEvent) {
       {isExpanded ? 'bottombar-expanded' : 'bottombar-collapsed'}
     "
     role="region"
-    aria-labelledby={header ? '{id}-header' : undefined}
+    aria-labelledby={header ? `${id}-header` : undefined}
     aria-label={header ? undefined : ariaLabel}
   >
     {#if collapsible}
