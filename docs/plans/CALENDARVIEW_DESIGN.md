@@ -93,8 +93,9 @@ All helpers read `Temporal` as a **global** (typed by
 rewrite when the polyfill era ends.
 
 **Consumer polyfill note (docs requirement).** The component and its docs
-page must carry a **Browser support** callout (same pattern as the
-Baseline-status notes used on the Tabs page): CalendarView requires
+page must carry a **Browser support** callout — which plan item **11.3**
+generalizes site-wide as a badge beside the page title with a tooltip
+naming the polyfill. CalendarView requires
 **native Temporal** (Chrome/Edge 131+; check current Baseline status when
 shipping), and consumers targeting older browsers install the polyfill
 themselves — typically as the first import of their app entry or layout:
