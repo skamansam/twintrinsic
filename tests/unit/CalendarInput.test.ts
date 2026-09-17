@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/svelte"
 import { describe, expect, it } from "vitest"
-import Calendar from "../../src/lib/components/Form/Calendar.svelte"
+import CalendarInput from "../../src/lib/components/Form/CalendarInput.svelte"
 
-describe("Calendar", () => {
+describe("CalendarInput", () => {
   it("renders a date input", () => {
-    render(Calendar, {
+    render(CalendarInput, {
       props: {
         label: "Select date",
       },
@@ -15,7 +15,7 @@ describe("Calendar", () => {
   })
 
   it("renders with a value", () => {
-    render(Calendar, {
+    render(CalendarInput, {
       props: {
         label: "Date",
         value: new Date(2026, 3, 7),
@@ -26,7 +26,7 @@ describe("Calendar", () => {
   })
 
   it("renders disabled state", () => {
-    render(Calendar, {
+    render(CalendarInput, {
       props: {
         label: "Date",
         disabled: true,
@@ -37,7 +37,7 @@ describe("Calendar", () => {
   })
 
   it("renders with min and max dates", () => {
-    render(Calendar, {
+    render(CalendarInput, {
       props: {
         label: "Date",
         minDate: new Date(2026, 3, 1),
@@ -50,7 +50,7 @@ describe("Calendar", () => {
   })
 
   it("renders without label", () => {
-    const { container } = render(Calendar, {})
+    const { container } = render(CalendarInput, {})
     expect(container.firstChild).toBeTruthy()
     const input = container.querySelector("input[type='date']")
     expect(input).toBeTruthy()

@@ -15,11 +15,11 @@ If neither yields data, EventsTable logs a `console.warn` and renders nothing.
 Usage:
 ```svelte
 <script>
-  import * as Calendar from "twintrinsic/components/Calendar"
+  import * as CalendarInput from "twintrinsic/components/CalendarInput"
   import EventsTable from "twintrinsic/components/EventsTable"
 </script>
 
-<EventsTable component={Calendar} />
+<EventsTable component={CalendarInput} />
 
 <EventsTable
   data={{

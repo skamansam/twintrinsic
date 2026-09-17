@@ -97,7 +97,7 @@ const categories = [
       { name: "AutoComplete", href: "/docs/components/Form/AutoComplete" },
       { name: "Button", href: "/docs/components/Button/Button" },
       { name: "ButtonGroup", href: "/docs/components/Button/ButtonGroup" },
-      { name: "Calendar", href: "/docs/components/Form/Calendar" },
+      { name: "CalendarInput", href: "/docs/components/Form/CalendarInput" },
       { name: "Checkbox", href: "/docs/components/Form/Checkbox" },
       { name: "ColorPicker", href: "/docs/components/Form/ColorPicker" },
       { name: "Combobox", href: "/docs/components/Form/Combobox" },

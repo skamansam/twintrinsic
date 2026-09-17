@@ -1,17 +1,19 @@
 <!--
 @component
-Calendar - A date picker built on the native `<input type="date">` element.
+CalendarInput - A date picker built on the native `<input type="date">` element.
 Uses the browser's built-in date picker for accessibility, validation, and
 localized formatting — free of charge.
 
+For a full calendar **view** with events, see CalendarView (plan 11.1).
+
 Usage:
 ```svelte
-<Calendar
+<CalendarInput
   value={selectedDate}
   onselect={handleSelect}
 />
 
-<Calendar
+<CalendarInput
   label="Birthday"
   minDate={new Date('2026-01-01')}
   maxDate={new Date('2026-12-31')}
@@ -37,15 +39,14 @@ export const propsMetadata = [
 <script lang="ts">
 /**
  * @component
- * Calendar - A date picker built on the native `<input type="date">` element.
+ * CalendarInput - A date picker built on the native `<input type="date">` element.
  *
  * Uses the browser's native date picker for maximum accessibility, validation,
  * and localized formatting. The native picker provides ARIA support, keyboard
  * navigation, and locale-aware date formatting for free.
  *
- * For date range selection, use two Calendar components side by side.
- * For custom calendar grids with week numbers, consider a dedicated
- * calendar library.
+ * For date range selection, use two CalendarInput components side by side.
+ * For a full calendar view with events, see CalendarView.
  */
 import { getContext } from "svelte"
 import type { FormContext, FormFieldApi } from "./formContext.js"

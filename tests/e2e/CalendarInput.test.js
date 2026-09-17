@@ -2,20 +2,20 @@ import { expect, test } from "@playwright/test";
 import { waitForHydration } from "./helpers.js";
 
 /**
- * Docs-site smoke tests for the Calendar component.
+ * Docs-site smoke tests for the CalendarInput component.
  *
- * The Calendar now wraps a native `<input type="date">` — the browser's
+ * CalendarInput wraps a native `<input type="date">` — the browser's
  * built-in date picker handles the calendar UI, so we verify the input
  * renders correctly and responds to user interaction.
  */
-test.describe("Calendar docs page", () => {
+test.describe("CalendarInput docs page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/docs/components/Form/Calendar");
+    await page.goto("/docs/components/Form/CalendarInput");
     await waitForHydration(page);
   });
 
   test("renders the docs page with all live examples", async ({ page }) => {
-    await expect(page.getByRole("heading", { name: "Calendar", level: 1 })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "CalendarInput", level: 1 })).toBeVisible();
     await expect(page.getByTestId("calendar-basic")).toBeVisible();
     await expect(page.getByTestId("calendar-with-value")).toBeVisible();
     await expect(page.getByTestId("calendar-min-max")).toBeVisible();

@@ -1,9 +1,9 @@
 import { expect } from "storybook/test";
-import Calendar from "$lib/components/Form/Calendar.svelte";
+import CalendarInput from "$lib/components/Form/CalendarInput.svelte";
 
 export default {
-  title: "Form/Calendar",
-  component: Calendar,
+  title: "Form/CalendarInput",
+  component: CalendarInput,
   tags: ["autodocs"],
   argTypes: {
     value: { control: "date" },

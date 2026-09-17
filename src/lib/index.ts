@@ -35,7 +35,7 @@ export { default as EventsTable } from "./components/EventsTable/EventsTable.sve
 export { default as Footer } from "./components/Footer/Footer.svelte";
 // Form Components
 export { default as AutoComplete } from "./components/Form/AutoComplete.svelte";
-export { default as Calendar } from "./components/Form/Calendar.svelte";
+export { default as CalendarInput } from "./components/Form/CalendarInput.svelte";
 export { default as Checkbox } from "./components/Form/Checkbox.svelte";
 export { default as ColorPicker } from "./components/Form/ColorPicker.svelte";
 export { default as Combobox } from "./components/Form/Combobox.svelte";

@@ -150,7 +150,7 @@ const siteMenu = $derived([
       { title: "AutoComplete", link: "/docs/components/Form/AutoComplete" },
       { title: "Button", link: "/docs/components/Button/Button" },
       { title: "ButtonGroup", link: "/docs/components/Button/ButtonGroup" },
-      { title: "Calendar", link: "/docs/components/Form/Calendar" },
+      { title: "CalendarInput", link: "/docs/components/Form/CalendarInput" },
       { title: "Checkbox", link: "/docs/components/Form/Checkbox" },
       { title: "ColorPicker", link: "/docs/components/Form/ColorPicker" },
       { title: "Combobox", link: "/docs/components/Form/Combobox" },

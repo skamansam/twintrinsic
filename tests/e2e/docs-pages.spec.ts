@@ -100,7 +100,7 @@ const componentPages: [string, string, string[]][] = [
   ["/docs/components/Form/AutoComplete", "AutoComplete", ["autocomplete-basic"]],
   ["/docs/components/Button/Button", "Button", ["button-basic"]],
   ["/docs/components/Button/ButtonGroup", "ButtonGroup", []],
-  ["/docs/components/Form/Calendar", "Calendar", ["calendar-basic"]],
+  ["/docs/components/Form/CalendarInput", "CalendarInput", ["calendar-basic"]],
   ["/docs/components/Form/Checkbox", "Checkbox", [
     "checkbox-basic", "checkbox-description", "checkbox-indeterminate",
     "checkbox-required", "checkbox-error", "checkbox-disabled", "checkbox-group",
@@ -153,7 +153,7 @@ const componentPages: [string, string, string[]][] = [
  */
 const interactiveComponents = new Set([
   "Accordion", "AccordionItem", "AppHeader", "AutoComplete", "BottomBar",
-  "Button", "Calendar", "Checkbox", "Chip", "ChipGroup", "ColorPicker",
+  "Button", "CalendarInput", "Checkbox", "Chip", "ChipGroup", "ColorPicker",
   "Combobox", "DataTable", "Dropdown", "FileUpload", "FloatLabel",
   "Form", "FormField", "Input", "InputSwitch", "Knob", "ListInput",
   "Listbox", "Menu", "MenuItem", "Modal", "NumberInput", "Panel",

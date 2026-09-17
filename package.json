@@ -129,10 +129,10 @@
       "svelte": "./dist/components/Button/ButtonGroup.svelte",
       "default": "./dist/components/Button/ButtonGroup.svelte"
     },
-    "./components/Calendar": {
-      "types": "./dist/components/Form/Calendar.svelte.d.ts",
-      "svelte": "./dist/components/Form/Calendar.svelte",
-      "default": "./dist/components/Form/Calendar.svelte"
+    "./components/CalendarInput": {
+      "types": "./dist/components/Form/CalendarInput.svelte.d.ts",
+      "svelte": "./dist/components/Form/CalendarInput.svelte",
+      "default": "./dist/components/Form/CalendarInput.svelte"
     },
     "./components/Card": {
       "types": "./dist/components/Card/Card.svelte.d.ts",

@@ -101,7 +101,7 @@ describe("props extraction accuracy", () => {
 
   it("extracts event details for a range of callback shapes", () => {
     const byName = Object.fromEntries(
-      readProps("src/lib/components/Form/Calendar.svelte").map((p) => [p.name, p]),
+      readProps("src/lib/components/Form/CalendarInput.svelte").map((p) => [p.name, p]),
     );
     expect(byName.onselect.eventDetail).toContain("date");
   });
