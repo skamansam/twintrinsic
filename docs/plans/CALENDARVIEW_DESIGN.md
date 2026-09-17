@@ -356,7 +356,8 @@ with static multi-source data, which is also how tests and stories demo it.
 | 4 | **Grouping** | `eventGroup` (uid key → fallback key), count badge, color dots, `grouping` toggle demo with two fake calendars |
 | 5 | **Import** | `parseICal` (+ tests with real Google-export samples), recurring-flag marker |
 | 6 | **Connectivity recipe** | `calendars`/`fetchEvents` contract, docs recipes for Google/Outlook/Apple, `week`/`day` views, RRULE expansion |
-| 7 | **Checklist close-out** | Storybook story, docs page (i18n en/es/fa), e2e (render, keyboard, grouping toggle), `check`/`check:i18n`/`check:assets` green, completion page updated |
+| 7 | **Drag-to-edit** | `draggable` events + cell `dragover`/`drop` (HTML DnD API), `oneventmove` callback, keyboard-editing alternative, e2e drag test |
+| 8 | **Checklist close-out** | Storybook story, docs page (i18n en/es/fa), e2e (render, keyboard, grouping toggle), `check`/`check:i18n`/`check:assets` green, completion page updated |
 
 ## Resolved decisions (2026-09-17)
 
@@ -369,9 +370,7 @@ with static multi-source data, which is also how tests and stories demo it.
    Consumers override with `weekStart={0}` or `{1}` — the prop is the
    documented remedy, so no locale→firstDay lookup table ships. The docs
    **Browser support** callout lists `weekInfo` alongside Temporal.
-3. **Event editing (drag to reschedule) is out of scope for 11.1.**
-   CalendarView is a read-centric view in v1; revisit as a separate plan
-   item if requested.
+3. **Event editing (drag to reschedule) is IN scope, via the native HTML Drag and Drop API** — no pointer-event framework, no library. Events are `draggable` (mouse) with a **keyboard-editing alternative** (select event → Enter opens an editor / arrow keys move by day — DnD is pointer-only and must never be the only path); `dragover` on cells is handled to highlight drop targets and compute the target `PlainDate`; `drop` moves the event's `start` by the day delta, routing through a new `oneventmove` callback (`{ event, from, to }`) so the consumer owns state. Limits documented: HTML DnD has no touch support (desktop-only) and cannot resize event durations — resizing would need pointer events, explicitly out of 11.1 scope.
 
 **Finalized:** the design is ready for milestone 1 (CalendarInput rename).
 The no-polyfill policy is reflected throughout: zero runtime dependencies,
