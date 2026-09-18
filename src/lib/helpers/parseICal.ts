@@ -7,9 +7,10 @@
  * Scope (per `docs/plans/CALENDARVIEW_DESIGN.md` §4): the property subset
  * real-world calendar exports actually use — VEVENT, UID, SUMMARY,
  * DTSTART/DTEND (DATE vs DATE-TIME, TZID, VALUE=DATE, UTC "Z"), STATUS,
- * DESCRIPTION, LOCATION. RRULE is **not** expanded: recurring events are
- * emitted once (base instance) and marked `recurring: true` — expansion
- * is deferred to milestone 6 by design decision §"Resolved decisions".
+ * DESCRIPTION, LOCATION. RRULE is captured raw on `data-rrule` and marked
+ * `recurring: true`; expansion into occurrences is the caller's choice via
+ * the phase-2 `expandRecurrences` helper (range-capped), so the parser
+ * stays a pure property-mapper.
  *
  * Google Calendar's .ics export *is* iCalendar, so the same parser covers
  * it; "real Google-export samples" in the test suite mirror Google's
@@ -25,33 +26,35 @@
  * @see docs/plans/CALENDARVIEW_DESIGN.md §4
  */
 
-import type { CalendarViewEvent, EventStatus } from "./eventNormalize.js"
+import type { CalendarViewEvent, EventStatus } from "./eventNormalize.js";
 
 /** Options for {@link parseICal}. */
 export interface ParseICalOptions {
-	/**
-	 * Fallback IANA time zone for DATE-TIME values without a TZID param
-	 * (floating times). The zone is recorded on the event (`tzid`) but no
-	 * zone conversion is performed — iCalendar times stay wall-clock.
-	 * @default "UTC"
-	 */
-	defaultTz?: string
-	/**
-	 * Prefix for generated event ids when a VEVENT has no UID.
-	 * @default "ical"
-	 */
-	idPrefix?: string
+  /**
+   * Fallback IANA time zone for DATE-TIME values without a TZID param
+   * (floating times). The zone is recorded on the event (`tzid`) but no
+   * zone conversion is performed — iCalendar times stay wall-clock.
+   * @default "UTC"
+   */
+  defaultTz?: string;
+  /**
+   * Prefix for generated event ids when a VEVENT has no UID.
+   * @default "ical"
+   */
+  idPrefix?: string;
 }
 
 /** An event parsed from an .ics feed, ready for the CalendarView `events` prop. */
 export type ParsedICalEvent = CalendarViewEvent & {
-	/** iCalendar UID verbatim (the grouping dedup key). */
-	uid?: string
-	/** Resolved IANA zone of DTSTART (TZID param or `defaultTz`). */
-	tzid?: string
-	/** True when the VEVENT carries an RRULE (base instance only, not expanded). */
-	recurring?: boolean
-}
+  /** iCalendar UID verbatim (the grouping dedup key). */
+  uid?: string;
+  /** Resolved IANA zone of DTSTART (TZID param or `defaultTz`). */
+  tzid?: string;
+  /** True when the VEVENT carries an RRULE (base instance; expand via `expandRecurrences`). */
+  recurring?: boolean;
+  /** Raw RRULE value (without the `RRULE:` prefix) for `expandRecurrences`. */
+  "data-rrule"?: string;
+};
 
 /**
  * Unfolds RFC 5545 content lines: a CRLF (or LF) followed by a space or
@@ -60,16 +63,16 @@ export type ParsedICalEvent = CalendarViewEvent & {
  * @returns Physical content lines, folded lines joined
  */
 function unfoldLines(text: string): string[] {
-	const raw = text.split(/\r\n|\n|\r/)
-	const lines: string[] = []
-	for (const line of raw) {
-		if ((line.startsWith(" ") || line.startsWith("\t")) && lines.length > 0) {
-			lines[lines.length - 1] += line.slice(1)
-		} else {
-			lines.push(line)
-		}
-	}
-	return lines
+  const raw = text.split(/\r\n|\n|\r/);
+  const lines: string[] = [];
+  for (const line of raw) {
+    if ((line.startsWith(" ") || line.startsWith("\t")) && lines.length > 0) {
+      lines[lines.length - 1] += line.slice(1);
+    } else {
+      lines.push(line);
+    }
+  }
+  return lines;
 }
 
 /**
@@ -81,23 +84,23 @@ function unfoldLines(text: string): string[] {
  * @returns Lowercase name, raw param string, and property value
  */
 function parseLine(line: string): { name: string; params: string; value: string } | undefined {
-	let inQuotes = false
-	let splitAt = -1
-	for (let i = 0; i < line.length; i++) {
-		const ch = line[i]
-		if (ch === '"') inQuotes = !inQuotes
-		else if (ch === ":" && !inQuotes) {
-			splitAt = i
-			break
-		}
-	}
-	if (splitAt === -1) return undefined
-	const head = line.slice(0, splitAt)
-	const value = line.slice(splitAt + 1)
-	const semi = head.indexOf(";")
-	const name = (semi === -1 ? head : head.slice(0, semi)).trim().toUpperCase()
-	const params = semi === -1 ? "" : head.slice(semi + 1)
-	return { name, params, value }
+  let inQuotes = false;
+  let splitAt = -1;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') inQuotes = !inQuotes;
+    else if (ch === ":" && !inQuotes) {
+      splitAt = i;
+      break;
+    }
+  }
+  if (splitAt === -1) return undefined;
+  const head = line.slice(0, splitAt);
+  const value = line.slice(splitAt + 1);
+  const semi = head.indexOf(";");
+  const name = (semi === -1 ? head : head.slice(0, semi)).trim().toUpperCase();
+  const params = semi === -1 ? "" : head.slice(semi + 1);
+  return { name, params, value };
 }
 
 /**
@@ -108,20 +111,23 @@ function parseLine(line: string): { name: string; params: string; value: string 
  * @returns Unquoted value, or undefined when absent
  */
 function getParam(params: string, key: string): string | undefined {
-	for (const part of params.split(";")) {
-		const eq = part.indexOf("=")
-		if (eq === -1) continue
-		if (part.slice(0, eq).trim().toUpperCase() === key.toUpperCase()) {
-			return part.slice(eq + 1).trim().replace(/^"|"$/g, "")
-		}
-	}
-	return undefined
+  for (const part of params.split(";")) {
+    const eq = part.indexOf("=");
+    if (eq === -1) continue;
+    if (part.slice(0, eq).trim().toUpperCase() === key.toUpperCase()) {
+      return part
+        .slice(eq + 1)
+        .trim()
+        .replace(/^"|"$/g, "");
+    }
+  }
+  return undefined;
 }
 
 /** iCalendar date form: `YYYYMMDD` (`VALUE=DATE`). */
-const DATE_ONLY = /^\d{8}$/
+const DATE_ONLY = /^\d{8}$/;
 /** iCalendar date-time form: `YYYYMMDDTHHMMSS` (with optional trailing `Z`). */
-const DATE_TIME = /^(\d{8})T(\d{6})(Z?)$/
+const DATE_TIME = /^(\d{8})T(\d{6})(Z?)$/;
 
 /**
  * Converts an iCalendar DATE or DATE-TIME value into the RFC 9557 string
@@ -131,16 +137,16 @@ const DATE_TIME = /^(\d{8})T(\d{6})(Z?)$/
  * @returns `"YYYY-MM-DD"` or `"YYYY-MM-DDTHH:mm"` (seconds kept when nonzero)
  */
 function icalToInstant(value: string): string {
-	if (DATE_ONLY.test(value)) {
-		return `${value.slice(0, 4)}-${value.slice(4, 6)}-${value.slice(6, 8)}`
-	}
-	const m = DATE_TIME.exec(value)
-	if (!m) return value
-	const date = `${m[1].slice(0, 4)}-${m[1].slice(4, 6)}-${m[1].slice(6, 8)}`
-	const hh = m[2].slice(0, 2)
-	const mm = m[2].slice(2, 4)
-	const ss = m[2].slice(4, 6)
-	return ss === "00" ? `${date}T${hh}:${mm}` : `${date}T${hh}:${mm}:${ss}`
+  if (DATE_ONLY.test(value)) {
+    return `${value.slice(0, 4)}-${value.slice(4, 6)}-${value.slice(6, 8)}`;
+  }
+  const m = DATE_TIME.exec(value);
+  if (!m) return value;
+  const date = `${m[1].slice(0, 4)}-${m[1].slice(4, 6)}-${m[1].slice(6, 8)}`;
+  const hh = m[2].slice(0, 2);
+  const mm = m[2].slice(2, 4);
+  const ss = m[2].slice(4, 6);
+  return ss === "00" ? `${date}T${hh}:${mm}` : `${date}T${hh}:${mm}:${ss}`;
 }
 
 /**
@@ -150,11 +156,11 @@ function icalToInstant(value: string): string {
  * @returns Unescaped string
  */
 function unescapeText(value: string): string {
-	return value
-		.replace(/\\n/gi, "\n")
-		.replace(/\\,/g, ",")
-		.replace(/\\;/g, ";")
-		.replace(/\\\\/g, "\\")
+  return value
+    .replace(/\\n/gi, "\n")
+    .replace(/\\,/g, ",")
+    .replace(/\\;/g, ";")
+    .replace(/\\\\/g, "\\");
 }
 
 /**
@@ -166,84 +172,89 @@ function unescapeText(value: string): string {
  * @returns Events in file order, ready for the `events` prop
  */
 export function parseICal(text: string, options: ParseICalOptions = {}): ParsedICalEvent[] {
-	const defaultTz = options.defaultTz ?? "UTC"
-	const idPrefix = options.idPrefix ?? "ical"
-	const events: ParsedICalEvent[] = []
+  const defaultTz = options.defaultTz ?? "UTC";
+  const idPrefix = options.idPrefix ?? "ical";
+  const events: ParsedICalEvent[] = [];
 
-	let current: Partial<ParsedICalEvent> & { dtstart?: string; dtend?: string; tzid?: string } | undefined
-	let uidSeq = 0
+  let current:
+    | (Partial<ParsedICalEvent> & { dtstart?: string; dtend?: string; tzid?: string })
+    | undefined;
+  let uidSeq = 0;
 
-	const flush = () => {
-		if (!current?.dtstart) return
-		// UID doubles as the event id when present: ids stay stable across
-		// re-parses and line up with the grouping dedup key (milestone 4).
-		const id = current.uid ?? `${idPrefix}-${++uidSeq}`
-		const base: ParsedICalEvent = {
-			id,
-			title: current.title ?? "(untitled)",
-			start: current.dtstart,
-			uid: current.uid,
-			tzid: current.tzid,
-			recurring: current.recurring,
-		}
-		if (current.dtend !== undefined) base.end = current.dtend
-		if (current.allDay !== undefined) base.allDay = current.allDay
-		if (current.status !== undefined) base.status = current.status
-		if (current.location !== undefined) base.location = current.location
-		if (current.description !== undefined) base.description = current.description
-		events.push(base)
-	}
+  const flush = () => {
+    if (!current?.dtstart) return;
+    // UID doubles as the event id when present: ids stay stable across
+    // re-parses and line up with the grouping dedup key (milestone 4).
+    const id = current.uid ?? `${idPrefix}-${++uidSeq}`;
+    const base: ParsedICalEvent = {
+      id,
+      title: current.title ?? "(untitled)",
+      start: current.dtstart,
+      uid: current.uid,
+      tzid: current.tzid,
+      recurring: current.recurring,
+    };
+    if (current.dtend !== undefined) base.end = current.dtend;
+    if (current.allDay !== undefined) base.allDay = current.allDay;
+    if (current.status !== undefined) base.status = current.status;
+    if (current.location !== undefined) base.location = current.location;
+    if (current.description !== undefined) base.description = current.description;
+    if (current["data-rrule"] !== undefined) base["data-rrule"] = current["data-rrule"];
+    events.push(base);
+  };
 
-	for (const line of unfoldLines(text)) {
-		const parsed = parseLine(line)
-		if (!parsed) continue
-		const { name, params, value } = parsed
+  for (const line of unfoldLines(text)) {
+    const parsed = parseLine(line);
+    if (!parsed) continue;
+    const { name, params, value } = parsed;
 
-		if (name === "BEGIN" && value.trim().toUpperCase() === "VEVENT") {
-			current = {}
-			continue
-		}
-		if (name === "END" && value.trim().toUpperCase() === "VEVENT") {
-			flush()
-			current = undefined
-			continue
-		}
-		if (!current) continue
+    if (name === "BEGIN" && value.trim().toUpperCase() === "VEVENT") {
+      current = {};
+      continue;
+    }
+    if (name === "END" && value.trim().toUpperCase() === "VEVENT") {
+      flush();
+      current = undefined;
+      continue;
+    }
+    if (!current) continue;
 
-		switch (name) {
-			case "UID":
-				current.uid = value.trim()
-				break
-			case "SUMMARY":
-				current.title = unescapeText(value)
-				break
-			case "DTSTART": {
-				current.dtstart = icalToInstant(value.trim())
-				current.tzid = getParam(params, "TZID") ?? defaultTz
-				current.allDay = getParam(params, "VALUE")?.toUpperCase() === "DATE" || DATE_ONLY.test(value.trim())
-				break
-			}
-			case "DTEND":
-				current.dtend = icalToInstant(value.trim())
-				break
-			case "STATUS":
-				current.status = normalizeStatus(value.trim())
-				break
-			case "LOCATION":
-				current.location = unescapeText(value)
-				break
-			case "DESCRIPTION":
-				current.description = unescapeText(value)
-				break
-			case "RRULE":
-				current.recurring = true
-				break
-			default:
-				break
-		}
-	}
+    switch (name) {
+      case "UID":
+        current.uid = value.trim();
+        break;
+      case "SUMMARY":
+        current.title = unescapeText(value);
+        break;
+      case "DTSTART": {
+        current.dtstart = icalToInstant(value.trim());
+        current.tzid = getParam(params, "TZID") ?? defaultTz;
+        current.allDay =
+          getParam(params, "VALUE")?.toUpperCase() === "DATE" || DATE_ONLY.test(value.trim());
+        break;
+      }
+      case "DTEND":
+        current.dtend = icalToInstant(value.trim());
+        break;
+      case "STATUS":
+        current.status = normalizeStatus(value.trim());
+        break;
+      case "LOCATION":
+        current.location = unescapeText(value);
+        break;
+      case "DESCRIPTION":
+        current.description = unescapeText(value);
+        break;
+      case "RRULE":
+        current.recurring = true;
+        current["data-rrule"] = value;
+        break;
+      default:
+        break;
+    }
+  }
 
-	return events
+  return events;
 }
 
 /**
@@ -253,12 +264,12 @@ export function parseICal(text: string, options: ParseICalOptions = {}): ParsedI
  * @returns The matching EventStatus, or undefined for unmapped values
  */
 function normalizeStatus(raw: string): EventStatus | undefined {
-	const upper = raw.toUpperCase()
-	if (upper === "CONFIRMED" || upper === "TENTATIVE" || upper === "CANCELLED") {
-		return upper.toLowerCase() as EventStatus
-	}
-	return undefined
+  const upper = raw.toUpperCase();
+  if (upper === "CONFIRMED" || upper === "TENTATIVE" || upper === "CANCELLED") {
+    return upper.toLowerCase() as EventStatus;
+  }
+  return undefined;
 }
 
 // Re-exported so parser consumers get the event model types from one module.
-export type { CalendarInstant, CalendarViewEvent, EventStatus } from "./eventNormalize.js"
+export type { CalendarInstant, CalendarViewEvent, EventStatus } from "./eventNormalize.js";

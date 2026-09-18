@@ -31,14 +31,8 @@
     "storybook": "storybook dev -p 6006",
     "storybook:build": "rm -rf static/storybook && storybook build -o static/storybook"
   },
-  "files": [
-    "dist",
-    "!dist/**/*.test.*",
-    "!dist/**/*.spec.*"
-  ],
-  "sideEffects": [
-    "**/*.css"
-  ],
+  "files": ["dist", "!dist/**/*.test.*", "!dist/**/*.spec.*"],
+  "sideEffects": ["**/*.css"],
   "svelte": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
@@ -629,6 +623,11 @@
       "svelte": "./dist/helpers/connectCalendars.js",
       "default": "./dist/helpers/connectCalendars.js"
     },
+    "./helpers/rruleExpand": {
+      "types": "./dist/helpers/rruleExpand.d.ts",
+      "svelte": "./dist/helpers/rruleExpand.js",
+      "default": "./dist/helpers/rruleExpand.js"
+    },
     "./helpers/getItemLabel": {
       "types": "./dist/helpers/itemLabel.d.ts",
       "svelte": "./dist/helpers/itemLabel.js",
@@ -696,9 +695,7 @@
     "vite": "^8.2.1",
     "vitest": "^4.1.10"
   },
-  "keywords": [
-    "svelte"
-  ],
+  "keywords": ["svelte"],
   "dependencies": {
     "@codemirror/lang-cpp": "^6.0.3",
     "@codemirror/lang-css": "^6.3.1",
@@ -724,10 +721,6 @@
     "prismjs": "^1.30.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "@tailwindcss/oxide",
-      "twintrinsic"
-    ]
+    "onlyBuiltDependencies": ["esbuild", "@tailwindcss/oxide", "twintrinsic"]
   }
 }

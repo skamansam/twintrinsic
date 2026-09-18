@@ -130,6 +130,31 @@ const events = parseICal(icsText, { defaultTz: "Europe/Berlin" })
 // Feed straight into <CalendarView events={events} />`}
   </CodeBlock>
 
+  <Separator>{m.util_rrule_heading()}</Separator>
+
+  <h2>expandRecurrences</h2>
+
+  <Panel>
+    {#snippet header()}
+      expandRecurrences(events, range) → occurrences   // range = the rendered window
+    {/snippet}
+    <p>{m.util_rrule_body()}</p>
+  </Panel>
+
+  <CodeBlock language="typescript">
+{`import { expandRecurrences } from "twintrinsic"
+
+// range = the month (or any window) you are rendering
+const occurrences = expandRecurrences(events, {
+  start: rangeStart,
+  end: rangeEnd,
+})
+// Base instances stay put; supported rules gain _0, _1, … instances.
+// Unsupported rules fail closed and keep their base instance.
+
+// Or let CalendarView do it: <CalendarView events={events} recurrence />`}
+  </CodeBlock>
+
   <Separator>{m.util_docs_tables()}</Separator>
 
   <h2>PropsTable & EventsTable</h2>

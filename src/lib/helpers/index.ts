@@ -19,6 +19,13 @@ export {
   type CalendarsErrorDetail,
   type ConnectResult,
 } from "./connectCalendars.js";
+export {
+  expandRecurrence,
+  expandRecurrences,
+  parseRRule,
+  rruleOf,
+  type ParsedRRule,
+} from "./rruleExpand.js";
 export type {
   EventDataHash,
   PropDataHash,

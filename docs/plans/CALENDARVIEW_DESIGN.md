@@ -260,7 +260,7 @@ interface CalendarSource {
 |---|---|
 | **iCalendar (.ics) import** | `parseICal(text, { defaultTz }): CalendarViewEvent[]` in `src/lib/helpers/` — VEVENT, UID, SUMMARY, DTSTART/DTEND (DATE vs DATE-TIME, TZID, VALUE=DATE), STATUS, DESCRIPTION, LOCATION. Ships phase 1. |
 | **Google export** | Google's .ics export *is* iCalendar → same parser. CSV export gets `parseGoogleCsv()` in phase 2. |
-| **Recurrence (RRULE)** | Phase 2. Phase 1 renders only the base instance and marks `recurring: true` (icon marker). Expansion via an RFC 5545 helper lib, expansion capped at the visible range. |
+| **Recurrence (RRULE)** | ✅ Shipped (2026-09-18). `rruleExpand.ts` expands FREQ (DAILY/WEEKLY/MONTHLY/YEARLY), INTERVAL, COUNT, UNTIL and weekly BYDAY, capped to the visible grid; unsupported parts fail closed and keep the base instance. parseICal captures the raw rule (`recurring: true` + `data-rrule`); CalendarView's `recurrence` prop runs expansion inside the pipeline before grouping, and instances only dedup per-occurrence (uid + startDay, matching UID + RECURRENCE-ID semantics). |
 | **Google Calendar API** | Adapter doc example: server endpoint → `fetchEvents()`; client passes `{ id, name, color, fetchEvents }`. |
 | **Microsoft Outlook/365** | Same pattern via Graph API `/me/calendarview`. |
 | **Apple** | CalDAV server-side, or (zero-auth) published **iCal subscription URLs** fetched server-side and fed through the same .ics parser. |
@@ -355,16 +355,19 @@ with static multi-source data, which is also how tests and stories demo it.
 | 3 | **Events** ✅ | `eventNormalize`, static `events` render, chips with icon/badge/color/status, `eventContent` snippet, `+N more` popover |
 | 4 | **Grouping** ✅ | `eventGroup` (uid key → fallback key), count badge, color dots, `grouping` toggle demo with two fake calendars |
 | 5 | **Import** ✅ | `parseICal` (+ tests with real Google-export samples), recurring-flag marker |
-| 6 | **Connectivity recipe** ✅ | `connectCalendars` helper (calendars/fetchEvents contract, Promise.allSettled per-source failures, calendarId stamping, color fallback); `calendars` + `oncalendarserror` wired into CalendarView; Google/Outlook/Apple docs recipes — `week`/`day` views and RRULE expansion deferred (phase 2) |
+| 6 | **Connectivity recipe** ✅ | `connectCalendars` helper (calendars/fetchEvents contract, Promise.allSettled per-source failures, calendarId stamping, color fallback); `calendars` + `oncalendarserror` wired into CalendarView; Google/Outlook/Apple docs recipes — `week`/`day` views still deferred (phase 2) |
 | 7 | **Drag-to-edit** | `draggable` events + cell `dragover`/`drop` (HTML DnD API), `oneventmove` callback, keyboard-editing alternative, e2e drag test |
 | 8 | **Checklist close-out** ✅ | Storybook story (11 stories incl. DragToEdit + Connectivity), docs page (i18n en/es/fa), e2e (render, keyboard, grouping toggle, drag keyboard-move, connectivity fetch, badge row), `check`/`check:i18n`/`check:assets` green, completion page updated (+DnD, +Popover) |
 
 ## Resolved decisions (2026-09-17)
 
-1. **RRULE expansion — deferred to milestone 6.** Milestone 5 ships .ics
-   parsing with recurring events marked (`recurring: true` + icon marker,
-   base instance only). Grouping and import don't need expansion, and a
-   correct RRULE engine deserves its own reviewed milestone.
+1. **RRULE expansion — ✅ shipped 2026-09-18 (originally deferred).**
+   `rruleExpand.ts` (10 unit tests) expands the meeting-style subset:
+   FREQ DAILY/WEEKLY/MONTHLY/YEARLY, INTERVAL, COUNT, UNTIL, weekly BYDAY;
+   rules with other parts fail closed to the base instance. parseICal
+   captures the raw rule; the `recurrence` prop expands range-capped
+   before grouping, and grouping keys include the occurrence start so a
+   series dedups per-occurrence across calendars.
 2. **`weekStart: "auto"` falls back to ISO Monday** where
    `Intl.Locale.prototype.weekInfo` is missing (currently Firefox).
    Consumers override with `weekStart={0}` or `{1}` — the prop is the

@@ -117,6 +117,11 @@ const CONNECTED_SOURCES = [
     ],
   },
 ]
+
+/** Phase-2 RRULE fixture: the parser's raw rule expands to weekly occurrences. */
+const RRULE_EVENTS = [
+  { id: "rr", uid: "rr@docs", title: "Weekly sync", start: "2026-09-02T11:00", "data-rrule": "FREQ=WEEKLY;BYDAY=WE;COUNT=6", color: "#8b5cf6" },
+]
 </script>
 
 <Story name="Default">
@@ -360,6 +365,27 @@ const CONNECTED_SOURCES = [
     // The merged chip takes the primary's (family) color.
     const chip = canvas.getByTestId("calendar-view-event-conn-standup-p")
     expect(chip.style.getPropertyValue("--event-color")).toBe("#f59e0b")
+  }}
+>
+  {#snippet children(args)}
+    <div style="min-height: 340px">
+      <CalendarView {...args} month={SEPTEMBER} />
+    </div>
+  {/snippet}
+</Story>
+
+<Story
+  name="Recurrence"
+  args={{ events: RRULE_EVENTS, recurrence: true }}
+  play={async ({ canvas }) => {
+    // The base chip renders Sept 2; expansion adds Wednesdays
+    // Sept 9, 16, 23, 30 and Oct 7 (COUNT=6 total with the base).
+    await canvas.findByTestId("calendar-view-event-rr")
+    for (const id of ["rr_0", "rr_1", "rr_2", "rr_3", "rr_4"]) {
+      expect(canvas.getByTestId(`calendar-view-event-${id}`)).toBeInTheDocument()
+    }
+    const last = canvas.getByTestId("calendar-view-event-rr_4").closest("[data-day]")
+    expect(last?.getAttribute("data-day")).toBe("2026-10-07")
   }}
 >
   {#snippet children(args)}

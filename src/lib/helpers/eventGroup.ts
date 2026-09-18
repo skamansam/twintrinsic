@@ -12,7 +12,7 @@
  * @see docs/plans/CALENDARVIEW_DESIGN.md §"Rendering & CSS" (M4)
  */
 
-import type { CalendarViewEvent, NormalizedEvent } from "./eventNormalize.js"
+import type { CalendarViewEvent, NormalizedEvent } from "./eventNormalize.js";
 
 /**
  * One visual event produced by grouping: the **primary** (first source)
@@ -20,8 +20,8 @@ import type { CalendarViewEvent, NormalizedEvent } from "./eventNormalize.js"
  * `sources` for count badges and per-source color dots.
  */
 export interface GroupedEvent extends NormalizedEvent {
-	/** All contributing events, in input order (calendar order when the consumer concatenates per-calendar arrays). */
-	sources: CalendarViewEvent[]
+  /** All contributing events, in input order (calendar order when the consumer concatenates per-calendar arrays). */
+  sources: CalendarViewEvent[];
 }
 
 /**
@@ -31,9 +31,13 @@ export interface GroupedEvent extends NormalizedEvent {
  * @returns A string key shared by every copy of the same real-world event
  */
 export function dedupKey(ne: NormalizedEvent): string {
-	if (ne.event.uid) return `uid:${ne.event.uid}`
-	const day = ne.startDay.toString()
-	return `fb:${ne.event.title}|${day}|${ne.startTime ?? "allday"}`
+  // uid + start day: the same real-world *occurrence* across calendars.
+  // (Plain uid would merge every instance of a recurring series into one
+  // chip once RRULE expansion is on — instances must dedup per day, the
+  // way UID + RECURRENCE-ID identify an occurrence in iCalendar.)
+  if (ne.event.uid) return `uid:${ne.event.uid}@${ne.startDay.toString()}`;
+  const day = ne.startDay.toString();
+  return `fb:${ne.event.title}|${day}|${ne.startTime ?? "allday"}`;
 }
 
 /**
@@ -45,17 +49,17 @@ export function dedupKey(ne: NormalizedEvent): string {
  * @returns One GroupedEvent per distinct real-world event
  */
 export function groupEvents(events: NormalizedEvent[]): GroupedEvent[] {
-	const byKey = new Map<string, GroupedEvent>()
-	for (const ne of events) {
-		const key = dedupKey(ne)
-		const existing = byKey.get(key)
-		if (existing) {
-			existing.sources.push(ne.event)
-			continue
-		}
-		byKey.set(key, { ...ne, sources: [ne.event] })
-	}
-	return [...byKey.values()]
+  const byKey = new Map<string, GroupedEvent>();
+  for (const ne of events) {
+    const key = dedupKey(ne);
+    const existing = byKey.get(key);
+    if (existing) {
+      existing.sources.push(ne.event);
+      continue;
+    }
+    byKey.set(key, { ...ne, sources: [ne.event] });
+  }
+  return [...byKey.values()];
 }
 
 /**
@@ -63,7 +67,7 @@ export function groupEvents(events: NormalizedEvent[]): GroupedEvent[] {
  * @param ne - The chip event to test
  */
 export function isGrouped(ne: NormalizedEvent): ne is GroupedEvent {
-	return "sources" in ne
+  return "sources" in ne;
 }
 
 /**
@@ -73,7 +77,7 @@ export function isGrouped(ne: NormalizedEvent): ne is GroupedEvent {
  * @returns How many sources contributed
  */
 export function sourceCount(ne: NormalizedEvent): number {
-	return isGrouped(ne) ? ne.sources.length : 1
+  return isGrouped(ne) ? ne.sources.length : 1;
 }
 
 /**
@@ -82,6 +86,6 @@ export function sourceCount(ne: NormalizedEvent): number {
  * @returns One CSS color per contributing source
  */
 export function sourceColors(ne: NormalizedEvent): string[] {
-	if (!isGrouped(ne)) return [ne.event.color ?? "var(--color-primary)"]
-	return ne.sources.map((s) => s.color ?? "var(--color-primary)")
+  if (!isGrouped(ne)) return [ne.event.color ?? "var(--color-primary)"];
+  return ne.sources.map((s) => s.color ?? "var(--color-primary)");
 }

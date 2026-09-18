@@ -48,6 +48,7 @@ export const propsMetadata = [
   { name: "grouping", type: "boolean", description: "Merge the same event across calendars into one chip with a source-count badge (dedup by iCal UID, then title+day+time)", default: "false", optional: true },
   { name: "maxEventsPerCell", type: "number", description: "Max chips shown per cell before the \"+N more\" popover (default 2)", default: "2", optional: true },
   { name: "eventContent", type: "Snippet<[CalendarViewEvent]>", description: "Custom chip content; receives the raw event (see `CalendarViewEvent`)", optional: true },
+  { name: "recurrence", type: "boolean", description: "Expand RRULE-carrying events (e.g. from parseICal) into range-capped occurrences; off renders base instances only", default: "false", optional: true },
 ];
 </script>
 
@@ -72,6 +73,7 @@ import Icon from "../Icon/Icon.svelte"
 import { buildMonthGrid, monthTitle, resolveWeekStart, weekdayHeaders, type WeekStart } from "../../helpers/calendarGrid.js"
 import { eventsForDay, normalizeEvents, type CalendarViewEvent, type EventMoveDetail, type NormalizedEvent } from "../../helpers/eventNormalize.js"
 import { connectCalendars, type CalendarSource, type CalendarsErrorDetail } from "../../helpers/connectCalendars.js"
+import { expandRecurrences } from "../../helpers/rruleExpand.js"
 import { groupEvents, sourceColors, sourceCount, type GroupedEvent } from "../../helpers/eventGroup.js"
 import type { Snippet } from "svelte"
 
@@ -111,6 +113,8 @@ interface Props {
   dragEvents?: boolean
   /** Connected calendars (M6 contract): each supplies fetchEvents for the visible range; results merge with `events` */
   calendars?: CalendarSource[]
+  /** Expand RRULE-carrying events (e.g. from parseICal) into range-capped occurrences; off renders base instances only */
+  recurrence?: boolean
   /** Fires when a connected calendar fails to fetch; other sources still render */
   oncalendarserror?: (event: CustomEvent<CalendarsErrorDetail>) => void
   /** Custom chip content; receives the raw event (see `CalendarViewEvent`) */
@@ -134,6 +138,7 @@ let {
   oneventmove,
   dragEvents = false,
   calendars = [],
+  recurrence = false,
   oncalendarserror,
   eventContent,
   ...restProps
@@ -294,13 +299,20 @@ $effect(() => {
 let calendarsRun = 0
 
 /**
- * Event pipeline: normalize (ISO strings → day spans, sorted) then, when
- * `grouping` is on, merge same-real-world-event copies into GroupedEvents
- * (uid key, title+day+time fallback). GroupedEvent extends NormalizedEvent,
- * so chips/popovers treat both shapes uniformly. Static `events` and
- * fetched `calendars` events merge into one dataset.
+ * Event pipeline: static `events` + fetched `calendars` events merge, then
+ * recurring events expand into range-capped occurrences (`expandRecurrences`
+ * reads the raw `data-rrule` parseICal attaches). Instances normalize into
+ * day spans and — when `grouping` is on — merge same-real-world-event copies
+ * into GroupedEvents. Instances keep their `uid`, so a recurring event still
+ * groups across calendars on every occurrence.
  */
-const normalized = $derived(grouping ? groupEvents(normalizeEvents([...events, ...remoteEvents])) : normalizeEvents([...events, ...remoteEvents]))
+const normalized = $derived.by(() => {
+  const raw = [...events, ...remoteEvents]
+  const expanded = recurrence
+    ? expandRecurrences(raw, { start: grid[0], end: grid[grid.length - 1] })
+    : raw
+  return grouping ? groupEvents(normalizeEvents(expanded)) : normalizeEvents(expanded)
+})
 
 /**
  * Looks up the events covering a grid day, split into visible chips and

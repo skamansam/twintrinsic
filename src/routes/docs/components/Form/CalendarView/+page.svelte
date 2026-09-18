@@ -309,9 +309,9 @@ let sourceErrors = $state<string[]>([])
 import { parseICal } from "twintrinsic/helpers/parseICal"
 const events = parseICal(icsText, { defaultTz: "Europe/Berlin" })
 \`\`\`
-<CalendarView month={Temporal.PlainDate.from('2026-09-01')} events={events} />`}>
+<CalendarView month={Temporal.PlainDate.from('2026-09-01')} {events} recurrence />`}>
   <div class="max-w-sm" data-testid="calendarview-ics">
-    <CalendarView month={SEPTEMBER} events={ICS_EVENTS} />
+    <CalendarView month={SEPTEMBER} events={ICS_EVENTS} recurrence />
   </div>
 </ExampleTabs>
 

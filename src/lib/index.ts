@@ -140,11 +140,14 @@ export {
   normalizeEvents,
   parseICal,
   connectCalendars,
+  expandRecurrence,
+  expandRecurrences,
   isCalendarSource,
   type CalendarInstant,
   type CalendarViewEvent,
   type CalendarSource,
   type NormalizedEvent,
+  type ParsedRRule,
   type ParsedICalEvent,
 } from "./helpers/index.js";
 export type {

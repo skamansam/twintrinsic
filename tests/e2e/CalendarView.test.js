@@ -182,7 +182,9 @@ test.describe("CalendarView milestone close-out", () => {
 
   test("ics import demo renders parsed events including the recurring marker", async ({ page }) => {
     const demo = page.getByTestId("calendarview-ics");
-    await expect(demo.getByText("Team standup")).toBeVisible();
+    // recurrence expands the RRULE: the standup renders on Sep 15, 22, 29 and Oct 6
+    await expect(demo.getByText("Team standup").first()).toBeVisible();
+    await expect(demo.locator('[data-testid^="calendar-view-event-docs-standup"]')).toHaveCount(4);
     await expect(demo.getByText("Planning offsite").first()).toBeVisible();
     await expect(demo.getByText("Maybe lunch")).toBeVisible();
     // The recurring standup (RRULE) renders the repeat-icon marker; the
