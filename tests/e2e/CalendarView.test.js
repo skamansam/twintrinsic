@@ -190,7 +190,7 @@ test.describe("CalendarView milestone close-out", () => {
     // The recurring standup (RRULE) renders the repeat-icon marker; the
     // all-day offsite is not recurring and correctly has none.
     const standupChip = demo.locator('[data-testid^="calendar-view-event-docs-standup"]');
-    await expect(standupChip.locator(".calendar-view-chip-icon")).toBeVisible();
+    await expect(standupChip.locator(".calendar-view-chip-icon").first()).toBeVisible();
   });
 
   test("browser-API badges sit beside the title and the heading stays clean", async ({ page }) => {
