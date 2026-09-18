@@ -11,6 +11,7 @@ export {
 } from "./eventNormalize.js";
 export { getItemLabel } from "./itemLabel.js";
 export { getItemValue } from "./itemValue.js";
+export { parseICal, type ParseICalOptions, type ParsedICalEvent } from "./parseICal.js";
 export type {
   EventDataHash,
   PropDataHash,

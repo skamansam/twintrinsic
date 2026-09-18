@@ -8,6 +8,7 @@ import { expect, fireEvent, waitFor, within } from "storybook/test"
 import { Temporal as TemporalPolyfill } from "@js-temporal/polyfill"
 import "./temporalGlobal.js"
 import CalendarView from "$lib/components/CalendarView/CalendarView.svelte"
+import { parseICal } from "$lib/helpers/parseICal.js"
 
 const { Story } = defineMeta({
   title: "Form/CalendarView",
@@ -22,6 +23,37 @@ const { Story } = defineMeta({
 
 /** Fixed visible month so story screenshots don't drift with the calendar. */
 const SEPTEMBER = TemporalPolyfill.PlainDate.from("2026-09-01")
+
+/** Google-export-shaped feed: one recurring standup, one all-day offsite, one tentative. */
+const ICS_SAMPLE = `BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+METHOD:PUBLISH
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Berlin:20260915T093000
+DTEND;TZID=Europe/Berlin:20260915T100000
+RRULE:FREQ=WEEKLY;BYDAY=TU;COUNT=10
+UID:story-standup@google.com
+STATUS:CONFIRMED
+SUMMARY:Team standup
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20260921
+DTEND;VALUE=DATE:20260922
+UID:story-offsite@google.com
+STATUS:CONFIRMED
+SUMMARY:Planning offsite
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20260918T130000
+UID:story-lunch@google.com
+STATUS:TENTATIVE
+SUMMARY:Maybe lunch
+END:VEVENT
+END:VCALENDAR`
+
+/** Parsed once at module scope — parseICal is pure text to events. */
+const ICS_EVENTS = parseICal(ICS_SAMPLE)
 
 /** Sample events exercising color, icon, badge, and cancelled states. */
 const EVENTS = [
@@ -153,6 +185,27 @@ const EVENTS = [
         expect(canvas.getByTestId("calendar-view-popover-event-e4")).toBeVisible()
       })
     })
+  }}
+>
+  {#snippet children(args)}
+    <div style="min-height: 340px">
+      <CalendarView {...args} month={SEPTEMBER} />
+    </div>
+  {/snippet}
+</Story>
+
+<Story
+  name="IcsImport"
+  args={{ events: ICS_EVENTS }}
+  play={async ({ canvas }) => {
+    // Parsed events land on the grid: standup (timed), offsite (all-day),
+    // and lunch (tentative). The standup carries the repeat marker.
+    await canvas.findByText("Team standup")
+    expect(canvas.getByText("Planning offsite")).toBeInTheDocument()
+    expect(canvas.getByText("Maybe lunch")).toBeInTheDocument()
+    // Recurring event's chip renders the repeat icon wrapper.
+    const standupChip = canvas.getByTestId("calendar-view-event-story-standup@google.com")
+    expect(standupChip.querySelector(".calendar-view-chip-icon")).not.toBeNull()
   }}
 >
   {#snippet children(args)}

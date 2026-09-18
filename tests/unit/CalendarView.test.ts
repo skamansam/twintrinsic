@@ -15,8 +15,11 @@ beforeAll(() => {
 	vi.stubGlobal("Temporal", TemporalPolyfill)
 })
 
-/** Fixed "today" so tests don't drift as months pass. */
-const TODAY = TemporalPolyfill.PlainDate.from("2026-09-17")
+/**
+ * "Today" as the component sees it (Temporal.Now). Derived, not pinned —
+ * a hard-coded date drifts the moment the real calendar moves past it.
+ */
+const TODAY = TemporalPolyfill.Now.plainDateISO()
 
 /** Renders CalendarView pinned to September 2026. */
 async function renderForSeptember(props = {}) {

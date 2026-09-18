@@ -137,9 +137,11 @@ export {
   getItemValue,
   normalizeEvent,
   normalizeEvents,
+  parseICal,
   type CalendarInstant,
   type CalendarViewEvent,
   type NormalizedEvent,
+  type ParsedICalEvent,
 } from "./helpers/index.js";
 export type {
   EventDataHash,

@@ -54,6 +54,12 @@ export interface CalendarViewEvent {
 	badge?: string | number
 	/** iCalendar STATUS subset; `cancelled` renders struck through, never dropped. */
 	status?: EventStatus
+	/**
+	 * Set by the .ics importer (`parseICal`) for events carrying an RRULE.
+	 * The base instance only is rendered; when no custom `icon` is given the
+	 * chip shows a repeat marker. Expansion is out of scope (milestone 6).
+	 */
+	recurring?: boolean
 	/** Free-form metadata for `eventContent` snippet consumers. */
 	location?: string
 	description?: string

@@ -30,11 +30,42 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CalendarViewModule from "$lib/components/CalendarView/CalendarView.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import { parseICal } from "$lib/helpers/parseICal.js"
 import { m } from "$lib/paraglide/messages.js"
 
 // Anchor dates for the demos — pinned so examples don't drift as months pass.
 const SEPTEMBER = Temporal.PlainDate.from("2026-09-01")
 const SELECTED = Temporal.PlainDate.from("2026-09-21")
+
+// Dogfood the .ics importer: a Google-export-shaped feed (standup repeats,
+// offsite is all-day, one tentative). Parsed once at module scope.
+const ICS_SAMPLE = `BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+METHOD:PUBLISH
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Berlin:20260915T093000
+DTEND;TZID=Europe/Berlin:20260915T100000
+RRULE:FREQ=WEEKLY;BYDAY=TU;COUNT=10
+UID:docs-standup@google.com
+STATUS:CONFIRMED
+SUMMARY:Team standup
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20260921
+DTEND;VALUE=DATE:20260922
+UID:docs-offsite@google.com
+STATUS:CONFIRMED
+SUMMARY:Planning offsite
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20260918T130000
+UID:docs-lunch@google.com
+STATUS:TENTATIVE
+SUMMARY:Maybe lunch
+END:VEVENT
+END:VCALENDAR`
+const ICS_EVENTS = parseICal(ICS_SAMPLE)
 </script>
 
 <style lang="postcss">
@@ -151,6 +182,19 @@ const SELECTED = Temporal.PlainDate.from("2026-09-21")
 <ExampleTabs code={`<CalendarView />`}>
   <div class="max-w-sm" data-testid="calendarview-keyboard">
     <CalendarView />
+  </div>
+</ExampleTabs>
+
+<h3>{m.calendarview_ex_ics()}</h3>
+<p>{m.calendarview_ex_ics_p()}</p>
+<ExampleTabs code={`\`\`\`js
+// Google Calendar export (or any iCalendar feed)
+import { parseICal } from "twintrinsic/helpers/parseICal"
+const events = parseICal(icsText, { defaultTz: "Europe/Berlin" })
+\`\`\`
+<CalendarView month={Temporal.PlainDate.from('2026-09-01')} events={events} />`}>
+  <div class="max-w-sm" data-testid="calendarview-ics">
+    <CalendarView month={SEPTEMBER} events={ICS_EVENTS} />
   </div>
 </ExampleTabs>
 

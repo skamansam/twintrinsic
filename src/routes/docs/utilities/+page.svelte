@@ -110,6 +110,26 @@ detectLanguage("<div>hello</div>")                  // "markup"
 detectLanguage("key: value")                        // "yaml"`}
   </CodeBlock>
 
+  <Separator>{m.util_ical_heading()}</Separator>
+
+  <h2>parseICal</h2>
+
+  <Panel>
+    {#snippet header()}
+      parseICal(text: string, options?) → ParsedICalEvent[]
+    {/snippet}
+    <p>{m.util_ical_body()}</p>
+  </Panel>
+
+  <CodeBlock language="typescript">
+{`import { parseICal } from "twintrinsic"
+
+// icsText: any iCalendar feed (Google export, Outlook, Apple)
+const events = parseICal(icsText, { defaultTz: "Europe/Berlin" })
+// → [{ id, title, start, uid, tzid, recurring, status, allDay, ... }]
+// Feed straight into <CalendarView events={events} />`}
+  </CodeBlock>
+
   <Separator>{m.util_docs_tables()}</Separator>
 
   <h2>PropsTable & EventsTable</h2>

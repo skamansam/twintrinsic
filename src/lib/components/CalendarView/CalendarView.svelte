@@ -380,8 +380,8 @@ function chipColor(ne: NormalizedEvent): string {
                         {@render eventContent(ne.event)}
                       {:else}
                         {#if start}
-                          {#if ne.event.icon}
-                            <span class="calendar-view-chip-icon"><Icon name={ne.event.icon} /></span>
+                          {#if ne.event.icon || ne.event.recurring}
+                            <span class="calendar-view-chip-icon"><Icon name={ne.event.icon ?? "repeat"} /></span>
                           {/if}
                           {#if !ne.allDay && ne.startTime}
                             <span class="calendar-view-chip-time">{ne.startTime}</span>
@@ -421,8 +421,8 @@ function chipColor(ne: NormalizedEvent): string {
                               data-testid={`calendar-view-popover-event-${ne.event.id}`}
                               onclick={() => selectEvent(ne)}
                             >
-                              {#if ne.event.icon}
-                                <span class="calendar-view-chip-icon"><Icon name={ne.event.icon} /></span>
+                              {#if ne.event.icon || ne.event.recurring}
+                                <span class="calendar-view-chip-icon"><Icon name={ne.event.icon ?? "repeat"} /></span>
                               {/if}
                               {#if !ne.allDay && ne.startTime}
                                 <span class="calendar-view-chip-time">{ne.startTime}</span>

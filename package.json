@@ -614,6 +614,11 @@
       "svelte": "./dist/helpers/eventNormalize.js",
       "default": "./dist/helpers/eventNormalize.js"
     },
+    "./helpers/parseICal": {
+      "types": "./dist/helpers/parseICal.d.ts",
+      "svelte": "./dist/helpers/parseICal.js",
+      "default": "./dist/helpers/parseICal.js"
+    },
     "./helpers/getItemLabel": {
       "types": "./dist/helpers/itemLabel.d.ts",
       "svelte": "./dist/helpers/itemLabel.js",
