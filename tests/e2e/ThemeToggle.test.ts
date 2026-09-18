@@ -28,6 +28,7 @@ test.describe("ThemeToggle docs page", () => {
   }) => {
     const button = page.getByTestId("theme-basic").locator(".tw-theme-toggle-button").first();
     await expect(button).toBeVisible();
+    const toggle = page.getByTestId("theme-basic");
     const checkbox = toggle.locator("input[type='checkbox']").first();
     await expect(checkbox).toBeAttached();
     // The checkbox is visually hidden but programmatically present.
@@ -45,6 +46,7 @@ test.describe("ThemeToggle docs page", () => {
 
   test("clicking the toggle swaps the checked state", async ({ page }) => {
     const button = page.getByTestId("theme-basic").locator(".tw-theme-toggle-button").first();
+    const toggle = page.getByTestId("theme-basic");
     const checkbox = toggle.locator("input[type='checkbox']").first();
 
     const checkedBefore = await checkbox.isChecked();

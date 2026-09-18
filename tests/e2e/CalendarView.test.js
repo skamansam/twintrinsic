@@ -23,7 +23,8 @@ test.describe("CalendarView docs page", () => {
 
   test("fixed-month demo shows the September 2026 grid", async ({ page }) => {
     const demo = page.getByTestId("calendarview-fixed");
-    await expect(demo.getByText("September 2026")).toBeVisible();
+    // Role query: the sr-only live region also contains the month title.
+    await expect(demo.getByRole("heading", { name: "September 2026" })).toBeVisible();
     // 42 gridcells: the fixed 6×7 grid.
     await expect(demo.getByRole("grid").locator('[role="gridcell"]')).toHaveCount(42);
   });
@@ -64,9 +65,9 @@ test.describe("CalendarView docs page", () => {
   test("next-month button pages the grid to October and back", async ({ page }) => {
     const demo = page.getByTestId("calendarview-fixed");
     await demo.getByTestId("calendar-view-next").click();
-    await expect(demo.getByText("October 2026")).toBeVisible();
+    await expect(demo.getByRole("heading", { name: "October 2026" })).toBeVisible();
     await demo.getByTestId("calendar-view-prev").click();
-    await expect(demo.getByText("September 2026")).toBeVisible();
+    await expect(demo.getByRole("heading", { name: "September 2026" })).toBeVisible();
   });
 
   test("keyboard navigation moves the single tabbable cell and selects with Enter", async ({ page }) => {
@@ -92,7 +93,7 @@ test.describe("CalendarView docs page", () => {
     const grid = demo.getByRole("grid");
     await grid.locator('[role="gridcell"] [tabindex="0"]').focus();
     await page.keyboard.press("PageDown");
-    await expect(demo.getByText("October 2026")).toBeVisible();
+    await expect(demo.getByRole("heading", { name: "October 2026" })).toBeVisible();
     // Focus must be back inside the grid after the async re-render.
     await expect(grid.locator('[role="gridcell"] [tabindex="0"]')).toBeVisible();
   });
