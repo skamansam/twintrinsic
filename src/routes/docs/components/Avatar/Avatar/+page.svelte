@@ -4,6 +4,8 @@ Avatar documentation page — standardized structure
 -->
 <script lang="ts">
 import Avatar from "$lib/components/Avatar/Avatar.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
@@ -16,7 +18,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>{m.avatar_heading()}</h1>
+<div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("Avatar")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+  <h1>{m.avatar_heading()}</h1>
+</div>
 
 <p>{m.avatar_intro_1()}</p>
 

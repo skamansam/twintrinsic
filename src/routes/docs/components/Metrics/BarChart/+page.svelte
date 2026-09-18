@@ -4,6 +4,8 @@ BarChart documentation page — standardized structure
 -->
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
@@ -17,7 +19,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>BarChart</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("BarChart")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+    <h1>BarChart</h1>
+  </div>
 
   <p>
     <strong>BarChart</strong> — {m.bar_lede()}

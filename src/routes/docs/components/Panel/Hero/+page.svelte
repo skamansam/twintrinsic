@@ -4,6 +4,8 @@ Hero documentation page — standardized structure
 -->
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Hero from "$lib/components/Panel/Hero/Hero.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
@@ -16,7 +18,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>{m.hero_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("Hero")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+    <h1>{m.hero_heading()}</h1>
+  </div>
 
   <p>
     <strong>{m.hero_heading()}</strong>{m.hero_intro_1()}<code>type</code>{m.hero_intro_2()}<code>bg-&#123;type&#125;</code>{m.hero_intro_3()}

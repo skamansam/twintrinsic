@@ -4,6 +4,8 @@ TabList documentation page — standardized structure
 -->
 <script lang="ts">
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import Tab from "$lib/components/Tabs/Tab.svelte"
 import TabList from "$lib/components/Tabs/TabList.svelte"
 import TabPanel from "$lib/components/Tabs/TabPanel.svelte"
@@ -24,7 +26,12 @@ import { m } from "$lib/paraglide/messages.js"
     </p>
   </div>
 
-<h1>{m.tablist_heading()}</h1>
+<div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("TabList")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+
+  <h1>{m.tablist_heading()}</h1>
+
+</div>
 
 <p>
   <strong>{m.tablist_heading()}</strong>{m.tablist_intro_1()}<code>role="tablist"</code>{m.tablist_intro_2()}

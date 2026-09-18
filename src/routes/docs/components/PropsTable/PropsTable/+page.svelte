@@ -1,5 +1,7 @@
 <script lang="ts">
 import Button from "$lib/components/Button/Button.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
@@ -21,7 +23,10 @@ const propsData = {
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>{m.pt_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("PropsTable")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+    <h1>{m.pt_heading()}</h1>
+  </div>
 
   <p>
     {m.pt_lede_1()}<code>propsMetadata</code>{m.pt_lede_2()}<code>data</code>{m.pt_lede_3()}<code>console.warn</code>{m.pt_lede_4()}

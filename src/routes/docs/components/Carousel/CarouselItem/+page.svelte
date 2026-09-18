@@ -4,6 +4,8 @@ CarouselItem documentation page — standardized structure
 -->
 <script lang="ts">
 import Carousel from "$lib/components/Carousel/Carousel.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import CarouselItem from "$lib/components/Carousel/CarouselItem.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
@@ -25,7 +27,12 @@ import { m } from "$lib/paraglide/messages.js"
     </p>
   </div>
 
-  <h1>{m.carouselitem_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("CarouselItem")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+
+    <h1>{m.carouselitem_heading()}</h1>
+
+  </div>
 
   <p>
     <strong>{m.carouselitem_heading()}</strong>{m.carouselitem_intro_1()}<code>&lt;Carousel&gt;</code>{m.carouselitem_intro_2()}<code>role="tabpanel"</code>{m.carouselitem_intro_3()}<code>aria-roledescription="slide"</code>{m.carouselitem_intro_4()}

@@ -4,6 +4,8 @@ DataTable documentation page — standardized structure
 -->
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import DataTable, * as DataTableModule from "$lib/components/DataTable/DataTable.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
@@ -52,7 +54,10 @@ const templateColumns = [
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>{m.dt_heading()}</h1>
+<div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("DataTable")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+  <h1>{m.dt_heading()}</h1>
+</div>
 
 <p>
   {m.dt_intro_1()}

@@ -4,6 +4,8 @@ ColorPicker documentation page — standardized structure
 -->
 <script lang="ts">
 import BrowserApiBadge from "$lib/components/BrowserApiBadge/BrowserApiBadge.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import ColorPicker from "$lib/components/Form/ColorPicker.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
@@ -19,6 +21,7 @@ import { m } from "$lib/paraglide/messages.js"
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
 <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("ColorPicker")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
   <h1>{m.colorpicker_heading()}</h1>
   <BrowserApiBadge component="ColorPicker" />
 </div>

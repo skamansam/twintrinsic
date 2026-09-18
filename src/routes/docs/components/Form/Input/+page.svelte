@@ -4,6 +4,8 @@ Input documentation page — standardized structure
 -->
 <script lang="ts">
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import Input from "$lib/components/Form/Input.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
@@ -27,7 +29,10 @@ function handlePasswordInput(event: CustomEvent<{ value: string }>) {
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>{m.input_heading()}</h1>
+<div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("Input")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+  <h1>{m.input_heading()}</h1>
+</div>
 
 <!-- ─── Description ───────────────────────────────────── -->
 <p>

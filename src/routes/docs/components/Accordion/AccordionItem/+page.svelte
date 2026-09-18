@@ -4,6 +4,8 @@ AccordionItem documentation page — standardized structure
 -->
 <script lang="ts">
 import Accordion from "$lib/components/Accordion/Accordion.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import AccordionItem from "$lib/components/Accordion/AccordionItem.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
@@ -25,7 +27,12 @@ import { m } from "$lib/paraglide/messages.js"
     </p>
   </div>
 
-  <h1>{m.accordionitem_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("AccordionItem")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+
+    <h1>{m.accordionitem_heading()}</h1>
+
+  </div>
 
   <p>
     <strong>{m.accordionitem_heading()}</strong>{m.accordionitem_intro_1()}<code>&lt;Accordion&gt;</code>{m.accordionitem_intro_2()}<code>&lt;details&gt;</code>{m.accordionitem_intro_3()}<code>&lt;summary&gt;</code>{m.accordionitem_intro_4()}

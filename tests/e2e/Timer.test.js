@@ -73,8 +73,10 @@ test.describe("Timer docs page", () => {
     await expect(variants.getByRole("timer")).toHaveCount(3);
     // Bar variant -> native <progress>
     await expect(variants.locator("progress")).toHaveCount(1);
-    // Gauge variant -> svg with a chart role
-    await expect(variants.locator("svg")).toHaveCount(1);
+    // Gauge variant -> one exposed chart svg. Iconify icons also render
+    // role="img" but always carry aria-hidden="true" (decorative), so the
+    // not-hidden selector isolates the gauge regardless of control icons.
+    await expect(variants.locator("svg[role='img']:not([aria-hidden='true'])")).toHaveCount(1);
     // KPI variant -> clickable card showing the labeled value vs target
     await expect(variants.getByText("Deploy")).toBeVisible();
     await expect(variants.getByRole("button", { name: /Deploy: 120 of 120/i })).toBeVisible();

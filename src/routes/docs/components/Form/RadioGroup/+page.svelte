@@ -4,6 +4,8 @@ RadioGroup documentation page — standardized structure
 -->
 <script lang="ts">
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import Radio from "$lib/components/Form/Radio.svelte"
 import RadioGroup from "$lib/components/Form/RadioGroup.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
@@ -18,7 +20,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>{m.rg_heading()}</h1>
+<div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("RadioGroup")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+  <h1>{m.rg_heading()}</h1>
+</div>
 
 <p>
   <strong>{m.rg_heading()}</strong>{m.rg_intro_1()}<code>&lt;fieldset&gt;</code>{m.rg_intro_2()}<code>&lt;legend&gt;</code>{m.rg_intro_3()}

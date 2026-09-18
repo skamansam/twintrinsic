@@ -4,6 +4,8 @@ Alert documentation page — standardized structure
 -->
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Alert from "$lib/components/Alert/Alert.svelte"
 import Button from "$lib/components/Button/Button.svelte"
@@ -18,7 +20,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>{m.alert_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("Alert")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+    <h1>{m.alert_heading()}</h1>
+  </div>
 
   <p>
     <strong>{m.alert_heading()}</strong>{m.alert_lede_1()}

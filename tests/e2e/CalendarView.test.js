@@ -228,7 +228,11 @@ test.describe("CalendarView views + playground (11.4)", () => {
     await demo.getByTestId("view-day").click();
     await expect(demo.locator("[data-testid^='calendar-view-day-2026']")).toHaveCount(1);
     // The demo binds month; page forward until the cell is Sep 16.
-    for (let i = 0; i < 20 && !(await demo.getByTestId("calendar-view-day-2026-09-16").isVisible()); i++) {
+    for (
+      let i = 0;
+      i < 20 && !(await demo.getByTestId("calendar-view-day-2026-09-16").isVisible());
+      i++
+    ) {
       await demo.getByTestId("calendar-view-next").click();
     }
     await expect(demo.getByTestId("calendar-view-day-2026-09-16")).toBeVisible();
@@ -257,12 +261,16 @@ test.describe("CalendarView views + playground (11.4)", () => {
     await expect(demo.getByTestId("calendar-view-event-")).toBeHidden(); // sanity: no empty ids
   });
 
-  test("playground holiday toggles fetch feeds, render chips, and lock dragging", async ({ page }) => {
+  test("playground holiday toggles fetch feeds, render chips, and lock dragging", async ({
+    page,
+  }) => {
     const demo = page.getByTestId("calendarview-playground");
     await demo.getByTestId("playground-cal-en.usa").check();
     // Live public feed: at least one US holiday lands in the Sep 2026 grid.
     await expect
-      .poll(async () => demo.locator("[data-testid^='calendar-view-event-']").count(), { timeout: 15000 })
+      .poll(async () => demo.locator("[data-testid^='calendar-view-event-']").count(), {
+        timeout: 15000,
+      })
       .toBeGreaterThan(0);
     // Holiday chips (calendarId-stamped) must be drag-locked.
     const holidayChip = demo

@@ -4,6 +4,8 @@ Stepper documentation page — standardized structure
 -->
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
@@ -29,7 +31,10 @@ let verticalSteps = [
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>{m.stepper_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("Stepper")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+    <h1>{m.stepper_heading()}</h1>
+  </div>
 
   <p>
     <strong>{m.stepper_heading()}</strong>{m.stepper_lede_1()}

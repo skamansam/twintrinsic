@@ -4,6 +4,8 @@ StepperStep documentation page — standardized structure
 -->
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
@@ -25,7 +27,12 @@ import { m } from "$lib/paraglide/messages.js"
     </p>
   </div>
 
-  <h1>{m.step_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("StepperStep")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+
+    <h1>{m.step_heading()}</h1>
+
+  </div>
 
   <p>
     <strong>{m.step_heading()}</strong>{m.step_lede_1()}<code>&lt;Stepper&gt;</code>{m.step_lede_2()}<code>&lt;Stepper&gt;</code>{m.step_lede_3()}<code>activeStep</code>{m.step_lede_4()}

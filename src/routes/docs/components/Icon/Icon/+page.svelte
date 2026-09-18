@@ -4,6 +4,7 @@ Icon documentation page — standardized structure
 -->
 <script lang="ts">
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import { docsIcon } from "../../../componentIcons"
 import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Icon from "$lib/components/Icon/Icon.svelte"
@@ -17,7 +18,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>{m.icon_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("Icon")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+    <h1>{m.icon_heading()}</h1>
+  </div>
 
   <p>
     <strong>{m.icon_heading()}</strong>{m.icon_lede_1()}

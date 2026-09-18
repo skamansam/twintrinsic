@@ -1,5 +1,7 @@
 <script lang="ts">
 import App, * as AppModule from "$lib/components/App/App.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import BottomBar from "$lib/components/BottomBar/BottomBar.svelte"
 import Button from "$lib/components/Button/Button.svelte"
 import Container from "$lib/components/Container/Container.svelte"
@@ -19,7 +21,10 @@ App documentation page — standardized structure
   @reference '$lib/twintrinsic.css';
 </style>
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>{m.app_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("App")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+    <h1>{m.app_heading()}</h1>
+  </div>
 
   <!-- ─── Description ───────────────────────────────────── -->
   <p>

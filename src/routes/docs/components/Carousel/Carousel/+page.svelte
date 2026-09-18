@@ -4,6 +4,8 @@ Carousel documentation page — standardized structure
 -->
 <script lang="ts">
 import BrowserApiBadge from "$lib/components/BrowserApiBadge/BrowserApiBadge.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import Carousel from "$lib/components/Carousel/Carousel.svelte"
 import CarouselItem from "$lib/components/Carousel/CarouselItem.svelte"
 import Container from "$lib/components/Container/Container.svelte"
@@ -21,6 +23,7 @@ import { m } from "$lib/paraglide/messages.js"
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("Carousel")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
   <h1>{m.carousel_heading()}</h1>
   <BrowserApiBadge component="Carousel" />
 </div>

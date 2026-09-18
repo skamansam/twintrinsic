@@ -4,6 +4,8 @@ TreeNode documentation page — standardized structure
 -->
 <script lang="ts">
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Tree from "$lib/components/Tree/Tree.svelte"
 import TreeNode from "$lib/components/Tree/TreeNode.svelte"
@@ -25,7 +27,12 @@ import { m } from "$lib/paraglide/messages.js"
     </p>
   </div>
 
-  <h1>{m.treenode_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("TreeNode")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+
+    <h1>{m.treenode_heading()}</h1>
+
+  </div>
 
   <p>
     <strong>{m.treenode_heading()}</strong>{m.treenode_intro_1()}<code>treeitem</code>{m.treenode_intro_2()}

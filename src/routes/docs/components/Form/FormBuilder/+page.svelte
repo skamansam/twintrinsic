@@ -4,6 +4,8 @@ FormBuilder documentation page — standardized structure
 -->
 <script lang="ts">
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
@@ -41,7 +43,10 @@ const json = (value: unknown): string => JSON.stringify(value, null, 2)
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>{m.fb_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("FormBuilder")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+    <h1>{m.fb_heading()}</h1>
+  </div>
 
   <p>
     <strong>{m.fb_heading()}</strong>{m.fb_intro_1()}<a href="https://spec.openapis.org/oas/v3.0.3#schema-object">OpenAPI 3.0 Schema Object</a>{m.fb_intro_2()}<code>&lt;Form&gt;</code>{m.fb_intro_3()}

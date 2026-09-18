@@ -4,6 +4,8 @@ MenuItem documentation page — standardized structure
 -->
 <script lang="ts">
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import Menu from "$lib/components/Menu/Menu/Menu.svelte"
 import MenuItem from "$lib/components/Menu/Menu/MenuItem.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
@@ -24,7 +26,12 @@ import { m } from "$lib/paraglide/messages.js"
     </p>
   </div>
 
-<h1>{m.menuitem_heading()}</h1>
+<div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("MenuItem")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+
+  <h1>{m.menuitem_heading()}</h1>
+
+</div>
 
 <p>
   <strong>{m.menuitem_heading()}</strong>{m.menuitem_intro_1()}

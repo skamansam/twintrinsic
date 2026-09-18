@@ -4,6 +4,8 @@ TableCell documentation page — standardized structure
 -->
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as TableCellModule from "$lib/components/Table/TableCell.svelte"
 import { m } from "$lib/paraglide/messages.js"
@@ -14,7 +16,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>{m.tablecell_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("TableCell")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+    <h1>{m.tablecell_heading()}</h1>
+  </div>
 
   <p>
     <strong>{m.tablecell_heading()}</strong>{m.tablecell_intro_1()}<code>&lt;td&gt;</code>{m.tablecell_intro_2()}<code>&lt;Table&gt;</code>{m.tablecell_intro_3()}

@@ -217,8 +217,13 @@ describe("buildWeekGrid", () => {
     // 2026-09-16 is a Wednesday; Sunday-start grid begins Sep 13.
     const week = buildWeekGrid(TemporalPolyfill.PlainDate.from("2026-09-16"), { weekStart: 0 });
     expect(week.map((d) => d.toString())).toEqual([
-      "2026-09-13", "2026-09-14", "2026-09-15", "2026-09-16",
-      "2026-09-17", "2026-09-18", "2026-09-19",
+      "2026-09-13",
+      "2026-09-14",
+      "2026-09-15",
+      "2026-09-16",
+      "2026-09-17",
+      "2026-09-18",
+      "2026-09-19",
     ]);
   });
 

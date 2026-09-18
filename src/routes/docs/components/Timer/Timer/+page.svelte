@@ -4,6 +4,8 @@ Timer documentation page — standardized structure
 -->
 <script lang="ts">
 import BrowserApiBadge from "$lib/components/BrowserApiBadge/BrowserApiBadge.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
@@ -18,6 +20,7 @@ import { m } from "$lib/paraglide/messages.js"
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
   <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("Timer")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
   <h1>{m.timer_heading()}</h1>
   <BrowserApiBadge component="Timer" />
 </div>

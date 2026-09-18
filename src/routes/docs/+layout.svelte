@@ -9,6 +9,11 @@ import TwintrinsicLogo from "$lib/components/icons/TwintrinsicLogo.svelte"
 import LocaleSwitcher from "$lib/components/LocaleSwitcher/LocaleSwitcher.svelte"
 import { m } from "$lib/paraglide/messages.js"
 import { getTextDirection } from "$lib/paraglide/runtime.js"
+import { docsIconFor, loadDocsIconCollection } from "./componentIcons"
+
+// 11.2: register the bundled Tabler icon data once so every docs icon
+// renders offline (no runtime Iconify API fetches).
+loadDocsIconCollection()
 
 let { children } = $props()
 
@@ -46,13 +51,22 @@ const siteLinks = $derived([
 let leftSidebarExpanded = $state(false)
 
 // Component links for the left sidebar (group titles are translated)
-const siteMenu = $derived([
+// 11.2: every component entry gets its Tabler icon from the shared map.
+/** One sidebar entry: TreeMenu item shape + docs icon. */
+interface DocsMenuChild {
+  title?: string
+  label?: string
+  link: string
+  icon?: string
+}
+const siteMenu = $derived.by(() => {
+  const raw: { title?: string; children: DocsMenuChild[] }[] = [
   {
     title: m.nav_examples(),
     children: [
-      { title: "Data Dashboard", link: "/docs/examples/dashboard" },
-      { title: "Game Map", link: "/docs/examples/game-map" },
-      { title: "Shopping Page", link: "/docs/examples/shopping" },
+      { title: "Data Dashboard", link: "/docs/examples/dashboard", icon: "dashboard" },
+      { title: "Game Map", link: "/docs/examples/game-map", icon: "map" },
+      { title: "Shopping Page", link: "/docs/examples/shopping", icon: "shopping-cart" },
     ],
   },
   {
@@ -204,15 +218,23 @@ const siteMenu = $derived([
   },
   {
     title: m.nav_apis(),
-    children: [{ title: "Utilities", link: "/docs/utilities" }],
+    children: [{ title: "Utilities", link: "/docs/utilities", icon: "tool" }],
   },
   {
     title: m.nav_theming(),
     children: [
-      { title: "Theme Preview", link: "/docs/theming/preview" },
+      { title: "Theme Preview", link: "/docs/theming/preview", icon: "palette" },
     ],
   },
-])
+  ]
+  return raw.map((group) => ({
+    ...group,
+    children: group.children.map((child) => ({
+      ...child,
+      icon: child.icon ?? (child.title ? docsIconFor(child.title) : undefined),
+    })),
+  }))
+})
 
 // Theme colors for the right sidebar
 const themeColors = [

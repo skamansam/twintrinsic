@@ -4,6 +4,8 @@ TreeMenu documentation page — standardized structure
 -->
 <script lang="ts">
 import BrowserApiBadge from "$lib/components/BrowserApiBadge/BrowserApiBadge.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import type { MenuItem as TreeMenuItem } from "$lib/components/TreeMenu/TreeMenu.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import TreeMenu from "$lib/components/TreeMenu/TreeMenu.svelte"
@@ -53,6 +55,7 @@ const actionItems: TreeMenuItem[] = [
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
 <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("TreeMenu")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
   <h1>{m.treemenu_heading()}</h1>
   <BrowserApiBadge component="TreeMenu" />
 </div>

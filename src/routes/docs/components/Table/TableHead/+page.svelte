@@ -4,6 +4,8 @@ TableHead documentation page — standardized structure
 -->
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as TableHeadModule from "$lib/components/Table/TableHead.svelte"
 import { m } from "$lib/paraglide/messages.js"
@@ -14,7 +16,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>{m.tablehead_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("TableHead")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+    <h1>{m.tablehead_heading()}</h1>
+  </div>
 
   <p>
     <strong>{m.tablehead_heading()}</strong>{m.tablehead_intro_1()}<code>&lt;thead&gt;</code>{m.tablehead_intro_2()}<code>&lt;Table&gt;</code>{m.tablehead_intro_3()}

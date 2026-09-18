@@ -4,6 +4,8 @@ TableBody documentation page — standardized structure
 -->
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as TableBodyModule from "$lib/components/Table/TableBody.svelte"
 import { m } from "$lib/paraglide/messages.js"
@@ -21,7 +23,12 @@ import { m } from "$lib/paraglide/messages.js"
     </p>
   </div>
 
-  <h1>{m.tablebody_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("TableBody")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+
+    <h1>{m.tablebody_heading()}</h1>
+
+  </div>
 
   <p>
     <strong>{m.tablebody_heading()}</strong>{m.tablebody_intro_1()}<code>&lt;tbody&gt;</code>{m.tablebody_intro_2()}<code>&lt;Table&gt;</code>{m.tablebody_intro_3()}

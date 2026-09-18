@@ -25,6 +25,8 @@ if (!globalThis.Temporal) {
 
 <script lang="ts">
 import BrowserApiBadge from "$lib/components/BrowserApiBadge/BrowserApiBadge.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import CalendarView from "$lib/components/CalendarView/CalendarView.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
@@ -320,6 +322,7 @@ function viewSpan(month: Temporal.PlainDate, view: "month" | "week" | "day") {
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
 <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("CalendarView")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
   <h1>{m.calendarview_heading()}</h1>
   <BrowserApiBadge component="CalendarView" />
 </div>

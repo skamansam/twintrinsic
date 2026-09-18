@@ -4,6 +4,8 @@ Listbox documentation page — standardized structure
 -->
 <script lang="ts">
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import FormField from "$lib/components/Form/FormField.svelte"
 import Listbox from "$lib/components/Form/Listbox.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
@@ -29,7 +31,10 @@ let selectedFruits = $state(["Apple", "Grape"])
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>{m.listbox_heading()}</h1>
+<div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("Listbox")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+  <h1>{m.listbox_heading()}</h1>
+</div>
 
 <p>
   <strong>{m.listbox_heading()}</strong>{m.listbox_lede_1()}

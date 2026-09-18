@@ -4,6 +4,8 @@ BreadcrumbItem documentation page — standardized structure
 -->
 <script lang="ts">
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import Breadcrumb from "$lib/components/Breadcrumb/Breadcrumb.svelte"
 import BreadcrumbItem from "$lib/components/Breadcrumb/BreadcrumbItem.svelte"
 import Container from "$lib/components/Container/Container.svelte"
@@ -25,7 +27,12 @@ import { m } from "$lib/paraglide/messages.js"
     </p>
   </div>
 
-  <h1>{m.breadcrumbitem_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("BreadcrumbItem")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+
+    <h1>{m.breadcrumbitem_heading()}</h1>
+
+  </div>
 
   <p>
     <strong>{m.breadcrumbitem_heading()}</strong>{m.breadcrumbitem_intro_1()}<code>href</code>{m.breadcrumbitem_intro_2()}<code>aria-current="page"</code>{m.breadcrumbitem_intro_3()}

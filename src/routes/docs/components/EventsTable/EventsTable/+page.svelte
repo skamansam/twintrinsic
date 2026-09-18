@@ -1,5 +1,7 @@
 <script lang="ts">
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import Input from "$lib/components/Form/Input.svelte"
@@ -22,7 +24,10 @@ const propsData = {
 </script>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-  <h1>{m.events_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("EventsTable")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+    <h1>{m.events_heading()}</h1>
+  </div>
 
   <p>
     {m.events_lede_1()}<code>PropsTable</code>{m.events_lede_2()}<code>propsMetadata</code>{m.events_lede_3()}<code>CustomEvent</code>{m.events_lede_4()}<code>data</code>{m.events_lede_5()}

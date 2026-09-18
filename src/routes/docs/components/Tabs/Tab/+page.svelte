@@ -4,6 +4,8 @@ Tab documentation page — redirects to parent Tabs component.
 -->
 <script lang="ts">
 import Container from "$lib/components/Container/Container.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import { m } from "$lib/paraglide/messages.js"
 </script>
 
@@ -19,7 +21,12 @@ import { m } from "$lib/paraglide/messages.js"
     </p>
   </div>
 
-  <h1>{m.tab_heading()}</h1>
+  <div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("Tab")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+
+    <h1>{m.tab_heading()}</h1>
+
+  </div>
 
   <p>
     <strong>{m.tab_heading()}</strong>{m.tab_intro_1()}<code>&lt;Tabs&gt;</code>{m.tab_intro_2()}<code>&lt;TabList&gt;</code>{m.tab_intro_3()}

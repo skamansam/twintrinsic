@@ -4,6 +4,8 @@ AutoComplete documentation page — standardized structure
 -->
 <script lang="ts">
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
+import { docsIcon } from "../../../componentIcons"
+import Icon from "$lib/components/Icon/Icon.svelte"
 import AutoComplete from "$lib/components/Form/AutoComplete.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
@@ -40,7 +42,10 @@ function renderAvatar(item: (typeof users)[number]): string {
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>{m.autocomplete_heading()}</h1>
+<div class="flex flex-wrap items-center gap-3">
+  <Icon name={docsIcon("AutoComplete")} class="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+  <h1>{m.autocomplete_heading()}</h1>
+</div>
 
 <p>
   <strong>{m.autocomplete_heading()}</strong>{m.autocomplete_lede_1()}<code>popover="auto"</code>{m.autocomplete_lede_2()}
