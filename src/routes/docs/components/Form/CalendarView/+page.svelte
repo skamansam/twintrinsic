@@ -24,14 +24,13 @@ if (!globalThis.Temporal) {
 </script>
 
 <script lang="ts">
+import BrowserApiBadge from "$lib/components/BrowserApiBadge/BrowserApiBadge.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import CalendarView from "$lib/components/CalendarView/CalendarView.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CalendarViewModule from "$lib/components/CalendarView/CalendarView.svelte"
 import Container from "$lib/components/Container/Container.svelte"
-import Badge from "$lib/components/Badge/Badge.svelte"
-import Tooltip from "$lib/components/Tooltip/Tooltip.svelte"
 import { parseICal } from "$lib/helpers/parseICal.js"
 import type { EventMoveDetail } from "$lib/helpers/eventNormalize.js"
 import { m } from "$lib/paraglide/messages.js"
@@ -105,14 +104,10 @@ function moveEvent(e: CustomEvent<EventMoveDetail>) {
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>
-  {m.calendarview_heading()}
-  <Tooltip content={m.calendarview_api_badge_tip()}>
-    <Badge pill outline variant="info">
-      Temporal
-    </Badge>
-  </Tooltip>
-</h1>
+<div class="flex flex-wrap items-center gap-3">
+  <h1>{m.calendarview_heading()}</h1>
+  <BrowserApiBadge component="CalendarView" />
+</div>
 
 <p>
   <strong>{m.calendarview_heading()}</strong>{m.calendarview_lede_1()}<code>Temporal</code>{m.calendarview_lede_2()}<code>@js-temporal/polyfill</code>{m.calendarview_lede_3()}

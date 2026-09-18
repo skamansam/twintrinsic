@@ -36,6 +36,7 @@ export { default as Footer } from "./components/Footer/Footer.svelte";
 // Form Components
 export { default as AutoComplete } from "./components/Form/AutoComplete.svelte";
 export { default as CalendarInput } from "./components/Form/CalendarInput.svelte";
+export { default as BrowserApiBadge } from "./components/BrowserApiBadge/BrowserApiBadge.svelte";
 export { default as CalendarView } from "./components/CalendarView/CalendarView.svelte";
 export { default as Checkbox } from "./components/Form/Checkbox.svelte";
 export { default as ColorPicker } from "./components/Form/ColorPicker.svelte";

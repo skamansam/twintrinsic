@@ -574,6 +574,11 @@
       "svelte": "./dist/components/Toast/Toast.svelte",
       "default": "./dist/components/Toast/Toast.svelte"
     },
+    "./components/BrowserApiBadge": {
+      "types": "./dist/components/BrowserApiBadge/BrowserApiBadge.svelte.d.ts",
+      "svelte": "./dist/components/BrowserApiBadge/BrowserApiBadge.svelte",
+      "default": "./dist/components/BrowserApiBadge/BrowserApiBadge.svelte"
+    },
     "./components/Tooltip": {
       "types": "./dist/components/Tooltip/Tooltip.svelte.d.ts",
       "svelte": "./dist/components/Tooltip/Tooltip.svelte",

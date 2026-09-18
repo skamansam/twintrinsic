@@ -3,6 +3,7 @@
 Menu documentation page — standardized structure
 -->
 <script lang="ts">
+import BrowserApiBadge from "$lib/components/BrowserApiBadge/BrowserApiBadge.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import Menu from "$lib/components/Menu/Menu/Menu.svelte"
@@ -19,7 +20,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
+  <div class="flex flex-wrap items-center gap-3">
   <h1>{m.menu_heading()}</h1>
+  <BrowserApiBadge component="Menu" />
+</div>
 
   <p>
     <strong>{m.menu_heading()}</strong>{m.menu_intro_1()}<code>popover="auto"</code>{m.menu_intro_2()}

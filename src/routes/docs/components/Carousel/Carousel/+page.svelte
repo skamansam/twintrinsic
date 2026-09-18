@@ -3,6 +3,7 @@
 Carousel documentation page — standardized structure
 -->
 <script lang="ts">
+import BrowserApiBadge from "$lib/components/BrowserApiBadge/BrowserApiBadge.svelte"
 import Carousel from "$lib/components/Carousel/Carousel.svelte"
 import CarouselItem from "$lib/components/Carousel/CarouselItem.svelte"
 import Container from "$lib/components/Container/Container.svelte"
@@ -19,7 +20,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
+  <div class="flex flex-wrap items-center gap-3">
   <h1>{m.carousel_heading()}</h1>
+  <BrowserApiBadge component="Carousel" />
+</div>
 
   <p>
     <strong>{m.carousel_heading()}</strong>{m.carousel_intro_1()}

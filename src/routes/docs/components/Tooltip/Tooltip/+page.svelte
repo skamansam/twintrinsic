@@ -3,6 +3,7 @@
 Tooltip documentation page — standardized structure
 -->
 <script lang="ts">
+import BrowserApiBadge from "$lib/components/BrowserApiBadge/BrowserApiBadge.svelte"
 import Button from "$lib/components/Button/Button.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
@@ -17,7 +18,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>{m.tooltip_heading()}</h1>
+<div class="flex flex-wrap items-center gap-3">
+  <h1>{m.tooltip_heading()}</h1>
+  <BrowserApiBadge component="Tooltip" />
+</div>
 
 <p>
   {m.tooltip_intro_1()}<strong>Popover API</strong>{m.tooltip_intro_2()}<code>popover="hint"</code>{m.tooltip_intro_3()}<strong><code>interestfor</code></strong>{m.tooltip_intro_4()}<strong>CSS Anchor Positioning</strong>{m.tooltip_intro_5()}

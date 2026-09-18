@@ -3,6 +3,7 @@
 CalendarInput documentation page — standardized structure
 -->
 <script lang="ts">
+import BrowserApiBadge from "$lib/components/BrowserApiBadge/BrowserApiBadge.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import CalendarInput from "$lib/components/Form/CalendarInput.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
@@ -17,7 +18,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>{m.calendar_heading()}</h1>
+<div class="flex flex-wrap items-center gap-3">
+  <h1>{m.calendar_heading()}</h1>
+  <BrowserApiBadge component="CalendarInput" />
+</div>
 
 <p>
   <strong>{m.calendar_heading()}</strong>{m.calendar_lede_1()}<code>&lt;input type="date"&gt;</code>{m.calendar_lede_2()}

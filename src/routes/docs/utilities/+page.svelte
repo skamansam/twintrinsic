@@ -162,4 +162,21 @@ pnpm check:assets -- --ignore=/banner.jpg
 # List every reference found, including resolving ones
 pnpm check:assets -- --list`}
   </CodeBlock>
+
+  <Separator>{m.util_apibadge_heading()}</Separator>
+
+  <h2><code>browserApiRegistry</code></h2>
+
+  <p>{m.util_apibadge_body_1()}</p>
+
+  <CodeBlock language="ts">
+{`import { browserApisFor } from "twintrinsic/helpers/browserApiRegistry"
+
+// Returns the APIs for a component (or undefined)
+const apis = browserApisFor("CalendarView")
+// [{ label: "Temporal", mdnUrl: "…", polyfill: "@js-temporal/polyfill" }]`}
+  </CodeBlock>
+
+  <p>{m.util_apibadge_body_2()}</p>
+  <p>{m.util_apibadge_body_3()}</p>
 </Container>

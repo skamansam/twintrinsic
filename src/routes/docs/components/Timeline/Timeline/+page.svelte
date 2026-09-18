@@ -3,6 +3,7 @@
 Timeline documentation page — standardized structure
 -->
 <script lang="ts">
+import BrowserApiBadge from "$lib/components/BrowserApiBadge/BrowserApiBadge.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
@@ -17,7 +18,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
+  <div class="flex flex-wrap items-center gap-3">
   <h1>{m.timeline_heading()}</h1>
+  <BrowserApiBadge component="Timeline" />
+</div>
 
   <p>
     <strong>{m.timeline_heading()}</strong>{m.timeline_intro_1()}

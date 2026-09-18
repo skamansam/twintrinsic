@@ -125,6 +125,8 @@ const components = [
     { name: "Temporal API", implemented: true },
     { name: "ARIA grid pattern (APG)", implemented: true },
     { name: "Intl API (weekInfo, formatting)", implemented: true },
+    { name: "HTML Drag and Drop API", implemented: true },
+    { name: "Popover API (+N more overflow)", implemented: true },
   ]},
   { name: "Checkbox", category: "Form", updated: true, apis: [
     { name: "HTML checkbox input", implemented: true },

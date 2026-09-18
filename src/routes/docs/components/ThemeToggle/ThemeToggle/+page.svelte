@@ -3,6 +3,7 @@
 ThemeToggle documentation page — standardized structure
 -->
 <script lang="ts">
+import BrowserApiBadge from "$lib/components/BrowserApiBadge/BrowserApiBadge.svelte"
 import Button from "$lib/components/Button/Button.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
@@ -16,7 +17,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
+  <div class="flex flex-wrap items-center gap-3">
   <h1>{m.themetoggle_heading()}</h1>
+  <BrowserApiBadge component="ThemeToggle" />
+</div>
 
   <p>
     <strong>{m.themetoggle_heading()}</strong>{m.themetoggle_intro_1()}

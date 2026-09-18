@@ -5038,5 +5038,12 @@
   "bar_ex_percolor": "Per-Bar Colors",
   "bar_ex_percolor_p": "Pass an array to the barColors prop to override the color of individual bars. The array is indexed by label position; entries left undefined fall back to the series color.",
   "calendarview_ex_drag": "Drag to edit",
-  "calendarview_ex_drag_p": "Enable dragEvents to reschedule events with the native HTML Drag and Drop API (desktop pointer only — DnD has no touch support). Drop a chip on another day and CalendarView fires oneventmove with the moved event and its from/to days; the consumer owns state and rewrites the event's start. Keyboard alternative: click a chip to activate it, then use the arrow keys to move it by day or week. Durations cannot be resized with DnD."
+  "calendarview_ex_drag_p": "Enable dragEvents to reschedule events with the native HTML Drag and Drop API (desktop pointer only — DnD has no touch support). Drop a chip on another day and CalendarView fires oneventmove with the moved event and its from/to days; the consumer owns state and rewrites the event's start. Keyboard alternative: click a chip to activate it, then use the arrow keys to move it by day or week. Durations cannot be resized with DnD.",
+  "api_badge_polyfill": "Built on a native browser API. Twintrinsic ships no polyfill — if you target older browsers, install {api} yourself (e.g. as the first import of your app entry).",
+  "api_badge_nopolyfill": "Built on a native browser API. No polyfill is available — browsers without support cannot enable this feature.",
+  "api_badge_link": "Learn more about the {api} browser API (opens MDN in a new tab)",
+  "util_apibadge_heading": "Browser-API badge registry",
+  "util_apibadge_body_1": "The docs site's title badges come from a shared data registry: each entry names a native browser API, links its spec page, and lists the polyfill a consumer may install for older browsers (Twintrinsic never ships one). The BrowserApiBadge component renders these pills beside every docs page title.",
+  "util_apibadge_body_2": "The same registry doubles as the data source for the completion page's web-API checklist, so entries added there appear in both places. Register a component by adding it to browserApiRegistry with its APIs; pages with no entry simply render no badge.",
+  "util_apibadge_body_3": "Mappings are evidence-based: an entry exists only if the component's source actually uses the API. Tooltip strings (including the polyfill install note) are localized in en, es, and fa."
 }

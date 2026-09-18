@@ -3,6 +3,7 @@
 Switch documentation page — standardized structure
 -->
 <script lang="ts">
+import BrowserApiBadge from "$lib/components/BrowserApiBadge/BrowserApiBadge.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Switch from "$lib/components/Form/Switch.svelte"
 import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
@@ -17,7 +18,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>{m.switch_heading()}</h1>
+<div class="flex flex-wrap items-center gap-3">
+  <h1>{m.switch_heading()}</h1>
+  <BrowserApiBadge component="Switch" />
+</div>
 
 <!-- ─── Description ───────────────────────────────────── -->
 <p>

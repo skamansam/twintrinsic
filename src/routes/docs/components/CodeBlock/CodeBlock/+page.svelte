@@ -3,6 +3,7 @@
 CodeBlock documentation page — standardized structure
 -->
 <script lang="ts">
+import BrowserApiBadge from "$lib/components/BrowserApiBadge/BrowserApiBadge.svelte"
 import CodeBlock from "$lib/components/CodeBlock/CodeBlock.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
@@ -16,7 +17,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>{m.codeblock_heading()}</h1>
+<div class="flex flex-wrap items-center gap-3">
+  <h1>{m.codeblock_heading()}</h1>
+  <BrowserApiBadge component="CodeBlock" />
+</div>
 
 <p>
   <strong>{m.codeblock_heading()}</strong>{m.codeblock_intro_1()}

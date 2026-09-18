@@ -3,6 +3,7 @@
 Accordion documentation page — standardized structure
 -->
 <script lang="ts">
+import BrowserApiBadge from "$lib/components/BrowserApiBadge/BrowserApiBadge.svelte"
 import Accordion from "$lib/components/Accordion/Accordion.svelte"
 import AccordionItem from "$lib/components/Accordion/AccordionItem.svelte"
 import Container from "$lib/components/Container/Container.svelte"
@@ -19,7 +20,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
+  <div class="flex flex-wrap items-center gap-3">
   <h1>{m.accordion_heading()}</h1>
+  <BrowserApiBadge component="Accordion" />
+</div>
 
   <p>
     <strong>{m.accordion_heading()}</strong>{m.accordion_intro_1()}<code>&lt;details&gt;</code>{m.accordion_intro_2()}<code>&lt;summary&gt;</code>{m.accordion_intro_3()}

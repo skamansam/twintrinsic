@@ -3,6 +3,7 @@
 FileUpload documentation page — standardized structure
 -->
 <script lang="ts">
+import BrowserApiBadge from "$lib/components/BrowserApiBadge/BrowserApiBadge.svelte"
 import ExampleTabs from "$lib/components/ExampleTabs/ExampleTabs.svelte"
 import Container from "$lib/components/Container/Container.svelte"
 import FileUpload from "$lib/components/Form/FileUpload.svelte"
@@ -17,7 +18,10 @@ import { m } from "$lib/paraglide/messages.js"
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
+  <div class="flex flex-wrap items-center gap-3">
   <h1>{m.fileupload_heading()}</h1>
+  <BrowserApiBadge component="FileUpload" />
+</div>
 
   <p>
     <strong>{m.fileupload_heading()}</strong>{m.fileupload_lede_1()}
