@@ -519,7 +519,7 @@ describe("CalendarView connectivity (milestone 6)", () => {
 
 	it("fetched events merge with static events and group across sources", async () => {
 		const work = workSource([{ id: "r1", uid: "shared@x", title: "Standup", start: "2026-09-15T09:30" }])
-		const { getByTestId } = await renderForSeptember({
+		await renderForSeptember({
 			events: [{ id: "s1", uid: "shared@x", title: "Standup", start: "2026-09-15T09:30", color: "#6366f1" }],
 			calendars: [work],
 			grouping: true,
