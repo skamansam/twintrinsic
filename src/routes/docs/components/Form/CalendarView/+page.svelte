@@ -31,8 +31,9 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CalendarViewModule from "$lib/components/CalendarView/CalendarView.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import { buildMonthGrid, buildWeekGrid } from "$lib/helpers/calendarGrid.js"
 import { parseICal } from "$lib/helpers/parseICal.js"
-import type { EventMoveDetail } from "$lib/helpers/eventNormalize.js"
+import type { CalendarViewEvent, EventMoveDetail } from "$lib/helpers/eventNormalize.js"
 import type { CalendarSource } from "$lib/helpers/connectCalendars.js"
 import { m } from "$lib/paraglide/messages.js"
 
@@ -160,6 +161,157 @@ const CONNECTED_SOURCES: CalendarSource[] = [
 
 /** Failures reported by oncalendarserror (demo shows them inline). */
 let sourceErrors = $state<string[]>([])
+
+// ── Views demo: consumer-owned events shown across all three views. ──
+let viewsMonth = $state(SEPTEMBER)
+let viewEvents: CalendarViewEvent[] = $state([
+  { id: "v-review", title: "Design review", start: "2026-09-16T14:00", color: "#6366f1" },
+  { id: "v-offsite", title: "Offsite", start: "2026-09-18", allDay: true, color: "#f59e0b" },
+])
+
+// ── Playground (11.4): Google public holiday calendars + event sandbox. ──
+
+/**
+ * Builds a CalendarSource for one of Google's public holiday calendars.
+ * The legacy GData JSON endpoints are retired; the current public feed is
+ * plain iCalendar, so parseICal handles it and UID-based grouping works.
+ * Fetches are cached per calendarId — repeat toggles don't re-hit the feed.
+ * @param id - Google public calendarId (e.g. "en.usa#holiday@group.v.calendar.google.com")
+ * @param name - Legend label shown next to the toggle
+ * @param color - Source color for the calendar's chips
+ */
+function googleHolidaySource(id: string, name: string, color: string): CalendarSource {
+  const cache = new Map<string, CalendarViewEvent[]>()
+  return {
+    id,
+    name,
+    color,
+    fetchEvents: async ({ start, end }) => {
+      const key = `${start.year}-${start.month}`
+      if (!cache.has(key)) {
+        // CORS-safe: the iCal fetch + parse happen server-side
+        // (src/routes/api/holidays/+server.ts, the M6 recipe).
+        const url = `/api/holidays?calendar=${encodeURIComponent(id)}&from=${start.toString()}&to=${end.toString()}`
+        cache.set(key, await fetch(url).then((r) => {
+          if (!r.ok) throw new Error(`holiday feed ${r.status}`)
+          return r.json()
+        }))
+      }
+      return cache.get(key) ?? []
+    },
+  }
+}
+
+/** Holiday feeds offered in the playground (calendarIds are stable public slugs). */
+const PLAYGROUND_CALENDARS = [
+  { id: "en.usa#holiday@group.v.calendar.google.com", name: "US holidays", color: "#ef4444" },
+  { id: "en.uk#holiday@group.v.calendar.google.com", name: "UK holidays", color: "#3b82f6" },
+  { id: "en.german#holiday@group.v.calendar.google.com", name: "German holidays", color: "#f59e0b" },
+  { id: "en.christian#holiday@group.v.calendar.google.com", name: "Christian holidays", color: "#8b5cf6" },
+]
+
+/** Multi-select state: which holiday feeds are toggled on. */
+let pickedCalendars = $state<string[]>([])
+
+/** Playground visibility month + view (consumer-owned, feeds CalendarView). */
+let playgroundMonth = $state(SEPTEMBER)
+let playgroundView = $state<"month" | "week" | "day">("month")
+
+/** The sandbox's custom/random events (consumer-owned; drag rewrites starts). */
+let sandboxEvents: CalendarViewEvent[] = $state([
+  { id: "sb-1", title: "Kickoff", start: "2026-09-03T10:00", color: "#10b981" },
+])
+
+/**
+ * Deterministic RNG for the sprinkle button (mulberry32) — same seed,
+ * same events, so demos and e2e tests are reproducible.
+ * @param seed - 32-bit seed
+ */
+function mulberry32(seed: number): () => number {
+  let a = seed >>> 0
+  return () => {
+    a |= 0
+    a = (a + 0x6d2b79f5) | 0
+    let t = Math.imul(a ^ (a >>> 15), 1 | a)
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+/** Sprinkle counter — bumps the seed so repeated clicks add fresh events. */
+let sprinkleRun = 0
+
+const SANDBOX_COLORS = ["#6366f1", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4"]
+const SANDBOX_ICONS = ["tabler:coffee", "tabler:calendar-star", "tabler:users", "tabler:flag"]
+
+/** Sprinkles 4 random events across the currently visible period (seeded). */
+function sprinkle() {
+  const rand = mulberry32(42 + sprinkleRun++)
+  const span = viewSpan(playgroundMonth, playgroundView)
+  const created = Array.from({ length: 4 }, (_, i) => {
+    const dayOffset = Math.floor(rand() * span.days)
+    const day = span.start.add({ days: dayOffset })
+    const timed = rand() > 0.35
+    const hour = 8 + Math.floor(rand() * 10)
+    return {
+      id: `sb-${sprinkleRun}-${i}`,
+      title: "Random event",
+      start: timed ? `${day.toString()}T${String(hour).padStart(2, "0")}:00` : day.toString(),
+      allDay: !timed,
+      color: SANDBOX_COLORS[Math.floor(rand() * SANDBOX_COLORS.length)],
+      icon: rand() > 0.5 ? SANDBOX_ICONS[Math.floor(rand() * SANDBOX_ICONS.length)] : undefined,
+      badge: rand() > 0.7 ? String(1 + Math.floor(rand() * 9)) : undefined,
+    }
+  })
+  sandboxEvents = [...sandboxEvents, ...created]
+}
+
+/** Adds a custom event on the currently selected (or focused) day. */
+function addCustomEvent(e: SubmitEvent) {
+  e.preventDefault()
+  const data = new FormData(e.target as HTMLFormElement)
+  const title = String(data.get("title") ?? "").trim() || "New event"
+  const day = String(data.get("date") || playgroundMonth.toString()).slice(0, 10)
+  sandboxEvents = [
+    ...sandboxEvents,
+    {
+      id: `sb-custom-${crypto.randomUUID()}`,
+      title,
+      start: day,
+      allDay: true,
+      color: SANDBOX_COLORS[sandboxEvents.length % SANDBOX_COLORS.length],
+    },
+  ]
+  form?.reset()
+}
+
+/** Deletes the selected sandbox event (holidays are never deletable). */
+function deleteSelected() {
+  if (!selectedEvent || !selectedEvent.id.startsWith("sb-")) return
+  sandboxEvents = sandboxEvents.filter((ev) => ev.id !== selectedEvent?.id)
+  selectedEvent = undefined
+}
+
+/** First calendar-holiday event currently selected via oneventselect. */
+let selectedEvent: CalendarViewEvent | undefined = $state(undefined)
+
+/** The add-event form element (reset after submit). */
+let form: HTMLFormElement | undefined = $state()
+
+/**
+ * The first/last day of the period currently displayed.
+ * @param month - The visible anchor date
+ * @param view - The active view
+ */
+function viewSpan(month: Temporal.PlainDate, view: "month" | "week" | "day") {
+  if (view === "day") return { start: month, end: month, days: 1 }
+  if (view === "week") {
+    const week = buildWeekGrid(month, { weekStart: 0 })
+    return { start: week[0], end: week[6], days: 7 }
+  }
+  const grid = buildMonthGrid(month, { weekStart: 0 })
+  return { start: grid[0], end: grid[grid.length - 1], days: grid.length }
+}
 </script>
 
 <style lang="postcss">
@@ -314,6 +466,111 @@ const events = parseICal(icsText, { defaultTz: "Europe/Berlin" })
     <CalendarView month={SEPTEMBER} events={ICS_EVENTS} recurrence />
   </div>
 </ExampleTabs>
+
+<h3>{m.calendarview_ex_views()}</h3>
+<p>{m.calendarview_ex_views_p()}</p>
+<ExampleTabs code={`<script lang="ts">
+  let view = $state<'month' | 'week' | 'day'>("month")
+  let events = $state([
+    { id: "v-review", title: "Design review", start: "2026-09-16T14:00", color: "#6366f1" },
+    { id: "v-offsite", title: "Offsite", start: "2026-09-18", allDay: true, color: "#f59e0b" },
+  ])
+<\/script>
+
+<CalendarView month={Temporal.PlainDate.from('2026-09-01')} {view} {events} />`}>
+  <div class="max-w-sm" data-testid="calendarview-views">
+    <div class="mb-2 flex gap-2" role="group" aria-label="View">
+      <button type="button" class="rounded border px-2 py-1 text-xs" class:bg-primary={playgroundView === "month"} class:text-background={playgroundView === "month"} onclick={() => (playgroundView = "month")} data-testid="view-month">Month</button>
+      <button type="button" class="rounded border px-2 py-1 text-xs" class:bg-primary={playgroundView === "week"} class:text-background={playgroundView === "week"} onclick={() => (playgroundView = "week")} data-testid="view-week">Week</button>
+      <button type="button" class="rounded border px-2 py-1 text-xs" class:bg-primary={playgroundView === "day"} class:text-background={playgroundView === "day"} onclick={() => (playgroundView = "day")} data-testid="view-day">Day</button>
+    </div>
+    <CalendarView bind:month={viewsMonth} view={playgroundView} events={viewEvents} />
+  </div>
+</ExampleTabs>
+
+<h3>{m.calendarview_ex_playground()}</h3>
+<p>{m.calendarview_ex_playground_p()}</p>
+<div class="not-prose rounded-lg border border-border p-4" data-testid="calendarview-playground">
+  <fieldset class="mb-3">
+    <legend class="text-xs font-semibold uppercase tracking-wide text-muted">Holiday calendars</legend>
+    <div class="flex flex-wrap gap-3">
+      {#each PLAYGROUND_CALENDARS as cal (cal.id)}
+        <label class="flex items-center gap-1.5 text-sm">
+          <input
+            type="checkbox"
+            class="accent-[var(--color-primary)]"
+            checked={pickedCalendars.includes(cal.id)}
+            onchange={(e) => {
+              const on = (e.currentTarget as HTMLInputElement).checked
+              pickedCalendars = on ? [...pickedCalendars, cal.id] : pickedCalendars.filter((c) => c !== cal.id)
+            }}
+            data-testid={`playground-cal-${cal.id.split("#")[0]}`}
+          />
+          <span class="inline-block h-3 w-3 rounded-full" style="background: {cal.color}"></span>
+          {cal.name}
+        </label>
+      {/each}
+    </div>
+  </fieldset>
+
+  <div class="mb-3 flex flex-wrap items-end gap-3">
+    <button
+      type="button"
+      class="rounded bg-primary px-3 py-1.5 text-sm text-background hover:opacity-90"
+      onclick={sprinkle}
+      data-testid="playground-sprinkle"
+    >
+      {m.playground_sprinkle()}
+    </button>
+    <button
+      type="button"
+      class="rounded border border-border px-3 py-1.5 text-sm disabled:opacity-40"
+      disabled={!selectedEvent || !selectedEvent.id.startsWith("sb-")}
+      onclick={deleteSelected}
+      data-testid="playground-delete"
+    >
+      {m.playground_delete()}
+    </button>
+    <form class="flex items-end gap-2" onsubmit={addCustomEvent} bind:this={form}>
+      <label class="text-xs">
+        <span class="block text-muted">{m.playground_title_label()}</span>
+        <input name="title" class="rounded border border-border px-2 py-1 text-sm" required />
+      </label>
+      <label class="text-xs">
+        <span class="block text-muted">Date</span>
+        <input name="date" type="date" value="2026-09-15" class="rounded border border-border px-2 py-1 text-sm" />
+      </label>
+      <button type="submit" class="rounded border border-border px-3 py-1.5 text-sm" data-testid="playground-add">
+        {m.playground_add()}
+      </button>
+    </form>
+  </div>
+
+  <p class="mb-2 text-xs text-muted">{m.playground_hint()}</p>
+
+  <CalendarView
+    bind:month={playgroundMonth}
+    view={playgroundView}
+    events={sandboxEvents}
+    calendars={PLAYGROUND_CALENDARS.filter((c) => pickedCalendars.includes(c.id)).map((c) =>
+      googleHolidaySource(c.id, c.name, c.color),
+    )}
+    grouping
+    dragEvents
+    eventsDraggable={(e) => !e.calendarId}
+    ondateselect={(e) => (playgroundMonth = e.detail.date)}
+    oneventselect={(e) => (selectedEvent = e.detail.event)}
+    oneventmove={(e) => {
+      sandboxEvents = sandboxEvents.map((ev) =>
+        ev.id === e.detail.event.id ? { ...ev, start: e.detail.to.toString() } : ev,
+      )
+      selectedEvent = { ...e.detail.event, start: e.detail.to }
+    }}
+    oncalendarserror={(e) => {
+      sourceErrors = e.detail.errors.map((err) => err.sourceId)
+    }}
+  />
+</div>
 
 <h3>{m.calendarview_ex_drag()}</h3>
 <p>{m.calendarview_ex_drag_p()}</p>

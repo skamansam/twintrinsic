@@ -122,6 +122,40 @@ const CONNECTED_SOURCES = [
 const RRULE_EVENTS = [
   { id: "rr", uid: "rr@docs", title: "Weekly sync", start: "2026-09-02T11:00", "data-rrule": "FREQ=WEEKLY;BYDAY=WE;COUNT=6", color: "#8b5cf6" },
 ]
+/** Week/day-view fixture: two events in the target week, one outside. */
+const VIEW_EVENTS = [
+  { id: "wk-review", title: "Design review", start: "2026-09-16T14:00", color: "#6366f1" },
+  { id: "wk-offsite", title: "Offsite", start: "2026-09-18", allDay: true, color: "#f59e0b" },
+  { id: "wk-later", title: "Next month", start: "2026-10-05T09:00", color: "#10b981" },
+]
+/** Playground fixture: sandbox events + mock holiday feeds (no network). */
+const SANDBOX_EVENTS = [
+  { id: "sb-1", title: "Kickoff", start: "2026-09-03T10:00", color: "#10b981" },
+  { id: "sb-2", title: "Retro", start: "2026-09-17T15:00", color: "#6366f1", icon: "tabler:users" },
+]
+const HOLIDAY_FEEDS = [
+  {
+    id: "en.usa#holiday@group.v.calendar.google.com",
+    name: "US holidays",
+    color: "#ef4444",
+    fetchEvents: async () => [
+      { id: "hol-labor", uid: "20260907_x@google.com", title: "Labor Day", start: "2026-09-07", allDay: true },
+      { id: "hol-patriot", uid: "20260911_y@google.com", title: "Patriot Day", start: "2026-09-11", allDay: true },
+    ],
+  },
+  {
+    id: "en.christian#holiday@group.v.calendar.google.com",
+    name: "Christian holidays",
+    color: "#8b5cf6",
+    fetchEvents: async () => [
+      { id: "hol-advent", uid: "20261129_z@google.com", title: "Advent", start: "2026-11-29", allDay: true },
+    ],
+  },
+]
+/** Holidays (calendarId sources) are locked from drag-to-edit. */
+const lockHolidays = (e) => !e.calendarId
+
+
 </script>
 
 <Story name="Default">
@@ -386,6 +420,54 @@ const RRULE_EVENTS = [
     }
     const last = canvas.getByTestId("calendar-view-event-rr_4").closest("[data-day]")
     expect(last?.getAttribute("data-day")).toBe("2026-10-07")
+  }}
+>
+  {#snippet children(args)}
+    <div style="min-height: 340px">
+      <CalendarView {...args} month={SEPTEMBER} />
+    </div>
+  {/snippet}
+</Story>\n
+<Story name="WeekView" args={{ view: "week", events: VIEW_EVENTS }}
+  play={async ({ canvas, canvasElement }) => {
+    // Week view shows only the events inside Sep 13–19 (Sun-start).
+    await canvas.findByTestId("calendar-view-event-wk-review")
+    await canvas.findByTestId("calendar-view-event-wk-offsite")
+    expect(canvas.queryByTestId("calendar-view-event-wk-later")).toBeNull()
+    // Exactly one row of 7 days.
+    const days = canvasElement.querySelectorAll("[data-testid^='calendar-view-day-2026']")
+    expect(days.length).toBe(7)
+  }}>
+  {#snippet children(args)}
+    <div style="min-height: 200px">
+      <CalendarView {...args} month={TemporalPolyfill.PlainDate.from("2026-09-16")} />
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="DayView" args={{ view: "day", events: [{ id: "day-ev", title: "Dentist", start: "2026-09-01T11:00" }] }}>
+  {#snippet children(args)}
+    <div style="min-height: 160px">
+      <CalendarView {...args} month={SEPTEMBER} />
+    </div>
+  {/snippet}
+</Story>\n
+<Story
+  name="Playground"
+  args={{
+    events: SANDBOX_EVENTS,
+    calendars: HOLIDAY_FEEDS,
+    grouping: true,
+    dragEvents: true,
+    eventsDraggable: lockHolidays,
+  }}
+  play={async ({ canvas }) => {
+    // Sandbox chips render; holiday chips arrive via the calendars contract.
+    await canvas.findByTestId("calendar-view-event-sb-1")
+    await canvas.findByTestId("calendar-view-event-hol-labor")
+    // Holidays are drag-locked; sandbox events are draggable.
+    expect(canvas.getByTestId("calendar-view-event-hol-labor").getAttribute("draggable")).toBe("false")
+    expect(canvas.getByTestId("calendar-view-event-sb-1").getAttribute("draggable")).toBe("true")
   }}
 >
   {#snippet children(args)}

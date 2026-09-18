@@ -141,3 +141,22 @@ export function monthTitle(month: Temporal.PlainDate, locale?: string): string {
   const tag = locale ?? (typeof navigator !== "undefined" ? navigator.language : "en");
   return month.toLocaleString(tag, { month: "long", year: "numeric" });
 }
+
+/**
+ * Builds a single week (7 dates) containing `date`, starting on the
+ * configured week start — the same week-start math as `buildMonthGrid`,
+ * so week view aligns with the month grid's columns.
+ * @param date - Any `PlainDate` inside the target week
+ * @param options - `weekStart` ("auto" resolves via locale) and `locale`
+ * @returns 7 `PlainDate`s, grid-column order
+ */
+export function buildWeekGrid(
+  date: Temporal.PlainDate,
+  { weekStart = "auto", locale }: GridOptions = {},
+): Temporal.PlainDate[] {
+  const start = resolveWeekStart(weekStart, locale);
+  const dow = (date.dayOfWeek % 7) as WeekStart; // Mon=1..Sat=6, Sun=0
+  const back = (dow - start + 7) % 7;
+  const gridStart = date.subtract({ days: back });
+  return Array.from({ length: 7 }, (_, i) => gridStart.add({ days: i }));
+}

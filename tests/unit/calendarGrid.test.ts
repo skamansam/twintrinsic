@@ -11,6 +11,7 @@ import { Temporal as TemporalPolyfill } from "@js-temporal/polyfill";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import {
   buildMonthGrid,
+  buildWeekGrid,
   monthTitle,
   resolveWeekStart,
   weekdayHeaders,
@@ -208,5 +209,29 @@ describe("monthTitle", () => {
 
   it("reflects the month of the passed date, not today", () => {
     expect(monthTitle(TemporalPolyfill.PlainDate.from("2025-01-01"), "en-US")).toBe("January 2025");
+  });
+});
+
+describe("buildWeekGrid", () => {
+  it("starts on the configured week start and spans 7 days", () => {
+    // 2026-09-16 is a Wednesday; Sunday-start grid begins Sep 13.
+    const week = buildWeekGrid(TemporalPolyfill.PlainDate.from("2026-09-16"), { weekStart: 0 });
+    expect(week.map((d) => d.toString())).toEqual([
+      "2026-09-13", "2026-09-14", "2026-09-15", "2026-09-16",
+      "2026-09-17", "2026-09-18", "2026-09-19",
+    ]);
+  });
+
+  it("matches the month grid columns for a Monday start (ISO)", () => {
+    const week = buildWeekGrid(TemporalPolyfill.PlainDate.from("2026-09-16"), { weekStart: 1 });
+    expect(week[0].toString()).toBe("2026-09-14"); // Monday
+    expect(week[6].toString()).toBe("2026-09-20"); // Sunday
+  });
+
+  it("wraps correctly across month boundaries", () => {
+    // 2026-09-01 is a Tuesday: a Sunday-start week begins Aug 30.
+    const week = buildWeekGrid(TemporalPolyfill.PlainDate.from("2026-09-01"), { weekStart: 0 });
+    expect(week[0].toString()).toBe("2026-08-30");
+    expect(week[6].toString()).toBe("2026-09-05");
   });
 });

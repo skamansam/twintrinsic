@@ -162,8 +162,10 @@ Details that matter:
   `setMonth()`.
 - **"Today"** is `Temporal.Now.plainDateISO()` and is marked
   `aria-current="date"` — never `new Date()`.
-- **Week view** (phase 2) = one row of the same algorithm; **day view**
-  (phase 2) = a single column, timed events listed with `PlainTime`s.
+- **Week view** ✅ shipped: `view="week"` renders the 1×7 row containing
+  `month` (`buildWeekGrid`); **day view** ✅ shipped: `view="day"` renders a
+  single cell. Paging/keyboard step by the active period; chips, grouping,
+  drag and popovers are day-keyed and work unchanged in all views.
 
 ---
 

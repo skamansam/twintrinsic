@@ -35,9 +35,11 @@ export const propsMetadata = [
   { name: "weekStart", type: "WeekStart | \"auto\"", description: "Day the week starts on; `\"auto\"` derives from the locale", default: "\"auto\"", optional: true },
   { name: "locale", type: "string", description: "BCP 47 locale tag (defaults to the runtime locale)", optional: true },
   { name: "weeks", type: "number", description: "Number of grid rows (6 keeps the grid stable between months)", default: "6", optional: true },
+  { name: "view", type: '"month" | "week" | "day"', description: "Which period the grid shows: month (6\u00d77), week (1\u00d77 containing `month`), or day (single cell)", default: '"month"', optional: true },
+  { name: "eventsDraggable", type: "(event: CalendarViewEvent) => boolean", description: "Per-event override: set `draggable: false` to exclude a single event from drag-to-edit (e.g. read-only holiday feeds)", optional: true },
   { name: "class", type: "string", description: "Additional CSS classes", default: "\"\"", optional: true },
   { name: "id", type: "string", description: "HTML id for the grid element", default: "crypto.randomUUID()", optional: true },
-  { name: "onmonthchange", type: "(event: CustomEvent<{ month: Temporal.PlainDate }>) => void", description: "Fires after the visible month changes", optional: true, eventDetail: "{ month: Temporal.PlainDate }" },
+  { name: "onmonthchange", type: "(event: CustomEvent<{ month: Temporal.PlainDate }>) => void", description: "Fires after the visible period changes (month paging in month view; ±7 days in week view; ±1 day in day view)", optional: true, eventDetail: "{ month: Temporal.PlainDate }" },
   { name: "ondateselect", type: "(event: CustomEvent<{ date: Temporal.PlainDate }>) => void", description: "Fires when a day is selected via pointer or keyboard", optional: true, eventDetail: "{ date: Temporal.PlainDate }" },
   { name: "oneventselect", type: "(event: CustomEvent<{ event: CalendarViewEvent }>) => void", description: "Fires when an event chip is activated (pointer or keyboard)", optional: true, eventDetail: "{ event: CalendarViewEvent }" },
   { name: "oneventmove", type: "(event: CustomEvent<EventMoveDetail>) => void", description: "Fires on drag-to-edit drop (HTML DnD) or a keyboard move — the consumer owns state and re-renders from the new `start`", optional: true, eventDetail: "EventMoveDetail" },
@@ -70,7 +72,7 @@ export const propsMetadata = [
  */
 import { tick } from "svelte"
 import Icon from "../Icon/Icon.svelte"
-import { buildMonthGrid, monthTitle, resolveWeekStart, weekdayHeaders, type WeekStart } from "../../helpers/calendarGrid.js"
+import { buildMonthGrid, buildWeekGrid, monthTitle, resolveWeekStart, weekdayHeaders, type WeekStart } from "../../helpers/calendarGrid.js"
 import { eventsForDay, normalizeEvents, type CalendarViewEvent, type EventMoveDetail, type NormalizedEvent } from "../../helpers/eventNormalize.js"
 import { connectCalendars, type CalendarSource, type CalendarsErrorDetail } from "../../helpers/connectCalendars.js"
 import { expandRecurrences } from "../../helpers/rruleExpand.js"
@@ -93,6 +95,8 @@ interface Props {
   locale?: string
   /** Number of grid rows (6 keeps the grid stable between months) */
   weeks?: number
+  /** Which period the grid shows: month (6×7), week (1×7 containing `month`), or day (single cell) */
+  view?: "month" | "week" | "day"
   /** Events to render as chips in the day cells (ISO strings accepted) */
   events?: CalendarViewEvent[]
   /** Merge the same event across calendars into one chip with a source-count badge (dedup by iCal UID, then title+day+time) */
@@ -101,7 +105,7 @@ interface Props {
   maxEventsPerCell?: number
   /** Additional CSS classes */
   class?: string
-  /** Fires after the visible month changes */
+  /** Fires after the visible period changes (month paging in month view; ±7 days in week view; ±1 day in day view) */
   onmonthchange?: (event: CustomEvent<{ month: Temporal.PlainDate }>) => void
   /** Fires when a day is selected via pointer or keyboard */
   ondateselect?: (event: CustomEvent<{ date: Temporal.PlainDate }>) => void
@@ -111,6 +115,8 @@ interface Props {
   oneventmove?: (event: CustomEvent<EventMoveDetail>) => void
   /** Enable drag-to-edit via the native HTML Drag and Drop API (desktop pointer only; keyboard alternative provided) */
   dragEvents?: boolean
+  /** Per-event override: set `draggable: false` to exclude a single event from drag-to-edit (e.g. read-only holiday feeds) */
+  eventsDraggable?: (event: CalendarViewEvent) => boolean
   /** Connected calendars (M6 contract): each supplies fetchEvents for the visible range; results merge with `events` */
   calendars?: CalendarSource[]
   /** Expand RRULE-carrying events (e.g. from parseICal) into range-capped occurrences; off renders base instances only */
@@ -128,6 +134,7 @@ let {
   weekStart = "auto",
   locale = undefined,
   weeks = 6,
+  view = "month",
   events = [],
   grouping = false,
   maxEventsPerCell = 2,
@@ -137,6 +144,7 @@ let {
   oneventselect,
   oneventmove,
   dragEvents = false,
+  eventsDraggable,
   calendars = [],
   recurrence = false,
   oncalendarserror,
@@ -161,18 +169,38 @@ const effectiveMonth = $derived.by(() => {
 /** Effective first day of the week (resolves "auto" against the locale). */
 const effectiveWeekStart = $derived(resolveWeekStart(weekStart, locale))
 
-/** The 6×7 grid of PlainDates covering the visible month. */
-const grid = $derived(buildMonthGrid(effectiveMonth, { weekStart: effectiveWeekStart, weeks, locale }))
+/**
+ * The 6×7 month grid, a 1×7 week row, or a single day cell, per `view`.
+ * Week/day grids reuse the month grid's day-keyed chip, drag, and popover
+ * machinery — only the shape of the array changes.
+ */
+const grid = $derived.by(() => {
+  if (view === "week") return buildWeekGrid(effectiveMonth, { weekStart: effectiveWeekStart, locale })
+  if (view === "day") return [effectiveMonth]
+  return buildMonthGrid(effectiveMonth, { weekStart: effectiveWeekStart, weeks, locale })
+})
 
 /** Localized weekday header labels, grid-column order. */
 const headers = $derived(weekdayHeaders(effectiveWeekStart, locale))
 
-/** Localized "September 2026" title for the visible month. */
-const title = $derived(monthTitle(effectiveMonth, locale))
+/** Localized title: "September 2026" in month view, "Sep 14 – 20, 2026" in week view, localized full date in day view. */
+const title = $derived.by(() => {
+  const tag = locale ?? (typeof navigator !== "undefined" ? navigator.language : "en")
+  if (view === "day") return effectiveMonth.toLocaleString(tag, { dateStyle: "full" })
+  if (view === "week") {
+    const start = grid[0]
+    const end = grid[grid.length - 1]
+    if (start.month === end.month && start.year === end.year) {
+      return `${start.toLocaleString(tag, { month: "short", day: "numeric" })} – ${end.day}, ${end.year}`
+    }
+    return `${start.toLocaleString(tag, { month: "short", day: "numeric" })} – ${end.toLocaleString(tag, { month: "short", day: "numeric" })}${start.year !== end.year ? `, ${end.year}` : ""}`
+  }
+  return monthTitle(effectiveMonth, locale)
+})
 
-/** Split into weeks for role="row" rendering. */
+/** Split into weeks for role="row" rendering (1 row in week/day view). */
 const rows = $derived(
-  Array.from({ length: weeks }, (_, w) => grid.slice(w * 7, w * 7 + 7)),
+  Array.from({ length: Math.ceil(grid.length / 7) }, (_, w) => grid.slice(w * 7, w * 7 + 7)),
 )
 
 /** Today as a PlainDate — marked with aria-current="date", never `new Date()`. */
@@ -197,12 +225,14 @@ const focusedDate = $derived(grid[focusedIndex] ?? grid[0])
 let gridElement: HTMLTableElement | undefined = $state()
 
 /**
- * Changes the visible month, notifies the consumer, and restores focus to
- * the same week/day position in the new grid (clamped to the grid length).
- * @param months - Number of months to move by (negative = backwards)
+ * Steps the visible period forward or backward by the amount matching the
+ * current `view` (±1 month / ±7 days / ±1 day), notifies the consumer, and
+ * restores focus to the same positional cell in the new grid.
+ * @param months - Signed number of months to move by (1 / -1)
  */
 async function pageMonths(months: number): Promise<void> {
-  const next = effectiveMonth.add({ months })
+  const step = view === "week" ? { weeks: months } : view === "day" ? { days: months } : { months }
+  const next = effectiveMonth.add(step)
   month = next
   focusedIndex = Math.min(focusedIndex, grid.length - 1)
   onmonthchange?.(new CustomEvent("monthchange", { detail: { month: next } }))
@@ -221,7 +251,7 @@ function moveFocus(days: number): void {
     focusedIndex = next
     return
   }
-  // Ran off the grid edge — page the month and keep the focus position.
+  // Ran off the grid edge — step the period and keep the focus position.
   void pageMonths(days > 0 ? 1 : -1)
 }
 
@@ -376,6 +406,7 @@ function handleChipKeydown(ne: NormalizedEvent, e: KeyboardEvent): void {
     return
   }
   if (!dragEvents || selectedEventId !== ne.event.id) return
+  if (eventsDraggable && !eventsDraggable(ne.event)) return
   const deltas: Record<string, number> = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: 7, ArrowUp: -7 }
   const delta = deltas[e.key]
   if (delta === undefined) return
@@ -399,6 +430,7 @@ let dragOverDay = $state<string | undefined>(undefined)
  */
 function handleDragStart(ne: NormalizedEvent, isStart: boolean, e: DragEvent): void {
   if (!dragEvents || !isStart) return
+  if (eventsDraggable && !eventsDraggable(ne.event)) return
   draggingId = ne.event.id
   e.dataTransfer?.setData("text/plain", ne.event.id)
   if (e.dataTransfer) e.dataTransfer.effectAllowed = "move"
@@ -481,7 +513,7 @@ function chipColor(ne: NormalizedEvent): string {
       type="button"
       class="calendar-view-nav"
       data-testid="calendar-view-prev"
-      aria-label="Previous month"
+      aria-label={view === "month" ? "Previous month" : view === "week" ? "Previous week" : "Previous day"}
       onclick={() => pageMonths(-1)}
     >
       <Icon name="tabler:chevron-left" class="w-4 h-4" />
@@ -491,7 +523,7 @@ function chipColor(ne: NormalizedEvent): string {
       type="button"
       class="calendar-view-nav"
       data-testid="calendar-view-next"
-      aria-label="Next month"
+      aria-label={view === "month" ? "Next month" : view === "week" ? "Next week" : "Next day"}
       onclick={() => pageMonths(1)}
     >
       <Icon name="tabler:chevron-right" class="w-4 h-4" />
@@ -561,7 +593,7 @@ function chipColor(ne: NormalizedEvent): string {
                       style="--event-color: {chipColor(ne)}"
                       aria-label={chipLabel(ne)}
                       title={ne.event.title}
-                      draggable={dragEvents && start}
+                      draggable={dragEvents && start && (eventsDraggable?.(ne.event) ?? true)}
                       data-testid={`calendar-view-event-${ne.event.id}`}
                       onclick={(e) => {
                         e.stopPropagation()

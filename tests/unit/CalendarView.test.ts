@@ -654,3 +654,75 @@ describe("CalendarView RRULE expansion (phase 2)", () => {
     expect(getByTestId("calendar-view-group-count-o").textContent).toBe("2");
   });
 });
+
+describe("CalendarView views (month/week/day)", () => {
+  const SEPTEMBER = () => TemporalPolyfill.PlainDate.from("2026-09-01");
+
+  it("month view renders the 6-week grid", () => {
+    render(CalendarView, { props: { month: SEPTEMBER() } });
+    // 42 day buttons: Sep 2026 grid starts Sun Aug 30.
+    const days = screen.getAllByTestId(/^calendar-view-day-\d{4}-/);
+    expect(days.length).toBe(42);
+  });
+
+  it("week view renders exactly 7 day cells containing the month date", () => {
+    render(CalendarView, { props: { month: SEPTEMBER(), view: "week" } });
+    const days = screen.getAllByTestId(/^calendar-view-day-\d{4}-/);
+    expect(days.length).toBe(7);
+    // Sep 1 2026 is a Tuesday; Sunday-start week runs Aug 30 → Sep 5.
+    const labels = days.map((d) => d.getAttribute("data-testid"));
+    expect(labels).toContain("calendar-view-day-2026-08-30");
+    expect(labels).toContain("calendar-view-day-2026-09-05");
+  });
+
+  it("day view renders a single cell with the full date as its title", () => {
+    render(CalendarView, { props: { month: SEPTEMBER(), view: "day" } });
+    const days = screen.getAllByTestId(/^calendar-view-day-\d{4}-/);
+    expect(days.length).toBe(1);
+    expect(screen.getByTestId("calendar-view-day-2026-09-01")).toBeInTheDocument();
+    // Day-view title is the localized full date (contains the day number).
+    const heading = screen.getByTestId("calendar-view");
+    expect(heading.textContent).toContain("September 1");
+  });
+
+  it("day view events render through the standard chip pipeline", () => {
+    render(CalendarView, {
+      props: {
+        month: SEPTEMBER(),
+        view: "day",
+        events: [{ id: "ev1", title: "Dentist", start: "2026-09-01T11:00" }],
+      },
+    });
+    expect(screen.getByTestId("calendar-view-event-ev1")).toBeInTheDocument();
+    expect(screen.getByText("Dentist")).toBeInTheDocument();
+  });
+
+  it("eventsDraggable=false excludes an event from drag and keyboard move", async () => {
+    const onmove = vi.fn();
+    render(CalendarView, {
+      props: {
+        month: SEPTEMBER(),
+        dragEvents: true,
+        eventsDraggable: (e) => e.id !== "locked",
+        events: [
+          { id: "locked", title: "Holiday", start: "2026-09-15T09:00" },
+          { id: "movable", title: "Standup", start: "2026-09-15T10:00" },
+        ],
+        oneventmove: onmove,
+      },
+    });
+    const locked = screen.getByTestId("calendar-view-event-locked");
+    // Not draggable, and arrows do nothing while it is the active chip.
+    expect(locked.getAttribute("draggable")).toBe("false");
+    locked.click();
+    locked.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true }));
+    await Promise.resolve();
+    expect(onmove).not.toHaveBeenCalled();
+    // The movable chip still moves.
+    const movable = screen.getByTestId("calendar-view-event-movable");
+    movable.click();
+    movable.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true }));
+    await Promise.resolve();
+    expect(onmove).toHaveBeenCalledTimes(1);
+  });
+});

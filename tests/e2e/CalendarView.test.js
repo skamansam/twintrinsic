@@ -204,3 +204,77 @@ test.describe("CalendarView milestone close-out", () => {
     await expect(badges.filter({ hasText: "Drag and Drop" })).toBeVisible();
   });
 });
+
+test.describe("CalendarView views + playground (11.4)", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto("/docs/components/Form/CalendarView");
+    await waitForHydration(page);
+  });
+
+  test("view switcher reflows the same events across month/week/day", async ({ page }) => {
+    const demo = page.getByTestId("calendarview-views");
+    // Month view: 42 cells, both events visible.
+    await expect(demo.locator("[data-testid^='calendar-view-day-2026']")).toHaveCount(42);
+    await expect(demo.getByText("Design review")).toBeVisible();
+    // Week view: 7 cells. The demo starts on Sep 1 (week of Aug 30), so
+    // page forward to the week containing the Sep 16 event first.
+    await demo.getByTestId("view-week").click();
+    await expect(demo.locator("[data-testid^='calendar-view-day-2026']")).toHaveCount(7);
+    for (let i = 0; i < 5 && !(await demo.getByText("Design review").isVisible()); i++) {
+      await demo.getByTestId("calendar-view-next").click();
+    }
+    await expect(demo.getByText("Design review")).toBeVisible();
+    // Day view: 1 cell; navigate it to Sep 16 and the review appears there.
+    await demo.getByTestId("view-day").click();
+    await expect(demo.locator("[data-testid^='calendar-view-day-2026']")).toHaveCount(1);
+    // The demo binds month; page forward until the cell is Sep 16.
+    for (let i = 0; i < 20 && !(await demo.getByTestId("calendar-view-day-2026-09-16").isVisible()); i++) {
+      await demo.getByTestId("calendar-view-next").click();
+    }
+    await expect(demo.getByTestId("calendar-view-day-2026-09-16")).toBeVisible();
+    await expect(demo.getByText("Design review")).toBeVisible();
+    await expect(demo.getByText("Offsite")).toBeHidden();
+  });
+
+  test("playground sprinkle adds seeded events to the visible month", async ({ page }) => {
+    const demo = page.getByTestId("calendarview-playground");
+    await demo.getByTestId("playground-sprinkle").click();
+    // Seeded RNG: run 1 always produces the same 4 chips (ids sb-1-0..3).
+    await expect(demo.getByTestId("calendar-view-event-sb-1-0")).toBeVisible();
+    for (const i of [1, 2, 3]) {
+      await expect(demo.getByTestId(`calendar-view-event-sb-1-${i}`)).toBeVisible();
+    }
+    await demo.getByTestId("playground-sprinkle").click();
+    await expect(demo.getByTestId("calendar-view-event-sb-2-0")).toBeVisible();
+  });
+
+  test("playground custom event form adds an event on the chosen day", async ({ page }) => {
+    const demo = page.getByTestId("calendarview-playground");
+    await demo.locator("input[name='title']").fill("Dentist");
+    await demo.locator("input[name='date']").fill("2026-09-24");
+    await demo.getByTestId("playground-add").click();
+    await expect(demo.getByText("Dentist")).toBeVisible();
+    await expect(demo.getByTestId("calendar-view-event-")).toBeHidden(); // sanity: no empty ids
+  });
+
+  test("playground holiday toggles fetch feeds, render chips, and lock dragging", async ({ page }) => {
+    const demo = page.getByTestId("calendarview-playground");
+    await demo.getByTestId("playground-cal-en.usa").check();
+    // Live public feed: at least one US holiday lands in the Sep 2026 grid.
+    await expect
+      .poll(async () => demo.locator("[data-testid^='calendar-view-event-']").count(), { timeout: 15000 })
+      .toBeGreaterThan(0);
+    // Holiday chips (calendarId-stamped) must be drag-locked.
+    const holidayChip = demo
+      .locator("[data-testid^='calendar-view-event-']")
+      .filter({ hasText: /Day|Eve|Holiday/ })
+      .first();
+    await expect(holidayChip).toHaveAttribute("draggable", "false", { timeout: 15000 });
+    // Sandbox chips stay draggable.
+    await expect(demo.getByTestId("calendar-view-event-sb-1")).toHaveAttribute("draggable", "true");
+    // Toggle off: holiday chips disappear, sandbox chips remain.
+    await demo.getByTestId("playground-cal-en.usa").uncheck();
+    await expect(holidayChip).toBeHidden();
+    await expect(demo.getByTestId("calendar-view-event-sb-1")).toBeVisible();
+  });
+});
