@@ -98,6 +98,7 @@ const categories = [
       { name: "Button", href: "/docs/components/Button/Button" },
       { name: "ButtonGroup", href: "/docs/components/Button/ButtonGroup" },
       { name: "CalendarInput", href: "/docs/components/Form/CalendarInput" },
+      { name: "CalendarView", href: "/docs/components/Form/CalendarView" },
       { name: "Checkbox", href: "/docs/components/Form/Checkbox" },
       { name: "ColorPicker", href: "/docs/components/Form/ColorPicker" },
       { name: "Combobox", href: "/docs/components/Form/Combobox" },

@@ -249,3 +249,91 @@ describe("CalendarView today anchor", () => {
 		expect(container.querySelectorAll('[aria-current="date"]')).toHaveLength(1)
 	})
 })
+
+describe("CalendarView event chips (milestone 3)", () => {
+	/** Sample events pinned to September 2026. */
+	const EVENTS = [
+		{ id: "standup", title: "Standup", start: "2026-09-17T09:30" },
+		{ id: "launch", title: "Launch", start: "2026-09-17" },
+		{ id: "conf", title: "Conference", start: "2026-09-15", end: "2026-09-18" },
+		{ id: "review", title: "Review", start: "2026-09-17T14:00", icon: "tabler:eye", badge: 3, color: "#0ea5e9" },
+		{ id: "gone", title: "Cancelled 1:1", start: "2026-09-21", status: "cancelled" as const },
+		{ id: "a1", title: "A1", start: "2026-09-22T08:00" },
+		{ id: "a2", title: "A2", start: "2026-09-22T09:00" },
+		{ id: "a3", title: "A3", start: "2026-09-22T10:00" },
+	]
+
+	it("renders a chip per event on its day with time and title", async () => {
+		const { getByTestId } = await renderForSeptember({ events: EVENTS, maxEventsPerCell: 4 })
+		const chip = getByTestId("calendar-view-event-standup")
+		expect(chip).toBeInTheDocument()
+		expect(chip.textContent).toContain("Standup")
+		expect(chip.textContent).toContain("09:30")
+	})
+
+	it("renders all-day events without a time", async () => {
+		const { getByTestId } = await renderForSeptember({ events: EVENTS })
+		const chip = getByTestId("calendar-view-event-launch")
+		expect(chip.textContent).toContain("Launch")
+		expect(chip.textContent).not.toContain(":")
+	})
+
+	it("renders multi-day events on every covered day with continuation markers", async () => {
+		const { getAllByTestId } = await renderForSeptember({ events: EVENTS, maxEventsPerCell: 4 })
+		// Same testid (event id) on all 4 covered cells; continuation cells show ↔ marker.
+		const chips = getAllByTestId("calendar-view-event-conf")
+		expect(chips).toHaveLength(4)
+		expect(chips[1].textContent).toContain("↔")
+		expect(chips[3].textContent).toContain("↔")
+		expect(chips[0].textContent).not.toContain("↔")
+	})
+
+	it("renders icon and badge on the chip when provided", async () => {
+		const { getByTestId } = await renderForSeptember({ events: EVENTS, maxEventsPerCell: 4 })
+		const chip = getByTestId("calendar-view-event-review")
+		// Icon data loads async from the Iconify runtime — assert the icon slot, not the svg.
+		expect(chip.querySelector(".calendar-view-chip-icon")).not.toBeNull()
+		expect(chip.textContent).toContain("3")
+		expect(chip.getAttribute("style")).toContain("--event-color: #0ea5e9")
+	})
+
+	it("renders cancelled events struck through, not hidden", async () => {
+		const { getByTestId } = await renderForSeptember({ events: EVENTS })
+		const chip = getByTestId("calendar-view-event-gone")
+		expect(chip).toBeInTheDocument()
+		expect(chip.className).toContain("calendar-view-chip-cancelled")
+	})
+
+	it("overflows beyond maxEventsPerCell into a +N more popover", async () => {
+		const { getByTestId } = await renderForSeptember({ events: EVENTS, maxEventsPerCell: 2 })
+		const more = getByTestId("calendar-view-more-2026-09-22")
+		expect(more.textContent).toContain("+1")
+		// Only the first 2 (by sort order) are visible chips.
+		expect(document.querySelector('[data-testid="calendar-view-event-a1"]')).not.toBeNull()
+		expect(document.querySelector('[data-testid="calendar-view-event-a3"]')).toBeNull()
+	})
+
+	it("shows overflow events inside the popover when opened", async () => {
+		const { getByTestId } = await renderForSeptember({ events: EVENTS, maxEventsPerCell: 2 })
+		getByTestId("calendar-view-more-2026-09-22").click()
+		await waitFor(() => {
+			expect(document.querySelector('[data-testid="calendar-view-popover-event-a3"]')).not.toBeNull()
+		})
+	})
+
+	it("fires oneventselect with the raw event on chip click", async () => {
+		const oneventselect = vi.fn()
+		const { getByTestId } = await renderForSeptember({ events: EVENTS, maxEventsPerCell: 4, oneventselect })
+		fireEvent.click(getByTestId("calendar-view-event-standup"))
+		expect(oneventselect).toHaveBeenCalledTimes(1)
+		const detail = oneventselect.mock.calls[0][0].detail
+		expect(detail.event.id).toBe("standup")
+	})
+
+	it("chip click does not select the day (stopPropagation)", async () => {
+		const ondateselect = vi.fn()
+		const { getByTestId } = await renderForSeptember({ events: EVENTS, maxEventsPerCell: 4, ondateselect })
+		fireEvent.click(getByTestId("calendar-view-event-standup"))
+		expect(ondateselect).not.toHaveBeenCalled()
+	})
+})

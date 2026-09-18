@@ -32,6 +32,10 @@ export const propsMetadata = [
   { name: "id", type: "string", description: "HTML id for the grid element", default: "crypto.randomUUID()", optional: true },
   { name: "onmonthchange", type: "(event: CustomEvent<{ month: Temporal.PlainDate }>) => void", description: "Fires after the visible month changes", optional: true, eventDetail: "{ month: Temporal.PlainDate }" },
   { name: "ondateselect", type: "(event: CustomEvent<{ date: Temporal.PlainDate }>) => void", description: "Fires when a day is selected via pointer or keyboard", optional: true, eventDetail: "{ date: Temporal.PlainDate }" },
+  { name: "oneventselect", type: "(event: CustomEvent<{ event: CalendarViewEvent }>) => void", description: "Fires when an event chip is activated (pointer or keyboard)", optional: true, eventDetail: "{ event: CalendarViewEvent }" },
+  { name: "events", type: "CalendarViewEvent[]", description: "Events to render as chips in the day cells (ISO strings accepted)", default: "[]", optional: true },
+  { name: "maxEventsPerCell", type: "number", description: "Max chips shown per cell before the \"+N more\" popover (default 2)", default: "2", optional: true },
+  { name: "eventContent", type: "Snippet<[CalendarViewEvent]>", description: "Custom chip content; receives the raw event (see `CalendarViewEvent`)", optional: true },
 ];
 </script>
 
@@ -54,6 +58,8 @@ export const propsMetadata = [
 import { tick } from "svelte"
 import Icon from "../Icon/Icon.svelte"
 import { buildMonthGrid, monthTitle, resolveWeekStart, weekdayHeaders, type WeekStart } from "../../helpers/calendarGrid.js"
+import { eventsForDay, normalizeEvents, type CalendarViewEvent, type NormalizedEvent } from "../../helpers/eventNormalize.js"
+import type { Snippet } from "svelte"
 
 interface Props {
   /** Additional props passed through to the root element */
@@ -71,12 +77,20 @@ interface Props {
   locale?: string
   /** Number of grid rows (6 keeps the grid stable between months) */
   weeks?: number
+  /** Events to render as chips in the day cells (ISO strings accepted) */
+  events?: CalendarViewEvent[]
+  /** Max chips shown per cell before the "+N more" popover (default 2) */
+  maxEventsPerCell?: number
   /** Additional CSS classes */
   class?: string
   /** Fires after the visible month changes */
   onmonthchange?: (event: CustomEvent<{ month: Temporal.PlainDate }>) => void
   /** Fires when a day is selected via pointer or keyboard */
   ondateselect?: (event: CustomEvent<{ date: Temporal.PlainDate }>) => void
+  /** Fires when an event chip is activated (pointer or keyboard) */
+  oneventselect?: (event: CustomEvent<{ event: CalendarViewEvent }>) => void
+  /** Custom chip content; receives the raw event (see `CalendarViewEvent`) */
+  eventContent?: Snippet<[CalendarViewEvent]>
 }
 
 let {
@@ -86,9 +100,13 @@ let {
   weekStart = "auto",
   locale = undefined,
   weeks = 6,
+  events = [],
+  maxEventsPerCell = 2,
   class: className = "",
   onmonthchange,
   ondateselect,
+  oneventselect,
+  eventContent,
   ...restProps
 }: Props = $props()
 
@@ -216,6 +234,63 @@ const labelId = $derived(`${id}-title`)
 
 /** Roving tabindex: the focused cell is the only tabbable one. */
 const cellTabIndex = (i: number): -1 | 0 => (i === focusedIndex ? 0 : -1)
+
+/** Normalized events sorted by day — recomputed only when the events prop changes. */
+const normalized = $derived(normalizeEvents(events))
+
+/**
+ * Looks up the events covering a grid day, split into visible chips and
+ * overflow for the "+N more" popover.
+ * @param day - The grid cell day
+ * @returns Visible chips and the overflowed remainder
+ */
+function chipsFor(day: Temporal.PlainDate): { visible: NormalizedEvent[]; overflow: NormalizedEvent[] } {
+  const dayEvents = eventsForDay(normalized, day)
+  const visible = dayEvents.slice(0, maxEventsPerCell)
+  return { visible, overflow: dayEvents.slice(maxEventsPerCell) }
+}
+
+/**
+ * True when this cell is the first day of the event's span — continuation
+ * cells render a compact marker instead of the full chip.
+ * @param ne - The normalized event
+ * @param day - The cell being rendered
+ */
+function isSpanStart(ne: NormalizedEvent, day: Temporal.PlainDate): boolean {
+  return ne.startDay.equals(day)
+}
+
+/**
+ * Builds the chip's accessible name: title, time, and markers per the APG.
+ * @param ne - The normalized event
+ * @returns Accessible description, e.g. "Standup, 9:00"
+ */
+function chipLabel(ne: NormalizedEvent): string {
+  const parts = [ne.event.title]
+  if (ne.startTime) parts.push(ne.startTime)
+  if (ne.event.badge !== undefined) parts.push(String(ne.event.badge))
+  if (ne.cancelled) parts.push("cancelled")
+  return parts.join(", ")
+}
+
+/**
+ * Notifies the consumer that an event chip was activated.
+ * @param ne - The activated event
+ */
+function selectEvent(ne: NormalizedEvent): void {
+  oneventselect?.(new CustomEvent("eventselect", { detail: { event: ne.event } }))
+}
+
+/**
+ * Resolves the chip color: the event's own color wins, then falls back to
+ * the primary token via CSS custom property (dynamic data, not a theme
+ * token — the one sanctioned inline style per design §6).
+ * @param ne - The normalized event
+ * @returns The CSS value for --event-color
+ */
+function chipColor(ne: NormalizedEvent): string {
+  return ne.event.color ?? "var(--color-primary)"
+}
 </script>
 
 <div class="calendar-view {className}" data-testid="calendar-view">
@@ -282,6 +357,85 @@ const cellTabIndex = (i: number): -1 | 0 => (i === focusedIndex ? 0 : -1)
               >
                 {day.day}
               </button>
+              {#if chipsFor(day).visible.length > 0 || chipsFor(day).overflow.length > 0}
+                {@const chips = chipsFor(day)}
+                <div class="calendar-view-chips">
+                  {#each chips.visible as ne (ne.event.id)}
+                    {@const start = isSpanStart(ne, day)}
+                    <button
+                      type="button"
+                      class="calendar-view-chip"
+                      class:calendar-view-chip-cancelled={ne.cancelled}
+                      class:calendar-view-chip-continuation={!start}
+                      style="--event-color: {chipColor(ne)}"
+                      aria-label={chipLabel(ne)}
+                      title={ne.event.title}
+                      data-testid={`calendar-view-event-${ne.event.id}`}
+                      onclick={(e) => {
+                        e.stopPropagation()
+                        selectEvent(ne)
+                      }}
+                    >
+                      {#if eventContent}
+                        {@render eventContent(ne.event)}
+                      {:else}
+                        {#if start}
+                          {#if ne.event.icon}
+                            <span class="calendar-view-chip-icon"><Icon name={ne.event.icon} /></span>
+                          {/if}
+                          {#if !ne.allDay && ne.startTime}
+                            <span class="calendar-view-chip-time">{ne.startTime}</span>
+                          {/if}
+                          <span class="calendar-view-chip-title" class:line-through={ne.cancelled}>{ne.event.title}</span>
+                          {#if ne.event.badge !== undefined}
+                            <span class="calendar-view-chip-badge">{ne.event.badge}</span>
+                          {/if}
+                        {:else}
+                          <span class="calendar-view-chip-title">↔ {ne.event.title}</span>
+                        {/if}
+                      {/if}
+                    </button>
+                  {/each}
+                  {#if chips.overflow.length > 0}
+                    <button
+                      type="button"
+                      popoverTarget={`${id}-more-${day.toString()}`}
+                      class="calendar-view-more"
+                      data-testid={`calendar-view-more-${day.toString()}`}
+                    >
+                      +{chips.overflow.length}
+                    </button>
+                    <div
+                      popover="auto"
+                      id={`${id}-more-${day.toString()}`}
+                      class="calendar-view-popover"
+                    >
+                      <ul class="calendar-view-popover-list">
+                        {#each chips.overflow as ne (ne.event.id)}
+                          <li>
+                            <button
+                              type="button"
+                              class="calendar-view-chip"
+                              class:calendar-view-chip-cancelled={ne.cancelled}
+                              style="--event-color: {chipColor(ne)}"
+                              data-testid={`calendar-view-popover-event-${ne.event.id}`}
+                              onclick={() => selectEvent(ne)}
+                            >
+                              {#if ne.event.icon}
+                                <span class="calendar-view-chip-icon"><Icon name={ne.event.icon} /></span>
+                              {/if}
+                              {#if !ne.allDay && ne.startTime}
+                                <span class="calendar-view-chip-time">{ne.startTime}</span>
+                              {/if}
+                              <span class="calendar-view-chip-title">{ne.event.title}</span>
+                            </button>
+                          </li>
+                        {/each}
+                      </ul>
+                    </div>
+                  {/if}
+                </div>
+              {/if}
             </td>
           {/each}
         </tr>
@@ -338,5 +492,53 @@ const cellTabIndex = (i: number): -1 | 0 => (i === focusedIndex ? 0 : -1)
 
   .calendar-view-selected .calendar-view-day {
     @apply font-semibold;
+  }
+
+  .calendar-view-chips {
+    @apply flex flex-col gap-px px-0.5 pb-0.5;
+  }
+
+  .calendar-view-chip {
+    @apply flex items-center gap-1 min-w-0 w-full text-start text-[10px] leading-tight rounded px-1 py-0.5
+      bg-(--event-color)/15 text-text dark:text-text hover:bg-(--event-color)/25
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-(--event-color);
+    border-inline-start: 2px solid var(--event-color);
+  }
+
+  .calendar-view-chip-icon {
+    @apply w-3 h-3 shrink-0 text-(--event-color);
+  }
+
+  .calendar-view-chip-time {
+    @apply shrink-0 tabular-nums text-muted dark:text-muted;
+  }
+
+  .calendar-view-chip-title {
+    @apply truncate;
+  }
+
+  .calendar-view-chip-badge {
+    @apply shrink-0 text-[9px] font-semibold rounded-full bg-(--event-color)/30 px-1;
+  }
+
+  .calendar-view-chip-cancelled {
+    @apply opacity-60;
+  }
+
+  .calendar-view-chip-continuation {
+    @apply italic text-muted dark:text-muted;
+  }
+
+  .calendar-view-more {
+    @apply text-start text-[10px] font-medium text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1;
+  }
+
+  .calendar-view-popover {
+    @apply p-2 rounded-lg border border-surface bg-background text-text dark:bg-background shadow-lg
+      open:fixed open:inset-auto open:mt-1;
+  }
+
+  .calendar-view-popover-list {
+    @apply flex flex-col gap-1 m-0 p-0 list-none min-w-36;
   }
 </style>

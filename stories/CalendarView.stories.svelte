@@ -2,8 +2,11 @@
 import { defineMeta } from "@storybook/addon-svelte-csf"
 import { expect, fireEvent, waitFor, within } from "storybook/test"
 // The polyfill stands in for the browser's native Temporal global in the
-// Storybook iframe — same shape as a consumer's install.
+// Storybook iframe — same shape as a consumer's install. The named import
+// does NOT install the global, so pin it via the helper module (a plain
+// `.js` import keeps the CSF static indexer happy).
 import { Temporal as TemporalPolyfill } from "@js-temporal/polyfill"
+import "./temporalGlobal.js"
 import CalendarView from "$lib/components/CalendarView/CalendarView.svelte"
 
 const { Story } = defineMeta({
@@ -19,6 +22,17 @@ const { Story } = defineMeta({
 
 /** Fixed visible month so story screenshots don't drift with the calendar. */
 const SEPTEMBER = TemporalPolyfill.PlainDate.from("2026-09-01")
+
+/** Sample events exercising color, icon, badge, and cancelled states. */
+const EVENTS = [
+  { id: "e1", start: "2026-09-08T10:00", title: "Design review", color: "#6366f1", icon: "palette" },
+  { id: "e2", start: "2026-09-15T09:30", title: "Team standup", color: "#10b981" },
+  { id: "e3", start: "2026-09-15", title: "Sprint planning", color: "#f59e0b", badge: "5" },
+  { id: "e4", start: "2026-09-15T14:00", title: "1:1 with Sam", color: "#ef4444" },
+  { id: "e5", start: "2026-09-21", title: "Release 2.0", color: "#0ea5e9", icon: "rocket" },
+  { id: "e6", start: "2026-09-21T16:00", title: "Retro", color: "#8b5cf6" },
+  { id: "e7", start: "2026-09-17", title: "Cancelled offsite", color: "#6b7280", status: "cancelled" },
+]
 </script>
 
 <Story name="Default">
@@ -108,6 +122,42 @@ const SEPTEMBER = TemporalPolyfill.PlainDate.from("2026-09-01")
         month={SEPTEMBER}
         ondateselect={(e) => console.log("selected", e.detail.date.toString())}
       />
+    </div>
+  {/snippet}
+</Story>
+
+<Story
+  name="Events"
+  args={{ events: EVENTS, maxEventsPerCell: 2 }}
+  play={async ({ canvas, step }) => {
+    await step("chips render with color, icon, badge, and cancelled styling", async () => {
+      await canvas.findByText("Design review")
+      expect(canvas.getByText("Sprint planning")).toBeInTheDocument()
+      expect(canvas.getByText("Team standup")).toBeInTheDocument()
+      expect(canvas.getByText("Cancelled offsite")).toBeInTheDocument()
+      // Badge renders inside its chip
+      const planningChip = canvas.getByTestId("calendar-view-event-e3")
+      expect(planningChip.textContent).toContain("5")
+    })
+
+    await step("overflow events collect behind +N more", async () => {
+      // Sept 15 has 3 events; maxEventsPerCell=2 pushes "1:1 with Sam" over
+      const more = canvas.getByTestId("calendar-view-more-2026-09-15")
+      expect(more.textContent).toContain("+1")
+      // The popover content lives in the DOM even when closed (hidden by
+      // the UA popover stylesheet), so assert on visibility, not presence.
+      const overflowChip = canvas.getByTestId("calendar-view-popover-event-e4")
+      expect(overflowChip).not.toBeVisible()
+      await fireEvent.click(more)
+      await waitFor(() => {
+        expect(canvas.getByTestId("calendar-view-popover-event-e4")).toBeVisible()
+      })
+    })
+  }}
+>
+  {#snippet children(args)}
+    <div style="min-height: 340px">
+      <CalendarView {...args} month={SEPTEMBER} />
     </div>
   {/snippet}
 </Story>

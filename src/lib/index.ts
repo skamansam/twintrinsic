@@ -132,8 +132,14 @@ export {
 export {
   detectLanguage,
   dispatchGroupRemove,
+  eventsForDay,
   getItemLabel,
   getItemValue,
+  normalizeEvent,
+  normalizeEvents,
+  type CalendarInstant,
+  type CalendarViewEvent,
+  type NormalizedEvent,
 } from "./helpers/index.js";
 export type {
   EventDataHash,

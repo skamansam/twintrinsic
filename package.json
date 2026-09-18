@@ -609,6 +609,11 @@
       "svelte": "./dist/helpers/groupRemove.js",
       "default": "./dist/helpers/groupRemove.js"
     },
+    "./helpers/eventNormalize": {
+      "types": "./dist/helpers/eventNormalize.d.ts",
+      "svelte": "./dist/helpers/eventNormalize.js",
+      "default": "./dist/helpers/eventNormalize.js"
+    },
     "./helpers/getItemLabel": {
       "types": "./dist/helpers/itemLabel.d.ts",
       "svelte": "./dist/helpers/itemLabel.js",

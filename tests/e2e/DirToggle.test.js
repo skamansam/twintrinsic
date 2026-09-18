@@ -1210,6 +1210,22 @@ test.describe("Docs locale switcher", () => {
     await expect(page.getByRole("heading", { name: "سفارشی‌سازی", level: 2 })).toBeVisible();
   });
 
+  test("CalendarView docs page switches to Persian", async ({ page }) => {
+    await page.goto("/docs/components/Form/CalendarView");
+    await waitForHydration(page);
+
+    const heading = page.getByRole("heading", { name: "CalendarView", level: 1 });
+    await expect(heading).toBeVisible();
+
+    await page.getByTestId("docs-locale-switcher").getByRole("button", { name: "فارسی" }).click();
+    await waitForHydration(page);
+
+    await expect(page.locator("html")).toHaveAttribute("lang", "fa");
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    // The translated intro section renders (key text, not the h1).
+    await expect(page.getByRole("heading", { name: "پشتیبانی مرورگرها", level: 2 })).toBeVisible();
+  });
+
   test("CalendarInput docs page switches to Persian", async ({ page }) => {
     await page.goto("/docs/components/Form/CalendarInput");
     await waitForHydration(page);

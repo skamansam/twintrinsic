@@ -117,9 +117,14 @@ const components = [
   { name: "Button", category: "Form", updated: true, apis: [
     { name: "Semantic HTML button", implemented: true },
   ]},
-  { name: "Calendar", category: "Form", updated: false, apis: [
-    { name: "HTML date input", implemented: false },
-    { name: "Intl API", implemented: false },
+  { name: "CalendarInput", category: "Form", updated: true, apis: [
+    { name: "HTML date input", implemented: true },
+    { name: "Intl API", implemented: true },
+  ]},
+  { name: "CalendarView", category: "Form", updated: true, apis: [
+    { name: "Temporal API", implemented: true },
+    { name: "ARIA grid pattern (APG)", implemented: true },
+    { name: "Intl API (weekInfo, formatting)", implemented: true },
   ]},
   { name: "Checkbox", category: "Form", updated: true, apis: [
     { name: "HTML checkbox input", implemented: true },

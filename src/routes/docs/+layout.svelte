@@ -151,6 +151,7 @@ const siteMenu = $derived([
       { title: "Button", link: "/docs/components/Button/Button" },
       { title: "ButtonGroup", link: "/docs/components/Button/ButtonGroup" },
       { title: "CalendarInput", link: "/docs/components/Form/CalendarInput" },
+      { title: "CalendarView", link: "/docs/components/Form/CalendarView" },
       { title: "Checkbox", link: "/docs/components/Form/Checkbox" },
       { title: "ColorPicker", link: "/docs/components/Form/ColorPicker" },
       { title: "Combobox", link: "/docs/components/Form/Combobox" },
