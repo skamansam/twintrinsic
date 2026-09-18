@@ -353,7 +353,7 @@ with static multi-source data, which is also how tests and stories demo it.
 | 1 | **CalendarInput rename** ✅ | §0 table, zero behavior change, docs redirect, e2e/unit/story renames green |
 | 2 | **Month grid MVP** ✅ | `calendarGrid` helpers (native Temporal global + `temporal.d.ts`) with unit tests; ARIA grid + roving-tabindex keyboard nav, paging, today/selection, live region; docs page + i18n + e2e; **no polyfill installed** |
 | 3 | **Events** ✅ | `eventNormalize`, static `events` render, chips with icon/badge/color/status, `eventContent` snippet, `+N more` popover |
-| 4 | **Grouping** | `eventGroup` (uid key → fallback key), count badge, color dots, `grouping` toggle demo with two fake calendars |
+| 4 | **Grouping** ✅ | `eventGroup` (uid key → fallback key), count badge, color dots, `grouping` toggle demo with two fake calendars |
 | 5 | **Import** ✅ | `parseICal` (+ tests with real Google-export samples), recurring-flag marker |
 | 6 | **Connectivity recipe** | `calendars`/`fetchEvents` contract, docs recipes for Google/Outlook/Apple, `week`/`day` views, RRULE expansion |
 | 7 | **Drag-to-edit** | `draggable` events + cell `dragover`/`drop` (HTML DnD API), `oneventmove` callback, keyboard-editing alternative, e2e drag test |
