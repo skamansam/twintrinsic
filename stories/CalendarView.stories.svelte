@@ -95,6 +95,28 @@ const MOVES = []
 function captureMove(e) {
   MOVES.push(e.detail)
 }
+
+/** Connectivity fixture: an async mock standing in for a server-proxied feed (Google/Outlook/CalDAV). */
+const CONNECTED_SOURCES = [
+  {
+    id: "work",
+    name: "Work",
+    color: "#10b981",
+    fetchEvents: async () => [
+      { id: "conn-standup-w", uid: "conn-standup@docs", title: "Standup", start: "2026-09-15T09:30" },
+      { id: "conn-review", title: "Design review", start: "2026-09-16T14:00" },
+    ],
+  },
+  {
+    id: "family",
+    name: "Family",
+    color: "#f59e0b",
+    fetchEvents: async () => [
+      { id: "conn-standup-p", uid: "conn-standup@docs", title: "Standup", start: "2026-09-15T09:30" },
+      { id: "conn-dentist", title: "Dentist", start: "2026-09-17T11:00" },
+    ],
+  },
+]
 </script>
 
 <Story name="Default">
@@ -313,6 +335,31 @@ function captureMove(e) {
       await fireEvent.keyDown(chip, { key: "ArrowRight" })
       expect(MOVES[MOVES.length - 1].to.toString()).toBe("2026-09-16")
     })
+  }}
+>
+  {#snippet children(args)}
+    <div style="min-height: 340px">
+      <CalendarView {...args} month={SEPTEMBER} />
+    </div>
+  {/snippet}
+</Story>
+
+<Story
+  name="Connectivity"
+  args={{ calendars: CONNECTED_SOURCES, grouping: true }}
+  play={async ({ canvas }) => {
+    // Remote events render after the async fetch resolves; the same-UID
+    // standup copies from the two "calendars" merge into one grouped chip.
+    await canvas.findByTestId("calendar-view-event-conn-review")
+    expect(canvas.getByTestId("calendar-view-event-conn-dentist")).toBeInTheDocument()
+    // Grouping: both copies share conn-standup@docs, so only the primary
+    // chip remains ("conn-standup-p" — the id tiebreak sorts it first).
+    expect(canvas.queryByTestId("calendar-view-event-conn-standup-w")).toBeNull()
+    const count = canvas.getByTestId("calendar-view-group-count-conn-standup-p")
+    expect(count.textContent).toBe("2")
+    // The merged chip takes the primary's (family) color.
+    const chip = canvas.getByTestId("calendar-view-event-conn-standup-p")
+    expect(chip.style.getPropertyValue("--event-color")).toBe("#f59e0b")
   }}
 >
   {#snippet children(args)}

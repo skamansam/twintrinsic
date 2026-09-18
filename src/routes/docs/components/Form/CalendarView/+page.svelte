@@ -33,6 +33,7 @@ import * as CalendarViewModule from "$lib/components/CalendarView/CalendarView.s
 import Container from "$lib/components/Container/Container.svelte"
 import { parseICal } from "$lib/helpers/parseICal.js"
 import type { EventMoveDetail } from "$lib/helpers/eventNormalize.js"
+import type { CalendarSource } from "$lib/helpers/connectCalendars.js"
 import { m } from "$lib/paraglide/messages.js"
 
 // Anchor dates for the demos — pinned so examples don't drift as months pass.
@@ -81,6 +82,35 @@ END:VEVENT
 END:VCALENDAR`
 const ICS_EVENTS = parseICal(ICS_SAMPLE)
 
+/** Copy-paste Google Calendar recipe shown in the connectivity example's code tab. */
+const GOOGLE_RECIPE = `// +page.server.ts — OAuth + CORS live on your server, not in the component
+import { google } from "googleapis"
+
+export async function load() {
+  const cal = google.calendar({ version: "v3", auth: OAUTH_CLIENT })
+  const { data } = await cal.events.list({
+    calendarId: "primary",
+    timeMin: ..., timeMax: ..., singleEvents: true, orderBy: "startTime",
+  })
+  return {
+    events: data.items.map((item) => ({
+      id: item.id,
+      uid: item.iCalUID,            // cross-calendar grouping key
+      title: item.summary,
+      start: item.start.dateTime ?? item.start.date,
+      end: item.end.dateTime ?? item.end.date,
+      status: item.status === "cancelled" ? "cancelled" : "confirmed",
+    })),
+  }
+}
+
+// +page.svelte — the component consumes plain data:
+const work: CalendarSource = {
+  id: "work", name: "Work", color: "#10b981",
+  fetchEvents: async (range) => (await fetch(serverUrl + "?from=" + range.start)).json(),
+}
+<CalendarView calendars={[work]} grouping />`
+
 // Milestone-7 drag demo: the consumer owns event state — `oneventmove`
 // rewrites the moved event's `start` and the chip re-renders in its new cell.
 let dragEvents = $state([
@@ -97,6 +127,39 @@ function moveEvent(e: CustomEvent<EventMoveDetail>) {
     ev.id === e.detail.event.id ? { ...ev, start: e.detail.to.toString() } : ev,
   )
 }
+
+// Milestone-6 connectivity demo: stand-ins for the server-backed sources
+// shown in the recipes below. Each mock resolves asynchronously so the
+// demo exercises the real fetch → merge → color-fallback path.
+const CONNECTED_SOURCES: CalendarSource[] = [
+  {
+    id: "work",
+    name: "Work",
+    color: "#10b981",
+    fetchEvents: async ({ start, end }) => {
+      await new Promise((r) => setTimeout(r, 30))
+      return [
+        { id: "conn-standup-g", uid: "standup@docs", title: "Standup", start: "2026-09-15T09:30" },
+        { id: "conn-review", title: "Design review", start: "2026-09-16T14:00" },
+      ].filter((e) => e.start >= start.toString() && e.start <= end.toString())
+    },
+  },
+  {
+    id: "family",
+    name: "Family",
+    color: "#f59e0b",
+    fetchEvents: async () => {
+      await new Promise((r) => setTimeout(r, 10))
+      return [
+        { id: "conn-standup-p", uid: "standup@docs", title: "Standup", start: "2026-09-15T09:30" },
+        { id: "conn-dentist", title: "Dentist", start: "2026-09-17T11:00" },
+      ]
+    },
+  },
+]
+
+/** Failures reported by oncalendarserror (demo shows them inline). */
+let sourceErrors = $state<string[]>([])
 </script>
 
 <style lang="postcss">
@@ -271,6 +334,59 @@ const events = parseICal(icsText, { defaultTz: "Europe/Berlin" })
     <CalendarView month={SEPTEMBER} events={dragEvents} dragEvents oneventmove={moveEvent} />
   </div>
 </ExampleTabs>
+
+<h3>{m.calendarview_ex_connect()}</h3>
+<p>{m.calendarview_ex_connect_p()}</p>
+<ExampleTabs code={GOOGLE_RECIPE}>
+  <div class="max-w-sm" data-testid="calendarview-connect">
+    {#if sourceErrors.length > 0}
+      <p class="mb-2 text-xs text-danger" data-testid="calendarview-connect-errors">
+        {m.calendarview_connect_errors({ count: sourceErrors.length })}
+      </p>
+    {/if}
+    <CalendarView
+      month={SEPTEMBER}
+      calendars={CONNECTED_SOURCES}
+      grouping
+      oncalendarserror={(e) => {
+        sourceErrors = e.detail.errors.map((err) => err.sourceId)
+      }}
+    />
+  </div>
+</ExampleTabs>
+
+<h3>{m.calendarview_ex_outlook()}</h3>
+<p>{m.calendarview_ex_outlook_p()}</p>
+<pre><code>{`// +page.server.ts — Microsoft Graph /me/calendarview proxy
+const { data } = await graphClient.api("/me/calendarview")
+  .query({ startDateTime: range.start, endDateTime: range.end })
+  .select("subject,start,end,iCalUId,isCancelled")
+  .post()
+
+// Map Graph items to CalendarViewEvents:
+events = data.value.map((item) => ({
+  id: item.id,
+  uid: item.iCalUId,             // same dedup key Google uses
+  title: item.subject,
+  start: item.start.dateTime,    // always an instant + timeZone
+  end: item.end.dateTime,
+  status: item.isCancelled ? "cancelled" : "confirmed",
+}))`}</code></pre>
+
+<h3>{m.calendarview_ex_apple()}</h3>
+<p>{m.calendarview_ex_apple_p()}</p>
+<pre><code>{`// +page.server.ts — zero-auth: fetch the published iCal URL server-side
+// and reuse the built-in parser (works for any CalDAV/ics feed too)
+import { parseICal } from "twintrinsic/helpers/parseICal"
+
+const ics = await fetch("https://caldav.icloud.com/published/…").then((r) => r.text())
+const events = parseICal(ics, { defaultTz: "Europe/Berlin" })
+
+const family: CalendarSource = {
+  id: "family", name: "Family", color: "#f59e0b",
+  fetchEvents: async () => events,
+}
+<CalendarView calendars={[family]} />`}</code></pre>
 
 <h2>{m.sec_props()}</h2>
 <PropsTable component={CalendarViewModule} />

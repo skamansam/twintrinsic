@@ -5045,5 +5045,12 @@
   "util_apibadge_heading": "Browser-API badge registry",
   "util_apibadge_body_1": "The docs site's title badges come from a shared data registry: each entry names a native browser API, links its spec page, and lists the polyfill a consumer may install for older browsers (Twintrinsic never ships one). The BrowserApiBadge component renders these pills beside every docs page title.",
   "util_apibadge_body_2": "The same registry doubles as the data source for the completion page's web-API checklist, so entries added there appear in both places. Register a component by adding it to browserApiRegistry with its APIs; pages with no entry simply render no badge.",
-  "util_apibadge_body_3": "Mappings are evidence-based: an entry exists only if the component's source actually uses the API. Tooltip strings (including the polyfill install note) are localized in en, es, and fa."
+  "util_apibadge_body_3": "Mappings are evidence-based: an entry exists only if the component's source actually uses the API. Tooltip strings (including the polyfill install note) are localized in en, es, and fa.",
+  "calendarview_ex_connect": "Connecting external calendars",
+  "calendarview_ex_connect_p": "Pass CalendarSource objects to the calendars prop: each supplies a fetchEvents function called for the visible range whenever the month changes. Fetching needs OAuth secrets and is CORS-blocked in-browser, so the network call belongs on your server — the component consumes plain data, stamps each event with its calendarId, and falls back per-event colors to the calendar's color. A failing source reports oncalendarserror while the others still render. Combine with grouping to merge the same event across calendars.",
+  "calendarview_connect_errors": "{count} calendar source(s) failed to load; the rest are shown.",
+  "calendarview_ex_outlook": "Outlook / Microsoft 365 recipe",
+  "calendarview_ex_outlook_p": "Proxy Microsoft Graph's /me/calendarview endpoint on your server and map items to CalendarViewEvents. Graph always sends absolute instants with a timeZone, and iCalUId is preserved across attendees' calendars — so grouping works.",
+  "calendarview_ex_apple": "Apple Calendar / CalDAV recipe",
+  "calendarview_ex_apple_p": "The zero-auth path: fetch a published iCal subscription URL server-side and feed it through the built-in parseICal helper. The same approach covers any CalDAV bridge or raw .ics feed. For private calendars, proxy CalDAV with auth on your server and map VEVENTs the same way the parser does."
 }

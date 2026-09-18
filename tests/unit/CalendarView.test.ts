@@ -459,3 +459,74 @@ describe("CalendarView drag-to-edit (milestone 7)", () => {
 		expect(dayButton.getAttribute("tabindex")).toBe("-1")
 	})
 })
+
+describe("CalendarView connectivity (milestone 6)", () => {
+	/** Two sources: one healthy, one for the shared-event grouping demo. */
+	function workSource(events: Array<Record<string, unknown>> = []) {
+		return { id: "work", name: "Work", color: "#10b981", fetchEvents: vi.fn().mockResolvedValue(events) }
+	}
+
+	it("fetches connected calendars on mount and renders their chips", async () => {
+		const work = workSource([{ id: "remote1", title: "Remote standup", start: "2026-09-16T09:00" }])
+		const { getByTestId } = await renderForSeptember({ calendars: [work] })
+		await waitFor(() => {
+			expect(getByTestId("calendar-view-event-remote1")).toBeInTheDocument()
+		})
+		expect(work.fetchEvents).toHaveBeenCalledTimes(1)
+		// Range covers the visible 6×7 grid (Aug 31 → Oct 11 for Sept 2026, weekStart 1).
+		const range = work.fetchEvents.mock.calls[0][0]
+		expect(range.start.toString()).toBe("2026-08-31")
+		expect(range.end.toString()).toBe("2026-10-11")
+	})
+
+	it("fetched events fall back to the calendar's color via --event-color", async () => {
+		const work = workSource([{ id: "remote1", title: "Remote standup", start: "2026-09-16T09:00" }])
+		const { getByTestId } = await renderForSeptember({ calendars: [work] })
+		await waitFor(() => {
+			expect(getByTestId("calendar-view-event-remote1")).toBeInTheDocument()
+		})
+		const chip = getByTestId("calendar-view-event-remote1")
+		expect(chip.style.getPropertyValue("--event-color")).toBe("#10b981")
+	})
+
+	it("a failing source fires oncalendarserror; healthy sources still render", async () => {
+		const oncalendarserror = vi.fn()
+		const flaky = {
+			id: "flaky",
+			name: "Flaky",
+			color: "#f00",
+			fetchEvents: vi.fn().mockRejectedValue(new Error("CORS")),
+		}
+		const healthy = workSource([{ id: "remote-ok", title: "OK event", start: "2026-09-16T09:00" }])
+		const { getByTestId } = await renderForSeptember({ calendars: [flaky, healthy], oncalendarserror })
+		await waitFor(() => {
+			expect(oncalendarserror).toHaveBeenCalledTimes(1)
+		})
+		const detail = oncalendarserror.mock.calls[0][0].detail
+		expect(detail.errors).toHaveLength(1)
+		expect(detail.errors[0].sourceId).toBe("flaky")
+		expect(getByTestId("calendar-view-event-remote-ok")).toBeInTheDocument()
+	})
+
+	it("no calendars prop means no fetching and no errors", async () => {
+		const fetcher = vi.fn().mockResolvedValue([])
+		const idle = { id: "idle", name: "Idle", color: "#00f", fetchEvents: fetcher }
+		const { getByTestId } = await renderForSeptember({ events: [{ id: "static1", title: "Static", start: "2026-09-16T10:00" }] })
+		expect(getByTestId("calendar-view-event-static1")).toBeInTheDocument()
+		expect(fetcher).not.toHaveBeenCalled()
+		void idle
+	})
+
+	it("fetched events merge with static events and group across sources", async () => {
+		const work = workSource([{ id: "r1", uid: "shared@x", title: "Standup", start: "2026-09-15T09:30" }])
+		const { getByTestId } = await renderForSeptember({
+			events: [{ id: "s1", uid: "shared@x", title: "Standup", start: "2026-09-15T09:30", color: "#6366f1" }],
+			calendars: [work],
+			grouping: true,
+		})
+		await waitFor(() => {
+			// Group primary is whichever sorted first; both copies share uid.
+			expect(document.querySelector('[data-testid^="calendar-view-group-count-"]')).not.toBeNull()
+		})
+	})
+})

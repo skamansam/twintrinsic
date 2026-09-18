@@ -139,8 +139,11 @@ export {
   normalizeEvent,
   normalizeEvents,
   parseICal,
+  connectCalendars,
+  isCalendarSource,
   type CalendarInstant,
   type CalendarViewEvent,
+  type CalendarSource,
   type NormalizedEvent,
   type ParsedICalEvent,
 } from "./helpers/index.js";

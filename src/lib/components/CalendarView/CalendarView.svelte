@@ -42,6 +42,8 @@ export const propsMetadata = [
   { name: "oneventselect", type: "(event: CustomEvent<{ event: CalendarViewEvent }>) => void", description: "Fires when an event chip is activated (pointer or keyboard)", optional: true, eventDetail: "{ event: CalendarViewEvent }" },
   { name: "oneventmove", type: "(event: CustomEvent<EventMoveDetail>) => void", description: "Fires on drag-to-edit drop (HTML DnD) or a keyboard move — the consumer owns state and re-renders from the new `start`", optional: true, eventDetail: "EventMoveDetail" },
   { name: "dragEvents", type: "boolean", description: "Enable drag-to-edit via the native HTML Drag and Drop API (desktop pointer only; keyboard alternative provided)", default: "false", optional: true },
+  { name: "calendars", type: "CalendarSource[]", description: "Connected calendars (M6 contract): each supplies fetchEvents for the visible range; results merge with `events`", default: "[]", optional: true },
+  { name: "oncalendarserror", type: "(event: CustomEvent<CalendarsErrorDetail>) => void", description: "Fires when a connected calendar fails to fetch; other sources still render", optional: true, eventDetail: "CalendarsErrorDetail" },
   { name: "events", type: "CalendarViewEvent[]", description: "Events to render as chips in the day cells (ISO strings accepted)", default: "[]", optional: true },
   { name: "grouping", type: "boolean", description: "Merge the same event across calendars into one chip with a source-count badge (dedup by iCal UID, then title+day+time)", default: "false", optional: true },
   { name: "maxEventsPerCell", type: "number", description: "Max chips shown per cell before the \"+N more\" popover (default 2)", default: "2", optional: true },
@@ -69,6 +71,7 @@ import { tick } from "svelte"
 import Icon from "../Icon/Icon.svelte"
 import { buildMonthGrid, monthTitle, resolveWeekStart, weekdayHeaders, type WeekStart } from "../../helpers/calendarGrid.js"
 import { eventsForDay, normalizeEvents, type CalendarViewEvent, type EventMoveDetail, type NormalizedEvent } from "../../helpers/eventNormalize.js"
+import { connectCalendars, type CalendarSource, type CalendarsErrorDetail } from "../../helpers/connectCalendars.js"
 import { groupEvents, sourceColors, sourceCount, type GroupedEvent } from "../../helpers/eventGroup.js"
 import type { Snippet } from "svelte"
 
@@ -106,6 +109,10 @@ interface Props {
   oneventmove?: (event: CustomEvent<EventMoveDetail>) => void
   /** Enable drag-to-edit via the native HTML Drag and Drop API (desktop pointer only; keyboard alternative provided) */
   dragEvents?: boolean
+  /** Connected calendars (M6 contract): each supplies fetchEvents for the visible range; results merge with `events` */
+  calendars?: CalendarSource[]
+  /** Fires when a connected calendar fails to fetch; other sources still render */
+  oncalendarserror?: (event: CustomEvent<CalendarsErrorDetail>) => void
   /** Custom chip content; receives the raw event (see `CalendarViewEvent`) */
   eventContent?: Snippet<[CalendarViewEvent]>
 }
@@ -126,6 +133,8 @@ let {
   oneventselect,
   oneventmove,
   dragEvents = false,
+  calendars = [],
+  oncalendarserror,
   eventContent,
   ...restProps
 }: Props = $props()
@@ -255,13 +264,43 @@ const labelId = $derived(`${id}-title`)
 /** Roving tabindex: the focused cell is the only tabbable one. */
 const cellTabIndex = (i: number): -1 | 0 => (i === focusedIndex ? 0 : -1)
 
+/** Events fetched from connected `calendars` (merged with static `events`). */
+let remoteEvents = $state<CalendarViewEvent[]>([])
+
+/**
+ * Connectivity lifecycle: fetches every connected calendar for the visible
+ * grid range whenever the sources or the visible month change. Only the
+ * latest round's results land (stale responses discarded), and per-source
+ * failures surface via `oncalendarserror` without blanking the calendar.
+ */
+$effect(() => {
+  const sources = calendars
+  if (sources.length === 0) {
+    remoteEvents = []
+    return
+  }
+  const range = { start: grid[0], end: grid[grid.length - 1] }
+  const run = ++calendarsRun
+  connectCalendars(sources, range).then(({ events: fetched, errors }) => {
+    if (run !== calendarsRun) return
+    remoteEvents = fetched
+    if (errors.length > 0) {
+      oncalendarserror?.(new CustomEvent("calendarserror", { detail: { errors } satisfies CalendarsErrorDetail }))
+    }
+  })
+})
+
+/** Monotonic counter discarding stale connectivity rounds. */
+let calendarsRun = 0
+
 /**
  * Event pipeline: normalize (ISO strings → day spans, sorted) then, when
  * `grouping` is on, merge same-real-world-event copies into GroupedEvents
  * (uid key, title+day+time fallback). GroupedEvent extends NormalizedEvent,
- * so chips/popovers treat both shapes uniformly.
+ * so chips/popovers treat both shapes uniformly. Static `events` and
+ * fetched `calendars` events merge into one dataset.
  */
-const normalized = $derived(grouping ? groupEvents(normalizeEvents(events)) : normalizeEvents(events))
+const normalized = $derived(grouping ? groupEvents(normalizeEvents([...events, ...remoteEvents])) : normalizeEvents([...events, ...remoteEvents]))
 
 /**
  * Looks up the events covering a grid day, split into visible chips and

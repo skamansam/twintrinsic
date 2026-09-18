@@ -624,6 +624,11 @@
       "svelte": "./dist/helpers/parseICal.js",
       "default": "./dist/helpers/parseICal.js"
     },
+    "./helpers/connectCalendars": {
+      "types": "./dist/helpers/connectCalendars.d.ts",
+      "svelte": "./dist/helpers/connectCalendars.js",
+      "default": "./dist/helpers/connectCalendars.js"
+    },
     "./helpers/getItemLabel": {
       "types": "./dist/helpers/itemLabel.d.ts",
       "svelte": "./dist/helpers/itemLabel.js",

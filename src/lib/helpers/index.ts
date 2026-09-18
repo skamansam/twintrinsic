@@ -12,6 +12,13 @@ export {
 export { getItemLabel } from "./itemLabel.js";
 export { getItemValue } from "./itemValue.js";
 export { parseICal, type ParseICalOptions, type ParsedICalEvent } from "./parseICal.js";
+export {
+  connectCalendars,
+  isCalendarSource,
+  type CalendarSource,
+  type CalendarsErrorDetail,
+  type ConnectResult,
+} from "./connectCalendars.js";
 export type {
   EventDataHash,
   PropDataHash,

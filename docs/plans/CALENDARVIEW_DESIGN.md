@@ -355,7 +355,7 @@ with static multi-source data, which is also how tests and stories demo it.
 | 3 | **Events** ✅ | `eventNormalize`, static `events` render, chips with icon/badge/color/status, `eventContent` snippet, `+N more` popover |
 | 4 | **Grouping** ✅ | `eventGroup` (uid key → fallback key), count badge, color dots, `grouping` toggle demo with two fake calendars |
 | 5 | **Import** ✅ | `parseICal` (+ tests with real Google-export samples), recurring-flag marker |
-| 6 | **Connectivity recipe** | `calendars`/`fetchEvents` contract, docs recipes for Google/Outlook/Apple, `week`/`day` views, RRULE expansion |
+| 6 | **Connectivity recipe** ✅ | `connectCalendars` helper (calendars/fetchEvents contract, Promise.allSettled per-source failures, calendarId stamping, color fallback); `calendars` + `oncalendarserror` wired into CalendarView; Google/Outlook/Apple docs recipes — `week`/`day` views and RRULE expansion deferred (phase 2) |
 | 7 | **Drag-to-edit** | `draggable` events + cell `dragover`/`drop` (HTML DnD API), `oneventmove` callback, keyboard-editing alternative, e2e drag test |
 | 8 | **Checklist close-out** | Storybook story, docs page (i18n en/es/fa), e2e (render, keyboard, grouping toggle), `check`/`check:i18n`/`check:assets` green, completion page updated |
 
