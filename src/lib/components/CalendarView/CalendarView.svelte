@@ -34,6 +34,7 @@ export const propsMetadata = [
   { name: "ondateselect", type: "(event: CustomEvent<{ date: Temporal.PlainDate }>) => void", description: "Fires when a day is selected via pointer or keyboard", optional: true, eventDetail: "{ date: Temporal.PlainDate }" },
   { name: "oneventselect", type: "(event: CustomEvent<{ event: CalendarViewEvent }>) => void", description: "Fires when an event chip is activated (pointer or keyboard)", optional: true, eventDetail: "{ event: CalendarViewEvent }" },
   { name: "events", type: "CalendarViewEvent[]", description: "Events to render as chips in the day cells (ISO strings accepted)", default: "[]", optional: true },
+  { name: "grouping", type: "boolean", description: "Merge the same event across calendars into one chip with a source-count badge (dedup by iCal UID, then title+day+time)", default: "false", optional: true },
   { name: "maxEventsPerCell", type: "number", description: "Max chips shown per cell before the \"+N more\" popover (default 2)", default: "2", optional: true },
   { name: "eventContent", type: "Snippet<[CalendarViewEvent]>", description: "Custom chip content; receives the raw event (see `CalendarViewEvent`)", optional: true },
 ];
@@ -59,6 +60,7 @@ import { tick } from "svelte"
 import Icon from "../Icon/Icon.svelte"
 import { buildMonthGrid, monthTitle, resolveWeekStart, weekdayHeaders, type WeekStart } from "../../helpers/calendarGrid.js"
 import { eventsForDay, normalizeEvents, type CalendarViewEvent, type NormalizedEvent } from "../../helpers/eventNormalize.js"
+import { groupEvents, sourceColors, sourceCount, type GroupedEvent } from "../../helpers/eventGroup.js"
 import type { Snippet } from "svelte"
 
 interface Props {
@@ -79,6 +81,8 @@ interface Props {
   weeks?: number
   /** Events to render as chips in the day cells (ISO strings accepted) */
   events?: CalendarViewEvent[]
+  /** Merge the same event across calendars into one chip with a source-count badge (dedup by iCal UID, then title+day+time) */
+  grouping?: boolean
   /** Max chips shown per cell before the "+N more" popover (default 2) */
   maxEventsPerCell?: number
   /** Additional CSS classes */
@@ -101,6 +105,7 @@ let {
   locale = undefined,
   weeks = 6,
   events = [],
+  grouping = false,
   maxEventsPerCell = 2,
   class: className = "",
   onmonthchange,
@@ -235,8 +240,13 @@ const labelId = $derived(`${id}-title`)
 /** Roving tabindex: the focused cell is the only tabbable one. */
 const cellTabIndex = (i: number): -1 | 0 => (i === focusedIndex ? 0 : -1)
 
-/** Normalized events sorted by day — recomputed only when the events prop changes. */
-const normalized = $derived(normalizeEvents(events))
+/**
+ * Event pipeline: normalize (ISO strings → day spans, sorted) then, when
+ * `grouping` is on, merge same-real-world-event copies into GroupedEvents
+ * (uid key, title+day+time fallback). GroupedEvent extends NormalizedEvent,
+ * so chips/popovers treat both shapes uniformly.
+ */
+const normalized = $derived(grouping ? groupEvents(normalizeEvents(events)) : normalizeEvents(events))
 
 /**
  * Looks up the events covering a grid day, split into visible chips and
@@ -269,6 +279,7 @@ function chipLabel(ne: NormalizedEvent): string {
   const parts = [ne.event.title]
   if (ne.startTime) parts.push(ne.startTime)
   if (ne.event.badge !== undefined) parts.push(String(ne.event.badge))
+  if (sourceCount(ne) > 1) parts.push(`shared on ${sourceCount(ne)} calendars`)
   if (ne.cancelled) parts.push("cancelled")
   return parts.join(", ")
 }
@@ -390,6 +401,14 @@ function chipColor(ne: NormalizedEvent): string {
                           {#if ne.event.badge !== undefined}
                             <span class="calendar-view-chip-badge">{ne.event.badge}</span>
                           {/if}
+                          {#if sourceCount(ne) > 1}
+                            <span class="calendar-view-chip-dots" aria-hidden="true">
+                              {#each sourceColors(ne) as dotColor, di (di)}
+                                <span class="calendar-view-chip-dot" style="--dot-color: {dotColor}"></span>
+                              {/each}
+                            </span>
+                            <span class="calendar-view-chip-badge calendar-view-chip-badge-count" data-testid={`calendar-view-group-count-${ne.event.id}`}>{sourceCount(ne)}</span>
+                          {/if}
                         {:else}
                           <span class="calendar-view-chip-title">↔ {ne.event.title}</span>
                         {/if}
@@ -428,6 +447,14 @@ function chipColor(ne: NormalizedEvent): string {
                                 <span class="calendar-view-chip-time">{ne.startTime}</span>
                               {/if}
                               <span class="calendar-view-chip-title">{ne.event.title}</span>
+                              {#if sourceCount(ne) > 1}
+                                <span class="calendar-view-chip-dots" aria-hidden="true">
+                                  {#each sourceColors(ne) as dotColor, di (di)}
+                                    <span class="calendar-view-chip-dot" style="--dot-color: {dotColor}"></span>
+                                  {/each}
+                                </span>
+                                <span class="calendar-view-chip-badge calendar-view-chip-badge-count" data-testid={`calendar-view-group-count-${ne.event.id}`}>{sourceCount(ne)}</span>
+                              {/if}
                             </button>
                           </li>
                         {/each}
@@ -519,6 +546,22 @@ function chipColor(ne: NormalizedEvent): string {
 
   .calendar-view-chip-badge {
     @apply shrink-0 text-[9px] font-semibold rounded-full bg-(--event-color)/30 px-1;
+  }
+
+  /* Source-count badge on grouped chips — solid event color for contrast with the event's own badge. */
+  .calendar-view-chip-badge-count {
+    @apply bg-(--event-color) text-white;
+  }
+
+  /* Per-source color-dot cluster (decorative; the count badge carries the meaning). */
+  .calendar-view-chip-dots {
+    @apply shrink-0 flex items-center;
+  }
+
+  .calendar-view-chip-dot {
+    @apply w-1.5 h-1.5 rounded-full;
+    background: var(--dot-color);
+    margin-inline-start: -3px;
   }
 
   .calendar-view-chip-cancelled {

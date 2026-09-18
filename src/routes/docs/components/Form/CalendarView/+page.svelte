@@ -30,12 +30,26 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CalendarViewModule from "$lib/components/CalendarView/CalendarView.svelte"
 import Container from "$lib/components/Container/Container.svelte"
+import Badge from "$lib/components/Badge/Badge.svelte"
+import Tooltip from "$lib/components/Tooltip/Tooltip.svelte"
 import { parseICal } from "$lib/helpers/parseICal.js"
 import { m } from "$lib/paraglide/messages.js"
 
 // Anchor dates for the demos — pinned so examples don't drift as months pass.
 const SEPTEMBER = Temporal.PlainDate.from("2026-09-01")
 const SELECTED = Temporal.PlainDate.from("2026-09-21")
+
+// Milestone-4 grouping demo: two fake calendars sharing one standup (iCal
+// UID dedup). Deep work and the dentist appointment are unshared.
+const GROUPING_EVENTS = [
+  { id: "work-standup", uid: "standup@google.com", title: "Standup", start: "2026-09-15T09:30", color: "#10b981" },
+  { id: "work-deep", title: "Deep work", start: "2026-09-16T14:00", color: "#6366f1" },
+  { id: "personal-standup", uid: "standup@google.com", title: "Standup", start: "2026-09-15T09:30", color: "#f59e0b" },
+  { id: "personal-dentist", title: "Dentist", start: "2026-09-17T11:00", color: "#ef4444" },
+]
+
+/** Toggle state for the grouping demo. */
+let grouping = $state(false)
 
 // Dogfood the .ics importer: a Google-export-shaped feed (standup repeats,
 // offsite is all-day, one tentative). Parsed once at module scope.
@@ -73,7 +87,14 @@ const ICS_EVENTS = parseICal(ICS_SAMPLE)
 </style>
 
 <Container as="article" class="prose dark:prose-invert max-w-none">
-<h1>{m.calendarview_heading()}</h1>
+<h1>
+  {m.calendarview_heading()}
+  <Tooltip content={m.calendarview_api_badge_tip()}>
+    <Badge pill outline variant="info">
+      Temporal
+    </Badge>
+  </Tooltip>
+</h1>
 
 <p>
   <strong>{m.calendarview_heading()}</strong>{m.calendarview_lede_1()}<code>Temporal</code>{m.calendarview_lede_2()}<code>@js-temporal/polyfill</code>{m.calendarview_lede_3()}
@@ -182,6 +203,26 @@ const ICS_EVENTS = parseICal(ICS_SAMPLE)
 <ExampleTabs code={`<CalendarView />`}>
   <div class="max-w-sm" data-testid="calendarview-keyboard">
     <CalendarView />
+  </div>
+</ExampleTabs>
+
+<h3>{m.calendarview_ex_grouping()}</h3>
+<p>{m.calendarview_ex_grouping_p()}</p>
+<ExampleTabs code={`<script lang="ts">
+  let grouping = $state(false)
+<\/script>
+
+<label>
+  <input type="checkbox" bind:checked={grouping} />
+  Group shared events
+</label>
+<CalendarView {...{ events }} {grouping} />`}>
+  <div class="max-w-sm" data-testid="calendarview-grouping">
+    <label class="mb-2 flex items-center gap-2 text-sm">
+      <input type="checkbox" bind:checked={grouping} />
+      {grouping ? "Group shared events" : "Show all calendars"}
+    </label>
+    <CalendarView month={SEPTEMBER} {...{ events: GROUPING_EVENTS }} {grouping} />
   </div>
 </ExampleTabs>
 

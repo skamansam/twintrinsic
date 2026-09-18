@@ -55,6 +55,24 @@ END:VCALENDAR`
 /** Parsed once at module scope — parseICal is pure text to events. */
 const ICS_EVENTS = parseICal(ICS_SAMPLE)
 
+/**
+ * Two fake calendars sharing one standup (iCal UID dedup) — the milestone-4
+ * grouping demo data. Unshared events (deep work, dentist) prove grouping
+ * never merges distinct events.
+ */
+const GROUPING_EVENTS = [
+  { id: "a-work-standup", uid: "standup@google.com", title: "Standup", start: "2026-09-15T09:30", color: "#10b981" },
+  { id: "work-deep", title: "Deep work", start: "2026-09-16T14:00", color: "#6366f1" },
+  { id: "z-personal-standup", uid: "standup@google.com", title: "Standup", start: "2026-09-15T09:30", color: "#f59e0b" },
+  { id: "personal-dentist", title: "Dentist", start: "2026-09-17T11:00", color: "#ef4444" },
+]
+// Spread (not a literal `events=` attribute): CSF tooling treats a literal
+// `events` attribute as event wiring, not a prop.
+const GROUPING_PROPS = { events: GROUPING_EVENTS }
+
+/** Toggle state for the GroupingToggle demo (shared story-file scope). */
+let grouping = $state(false)
+
 /** Sample events exercising color, icon, badge, and cancelled states. */
 const EVENTS = [
   { id: "e1", start: "2026-09-08T10:00", title: "Design review", color: "#6366f1", icon: "palette" },
@@ -206,6 +224,48 @@ const EVENTS = [
     // Recurring event's chip renders the repeat icon wrapper.
     const standupChip = canvas.getByTestId("calendar-view-event-story-standup@google.com")
     expect(standupChip.querySelector(".calendar-view-chip-icon")).not.toBeNull()
+  }}
+>
+  {#snippet children(args)}
+    <div style="min-height: 340px">
+      <CalendarView {...args} month={SEPTEMBER} />
+    </div>
+  {/snippet}
+</Story>
+
+<Story
+  name="GroupingOff"
+  args={{ events: GROUPING_EVENTS, grouping: false }}
+  play={async ({ canvas }) => {
+    // Grouping off: every calendar's copy of the standup renders separately.
+    await canvas.findByTestId("calendar-view-event-a-work-standup")
+    expect(canvas.getByTestId("calendar-view-event-z-personal-standup")).toBeInTheDocument()
+    expect(canvas.queryByTestId("calendar-view-group-count-a-work-standup")).toBeNull()
+    // Unshared events always render.
+    expect(canvas.getByTestId("calendar-view-event-personal-dentist")).toBeInTheDocument()
+  }}
+>
+  {#snippet children(args)}
+    <div style="min-height: 340px">
+      <CalendarView {...args} month={SEPTEMBER} />
+    </div>
+  {/snippet}
+</Story>
+
+<Story
+  name="GroupingOn"
+  args={{ events: GROUPING_EVENTS, grouping: true }}
+  play={async ({ canvas }) => {
+    // Grouping on: the same-UID copies merge into one chip whose solid
+    // badge shows the source count; per-source color dots render inside.
+    await canvas.findByTestId("calendar-view-event-a-work-standup")
+    const count = canvas.getByTestId("calendar-view-group-count-a-work-standup")
+    expect(count.textContent).toBe("2")
+    expect(canvas.queryByTestId("calendar-view-event-z-personal-standup")).toBeNull()
+    const dots = canvas.getByTestId("calendar-view-event-a-work-standup").querySelectorAll(".calendar-view-chip-dot")
+    expect(dots.length).toBe(2)
+    // Unshared events never merge.
+    expect(canvas.getByTestId("calendar-view-event-personal-dentist")).toBeInTheDocument()
   }}
 >
   {#snippet children(args)}

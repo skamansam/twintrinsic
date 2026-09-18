@@ -340,3 +340,41 @@ describe("CalendarView event chips (milestone 3)", () => {
 		expect(ondateselect).not.toHaveBeenCalled()
 	})
 })
+
+describe("CalendarView grouping (milestone 4)", () => {
+	/** Two fake calendars sharing one standup (UID dedup) + private events. */
+	const GROUPED_EVENTS = [
+		{ id: "w1", uid: "standup@google.com", title: "Standup", start: "2026-09-15T09:30", color: "#10b981" },
+		{ id: "w2", title: "Deep work", start: "2026-09-16T14:00", color: "#6366f1" },
+		{ id: "p1", uid: "standup@google.com", title: "Standup", start: "2026-09-15T09:30", color: "#f59e0b" },
+		{ id: "p2", title: "Dentist", start: "2026-09-17T11:00", color: "#ef4444" },
+	]
+
+	it("grouping=false renders every source event as its own chip", async () => {
+		const { getByTestId } = await renderForSeptember({ events: GROUPED_EVENTS })
+		expect(getByTestId("calendar-view-event-w1")).toBeInTheDocument()
+		expect(getByTestId("calendar-view-event-p1")).toBeInTheDocument()
+		expect(document.querySelectorAll('[data-testid="calendar-view-group-count-w1"]')).toHaveLength(0)
+	})
+
+	it("grouping=true merges same-UID copies into one chip with a count badge", async () => {
+		const { getByTestId, queryByTestId } = await renderForSeptember({ events: GROUPED_EVENTS, grouping: true })
+		// Only one standup chip exists; the primary is whichever copy sorted
+		// first in normalizeEvents (p1 — deterministic id tiebreak).
+		expect(getByTestId("calendar-view-event-p1")).toBeInTheDocument()
+		expect(queryByTestId("calendar-view-event-w1")).toBeNull()
+		expect(getByTestId("calendar-view-group-count-p1").textContent).toBe("2")
+	})
+
+	it("grouped chips render per-source color dots", async () => {
+		const { getByTestId } = await renderForSeptember({ events: GROUPED_EVENTS, grouping: true })
+		const dots = getByTestId("calendar-view-event-p1").querySelectorAll(".calendar-view-chip-dot")
+		expect(dots).toHaveLength(2)
+	})
+
+	it("grouping never merges different events", async () => {
+		const { getByTestId } = await renderForSeptember({ events: GROUPED_EVENTS, grouping: true })
+		expect(getByTestId("calendar-view-event-w2")).toBeInTheDocument()
+		expect(getByTestId("calendar-view-event-p2")).toBeInTheDocument()
+	})
+})
