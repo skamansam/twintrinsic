@@ -16,7 +16,13 @@ test.describe("CalendarView docs page", () => {
 
   test("renders the docs page with the h1 and all live examples", async ({ page }) => {
     await expect(page.getByRole("heading", { name: "CalendarView", level: 1 })).toBeVisible();
-    for (const demo of ["calendarview-basic", "calendarview-fixed", "calendarview-selected", "calendarview-weekstart", "calendarview-keyboard"]) {
+    for (const demo of [
+      "calendarview-basic",
+      "calendarview-fixed",
+      "calendarview-selected",
+      "calendarview-weekstart",
+      "calendarview-keyboard",
+    ]) {
       await expect(page.getByTestId(demo)).toBeVisible();
     }
   });
@@ -72,7 +78,9 @@ test.describe("CalendarView docs page", () => {
     await expect(demo.getByRole("heading", { name: "September 2026" })).toBeVisible();
   });
 
-  test("keyboard navigation moves the single tabbable cell and selects with Enter", async ({ page }) => {
+  test("keyboard navigation moves the single tabbable cell and selects with Enter", async ({
+    page,
+  }) => {
     const demo = page.getByTestId("calendarview-fixed");
     const grid = demo.getByRole("grid");
     await grid.locator('[role="gridcell"] [tabindex="0"]').focus();
@@ -110,6 +118,87 @@ test.describe("CalendarView docs page", () => {
       .filter({ hasText: "@js-temporal/polyfill" })
       .first();
     await expect(polyfillCode).toBeVisible();
-    await expect(page.locator("article").locator("code:visible").filter({ hasText: "Temporal" }).first()).toBeVisible();
+    await expect(
+      page.locator("article").locator("code:visible").filter({ hasText: "Temporal" }).first(),
+    ).toBeVisible();
+  });
+});
+
+test.describe("CalendarView milestone close-out", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto("/docs/components/Form/CalendarView");
+    await waitForHydration(page);
+  });
+
+  test("grouping toggle merges and unmerges shared events live", async ({ page }) => {
+    const demo = page.getByTestId("calendarview-grouping");
+    // Off: every calendar's copy of the standup renders separately.
+    await expect(demo.getByTestId("calendar-view-event-work-standup")).toBeVisible();
+    await expect(demo.getByTestId("calendar-view-event-personal-standup")).toBeVisible();
+    await demo.getByRole("checkbox").check();
+    // On: one merged chip with the source-count badge; the second copy is
+    // gone. The merged chip keeps the primary's id — the id tiebreak sorts
+    // "personal-standup" first.
+    await expect(demo.getByTestId("calendar-view-event-work-standup")).toHaveCount(0);
+    await expect(demo.getByTestId("calendar-view-group-count-personal-standup")).toHaveText("2");
+    // Unshared events are never merged.
+    await expect(demo.getByTestId("calendar-view-event-personal-dentist")).toBeVisible();
+    // Toggling back restores both copies.
+    await demo.getByRole("checkbox").uncheck();
+    await expect(demo.getByTestId("calendar-view-event-personal-standup")).toBeVisible();
+  });
+
+  test("drag-to-edit keyboard alternative reschedules the consumer-owned event", async ({
+    page,
+  }) => {
+    const demo = page.getByTestId("calendarview-drag");
+    const chip = demo.getByTestId("calendar-view-event-d1");
+    await expect(chip).toHaveAttribute("draggable", "true");
+    // Activate the chip, then arrow-key reschedule it one day forward. The
+    // demo page owns state and rewrites the event's start, so the chip
+    // re-renders inside the next day's cell.
+    await chip.click();
+    await chip.press("ArrowRight");
+    await expect(
+      demo.locator('[data-day="2026-09-16"]').locator('[data-testid="calendar-view-event-d1"]'),
+    ).toHaveCount(1);
+    await expect(
+      demo.locator('[data-day="2026-09-15"]').locator('[data-testid="calendar-view-event-d1"]'),
+    ).toHaveCount(0);
+  });
+
+  test("connectivity demo fetches both sources and groups the shared standup", async ({ page }) => {
+    const demo = page.getByTestId("calendarview-connect");
+    // Async fetch → chips appear once both sources resolve.
+    await expect(demo.getByTestId("calendar-view-event-conn-review")).toBeVisible({
+      timeout: 5000,
+    });
+    await expect(demo.getByTestId("calendar-view-event-conn-dentist")).toBeVisible();
+    // The same-UID standup merges across the two calendars with a count of 2.
+    await expect(demo.getByTestId("calendar-view-group-count-conn-standup-g")).toHaveText("2");
+    // No error banner: both mock sources resolved.
+    await expect(demo.getByTestId("calendar-view-connect-errors")).toHaveCount(0);
+  });
+
+  test("ics import demo renders parsed events including the recurring marker", async ({ page }) => {
+    const demo = page.getByTestId("calendarview-ics");
+    await expect(demo.getByText("Team standup")).toBeVisible();
+    await expect(demo.getByText("Planning offsite").first()).toBeVisible();
+    await expect(demo.getByText("Maybe lunch")).toBeVisible();
+    // The recurring standup (RRULE) renders the repeat-icon marker; the
+    // all-day offsite is not recurring and correctly has none.
+    const standupChip = demo.locator('[data-testid^="calendar-view-event-docs-standup"]');
+    await expect(standupChip.locator(".calendar-view-chip-icon")).toBeVisible();
+  });
+
+  test("browser-API badges sit beside the title and the heading stays clean", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: "CalendarView", level: 1 })).toHaveText(
+      "CalendarView",
+    );
+    const badges = page.locator(".browser-api-badges a");
+    await expect(badges).toHaveCount(3);
+    await expect(badges.filter({ hasText: "Temporal" })).toBeVisible();
+    await expect(badges.filter({ hasText: "Popover" })).toBeVisible();
+    await expect(badges.filter({ hasText: "Drag and Drop" })).toBeVisible();
   });
 });

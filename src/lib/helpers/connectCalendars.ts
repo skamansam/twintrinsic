@@ -19,7 +19,7 @@
  *
  * @see docs/plans/CALENDARVIEW_DESIGN.md §4
  */
-import type { CalendarViewEvent } from "./eventNormalize.js"
+import type { CalendarViewEvent } from "./eventNormalize.js";
 
 /**
  * A consumer-implemented event source. `fetchEvents` typically proxies a
@@ -28,30 +28,33 @@ import type { CalendarViewEvent } from "./eventNormalize.js"
  * CalendarView docs page for copy-paste recipes per provider.
  */
 export interface CalendarSource {
-	/** Stable id referenced by `CalendarViewEvent.calendarId`. */
-	id: string
-	/** Display name (legend, grouping tooltip). */
-	name: string
-	/** CSS color (Tailwind theme token, hex, or `var()`). */
-	color: string
-	/**
-	 * Fetch events for the visible range. Called per month/page change;
-	 * implementers return an empty array rather than throwing when a feed
-	 * is merely empty.
-	 */
-	fetchEvents(range: { start: Temporal.PlainDate; end: Temporal.PlainDate }): Promise<CalendarViewEvent[]>
+  /** Stable id referenced by `CalendarViewEvent.calendarId`. */
+  id: string;
+  /** Display name (legend, grouping tooltip). */
+  name: string;
+  /** CSS color (Tailwind theme token, hex, or `var()`). */
+  color: string;
+  /**
+   * Fetch events for the visible range. Called per month/page change;
+   * implementers return an empty array rather than throwing when a feed
+   * is merely empty.
+   */
+  fetchEvents(range: {
+    start: Temporal.PlainDate;
+    end: Temporal.PlainDate;
+  }): Promise<CalendarViewEvent[]>;
 }
 
 /** Narrow a bare object to a `CalendarSource` (duck check on `fetchEvents`). */
 export function isCalendarSource(value: unknown): value is CalendarSource {
-	return (
-		typeof value === "object" &&
-		value !== null &&
-		typeof (value as CalendarSource).id === "string" &&
-		typeof (value as CalendarSource).name === "string" &&
-		typeof (value as CalendarSource).color === "string" &&
-		typeof (value as CalendarSource).fetchEvents === "function"
-	)
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    typeof (value as CalendarSource).id === "string" &&
+    typeof (value as CalendarSource).name === "string" &&
+    typeof (value as CalendarSource).color === "string" &&
+    typeof (value as CalendarSource).fetchEvents === "function"
+  );
 }
 
 /**
@@ -60,8 +63,8 @@ export function isCalendarSource(value: unknown): value is CalendarSource {
  * render — this is a report, not a fatal state.
  */
 export interface CalendarsErrorDetail {
-	/** One entry per failed source, with the thrown reason. */
-	errors: Array<{ sourceId: string; error: unknown }>
+  /** One entry per failed source, with the thrown reason. */
+  errors: Array<{ sourceId: string; error: unknown }>;
 }
 
 /**
@@ -69,10 +72,10 @@ export interface CalendarsErrorDetail {
  * every source that succeeded, plus one entry per source that rejected.
  */
 export interface ConnectResult {
-	/** Events from all successful sources, in source order. */
-	events: CalendarViewEvent[]
-	/** Per-source failures — a flaky feed must not blank the calendar. */
-	errors: Array<{ sourceId: string; error: unknown }>
+  /** Events from all successful sources, in source order. */
+  events: CalendarViewEvent[];
+  /** Per-source failures — a flaky feed must not blank the calendar. */
+  errors: Array<{ sourceId: string; error: unknown }>;
 }
 
 /**
@@ -91,28 +94,28 @@ export interface ConnectResult {
  * @returns Events plus per-source fetch errors
  */
 export async function connectCalendars(
-	sources: readonly CalendarSource[],
-	range: { start: Temporal.PlainDate; end: Temporal.PlainDate },
+  sources: readonly CalendarSource[],
+  range: { start: Temporal.PlainDate; end: Temporal.PlainDate },
 ): Promise<ConnectResult> {
-	const settled = await Promise.allSettled(sources.map((source) => source.fetchEvents(range)))
+  const settled = await Promise.allSettled(sources.map((source) => source.fetchEvents(range)));
 
-	const events: CalendarViewEvent[] = []
-	const errors: Array<{ sourceId: string; error: unknown }> = []
+  const events: CalendarViewEvent[] = [];
+  const errors: Array<{ sourceId: string; error: unknown }> = [];
 
-	sources.forEach((source, i) => {
-		const outcome = settled[i]
-		if (outcome.status === "rejected") {
-			errors.push({ sourceId: source.id, error: outcome.reason })
-			return
-		}
-		for (const event of outcome.value) {
-			events.push({
-				...event,
-				calendarId: event.calendarId ?? source.id,
-				color: event.color ?? source.color,
-			})
-		}
-	})
+  sources.forEach((source, i) => {
+    const outcome = settled[i];
+    if (outcome.status === "rejected") {
+      errors.push({ sourceId: source.id, error: outcome.reason });
+      return;
+    }
+    for (const event of outcome.value) {
+      events.push({
+        ...event,
+        calendarId: event.calendarId ?? source.id,
+        color: event.color ?? source.color,
+      });
+    }
+  });
 
-	return { events, errors }
+  return { events, errors };
 }
