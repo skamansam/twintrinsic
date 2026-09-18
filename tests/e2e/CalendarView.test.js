@@ -35,7 +35,9 @@ test.describe("CalendarView docs page", () => {
     await expect(headers).toHaveCount(7);
     const labelledBy = await grid.getAttribute("aria-labelledby");
     expect(labelledBy).toBeTruthy();
-    await expect(page.locator(`#${labelledBy}`)).toHaveText("September 2026");
+    // CSS.escape: crypto.randomUUID() ids can start with a digit, which a
+    // bare `#...` selector rejects.
+    await expect(page.locator(`[id="${labelledBy}"]`)).toHaveText("September 2026");
   });
 
   test("today is marked with aria-current=date exactly once", async ({ page }) => {
@@ -100,7 +102,14 @@ test.describe("CalendarView docs page", () => {
 
   test("browser support section names Temporal and the polyfill", async ({ page }) => {
     await expect(page.getByRole("heading", { name: "Browser support" })).toBeVisible();
-    const section = page.locator("article");
-    await expect(section.getByText("@js-temporal/polyfill").first()).toBeVisible();
+    // Scope to visible <code> elements: the title-row badge tooltip also
+    // mentions the polyfill package but stays hidden until hover.
+    const polyfillCode = page
+      .locator("article")
+      .locator("code:visible")
+      .filter({ hasText: "@js-temporal/polyfill" })
+      .first();
+    await expect(polyfillCode).toBeVisible();
+    await expect(page.locator("article").locator("code:visible").filter({ hasText: "Temporal" }).first()).toBeVisible();
   });
 });
