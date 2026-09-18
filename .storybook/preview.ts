@@ -1,18 +1,18 @@
-import type { Preview } from "@storybook/sveltekit"
-import { addons } from "storybook/internal/preview-api"
-import { loadPlatformPolyfills } from "../src/lib/polyfills.js"
-import { DOCS_RENDERED, GLOBALS_UPDATED, STORY_RENDERED } from "storybook/internal/core-events"
-import "../src/lib/twintrinsic.css"
+import type { Preview } from "@storybook/sveltekit";
+import { addons } from "storybook/internal/preview-api";
+import { loadPlatformPolyfills } from "../src/lib/polyfills.js";
+import { DOCS_RENDERED, GLOBALS_UPDATED, STORY_RENDERED } from "storybook/internal/core-events";
+import "../src/lib/twintrinsic.css";
 // Storybook-only demo themes (Brand, High Contrast, CVD + dark variants).
 // These are NOT part of the shipped library CSS — see the header of
 // themes.css for rationale. Also contains the `.sbdocs` overrides that
 // make the autodocs page follow the selected theme.
-import "./themes.css"
+import "./themes.css";
 
 // Feature-detected polyfills for Popover API + CSS Anchor Positioning.
 // No-op in engines that support them natively; restores the behavior in
 // older test/consumer browsers so the popover-based components work there.
-void loadPlatformPolyfills()
+void loadPlatformPolyfills();
 
 // Grouped light/dark theme picker.
 //
@@ -40,14 +40,14 @@ const THEMES: Record<string, Record<string, string>> = {
     deuteranopia: "deuteranopia-dark",
     tritanopia: "tritanopia-dark",
   },
-}
+};
 
 const withThemePicker: Preview["decorators"][number] = (storyFn, context) => {
-  const { themeMode = "light", themeVariant = "default" } = context.globals
-  const theme = THEMES[themeMode]?.[themeVariant] ?? "light"
-  document.documentElement.setAttribute("data-theme", theme)
-  return storyFn()
-}
+  const { themeMode = "light", themeVariant = "default" } = context.globals;
+  const theme = THEMES[themeMode]?.[themeVariant] ?? "light";
+  document.documentElement.setAttribute("data-theme", theme);
+  return storyFn();
+};
 
 // Storybook renders the Docs page (autodocs) WITHOUT running global
 // decorators, and stories mounted in Docs canvases (e.g. the ThemeToggle
@@ -56,28 +56,28 @@ const withThemePicker: Preview["decorators"][number] = (storyFn, context) => {
 // canvas), we subscribe to the preview channel and re-apply the composed
 // theme whenever globals change or a story/docs render finishes. This
 // keeps the theme picker authoritative in BOTH view modes.
-let currentTheme = "light"
+let currentTheme = "light";
 
 function applyTheme() {
-  document.documentElement.setAttribute("data-theme", currentTheme)
+  document.documentElement.setAttribute("data-theme", currentTheme);
 }
 
 if (typeof window !== "undefined") {
-  const channel = addons.getChannel()
+  const channel = addons.getChannel();
   if (channel) {
     channel.on(GLOBALS_UPDATED, ({ globals }: { globals: Record<string, string> }) => {
-      const { themeMode = "light", themeVariant = "default" } = globals
-      currentTheme = THEMES[themeMode]?.[themeVariant] ?? "light"
-      applyTheme()
-    })
+      const { themeMode = "light", themeVariant = "default" } = globals;
+      currentTheme = THEMES[themeMode]?.[themeVariant] ?? "light";
+      applyTheme();
+    });
 
     // Re-apply after every render — docs pages don't run the decorator,
     // and mounted components (ThemeToggle) may have removed the attribute.
-    channel.on(STORY_RENDERED, applyTheme)
-    channel.on(DOCS_RENDERED, applyTheme)
+    channel.on(STORY_RENDERED, applyTheme);
+    channel.on(DOCS_RENDERED, applyTheme);
 
     // Apply once at startup (the channel may already be connected).
-    applyTheme()
+    applyTheme();
   }
 }
 
@@ -142,7 +142,7 @@ const preview: Preview = {
     },
   },
 
-  tags: ["autodocs"]
-}
+  tags: ["autodocs"],
+};
 
-export default preview
+export default preview;

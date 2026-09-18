@@ -15,9 +15,7 @@ test.describe("Container docs page", () => {
   });
 
   test("renders the docs page heading", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "Container", level: 1 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Container", level: 1 })).toBeVisible();
   });
 
   test("renders content inside the basic container", async ({ page }) => {
@@ -32,9 +30,7 @@ test.describe("Container docs page", () => {
     await expect(fluid).toBeVisible();
   });
 
-  test("basic container constrains width while fluid does not", async ({
-    page,
-  }) => {
+  test("basic container constrains width while fluid does not", async ({ page }) => {
     const basic = page.getByTestId("container-basic");
     const fluid = page.getByTestId("container-fluid");
 

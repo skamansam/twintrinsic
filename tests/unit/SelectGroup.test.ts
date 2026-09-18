@@ -1,6 +1,6 @@
-import { render } from "@testing-library/svelte"
-import { describe, expect, it } from "vitest"
-import SelectGroup from "../../src/lib/components/Form/SelectGroup.svelte"
+import { render } from "@testing-library/svelte";
+import { describe, expect, it } from "vitest";
+import SelectGroup from "../../src/lib/components/Form/SelectGroup.svelte";
 
 describe("SelectGroup", () => {
   it("renders element", () => {
@@ -9,7 +9,7 @@ describe("SelectGroup", () => {
         label: "Select",
         children: () => "Options",
       },
-    })
-    expect(container.firstChild).toBeTruthy()
-  })
-})
+    });
+    expect(container.firstChild).toBeTruthy();
+  });
+});

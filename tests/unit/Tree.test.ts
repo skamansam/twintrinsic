@@ -1,6 +1,6 @@
-import { render } from "@testing-library/svelte"
-import { describe, expect, it, vi } from "vitest"
-import Tree from "../../src/lib/components/Tree/Tree.svelte"
+import { render } from "@testing-library/svelte";
+import { describe, expect, it, vi } from "vitest";
+import Tree from "../../src/lib/components/Tree/Tree.svelte";
 
 describe("Tree", () => {
   it("renders tree container", () => {
@@ -9,9 +9,9 @@ describe("Tree", () => {
         onselect: vi.fn(),
         children: () => "Tree",
       },
-    })
-    expect(container.querySelector(".tree")).toBeTruthy()
-  })
+    });
+    expect(container.querySelector(".tree")).toBeTruthy();
+  });
 
   it("renders element", () => {
     const { container } = render(Tree, {
@@ -19,7 +19,7 @@ describe("Tree", () => {
         onselect: vi.fn(),
         children: () => "Tree content",
       },
-    })
-    expect(container.firstChild).toBeTruthy()
-  })
-})
+    });
+    expect(container.firstChild).toBeTruthy();
+  });
+});

@@ -1,6 +1,6 @@
-import { render, screen } from "@testing-library/svelte"
-import { describe, expect, it } from "vitest"
-import CalendarInput from "../../src/lib/components/Form/CalendarInput.svelte"
+import { render, screen } from "@testing-library/svelte";
+import { describe, expect, it } from "vitest";
+import CalendarInput from "../../src/lib/components/Form/CalendarInput.svelte";
 
 describe("CalendarInput", () => {
   it("renders a date input", () => {
@@ -8,11 +8,11 @@ describe("CalendarInput", () => {
       props: {
         label: "Select date",
       },
-    })
-    const input = screen.getByLabelText("Select date")
-    expect(input).toBeInTheDocument()
-    expect(input).toHaveAttribute("type", "date")
-  })
+    });
+    const input = screen.getByLabelText("Select date");
+    expect(input).toBeInTheDocument();
+    expect(input).toHaveAttribute("type", "date");
+  });
 
   it("renders with a value", () => {
     render(CalendarInput, {
@@ -20,10 +20,10 @@ describe("CalendarInput", () => {
         label: "Date",
         value: new Date(2026, 3, 7),
       },
-    })
-    const input = screen.getByLabelText("Date")
-    expect(input).toHaveValue("2026-04-07")
-  })
+    });
+    const input = screen.getByLabelText("Date");
+    expect(input).toHaveValue("2026-04-07");
+  });
 
   it("renders disabled state", () => {
     render(CalendarInput, {
@@ -31,10 +31,10 @@ describe("CalendarInput", () => {
         label: "Date",
         disabled: true,
       },
-    })
-    const input = screen.getByLabelText("Date")
-    expect(input).toBeDisabled()
-  })
+    });
+    const input = screen.getByLabelText("Date");
+    expect(input).toBeDisabled();
+  });
 
   it("renders with min and max dates", () => {
     render(CalendarInput, {
@@ -43,17 +43,17 @@ describe("CalendarInput", () => {
         minDate: new Date(2026, 3, 1),
         maxDate: new Date(2026, 3, 30),
       },
-    })
-    const input = screen.getByLabelText("Date")
-    expect(input).toHaveAttribute("min", "2026-04-01")
-    expect(input).toHaveAttribute("max", "2026-04-30")
-  })
+    });
+    const input = screen.getByLabelText("Date");
+    expect(input).toHaveAttribute("min", "2026-04-01");
+    expect(input).toHaveAttribute("max", "2026-04-30");
+  });
 
   it("renders without label", () => {
-    const { container } = render(CalendarInput, {})
-    expect(container.firstChild).toBeTruthy()
-    const input = container.querySelector("input[type='date']")
-    expect(input).toBeTruthy()
-    expect(input).toHaveAttribute("type", "date")
-  })
-})
+    const { container } = render(CalendarInput, {});
+    expect(container.firstChild).toBeTruthy();
+    const input = container.querySelector("input[type='date']");
+    expect(input).toBeTruthy();
+    expect(input).toHaveAttribute("type", "date");
+  });
+});

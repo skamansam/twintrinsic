@@ -8,8 +8,8 @@
  * pass Temporal data import this module so the component's bare `Temporal`
  * reference resolves exactly as it would in a consumer's polyfilled app.
  */
-import { Temporal as TemporalPolyfill } from "@js-temporal/polyfill"
+import { Temporal as TemporalPolyfill } from "@js-temporal/polyfill";
 
 if (typeof globalThis.Temporal === "undefined") {
-  globalThis.Temporal = TemporalPolyfill
+  globalThis.Temporal = TemporalPolyfill;
 }

@@ -33,18 +33,14 @@ test.describe("LazyPanel docs page", () => {
   test("basic example lazy-loads content on scroll", async ({ page }) => {
     const example = page.getByTestId("lazypanel-basic");
     await example.scrollIntoViewIfNeeded();
-    await expect(
-      example.getByText("How do upgrades work?"),
-    ).toBeVisible();
+    await expect(example.getByText("How do upgrades work?")).toBeVisible();
   });
 
   test("custom-loading example renders its content once visible", async ({ page }) => {
     const example = page.getByTestId("lazypanel-custom-loading");
     await example.scrollIntoViewIfNeeded();
     await expect(example.locator(".panel")).toBeVisible();
-    await expect(
-      example.getByText("Manage your profile"),
-    ).toBeVisible();
+    await expect(example.getByText("Manage your profile")).toBeVisible();
   });
 
   test("lazy panels do not render content before scrolling", async ({ page }) => {

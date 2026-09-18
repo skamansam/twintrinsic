@@ -1,5 +1,5 @@
-import { expect, userEvent } from "storybook/test"
-import Input from "$lib/components/Form/Input.svelte"
+import { expect, userEvent } from "storybook/test";
+import Input from "$lib/components/Form/Input.svelte";
 
 let passwordVisible = false;
 
@@ -24,7 +24,7 @@ export default {
     rightIcon: { control: "text" },
     mask: { control: "text" },
   },
-}
+};
 
 export const Default = {
   args: {
@@ -37,7 +37,7 @@ export const Default = {
     await userEvent.type(input, "johndoe");
     await expect(input).toHaveValue("johndoe");
   },
-}
+};
 
 export const WithIcons = {
   render: (args) => ({
@@ -57,7 +57,7 @@ export const WithIcons = {
     rightIcon: "eye",
     placeholder: "Enter password",
   },
-}
+};
 
 export const FloatingLabel = {
   args: {
@@ -66,7 +66,7 @@ export const FloatingLabel = {
     floating: true,
     placeholder: "Enter email",
   },
-}
+};
 
 export const WithError = {
   args: {
@@ -81,7 +81,7 @@ export const WithError = {
     await expect(input).toBeInTheDocument();
     await expect(input).toHaveAttribute("aria-invalid", "true");
   },
-}
+};
 
 export const WithHelpText = {
   args: {
@@ -90,7 +90,7 @@ export const WithHelpText = {
     helpText: "Password must be at least 8 characters long",
     leftIcon: "lock",
   },
-}
+};
 
 export const Disabled = {
   args: {
@@ -102,7 +102,7 @@ export const Disabled = {
     const input = canvas.getByDisplayValue("johndoe");
     await expect(input).toBeDisabled();
   },
-}
+};
 
 export const Readonly = {
   args: {
@@ -111,7 +111,7 @@ export const Readonly = {
     readonly: true,
     rightIcon: "copy",
   },
-}
+};
 
 export const WithMask = {
   args: {
@@ -120,7 +120,7 @@ export const WithMask = {
     mask: "(###) ###-####",
     placeholder: "(555) 555-5555",
   },
-}
+};
 
 export const Required = {
   args: {
@@ -128,7 +128,7 @@ export const Required = {
     required: true,
     placeholder: "Enter your full name",
   },
-}
+};
 
 export const Compact = {
   args: {
@@ -137,7 +137,7 @@ export const Compact = {
     placeholder: "Search...",
     class: "max-w-xs",
   },
-}
+};
 
 export const WithDatalist = {
   args: {
@@ -145,7 +145,7 @@ export const WithDatalist = {
     placeholder: "Type a browser...",
     datalist: ["Chrome", "Firefox", "Safari", "Edge", "Opera"],
   },
-}
+};
 
 export const WithDatalistObjects = {
   args: {
@@ -159,4 +159,4 @@ export const WithDatalistObjects = {
       { label: "Japan", value: "JP" },
     ],
   },
-}
+};

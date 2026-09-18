@@ -26,9 +26,7 @@ const outputFile = path.join(process.cwd(), "static", "browser-compat.json");
  */
 function readResultFiles() {
   if (!fs.existsSync(inputDir)) {
-    throw new Error(
-      `No compat results found at ${inputDir}. Run \`pnpm test:compat\` first.`,
-    );
+    throw new Error(`No compat results found at ${inputDir}. Run \`pnpm test:compat\` first.`);
   }
   return fs
     .readdirSync(inputDir)
@@ -63,4 +61,6 @@ function mergeResults(files) {
 const merged = mergeResults(readResultFiles());
 fs.mkdirSync(path.dirname(outputFile), { recursive: true });
 fs.writeFileSync(outputFile, `${JSON.stringify(merged, null, 2)}\n`);
-console.log(`Wrote ${Object.keys(merged.features).length} features for [${merged.browsers.join(", ")}] to ${outputFile}`);
+console.log(
+  `Wrote ${Object.keys(merged.features).length} features for [${merged.browsers.join(", ")}] to ${outputFile}`,
+);

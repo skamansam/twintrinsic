@@ -343,12 +343,7 @@
   },
   "overrides": [
     {
-      "includes": [
-        "**/*.ts",
-        "**/*.tsx",
-        "**/*.mts",
-        "**/*.cts"
-      ],
+      "includes": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
       "linter": {
         "rules": {
           "complexity": {
@@ -388,10 +383,7 @@
       }
     },
     {
-      "includes": [
-        "*.svelte",
-        "**/*.svelte"
-      ],
+      "includes": ["*.svelte", "**/*.svelte"],
       "javascript": {
         "globals": []
       },
@@ -400,12 +392,7 @@
       }
     },
     {
-      "includes": [
-        "*.svelte.js",
-        "*.svelte.ts",
-        "**/*.svelte.js",
-        "**/*.svelte.ts"
-      ],
+      "includes": ["*.svelte.js", "*.svelte.ts", "**/*.svelte.js", "**/*.svelte.ts"],
       "javascript": {
         "globals": []
       }

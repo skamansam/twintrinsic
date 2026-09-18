@@ -16,9 +16,7 @@ test.describe("StepperStep docs page", () => {
   });
 
   test("renders the docs page heading", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "StepperStep", level: 1 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "StepperStep", level: 1 })).toBeVisible();
   });
 
   test("basic steps render inside a nav landmark", async ({ page }) => {
@@ -31,27 +29,19 @@ test.describe("StepperStep docs page", () => {
   test("basic steps render their titles", async ({ page }) => {
     const example = page.getByTestId("stepper-step-basic");
     for (const title of ["Account", "Profile", "Review"]) {
-      await expect(
-        example.locator(".stepper-step-title").getByText(title),
-      ).toBeVisible();
+      await expect(example.locator(".stepper-step-title").getByText(title)).toBeVisible();
     }
   });
 
   test("steps render subtitles and custom icons", async ({ page }) => {
     const example = page.getByTestId("stepper-step-subtitles");
+    await expect(example.locator(".stepper-step-title").getByText("Contact")).toBeVisible();
     await expect(
-      example.locator(".stepper-step-title").getByText("Contact"),
-    ).toBeVisible();
-    await expect(
-      example
-        .locator(".stepper-step-subtitle")
-        .getByText("Your email address"),
+      example.locator(".stepper-step-subtitle").getByText("Your email address"),
     ).toBeVisible();
   });
 
-  test("explicit states render completed, active, error, optional, disabled", async ({
-    page,
-  }) => {
+  test("explicit states render completed, active, error, optional, disabled", async ({ page }) => {
     const example = page.getByTestId("stepper-step-states");
     await expect(example.locator(".stepper-step-completed")).toHaveCount(1);
     await expect(example.locator(".stepper-step-active")).toHaveCount(1);
@@ -61,9 +51,7 @@ test.describe("StepperStep docs page", () => {
     // The active step is announced via aria-current.
     await expect(example.locator("[aria-current='step']")).toHaveCount(1);
     // The optional marker renders on the optional step.
-    await expect(example.locator(".stepper-step-optional")).toHaveText(
-      "(optional)",
-    );
+    await expect(example.locator(".stepper-step-optional")).toHaveText("(optional)");
   });
 
   test("error step has error styling class", async ({ page }) => {
@@ -84,12 +72,8 @@ test.describe("StepperStep docs page", () => {
 
   test("vertical steps show the active step's content", async ({ page }) => {
     const example = page.getByTestId("stepper-step-vertical");
-    await expect(
-      example.getByText("Enter your personal details."),
-    ).toBeVisible();
-    await expect(
-      example.getByText("Enter your address details."),
-    ).not.toBeVisible();
+    await expect(example.getByText("Enter your personal details.")).toBeVisible();
+    await expect(example.getByText("Enter your address details.")).not.toBeVisible();
   });
 
   test("each step has role=listitem", async ({ page }) => {
@@ -101,9 +85,7 @@ test.describe("StepperStep docs page", () => {
     }
   });
 
-  test("step numbers are visible for non-alternative-label layouts", async ({
-    page,
-  }) => {
+  test("step numbers are visible for non-alternative-label layouts", async ({ page }) => {
     const example = page.getByTestId("stepper-step-basic");
     const numbers = example.locator(".stepper-step-number");
     const count = await numbers.count();

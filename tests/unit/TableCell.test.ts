@@ -1,6 +1,6 @@
-import { render } from "@testing-library/svelte"
-import { describe, expect, it } from "vitest"
-import TableCell from "../../src/lib/components/Table/TableCell.svelte"
+import { render } from "@testing-library/svelte";
+import { describe, expect, it } from "vitest";
+import TableCell from "../../src/lib/components/Table/TableCell.svelte";
 
 describe("TableCell", () => {
   it("renders td element", () => {
@@ -10,9 +10,9 @@ describe("TableCell", () => {
         rowspan: 1,
         children: () => "Cell",
       },
-    })
-    expect(container.querySelector("td")).toBeTruthy()
-  })
+    });
+    expect(container.querySelector("td")).toBeTruthy();
+  });
 
   it("renders element", () => {
     const { container } = render(TableCell, {
@@ -21,7 +21,7 @@ describe("TableCell", () => {
         rowspan: 1,
         children: () => "Cell content",
       },
-    })
-    expect(container.firstChild).toBeTruthy()
-  })
-})
+    });
+    expect(container.firstChild).toBeTruthy();
+  });
+});

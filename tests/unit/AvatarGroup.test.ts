@@ -1,6 +1,6 @@
-import { render } from "@testing-library/svelte"
-import { describe, expect, it } from "vitest"
-import AvatarGroup from "../../src/lib/components/Avatar/AvatarGroup.svelte"
+import { render } from "@testing-library/svelte";
+import { describe, expect, it } from "vitest";
+import AvatarGroup from "../../src/lib/components/Avatar/AvatarGroup.svelte";
 
 describe("AvatarGroup", () => {
   it("renders avatar group container", () => {
@@ -10,9 +10,9 @@ describe("AvatarGroup", () => {
         total: 5,
         children: () => "Avatars",
       },
-    })
-    expect(container.querySelector(".avatar-group")).toBeTruthy()
-  })
+    });
+    expect(container.querySelector(".avatar-group")).toBeTruthy();
+  });
 
   it("renders element", () => {
     const { container } = render(AvatarGroup, {
@@ -21,7 +21,7 @@ describe("AvatarGroup", () => {
         total: 5,
         children: () => "AvatarGroup content",
       },
-    })
-    expect(container.firstChild).toBeTruthy()
-  })
-})
+    });
+    expect(container.firstChild).toBeTruthy();
+  });
+});

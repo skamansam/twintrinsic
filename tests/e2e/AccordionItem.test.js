@@ -16,9 +16,7 @@ test.describe("AccordionItem docs page", () => {
   });
 
   test("renders the docs page heading", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "AccordionItem", level: 1 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "AccordionItem", level: 1 })).toBeVisible();
   });
 
   test("basic items render expandable details elements", async ({ page }) => {
@@ -91,9 +89,7 @@ test.describe("AccordionItem docs page", () => {
 
     // Attempting to open the disabled item keeps it closed.
     await example.getByText("Locked", { exact: true }).click({ force: true });
-    await expect(
-      example.getByText("This panel cannot be opened."),
-    ).not.toBeVisible();
+    await expect(example.getByText("This panel cannot be opened.")).not.toBeVisible();
   });
 
   test("disabled item has disabled styling", async ({ page }) => {

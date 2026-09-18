@@ -15,9 +15,7 @@ test.describe("IconifyIcon docs page", () => {
   });
 
   test("renders the docs page heading", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "IconifyIcon", level: 1 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "IconifyIcon", level: 1 })).toBeVisible();
   });
 
   test("basic icons demo renders icon wrappers", async ({ page }) => {
@@ -30,14 +28,12 @@ test.describe("IconifyIcon docs page", () => {
 
   test("icons are decorative (aria-hidden=true)", async ({ page }) => {
     const icons = page.locator("._icon-home svg").first();
-    if (await icons.count() > 0) {
+    if ((await icons.count()) > 0) {
       await expect(icons).toHaveAttribute("aria-hidden", "true");
     }
   });
 
-  test("iconsets demo renders icons with their iconset class", async ({
-    page,
-  }) => {
+  test("iconsets demo renders icons with their iconset class", async ({ page }) => {
     await expect(page.locator("._iconset-fa").first()).toBeAttached();
     await expect(page.locator("._iconset-heroicons").first()).toBeAttached();
     await expect(page.locator("._iconset-tabler").first()).toBeAttached();

@@ -16,52 +16,58 @@ type FakeEntry = { isIntersecting: boolean };
 let observerCallback: ((entries: FakeEntry[]) => void) | undefined;
 
 beforeEach(() => {
-	observerCallback = undefined;
-	vi.stubGlobal(
-		"IntersectionObserver",
-		class {
-			constructor(cb: (entries: FakeEntry[]) => void) {
-				observerCallback = cb;
-			}
-			observe() { /* tests fire the callback manually */ }
-			unobserve() { /* no-op */ }
-			disconnect() { /* no-op */ }
-			takeRecords() {
-				return [];
-			}
-		} as unknown as typeof IntersectionObserver,
-	);
+  observerCallback = undefined;
+  vi.stubGlobal(
+    "IntersectionObserver",
+    class {
+      constructor(cb: (entries: FakeEntry[]) => void) {
+        observerCallback = cb;
+      }
+      observe() {
+        /* tests fire the callback manually */
+      }
+      unobserve() {
+        /* no-op */
+      }
+      disconnect() {
+        /* no-op */
+      }
+      takeRecords() {
+        return [];
+      }
+    } as unknown as typeof IntersectionObserver,
+  );
 });
 
 function intersect(intersecting = true) {
-	expect(observerCallback, "observer callback was not registered").toBeDefined();
-	observerCallback?.([{ isIntersecting: intersecting }]);
+  expect(observerCallback, "observer callback was not registered").toBeDefined();
+  observerCallback?.([{ isIntersecting: intersecting }]);
 }
 
 describe("Lazy", () => {
-	it("renders nothing before the IntersectionObserver fires", () => {
-		const { container } = render(LazyWithContent);
+  it("renders nothing before the IntersectionObserver fires", () => {
+    const { container } = render(LazyWithContent);
 
-		expect(container.querySelector(".lazy-container")).toBeTruthy();
-		expect(container.querySelector(".lazy-content")).toBeNull();
-	});
+    expect(container.querySelector(".lazy-container")).toBeTruthy();
+    expect(container.querySelector(".lazy-content")).toBeNull();
+  });
 
-	it("renders content once the observer reports an intersection", async () => {
-		const { container } = render(LazyWithContent);
+  it("renders content once the observer reports an intersection", async () => {
+    const { container } = render(LazyWithContent);
 
-		expect(container.querySelector(".lazy-content")).toBeNull();
+    expect(container.querySelector(".lazy-content")).toBeNull();
 
-		intersect(true);
-		await tick();
+    intersect(true);
+    await tick();
 
-		expect(container.querySelector(".lazy-content")).toBeTruthy();
-	});
+    expect(container.querySelector(".lazy-content")).toBeTruthy();
+  });
 
-	it("ignores non-intersecting entries", () => {
-		const { container } = render(LazyWithContent);
+  it("ignores non-intersecting entries", () => {
+    const { container } = render(LazyWithContent);
 
-		intersect(false);
+    intersect(false);
 
-		expect(container.querySelector(".lazy-content")).toBeNull();
-	});
+    expect(container.querySelector(".lazy-content")).toBeNull();
+  });
 });

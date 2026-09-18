@@ -18,7 +18,7 @@
  * idempotent and safe to invoke multiple times.
  */
 
-let loadPromise: Promise<void> | null = null
+let loadPromise: Promise<void> | null = null;
 
 /**
  * Loads the platform polyfills (popover + CSS anchor positioning) when the
@@ -27,28 +27,28 @@ let loadPromise: Promise<void> | null = null
  */
 export function loadPlatformPolyfills(): Promise<void> {
   // SSR: nothing to polyfill server-side.
-  if (typeof window === "undefined") return Promise.resolve()
-  if (loadPromise) return loadPromise
+  if (typeof window === "undefined") return Promise.resolve();
+  if (loadPromise) return loadPromise;
 
   loadPromise = (async () => {
-    const tasks: Array<Promise<unknown>> = []
+    const tasks: Array<Promise<unknown>> = [];
 
     if (!("popover" in HTMLElement.prototype)) {
-      tasks.push(import(/* @vite-ignore */ "@oddbird/popover-polyfill"))
+      tasks.push(import(/* @vite-ignore */ "@oddbird/popover-polyfill"));
     }
 
     if (!("anchorName" in document.documentElement.style)) {
-      tasks.push(import(/* @vite-ignore */ "@oddbird/css-anchor-positioning"))
+      tasks.push(import(/* @vite-ignore */ "@oddbird/css-anchor-positioning"));
     }
 
     // Interest Invokers (interestfor attribute) — Chrome 142+, Edge 142+.
     // Polyfill for Firefox / Safari where the attribute is not yet supported.
     if (!Object.hasOwn(HTMLButtonElement.prototype, "interestForElement")) {
-      tasks.push(import(/* @vite-ignore */ "interestfor"))
+      tasks.push(import(/* @vite-ignore */ "interestfor"));
     }
 
-    await Promise.all(tasks)
-  })()
+    await Promise.all(tasks);
+  })();
 
-  return loadPromise
+  return loadPromise;
 }

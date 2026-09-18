@@ -15,14 +15,10 @@ test.describe("Theme preview page", () => {
   });
 
   test("renders the Theme Preview heading", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "Theme Preview", level: 1 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Theme Preview", level: 1 })).toBeVisible();
   });
 
-  test("renders all 12 themes as scoped data-theme panels", async ({
-    page,
-  }) => {
+  test("renders all 12 themes as scoped data-theme panels", async ({ page }) => {
     const expectedThemes = [
       "light",
       "dark",
@@ -63,9 +59,7 @@ test.describe("Theme preview page", () => {
     expect(panelValues.sort()).toEqual([...expectedThemes].sort());
   });
 
-  test("each theme panel applies its own background color", async ({
-    page,
-  }) => {
+  test("each theme panel applies its own background color", async ({ page }) => {
     const backgrounds = await page.evaluate(() => {
       const pick = (theme: string) => {
         const el = document.querySelector(`[data-theme="${theme}"]`);
@@ -107,19 +101,13 @@ test.describe("Theme preview page", () => {
   });
 
   test("color blind themes are present in the preview", async ({ page }) => {
-    for (const theme of [
-      "protanopia",
-      "deuteranopia",
-      "tritanopia",
-    ]) {
+    for (const theme of ["protanopia", "deuteranopia", "tritanopia"]) {
       const panel = page.locator(`[data-theme="${theme}"]`);
       await expect(panel).toBeAttached();
     }
   });
 
-  test("high-contrast themes are distinguishable from standard themes", async ({
-    page,
-  }) => {
+  test("high-contrast themes are distinguishable from standard themes", async ({ page }) => {
     const highContrastBg = await page.evaluate(() => {
       const el = document.querySelector('[data-theme="high-contrast"]');
       if (!el) return null;

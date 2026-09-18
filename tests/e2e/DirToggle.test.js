@@ -1484,7 +1484,9 @@ test.describe("Docs locale switcher", () => {
     const heading = page.getByRole("heading", { name: "Timer", level: 1 });
     await expect(heading).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 }),
+    ).toBeVisible();
   });
 
   test("Lazy docs page switches to Persian", async ({ page }) => {
@@ -1497,7 +1499,9 @@ test.describe("Docs locale switcher", () => {
     const heading = page.getByRole("heading", { name: "Lazy", level: 1, exact: true });
     await expect(heading).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 }),
+    ).toBeVisible();
   });
 
   test("LazyPanel docs page switches to Persian", async ({ page }) => {
@@ -1510,7 +1514,9 @@ test.describe("Docs locale switcher", () => {
     const heading = page.getByRole("heading", { name: "LazyPanel", level: 1 });
     await expect(heading).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 }),
+    ).toBeVisible();
   });
 
   test("LocaleSwitcher docs page switches to Persian", async ({ page }) => {
@@ -1523,7 +1529,9 @@ test.describe("Docs locale switcher", () => {
     const heading = page.getByRole("heading", { name: "LocaleSwitcher", level: 1 });
     await expect(heading).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 }),
+    ).toBeVisible();
   });
 
   test("Masonry docs page switches to Persian", async ({ page }) => {
@@ -1536,7 +1544,9 @@ test.describe("Docs locale switcher", () => {
     const heading = page.getByRole("heading", { name: "Masonry", level: 1 });
     await expect(heading).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 }),
+    ).toBeVisible();
   });
 
   test("TextInput docs page switches to Persian", async ({ page }) => {
@@ -1562,7 +1572,9 @@ test.describe("Docs locale switcher", () => {
     const heading = page.getByRole("heading", { name: "InvalidState", level: 1 });
     await expect(heading).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 }),
+    ).toBeVisible();
   });
 
   test("RadioGroup docs page switches to Persian", async ({ page }) => {
@@ -1575,7 +1587,9 @@ test.describe("Docs locale switcher", () => {
     const heading = page.getByRole("heading", { name: "RadioGroup", level: 1 });
     await expect(heading).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 }),
+    ).toBeVisible();
   });
 
   test("FormField docs page switches to Persian", async ({ page }) => {
@@ -1588,7 +1602,9 @@ test.describe("Docs locale switcher", () => {
     const heading = page.getByRole("heading", { name: "FormField", level: 1 });
     await expect(heading).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 }),
+    ).toBeVisible();
   });
 
   test("FormBuilder docs page switches to Persian", async ({ page }) => {
@@ -1601,7 +1617,9 @@ test.describe("Docs locale switcher", () => {
     const heading = page.getByRole("heading", { name: "FormBuilder", level: 1 });
     await expect(heading).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-    await expect(page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "چیست، چه زمانی و چرا", level: 2 }),
+    ).toBeVisible();
   });
 
   test("PropsTable docs page switches to Persian", async ({ page }) => {

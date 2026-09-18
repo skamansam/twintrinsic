@@ -15,9 +15,7 @@ test.describe("Lazy docs page", () => {
   });
 
   test("renders the docs page heading", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "Lazy", level: 1 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Lazy", level: 1 })).toBeVisible();
   });
 
   test("deferred content renders once in view", async ({ page }) => {
@@ -26,9 +24,7 @@ test.describe("Lazy docs page", () => {
     await expect(lazy).toContainText("Monthly revenue chart");
   });
 
-  test("placeholder snippet renders then gives way to content", async ({
-    page,
-  }) => {
+  test("placeholder snippet renders then gives way to content", async ({ page }) => {
     const lazy = page.getByTestId("lazy-placeholder");
 
     // The example sits below the fold, so the placeholder shows first.
@@ -39,25 +35,19 @@ test.describe("Lazy docs page", () => {
     await expect(lazy).toContainText("Live analytics widget");
   });
 
-  test("lazy panel container is visible before content loads", async ({
-    page,
-  }) => {
+  test("lazy panel container is visible before content loads", async ({ page }) => {
     const lazy = page.getByTestId("lazy-basic");
     await expect(lazy).toBeVisible();
   });
 
-  test("content is not visible before scroll (placeholder state)", async ({
-    page,
-  }) => {
+  test("content is not visible before scroll (placeholder state)", async ({ page }) => {
     const lazy = page.getByTestId("lazy-placeholder");
     // Before scrolling, the placeholder should be shown.
     await expect(lazy).toContainText("Loading chart…");
     await expect(lazy).not.toContainText("Live analytics widget");
   });
 
-  test("lazy loading does not break keyboard accessibility", async ({
-    page,
-  }) => {
+  test("lazy loading does not break keyboard accessibility", async ({ page }) => {
     const lazy = page.getByTestId("lazy-basic");
     await lazy.scrollIntoViewIfNeeded();
     await expect(lazy).toContainText("Monthly revenue chart");

@@ -1,5 +1,5 @@
-import { expect, userEvent, within } from "storybook/test"
-import Select from "$lib/components/Form/Select.svelte"
+import { expect, userEvent, within } from "storybook/test";
+import Select from "$lib/components/Form/Select.svelte";
 
 export default {
   title: "Form/Select",
@@ -14,7 +14,7 @@ export default {
     error: { control: "text" },
     required: { control: "boolean" },
   },
-}
+};
 
 const countries = [
   { value: "us", label: "United States" },
@@ -27,7 +27,7 @@ const countries = [
   { value: "de", label: "Germany" },
   { value: "it", label: "Italy" },
   { value: "es", label: "Spain" },
-]
+];
 
 const programmingLanguages = [
   {
@@ -85,7 +85,7 @@ const programmingLanguages = [
     value: "dart",
     label: "Dart",
   },
-]
+];
 
 export const Default = {
   args: {
@@ -97,7 +97,7 @@ export const Default = {
     const select = canvas.getByRole("combobox", { name: /country/i });
     await expect(select).toBeInTheDocument();
   },
-}
+};
 
 export const WithValue = {
   args: {
@@ -109,7 +109,7 @@ export const WithValue = {
     const select = canvas.getByRole("combobox", { name: /country/i });
     await expect(select).toHaveValue("us");
   },
-}
+};
 
 export const Multiple = {
   args: {
@@ -118,7 +118,7 @@ export const Multiple = {
     multiple: true,
     placeholder: "Select languages...",
   },
-}
+};
 
 export const WithGroups = {
   args: {
@@ -126,7 +126,7 @@ export const WithGroups = {
     options: programmingLanguages,
     placeholder: "Select a language...",
   },
-}
+};
 
 export const Required = {
   args: {
@@ -135,7 +135,7 @@ export const Required = {
     required: true,
     placeholder: "Select a country...",
   },
-}
+};
 
 export const WithError = {
   args: {
@@ -149,7 +149,7 @@ export const WithError = {
     await expect(select).toHaveAttribute("aria-invalid", "true");
     await expect(canvas.getByText("Please select a country")).toBeVisible();
   },
-}
+};
 
 export const Disabled = {
   args: {
@@ -162,7 +162,7 @@ export const Disabled = {
     const select = canvas.getByRole("combobox", { name: /country/i });
     await expect(select).toBeDisabled();
   },
-}
+};
 
 export const WithSearch = {
   args: {
@@ -178,7 +178,7 @@ export const WithSearch = {
     ],
     placeholder: "Search countries...",
   },
-}
+};
 
 export const MultipleWithSearch = {
   args: {
@@ -214,7 +214,7 @@ export const MultipleWithSearch = {
     multiple: true,
     placeholder: "Search languages...",
   },
-}
+};
 
 export const CustomStyled = {
   name: "Custom Styled (base-select)",
@@ -230,8 +230,9 @@ export const CustomStyled = {
   parameters: {
     docs: {
       description: {
-        story: "In Chrome 135+ and Edge 135+, the select uses `appearance: base-select` for a customizable picker with styled options, arrow icon, and checkmark. In unsupported browsers, it falls back to the standard OS dropdown.",
+        story:
+          "In Chrome 135+ and Edge 135+, the select uses `appearance: base-select` for a customizable picker with styled options, arrow icon, and checkmark. In unsupported browsers, it falls back to the standard OS dropdown.",
       },
     },
   },
-}
+};

@@ -97,10 +97,7 @@ export default defineConfig({
       { find: "$lib", replacement: path.resolve(__dirname, "./src/lib") },
       {
         find: /^@iconify\/svelte$/,
-        replacement: path.resolve(
-          __dirname,
-          "node_modules/@iconify/svelte/dist/Icon.svelte",
-        ),
+        replacement: path.resolve(__dirname, "node_modules/@iconify/svelte/dist/Icon.svelte"),
       },
     ],
   },
@@ -146,10 +143,7 @@ export default defineConfig({
           alias: [
             {
               find: /^svelte$/,
-              replacement: path.resolve(
-                __dirname,
-                "node_modules/svelte/src/index-client.js",
-              ),
+              replacement: path.resolve(__dirname, "node_modules/svelte/src/index-client.js"),
             },
           ],
         },
@@ -169,11 +163,7 @@ export default defineConfig({
               // resolver — where the `^svelte$` alias above applies — instead
               // of Node's native ESM loader, which would still pick the
               // server entry.
-              inline: [
-                "svelte",
-                "@testing-library/svelte",
-                "@testing-library/svelte-core",
-              ],
+              inline: ["svelte", "@testing-library/svelte", "@testing-library/svelte-core"],
             },
           },
         },

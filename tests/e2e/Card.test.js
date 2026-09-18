@@ -26,14 +26,18 @@ test.describe("Card docs page", () => {
 
   test("cards with headers render heading content", async ({ page }) => {
     // Find cards that have header sections
-    const headers = page.locator(".card-header, [class*='card'] header, [class*='card'] h3, [class*='card'] h4");
+    const headers = page.locator(
+      ".card-header, [class*='card'] header, [class*='card'] h3, [class*='card'] h4",
+    );
     const count = await headers.count();
     expect(count).toBeGreaterThanOrEqual(1);
   });
 
   test("cards with footers render action buttons or links", async ({ page }) => {
     // Cards with footers should have buttons or links
-    const buttons = page.locator(".card-footer button, .card-footer a, [class*='card'] footer button, [class*='card'] footer a");
+    const buttons = page.locator(
+      ".card-footer button, .card-footer a, [class*='card'] footer button, [class*='card'] footer a",
+    );
     const count = await buttons.count();
     expect(count).toBeGreaterThanOrEqual(1);
   });

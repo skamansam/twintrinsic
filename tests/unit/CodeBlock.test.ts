@@ -1,7 +1,7 @@
-import { render, waitFor } from "@testing-library/svelte"
-import { describe, expect, it, vi } from "vitest"
-import CodeBlock from "../../src/lib/components/CodeBlock/CodeBlock.svelte"
-import CodeBlockWithCode from "./helpers/CodeBlockWithCode.svelte"
+import { render, waitFor } from "@testing-library/svelte";
+import { describe, expect, it, vi } from "vitest";
+import CodeBlock from "../../src/lib/components/CodeBlock/CodeBlock.svelte";
+import CodeBlockWithCode from "./helpers/CodeBlockWithCode.svelte";
 
 describe("CodeBlock", () => {
   it("renders code block container", () => {
@@ -9,55 +9,55 @@ describe("CodeBlock", () => {
       props: {
         code: "console.log('hello')",
       },
-    })
-    expect(container.querySelector(".code-block")).toBeTruthy()
-  })
+    });
+    expect(container.querySelector(".code-block")).toBeTruthy();
+  });
 
   it("renders element", () => {
     const { container } = render(CodeBlock, {
       props: {
         code: "const x = 1;",
       },
-    })
-    expect(container.firstChild).toBeTruthy()
-  })
+    });
+    expect(container.firstChild).toBeTruthy();
+  });
 
   it("accepts language prop", () => {
     const { container } = render(CodeBlock, {
       props: {
         language: "javascript",
       },
-    })
-    const codeElement = container.querySelector("code")
-    expect(codeElement?.className).toContain("language-javascript")
-  })
+    });
+    const codeElement = container.querySelector("code");
+    expect(codeElement?.className).toContain("language-javascript");
+  });
 
   it("accepts pluginSource prop", () => {
     const { component } = render(CodeBlock, {
       props: {
         pluginSource: "esm.sh",
       },
-    })
-    expect(component).toBeTruthy()
-  })
+    });
+    expect(component).toBeTruthy();
+  });
 
   it("accepts plugins prop as array", () => {
     const { component } = render(CodeBlock, {
       props: {
         plugins: ["autoloader", "line-numbers"],
       },
-    })
-    expect(component).toBeTruthy()
-  })
+    });
+    expect(component).toBeTruthy();
+  });
 
   it("accepts custom pluginSource path", () => {
     const { component } = render(CodeBlock, {
       props: {
         pluginSource: "https://custom.cdn/prismjs/components/",
       },
-    })
-    expect(component).toBeTruthy()
-  })
+    });
+    expect(component).toBeTruthy();
+  });
 
   // Highlighting happens after the async onMount (prism-svelte pre-load,
   // plugin loading), so token markup only appears once the promise chain
@@ -69,60 +69,60 @@ describe("CodeBlock", () => {
         code: "const x = 1;",
         language: "javascript",
       },
-    })
+    });
 
     await waitFor(() => {
-      expect(container.querySelector(".token.keyword")).toBeTruthy()
-    })
-    expect(container.querySelector("code")?.textContent).toContain("const x = 1;")
-  })
+      expect(container.querySelector(".token.keyword")).toBeTruthy();
+    });
+    expect(container.querySelector("code")?.textContent).toContain("const x = 1;");
+  });
 
   it("accepts full plugin URLs", () => {
     const { component } = render(CodeBlock, {
       props: {
         plugins: ["https://example.com/custom-plugin.js"],
       },
-    })
-    expect(component).toBeTruthy()
-  })
+    });
+    expect(component).toBeTruthy();
+  });
 
   it("renders copy button", () => {
     const { container } = render(CodeBlock, {
       props: {
         code: "const x = 1;",
       },
-    })
-    const copyButton = container.querySelector(".code-copy")
-    expect(copyButton).toBeTruthy()
-  })
+    });
+    const copyButton = container.querySelector(".code-copy");
+    expect(copyButton).toBeTruthy();
+  });
 
   it("renders language label when language prop is provided", () => {
     const { container } = render(CodeBlock, {
       props: {
         language: "python",
       },
-    })
-    const languageLabel = container.querySelector(".code-language")
-    expect(languageLabel?.textContent).toBe("python")
-  })
+    });
+    const languageLabel = container.querySelector(".code-language");
+    expect(languageLabel?.textContent).toBe("python");
+  });
 
   it("does not render language label when language prop is not provided", () => {
     const { container } = render(CodeBlock, {
       props: {
         code: "const x = 1;",
       },
-    })
-    const languageLabel = container.querySelector(".code-language")
-    expect(languageLabel).toBeFalsy()
-  })
+    });
+    const languageLabel = container.querySelector(".code-language");
+    expect(languageLabel).toBeFalsy();
+  });
 
   it("applies custom CSS classes", () => {
     const { container } = render(CodeBlock, {
       props: {
         class: "custom-class",
       },
-    })
-    const codeBlock = container.querySelector(".code-block")
-    expect(codeBlock?.className).toContain("custom-class")
-  })
-})
+    });
+    const codeBlock = container.querySelector(".code-block");
+    expect(codeBlock?.className).toContain("custom-class");
+  });
+});

@@ -15,9 +15,7 @@ test.describe("Section docs page", () => {
   });
 
   test("renders the docs page heading", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "Section", level: 1 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Section", level: 1 })).toBeVisible();
   });
 
   test("string title renders as a semantic section element", async ({ page }) => {
@@ -29,9 +27,7 @@ test.describe("Section docs page", () => {
 
   test("string title and subtitle render as headings", async ({ page }) => {
     const section = page.getByTestId("section-string-title");
-    await expect(
-      section.getByRole("heading", { name: "About Us" }),
-    ).toBeVisible();
+    await expect(section.getByRole("heading", { name: "About Us" })).toBeVisible();
     await expect(section).toContainText("We build accessible components.");
     await expect(section).toContainText("Content goes here.");
   });

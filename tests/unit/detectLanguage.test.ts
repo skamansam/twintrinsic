@@ -6,7 +6,7 @@ describe("detectLanguage", () => {
   it("detects HTML/SVG markup", () => {
     expect(detectLanguage("<div>hello</div>")).toBe("markup");
     expect(detectLanguage("<br />")).toBe("markup");
-    expect(detectLanguage("<svg><circle cx=\"10\" cy=\"10\" r=\"5\" /></svg>")).toBe("markup");
+    expect(detectLanguage('<svg><circle cx="10" cy="10" r="5" /></svg>')).toBe("markup");
   });
 
   it("detects HTML documents that include closing tags", () => {
@@ -16,7 +16,7 @@ describe("detectLanguage", () => {
   // --- CSS / SCSS ---
   it("detects CSS via @media / @import directives", () => {
     expect(detectLanguage("@media (max-width: 600px) { }")).toBe("css");
-    expect(detectLanguage("@import url(\"base.css\"); body { color: red; }")).toBe("css");
+    expect(detectLanguage('@import url("base.css"); body { color: red; }')).toBe("css");
   });
 
   it("detects SCSS via $ variables and @mixin", () => {
@@ -48,22 +48,24 @@ describe("detectLanguage", () => {
 
   it("detects TypeScript when interfaces are present alongside functions", () => {
     expect(
-      detectLanguage("function greet(person: Person): string { interface Foo {} return person.name }"),
+      detectLanguage(
+        "function greet(person: Person): string { interface Foo {} return person.name }",
+      ),
     ).toBe("typescript");
   });
 
   it("detects JSX when the code contains JSX tags", () => {
     expect(detectLanguage("function App() { return <div/> }")).toBe("jsx");
-    expect(detectLanguage("const el = () => <div className=\"x\" />")).toBe("jsx");
+    expect(detectLanguage('const el = () => <div className="x" />')).toBe("jsx");
   });
 
   // --- JSON ---
   it("detects valid JSON objects", () => {
-    expect(detectLanguage("{\"name\": \"twintrinsic\", \"version\": \"1.0.0\"}")).toBe("json");
+    expect(detectLanguage('{"name": "twintrinsic", "version": "1.0.0"}')).toBe("json");
   });
 
   it("detects valid JSON arrays", () => {
-    expect(detectLanguage("[1, 2, 3, { \"id\": 4 }]")).toBe("json");
+    expect(detectLanguage('[1, 2, 3, { "id": 4 }]')).toBe("json");
   });
 
   it("falls through to the default when braces do not parse as JSON", () => {

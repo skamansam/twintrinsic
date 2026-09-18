@@ -23,13 +23,13 @@
  * ```
  */
 
-import { preloadIcons as corePreloadIcons } from '../stores/iconPreload.js'
+import { preloadIcons as corePreloadIcons } from "../stores/iconPreload.js";
 
 /** A build-time manifest: list of icon names to preload. */
 export interface IconManifest {
-  icons: string[]
-  _count?: number
-  _generated?: string
+  icons: string[];
+  _count?: number;
+  _generated?: string;
 }
 
 /**
@@ -40,7 +40,7 @@ export interface IconManifest {
  */
 export function preloadManifest(manifest: IconManifest): void {
   if (manifest.icons?.length) {
-    corePreloadIcons(manifest.icons)
+    corePreloadIcons(manifest.icons);
   }
 }
 
@@ -54,23 +54,20 @@ export function preloadManifest(manifest: IconManifest): void {
  * @param icons - Array of `iconset:name` strings to preload
  * @param apiBase - Iconify API base URL (defaults to public API)
  */
-export function addLinkPreloads(
-  icons: string[],
-  apiBase = 'https://api.iconify.design'
-): void {
-  if (typeof document === 'undefined') return
+export function addLinkPreloads(icons: string[], apiBase = "https://api.iconify.design"): void {
+  if (typeof document === "undefined") return;
 
   for (const iconName of icons) {
-    const url = `${apiBase}/${iconName}.svg`
-    const existing = document.querySelector(`link[rel="preload"][href="${url}"]`)
-    if (existing) continue
+    const url = `${apiBase}/${iconName}.svg`;
+    const existing = document.querySelector(`link[rel="preload"][href="${url}"]`);
+    if (existing) continue;
 
-    const link = document.createElement('link')
-    link.rel = 'preload'
-    link.as = 'image'
-    link.href = url
-    link.type = 'image/svg+xml'
-    document.head.appendChild(link)
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = url;
+    link.type = "image/svg+xml";
+    document.head.appendChild(link);
   }
 }
 
@@ -78,8 +75,8 @@ export function addLinkPreloads(
  * Remove all icon preload links from the document head.
  */
 export function removeLinkPreloads(): void {
-  if (typeof document === 'undefined') return
-  document.querySelectorAll('link[rel="preload"][as="image"]').forEach(el => el.remove())
+  if (typeof document === "undefined") return;
+  document.querySelectorAll('link[rel="preload"][as="image"]').forEach((el) => el.remove());
 }
 
 /**
@@ -90,16 +87,16 @@ export function removeLinkPreloads(): void {
  * @returns Array of unique icon names found
  */
 export function extractIconNames(source: string): string[] {
-  const iconNames = new Set<string>()
+  const iconNames = new Set<string>();
   const patterns = [
     /\bname=["']([a-z][a-z0-9-]*:[a-z][a-z0-9-]*(?:-[a-z0-9]+)*)["']/gi,
     /\bicon=["']([a-z][a-z0-9-]*:[a-z][a-z0-9-]*(?:-[a-z0-9]+)*)["']/gi,
-  ]
+  ];
   for (const pattern of patterns) {
-    let match
+    let match;
     while ((match = pattern.exec(source)) !== null) {
-      iconNames.add(match[1])
+      iconNames.add(match[1]);
     }
   }
-  return [...iconNames].sort()
+  return [...iconNames].sort();
 }

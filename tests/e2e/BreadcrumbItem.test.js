@@ -16,9 +16,7 @@ test.describe("BreadcrumbItem docs page", () => {
   });
 
   test("renders the docs page heading", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "BreadcrumbItem", level: 1 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "BreadcrumbItem", level: 1 })).toBeVisible();
   });
 
   test("basic items render as a nav landmark with ordered list", async ({ page }) => {
@@ -34,16 +32,12 @@ test.describe("BreadcrumbItem docs page", () => {
 
   test("basic items render links, current item, and separators", async ({ page }) => {
     const example = page.getByTestId("breadcrumb-item-basic");
-    await expect(
-      example.getByRole("navigation", { name: "Breadcrumb" }),
-    ).toBeVisible();
-    await expect(example.getByRole("link", { name: "Home" })).toHaveAttribute(
+    await expect(example.getByRole("navigation", { name: "Breadcrumb" })).toBeVisible();
+    await expect(example.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/");
+    await expect(example.getByRole("link", { name: "Documentation" })).toHaveAttribute(
       "href",
-      "/",
+      "/docs",
     );
-    await expect(
-      example.getByRole("link", { name: "Documentation" }),
-    ).toHaveAttribute("href", "/docs");
 
     const current = example.locator(".breadcrumb-item-current");
     await expect(current).toHaveAttribute("aria-current", "page");
@@ -66,17 +60,12 @@ test.describe("BreadcrumbItem docs page", () => {
   test("custom separator and explicit current item", async ({ page }) => {
     const example = page.getByTestId("breadcrumb-item-links");
     await expect(example.locator(".breadcrumb-item")).toHaveCount(4);
-    await expect(example.locator(".breadcrumb-separator")).toHaveText([
-      "›",
-      "›",
-      "›",
-    ]);
-    await expect(example.locator(".breadcrumb-item-current")).toHaveText(
-      "Standing Desk",
+    await expect(example.locator(".breadcrumb-separator")).toHaveText(["›", "›", "›"]);
+    await expect(example.locator(".breadcrumb-item-current")).toHaveText("Standing Desk");
+    await expect(example.getByRole("link", { name: "Desks" })).toHaveAttribute(
+      "href",
+      "/products/desk",
     );
-    await expect(
-      example.getByRole("link", { name: "Desks" }),
-    ).toHaveAttribute("href", "/products/desk");
   });
 
   test("items with icons render the icon", async ({ page }) => {
@@ -86,24 +75,14 @@ test.describe("BreadcrumbItem docs page", () => {
 
   test("collapsed breadcrumb hides middle items", async ({ page }) => {
     const example = page.getByTestId("breadcrumb-item-collapsed");
-    await expect(
-      example.getByText("Home", { exact: true }),
-    ).toBeVisible();
-    await expect(
-      example.getByText("Section A", { exact: true }),
-    ).toBeVisible();
-    await expect(
-      example.getByText("Current Page", { exact: true }),
-    ).toBeVisible();
+    await expect(example.getByText("Home", { exact: true })).toBeVisible();
+    await expect(example.getByText("Section A", { exact: true })).toBeVisible();
+    await expect(example.getByText("Current Page", { exact: true })).toBeVisible();
 
     await expect(example.locator(".breadcrumb-item-hidden")).toHaveCount(2);
     for (const hidden of ["Section B", "Section C"]) {
-      await expect(
-        example.locator(".breadcrumb-item-hidden").getByText(hidden),
-      ).toBeAttached();
-      await expect(
-        example.getByText(hidden, { exact: true }),
-      ).not.toBeVisible();
+      await expect(example.locator(".breadcrumb-item-hidden").getByText(hidden)).toBeAttached();
+      await expect(example.getByText(hidden, { exact: true })).not.toBeVisible();
     }
   });
 

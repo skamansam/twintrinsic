@@ -1,6 +1,6 @@
-import { render } from "@testing-library/svelte"
-import { describe, expect, it, vi } from "vitest"
-import Button from "../../src/lib/components/Button/Button.svelte"
+import { render } from "@testing-library/svelte";
+import { describe, expect, it, vi } from "vitest";
+import Button from "../../src/lib/components/Button/Button.svelte";
 
 describe("Button", () => {
   it("renders with default props", () => {
@@ -8,9 +8,9 @@ describe("Button", () => {
       props: {
         children: () => "Click me",
       },
-    })
-    expect(container.querySelector("button")).toBeTruthy()
-  })
+    });
+    expect(container.querySelector("button")).toBeTruthy();
+  });
 
   it("renders as link when href is provided", () => {
     const { container } = render(Button, {
@@ -18,9 +18,9 @@ describe("Button", () => {
         href: "/about",
         children: () => "About",
       },
-    })
-    expect(container.querySelector("a")).toBeTruthy()
-  })
+    });
+    expect(container.querySelector("a")).toBeTruthy();
+  });
 
   it("applies variant classes correctly", () => {
     const { container } = render(Button, {
@@ -28,10 +28,10 @@ describe("Button", () => {
         variant: "primary",
         children: () => "Primary",
       },
-    })
-    const button = container.querySelector("button")
-    expect(button?.className).toContain("primary")
-  })
+    });
+    const button = container.querySelector("button");
+    expect(button?.className).toContain("primary");
+  });
 
   it("applies size classes correctly", () => {
     const { container } = render(Button, {
@@ -39,10 +39,10 @@ describe("Button", () => {
         size: "lg",
         children: () => "Large",
       },
-    })
-    const button = container.querySelector("button")
-    expect(button?.className).toContain("lg")
-  })
+    });
+    const button = container.querySelector("button");
+    expect(button?.className).toContain("lg");
+  });
 
   it("disables button when disabled prop is true", () => {
     const { container } = render(Button, {
@@ -50,10 +50,10 @@ describe("Button", () => {
         disabled: true,
         children: () => "Disabled",
       },
-    })
-    const button = container.querySelector("button") as HTMLButtonElement
-    expect(button?.disabled).toBe(true)
-  })
+    });
+    const button = container.querySelector("button") as HTMLButtonElement;
+    expect(button?.disabled).toBe(true);
+  });
 
   it("shows loading state", () => {
     const { container } = render(Button, {
@@ -61,9 +61,9 @@ describe("Button", () => {
         loading: true,
         children: () => "Loading",
       },
-    })
-    expect(container.querySelector(".button-loader")).toBeTruthy()
-  })
+    });
+    expect(container.querySelector(".button-loader")).toBeTruthy();
+  });
 
   it("applies full width class", () => {
     const { container } = render(Button, {
@@ -71,37 +71,37 @@ describe("Button", () => {
         fullWidth: true,
         children: () => "Full Width",
       },
-    })
-    const button = container.querySelector("button")
-    expect(button?.className).toContain("w-full")
-  })
+    });
+    const button = container.querySelector("button");
+    expect(button?.className).toContain("w-full");
+  });
 
   it("handles click events", async () => {
-    const onclick = vi.fn()
+    const onclick = vi.fn();
     const { container } = render(Button, {
       props: {
         onclick,
         children: () => "Click",
       },
-    })
-    const button = container.querySelector("button") as HTMLButtonElement
-    button?.click()
-    expect(onclick).toHaveBeenCalled()
-  })
+    });
+    const button = container.querySelector("button") as HTMLButtonElement;
+    button?.click();
+    expect(onclick).toHaveBeenCalled();
+  });
 
   it("prevents click when disabled", async () => {
-    const onclick = vi.fn()
+    const onclick = vi.fn();
     const { container } = render(Button, {
       props: {
         disabled: true,
         onclick,
         children: () => "Disabled",
       },
-    })
-    const button = container.querySelector("button") as HTMLButtonElement
-    button?.click()
-    expect(onclick).not.toHaveBeenCalled()
-  })
+    });
+    const button = container.querySelector("button") as HTMLButtonElement;
+    button?.click();
+    expect(onclick).not.toHaveBeenCalled();
+  });
 
   it("sets aria-label correctly", () => {
     const { container } = render(Button, {
@@ -109,20 +109,20 @@ describe("Button", () => {
         ariaLabel: "Close dialog",
         children: () => "X",
       },
-    })
-    const button = container.querySelector("button")
-    expect(button?.getAttribute("aria-label")).toBe("Close dialog")
-  })
+    });
+    const button = container.querySelector("button");
+    expect(button?.getAttribute("aria-label")).toBe("Close dialog");
+  });
 
   it("does not set an explicit role attribute (a11y fix: implicit role is used)", () => {
     const { container } = render(Button, {
       props: {
         children: () => "Click me",
       },
-    })
-    const button = container.querySelector("button")
-    expect(button?.hasAttribute("role")).toBe(false)
-  })
+    });
+    const button = container.querySelector("button");
+    expect(button?.hasAttribute("role")).toBe(false);
+  });
 
   it("does not set an explicit role on link variant (a11y fix)", () => {
     const { container } = render(Button, {
@@ -130,8 +130,8 @@ describe("Button", () => {
         href: "/about",
         children: () => "About",
       },
-    })
-    const link = container.querySelector("a")
-    expect(link?.hasAttribute("role")).toBe(false)
-  })
-})
+    });
+    const link = container.querySelector("a");
+    expect(link?.hasAttribute("role")).toBe(false);
+  });
+});

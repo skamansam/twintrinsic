@@ -93,6 +93,8 @@ describe("isCalendarSource", () => {
   it("rejects objects missing the fetcher or descriptors", () => {
     expect(isCalendarSource(null)).toBe(false);
     expect(isCalendarSource({ id: "a", name: "a", color: "#a" })).toBe(false);
-    expect(isCalendarSource({ id: 1, name: "a", color: "#a", fetchEvents: async () => [] })).toBe(false);
+    expect(isCalendarSource({ id: 1, name: "a", color: "#a", fetchEvents: async () => [] })).toBe(
+      false,
+    );
   });
 });

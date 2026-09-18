@@ -1,15 +1,15 @@
-import { writable } from 'svelte/store'
+import { writable } from "svelte/store";
 
 /**
  * Icon configuration for managing global iconset settings
  */
 export interface IconConfig {
   /** Default iconset to use (e.g., "mdi", "mdi-light", "fa") */
-  defaultIconset: string
+  defaultIconset: string;
   /** Default color for icons */
-  color?: string
+  color?: string;
   /** Default size for icons */
-  size?: string | number
+  size?: string | number;
 }
 
 /**
@@ -17,15 +17,15 @@ export interface IconConfig {
  * Allows setting a default iconset that all Icon components will use
  */
 export const iconConfig = writable<IconConfig>({
-  defaultIconset: 'tabler',
-})
+  defaultIconset: "tabler",
+});
 
 /**
  * Set the default iconset globally
  * @param iconset - The iconset name (e.g., "mdi-light", "fa", "heroicons")
  */
 export function setIconset(iconset: string): void {
-  iconConfig.update(config => ({ ...config, defaultIconset: iconset }))
+  iconConfig.update((config) => ({ ...config, defaultIconset: iconset }));
 }
 
 /**
@@ -33,7 +33,7 @@ export function setIconset(iconset: string): void {
  * @param color - CSS color value
  */
 export function setIconColor(color: string): void {
-  iconConfig.update(config => ({ ...config, color }))
+  iconConfig.update((config) => ({ ...config, color }));
 }
 
 /**
@@ -41,7 +41,7 @@ export function setIconColor(color: string): void {
  * @param size - Size as string (e.g., "24px") or number
  */
 export function setIconSize(size: string | number): void {
-  iconConfig.update(config => ({ ...config, size }))
+  iconConfig.update((config) => ({ ...config, size }));
 }
 
 /**
@@ -49,5 +49,5 @@ export function setIconSize(size: string | number): void {
  * @param config - Partial icon configuration to merge
  */
 export function updateIconConfig(config: Partial<IconConfig>): void {
-  iconConfig.update(current => ({ ...current, ...config }))
+  iconConfig.update((current) => ({ ...current, ...config }));
 }

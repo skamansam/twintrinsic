@@ -10,8 +10,5 @@
     "sourceMap": true,
     "strict": true
   },
-  "exclude": [
-    "node_modules",
-    "tests"
-  ]
+  "exclude": ["node_modules", "tests"]
 }

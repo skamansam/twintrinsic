@@ -2,7 +2,14 @@
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
 
-@custom-variant dark (&:where([data-theme="dark"], [data-theme$="-dark"], [data-theme="dark"] *, [data-theme$="-dark"] *));
+@custom-variant dark (
+  &:where(
+    [data-theme="dark"],
+    [data-theme$="-dark"],
+    [data-theme="dark"] *,
+    [data-theme$="-dark"] *
+  )
+);
 
 /* Light mode design tokens - @theme for Tailwind utility generation */
 @theme {

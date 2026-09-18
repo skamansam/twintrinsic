@@ -1,27 +1,31 @@
-import { render } from "@testing-library/svelte"
-import { describe, expect, it } from "vitest"
-import TableHeader from "../../src/lib/components/Table/TableHeader.svelte"
+import { render } from "@testing-library/svelte";
+import { describe, expect, it } from "vitest";
+import TableHeader from "../../src/lib/components/Table/TableHeader.svelte";
 
 describe("TableHeader", () => {
   it("renders th element", () => {
     const { container } = render(TableHeader, {
       props: {
         width: 100,
-        onsort: (dir: string) => { /* stub */ },
+        onsort: (dir: string) => {
+          /* stub */
+        },
         children: () => "Header",
       },
-    })
-    expect(container.querySelector("th")).toBeTruthy()
-  })
+    });
+    expect(container.querySelector("th")).toBeTruthy();
+  });
 
   it("renders element", () => {
     const { container } = render(TableHeader, {
       props: {
         width: 100,
-        onsort: (dir: string) => { /* stub */ },
+        onsort: (dir: string) => {
+          /* stub */
+        },
         children: () => "Header content",
       },
-    })
-    expect(container.firstChild).toBeTruthy()
-  })
-})
+    });
+    expect(container.firstChild).toBeTruthy();
+  });
+});

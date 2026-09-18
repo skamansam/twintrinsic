@@ -27,9 +27,7 @@ test.describe("Textarea docs page", () => {
 
   test("pre-filled value is honored", async ({ page }) => {
     const textarea = page.getByTestId("textarea-prefilled").locator("textarea");
-    await expect(textarea).toHaveValue(
-      "This is a pre-filled textarea with some initial content.",
-    );
+    await expect(textarea).toHaveValue("This is a pre-filled textarea with some initial content.");
   });
 
   test("auto-resize textarea accepts input", async ({ page }) => {

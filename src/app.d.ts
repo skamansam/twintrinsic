@@ -3,7 +3,6 @@
 declare global {
   // biome-ignore lint/style/noNamespace: see the above url for why this namespace is needed
   namespace App {
-
     // Defines the common shape of expected and unexpected errors. Expected errors are thrown using the error function. Unexpected errors are handled by the handleError hooks which should return this shape.
     interface Error {}
 
@@ -28,38 +27,38 @@ declare global {
   // moving to `src/routes/demo.d.ts` once the library is published.
   interface Window {
     /** Base URL for the demo site's API calls */
-    baseUrl?: string
+    baseUrl?: string;
     /** Map tile URL template (e.g., "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png") */
-    mapUrl?: string
+    mapUrl?: string;
     /** CDN URL for static assets */
-    cdnUrl?: string
+    cdnUrl?: string;
     /** CDN URL for map tiles */
-    tilesCdnUrl?: string
+    tilesCdnUrl?: string;
     /** CDN URL for user-uploaded storage */
-    storageCdnUrl?: string
+    storageCdnUrl?: string;
     /** Current user object, or null if not signed in */
-    user?: { name: string; avatar?: string; href?: string } | null
+    user?: { name: string; avatar?: string; href?: string } | null;
     /** Whether the current page is the code editor (disables certain features) */
-    isEditor?: boolean
+    isEditor?: boolean;
     // --- Genie Map demo (game-map route) ---
     /** Marker sprite positions and map data for the game-map demo */
-    mapData?: unknown
+    mapData?: unknown;
     /** Special overlay data (highlighted regions, custom markers) */
-    specialData?: unknown
+    specialData?: unknown;
     /** Whether the page is embedded in an iframe */
-    isEmbedded?: boolean
+    isEmbedded?: boolean;
     /** Whether the page is rendered in a mini/compact embed mode */
-    isMini?: boolean
+    isMini?: boolean;
     /** Embed context type (e.g., "game", "tour", "preview") */
-    embedType?: string
+    embedType?: string;
     /** Partner/affiliate identifier for the embed */
-    partner?: string
+    partner?: string;
     /** Whether the embed needs email verification before full access */
-    needsVerification?: boolean
+    needsVerification?: boolean;
     /** Game metadata for the game-map demo (id, title, slug, etc.) */
-    game?: { id: number; title: string; slug: string }
+    game?: { id: number; title: string; slug: string };
     /** Generic config object for demo scripts */
-    config?: Record<string, unknown>
+    config?: Record<string, unknown>;
   }
 }
 
@@ -69,8 +68,8 @@ declare global {
 declare module "svelte/elements" {
   interface HTMLAttributes<T> {
     /** Interest Invokers: ID of the popover to show on hover/focus */
-    interestfor?: string
+    interestfor?: string;
   }
 }
 
-export {}
+export {};

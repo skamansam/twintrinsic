@@ -14,13 +14,13 @@
 
 /** Any value accepted where a Temporal type appears in the event model. */
 export type CalendarInstant =
-	| Temporal.PlainDate
-	| Temporal.PlainDateTime
-	| Temporal.ZonedDateTime
-	| string // ISO 8601: "2026-09-17" | "2026-09-17T14:00" | "2026-09-17T14:00:00-08:00"
+  | Temporal.PlainDate
+  | Temporal.PlainDateTime
+  | Temporal.ZonedDateTime
+  | string; // ISO 8601: "2026-09-17" | "2026-09-17T14:00" | "2026-09-17T14:00:00-08:00"
 
 /** Visual/alert status of an event (iCalendar STATUS subset). */
-export type EventStatus = "confirmed" | "tentative" | "cancelled"
+export type EventStatus = "confirmed" | "tentative" | "cancelled";
 
 /**
  * One event as passed in via the CalendarView `events` prop.
@@ -28,59 +28,59 @@ export type EventStatus = "confirmed" | "tentative" | "cancelled"
  * optional rendering metadata (colors fall back to the calendar's).
  */
 export interface CalendarViewEvent {
-	/** Stable identity within one calendar source. */
-	id: string
-	/** Event title. Rendered in the cell; announced to assistive tech. */
-	title: string
-	/** Start instant (required). */
-	start: CalendarInstant
-	/** End instant (optional; inclusive day for multi-day events). */
-	end?: CalendarInstant
-	/**
-	 * All-day events render without a time and may span cells.
-	 * Default: inferred — `true` when `start` is a `PlainDate` or a
-	 * date-only string, `false` otherwise.
-	 */
-	allDay?: boolean
-	/** Which connected calendar this came from (matches `calendars[].id`). */
-	calendarId?: string
-	/** iCalendar UID — the cross-calendar dedup key used by grouping (milestone 4). */
-	uid?: string
-	/** Chip color (CSS color value). Falls back to the calendar's color, then primary. */
-	color?: string
-	/** Iconify icon name rendered inside the chip (e.g. "tabler:star"). */
-	icon?: string
-	/** Small badge rendered next to the title (count, label, etc.). */
-	badge?: string | number
-	/** iCalendar STATUS subset; `cancelled` renders struck through, never dropped. */
-	status?: EventStatus
-	/**
-	 * Set by the .ics importer (`parseICal`) for events carrying an RRULE.
-	 * The base instance only is rendered; when no custom `icon` is given the
-	 * chip shows a repeat marker. Expansion is out of scope (milestone 6).
-	 */
-	recurring?: boolean
-	/** Free-form metadata for `eventContent` snippet consumers. */
-	location?: string
-	description?: string
-	/** Rest props forwarded to the chip element. */
-	[key: `data-${string}`]: unknown
+  /** Stable identity within one calendar source. */
+  id: string;
+  /** Event title. Rendered in the cell; announced to assistive tech. */
+  title: string;
+  /** Start instant (required). */
+  start: CalendarInstant;
+  /** End instant (optional; inclusive day for multi-day events). */
+  end?: CalendarInstant;
+  /**
+   * All-day events render without a time and may span cells.
+   * Default: inferred — `true` when `start` is a `PlainDate` or a
+   * date-only string, `false` otherwise.
+   */
+  allDay?: boolean;
+  /** Which connected calendar this came from (matches `calendars[].id`). */
+  calendarId?: string;
+  /** iCalendar UID — the cross-calendar dedup key used by grouping (milestone 4). */
+  uid?: string;
+  /** Chip color (CSS color value). Falls back to the calendar's color, then primary. */
+  color?: string;
+  /** Iconify icon name rendered inside the chip (e.g. "tabler:star"). */
+  icon?: string;
+  /** Small badge rendered next to the title (count, label, etc.). */
+  badge?: string | number;
+  /** iCalendar STATUS subset; `cancelled` renders struck through, never dropped. */
+  status?: EventStatus;
+  /**
+   * Set by the .ics importer (`parseICal`) for events carrying an RRULE.
+   * The base instance only is rendered; when no custom `icon` is given the
+   * chip shows a repeat marker. Expansion is out of scope (milestone 6).
+   */
+  recurring?: boolean;
+  /** Free-form metadata for `eventContent` snippet consumers. */
+  location?: string;
+  description?: string;
+  /** Rest props forwarded to the chip element. */
+  [key: `data-${string}`]: unknown;
 }
 
 /** One event normalized to day spans, ready for grid placement. */
 export interface NormalizedEvent {
-	/** The original event, carried through for snippets and callbacks. */
-	event: CalendarViewEvent
-	/** Inclusive first day, in the event's own time zone. */
-	startDay: Temporal.PlainDate
-	/** Inclusive last day (equals `startDay` for single-day events). */
-	endDay: Temporal.PlainDate
-	/** Formatted start time "HH:mm", or `undefined` for all-day events. */
-	startTime?: string
-	/** Resolved all-day flag (prop value or inferred from the instant type). */
-	allDay: boolean
-	/** Convenience flag: `event.status === "cancelled"`. */
-	cancelled: boolean
+  /** The original event, carried through for snippets and callbacks. */
+  event: CalendarViewEvent;
+  /** Inclusive first day, in the event's own time zone. */
+  startDay: Temporal.PlainDate;
+  /** Inclusive last day (equals `startDay` for single-day events). */
+  endDay: Temporal.PlainDate;
+  /** Formatted start time "HH:mm", or `undefined` for all-day events. */
+  startTime?: string;
+  /** Resolved all-day flag (prop value or inferred from the instant type). */
+  allDay: boolean;
+  /** Convenience flag: `event.status === "cancelled"`. */
+  cancelled: boolean;
 }
 
 /**
@@ -89,7 +89,7 @@ export interface NormalizedEvent {
  * loaded (the library never ships or imports a polyfill).
  */
 function temporal(): typeof Temporal {
-	return (globalThis as { Temporal: typeof Temporal }).Temporal
+  return (globalThis as { Temporal: typeof Temporal }).Temporal;
 }
 
 /**
@@ -106,16 +106,16 @@ function temporal(): typeof Temporal {
  * @returns The PlainDate the event starts (or ends) on
  */
 function toDay(instant: CalendarInstant): Temporal.PlainDate {
-	if (typeof instant !== "string") {
-		// PlainDate is already a day; PlainDateTime/ZonedDateTime convert.
-		if (instant instanceof temporal().PlainDate) return instant
-		return instant.toPlainDate()
-	}
-	const T = temporal()
-	if (!instant.includes("T") && !instant.includes("t") && instant.length === 10) {
-		return T.PlainDate.from(instant)
-	}
-	return T.PlainDateTime.from(instant).toPlainDate()
+  if (typeof instant !== "string") {
+    // PlainDate is already a day; PlainDateTime/ZonedDateTime convert.
+    if (instant instanceof temporal().PlainDate) return instant;
+    return instant.toPlainDate();
+  }
+  const T = temporal();
+  if (!instant.includes("T") && !instant.includes("t") && instant.length === 10) {
+    return T.PlainDate.from(instant);
+  }
+  return T.PlainDateTime.from(instant).toPlainDate();
 }
 
 /**
@@ -125,17 +125,14 @@ function toDay(instant: CalendarInstant): Temporal.PlainDate {
  * @returns "HH:mm" string, or undefined for all-day instants
  */
 function toTime(instant: CalendarInstant): string | undefined {
-	if (typeof instant !== "string") {
-		if (instant instanceof temporal().PlainDate) return undefined
-		return instant.toPlainTime().toString({ smallestUnit: "minute" })
-	}
-	if (!instant.includes("T") && !instant.includes("t") && instant.length === 10) {
-		return undefined
-	}
-	return temporal()
-		.PlainDateTime.from(instant)
-		.toPlainTime()
-		.toString({ smallestUnit: "minute" })
+  if (typeof instant !== "string") {
+    if (instant instanceof temporal().PlainDate) return undefined;
+    return instant.toPlainTime().toString({ smallestUnit: "minute" });
+  }
+  if (!instant.includes("T") && !instant.includes("t") && instant.length === 10) {
+    return undefined;
+  }
+  return temporal().PlainDateTime.from(instant).toPlainTime().toString({ smallestUnit: "minute" });
 }
 
 /**
@@ -146,10 +143,10 @@ function toTime(instant: CalendarInstant): string | undefined {
  * @returns The resolved all-day flag
  */
 function inferAllDay(event: CalendarViewEvent): boolean {
-	if (event.allDay !== undefined) return event.allDay
-	const start = event.start
-	if (typeof start !== "string") return start instanceof temporal().PlainDate
-	return !start.includes("T") && !start.includes("t") && start.length === 10
+  if (event.allDay !== undefined) return event.allDay;
+  const start = event.start;
+  if (typeof start !== "string") return start instanceof temporal().PlainDate;
+  return !start.includes("T") && !start.includes("t") && start.length === 10;
 }
 
 /**
@@ -158,12 +155,12 @@ function inferAllDay(event: CalendarViewEvent): boolean {
  * @returns The NormalizedEvent for grid placement
  */
 export function normalizeEvent(event: CalendarViewEvent): NormalizedEvent {
-	const allDay = inferAllDay(event)
-	const startDay = toDay(event.start)
-	const endDay = event.end === undefined ? startDay : toDay(event.end)
-	// Timed events with an end instant may carry a start time; all-day never does.
-	const startTime = allDay ? undefined : toTime(event.start)
-	return { event, startDay, endDay, startTime, allDay, cancelled: event.status === "cancelled" }
+  const allDay = inferAllDay(event);
+  const startDay = toDay(event.start);
+  const endDay = event.end === undefined ? startDay : toDay(event.end);
+  // Timed events with an end instant may carry a start time; all-day never does.
+  const startTime = allDay ? undefined : toTime(event.start);
+  return { event, startDay, endDay, startTime, allDay, cancelled: event.status === "cancelled" };
 }
 
 /**
@@ -173,12 +170,12 @@ export function normalizeEvent(event: CalendarViewEvent): NormalizedEvent {
  * @returns NormalizedEvents in stable calendar order
  */
 export function normalizeEvents(events: CalendarViewEvent[]): NormalizedEvent[] {
-	return events.map(normalizeEvent).sort((a, b) => {
-		const byDay = Temporal.PlainDate.compare(a.startDay, b.startDay)
-		if (byDay !== 0) return byDay
-		if (a.startTime !== b.startTime) return (a.startTime ?? "") < (b.startTime ?? "") ? -1 : 1
-		return a.event.id < b.event.id ? -1 : a.event.id > b.event.id ? 1 : 0
-	})
+  return events.map(normalizeEvent).sort((a, b) => {
+    const byDay = Temporal.PlainDate.compare(a.startDay, b.startDay);
+    if (byDay !== 0) return byDay;
+    if (a.startTime !== b.startTime) return (a.startTime ?? "") < (b.startTime ?? "") ? -1 : 1;
+    return a.event.id < b.event.id ? -1 : a.event.id > b.event.id ? 1 : 0;
+  });
 }
 
 /**
@@ -189,10 +186,15 @@ export function normalizeEvents(events: CalendarViewEvent[]): NormalizedEvent[] 
  * @param day - The day to look up
  * @returns Events overlapping the day, in calendar order
  */
-export function eventsForDay(events: NormalizedEvent[], day: Temporal.PlainDate): NormalizedEvent[] {
-	return events.filter(
-		(ne) => Temporal.PlainDate.compare(ne.startDay, day) <= 0 && Temporal.PlainDate.compare(day, ne.endDay) <= 0,
-	)
+export function eventsForDay(
+  events: NormalizedEvent[],
+  day: Temporal.PlainDate,
+): NormalizedEvent[] {
+  return events.filter(
+    (ne) =>
+      Temporal.PlainDate.compare(ne.startDay, day) <= 0 &&
+      Temporal.PlainDate.compare(day, ne.endDay) <= 0,
+  );
 }
 
 /**
@@ -202,10 +204,10 @@ export function eventsForDay(events: NormalizedEvent[], day: Temporal.PlainDate)
  * array and re-renders by updating `event.start` to the new day.
  */
 export interface EventMoveDetail {
-	/** The moved event (raw, as passed via the `events` prop) */
-	event: CalendarViewEvent
-	/** The event's start day before the move */
-	from: Temporal.PlainDate
-	/** The event's start day after the move */
-	to: Temporal.PlainDate
+  /** The moved event (raw, as passed via the `events` prop) */
+  event: CalendarViewEvent;
+  /** The event's start day before the move */
+  from: Temporal.PlainDate;
+  /** The event's start day after the move */
+  to: Temporal.PlainDate;
 }

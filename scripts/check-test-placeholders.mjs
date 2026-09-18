@@ -59,16 +59,10 @@ const STORIES_FILE_RE = /\.stories\.[cm]?[jt]sx?$/;
  * `//` comments. Inline trailing comments are left alone — the code before
  * them is still scanned, which is what matters.
  */
-const STRIP_REGIONS = [
-  /\/\*[\s\S]*?\*\//g,
-  /^[ \t]*\/\/[^\n]*/gm,
-];
+const STRIP_REGIONS = [/\/\*[\s\S]*?\*\//g, /^[ \t]*\/\/[^\n]*/gm];
 
 /** Placeholder assertion patterns. */
-const PLACEHOLDER_RES = [
-  /\bexpect\s*\(\s*true\s*\)/g,
-  /\bexpect\s*\(\s*assertions\s*\)/g,
-];
+const PLACEHOLDER_RES = [/\bexpect\s*\(\s*true\s*\)/g, /\bexpect\s*\(\s*assertions\s*\)/g];
 
 /**
  * Blank a matched region in place, preserving newlines so reported line

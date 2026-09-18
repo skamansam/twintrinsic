@@ -35,7 +35,10 @@ test.describe("docs structure", () => {
     ];
     for (const cat of categories) {
       await expect(
-        page.getByRole("heading", { name: cat, level: 3 }).or(page.getByText(cat, { exact: true })).first(),
+        page
+          .getByRole("heading", { name: cat, level: 3 })
+          .or(page.getByText(cat, { exact: true }))
+          .first(),
       ).toBeVisible();
     }
   });
@@ -97,18 +100,14 @@ test.describe("docs navigation", () => {
     await page.goto("/docs/components");
     await waitForHydration(page);
 
-    await expect(
-      page.getByRole("link", { name: "Getting Started" }),
-    ).toBeVisible();
+    await expect(page.getByRole("link", { name: "Getting Started" })).toBeVisible();
   });
 
   test("docs sidebar contains Components link", async ({ page }) => {
     await page.goto("/docs");
     await waitForHydration(page);
 
-    await expect(
-      page.getByRole("link", { name: "Components" }),
-    ).toBeVisible();
+    await expect(page.getByRole("link", { name: "Components" })).toBeVisible();
   });
 
   test("docs sidebar contains Theming link", async ({ page }) => {
@@ -124,18 +123,14 @@ test.describe("docs navigation", () => {
     await page.goto("/docs");
     await waitForHydration(page);
 
-    await expect(
-      page.getByRole("link", { name: "Utilities" }),
-    ).toBeVisible();
+    await expect(page.getByRole("link", { name: "Utilities" })).toBeVisible();
   });
 
   test("docs sidebar contains Completion link", async ({ page }) => {
     await page.goto("/docs");
     await waitForHydration(page);
 
-    await expect(
-      page.getByRole("link", { name: "Completion" }),
-    ).toBeVisible();
+    await expect(page.getByRole("link", { name: "Completion" })).toBeVisible();
   });
 
   test("navigation: components index → individual component page", async ({ page }) => {
@@ -164,7 +159,9 @@ test.describe("docs pages render correctly", () => {
     await page.goto("/docs");
     await waitForHydration(page);
     // The /docs page h1 is "Twintrinsic Documentation"
-    await expect(page.getByRole("heading", { name: "Twintrinsic Documentation", level: 1 })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Twintrinsic Documentation", level: 1 }),
+    ).toBeVisible();
   });
 
   test("Theming page renders", async ({ page }) => {
@@ -182,7 +179,9 @@ test.describe("docs pages render correctly", () => {
   test("Completion page renders", async ({ page }) => {
     await page.goto("/docs/completion");
     await waitForHydration(page);
-    await expect(page.getByRole("heading", { name: "Development Completion", level: 1 })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Development Completion", level: 1 }),
+    ).toBeVisible();
   });
 
   test("Theme Preview page renders", async ({ page }) => {
@@ -195,7 +194,9 @@ test.describe("docs pages render correctly", () => {
     await page.goto("/docs/examples/dashboard");
     await waitForHydration(page);
     // Dashboard example has h2s but no h1; check for a visible heading
-    await expect(page.getByRole("heading", { name: "Key Metrics Overview", level: 2 })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Key Metrics Overview", level: 2 }),
+    ).toBeVisible();
   });
 
   test("Game Map example page renders", async ({ page }) => {

@@ -1,130 +1,130 @@
-import type { Meta, StoryObj } from '@storybook/sveltekit';
-import PieChart from '$lib/components/Metrics/PieChart/PieChart.svelte';
-import { expect } from 'storybook/test';
+import type { Meta, StoryObj } from "@storybook/sveltekit";
+import PieChart from "$lib/components/Metrics/PieChart/PieChart.svelte";
+import { expect } from "storybook/test";
 
 const meta = {
-	title: 'Metrics/PieChart',
-	component: PieChart,
-	tags: ['autodocs'],
-	argTypes: {
-		data: { control: 'object' },
-		labels: { control: 'object' },
-		colors: { control: 'object' },
-		title: { control: 'text' },
-		showLegend: { control: 'boolean' },
-		size: { control: { type: 'range', min: 200, max: 400, step: 50 } }
-	}
+  title: "Metrics/PieChart",
+  component: PieChart,
+  tags: ["autodocs"],
+  argTypes: {
+    data: { control: "object" },
+    labels: { control: "object" },
+    colors: { control: "object" },
+    title: { control: "text" },
+    showLegend: { control: "boolean" },
+    size: { control: { type: "range", min: 200, max: 400, step: 50 } },
+  },
 } satisfies Meta<PieChart>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-	play: async ({ canvas }) => {
-		await expect(canvas.getByText(/Chrome/)).toBeInTheDocument();
-	},
-	args: {
-		data: [35, 25, 20, 20],
-		labels: ['Chrome', 'Firefox', 'Safari', 'Edge'],
-		title: 'Browser Market Share',
-		showLegend: true,
-		size: 300
-	}
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText(/Chrome/)).toBeInTheDocument();
+  },
+  args: {
+    data: [35, 25, 20, 20],
+    labels: ["Chrome", "Firefox", "Safari", "Edge"],
+    title: "Browser Market Share",
+    showLegend: true,
+    size: 300,
+  },
 };
 
 export const MultipleSlices: Story = {
-	args: {
-		data: [15, 12, 10, 8, 7, 6, 5, 4, 3, 2, 2, 2, 2],
-		labels: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'],
-		title: 'Category Distribution',
-		showLegend: true
-	}
+  args: {
+    data: [15, 12, 10, 8, 7, 6, 5, 4, 3, 2, 2, 2, 2],
+    labels: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"],
+    title: "Category Distribution",
+    showLegend: true,
+  },
 };
 
 export const TwoSlices: Story = {
-	args: {
-		data: [60, 40],
-		labels: ['Success', 'Failed'],
-		colors: ['#10b981', '#ef4444'],
-		title: 'Test Results',
-		showLegend: true
-	}
+  args: {
+    data: [60, 40],
+    labels: ["Success", "Failed"],
+    colors: ["#10b981", "#ef4444"],
+    title: "Test Results",
+    showLegend: true,
+  },
 };
 
 export const Interactive: Story = {
-	args: {
-		data: [35, 25, 20, 20],
-		labels: ['Chrome', 'Firefox', 'Safari', 'Edge'],
-		title: 'Browser Market Share (click a slice)',
-		showLegend: true,
-		size: 300,
-		onsliceclick: (
-			_event: MouseEvent | KeyboardEvent,
-			detail: { index: number; label: string; value: number }
-		) => {
-			// eslint-disable-next-line no-console
-			console.log('Slice clicked:', detail);
-		}
-	}
+  args: {
+    data: [35, 25, 20, 20],
+    labels: ["Chrome", "Firefox", "Safari", "Edge"],
+    title: "Browser Market Share (click a slice)",
+    showLegend: true,
+    size: 300,
+    onsliceclick: (
+      _event: MouseEvent | KeyboardEvent,
+      detail: { index: number; label: string; value: number },
+    ) => {
+      // eslint-disable-next-line no-console
+      console.log("Slice clicked:", detail);
+    },
+  },
 };
 
 export const ActiveSlice: Story = {
-	args: {
-		data: [35, 25, 20, 20],
-		labels: ['Chrome', 'Firefox', 'Safari', 'Edge'],
-		title: 'Browser Market Share (Chrome active)',
-		showLegend: true,
-		size: 300,
-		activeSlice: 0,
-		pullDistance: 14
-	}
+  args: {
+    data: [35, 25, 20, 20],
+    labels: ["Chrome", "Firefox", "Safari", "Edge"],
+    title: "Browser Market Share (Chrome active)",
+    showLegend: true,
+    size: 300,
+    activeSlice: 0,
+    pullDistance: 14,
+  },
 };
 
 export const DonutWithActive: Story = {
-	args: {
-		data: [40, 30, 20, 10],
-		labels: ['Enterprise', 'Pro', 'Free', 'Trial'],
-		title: 'Revenue by Tier',
-		hole: 0.6,
-		centerText: '$2.4M',
-		centerSubtext: 'ARR',
-		showLegend: true,
-		size: 300,
-		activeSlice: 0,
-		pullDistance: 12
-	}
+  args: {
+    data: [40, 30, 20, 10],
+    labels: ["Enterprise", "Pro", "Free", "Trial"],
+    title: "Revenue by Tier",
+    hole: 0.6,
+    centerText: "$2.4M",
+    centerSubtext: "ARR",
+    showLegend: true,
+    size: 300,
+    activeSlice: 0,
+    pullDistance: 12,
+  },
 };
 
 export const OutsideLabels: Story = {
-	args: {
-		data: [35, 25, 20, 15, 5],
-		labels: ['Chrome', 'Firefox', 'Safari', 'Edge', 'Other'],
-		title: 'Browser Market Share (Outside Labels)',
-		outsideLabels: true,
-		labelFontSize: 11,
-		size: 300
-	}
+  args: {
+    data: [35, 25, 20, 15, 5],
+    labels: ["Chrome", "Firefox", "Safari", "Edge", "Other"],
+    title: "Browser Market Share (Outside Labels)",
+    outsideLabels: true,
+    labelFontSize: 11,
+    size: 300,
+  },
 };
 
 export const InsideLabels: Story = {
-	args: {
-		data: [40, 30, 20, 10],
-		labels: ['Enterprise', 'Pro', 'Free', 'Trial'],
-		title: 'Revenue by Tier (Inside Labels)',
-		insideLabels: true,
-		size: 300
-	}
+  args: {
+    data: [40, 30, 20, 10],
+    labels: ["Enterprise", "Pro", "Free", "Trial"],
+    title: "Revenue by Tier (Inside Labels)",
+    insideLabels: true,
+    size: 300,
+  },
 };
 
 export const DonutWithOutsideLabels: Story = {
-	args: {
-		data: [35, 25, 20, 15, 5],
-		labels: ['Chrome', 'Firefox', 'Safari', 'Edge', 'Other'],
-		title: 'Browser Market Share (Donut + Outside)',
-		hole: 0.5,
-		centerText: '100%',
-		centerSubtext: 'Total',
-		outsideLabels: true,
-		size: 350
-	}
+  args: {
+    data: [35, 25, 20, 15, 5],
+    labels: ["Chrome", "Firefox", "Safari", "Edge", "Other"],
+    title: "Browser Market Share (Donut + Outside)",
+    hole: 0.5,
+    centerText: "100%",
+    centerSubtext: "Total",
+    outsideLabels: true,
+    size: 350,
+  },
 };

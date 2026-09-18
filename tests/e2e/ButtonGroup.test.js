@@ -16,9 +16,7 @@ test.describe("ButtonGroup docs page", () => {
   });
 
   test("renders the docs page heading", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "ButtonGroup", level: 1 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "ButtonGroup", level: 1 })).toBeVisible();
   });
 
   test("basic button group renders role=group with aria-label", async ({ page }) => {
@@ -80,13 +78,9 @@ test.describe("ButtonGroup docs page", () => {
 
   test("vertical button group stacks its buttons", async ({ page }) => {
     const example = page.getByTestId("button-group-vertical");
-    await expect(
-      example.getByRole("group", { name: "File actions" }),
-    ).toBeVisible();
+    await expect(example.getByRole("group", { name: "File actions" })).toBeVisible();
     for (const label of ["Copy", "Move", "Delete"]) {
-      await expect(
-        example.getByRole("button", { name: label }),
-      ).toBeVisible();
+      await expect(example.getByRole("button", { name: label })).toBeVisible();
     }
   });
 
@@ -95,11 +89,7 @@ test.describe("ButtonGroup docs page", () => {
     const group = example.getByRole("group", { name: "Sign in options" });
     await expect(group).toBeVisible();
     await expect(group).toHaveClass(/w-full/);
-    await expect(
-      example.getByRole("button", { name: "Sign in" }),
-    ).toBeVisible();
-    await expect(
-      example.getByRole("button", { name: "Create account" }),
-    ).toBeVisible();
+    await expect(example.getByRole("button", { name: "Sign in" })).toBeVisible();
+    await expect(example.getByRole("button", { name: "Create account" })).toBeVisible();
   });
 });

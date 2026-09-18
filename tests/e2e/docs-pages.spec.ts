@@ -33,7 +33,11 @@ const componentPages: [string, string, string[]][] = [
   ["/docs/components/Container/Container", "Container", ["container-basic", "container-fluid"]],
   ["/docs/components/Panel/Hero", "Hero", ["hero-basic", "hero-type"]],
   ["/docs/components/Panel/Panel", "Panel", []],
-  ["/docs/components/Section/Section", "Section", ["section-string-title", "section-snippet-title"]],
+  [
+    "/docs/components/Section/Section",
+    "Section",
+    ["section-string-title", "section-snippet-title"],
+  ],
   ["/docs/components/Separator/Separator", "Separator", []],
   ["/docs/components/Splitter/Splitter", "Splitter", []],
 
@@ -49,15 +53,39 @@ const componentPages: [string, string, string[]][] = [
   ["/docs/components/TreeMenu/TreeMenu", "TreeMenu", []],
 
   // Data Display
-  ["/docs/components/Avatar/Avatar", "Avatar", [
-    "avatar-basic", "avatar-initials", "avatar-fallback", "avatar-gravatar",
-    "avatar-sizes", "avatar-size-xs", "avatar-size-sm", "avatar-size-md",
-    "avatar-size-lg", "avatar-size-xl", "avatar-shapes", "avatar-shape-circle",
-    "avatar-shape-square", "avatar-shape-rounded", "avatar-status-indicators",
-    "avatar-status-online", "avatar-status-offline", "avatar-status-away",
-    "avatar-status-busy", "avatar-styled", "avatar-bordered", "avatar-shadowed",
-  ]],
-  ["/docs/components/Avatar/AvatarGroup", "AvatarGroup", ["avatargroup-basic", "avatargroup-overflow"]],
+  [
+    "/docs/components/Avatar/Avatar",
+    "Avatar",
+    [
+      "avatar-basic",
+      "avatar-initials",
+      "avatar-fallback",
+      "avatar-gravatar",
+      "avatar-sizes",
+      "avatar-size-xs",
+      "avatar-size-sm",
+      "avatar-size-md",
+      "avatar-size-lg",
+      "avatar-size-xl",
+      "avatar-shapes",
+      "avatar-shape-circle",
+      "avatar-shape-square",
+      "avatar-shape-rounded",
+      "avatar-status-indicators",
+      "avatar-status-online",
+      "avatar-status-offline",
+      "avatar-status-away",
+      "avatar-status-busy",
+      "avatar-styled",
+      "avatar-bordered",
+      "avatar-shadowed",
+    ],
+  ],
+  [
+    "/docs/components/Avatar/AvatarGroup",
+    "AvatarGroup",
+    ["avatargroup-basic", "avatargroup-overflow"],
+  ],
   ["/docs/components/Badge/Badge", "Badge", ["badge-basic", "badge-status", "badge-dot"]],
   ["/docs/components/Carousel/Carousel", "Carousel", ["carousel-basic"]],
   ["/docs/components/Carousel/CarouselItem", "CarouselItem", []],
@@ -65,16 +93,22 @@ const componentPages: [string, string, string[]][] = [
   ["/docs/components/Chip/ChipGroup", "ChipGroup", ["chip-group-basic"]],
   ["/docs/components/CodeBlock/CodeBlock", "CodeBlock", ["code-block-basic"]],
   ["/docs/components/CodeBlockSpeed/CodeBlockSpeed", "CodeBlockSpeed", ["code-block-speed-basic"]],
-  ["/docs/components/CodeEditor/CodeEditor", "CodeEditor", [
-    "code-editor-javascript", "code-editor-python",
-  ]],
+  [
+    "/docs/components/CodeEditor/CodeEditor",
+    "CodeEditor",
+    ["code-editor-javascript", "code-editor-python"],
+  ],
   ["/docs/components/DataTable/DataTable", "DataTable", ["datatable-basic"]],
   ["/docs/components/Map/Map", "Map", ["map-basic", "map-tile-layer", "map-no-controls"]],
   ["/docs/components/Progress/Progress", "Progress", ["progress-basic"]],
   ["/docs/components/Skeleton/Skeleton", "Skeleton", ["skeleton-basic"]],
   ["/docs/components/Table/Table", "Table", ["table-basic"]],
   ["/docs/components/Tag/Tag", "Tag", ["tag-basic"]],
-  ["/docs/components/Tag/TagGroup", "TagGroup", ["tag-group-basic", "tag-group-dismissible", "tag-group-styled"]],
+  [
+    "/docs/components/Tag/TagGroup",
+    "TagGroup",
+    ["tag-group-basic", "tag-group-dismissible", "tag-group-styled"],
+  ],
   ["/docs/components/Timeline/Timeline", "Timeline", ["timeline-basic", "timeline-variants"]],
   ["/docs/components/Timeline/TimelineItem", "TimelineItem", []],
   ["/docs/components/Tooltip/Tooltip", "Tooltip", []],
@@ -102,10 +136,19 @@ const componentPages: [string, string, string[]][] = [
   ["/docs/components/Button/ButtonGroup", "ButtonGroup", []],
   ["/docs/components/Form/CalendarInput", "CalendarInput", ["calendar-basic"]],
   ["/docs/components/Form/CalendarView", "CalendarView", ["calendarview-basic"]],
-  ["/docs/components/Form/Checkbox", "Checkbox", [
-    "checkbox-basic", "checkbox-description", "checkbox-indeterminate",
-    "checkbox-required", "checkbox-error", "checkbox-disabled", "checkbox-group",
-  ]],
+  [
+    "/docs/components/Form/Checkbox",
+    "Checkbox",
+    [
+      "checkbox-basic",
+      "checkbox-description",
+      "checkbox-indeterminate",
+      "checkbox-required",
+      "checkbox-error",
+      "checkbox-disabled",
+      "checkbox-group",
+    ],
+  ],
   ["/docs/components/Form/ColorPicker", "ColorPicker", ["colorpicker-basic"]],
   ["/docs/components/Form/Combobox", "Combobox", ["combobox-basic"]],
   ["/docs/components/Form/Dropdown", "Dropdown", ["dropdown-basic"]],
@@ -123,10 +166,18 @@ const componentPages: [string, string, string[]][] = [
   ["/docs/components/Form/Radio", "Radio", ["radio-basic"]],
   ["/docs/components/Form/RadioGroup", "RadioGroup", ["radiogroup-basic"]],
   ["/docs/components/Form/Rating", "Rating", ["rating-basic"]],
-  ["/docs/components/Form/Select", "Select", [
-    "select-basic", "select-multiple", "select-groups",
-    "select-required", "select-error", "select-disabled",
-  ]],
+  [
+    "/docs/components/Form/Select",
+    "Select",
+    [
+      "select-basic",
+      "select-multiple",
+      "select-groups",
+      "select-required",
+      "select-error",
+      "select-disabled",
+    ],
+  ],
   ["/docs/components/Form/SelectGroup", "SelectGroup", []],
   ["/docs/components/Form/Slider", "Slider", ["slider-basic"]],
   ["/docs/components/Form/Switch", "Switch", ["switch-basic"]],
@@ -153,15 +204,57 @@ const componentPages: [string, string, string[]][] = [
  * Interactive components should additionally have keyboard docs.
  */
 const interactiveComponents = new Set([
-  "Accordion", "AccordionItem", "AppHeader", "AutoComplete", "BottomBar",
-  "Button", "CalendarInput", "CalendarView", "Checkbox", "Chip", "ChipGroup", "ColorPicker",
-  "Combobox", "DataTable", "Dropdown", "FileUpload", "FloatLabel",
-  "Form", "FormField", "Input", "InputSwitch", "Knob", "ListInput",
-  "Listbox", "Menu", "MenuItem", "Modal", "NumberInput", "Panel",
-  "Radio", "RadioGroup", "Rating", "Select", "SelectGroup", "Sidebar",
-  "Slider", "Stepper", "Switch", "Tab", "TabList", "TabPanel", "Tabs",
-  "TagGroup", "Textarea", "TextInput", "ThemeToggle", "Toast", "Tooltip",
-  "Tree", "TreeNode", "TreeMenu",
+  "Accordion",
+  "AccordionItem",
+  "AppHeader",
+  "AutoComplete",
+  "BottomBar",
+  "Button",
+  "CalendarInput",
+  "CalendarView",
+  "Checkbox",
+  "Chip",
+  "ChipGroup",
+  "ColorPicker",
+  "Combobox",
+  "DataTable",
+  "Dropdown",
+  "FileUpload",
+  "FloatLabel",
+  "Form",
+  "FormField",
+  "Input",
+  "InputSwitch",
+  "Knob",
+  "ListInput",
+  "Listbox",
+  "Menu",
+  "MenuItem",
+  "Modal",
+  "NumberInput",
+  "Panel",
+  "Radio",
+  "RadioGroup",
+  "Rating",
+  "Select",
+  "SelectGroup",
+  "Sidebar",
+  "Slider",
+  "Stepper",
+  "Switch",
+  "Tab",
+  "TabList",
+  "TabPanel",
+  "Tabs",
+  "TagGroup",
+  "Textarea",
+  "TextInput",
+  "ThemeToggle",
+  "Toast",
+  "Tooltip",
+  "Tree",
+  "TreeNode",
+  "TreeMenu",
 ]);
 
 // ─── 1. Every component page renders its h1 ──────────────────────────
@@ -203,7 +296,10 @@ test.describe("All component docs pages have standardised sections", () => {
 
       // Page should have at least one code block (usage example)
       const codeBlocks = page.locator("pre code, code");
-      expect(await codeBlocks.count(), `${heading} should have at least 1 code block`).toBeGreaterThanOrEqual(1);
+      expect(
+        await codeBlocks.count(),
+        `${heading} should have at least 1 code block`,
+      ).toBeGreaterThanOrEqual(1);
 
       // Page should have at least one props table or props section
       const propsSection = page.locator(".props-table, table").first();
@@ -224,7 +320,9 @@ test.describe("Interactive components have keyboard support section", () => {
 
       // Should have a keyboard section heading or table
       const keyboardHeading = page.getByRole("heading", { name: /keyboard/i });
-      const keyboardTable = page.locator("table").filter({ hasText: /arrow|tab|enter|escape|space/i });
+      const keyboardTable = page
+        .locator("table")
+        .filter({ hasText: /arrow|tab|enter|escape|space/i });
       const hasKeyboard = (await keyboardHeading.count()) > 0 || (await keyboardTable.count()) > 0;
       expect(hasKeyboard, `${heading} should document keyboard support`).toBeTruthy();
     });
@@ -335,15 +433,11 @@ test("Dashboard example page renders", async ({ page }) => {
   await page.goto("/docs/examples/dashboard");
   await waitForHydration(page);
   // Dashboard has no h1 — check for its first h2
-  await expect(
-    page.getByRole("heading", { name: "Key Metrics Overview", level: 2 }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Key Metrics Overview", level: 2 })).toBeVisible();
 });
 
 test("Shopping example page renders", async ({ page }) => {
   await page.goto("/docs/examples/shopping");
   await waitForHydration(page);
-  await expect(
-    page.getByText("Big Deals on Everything You Need"),
-  ).toBeVisible();
+  await expect(page.getByText("Big Deals on Everything You Need")).toBeVisible();
 });

@@ -30,10 +30,7 @@ test("records Tier 0 platform API support", async ({ page }, testInfo) => {
   const outDir = path.join(process.cwd(), "test-results", "compat");
   fs.mkdirSync(outDir, { recursive: true });
   const outFile = path.join(outDir, `${testInfo.project.name}.json`);
-  fs.writeFileSync(
-    outFile,
-    JSON.stringify({ project: testInfo.project.name, results }, null, 2),
-  );
+  fs.writeFileSync(outFile, JSON.stringify({ project: testInfo.project.name, results }, null, 2));
 
   // Sanity check: every feature must resolve to a boolean, never throw/undefined.
   for (const value of Object.values(results)) {

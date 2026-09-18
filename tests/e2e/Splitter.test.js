@@ -54,9 +54,9 @@ test.describe("Splitter docs page", () => {
   test("ArrowDown moves the vertical split position", async ({ page }) => {
     const divider = page.getByTestId("splitter-vertical").getByRole("separator");
     await divider.focus();
-    const initial = parseInt(await divider.getAttribute("aria-valuenow") || "50", 10);
+    const initial = parseInt((await divider.getAttribute("aria-valuenow")) || "50", 10);
     await page.keyboard.press("ArrowDown");
-    const after = parseInt(await divider.getAttribute("aria-valuenow") || "50", 10);
+    const after = parseInt((await divider.getAttribute("aria-valuenow")) || "50", 10);
     // ArrowDown should change the value
     expect(after).not.toBe(initial);
   });

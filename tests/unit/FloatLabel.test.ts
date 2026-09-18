@@ -1,6 +1,6 @@
-import { render } from "@testing-library/svelte"
-import { describe, expect, it } from "vitest"
-import FloatLabel from "../../src/lib/components/Form/FloatLabel.svelte"
+import { render } from "@testing-library/svelte";
+import { describe, expect, it } from "vitest";
+import FloatLabel from "../../src/lib/components/Form/FloatLabel.svelte";
 
 describe("FloatLabel", () => {
   it("renders element", () => {
@@ -11,7 +11,7 @@ describe("FloatLabel", () => {
         helpText: undefined,
         children: () => "Input",
       },
-    })
-    expect(container.firstChild).toBeTruthy()
-  })
-})
+    });
+    expect(container.firstChild).toBeTruthy();
+  });
+});

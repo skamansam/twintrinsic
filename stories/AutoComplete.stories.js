@@ -1,5 +1,5 @@
-import { expect, userEvent } from "storybook/test"
-import AutoComplete from "$lib/components/Form/AutoComplete.svelte"
+import { expect, userEvent } from "storybook/test";
+import AutoComplete from "$lib/components/Form/AutoComplete.svelte";
 
 const countries = [
   { label: "United States", value: "US" },
@@ -12,15 +12,40 @@ const countries = [
   { label: "Spain", value: "ES" },
   { label: "Japan", value: "JP" },
   { label: "China", value: "CN" },
-]
+];
 
 const users = [
-  { label: "Sarah Chen", value: "1", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=faces" },
-  { label: "Marcus Webb", value: "2", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=faces" },
-  { label: "Priya Patel", value: "3", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=faces" },
-  { label: "Diego Ramírez", value: "4", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=faces" },
-  { label: "Emma Lindqvist", value: "5", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=faces" },
-]
+  {
+    label: "Sarah Chen",
+    value: "1",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=faces",
+  },
+  {
+    label: "Marcus Webb",
+    value: "2",
+    avatar:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=faces",
+  },
+  {
+    label: "Priya Patel",
+    value: "3",
+    avatar:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=faces",
+  },
+  {
+    label: "Diego Ramírez",
+    value: "4",
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=faces",
+  },
+  {
+    label: "Emma Lindqvist",
+    value: "5",
+    avatar:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=faces",
+  },
+];
 
 const UserTemplate = {
   render: ({ item }) => `
@@ -29,7 +54,7 @@ const UserTemplate = {
       <span>${item.label}</span>
     </div>
   `,
-}
+};
 
 export default {
   title: "Form/AutoComplete",
@@ -47,7 +72,7 @@ export default {
     loading: { control: "boolean" },
     disabled: { control: "boolean" },
   },
-}
+};
 
 export const Default = {
   args: {
@@ -61,7 +86,7 @@ export const Default = {
     await userEvent.type(input, "Unit");
     await expect(input).toHaveValue("Unit");
   },
-}
+};
 
 export const Multiple = {
   args: {
@@ -70,7 +95,7 @@ export const Multiple = {
     multiple: true,
     placeholder: "Select countries",
   },
-}
+};
 
 export const CustomTemplate = {
   args: {
@@ -79,7 +104,7 @@ export const CustomTemplate = {
     itemTemplate: UserTemplate,
     placeholder: "Select a user",
   },
-}
+};
 
 export const WithMinLength = {
   args: {
@@ -88,7 +113,7 @@ export const WithMinLength = {
     minLength: 2,
     placeholder: "Type min. 2 characters",
   },
-}
+};
 
 export const WithDelay = {
   args: {
@@ -97,7 +122,7 @@ export const WithDelay = {
     delay: 500,
     placeholder: "Type to search (500ms delay)",
   },
-}
+};
 
 export const WithHighlight = {
   args: {
@@ -106,7 +131,7 @@ export const WithHighlight = {
     highlight: true,
     placeholder: "Type to highlight matches",
   },
-}
+};
 
 export const ForceSelection = {
   args: {
@@ -115,7 +140,7 @@ export const ForceSelection = {
     forceSelection: true,
     placeholder: "Must select from list",
   },
-}
+};
 
 export const Loading = {
   args: {
@@ -124,7 +149,7 @@ export const Loading = {
     loading: true,
     placeholder: "Loading...",
   },
-}
+};
 
 export const Disabled = {
   args: {
@@ -138,7 +163,7 @@ export const Disabled = {
     const input = canvas.getByPlaceholderText("Disabled");
     await expect(input).toBeDisabled();
   },
-}
+};
 
 export const CustomFilter = {
   args: {
@@ -148,4 +173,4 @@ export const CustomFilter = {
       items.filter((item) => item.label.toLowerCase().startsWith(query.toLowerCase())),
     placeholder: "Starts with filter",
   },
-}
+};

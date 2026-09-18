@@ -1,6 +1,6 @@
-import { render } from "@testing-library/svelte"
-import { describe, expect, it } from "vitest"
-import Container from "../../src/lib/components/Container/Container.svelte"
+import { render } from "@testing-library/svelte";
+import { describe, expect, it } from "vitest";
+import Container from "../../src/lib/components/Container/Container.svelte";
 
 describe("Container", () => {
   it("renders container element", () => {
@@ -8,16 +8,16 @@ describe("Container", () => {
       props: {
         children: () => "Content",
       },
-    })
-    expect(container.querySelector(".container")).toBeTruthy()
-  })
+    });
+    expect(container.querySelector(".container")).toBeTruthy();
+  });
 
   it("renders element", () => {
     const { container } = render(Container, {
       props: {
         children: () => "Container content",
       },
-    })
-    expect(container.firstChild).toBeTruthy()
-  })
-})
+    });
+    expect(container.firstChild).toBeTruthy();
+  });
+});

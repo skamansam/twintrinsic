@@ -4,26 +4,26 @@
  * @returns {string} Detected language alias
  */
 export function detectLanguage(content) {
-  const trimmed = content.trim()
+  const trimmed = content.trim();
 
   // HTML/SVG
   if (trimmed.startsWith("<") && trimmed.endsWith(">")) {
-    if (trimmed.includes("</svg>")) return "markup"
-    if (trimmed.includes("/>") || trimmed.includes("</")) return "markup"
+    if (trimmed.includes("</svg>")) return "markup";
+    if (trimmed.includes("/>") || trimmed.includes("</")) return "markup";
   }
 
   // CSS
   if (trimmed.includes("{") && trimmed.includes("}") && trimmed.includes(":")) {
-    if (trimmed.includes("@import") || trimmed.includes("@media")) return "css"
-    if (trimmed.includes("$") || trimmed.includes("@mixin")) return "scss"
+    if (trimmed.includes("@import") || trimmed.includes("@media")) return "css";
+    if (trimmed.includes("$") || trimmed.includes("@mixin")) return "scss";
   }
 
   // JavaScript/TypeScript
   if (trimmed.includes("function") || trimmed.includes("=>")) {
-    if (trimmed.includes(":") && trimmed.includes("interface")) return "typescript"
-    if (trimmed.includes("React.") || trimmed.includes("jsx")) return "jsx"
-    if (trimmed.includes("<") && trimmed.includes("/>")) return "jsx"
-    return "javascript"
+    if (trimmed.includes(":") && trimmed.includes("interface")) return "typescript";
+    if (trimmed.includes("React.") || trimmed.includes("jsx")) return "jsx";
+    if (trimmed.includes("<") && trimmed.includes("/>")) return "jsx";
+    return "javascript";
   }
 
   // JSON
@@ -32,8 +32,8 @@ export function detectLanguage(content) {
     (trimmed.startsWith("[") && trimmed.endsWith("]"))
   ) {
     try {
-      JSON.parse(trimmed)
-      return "json"
+      JSON.parse(trimmed);
+      return "json";
     } catch {
       // Not valid JSON, continue to next check
     }
@@ -41,23 +41,23 @@ export function detectLanguage(content) {
 
   // YAML
   if (trimmed.includes(":") && !trimmed.includes("{")) {
-    return "yaml"
+    return "yaml";
   }
 
   // Markdown
   if (trimmed.includes("#") || trimmed.includes("```")) {
-    return "markdown"
+    return "markdown";
   }
 
   // Svelte
   if (trimmed.includes("<script>") || trimmed.includes("$:") || trimmed.includes("$derived")) {
-    return "svelte"
+    return "svelte";
   }
 
   // Shell
   if (trimmed.startsWith("$") || trimmed.startsWith("#!")) {
-    return "bash"
+    return "bash";
   }
 
-  return "javascript"
+  return "javascript";
 }

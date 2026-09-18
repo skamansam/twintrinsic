@@ -13,9 +13,7 @@ test.describe("ThemeToggle docs page", () => {
   });
 
   test("renders the ThemeToggle docs page", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "ThemeToggle", level: 1 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "ThemeToggle", level: 1 })).toBeVisible();
   });
 
   test("renders multiple toggle rows", async ({ page }) => {
@@ -23,9 +21,7 @@ test.describe("ThemeToggle docs page", () => {
     expect(await toggles.count()).toBeGreaterThanOrEqual(1);
   });
 
-  test("a single toggle has proper ARIA label and hidden checkbox", async ({
-    page,
-  }) => {
+  test("a single toggle has proper ARIA label and hidden checkbox", async ({ page }) => {
     const button = page.getByTestId("theme-basic").locator(".tw-theme-toggle-button").first();
     await expect(button).toBeVisible();
     const toggle = page.getByTestId("theme-basic");

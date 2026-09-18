@@ -15,14 +15,10 @@ test.describe("AvatarGroup docs page", () => {
   });
 
   test("renders the docs page heading", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "AvatarGroup", level: 1 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "AvatarGroup", level: 1 })).toBeVisible();
   });
 
-  test("basic group renders a role=group with accessible avatars", async ({
-    page,
-  }) => {
+  test("basic group renders a role=group with accessible avatars", async ({ page }) => {
     const demo = page.getByTestId("avatargroup-basic");
     const group = demo.getByRole("group");
     await expect(group).toBeVisible();

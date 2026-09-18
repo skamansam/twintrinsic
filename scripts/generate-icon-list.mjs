@@ -16,85 +16,88 @@
  *
  * Usage: `pnpm run generate:icons`
  */
-import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs"
-import { dirname, join, resolve } from "node:path"
-import { fileURLToPath } from "node:url"
+import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
-const ROOT = resolve(__dirname, "..")
-const COMPONENTS_DIR = join(ROOT, "src/lib/components")
-const OUTPUT_FILE = join(ROOT, "src/lib/stores/iconPreload.ts")
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = resolve(__dirname, "..");
+const COMPONENTS_DIR = join(ROOT, "src/lib/components");
+const OUTPUT_FILE = join(ROOT, "src/lib/stores/iconPreload.ts");
 
-const DEFAULT_ICONSET = "tabler"
-const START_MARKER = "// AUTO-GENERATED-ICONS-START — do not edit by hand, run `pnpm run generate:icons`"
-const END_MARKER = "// AUTO-GENERATED-ICONS-END"
+const DEFAULT_ICONSET = "tabler";
+const START_MARKER =
+  "// AUTO-GENERATED-ICONS-START — do not edit by hand, run `pnpm run generate:icons`";
+const END_MARKER = "// AUTO-GENERATED-ICONS-END";
 
 /** Recursively collect every `.svelte` file under a directory. */
 function collectSvelteFiles(dir) {
-  const files = []
+  const files = [];
   for (const entry of readdirSync(dir)) {
-    const fullPath = join(dir, entry)
-    const stats = statSync(fullPath)
+    const fullPath = join(dir, entry);
+    const stats = statSync(fullPath);
     if (stats.isDirectory()) {
-      files.push(...collectSvelteFiles(fullPath))
-      continue
+      files.push(...collectSvelteFiles(fullPath));
+      continue;
     }
-    if (entry.endsWith(".svelte")) files.push(fullPath)
+    if (entry.endsWith(".svelte")) files.push(fullPath);
   }
-  return files
+  return files;
 }
 
 /** Normalize a raw icon name to a fully-qualified "iconset:name" identifier. */
 function qualify(name) {
-  return name.includes(":") ? name : `${DEFAULT_ICONSET}:${name}`
+  return name.includes(":") ? name : `${DEFAULT_ICONSET}:${name}`;
 }
 
 /** Extract literal icon names referenced in a single component's source. */
 function extractIconNames(source) {
-  const names = new Set()
+  const names = new Set();
 
   // <Icon name="..."> / <Icon ... name="..." ...>
   for (const match of source.matchAll(/<Icon\b[^>]*\bname=["']([a-zA-Z0-9:_-]+)["']/g)) {
-    names.add(match[1])
+    names.add(match[1]);
   }
 
   // Default values assigned to icon-shaped props, e.g. `icon = "tabler:star-filled"`
-  for (const match of source.matchAll(/\b(?:icon|emptyIcon|defaultIcon|filledIcon)\s+=\s+["']([a-zA-Z0-9:_-]+)["']/g)) {
-    names.add(match[1])
+  for (const match of source.matchAll(
+    /\b(?:icon|emptyIcon|defaultIcon|filledIcon)\s+=\s+["']([a-zA-Z0-9:_-]+)["']/g,
+  )) {
+    names.add(match[1]);
   }
 
-  return names
+  return names;
 }
 
 function main() {
-  const files = collectSvelteFiles(COMPONENTS_DIR)
-  const allNames = new Set()
+  const files = collectSvelteFiles(COMPONENTS_DIR);
+  const allNames = new Set();
 
   for (const file of files) {
-    const source = readFileSync(file, "utf-8")
+    const source = readFileSync(file, "utf-8");
     for (const name of extractIconNames(source)) {
-      allNames.add(qualify(name))
+      allNames.add(qualify(name));
     }
   }
 
-  const sortedNames = [...allNames].sort()
+  const sortedNames = [...allNames].sort();
 
-  const existing = readFileSync(OUTPUT_FILE, "utf-8")
-  const startIndex = existing.indexOf(START_MARKER)
-  const endIndex = existing.indexOf(END_MARKER)
+  const existing = readFileSync(OUTPUT_FILE, "utf-8");
+  const startIndex = existing.indexOf(START_MARKER);
+  const endIndex = existing.indexOf(END_MARKER);
 
   if (startIndex === -1 || endIndex === -1) {
-    throw new Error(`Could not find generated block markers in ${OUTPUT_FILE}`)
+    throw new Error(`Could not find generated block markers in ${OUTPUT_FILE}`);
   }
 
-  const generatedBlock = `${START_MARKER}\n${sortedNames.map((name) => `  "${name}",`).join("\n")}\n  ${END_MARKER}`
+  const generatedBlock = `${START_MARKER}\n${sortedNames.map((name) => `  "${name}",`).join("\n")}\n  ${END_MARKER}`;
 
   const updated =
-    existing.slice(0, startIndex) + generatedBlock + existing.slice(endIndex + END_MARKER.length)
+    existing.slice(0, startIndex) + generatedBlock + existing.slice(endIndex + END_MARKER.length);
 
-  writeFileSync(OUTPUT_FILE, updated)
+  writeFileSync(OUTPUT_FILE, updated);
 
-  console.log(`Wrote ${sortedNames.length} icon(s) to ${OUTPUT_FILE.replace(`${ROOT}/`, "")}`)
+  console.log(`Wrote ${sortedNames.length} icon(s) to ${OUTPUT_FILE.replace(`${ROOT}/`, "")}`);
 }
 
-main()
+main();

@@ -15,9 +15,7 @@ test.describe("Footer docs page", () => {
   });
 
   test("renders the docs page heading", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "Footer", level: 1 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Footer", level: 1 })).toBeVisible();
   });
 
   test("basic footer renders as a native footer landmark", async ({ page }) => {
@@ -52,20 +50,13 @@ test.describe("Footer docs page", () => {
     await expect(footer).toContainText("© 2026 Twintrinsic");
   });
 
-  test("center-only footer renders without stray empty regions", async ({
-    page,
-  }) => {
+  test("center-only footer renders without stray empty regions", async ({ page }) => {
     const footer = page.getByTestId("footer-center-only");
     await expect(footer).toContainText("Copyright © 2026 Twintrinsic");
   });
 
-  test("center-only footer also renders as a footer element", async ({
-    page,
-  }) => {
-    const footer = page
-      .getByTestId("footer-center-only")
-      .locator("footer")
-      .first();
+  test("center-only footer also renders as a footer element", async ({ page }) => {
+    const footer = page.getByTestId("footer-center-only").locator("footer").first();
     await expect(footer).toBeVisible();
     await expect(footer).toHaveJSProperty("tagName", "FOOTER");
   });

@@ -1,7 +1,6 @@
-import { default as netlifyAdapter } from "@sveltejs/adapter-netlify"
-import { default as vercelAdapter } from "@sveltejs/adapter-vercel"
-import { vitePreprocess } from "@sveltejs/vite-plugin-svelte"
-
+import { default as netlifyAdapter } from "@sveltejs/adapter-netlify";
+import { default as vercelAdapter } from "@sveltejs/adapter-vercel";
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 
 let adapter;
 let options;
@@ -21,6 +20,6 @@ const config = {
   kit: {
     adapter: adapter(options),
   },
-}
+};
 
-export default config
+export default config;

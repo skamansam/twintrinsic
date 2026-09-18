@@ -16,9 +16,7 @@ test.describe("ListInput docs page", () => {
   });
 
   test("renders the docs page heading", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "ListInput", level: 1 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "ListInput", level: 1 })).toBeVisible();
   });
 
   test("basic list input renders chips and adds new ones on Enter", async ({ page }) => {
@@ -101,9 +99,7 @@ test.describe("ListInput docs page", () => {
 
     await input.fill("not-an-email");
     await input.press("Enter");
-    await expect(example.getByRole("alert")).toHaveText(
-      "Please enter a valid email address",
-    );
+    await expect(example.getByRole("alert")).toHaveText("Please enter a valid email address");
     await expect(
       example.getByRole("button", {
         name: "Tag: not-an-email. Press Backspace to remove.",
@@ -132,9 +128,7 @@ test.describe("ListInput docs page", () => {
 
   test("disabled list input disables the text field", async ({ page }) => {
     const example = page.getByTestId("list-input-disabled");
-    await expect(
-      example.getByRole("textbox", { name: "Readonly tags" }),
-    ).toBeDisabled();
+    await expect(example.getByRole("textbox", { name: "Readonly tags" })).toBeDisabled();
     for (const chip of ["locked", "frozen"]) {
       await expect(example.getByText(chip, { exact: true })).toBeVisible();
     }

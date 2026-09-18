@@ -110,9 +110,7 @@ test("navigation: docs link navigates to /docs", async ({ page }) => {
   await page.getByRole("link", { name: /Get Started/i }).click();
   await waitForHydration(page);
   await expect(page).toHaveURL(/\/docs/);
-  await expect(
-    page.getByRole("heading", { name: "Getting Started", level: 1 }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Getting Started", level: 1 })).toBeVisible();
 });
 
 test("navigation: components link navigates to /docs/components", async ({ page }) => {
@@ -122,7 +120,5 @@ test("navigation: components link navigates to /docs/components", async ({ page 
   await page.getByRole("link", { name: /Browse components/i }).click();
   await waitForHydration(page);
   await expect(page).toHaveURL(/\/docs\/components/);
-  await expect(
-    page.getByRole("heading", { name: "Components", level: 1 }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Components", level: 1 })).toBeVisible();
 });

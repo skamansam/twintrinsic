@@ -215,7 +215,9 @@ async function main() {
       const bucket = byPath.get(assetPath) ?? [];
       const occurrence = { file: relative(ROOT, path), line };
       // Overlapping regexes (quoted + url()) can hit the same spot twice.
-      if (!bucket.some((entry) => entry.file === occurrence.file && entry.line === occurrence.line)) {
+      if (
+        !bucket.some((entry) => entry.file === occurrence.file && entry.line === occurrence.line)
+      ) {
         bucket.push(occurrence);
         byPath.set(assetPath, bucket);
       }
@@ -226,8 +228,7 @@ async function main() {
   const missing = [];
   for (const [assetPath, occurrences] of byPath) {
     const fsPath = join(STATIC_DIR, assetPath.slice(1));
-    const exists =
-      existsSync(fsPath) && statSync(fsPath).isFile();
+    const exists = existsSync(fsPath) && statSync(fsPath).isFile();
     if (!exists) missing.push({ path: assetPath, occurrences });
   }
 
@@ -251,9 +252,7 @@ async function main() {
   }
 
   const total = [...byPath.values()].reduce((sum, list) => sum + list.length, 0);
-  console.log(
-    `✔ All ${total} static-asset reference(s) across docs demos resolve under static/.`,
-  );
+  console.log(`✔ All ${total} static-asset reference(s) across docs demos resolve under static/.`);
   if (process.argv.includes("--list")) {
     for (const [assetPath, occurrences] of byPath) {
       console.log(`\n  ${assetPath}`);

@@ -14,10 +14,5 @@
     "moduleResolution": "NodeNext"
   },
   "include": ["src/lib/**/*", "src/app.d.ts"],
-  "exclude": [
-    "src/lib/paraglide/**/*",
-    "src/routes/**/*",
-    "tests/**/*",
-    "stories/**/*"
-  ]
+  "exclude": ["src/lib/paraglide/**/*", "src/routes/**/*", "tests/**/*", "stories/**/*"]
 }

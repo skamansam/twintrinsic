@@ -53,7 +53,10 @@ test.describe("Modal docs page", () => {
   });
 
   test("sized modal applies its size class", async ({ page }) => {
-    await page.getByTestId("modal-sizes").getByRole("button", { name: "View order details" }).click();
+    await page
+      .getByTestId("modal-sizes")
+      .getByRole("button", { name: "View order details" })
+      .click();
 
     const dialog = page.getByRole("dialog", { name: "Order details" });
     await expect(dialog).toBeVisible();

@@ -18,9 +18,9 @@
  * their own icon usage should pass their own list (optionally spread
  * together with `DEFAULT_PRELOAD_ICONS`) to `preloadIcons()`.
  */
-import { loadIcons } from "@iconify/svelte/dist/functions"
-import { get } from "svelte/store"
-import { iconConfig } from "./iconManager.js"
+import { loadIcons } from "@iconify/svelte/dist/functions";
+import { get } from "svelte/store";
+import { iconConfig } from "./iconManager.js";
 
 /**
  * Icon names (in `iconset:name` form) rendered internally by Twintrinsic's
@@ -49,7 +49,7 @@ export const DEFAULT_PRELOAD_ICONS: string[] = [
   "tabler:sun",
   "tabler:x",
   // AUTO-GENERATED-ICONS-END
-]
+];
 
 /**
  * Kick off Iconify data fetches for a list of icon names ahead of time so
@@ -61,7 +61,9 @@ export const DEFAULT_PRELOAD_ICONS: string[] = [
  * @param icons - Icon names to preload, with or without an `iconset:` prefix. Defaults to `DEFAULT_PRELOAD_ICONS`.
  */
 export function preloadIcons(icons: string[] = DEFAULT_PRELOAD_ICONS): void {
-  const defaultIconset = get(iconConfig).defaultIconset
-  const qualifiedNames = icons.map((icon) => (icon.includes(":") ? icon : `${defaultIconset}:${icon}`))
-  loadIcons(qualifiedNames)
+  const defaultIconset = get(iconConfig).defaultIconset;
+  const qualifiedNames = icons.map((icon) =>
+    icon.includes(":") ? icon : `${defaultIconset}:${icon}`,
+  );
+  loadIcons(qualifiedNames);
 }

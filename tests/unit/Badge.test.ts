@@ -1,6 +1,6 @@
-import { render } from "@testing-library/svelte"
-import { describe, expect, it } from "vitest"
-import Badge from "../../src/lib/components/Badge/Badge.svelte"
+import { render } from "@testing-library/svelte";
+import { describe, expect, it } from "vitest";
+import Badge from "../../src/lib/components/Badge/Badge.svelte";
 
 describe("Badge", () => {
   it("renders with default props", () => {
@@ -8,9 +8,9 @@ describe("Badge", () => {
       props: {
         children: () => "New",
       },
-    })
-    expect(container.querySelector(".badge")).toBeTruthy()
-  })
+    });
+    expect(container.querySelector(".badge")).toBeTruthy();
+  });
 
   it("renders element with variant", () => {
     const { container } = render(Badge, {
@@ -18,9 +18,9 @@ describe("Badge", () => {
         variant: "primary",
         children: () => "Primary",
       },
-    })
-    expect(container.firstChild).toBeTruthy()
-  })
+    });
+    expect(container.firstChild).toBeTruthy();
+  });
 
   it("renders element", () => {
     const { container } = render(Badge, {
@@ -28,18 +28,18 @@ describe("Badge", () => {
         size: "lg",
         children: () => "Large",
       },
-    })
-    expect(container.firstChild).toBeTruthy()
-  })
+    });
+    expect(container.firstChild).toBeTruthy();
+  });
 
   it("renders as dot when dot prop is true", () => {
     const { container } = render(Badge, {
       props: {
         dot: true,
       },
-    })
-    expect(container.querySelector(".badge-dot")).toBeTruthy()
-  })
+    });
+    expect(container.querySelector(".badge-dot")).toBeTruthy();
+  });
 
   it("renders as pill when pill prop is true", () => {
     const { container } = render(Badge, {
@@ -47,9 +47,9 @@ describe("Badge", () => {
         pill: true,
         children: () => "Pill",
       },
-    })
-    expect(container.querySelector(".badge-pill")).toBeTruthy()
-  })
+    });
+    expect(container.querySelector(".badge-pill")).toBeTruthy();
+  });
 
   it("applies outline classes when outline is true", () => {
     const { container } = render(Badge, {
@@ -57,10 +57,10 @@ describe("Badge", () => {
         outline: true,
         children: () => "Outline",
       },
-    })
-    const badge = container.querySelector(".badge")
-    expect(badge?.className).toContain("border")
-  })
+    });
+    const badge = container.querySelector(".badge");
+    expect(badge?.className).toContain("border");
+  });
 
   it("applies pulse animation when pulse is true", () => {
     const { container } = render(Badge, {
@@ -68,9 +68,9 @@ describe("Badge", () => {
         pulse: true,
         children: () => "Pulsing",
       },
-    })
-    expect(container.querySelector(".badge-pulse")).toBeTruthy()
-  })
+    });
+    expect(container.querySelector(".badge-pulse")).toBeTruthy();
+  });
 
   it("hides when empty and hideEmpty is true", () => {
     const { container } = render(Badge, {
@@ -78,9 +78,9 @@ describe("Badge", () => {
         hideEmpty: true,
         children: () => "",
       },
-    })
-    expect(container.querySelector(".badge")).toBeFalsy()
-  })
+    });
+    expect(container.querySelector(".badge")).toBeFalsy();
+  });
 
   it("renders overlay position classes", () => {
     const { container } = render(Badge, {
@@ -89,14 +89,14 @@ describe("Badge", () => {
         position: "top-right",
         children: () => "5",
       },
-    })
-    const badge = container.querySelector(".badge")
+    });
+    const badge = container.querySelector(".badge");
     // Overlay + the default inline=true apply absolute positioning via the
     // `badge-inline`/`badge-overlay` classes (CSS `@apply absolute`), not a
     // literal `absolute` class name.
-    expect(badge?.className).toContain("badge-overlay")
-    expect(badge?.className).toContain("badge-inline")
-  })
+    expect(badge?.className).toContain("badge-overlay");
+    expect(badge?.className).toContain("badge-inline");
+  });
 
   it("does not force absolute positioning when inline is false", () => {
     const { container } = render(Badge, {
@@ -104,9 +104,9 @@ describe("Badge", () => {
         inline: false,
         children: () => "Static",
       },
-    })
-    const badge = container.querySelector(".badge")
-    expect(badge?.className).not.toContain("badge-inline")
-    expect(badge?.className).not.toMatch(/(^|\s)absolute(\s|$)/)
-  })
-})
+    });
+    const badge = container.querySelector(".badge");
+    expect(badge?.className).not.toContain("badge-inline");
+    expect(badge?.className).not.toMatch(/(^|\s)absolute(\s|$)/);
+  });
+});

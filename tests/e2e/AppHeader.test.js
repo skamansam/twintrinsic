@@ -196,7 +196,9 @@ test.describe("AppHeader docs page", () => {
     await expect(trigger).toHaveAttribute("aria-expanded", "false");
   });
 
-  test("locale switcher autodetects the runtime locales and reports the active one", async ({ page }) => {
+  test("locale switcher autodetects the runtime locales and reports the active one", async ({
+    page,
+  }) => {
     const header = page.getByTestId("app-header-full-featured").locator(".app-header");
     const trigger = header.locator(".language-picker-trigger");
 
@@ -248,7 +250,9 @@ test.describe("AppHeader docs page", () => {
     // …and the docs shell re-rendered in the new locale. The AppHeader demo
     // state resets on reload, so reopen the menu to confirm the runtime now
     // reports the switched locale as checked.
-    const trigger2 = page.getByTestId("app-header-full-featured").locator(".language-picker-trigger");
+    const trigger2 = page
+      .getByTestId("app-header-full-featured")
+      .locator(".language-picker-trigger");
     await trigger2.click();
     const menu2 = page.getByTestId("app-header-full-featured").locator(".language-picker-menu");
     await expect(menu2).toBeVisible();

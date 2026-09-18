@@ -17,9 +17,7 @@ test.describe("ChipGroup docs page", () => {
   });
 
   test("renders the docs page heading", async ({ page }) => {
-    await expect(
-      page.getByRole("heading", { name: "ChipGroup", level: 1 }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "ChipGroup", level: 1 })).toBeVisible();
   });
 
   test("basic chip group renders a labeled group of chips", async ({ page }) => {
@@ -35,13 +33,9 @@ test.describe("ChipGroup docs page", () => {
   test("dynamic item template renders removable chips", async ({ page }) => {
     const example = page.getByTestId("chip-group-dynamic");
     for (const chip of ["Design", "Engineering", "Product", "Marketing"]) {
-      await expect(
-        example.getByRole("button", { name: new RegExp(chip) }),
-      ).toBeVisible();
+      await expect(example.getByRole("button", { name: new RegExp(chip) })).toBeVisible();
     }
-    await expect(
-      example.getByRole("button", { name: "Remove", exact: true }),
-    ).toHaveCount(4);
+    await expect(example.getByRole("button", { name: "Remove", exact: true })).toHaveCount(4);
   });
 
   test("clicking a remove button fires the remove action", async ({ page }) => {
