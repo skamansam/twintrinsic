@@ -83,6 +83,18 @@ const EVENTS = [
   { id: "e6", start: "2026-09-21T16:00", title: "Retro", color: "#8b5cf6" },
   { id: "e7", start: "2026-09-17", title: "Cancelled offsite", color: "#6b7280", status: "cancelled" },
 ]
+
+/** Drag-to-edit fixture: a movable timed event plus a static all-day anchor. */
+const DRAG_EVENTS = [
+  { id: "drag1", title: "Planning session", start: "2026-09-15T10:00", color: "#6366f1" },
+  { id: "drag2", title: "Team offsite", start: "2026-09-21", allDay: true, color: "#f59e0b" },
+]
+
+/** `oneventmove` payloads captured for the play (module fn reference survives the CSF transform; inline arrows don't). */
+const MOVES = []
+function captureMove(e) {
+  MOVES.push(e.detail)
+}
 </script>
 
 <Story name="Default">
@@ -266,6 +278,41 @@ const EVENTS = [
     expect(dots.length).toBe(2)
     // Unshared events never merge.
     expect(canvas.getByTestId("calendar-view-event-personal-dentist")).toBeInTheDocument()
+  }}
+>
+  {#snippet children(args)}
+    <div style="min-height: 340px">
+      <CalendarView {...args} month={SEPTEMBER} />
+    </div>
+  {/snippet}
+</Story>
+
+<Story
+  name="DragToEdit"
+  args={{ events: DRAG_EVENTS, dragEvents: true, oneventmove: captureMove }}
+  play={async ({ canvas, step }) => {
+    const chip = await canvas.findByTestId("calendar-view-event-drag1")
+    expect(chip.getAttribute("draggable")).toBe("true")
+
+    await step("drop on another cell fires oneventmove with from/to", async () => {
+      const target = canvas.getByTestId("calendar-view-day-2026-09-18").closest("[data-day]")
+      await fireEvent.dragStart(chip)
+      await fireEvent.dragOver(target)
+      expect(target).toHaveClass("calendar-view-droptarget")
+      await fireEvent.drop(target)
+      expect(MOVES.length).toBe(1)
+      expect(MOVES[0].event.id).toBe("drag1")
+      expect(MOVES[0].from.toString()).toBe("2026-09-15")
+      expect(MOVES[0].to.toString()).toBe("2026-09-18")
+      // Highlight clears after the drop.
+      expect(target).not.toHaveClass("calendar-view-droptarget")
+    })
+
+    await step("keyboard arrows move the activated event (DnD alternative)", async () => {
+      await fireEvent.click(chip)
+      await fireEvent.keyDown(chip, { key: "ArrowRight" })
+      expect(MOVES[MOVES.length - 1].to.toString()).toBe("2026-09-16")
+    })
   }}
 >
   {#snippet children(args)}

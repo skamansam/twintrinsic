@@ -4362,7 +4362,6 @@
   "events_a11y_3": "Los nombres de los eventos se muestran en su forma ",
   "events_a11y_4": " de prop de callback",
   "events_a11y_5": "La tabla se desplaza horizontalmente en pantallas estrechas en lugar de desbordarse",
-
   "card_lede_1": " es un alias heredado del ",
   "card_link": "componente Panel",
   "card_lede_2": ". Redirigiendo…",
@@ -4379,7 +4378,6 @@
   "panellazy_lede_1": " está documentado junto a los ",
   "panellazy_link": "componentes Lazy",
   "panellazy_lede_2": ". Redirigiendo…",
-
   "pt_heading": "PropsTable",
   "pt_lede_1": "Un componente de utilidad que renderiza las props de un componente como una tabla de documentación. Lee las props directamente de un módulo que exporta ",
   "pt_lede_2": ", o renderiza un hash ",
@@ -4398,7 +4396,6 @@
   "pt_a11y_3": "Los nombres y tipos de props se renderizan en ",
   "pt_a11y_4": " para mayor claridad",
   "pt_a11y_5": "La tabla se desplaza horizontalmente en pantallas estrechas en lugar de desbordarse",
-
   "timer_heading": "Timer",
   "timer_intro_1": " muestra una cuenta regresiva o progresiva con controles opcionales de pausa, reanudación y reinicio. Empareja una lectura monoespaciada grande con una de tres variantes visuales — una barra de Progreso, un GaugeChart o un KPICard — de modo que la misma lógica de temporización puede respaldar cualquier cosa, desde una cuenta regresiva de toast hasta una sesión Pomodoro.",
   "timer_what_1": "Un componente de temporización autónomo que cuenta hacia atrás desde una duración o cuenta hacia adelante hacia una. Emite eventos de actualización en cada tic, emite un evento de finalización cuando se alcanza la duración y puede repetirse automáticamente. La lectura es una región ",
@@ -4471,7 +4468,6 @@
   "timer_kb_2": "Activar el control enfocado (pausa/reanudación o reinicio)",
   "timer_kb_3": "Alternar pausa/reanudación",
   "timer_kb_3_1": "en la tarjeta KPI",
-
   "lazy_heading": "Lazy",
   "lazy_intro_1": " renderiza su contenido solo cuando entra en el viewport, usando un ",
   "lazy_intro_2": ". Úselo para diferir contenido fuera de pantalla y mantener rápidas las cargas iniciales de página.",
@@ -4513,7 +4509,6 @@
   "lazy_a11y_5": ".",
   "lazy_a11y_6": "El contenido diferido solo se monta cuando es visible.",
   "lazy_kb": "Lazy es un envoltorio de comportamiento y no requiere interacción por teclado. El contenido diferido mantiene su comportamiento nativo de teclado una vez montado.",
-
   "lazypanel_heading": "LazyPanel",
   "lazypanel_intro_1": " es un componente Panel que solo carga su contenido cuando se vuelve visible en el viewport. Construido sobre el componente Panel con ",
   "lazypanel_intro_2": " para la carga diferida.",
@@ -4544,7 +4539,6 @@
   "lazypanel_a11y_3": "Las actualizaciones de contenido se anuncian cuando la carga diferida se completa.",
   "lazypanel_kb_1": "Mover el foco al encabezado del panel",
   "lazypanel_kb_2": "Alternar el panel abierto/cerrado",
-
   "locale_heading": "LocaleSwitcher",
   "locale_intro_1": " es un selector de idioma que cambia la localización activa de ",
   "locale_intro_2": ". Renderiza un grupo de botones de alternancia o un ",
@@ -4586,7 +4580,6 @@
   "locale_kb_2": "Moverse al siguiente botón de localización",
   "locale_kb_3": "Moverse al botón de localización anterior",
   "locale_kb_4": "Activar la localización enfocada",
-
   "ti_heading": "TextInput",
   "ti_intro_1": " es un campo de texto de una sola línea con estilo que admite iconos, valores borrables, tamaños e integración con formularios. Reenvía los atributos estándar al elemento ",
   "ti_intro_2": " nativo.",
@@ -4626,7 +4619,6 @@
   "ti_a11y_3": "El botón de borrado está etiquetado y es accesible por teclado.",
   "ti_a11y_4_1": "Admite ",
   "ti_a11y_4_2": " y reenvía los atributos ARIA.",
-
   "invalid_heading": "InvalidState",
   "invalid_intro": " muestra mensajes de error de validación con estilo, iconos y atributos de accesibilidad consistentes.",
   "invalid_what_1": "Un componente de mensaje de error con ",
@@ -4660,7 +4652,6 @@
   "invalid_a11y_2_2": " para anuncio inmediato.",
   "invalid_a11y_3": "Color rojo + icono para indicación visual.",
   "invalid_a11y_4": "Contraste de color suficiente (WCAG AA).",
-
   "rg_heading": "RadioGroup",
   "rg_intro_1": " envuelve botones de radio relacionados con una leyenda compartida, control de disposición y validación. Usa ",
   "rg_intro_2": " + ",
@@ -4704,7 +4695,6 @@
   "rg_kb_2": "Seleccionar el radio enfocado",
   "rg_kb_3": "Radio anterior",
   "rg_kb_4": "Radio siguiente",
-
   "ff_heading": "FormField",
   "ff_intro": " envuelve los campos de formulario con una etiqueta, texto de ayuda, mensaje de error e indicador de obligatoriedad consistentes. Proporciona la estructura estándar que todo campo de formulario necesita.",
   "ff_what_1": "Un contenedor que asocia una etiqueta con un input, muestra texto de ayuda debajo del campo y muestra mensajes de error cuando falla la validación. Usa CSS ",
@@ -4757,7 +4747,6 @@
   "ff_a11y_5_1": "",
   "ff_a11y_5_2": " y ",
   "ff_a11y_5_3": " se establecen adecuadamente.",
-
   "masonry_heading": "Masonry",
   "masonry_intro": " crea disposiciones de cuadrícula al estilo Pinterest con elementos de alturas variables. Proporciona disposiciones responsivas y dinámicas que se ajustan automáticamente a diferentes tamaños de pantalla y dimensiones de contenido.",
   "masonry_what_1": "Un motor de disposición masonry basado en JavaScript que posiciona elementos de alturas variables en columnas, colocando siempre el siguiente elemento en la columna más corta. Usa ",
@@ -4809,7 +4798,6 @@
   "masonry_a11y_2_2": " personalizable para lectores de pantalla.",
   "masonry_a11y_3": "Mantiene un orden de foco adecuado para la navegación por teclado.",
   "masonry_kb": "Masonry es un elemento solo de disposición. Los elementos dentro del masonry mantienen su comportamiento nativo de teclado.",
-
   "fb_heading": "FormBuilder",
   "fb_intro_1": " genera un formulario accesible a partir de un ",
   "fb_intro_2": " de OpenAPI 3.0 o un array explícito de descriptores de campo. Mapea cada propiedad del esquema al control Twintrinsic correspondiente, conecta etiquetas, texto de ayuda y validación nativa, y renderiza todo dentro de un ",
@@ -4887,7 +4875,6 @@
   "fb_lim_2_2": " externos relativos (archivos/URLs) no se obtienen — proporciónelos mediante ",
   "fb_lim_2_3": ".",
   "fb_lim_3": "Para disposiciones profundamente personalizadas, componga los controles directamente en su lugar.",
-
   "themepv_heading": "Vista previa de temas",
   "themepv_intro_1": "Todos los temas integrados renderizados lado a lado. Cada panel es un ",
   "themepv_intro_2": " autocontenido que define su propio conjunto de tokens, así que los componentes dentro siguen ese tema exactamente — incluidas las variantes ",
@@ -4900,14 +4887,12 @@
   "themepv_usage_2": " en el elemento raíz, exactamente como lo hacen el sitio de documentación y Storybook:",
   "themepv_outro_1": "Consulte la página ",
   "themepv_outro_2": " para la referencia completa de tokens y cómo añadir sus propios temas.",
-
   "ex_viewguide": "Ver guía",
   "ex_bestpractices": "Buenas prácticas",
   "ex_bp_responsive_h": "Diseño responsivo",
   "ex_bp_colors_h": "Consistencia de color",
   "ex_bp_data_h": "Exactitud de datos",
   "ex_bp_a11y_h": "Accesibilidad",
-
   "exdash_banner_h": "¡Construya esto usted mismo!",
   "exdash_banner_p": "Aprenda a crear este dashboard con nuestra guía completa y la documentación de componentes.",
   "exdash_sec_metrics": "Resumen de métricas clave",
@@ -4917,7 +4902,6 @@
   "exdash_sec_conversion": "Fuentes de conversión",
   "exdash_sec_perf": "Métricas de rendimiento",
   "exdash_sec_resource": "Uso de recursos",
-
   "exdashg_h1": "Dashboard",
   "exdashg_lede": "Ejemplos completos de cómo construir dashboards de datos con los componentes Metrics.",
   "exdashg_metrics_p": "Muestre indicadores clave de rendimiento en una cuadrícula responsiva.",
@@ -4933,7 +4917,6 @@
   "exdashg_bp_colors_p": "Use colores consistentes entre métricas relacionadas. Aproveche los temas de color (primary, success, warning, danger) para la jerarquía visual.",
   "exdashg_bp_data_p": "Asegure datos actualizados y precisos. Use fuentes de datos en tiempo real cuando sea posible e indique claramente los tiempos de actualización.",
   "exdashg_bp_a11y_p": "Todos los componentes Metrics incluyen etiquetas ARIA y navegación por teclado. Garantice contraste de color suficiente y proporcione alternativas de texto para datos visuales.",
-
   "exmap_h1": "Ejemplo de mapa de juego",
   "exmap_lede": "Un mapa de juego interactivo con marcadores, popups y capacidades de edición. Haga clic en el mapa para crear marcadores nuevos; haga clic en los marcadores existentes para editarlos.",
   "exmap_how_h": "Cómo funciona",
@@ -4982,7 +4965,6 @@
   "exmap_demo_h": "Demostración interactiva",
   "exmap_json_h": "JSON de marcadores",
   "exmap_json_p": "Edite el JSON para actualizar los marcadores en tiempo real. Los cambios se reflejan en el mapa de inmediato.",
-
   "exshop_banner_h": "¡Construya esto usted mismo!",
   "exshop_banner_p_1": "Una página de compras estilo Amazon construida con ",
   "exshop_banner_p_2": ", ",
@@ -5001,7 +4983,6 @@
   "exshop_addtocart": "Añadir al carrito",
   "exshop_backtotop": "Volver arriba",
   "exshop_copyright": "Ejemplo de tienda Twintrinsic. Solo con fines de demostración.",
-
   "exshopg_h1": "Página de compras",
   "exshopg_lede": "Un recorrido por la construcción de una página de aterrizaje de e-commerce — banner principal, navegación de categorías, barra lateral de filtros, cuadrícula de productos y un pie de página grande de varias columnas — usando componentes Twintrinsic.",
   "exshopg_hero_h": "Encabezado principal",
@@ -5054,7 +5035,8 @@
   "exshopg_bp_placeholder_h": "Enlaces de marcador accesibles",
   "exshopg_bp_placeholder_1": "Los enlaces de demostración del pie/categorías usan ",
   "exshopg_bp_placeholder_2": " como sustituto de destinos reales. En producción, apunte siempre los enlaces a rutas reales para que sean significativos para la tecnología de asistencia y los usuarios de teclado.",
-
   "bar_ex_percolor": "Colores por barra",
-  "bar_ex_percolor_p": "Pase un array a la prop barColors para anular el color de barras individuales. El array se indexa por posición de etiqueta; las entradas dejadas como undefined vuelven al color de la serie."
+  "bar_ex_percolor_p": "Pase un array a la prop barColors para anular el color de barras individuales. El array se indexa por posición de etiqueta; las entradas dejadas como undefined vuelven al color de la serie.",
+  "calendarview_ex_drag": "Arrastrar para editar",
+  "calendarview_ex_drag_p": "Activa dragEvents para reprogramar eventos con la API nativa de arrastrar y soltar de HTML (solo puntero de escritorio — DnD no tiene soporte táctil). Suelta un chip en otro día y CalendarView dispara oneventmove con el evento movido y sus días de origen y destino; el consumidor posee el estado y reescribe el inicio del evento. Alternativa de teclado: haz clic en un chip para activarlo y usa las flechas para moverlo por día o semana. Las duraciones no se pueden redimensionar con DnD."
 }

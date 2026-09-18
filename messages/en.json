@@ -4362,7 +4362,6 @@
   "events_a11y_3": "Event names are rendered as their ",
   "events_a11y_4": " callback prop form",
   "events_a11y_5": "The table scrolls horizontally on narrow viewports instead of overflowing",
-
   "card_lede_1": " is a legacy alias for the ",
   "card_link": "Panel component",
   "card_lede_2": ". Redirecting…",
@@ -4379,7 +4378,6 @@
   "panellazy_lede_1": " is documented with the ",
   "panellazy_link": "Lazy components",
   "panellazy_lede_2": ". Redirecting…",
-
   "pt_heading": "PropsTable",
   "pt_lede_1": "A utility component that renders a component's props as a documentation table. It reads the props directly from a component module that exports ",
   "pt_lede_2": ", or renders a ",
@@ -4398,7 +4396,6 @@
   "pt_a11y_3": "Prop names and types are rendered in ",
   "pt_a11y_4": " for clarity",
   "pt_a11y_5": "The table scrolls horizontally on narrow viewports instead of overflowing",
-
   "timer_heading": "Timer",
   "timer_intro_1": " displays a countdown or count-up with optional pause, resume, and reset controls. It pairs a large monospace readout with one of three display variants — a Progress bar, a GaugeChart, or a KPICard — so the same timing logic can back anything from a toast countdown to a Pomodoro session.",
   "timer_what_1": "A self-contained timing component that counts down from a duration or counts up toward one. It fires update events on every tick, fires a complete event when the duration is reached, and can loop automatically. The readout is a live ",
@@ -4471,7 +4468,6 @@
   "timer_kb_2": "Activate the focused control (pause/resume or reset)",
   "timer_kb_3": "Toggle pause/resume",
   "timer_kb_3_1": "on the KPI card",
-
   "lazy_heading": "Lazy",
   "lazy_intro_1": " renders its content only once it scrolls into the viewport, using an ",
   "lazy_intro_2": ". Use it to defer off-screen content and keep initial page loads fast.",
@@ -4513,7 +4509,6 @@
   "lazy_a11y_5": ".",
   "lazy_a11y_6": "Deferred content is only mounted when visible.",
   "lazy_kb": "Lazy is a behavior wrapper and does not require keyboard interaction. Deferred content maintains its native keyboard behavior once mounted.",
-
   "lazypanel_heading": "LazyPanel",
   "lazypanel_intro_1": " is a Panel component that only loads its content when it becomes visible in the viewport. Built on top of the Panel component with ",
   "lazypanel_intro_2": " for lazy loading.",
@@ -4544,7 +4539,6 @@
   "lazypanel_a11y_3": "Content updates are announced when lazy loading completes.",
   "lazypanel_kb_1": "Move focus to the panel header",
   "lazypanel_kb_2": "Toggle the panel open/closed",
-
   "locale_heading": "LocaleSwitcher",
   "locale_intro_1": " is a language picker that switches the active ",
   "locale_intro_2": " locale. It renders either a group of toggle buttons or a native ",
@@ -4586,7 +4580,6 @@
   "locale_kb_2": "Move to the next locale button",
   "locale_kb_3": "Move to the previous locale button",
   "locale_kb_4": "Activate the focused locale",
-
   "ti_heading": "TextInput",
   "ti_intro_1": " is a styled single-line text input with support for icons, clearable values, sizing, and form integration. It forwards standard attributes to the native ",
   "ti_intro_2": " element.",
@@ -4626,7 +4619,6 @@
   "ti_a11y_3": "Clear button is labeled and keyboard-reachable.",
   "ti_a11y_4_1": "Supports ",
   "ti_a11y_4_2": " and forwards ARIA attributes.",
-
   "invalid_heading": "InvalidState",
   "invalid_intro": " displays validation error messages with consistent styling, icons, and accessibility attributes.",
   "invalid_what_1": "An error message component with ",
@@ -4660,7 +4652,6 @@
   "invalid_a11y_2_2": " for immediate announcement.",
   "invalid_a11y_3": "Red color + icon for visual indication.",
   "invalid_a11y_4": "Sufficient color contrast (WCAG AA).",
-
   "rg_heading": "RadioGroup",
   "rg_intro_1": " wraps related radio buttons with a shared legend, layout control, and validation. Uses native ",
   "rg_intro_2": " + ",
@@ -4704,7 +4695,6 @@
   "rg_kb_2": "Select the focused radio",
   "rg_kb_3": "Previous radio",
   "rg_kb_4": "Next radio",
-
   "ff_heading": "FormField",
   "ff_intro": " wraps form inputs with a consistent label, help text, error message, and required indicator. It provides the standard structure that every form field needs.",
   "ff_what_1": "A container that associates a label with an input, displays help text below the field, and shows error messages when validation fails. Uses ",
@@ -4757,7 +4747,6 @@
   "ff_a11y_5_1": "",
   "ff_a11y_5_2": " and ",
   "ff_a11y_5_3": " are set appropriately.",
-
   "masonry_heading": "Masonry",
   "masonry_intro": " creates Pinterest-style grid layouts with items of varying heights. It provides responsive, dynamic layouts that automatically adjust to different screen sizes and content dimensions.",
   "masonry_what_1": "A JavaScript-based masonry layout engine that positions items of varying heights into columns, always placing the next item in the shortest column. Uses ",
@@ -4809,7 +4798,6 @@
   "masonry_a11y_2_2": " for screen readers.",
   "masonry_a11y_3": "Maintains proper focus order for keyboard navigation.",
   "masonry_kb": "Masonry is a layout-only element. Items within the masonry maintain their native keyboard behavior.",
-
   "fb_heading": "FormBuilder",
   "fb_intro_1": " generates an accessible form from an ",
   "fb_intro_2": " or an explicit field-descriptor array. It maps each schema property onto the matching Twintrinsic control, wires up labels, help text, and native validation, and renders everything inside a ",
@@ -4887,7 +4875,6 @@
   "fb_lim_2_2": "s (files/URLs) are not fetched — provide them via ",
   "fb_lim_2_3": ".",
   "fb_lim_3": "For deeply custom layouts, compose the controls directly instead.",
-
   "themepv_heading": "Theme Preview",
   "themepv_intro_1": "Every built-in theme rendered side by side. Each panel is a self-contained ",
   "themepv_intro_2": " scoping its own token set, so the components inside follow that theme exactly — including the ",
@@ -4900,14 +4887,12 @@
   "themepv_usage_2": " on the root element, exactly like the docs site and Storybook do:",
   "themepv_outro_1": "See the ",
   "themepv_outro_2": " page for the full token reference and how to add your own themes.",
-
   "ex_viewguide": "View Guide",
   "ex_bestpractices": "Best Practices",
   "ex_bp_responsive_h": "Responsive Design",
   "ex_bp_colors_h": "Color Consistency",
   "ex_bp_data_h": "Data Accuracy",
   "ex_bp_a11y_h": "Accessibility",
-
   "exdash_banner_h": "Build this yourself!",
   "exdash_banner_p": "Learn how to create this dashboard with our comprehensive guide and component documentation.",
   "exdash_sec_metrics": "Key Metrics Overview",
@@ -4917,7 +4902,6 @@
   "exdash_sec_conversion": "Conversion Sources",
   "exdash_sec_perf": "Performance Metrics",
   "exdash_sec_resource": "Resource Utilization",
-
   "exdashg_h1": "Dashboard",
   "exdashg_lede": "Comprehensive examples showing how to build data dashboards using Metrics components.",
   "exdashg_metrics_p": "Display key performance indicators in a responsive grid layout.",
@@ -4933,7 +4917,6 @@
   "exdashg_bp_colors_p": "Use consistent colors across related metrics. Leverage the color themes (primary, success, warning, danger) for visual hierarchy.",
   "exdashg_bp_data_p": "Ensure data is up-to-date and accurate. Use real-time data sources when possible and clearly indicate data refresh times.",
   "exdashg_bp_a11y_p": "All Metrics components include ARIA labels and keyboard navigation. Ensure sufficient color contrast and provide text alternatives for visual data.",
-
   "exmap_h1": "Game Map Example",
   "exmap_lede": "An interactive game map with markers, popups, and editing capabilities. Click on the map to create new markers, click on existing markers to edit them.",
   "exmap_how_h": "How It Works",
@@ -4982,7 +4965,6 @@
   "exmap_demo_h": "Interactive Demo",
   "exmap_json_h": "Markers JSON",
   "exmap_json_p": "Edit the JSON to update markers in real-time. Changes are reflected on the map immediately.",
-
   "exshop_banner_h": "Build this yourself!",
   "exshop_banner_p_1": "An Amazon-style shopping page built from ",
   "exshop_banner_p_2": ", ",
@@ -5001,7 +4983,6 @@
   "exshop_addtocart": "Add to Cart",
   "exshop_backtotop": "Back to top",
   "exshop_copyright": "Twintrinsic Shop Example. For demonstration purposes only.",
-
   "exshopg_h1": "Shopping Page",
   "exshopg_lede": "A walkthrough of building an e-commerce landing page — hero banner, category navigation, filter sidebar, product grid, and a large multi-column footer — using Twintrinsic components.",
   "exshopg_hero_h": "Hero Header",
@@ -5054,7 +5035,8 @@
   "exshopg_bp_placeholder_h": "Accessible Placeholder Links",
   "exshopg_bp_placeholder_1": "Demo footer/category links use ",
   "exshopg_bp_placeholder_2": " as a stand-in for real destinations. In production, always point links at real routes so they're meaningful to assistive technology and keyboard users.",
-
   "bar_ex_percolor": "Per-Bar Colors",
-  "bar_ex_percolor_p": "Pass an array to the barColors prop to override the color of individual bars. The array is indexed by label position; entries left undefined fall back to the series color."
+  "bar_ex_percolor_p": "Pass an array to the barColors prop to override the color of individual bars. The array is indexed by label position; entries left undefined fall back to the series color.",
+  "calendarview_ex_drag": "Drag to edit",
+  "calendarview_ex_drag_p": "Enable dragEvents to reschedule events with the native HTML Drag and Drop API (desktop pointer only — DnD has no touch support). Drop a chip on another day and CalendarView fires oneventmove with the moved event and its from/to days; the consumer owns state and rewrites the event's start. Keyboard alternative: click a chip to activate it, then use the arrow keys to move it by day or week. Durations cannot be resized with DnD."
 }

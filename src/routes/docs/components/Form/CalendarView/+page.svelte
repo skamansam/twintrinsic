@@ -33,6 +33,7 @@ import Container from "$lib/components/Container/Container.svelte"
 import Badge from "$lib/components/Badge/Badge.svelte"
 import Tooltip from "$lib/components/Tooltip/Tooltip.svelte"
 import { parseICal } from "$lib/helpers/parseICal.js"
+import type { EventMoveDetail } from "$lib/helpers/eventNormalize.js"
 import { m } from "$lib/paraglide/messages.js"
 
 // Anchor dates for the demos — pinned so examples don't drift as months pass.
@@ -80,6 +81,23 @@ SUMMARY:Maybe lunch
 END:VEVENT
 END:VCALENDAR`
 const ICS_EVENTS = parseICal(ICS_SAMPLE)
+
+// Milestone-7 drag demo: the consumer owns event state — `oneventmove`
+// rewrites the moved event's `start` and the chip re-renders in its new cell.
+let dragEvents = $state([
+  { id: "d1", title: "Planning session", start: "2026-09-15T10:00", color: "#6366f1" },
+  { id: "d2", title: "Team offsite", start: "2026-09-21", allDay: true, color: "#f59e0b" },
+])
+
+/**
+ * Moves a dragged event's start to the drop day.
+ * @param e - The CalendarView `eventmove` detail ({ event, from, to })
+ */
+function moveEvent(e: CustomEvent<EventMoveDetail>) {
+  dragEvents = dragEvents.map((ev) =>
+    ev.id === e.detail.event.id ? { ...ev, start: e.detail.to.toString() } : ev,
+  )
+}
 </script>
 
 <style lang="postcss">
@@ -236,6 +254,26 @@ const events = parseICal(icsText, { defaultTz: "Europe/Berlin" })
 <CalendarView month={Temporal.PlainDate.from('2026-09-01')} events={events} />`}>
   <div class="max-w-sm" data-testid="calendarview-ics">
     <CalendarView month={SEPTEMBER} events={ICS_EVENTS} />
+  </div>
+</ExampleTabs>
+
+<h3>{m.calendarview_ex_drag()}</h3>
+<p>{m.calendarview_ex_drag_p()}</p>
+<ExampleTabs code={`<script lang="ts">
+  // Consumer-owned state: oneventmove rewrites the event's start.
+  let events = $state([
+    { id: "d1", title: "Planning session", start: "2026-09-15T10:00", color: "#6366f1" },
+  ])
+  function moveEvent(e: CustomEvent<EventMoveDetail>) {
+    events = events.map((ev) =>
+      ev.id === e.detail.event.id ? { ...ev, start: e.detail.to.toString() } : ev,
+    )
+  }
+<\\/script>
+
+<CalendarView {events} dragEvents oneventmove={moveEvent} />`}>
+  <div class="max-w-sm" data-testid="calendarview-drag">
+    <CalendarView month={SEPTEMBER} events={dragEvents} dragEvents oneventmove={moveEvent} />
   </div>
 </ExampleTabs>
 

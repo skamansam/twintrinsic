@@ -378,3 +378,84 @@ describe("CalendarView grouping (milestone 4)", () => {
 		expect(getByTestId("calendar-view-event-p2")).toBeInTheDocument()
 	})
 })
+
+describe("CalendarView drag-to-edit (milestone 7)", () => {
+	/** Renders with one chip on Sept 15 (Tue, in-month) and drag enabled. */
+	async function renderDraggable(props = {}) {
+		return renderForSeptember({
+			events: [{ id: "mv1", title: "Movable", start: "2026-09-15T09:00" }],
+			dragEvents: true,
+			...props,
+		})
+	}
+
+	it("chips are draggable only when dragEvents is enabled", async () => {
+		const { getByTestId } = await renderForSeptember({
+			events: [{ id: "mv1", title: "Movable", start: "2026-09-15T09:00" }],
+		})
+		expect(getByTestId("calendar-view-event-mv1").getAttribute("draggable")).toBe("false")
+	})
+
+	it("dragEvents=true makes span-start chips draggable", async () => {
+		const { getByTestId } = await renderDraggable()
+		expect(getByTestId("calendar-view-event-mv1").getAttribute("draggable")).toBe("true")
+	})
+
+	it("drop on another cell fires oneventmove with from/to days", async ()	=> {
+		const oneventmove = vi.fn()
+		const { getByTestId } = await renderDraggable({ oneventmove })
+		const chip = getByTestId("calendar-view-event-mv1")
+		const target = getByTestId("calendar-view-day-2026-09-18").closest("[data-day]") as HTMLElement
+		fireEvent.dragStart(chip)
+		fireEvent.dragOver(target)
+		expect(target).toHaveClass("calendar-view-droptarget")
+		fireEvent.drop(target)
+		expect(oneventmove).toHaveBeenCalledTimes(1)
+		const detail = oneventmove.mock.calls[0][0].detail
+		expect(detail.event.id).toBe("mv1")
+		expect(detail.from.toString()).toBe("2026-09-15")
+		expect(detail.to.toString()).toBe("2026-09-18")
+	})
+
+	it("drop without a preceding dragstart never fires the callback", async () => {
+		const oneventmove = vi.fn()
+		const { getByTestId } = await renderDraggable({ oneventmove })
+		const target = getByTestId("calendar-view-day-2026-09-18").closest("[data-day]") as HTMLElement
+		fireEvent.drop(target)
+		expect(oneventmove).not.toHaveBeenCalled()
+		expect(target).not.toHaveClass("calendar-view-droptarget")
+	})
+
+	it("keyboard arrows move the activated event by a day/week (DnD alternative)", async () => {
+		const oneventmove = vi.fn()
+		const { getByTestId } = await renderDraggable({ oneventmove })
+		const chip = getByTestId("calendar-view-event-mv1")
+		fireEvent.click(chip) // activates it as the keyboard-move target
+		fireEvent.keyDown(chip, { key: "ArrowRight" })
+		expect(oneventmove).toHaveBeenCalledTimes(1)
+		const detail = oneventmove.mock.calls[0][0].detail
+		expect(detail.from.toString()).toBe("2026-09-15")
+		expect(detail.to.toString()).toBe("2026-09-16")
+		fireEvent.keyDown(chip, { key: "ArrowDown" }) // +1 week from the CURRENT start
+		// Moves are always relative to the event's start in the props (the
+		// consumer owns state and re-renders) — not compounded in-component.
+		expect(oneventmove.mock.calls[1][0].detail.to.toString()).toBe("2026-09-22")
+	})
+
+	it("keyboard arrows do nothing on a chip that is not activated", async () => {
+		const oneventmove = vi.fn()
+		const { getByTestId } = await renderDraggable({ oneventmove })
+		const chip = getByTestId("calendar-view-event-mv1")
+		fireEvent.keyDown(chip, { key: "ArrowRight" })
+		expect(oneventmove).not.toHaveBeenCalled()
+	})
+
+	it("arrow keys still navigate the grid while no chip is activated", async () => {
+		const { getByTestId } = await renderDraggable()
+		const grid = getByTestId("calendar-view")
+		const dayButton = getByTestId(`calendar-view-day-${TODAY.toString()}`)
+		dayButton.focus()
+		fireEvent.keyDown(grid, { key: "ArrowRight" })
+		expect(dayButton.getAttribute("tabindex")).toBe("-1")
+	})
+})

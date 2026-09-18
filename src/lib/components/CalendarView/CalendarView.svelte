@@ -3,8 +3,11 @@
 CalendarView - A full calendar view built on the native Temporal API.
 
 Renders a month grid (6 weeks × 7 days) with ARIA grid semantics, roving
--tabindex keyboard navigation, and month paging. Events, grouping, import,
-and drag-to-edit land in later milestones (see docs/plans/CALENDARVIEW_DESIGN.md).
+-tabindex keyboard navigation, and month paging. Supports event chips
+(`events`), cross-calendar grouping (`grouping`), `.ics` import via the
+`parseICal` helper, and drag-to-edit rescheduling (`dragEvents` + the
+`oneventmove` callback, native HTML Drag and Drop API with a keyboard
+alternative — see docs/plans/CALENDARVIEW_DESIGN.md).
 
 Requires native Temporal (Chrome/Edge 131+). Consumers targeting older
 browsers can install `@js-temporal/polyfill` themselves (first import of
@@ -12,12 +15,16 @@ their app entry) — Twintrinsic ships no polyfill.
 
 Usage:
 ```svelte
-<CalendarView bind:value={selectedDate} />
+<CalendarView bind:value={selectedDate} />  <CalendarView
+    month={visibleMonth}
+    onmonthchange={(e) => console.log(e.detail.month)}
+    weekStart={0}
+/>
 
 <CalendarView
-  month={visibleMonth}
-  onmonthchange={(e) => console.log(e.detail.month)}
-  weekStart={0}
+  events={events}
+  dragEvents
+  oneventmove={(e) => console.log(e.detail.event.id, e.detail.to)}
 />
 ```
 -->
@@ -33,6 +40,8 @@ export const propsMetadata = [
   { name: "onmonthchange", type: "(event: CustomEvent<{ month: Temporal.PlainDate }>) => void", description: "Fires after the visible month changes", optional: true, eventDetail: "{ month: Temporal.PlainDate }" },
   { name: "ondateselect", type: "(event: CustomEvent<{ date: Temporal.PlainDate }>) => void", description: "Fires when a day is selected via pointer or keyboard", optional: true, eventDetail: "{ date: Temporal.PlainDate }" },
   { name: "oneventselect", type: "(event: CustomEvent<{ event: CalendarViewEvent }>) => void", description: "Fires when an event chip is activated (pointer or keyboard)", optional: true, eventDetail: "{ event: CalendarViewEvent }" },
+  { name: "oneventmove", type: "(event: CustomEvent<EventMoveDetail>) => void", description: "Fires on drag-to-edit drop (HTML DnD) or a keyboard move — the consumer owns state and re-renders from the new `start`", optional: true, eventDetail: "{ event, from, to }" },
+  { name: "dragEvents", type: "boolean", description: "Enable drag-to-edit via the native HTML Drag and Drop API (desktop pointer only; keyboard alternative provided)", default: "false", optional: true },
   { name: "events", type: "CalendarViewEvent[]", description: "Events to render as chips in the day cells (ISO strings accepted)", default: "[]", optional: true },
   { name: "grouping", type: "boolean", description: "Merge the same event across calendars into one chip with a source-count badge (dedup by iCal UID, then title+day+time)", default: "false", optional: true },
   { name: "maxEventsPerCell", type: "number", description: "Max chips shown per cell before the \"+N more\" popover (default 2)", default: "2", optional: true },
@@ -59,7 +68,7 @@ export const propsMetadata = [
 import { tick } from "svelte"
 import Icon from "../Icon/Icon.svelte"
 import { buildMonthGrid, monthTitle, resolveWeekStart, weekdayHeaders, type WeekStart } from "../../helpers/calendarGrid.js"
-import { eventsForDay, normalizeEvents, type CalendarViewEvent, type NormalizedEvent } from "../../helpers/eventNormalize.js"
+import { eventsForDay, normalizeEvents, type CalendarViewEvent, type EventMoveDetail, type NormalizedEvent } from "../../helpers/eventNormalize.js"
 import { groupEvents, sourceColors, sourceCount, type GroupedEvent } from "../../helpers/eventGroup.js"
 import type { Snippet } from "svelte"
 
@@ -93,6 +102,10 @@ interface Props {
   ondateselect?: (event: CustomEvent<{ date: Temporal.PlainDate }>) => void
   /** Fires when an event chip is activated (pointer or keyboard) */
   oneventselect?: (event: CustomEvent<{ event: CalendarViewEvent }>) => void
+  /** Fires on drag-to-edit drop (HTML DnD) or a keyboard move — the consumer owns state and re-renders from the new `start` */
+  oneventmove?: (event: CustomEvent<EventMoveDetail>) => void
+  /** Enable drag-to-edit via the native HTML Drag and Drop API (desktop pointer only; keyboard alternative provided) */
+  dragEvents?: boolean
   /** Custom chip content; receives the raw event (see `CalendarViewEvent`) */
   eventContent?: Snippet<[CalendarViewEvent]>
 }
@@ -111,6 +124,8 @@ let {
   onmonthchange,
   ondateselect,
   oneventselect,
+  oneventmove,
+  dragEvents = false,
   eventContent,
   ...restProps
 }: Props = $props()
@@ -284,12 +299,117 @@ function chipLabel(ne: NormalizedEvent): string {
   return parts.join(", ")
 }
 
+/** Id of the most recently activated event (keyboard-move target). */
+let selectedEventId = $state<string | undefined>(undefined)
+
 /**
- * Notifies the consumer that an event chip was activated.
+ * Notifies the consumer that an event chip was activated and marks it as
+ * the keyboard-move target (arrow keys then reschedule it, when enabled).
  * @param ne - The activated event
  */
 function selectEvent(ne: NormalizedEvent): void {
+  selectedEventId = ne.event.id
   oneventselect?.(new CustomEvent("eventselect", { detail: { event: ne.event } }))
+}
+
+/**
+ * Keyboard drag alternative on a focused chip: once activated (Enter/Space
+ * selects it), arrow keys reschedule it by day/week. DnD is pointer-only,
+ * so this must exist — the pointer path can never be the only one.
+ * @param ne - The chip's event
+ * @param e - The keyboard event on the chip button
+ */
+function handleChipKeydown(ne: NormalizedEvent, e: KeyboardEvent): void {
+  if (e.key === "Escape") {
+    selectedEventId = undefined
+    return
+  }
+  if (!dragEvents || selectedEventId !== ne.event.id) return
+  const deltas: Record<string, number> = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: 7, ArrowUp: -7 }
+  const delta = deltas[e.key]
+  if (delta === undefined) return
+  e.preventDefault()
+  e.stopPropagation()
+  moveEventByDays(ne, delta)
+}
+
+/** Id of the event being dragged (HTML DnD data transfer), if any. */
+let draggingId = $state<string | undefined>(undefined)
+
+/** ISO day string of the cell currently hovered as a drop target, if any. */
+let dragOverDay = $state<string | undefined>(undefined)
+
+/**
+ * Starts a chip drag (HTML DnD). Only enabled when `dragEvents` is set and
+ * the chip is its span's start cell (continuation markers are not movable).
+ * @param ne - The event being dragged
+ * @param isStart - Whether this chip is the span's first day
+ * @param e - The dragstart event
+ */
+function handleDragStart(ne: NormalizedEvent, isStart: boolean, e: DragEvent): void {
+  if (!dragEvents || !isStart) return
+  draggingId = ne.event.id
+  e.dataTransfer?.setData("text/plain", ne.event.id)
+  if (e.dataTransfer) e.dataTransfer.effectAllowed = "move"
+}
+
+/**
+ * Resolves the PlainDate a drop-target cell represents (grid cells carry
+ * `data-day` so the lookup never depends on DOM structure).
+ * @param target - The event target or one of its ancestors
+ * @returns The cell's date, or undefined outside the grid
+ */
+function dayFromCell(target: EventTarget | null): Temporal.PlainDate | undefined {
+  const cell = (target as HTMLElement | null)?.closest?.("[data-day]")
+  const iso = cell?.getAttribute("data-day")
+  return iso ? temporal().PlainDate.from(iso) : undefined
+}
+
+/**
+ * Highlights the hovered drop cell (dragover must be cancelled to allow a
+ * drop per the HTML DnD spec).
+ * @param e - The dragover event on a day cell
+ */
+function handleDragOver(e: DragEvent): void {
+  if (!draggingId) return
+  e.preventDefault()
+  if (e.dataTransfer) e.dataTransfer.dropEffect = "move"
+  dragOverDay = dayFromCell(e.target)?.toString()
+}
+
+/**
+ * Accepts the drop: resolves the target day and fires `oneventmove` so the
+ * consumer updates the event's `start` (the component never owns state).
+ * @param e - The drop event on a day cell
+ */
+function handleDrop(e: DragEvent): void {
+  const to = dayFromCell(e.target)
+  const id = draggingId
+  draggingId = undefined
+  dragOverDay = undefined
+  if (!to || !id) return
+  const ne = normalized.find((n) => n.event.id === id)
+  if (!ne) return
+  fireMove(ne, to)
+}
+
+/**
+ * Fires the `eventmove` callback with the event's current start day.
+ * @param ne - The normalized event being moved
+ * @param to - The new start day
+ */
+function fireMove(ne: NormalizedEvent, to: Temporal.PlainDate): void {
+  oneventmove?.(new CustomEvent("eventmove", { detail: { event: ne.event, from: ne.startDay, to } satisfies EventMoveDetail }))
+}
+
+/**
+ * Keyboard drag alternative: moves the most recently activated event by a
+ * signed day delta (never the only editing path — DnD is pointer-only).
+ * @param ne - The event to move
+ * @param days - Signed day delta
+ */
+function moveEventByDays(ne: NormalizedEvent, days: number): void {
+  fireMove(ne, ne.startDay.add({ days }))
 }
 
 /**
@@ -356,7 +476,14 @@ function chipColor(ne: NormalizedEvent): string {
               class="calendar-view-cell"
               class:calendar-view-outside={!inMonth}
               class:calendar-view-selected={selected}
+              class:calendar-view-droptarget={dragOverDay === day.toString()}
               aria-selected={selected}
+              data-day={day.toString()}
+              ondragover={handleDragOver}
+              ondragleave={() => {
+                if (dragOverDay === day.toString()) dragOverDay = undefined
+              }}
+              ondrop={handleDrop}
             >
               <button
                 type="button"
@@ -378,14 +505,23 @@ function chipColor(ne: NormalizedEvent): string {
                       class="calendar-view-chip"
                       class:calendar-view-chip-cancelled={ne.cancelled}
                       class:calendar-view-chip-continuation={!start}
+                      class:calendar-view-chip-dragging={draggingId === ne.event.id}
+                      class:calendar-view-chip-movable={dragEvents && start && selectedEventId === ne.event.id}
                       style="--event-color: {chipColor(ne)}"
                       aria-label={chipLabel(ne)}
                       title={ne.event.title}
+                      draggable={dragEvents && start}
                       data-testid={`calendar-view-event-${ne.event.id}`}
                       onclick={(e) => {
                         e.stopPropagation()
                         selectEvent(ne)
                       }}
+                      ondragstart={(e) => handleDragStart(ne, start, e)}
+                      ondragend={() => {
+                        draggingId = undefined
+                        dragOverDay = undefined
+                      }}
+                      onkeydown={(e) => handleChipKeydown(ne, e)}
                     >
                       {#if eventContent}
                         {@render eventContent(ne.event)}
@@ -566,6 +702,21 @@ function chipColor(ne: NormalizedEvent): string {
 
   .calendar-view-chip-cancelled {
     @apply opacity-60;
+  }
+
+  /* Drop-target highlight during an active drag (HTML DnD). */
+  .calendar-view-droptarget {
+    @apply ring-2 ring-inset ring-primary;
+  }
+
+  /* The chip currently being dragged. */
+  .calendar-view-chip-dragging {
+    @apply opacity-40;
+  }
+
+  /* The activated chip arrow keys will move (keyboard drag alternative). */
+  .calendar-view-chip-movable {
+    @apply cursor-move;
   }
 
   .calendar-view-chip-continuation {

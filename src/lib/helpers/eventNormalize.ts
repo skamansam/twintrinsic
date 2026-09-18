@@ -194,3 +194,18 @@ export function eventsForDay(events: NormalizedEvent[], day: Temporal.PlainDate)
 		(ne) => Temporal.PlainDate.compare(ne.startDay, day) <= 0 && Temporal.PlainDate.compare(day, ne.endDay) <= 0,
 	)
 }
+
+/**
+ * Payload for CalendarView's `oneventmove` callback: the moved event, the
+ * day it was dragged (or keyboard-moved) from, and the day it landed on.
+ * The component never mutates event state — the consumer owns the `events`
+ * array and re-renders by updating `event.start` to the new day.
+ */
+export interface EventMoveDetail {
+	/** The moved event (raw, as passed via the `events` prop) */
+	event: CalendarViewEvent
+	/** The event's start day before the move */
+	from: Temporal.PlainDate
+	/** The event's start day after the move */
+	to: Temporal.PlainDate
+}
