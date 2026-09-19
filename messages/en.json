@@ -5100,5 +5100,9 @@
   "research_related": "Related components",
   "research_sources_legend": "Source key",
   "research_sources_body": "Citations reference the checklist's source table: S1 WAI-ARIA APG, S2 MDN Web Docs, S3 Primer (GitHub), S4 Material Design 3, S5 modern-web-guidance, S6 Ant Design, S7 Carbon Design System.",
-  "research_sources_reference": "see the checklist's Sources Reference table."
+  "research_sources_reference": "see the checklist's Sources Reference table.",
+  "example_calendar_tz_heading": "Time zones",
+  "example_calendar_tz_lede": "The same instants land on different local days depending on the zone. Pick a zone to re-anchor the three demo events — the reference moment falls on Sep 1 in Los Angeles but Sep 2 in Tokyo.",
+  "example_calendar_tz_zone": "Zone",
+  "example_calendar_tz_reference": "Reference instant"
 }

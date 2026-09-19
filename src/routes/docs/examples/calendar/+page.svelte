@@ -89,6 +89,59 @@ let form: HTMLFormElement | undefined = $state()
 
 /** Source ids whose holiday feed failed to load (shown as a notice). */
 let sourceErrors: string[] = $state([])
+
+/* ── Time-zone demo (second example on the page) ────────────────────── */
+
+/**
+ * The reference instant every zone converts: 2026-09-01 23:30 UTC lands on
+ * Sep 1 at 16:30 in Los Angeles but Sep 2 at 08:30 in Tokyo — one event,
+ * different days, purely by zone. Demo data is fixed (not `Temporal.Now`)
+ * so SSR and hydration render identically; real apps would use
+ * `Temporal.Now.instant()`.
+ */
+const TZ_REFERENCE = Temporal.Instant.from("2026-09-01T23:30:00Z")
+
+/** Curated IANA zones offered in the picker (plus UTC as the default). */
+const TZ_ZONES = [
+  "UTC",
+  "America/Los_Angeles",
+  "America/New_York",
+  "Europe/London",
+  "Europe/Berlin",
+  "Asia/Tehran",
+  "Asia/Tokyo",
+  "Australia/Sydney",
+]
+
+/** Fixed demo instants — the events every zone re-anchors to a local day. */
+const TZ_INSTANTS = [
+  { name: "Launch call", at: "2026-09-01T23:30:00Z" },
+  { name: "Team standup", at: "2026-09-03T09:00:00Z" },
+  { name: "Sprint retro", at: "2026-09-08T16:00:00Z" },
+]
+
+/** Selected IANA zone (defaults to UTC for deterministic SSR). */
+let tzZone = $state("UTC")
+
+/** Visibility month for the time-zone demo's calendar. */
+let tzMonth = $state(Temporal.PlainDate.from("2026-09-01"))
+
+/** The reference instant re-expressed in the selected zone. */
+const tzRef = $derived(TZ_REFERENCE.toZonedDateTimeISO(tzZone))
+
+/** Demo events converted to the selected zone's local days (consumer-side conversion — CalendarView stays PlainDate-driven). */
+const tzEvents = $derived(
+  TZ_INSTANTS.map((e) => {
+    const zdt = Temporal.Instant.from(e.at).toZonedDateTimeISO(tzZone)
+    return {
+      id: `tz-${e.name}`,
+      title: `${e.name} · ${zdt.toPlainTime().toString({ smallestUnit: "minute" })}`,
+      start: zdt.toPlainDate().toString(),
+      allDay: true,
+      color: "var(--color-info)",
+    }
+  }),
+)
 </script>
 
 <svelte:head>
@@ -211,6 +264,32 @@ let sourceErrors: string[] = $state([])
         sourceErrors = e.detail.errors.map((err) => err.sourceId)
       }}
     />
+  </div>
+
+  <h2>{m.example_calendar_tz_heading()}</h2>
+  <p>{m.example_calendar_tz_lede()}</p>
+
+  <div class="not-prose mb-4 rounded-lg border border-border p-4" data-testid="tz-demo">
+    <div class="mb-3 flex flex-wrap items-end gap-3">
+      <label class="text-xs">
+        <span class="block text-muted">{m.example_calendar_tz_zone()}</span>
+        <select
+          bind:value={tzZone}
+          class="rounded border border-border bg-surface px-2 py-1 text-sm"
+          data-testid="tz-zone"
+        >
+          {#each TZ_ZONES as z (z)}
+            <option value={z}>{z}</option>
+          {/each}
+        </select>
+      </label>
+      <p class="text-xs text-muted" data-testid="tz-readout">
+        {m.example_calendar_tz_reference()}:
+        <strong class="text-text">{tzRef.toPlainDate().toString()} {tzRef.toPlainTime().toString({ smallestUnit: "minute" })}</strong>
+        ({tzRef.offset})
+      </p>
+    </div>
+    <CalendarView bind:month={tzMonth} events={tzEvents} maxEventsPerCell={3} />
   </div>
 
   <h2>{m.sec_what_when_why()}</h2>

@@ -76,5 +76,34 @@ test.describe("calendar example page", () => {
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
     // The seeded sandbox chip survives the reload the locale switch triggers.
     await expect(page.getByTestId("calendar-view-event-sb-1")).toBeVisible();
+    // The time-zone demo chrome translates too.
+    await expect(page.getByRole("heading", { name: "منطقه‌های زمانی" })).toBeVisible();
+  });
+
+  test("time-zone demo anchors the reference instant per zone", async ({ page }) => {
+    const tz = page.getByTestId("tz-demo");
+    // Default UTC: 23:30 on Sep 1, three demo events visible.
+    await expect(tz.getByTestId("tz-readout")).toContainText("2026-09-01 23:30");
+    for (const name of ["Launch call", "Team standup", "Sprint retro"]) {
+      await expect(tz.getByText(name)).toBeVisible();
+    }
+  });
+
+  test("switching zones re-anchors events to different local days", async ({ page }) => {
+    const tz = page.getByTestId("tz-demo");
+    const zone = tz.getByTestId("tz-zone");
+
+    // 23:30Z is 16:30 on the same day in Los Angeles (no midnight crossing).
+    await zone.selectOption("America/Los_Angeles");
+    await expect(tz.getByTestId("tz-readout")).toContainText("2026-09-01 16:30");
+    await expect(tz.getByTestId("tz-readout")).toContainText("-07:00");
+    await expect(tz.getByText(/Launch call · 16:30/)).toBeVisible();
+
+    // …but 08:30 the NEXT day in Tokyo, where Sprint retro (16:00Z) also crosses.
+    await zone.selectOption("Asia/Tokyo");
+    await expect(tz.getByTestId("tz-readout")).toContainText("2026-09-02 08:30");
+    await expect(tz.getByTestId("tz-readout")).toContainText("+09:00");
+    await expect(tz.getByText(/Launch call · 08:30/)).toBeVisible();
+    await expect(tz.getByText(/Sprint retro · 01:00/)).toBeVisible();
   });
 });
