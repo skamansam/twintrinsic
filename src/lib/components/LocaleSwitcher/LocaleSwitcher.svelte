@@ -76,19 +76,22 @@ Usage:
     // source, so a consumer's build resolves it to THEIR
     // `src/lib/paraglide/runtime.js`; apps without the alias (or without
     // Paraglide) simply match nothing and the glob stays empty.
-    const runtimeModules = import.meta.glob("$lib/paraglide/runtime.js")
+    const glob = (
+      import.meta as { glob?: (pattern: string) => Record<string, () => Promise<unknown>> }
+    ).glob
+    const runtimeModules = glob?.("$lib/paraglide/runtime.js") ?? {}
     const loaders = Object.values(runtimeModules)
     if (loaders.length === 0) {
       runtime = undefined
-    } else {
-      loaders[0]()
-        .then((mod) => {
-          runtime = mod as unknown as ParaglideRuntime
-        })
-        .catch(() => {
-          runtime = undefined
-        })
+      return
     }
+    loaders[0]()
+      .then((mod) => {
+        runtime = mod as unknown as ParaglideRuntime
+      })
+      .catch(() => {
+        runtime = undefined
+      })
   })
 
   /** Locales to display: explicit prop, or the runtime's list once loaded */
