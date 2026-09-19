@@ -2,6 +2,14 @@
   "name": "twintrinsic",
   "version": "0.51.0",
   "license": "MIT",
+  "packageManager": "pnpm@10.24.0",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "24.10.0",
+      "onFail": "download"
+    }
+  },
   "scripts": {
     "dev": "vite dev",
     "build:llms": "node scripts/build-llms-txt.mjs",
