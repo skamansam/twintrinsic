@@ -110,6 +110,19 @@ own branch and a GitHub pull request — never commit directly to `main`.
   `chore/<topic>`, `ci/<topic>` (e.g. `feat/calendar-timezone-demo`).
 - **Branch off `main`** (or off another feature branch for stacked work,
   targeting that branch as the PR base).
+- **Use worktrees, not in-place branch switches** — keep the primary
+  checkout on `main` and do branch work in a linked worktree:
+  - New branch: `git worktree add ../twintrinsic-<topic> -b <type>/<topic>`
+  - Existing branch: `git worktree add ../twintrinsic-<topic> <type>/<topic>`
+  - First setup in a worktree: `pnpm install` (the `prepare` script
+    compiles Paraglide and syncs SvelteKit; Playwright browsers are
+    shared through the home cache). Copy any needed untracked `.env`.
+  - After merge: `git worktree remove ../twintrinsic-<topic>`, delete
+    the branch, and `git worktree prune` if needed.
+- **Agent tooling note**: file tools operate on the primary checkout
+  only. Inside a worktree, edit files with scripted terminal edits
+  (e.g. `python3` heredocs) and run builds/tests/git via
+  `run_terminal_command` with `cwd` pointed at the worktree.
 - **When done**: push the branch, then open the PR with `gh pr create` —
   title summarizes the change, body covers what/why, verification gates
   (check, tests, lint), and a `Stacked on #N` note when applicable.
