@@ -72,6 +72,7 @@ const siteMenu = $derived.by(() => {
       { title: "Data Dashboard", link: "/docs/examples/dashboard", icon: "dashboard" },
       { title: "Game Map", link: "/docs/examples/game-map", icon: "map" },
       { title: "Shopping Page", link: "/docs/examples/shopping", icon: "shopping-cart" },
+      { title: "Calendar", link: "/docs/examples/calendar", icon: "calendar-heart" },
     ],
   },
   {

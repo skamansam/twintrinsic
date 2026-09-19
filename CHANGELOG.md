@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Calendar playground example page** (`/docs/examples/calendar`) — the
+  11.4 holiday-calendar playground is now a standalone, menu-visible example:
+  multi-select Google public holiday feeds, a seeded random-events generator
+  scoped to the active month/week/day view, a custom-event form,
+  select-then-delete, and drag-to-edit. Playground logic is shared with the
+  CalendarView docs page via `src/routes/docs/examples/playgroundHelpers.ts`;
+  chrome is translated (en/es/fa) with e2e coverage including the RTL locale.
+
 - **`parseGoogleCsv` helper** — parses Google Calendar's US-English **CSV
   export** into `CalendarViewEvent[]`: RFC 4180 tokenizer (quoted
   multi-line descriptions, `""` escapes, CRLF), case-insensitive and
