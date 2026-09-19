@@ -69,8 +69,6 @@ jobs:
     # against every story at the same time.
     name: Storybook interaction + a11y tests (Chromium)
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.58.2-noble
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -79,14 +77,20 @@ jobs:
           node-version-file: package.json
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # Browsers are installed at runtime so the binary always matches the
+      # playwright version resolved from the lockfile — no image tag to drift.
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test:storybook
 
   e2e:
     # Playwright against the SvelteKit preview booted on port 5173.
     name: E2E docs-site smokes (Chromium)
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.58.2-noble
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -95,6 +99,12 @@ jobs:
           node-version-file: package.json
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test:e2e
       # Debugging artifacts (screenshot/video/trace per failed test — see
       # playwright.config.ts `use`). Uploaded only when the job fails;
@@ -118,8 +128,6 @@ jobs:
     # from the artifact when you want the docs site to pick up new data.
     name: Browser compatibility matrix (Chromium/Firefox/WebKit)
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.58.2-noble
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -128,6 +136,12 @@ jobs:
           node-version-file: package.json
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - run: pnpm exec playwright install --with-deps chromium firefox webkit
       - run: pnpm test:compat
       - run: pnpm test:compat:merge
       - uses: actions/upload-artifact@v4
