@@ -205,7 +205,37 @@ export default defineConfig({
         // failed to import. Note: root-level optimizeDeps does NOT reach
         // this project server (see comment above), so the include lives here.
         optimizeDeps: {
-          include: ["@oddbird/css-anchor-positioning", "@oddbird/popover-polyfill", "interestfor"],
+          // All deps that Vite would otherwise discover LAZILY mid-run
+          // (cold CI cache) → second optimizer pass → server reload →
+          // every in-flight story import aborted. Pre-declaring pins them
+          // into the first pass. NOTE: any new lazily-imported dep must be
+          // added here too.
+          include: [
+            // Tooltip's polyfills (statically imported by src/lib/polyfills.ts)
+            "@oddbird/css-anchor-positioning",
+            "@oddbird/popover-polyfill",
+            "interestfor",
+            // CodeEditor's dynamic language imports — also split
+            // @codemirror/state across two bundles ("Unrecognized extension
+            // value" instanceof errors)
+            "@codemirror/lang-cpp",
+            "@codemirror/lang-css",
+            "@codemirror/lang-go",
+            "@codemirror/lang-html",
+            "@codemirror/lang-java",
+            "@codemirror/lang-javascript",
+            "@codemirror/lang-json",
+            "@codemirror/lang-markdown",
+            "@codemirror/lang-php",
+            "@codemirror/lang-python",
+            "@codemirror/lang-rust",
+            "@codemirror/lang-sql",
+            "@codemirror/lang-xml",
+            // Map's dynamic import
+            "leaflet",
+            // CodeBlock's dynamic import (the Svelte highlighter)
+            "prism-svelte",
+          ],
         },
         test: {
           name: "storybook",
