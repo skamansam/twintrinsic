@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "vite dev",
     "build:llms": "node scripts/build-llms-txt.mjs",
+    "build:research": "node scripts/build-research-data.mjs",
+    "check:research": "node scripts/build-research-data.mjs --check",
     "build:lib": "svelte-kit sync && svelte-package",
     "build": "pnpm build:llms && vite build",
     "preview": "vite preview",

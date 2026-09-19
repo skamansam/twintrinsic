@@ -5071,5 +5071,21 @@
   "calendarview_ex_csv": "CSV import",
   "calendarview_ex_csv_p": "Google Calendar CSV exports (the Subject/Start Date/… spreadsheet shape) parse through the parseGoogleCsv helper — see the Utilities page. Quoted multi-line descriptions, escaped quotes, 12-hour and 24-hour times, and inclusive all-day end dates are handled; unparseable rows are skipped. The demo below renders two rows: a timed talk and a two-day team holiday.",
   "calendarview_ex_lanes": "Sub-row lanes",
-  "calendarview_ex_lanes_p": "Overlapping multi-day events no longer stack on every day they touch: each week row assigns overlapping spans to side-by-side lanes (greedy interval packing, FullCalendar-style) so simultaneous events render next to each other with their full width. Single-day chips keep their normal stacked flow below the lanes. In the demo, the Offsite and Conference spans overlap on Sep 9–10 and render in two lanes, while the 1:1 stacks in the day's normal flow."
+  "calendarview_ex_lanes_p": "Overlapping multi-day events no longer stack on every day they touch: each week row assigns overlapping spans to side-by-side lanes (greedy interval packing, FullCalendar-style) so simultaneous events render next to each other with their full width. Single-day chips keep their normal stacked flow below the lanes. In the demo, the Offsite and Conference spans overlap on Sep 9–10 and render in two lanes, while the 1:1 stacks in the day's normal flow.",
+  "link_research": "Research",
+  "research_intro": "Design research for every component — what it is, when to use it, and why — compiled from the component research checklist.",
+  "research_of": "of",
+  "research_entries": "entries",
+  "research_search_label": "Search research",
+  "research_search_placeholder": "Search components, APIs, common mistakes…",
+  "research_what": "What",
+  "research_when": "When",
+  "research_why": "Why",
+  "research_sources": "Sources",
+  "research_implementation": "Twintrinsic implementation",
+  "research_mistakes": "Common mistakes",
+  "research_related": "Related components",
+  "research_sources_legend": "Source key",
+  "research_sources_body": "Citations reference the checklist's source table: S1 WAI-ARIA APG, S2 MDN Web Docs, S3 Primer (GitHub), S4 Material Design 3, S5 modern-web-guidance, S6 Ant Design, S7 Carbon Design System.",
+  "research_sources_reference": "see the checklist's Sources Reference table."
 }

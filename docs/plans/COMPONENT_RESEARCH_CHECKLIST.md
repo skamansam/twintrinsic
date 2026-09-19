@@ -55,6 +55,10 @@
 - Don't forget `id="main-content"` for skip-nav links
 
 **Related:** AppHeader, Sidebar, Footer, BottomBar, Container
+
+---
+
+### 1.2 AppHeader
 **Status:** ✅
 
 | | |
@@ -79,6 +83,10 @@
 - Don't forget `aria-label` when there are multiple navigation landmarks
 
 **Related:** App, Sidebar, BottomBar, Menu, Breadcrumb
+
+---
+
+### 1.3 BottomBar
 **Status:** ✅
 
 | | |
@@ -102,6 +110,10 @@
 - Don't forget `aria-current="page"` on the active item
 
 **Related:** AppHeader, Sidebar, App, Menu
+
+---
+
+### 1.4 Sidebar
 **Status:** ✅
 
 | | |
@@ -125,7 +137,6 @@
 - Don't hardcode sidebar width — use CSS custom properties for flexibility
 
 **Related:** App, AppHeader, Tree, TreeMenu, Breadcrumb
-**Status:** ✅
 
 ---
 
@@ -1653,4 +1664,6 @@
 2. ✅ Add Twintrinsic-specific implementation notes (which modern APIs are used)
 3. ✅ Add "Common Mistakes" section for each component
 4. ✅ Add "Related Components" cross-references
-5. ☐ Publish as component documentation on the docs site
+5. ✅ Publish as component documentation on the docs site — live at `/docs/research`
+   (generated into `src/routes/docs/research/researchData.generated.ts` via
+   `pnpm build:research`; CI gate: `pnpm check:research`)

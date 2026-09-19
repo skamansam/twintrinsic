@@ -42,6 +42,11 @@ const siteLinks = $derived([
     current: page.url.pathname === "/docs/utilities",
   },
   {
+    label: m.link_research(),
+    href: "/docs/research",
+    current: page.url.pathname === "/docs/research",
+  },
+  {
     label: m.link_completion(),
     href: "/docs/completion",
     current: page.url.pathname === "/docs/completion",
@@ -218,7 +223,10 @@ const siteMenu = $derived.by(() => {
   },
   {
     title: m.nav_apis(),
-    children: [{ title: "Utilities", link: "/docs/utilities", icon: "tool" }],
+    children: [
+      { title: "Utilities", link: "/docs/utilities", icon: "tool" },
+      { title: "Research", link: "/docs/research", icon: "book" },
+    ],
   },
   {
     title: m.nav_theming(),

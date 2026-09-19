@@ -258,7 +258,7 @@ The following plan files have been **deleted** (information consolidated above):
 
 ## 11. Component Research — In Progress
 
-**Status:** ⬜ Not started — all entries in `COMPONENT_RESEARCH_CHECKLIST.md` are blank.
+**Status:** ✅ Complete — all 67 component entries in `COMPONENT_RESEARCH_CHECKLIST.md` are filled in (What/When/Why, ≥5 sources, Twintrinsic implementation notes, common mistakes, cross-references) **and published to the docs site at `/docs/research`** (generated data + searchable page, i18n chrome in en/es/fa).
 
 ### What's Needed
 For every component, document **What** it is, **When** to use it, and **Why** — from a design perspective, written for developers. Each entry must cite ≥5 sources.
@@ -284,13 +284,13 @@ For every component, document **What** it is, **When** to use it, and **Why** �
 
 ---
 
-## 12. Plan File Cleanup — In Progress
+## 12. Plan File Cleanup — Complete
 
 | File | Status |
 |------|--------|
-| `E2E_TO_STORYBOOK_MIGRATION_PLAN.md` | ⬜ Can be deleted (completed) |
-| `USER_FEEDBACK.md` | ⬜ Review for actionable items |
-| `README.md` | ⬜ Update plan folder index |
+| `E2E_TO_STORYBOOK_MIGRATION_PLAN.md` | ✅ Completed (all checkboxes done) and archived to `docs/plans/archive/` |
+| `USER_FEEDBACK.md` | ✅ Reviewed — every actionable item was compiled into `FEEDBACK_RESOLUTION_PLAN.md` (89/89 complete); archived to `docs/plans/archive/` |
+| `README.md` | ✅ Plan folder index updated |
 
 ---
 
@@ -312,5 +312,5 @@ All phases of the 2026 Modernization Plan have been reviewed and assessed:
 | **CI Gating** | ✅ Done | unit/storybook/e2e/compat jobs in test.yml |
 
 ### Still TODO
-- Component Research Checklist — fill in What/When/Why for all 40+ components
-- Plan file cleanup — delete completed plans, update index
+
+Nothing — all phases assessed, research published.

@@ -5071,5 +5071,21 @@
   "calendarview_ex_csv": "Importación de CSV",
   "calendarview_ex_csv_p": "Las exportaciones CSV de Google Calendar (la forma de hoja de cálculo con Subject/Start Date/…) se analizan con el asistente parseGoogleCsv — consulta la página de utilidades. Se manejan descripciones multilínea entre comillas, comillas escapadas, horas de 12 y 24 horas y fechas de fin inclusivas para eventos de todo el día; las filas que no se pueden analizar se omiten. La demostración de abajo muestra dos filas: una charla con hora y dos días festivos de equipo.",
   "calendarview_ex_lanes": "Carriles de subfila",
-  "calendarview_ex_lanes_p": "Los eventos multiday superpuestos ya no se apilan en cada día que tocan: cada fila de semana asigna carriles lado a lado a los tramos superpuestos (empaquetado codicioso de intervalos, al estilo FullCalendar), de modo que los eventos simultáneos se muestran uno al lado del otro con todo su ancho. Los chips de un solo día mantienen su flujo apilado normal debajo de los carriles. En la demostración, los tramos de Offsite y Conference se superponen el 9 y 10 de sep y se muestran en dos carriles, mientras que el 1:1 se apila en el flujo normal del día."
+  "calendarview_ex_lanes_p": "Los eventos multiday superpuestos ya no se apilan en cada día que tocan: cada fila de semana asigna carriles lado a lado a los tramos superpuestos (empaquetado codicioso de intervalos, al estilo FullCalendar), de modo que los eventos simultáneos se muestran uno al lado del otro con todo su ancho. Los chips de un solo día mantienen su flujo apilado normal debajo de los carriles. En la demostración, los tramos de Offsite y Conference se superponen el 9 y 10 de sep y se muestran en dos carriles, mientras que el 1:1 se apila en el flujo normal del día.",
+  "link_research": "Investigación",
+  "research_intro": "Investigación de diseño para cada componente: qué es, cuándo usarlo y por qué, recopilada de la lista de verificación de investigación de componentes.",
+  "research_of": "de",
+  "research_entries": "entradas",
+  "research_search_label": "Buscar en la investigación",
+  "research_search_placeholder": "Buscar componentes, API, errores comunes…",
+  "research_what": "Qué",
+  "research_when": "Cuándo",
+  "research_why": "Por qué",
+  "research_sources": "Fuentes",
+  "research_implementation": "Implementación en Twintrinsic",
+  "research_mistakes": "Errores comunes",
+  "research_related": "Componentes relacionados",
+  "research_sources_legend": "Clave de fuentes",
+  "research_sources_body": "Las citas hacen referencia a la tabla de fuentes de la lista de verificación: S1 WAI-ARIA APG, S2 MDN Web Docs, S3 Primer (GitHub), S4 Material Design 3, S5 modern-web-guidance, S6 Ant Design, S7 Carbon Design System.",
+  "research_sources_reference": "ver la tabla de referencia de fuentes de la lista de verificación."
 }

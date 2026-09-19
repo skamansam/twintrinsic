@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **`parseGoogleCsv` helper** — parses Google Calendar's US-English **CSV
+  export** into `CalendarViewEvent[]`: RFC 4180 tokenizer (quoted
+  multi-line descriptions, `""` escapes, CRLF), case-insensitive and
+  column-order-independent header matching, `M/D/YYYY` dates (impossible
+  dates like 9/31 rejected via Temporal), 12h and 24h times, and malformed
+  rows skipped. Exported from the barrel and
+  `twintrinsic/helpers/parseGoogleCsv`.
+- **`assignEventLanes` / `computeWeekLanes` helpers + sub-row lanes** —
+  overlapping multi-day events in CalendarView's month grid now render
+  side by side in CSS-grid lane rows instead of stacking: each week packs
+  its spans into lanes (greedy interval coloring, calendar order), cells
+  define matching lane tracks, and lane chips span every day they cover.
+  Single-day chips keep their stacked auto flow; continuation chips keep
+  their event's lane. Exported from the barrel and
+  `twintrinsic/helpers/eventLanes`.
+
+### Fixed
+
+- **parseICal multi-day all-day events rendered one day too long** — RFC 5545
+  `DTEND;VALUE=DATE` is *exclusive* but CalendarView renders spans
+  *inclusive*; parseICal now converts (and drops same-day ends). Real Google
+  `.ics` imports previously over-rendered by one day.
+
 ## [0.51.0] - 2026-09-18
 
 ### Added
@@ -77,5 +104,6 @@ field); the `twintrinsic/components/Calendar` subpath is replaced by
 
 Initial tagged release of the Twintrinsic component library.
 
+[Unreleased]: https://github.com/koltondev/twintrinsic/compare/v0.51.0...HEAD
 [0.51.0]: https://github.com/koltondev/twintrinsic/compare/v0.50.0...v0.51.0
 [0.50.0]: https://github.com/koltondev/twintrinsic/releases/tag/v0.50.0

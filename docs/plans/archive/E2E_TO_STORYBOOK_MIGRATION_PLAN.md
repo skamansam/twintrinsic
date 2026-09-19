@@ -124,9 +124,11 @@ For each row: **link the story to migrate to**, **the docs page to add
     2. **Docs Playwright smoke**: nested-theming demo presence, page-header toggle works after page navigation.
   - The CSS-var test (`--color-background` swap) does not need Playwright — Storybook + A11y already covers behavior.
 
-- [ ] `tests/e2e/demo.test.ts` → stays as-is (`/` smoke) → `[KEEP-PW]`
-  - Add: assert that the homepage contains a link to `/docs` and links to component cards.
-  - Add: same smoke against `/docs`, `/docs/components`, `/demo/paraglide`.
+- [x] `tests/e2e/demo.test.ts` → stays as-is (`/` smoke) → `[KEEP-PW]` ✅
+  - Done (commit `e353d39`): the "docs smoke" describe asserts the homepage
+    links to `/docs` and renders component cards, and smoke-checks `/docs`
+    and `/docs/components`. `/demo/paraglide` smoke is covered by the
+    i18n demo tests in the same file.
 
 #### Storybook-pointing tests to migrate to docs + Storybook
 
