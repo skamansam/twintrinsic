@@ -10,7 +10,7 @@ A Tailwind-based Svelte 5 component library emphasizing accessibility, extensibi
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the documentation/i18n (Paraglide) workflow, and [AGENTS.md](AGENTS.md) for the coding standards (Svelte 5 runes, Tailwind, testing requirements).
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the documentation/i18n (Paraglide) workflow, [AGENTS.md](AGENTS.md) for the coding standards (Svelte 5 runes, Tailwind, testing requirements), and [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ## Philosophy
 
