@@ -57,3 +57,28 @@ test.describe("i18n demo pages", () => {
     await expect(page.getByTestId("pg-plural")).toContainText("مورد انتخاب شده");
   });
 });
+
+test.describe("docs smoke", () => {
+  test("homepage links to the docs and lists component cards", async ({ page }) => {
+    await page.goto("/");
+    await waitForHydration(page);
+
+    // Primary CTA + nav links into the docs
+    const docsLinks = page.locator('a[href="/docs"]');
+    await expect(docsLinks.first()).toBeVisible();
+    await expect(docsLinks).not.toHaveCount(0);
+
+    // Component cards point at their docs pages (lowercased route names)
+    await expect(page.locator('a[href^="/docs/components/"]').first()).toBeVisible();
+  });
+
+  test("docs index and components index render", async ({ page }) => {
+    await page.goto("/docs");
+    await waitForHydration(page);
+    await expect(page.locator("h1")).toBeVisible();
+
+    await page.goto("/docs/components");
+    await waitForHydration(page);
+    await expect(page.locator("h1")).toBeVisible();
+  });
+});

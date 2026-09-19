@@ -116,7 +116,7 @@ For each row: **link the story to migrate to**, **the docs page to add
   - "basic" / "fluid" testids already present.
   - Behavior (class names matching `container` / `w-full`) → Storybook `play` function per story.
 
-- [ ] `tests/e2e/themetoggle.test.ts` → currently goes to `/docs/components/themetoggle` (casing mismatch; docs page is at `/docs/components/ThemeToggle/ThemeToggle`) → `[DOCS]`
+- [x] `tests/e2e/ThemeToggle.test.ts` → already targets the PascalCase URL `/docs/components/ThemeToggle/ThemeToggle` (the old lowercase `themetoggle.test.ts` file was superseded) → `[DOCS]`
   - **Fix URL**: `/docs/components/ThemeToggle/ThemeToggle` (PascalCase).
   - Story: `stories/ThemeToggle.stories.js`.
   - Port 14 tests across 4 `describe` blocks to:
