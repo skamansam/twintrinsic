@@ -101,6 +101,23 @@ docs/
 └── ...                   # Other documentation
 ```
 
+## Git & PR Workflow
+
+Every new feature, fix, component, or update to an existing one gets its
+own branch and a GitHub pull request — never commit directly to `main`.
+
+- **Branch naming**: `feat/<topic>`, `fix/<topic>`, `docs/<topic>`,
+  `chore/<topic>`, `ci/<topic>` (e.g. `feat/calendar-timezone-demo`).
+- **Branch off `main`** (or off another feature branch for stacked work,
+  targeting that branch as the PR base).
+- **When done**: push the branch, then open the PR with `gh pr create` —
+  title summarizes the change, body covers what/why, verification gates
+  (check, tests, lint), and a `Stacked on #N` note when applicable.
+- **One logical change per PR** — don't mix an unrelated fix into a
+  feature branch; split it onto its own branch.
+- **Never push to `main` directly.** The user merges PRs; the agent opens
+  them and hands over.
+
 ## Planning Documents
 
 All planning files created by agents should be stored in `docs/plans/`. These documents track project scope, implementation strategies, migration progress, and other planning artifacts that help coordinate work across sessions.
