@@ -1,7 +1,7 @@
 # CalendarView — Design Note
 
-> Design for plan item **11.1** in `FEEDBACK_RESOLUTION_PLAN.md` (P1, ⬜ Planned).
-> Status: **Final** — open questions resolved 2026-09-17. Owner: TBD.
+> Design for plan item **11.1** in `FEEDBACK_RESOLUTION_PLAN.md` (P1, ✅ Done — 2026-09-18).
+> Status: **Final** — open questions resolved 2026-09-17; implementation complete including phase 2.
 > Companion rename: existing `Form/Calendar.svelte` → **CalendarInput**.
 > Policy: **native APIs only** — Twintrinsic ships zero polyfills; browser-support
 > gaps (Temporal, `Intl.Locale.weekInfo`) are documented so consumers can fill them.

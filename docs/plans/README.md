@@ -7,7 +7,7 @@ This folder contains planning documents for Twintrinsic.
 | File | Purpose |
 |------|---------|
 | **[CONSOLIDATED_PLAN.md](./CONSOLIDATED_PLAN.md)** | Single source of truth — project status, completed work, future plans, API reference |
-| **[COMPONENT_RESEARCH_CHECKLIST.md](./COMPONENT_RESEARCH_CHECKLIST.md)** | Per-component design research (What/When/Why, sources, implementation notes) — 67/67 entries complete; publishing to the docs site is the remaining step |
+| **[COMPONENT_RESEARCH_CHECKLIST.md](./COMPONENT_RESEARCH_CHECKLIST.md)** | Per-component design research (What/When/Why, sources, implementation notes) — 67/67 entries complete, published at `/docs/research` |
 | **[FEEDBACK_RESOLUTION_PLAN.md](./FEEDBACK_RESOLUTION_PLAN.md)** | Resolution tracker for the user-feedback audit — **89/89 complete** |
 | **[CALENDARVIEW_DESIGN.md](./CALENDARVIEW_DESIGN.md)** | CalendarView design note — Temporal date model, month grid, event grouping, connectivity (plan item 11.1, phase 2 closed) |
 | **[DOCPAGE_TEMPLATE_REFERENCE.md](./DOCPAGE_TEMPLATE_REFERENCE.md)** | The standardized docs-page template all component pages follow |
