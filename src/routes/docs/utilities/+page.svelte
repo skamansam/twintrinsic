@@ -155,6 +155,26 @@ const occurrences = expandRecurrences(events, {
 // Or let CalendarView do it: <CalendarView events={events} recurrence />`}
   </CodeBlock>
 
+  <Separator>{m.util_gcsv_heading()}</Separator>
+
+  <h2>parseGoogleCsv</h2>
+
+  <Panel>
+    {#snippet header()}
+      parseGoogleCsv(text: string, options?) → CalendarViewEvent[]
+    {/snippet}
+    <p>{m.util_gcsv_body()}</p>
+  </Panel>
+
+  <CodeBlock language="typescript">
+{`import { parseGoogleCsv } from "twintrinsic"
+
+const csvText = await fetch("/google-calendar-export.csv").then((r) => r.text())
+const events = parseGoogleCsv(csvText)
+
+// Feed straight into <CalendarView events={events} />`}
+  </CodeBlock>
+
   <Separator>{m.util_docs_tables()}</Separator>
 
   <h2>PropsTable & EventsTable</h2>

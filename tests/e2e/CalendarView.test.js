@@ -286,3 +286,20 @@ test.describe("CalendarView views + playground (11.4)", () => {
     await expect(demo.getByTestId("calendar-view-event-sb-1")).toBeVisible();
   });
 });
+
+test.describe("CalendarView Google CSV import", () => {
+  test("csv demo parses timed and multi-day all-day rows", async ({ page }) => {
+    await page.goto("/docs/components/Form/CalendarView");
+    await waitForHydration(page);
+    const csvDemo = page.getByTestId("calendarview-csv");
+    await expect(csvDemo).toBeVisible();
+
+    // Timed row renders on Sep 24.
+    await expect(csvDemo.getByText("Conference talk")).toHaveCount(1);
+
+    // The inclusive two-day holiday spans Sep 28–29 (start + continuation).
+    const holiday = csvDemo.getByText("Team holiday");
+    await expect(holiday.first()).toBeVisible();
+    await expect(holiday).toHaveCount(2);
+  });
+});

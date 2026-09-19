@@ -261,7 +261,7 @@ interface CalendarSource {
 | Capability | Approach |
 |---|---|
 | **iCalendar (.ics) import** | `parseICal(text, { defaultTz }): CalendarViewEvent[]` in `src/lib/helpers/` — VEVENT, UID, SUMMARY, DTSTART/DTEND (DATE vs DATE-TIME, TZID, VALUE=DATE), STATUS, DESCRIPTION, LOCATION. Ships phase 1. |
-| **Google export** | Google's .ics export *is* iCalendar → same parser. CSV export gets `parseGoogleCsv()` in phase 2. |
+| **Google export** | .ics via the same parser. ✅ CSV shipped (2026-09-18): `parseGoogleCsv(text, { idPrefix })` parses Google's US-English CSV export (Subject, Start/End Date+Time, All Day Event, Description, Location) — RFC 4180 tokenizer (quoted multi-line fields, `""` escapes), case-insensitive order-independent headers, 12/24-hour times, inclusive all-day ends passing straight through, malformed rows skipped. 10 unit tests + docs demo + e2e. |
 | **Recurrence (RRULE)** | ✅ Shipped (2026-09-18). `rruleExpand.ts` expands FREQ (DAILY/WEEKLY/MONTHLY/YEARLY), INTERVAL, COUNT, UNTIL and weekly BYDAY, capped to the visible grid; unsupported parts fail closed and keep the base instance. parseICal captures the raw rule (`recurring: true` + `data-rrule`); CalendarView's `recurrence` prop runs expansion inside the pipeline before grouping, and instances only dedup per-occurrence (uid + startDay, matching UID + RECURRENCE-ID semantics). |
 | **Google Calendar API** | Adapter doc example: server endpoint → `fetchEvents()`; client passes `{ id, name, color, fetchEvents }`. |
 | **Microsoft Outlook/365** | Same pattern via Graph API `/me/calendarview`. |
@@ -284,7 +284,7 @@ with static multi-source data, which is also how tests and stories demo it.
   calendars={sources}
   grouping={true}
   weekStart="auto"          // 0–6 | "auto"
-  view="month"              // "month" | "week" | "day" (week/day: phase 2)
+  view="month"              // "month" | "week" | "day"
   showWeekNumbers={false}
   maxEventsPerCell={3}
   oneventselect={(e) => e.detail.event}
@@ -357,7 +357,7 @@ with static multi-source data, which is also how tests and stories demo it.
 | 3 | **Events** ✅ | `eventNormalize`, static `events` render, chips with icon/badge/color/status, `eventContent` snippet, `+N more` popover |
 | 4 | **Grouping** ✅ | `eventGroup` (uid key → fallback key), count badge, color dots, `grouping` toggle demo with two fake calendars |
 | 5 | **Import** ✅ | `parseICal` (+ tests with real Google-export samples), recurring-flag marker |
-| 6 | **Connectivity recipe** ✅ | `connectCalendars` helper (calendars/fetchEvents contract, Promise.allSettled per-source failures, calendarId stamping, color fallback); `calendars` + `oncalendarserror` wired into CalendarView; Google/Outlook/Apple docs recipes — `week`/`day` views still deferred (phase 2) |
+| 6 | **Connectivity recipe** ✅ | `connectCalendars` helper (calendars/fetchEvents contract, Promise.allSettled per-source failures, calendarId stamping, color fallback); `calendars` + `oncalendarserror` wired into CalendarView; Google/Outlook/Apple docs recipes — `week`/`day` views since shipped (11.4) |
 | 7 | **Drag-to-edit** | `draggable` events + cell `dragover`/`drop` (HTML DnD API), `oneventmove` callback, keyboard-editing alternative, e2e drag test |
 | 8 | **Checklist close-out** ✅ | Storybook story (11 stories incl. DragToEdit + Connectivity), docs page (i18n en/es/fa), e2e (render, keyboard, grouping toggle, drag keyboard-move, connectivity fetch, badge row), `check`/`check:i18n`/`check:assets` green, completion page updated (+DnD, +Popover) |
 

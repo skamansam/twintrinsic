@@ -618,6 +618,11 @@
       "svelte": "./dist/helpers/parseICal.js",
       "default": "./dist/helpers/parseICal.js"
     },
+    "./helpers/parseGoogleCsv": {
+      "types": "./dist/helpers/parseGoogleCsv.d.ts",
+      "svelte": "./dist/helpers/parseGoogleCsv.js",
+      "default": "./dist/helpers/parseGoogleCsv.js"
+    },
     "./helpers/connectCalendars": {
       "types": "./dist/helpers/connectCalendars.d.ts",
       "svelte": "./dist/helpers/connectCalendars.js",

@@ -139,6 +139,7 @@ export {
   normalizeEvent,
   normalizeEvents,
   parseICal,
+  parseGoogleCsv,
   connectCalendars,
   expandRecurrence,
   expandRecurrences,

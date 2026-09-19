@@ -149,6 +149,34 @@ function icalToInstant(value: string): string {
   return ss === "00" ? `${date}T${hh}:${mm}` : `${date}T${hh}:${mm}:${ss}`;
 }
 
+/** Days in each month (non-leap February handled by the leap check). */
+const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+/**
+ * Returns the day before an ISO `YYYY-MM-DD` string. Pure civil-calendar
+ * arithmetic (the parser performs no runtime Temporal work) — used to
+ * convert RFC 5545's exclusive all-day DTEND onto CalendarView's
+ * inclusive span convention.
+ * @param isoDate - `YYYY-MM-DD` string
+ * @returns The previous day as `YYYY-MM-DD`
+ */
+function previousDayIso(isoDate: string): string {
+  let [y, m, d] = isoDate.split("-").map(Number);
+  d--;
+  if (d === 0) {
+    m--;
+    if (m === 0) {
+      m = 12;
+      y--;
+      d = 31;
+    } else {
+      const leap = m === 2 && ((y % 4 === 0 && y % 100 !== 0) || y % 400 === 0);
+      d = leap ? 29 : DAYS_IN_MONTH[m - 1];
+    }
+  }
+  return `${String(y).padStart(4, "0")}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+}
+
 /**
  * Unescapes iCalendar TEXT per RFC 5545 §3.3.11 (backslash escapes and
  * literal newlines).
@@ -194,7 +222,9 @@ export function parseICal(text: string, options: ParseICalOptions = {}): ParsedI
       tzid: current.tzid,
       recurring: current.recurring,
     };
-    if (current.dtend !== undefined) base.end = current.dtend;
+    if (current.dtend !== undefined && !(current.allDay && current.dtend <= current.dtstart)) {
+      base.end = current.dtend;
+    }
     if (current.allDay !== undefined) base.allDay = current.allDay;
     if (current.status !== undefined) base.status = current.status;
     if (current.location !== undefined) base.location = current.location;
@@ -233,9 +263,17 @@ export function parseICal(text: string, options: ParseICalOptions = {}): ParsedI
           getParam(params, "VALUE")?.toUpperCase() === "DATE" || DATE_ONLY.test(value.trim());
         break;
       }
-      case "DTEND":
-        current.dtend = icalToInstant(value.trim());
+      case "DTEND": {
+        const raw = value.trim();
+        current.dtend = icalToInstant(raw);
+        // RFC 5545: all-day DTEND is **exclusive**, but CalendarView
+        // renders inclusive spans (see `eventsForDay`) — shift DATE-valued
+        // ends back one day. Timed DTEND is already the true end instant.
+        if (getParam(params, "VALUE")?.toUpperCase() === "DATE" || DATE_ONLY.test(raw)) {
+          current.dtend = previousDayIso(current.dtend);
+        }
         break;
+      }
       case "STATUS":
         current.status = normalizeStatus(value.trim());
         break;

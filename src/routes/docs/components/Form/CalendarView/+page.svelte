@@ -35,6 +35,7 @@ import * as CalendarViewModule from "$lib/components/CalendarView/CalendarView.s
 import Container from "$lib/components/Container/Container.svelte"
 import { buildMonthGrid, buildWeekGrid } from "$lib/helpers/calendarGrid.js"
 import { parseICal } from "$lib/helpers/parseICal.js"
+import { parseGoogleCsv } from "$lib/helpers/parseGoogleCsv.js"
 import type { CalendarViewEvent, EventMoveDetail } from "$lib/helpers/eventNormalize.js"
 import type { CalendarSource } from "$lib/helpers/connectCalendars.js"
 import { m } from "$lib/paraglide/messages.js"
@@ -84,6 +85,16 @@ SUMMARY:Maybe lunch
 END:VEVENT
 END:VCALENDAR`
 const ICS_EVENTS = parseICal(ICS_SAMPLE)
+
+// CSV-import demo: the same calendar family as a Google CSV export
+// (Subject/Start Date/... columns). All-day rows keep their inclusive ends.
+const CSV_EVENTS = parseGoogleCsv(
+  [
+    "Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description",
+    'Conference talk,9/24/2026,1:00 PM,9/24/2026,2:00 PM,False,"Lightning talks and Q&A"',
+    "Team holiday,9/28/2026,,9/29/2026,,True,Office closed",
+  ].join("\n"),
+)
 
 /** Copy-paste Google Calendar recipe shown in the connectivity example's code tab. */
 const GOOGLE_RECIPE = `// +page.server.ts — OAuth + CORS live on your server, not in the component
@@ -454,6 +465,19 @@ function viewSpan(month: Temporal.PlainDate, view: "month" | "week" | "day") {
       {grouping ? "Group shared events" : "Show all calendars"}
     </label>
     <CalendarView month={SEPTEMBER} {...{ events: GROUPING_EVENTS }} {grouping} />
+  </div>
+</ExampleTabs>
+
+<h3>{m.calendarview_ex_csv()}</h3>
+<p>{m.calendarview_ex_csv_p()}</p>
+<ExampleTabs code={`\`\`\`js
+// Google Calendar CSV export (File → Export, or a subscribed-calendar CSV)
+import { parseGoogleCsv } from "twintrinsic/helpers/parseGoogleCsv"
+const csvEvents = parseGoogleCsv(csvText)
+\`\`\`
+<CalendarView month={Temporal.PlainDate.from('2026-09-01')} events={csvEvents} />`}>
+  <div class="max-w-sm" data-testid="calendarview-csv">
+    <CalendarView month={SEPTEMBER} events={CSV_EVENTS} />
   </div>
 </ExampleTabs>
 

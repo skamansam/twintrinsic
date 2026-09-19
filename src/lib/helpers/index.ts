@@ -13,6 +13,11 @@ export { getItemLabel } from "./itemLabel.js";
 export { getItemValue } from "./itemValue.js";
 export { parseICal, type ParseICalOptions, type ParsedICalEvent } from "./parseICal.js";
 export {
+  parseGoogleCsv,
+  type ParseGoogleCsvOptions,
+  type ParsedGoogleCsvEvent,
+} from "./parseGoogleCsv.js";
+export {
   connectCalendars,
   isCalendarSource,
   type CalendarSource,

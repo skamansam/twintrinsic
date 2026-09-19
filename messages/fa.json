@@ -5065,5 +5065,9 @@
   "calendarview_ex_outlook": "دستورالعمل Outlook / Microsoft 365",
   "calendarview_ex_outlook_p": "نقطه پایانی /me/calendarview مرورگر Microsoft Graph را در سرور خود پروکسی کنید و موارد را به CalendarViewEvents نگاشت کنید. Graph همیشه لحظه‌های مطلق با timeZone می‌فرستد و iCalUId میان تقویم شرکت‌کنندگان حفظ می‌شود — پس grouping کار می‌کند.",
   "calendarview_ex_apple": "دستورالعمل Apple Calendar / CalDAV",
-  "calendarview_ex_apple_p": "مسیر بدون احراز هویت: نشانی iCal منتشرشده را در سرور واکشی کنید و از helper داخلی parseICal عبور دهید. همین رویکرد هر پل CalDAV یا خوراک خام .ics را پوشش می‌دهد. برای تقویم‌های خصوصی، CalDAV را با احراز هویت در سرور پروکسی کنید و VEVENTها را مانند parser نگاشت کنید."
+  "calendarview_ex_apple_p": "مسیر بدون احراز هویت: نشانی iCal منتشرشده را در سرور واکشی کنید و از helper داخلی parseICal عبور دهید. همین رویکرد هر پل CalDAV یا خوراک خام .ics را پوشش می‌دهد. برای تقویم‌های خصوصی، CalDAV را با احراز هویت در سرور پروکسی کنید و VEVENTها را مانند parser نگاشت کنید.",
+  "util_gcsv_heading": "ورود CSV گوگل",
+  "util_gcsv_body": "خروجی CSV تقویم گوگل (نسخه انگلیسی با ستون‌های Subject، Start Date، Start Time، End Date، End Time، All Day Event، Description و Location) را به رویدادهای مناسب prop رویدادهای CalendarView تبدیل می‌کند. تطبیق سرستون‌ها به بزرگی و کوچکی حروف حساس نیست و ترتیب ستون‌ها مهم نیست؛ توضیحات چندخطی داخل گیومه، گیومه‌های فرار، ساعت‌های ۱۲ و ۲۴ ساعته و تاریخ‌های پایان فراگیر رویدادهای تمام‌روز پشتیبانی می‌شوند. ردیف‌های قابل تجزیه نادیده گرفته می‌شوند. مانند parseICal، بدون شیء Date و بدون polyfill — فقط انواع Temporal بومی.",
+  "calendarview_ex_csv": "ورود CSV",
+  "calendarview_ex_csv_p": "خروجی‌های CSV تقویم گوگل (شکل صفحه‌گسترده با Subject/Start Date/…) از طریق کمکی parseGoogleCsv تجزیه می‌شوند — صفحه Utilities را ببینید. توضیحات چندخطی داخل گیومه، گیومه‌های فرار، ساعت‌های ۱۲ و ۲۴ ساعته و تاریخ‌های پایان فراگیر رویدادهای تمام‌روز پشتیبانی می‌شوند؛ ردیف‌های غیرقابل تجزیه نادیده گرفته می‌شوند. دموی زیر دو ردیف را نشان می‌دهد: یک سخنرانی زمان‌دار و دو روز تعطیلی تیمی."
 }

@@ -5065,5 +5065,9 @@
   "calendarview_ex_outlook": "Outlook / Microsoft 365 recipe",
   "calendarview_ex_outlook_p": "Proxy Microsoft Graph's /me/calendarview endpoint on your server and map items to CalendarViewEvents. Graph always sends absolute instants with a timeZone, and iCalUId is preserved across attendees' calendars — so grouping works.",
   "calendarview_ex_apple": "Apple Calendar / CalDAV recipe",
-  "calendarview_ex_apple_p": "The zero-auth path: fetch a published iCal subscription URL server-side and feed it through the built-in parseICal helper. The same approach covers any CalDAV bridge or raw .ics feed. For private calendars, proxy CalDAV with auth on your server and map VEVENTs the same way the parser does."
+  "calendarview_ex_apple_p": "The zero-auth path: fetch a published iCal subscription URL server-side and feed it through the built-in parseICal helper. The same approach covers any CalDAV bridge or raw .ics feed. For private calendars, proxy CalDAV with auth on your server and map VEVENTs the same way the parser does.",
+  "util_gcsv_heading": "Google CSV import",
+  "util_gcsv_body": "Parses a Google Calendar CSV export (the US-English export with Subject, Start Date, Start Time, End Date, End Time, All Day Event, Description, and Location columns) into events for the CalendarView events prop. Header matching is case-insensitive and column-order independent; quoted multi-line descriptions, escaped quotes, 12-hour and 24-hour times, and inclusive all-day end dates are handled. Rows that cannot be parsed are skipped. As with parseICal, no Date objects and no polyfills — native Temporal types only.",
+  "calendarview_ex_csv": "CSV import",
+  "calendarview_ex_csv_p": "Google Calendar CSV exports (the Subject/Start Date/… spreadsheet shape) parse through the parseGoogleCsv helper — see the Utilities page. Quoted multi-line descriptions, escaped quotes, 12-hour and 24-hour times, and inclusive all-day end dates are handled; unparseable rows are skipped. The demo below renders two rows: a timed talk and a two-day team holiday."
 }

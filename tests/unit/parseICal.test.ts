@@ -118,11 +118,12 @@ describe("parseICal", () => {
     expect(standup.recurring).toBe(true);
   });
 
-  it("converts VALUE=DATE forms to all-day events with inclusive end", () => {
+  it("converts VALUE=DATE forms to all-day events (exclusive DTEND made inclusive)", () => {
     const events = parseICal(GOOGLE_EXPORT);
     const offsite = events[1] as ParsedICalEvent;
     expect(offsite.start).toBe("2026-09-21");
-    expect(offsite.end).toBe("2026-09-22");
+    // DTEND 20260922 is RFC-exclusive → same-day inclusive end is dropped.
+    expect(offsite.end).toBeUndefined();
     expect(offsite.allDay).toBe(true);
   });
 
