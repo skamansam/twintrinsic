@@ -95,19 +95,19 @@ import { m } from "$lib/paraglide/messages.js"
           <CarouselItem>
             <div class="h-64 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
               <h2 class="text-2xl font-bold text-text dark:text-white">Unlimited projects</h2>
-              <p class="mt-2 text-text dark:text-gray-300">Create as many workspaces and boards as you need.</p>
+              <p class="mt-2 text-muted">Create as many workspaces and boards as you need.</p>
             </div>
           </CarouselItem>
           <CarouselItem>
             <div class="h-64 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
               <h2 class="text-2xl font-bold text-text dark:text-white">Real-time collaboration</h2>
-              <p class="mt-2 text-text dark:text-gray-300">Invite teammates and edit together, live.</p>
+              <p class="mt-2 text-muted">Invite teammates and edit together, live.</p>
             </div>
           </CarouselItem>
           <CarouselItem>
             <div class="h-64 bg-success-100 dark:bg-success-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
               <h2 class="text-2xl font-bold text-text dark:text-white">Enterprise-grade security</h2>
-              <p class="mt-2 text-text dark:text-gray-300">SOC 2, SSO, and granular role-based access control.</p>
+              <p class="mt-2 text-muted">SOC 2, SSO, and granular role-based access control.</p>
             </div>
           </CarouselItem>
         {/snippet}
@@ -119,18 +119,18 @@ import { m } from "$lib/paraglide/messages.js"
   <ExampleTabs code={`<Carousel autoplay interval={4000}>
   {#snippet items()}
     <CarouselItem>
-      <div class="h-64 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center rounded-lg">
+      <div class="h-64 bg-gradient-to-br from-primary to-secondary flex items-center justify-center rounded-lg">
         <div class="text-center text-white">
           <h2 class="text-3xl font-bold">Lightning Fast</h2>
-          <p class="mt-2 text-blue-100">Built on modern web standards for peak performance.</p>
+          <p class="mt-2 text-primary-100">Built on modern web standards for peak performance.</p>
         </div>
       </div>
     </CarouselItem>
     <CarouselItem>
-      <div class="h-64 bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center rounded-lg">
+      <div class="h-64 bg-gradient-to-br from-success to-success-hover flex items-center justify-center rounded-lg">
         <div class="text-center text-white">
           <h2 class="text-3xl font-bold">Fully Accessible</h2>
-          <p class="mt-2 text-emerald-100">WCAG 2.1 compliant with keyboard navigation.</p>
+          <p class="mt-2 text-success-100">WCAG 2.1 compliant with keyboard navigation.</p>
         </div>
       </div>
     </CarouselItem>
@@ -140,18 +140,18 @@ import { m } from "$lib/paraglide/messages.js"
       <Carousel autoplay interval={4000}>
         {#snippet items()}
           <CarouselItem>
-            <div class="h-64 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center rounded-lg">
+            <div class="h-64 bg-gradient-to-br from-primary to-secondary flex items-center justify-center rounded-lg">
               <div class="text-center text-white">
                 <h2 class="text-3xl font-bold">Lightning Fast</h2>
-                <p class="mt-2 text-blue-100">Built on modern web standards for peak performance.</p>
+                <p class="mt-2 text-primary-100">Built on modern web standards for peak performance.</p>
               </div>
             </div>
           </CarouselItem>
           <CarouselItem>
-            <div class="h-64 bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center rounded-lg">
+            <div class="h-64 bg-gradient-to-br from-success to-success-hover flex items-center justify-center rounded-lg">
               <div class="text-center text-white">
                 <h2 class="text-3xl font-bold">Fully Accessible</h2>
-                <p class="mt-2 text-emerald-100">WCAG 2.1 compliant with keyboard navigation.</p>
+                <p class="mt-2 text-success-100">WCAG 2.1 compliant with keyboard navigation.</p>
               </div>
             </div>
           </CarouselItem>
@@ -173,13 +173,13 @@ import { m } from "$lib/paraglide/messages.js"
           <CarouselItem>
             <div class="h-64 bg-primary-100 dark:bg-primary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
               <h2 class="text-2xl font-bold text-text dark:text-white">Announcing Acme 3.0</h2>
-              <p class="mt-2 text-text dark:text-gray-300">A faster, more accessible platform is here.</p>
+              <p class="mt-2 text-muted">A faster, more accessible platform is here.</p>
             </div>
           </CarouselItem>
           <CarouselItem>
             <div class="h-64 bg-secondary-100 dark:bg-secondary-900 flex flex-col items-center justify-center rounded-lg text-center px-8">
               <h2 class="text-2xl font-bold text-text dark:text-white">New pricing plans</h2>
-              <p class="mt-2 text-text dark:text-gray-300">Save 20% when you switch to yearly billing.</p>
+              <p class="mt-2 text-muted">Save 20% when you switch to yearly billing.</p>
             </div>
           </CarouselItem>
         {/snippet}

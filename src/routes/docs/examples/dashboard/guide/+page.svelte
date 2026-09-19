@@ -107,32 +107,32 @@
 
 <div class="space-y-8">
 	<div>
-		<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">{m.exdashg_h1()}</h1>
-		<p class="text-gray-600 dark:text-gray-400">
+		<h1 class="text-3xl font-bold text-text mb-2">{m.exdashg_h1()}</h1>
+		<p class="text-muted">
 			{m.exdashg_lede()}
 		</p>
 	</div>
 
 	<!-- Key Metrics Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_metrics()}</h2>
-		<p class="text-gray-600 dark:text-gray-400">
+		<h2 class="text-2xl font-bold text-text">{m.exdash_sec_metrics()}</h2>
+		<p class="text-muted">
 			{m.exdashg_metrics_p()}
 		</p>
-		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+		<div class="bg-surface rounded-lg border border-border p-6">
 			<MetricGrid columns={4} gap="md" items={statsCards} />
 		</div>
 	</section>
 
 	<!-- KPI Cards Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_kpi()}</h2>
-		<p class="text-gray-600 dark:text-gray-400">
+		<h2 class="text-2xl font-bold text-text">{m.exdash_sec_kpi()}</h2>
+		<p class="text-muted">
 			{m.exdashg_kpi_p()}
 		</p>
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 			{#each kpiData as kpi}
-				<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+				<div class="bg-surface rounded-lg border border-border p-6">
 					<KPICard {...kpi} />
 				</div>
 			{/each}
@@ -141,11 +141,11 @@
 
 	<!-- Sales Trends Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_sales()}</h2>
-		<p class="text-gray-600 dark:text-gray-400">
+		<h2 class="text-2xl font-bold text-text">{m.exdash_sec_sales()}</h2>
+		<p class="text-muted">
 			{m.exdashg_sales_p()}
 		</p>
-		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+		<div class="bg-surface rounded-lg border border-border p-6">
 			<BarChart
 				series={salesData.series}
 				labels={salesData.labels}
@@ -161,11 +161,11 @@
 
 	<!-- Traffic Analysis Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_traffic()}</h2>
-		<p class="text-gray-600 dark:text-gray-400">
+		<h2 class="text-2xl font-bold text-text">{m.exdash_sec_traffic()}</h2>
+		<p class="text-muted">
 			{m.exdashg_traffic_p()}
 		</p>
-		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+		<div class="bg-surface rounded-lg border border-border p-6">
 			<AreaChart
 				series={trafficData.series}
 				labels={trafficData.labels}
@@ -182,11 +182,11 @@
 
 	<!-- Conversion Breakdown Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_conversion()}</h2>
-		<p class="text-gray-600 dark:text-gray-400">
+		<h2 class="text-2xl font-bold text-text">{m.exdash_sec_conversion()}</h2>
+		<p class="text-muted">
 			{m.exdashg_conversion_p()}
 		</p>
-		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6 flex justify-center">
+		<div class="bg-surface rounded-lg border border-border p-6 flex justify-center">
 			<DonutChart
 				data={conversionData.data}
 				labels={conversionData.labels}
@@ -199,12 +199,12 @@
 
 	<!-- Performance Metrics Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_perf()}</h2>
-		<p class="text-gray-600 dark:text-gray-400">
+		<h2 class="text-2xl font-bold text-text">{m.exdash_sec_perf()}</h2>
+		<p class="text-muted">
 			{m.exdashg_perf_p()}
 		</p>
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-			<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+			<div class="bg-surface rounded-lg border border-border p-6">
 				<GaugeChart
 					value={75}
 					min={0}
@@ -215,7 +215,7 @@
 					size={200}
 				/>
 			</div>
-			<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+			<div class="bg-surface rounded-lg border border-border p-6">
 				<GaugeChart
 					value={92}
 					min={0}
@@ -226,7 +226,7 @@
 					size={200}
 				/>
 			</div>
-			<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+			<div class="bg-surface rounded-lg border border-border p-6">
 				<GaugeChart
 					value={45}
 					min={0}
@@ -242,11 +242,11 @@
 
 	<!-- Progress Tracking Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_resource()}</h2>
-		<p class="text-gray-600 dark:text-gray-400">
+		<h2 class="text-2xl font-bold text-text">{m.exdash_sec_resource()}</h2>
+		<p class="text-muted">
 			{m.exdashg_resource_p()}
 		</p>
-		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6 space-y-6">
+		<div class="bg-surface rounded-lg border border-border p-6 space-y-6">
 			<ProgressMetric label="CPU Usage" value={65} max={100} color="primary" showPercentage={true} />
 			<ProgressMetric label="Memory Usage" value={78} max={100} color="warning" showPercentage={true} />
 			<ProgressMetric label="Disk Usage" value={45} max={100} color="success" showPercentage={true} />
@@ -256,12 +256,12 @@
 
 	<!-- Code Example Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdashg_impl_h()}</h2>
-		<p class="text-gray-600 dark:text-gray-400">
+		<h2 class="text-2xl font-bold text-text">{m.exdashg_impl_h()}</h2>
+		<p class="text-muted">
 			{m.exdashg_impl_p()}
 		</p>
-		<div class="bg-gray-900 dark:bg-gray-950 rounded-lg p-6 overflow-x-auto">
-			<pre class="text-gray-100 text-sm"><code>{`\u003Cscript lang="ts">
+		<div class="bg-inverse text-inverse-text rounded-lg p-6 overflow-x-auto">
+			<pre class="text-muted text-sm"><code>{`\u003Cscript lang="ts">
   import { MetricGrid, BarChart, DonutChart } from '$lib';
 
   const statsCards = [
@@ -312,29 +312,29 @@
 
 	<!-- Best Practices Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.ex_bestpractices()}</h2>
+		<h2 class="text-2xl font-bold text-text">{m.ex_bestpractices()}</h2>
 		<div class="space-y-3">
-			<div class="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-				<h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-2">{m.ex_bp_responsive_h()}</h3>
-				<p class="text-blue-800 dark:text-blue-200 text-sm">
+			<div class="bg-info-bg border border-info rounded-lg p-4">
+				<h3 class="font-semibold text-info-900 dark:text-info-100 mb-2">{m.ex_bp_responsive_h()}</h3>
+				<p class="text-info-800 dark:text-info-200 text-sm">
 					{m.exdashg_bp_responsive_p()}
 				</p>
 			</div>
-			<div class="bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-lg p-4">
-				<h3 class="font-semibold text-green-900 dark:text-green-100 mb-2">{m.ex_bp_colors_h()}</h3>
-				<p class="text-green-800 dark:text-green-200 text-sm">
+			<div class="bg-success-bg border border-success rounded-lg p-4">
+				<h3 class="font-semibold text-success-900 dark:text-success-100 mb-2">{m.ex_bp_colors_h()}</h3>
+				<p class="text-success-800 dark:text-success-200 text-sm">
 					{m.exdashg_bp_colors_p()}
 				</p>
 			</div>
-			<div class="bg-purple-50 dark:bg-purple-950 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-				<h3 class="font-semibold text-purple-900 dark:text-purple-100 mb-2">{m.ex_bp_data_h()}</h3>
-				<p class="text-purple-800 dark:text-purple-200 text-sm">
+			<div class="bg-secondary-bg border border-secondary rounded-lg p-4">
+				<h3 class="font-semibold text-secondary-900 dark:text-secondary-100 mb-2">{m.ex_bp_data_h()}</h3>
+				<p class="text-secondary-800 dark:text-secondary-200 text-sm">
 					{m.exdashg_bp_data_p()}
 				</p>
 			</div>
-			<div class="bg-orange-50 dark:bg-orange-950 border border-orange-200 dark:border-orange-800 rounded-lg p-4">
-				<h3 class="font-semibold text-orange-900 dark:text-orange-100 mb-2">{m.ex_bp_a11y_h()}</h3>
-				<p class="text-orange-800 dark:text-orange-200 text-sm">
+			<div class="bg-warning-bg border border-warning rounded-lg p-4">
+				<h3 class="font-semibold text-warning-900 dark:text-warning-100 mb-2">{m.ex_bp_a11y_h()}</h3>
+				<p class="text-warning-800 dark:text-warning-200 text-sm">
 					{m.exdashg_bp_a11y_p()}
 				</p>
 			</div>

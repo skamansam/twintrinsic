@@ -221,12 +221,12 @@ BottomBar documentation page — standardized structure
       Console
     </div>
   {/snippet}
-  <div class="font-mono text-sm p-4 space-y-1 bg-gray-900 text-gray-100">
-    <p><span class="text-green-400">✓</span> Build completed successfully</p>
-    <p><span class="text-yellow-400">⚠</span> Unused variable detected</p>
-    <p><span class="text-red-400">✕</span> Failed to load resource</p>
-    <p class="text-gray-400">> Starting development server...</p>
-    <p><span class="text-green-400">✓</span> Server is running on port 3000</p>
+  <div class="font-mono text-sm p-4 space-y-1 bg-surface text-text">
+    <p><span class="text-success">✓</span> Build completed successfully</p>
+    <p><span class="text-warning">⚠</span> Unused variable detected</p>
+    <p><span class="text-error">✕</span> Failed to load resource</p>
+    <p class="text-muted">> Starting development server...</p>
+    <p><span class="text-success">✓</span> Server is running on port 3000</p>
   </div>
 </BottomBar>`}>
     {#if showExamples}
@@ -240,12 +240,12 @@ BottomBar documentation page — standardized structure
               Console
             </div>
           {/snippet}
-          <div class="font-mono text-sm p-4 space-y-1 bg-gray-900 text-gray-100">
-            <p><span class="text-green-400">✓</span> Build completed successfully</p>
-            <p><span class="text-yellow-400">⚠</span> Unused variable detected</p>
-            <p><span class="text-red-400">✕</span> Failed to load resource</p>
-            <p class="text-gray-400">> Starting development server...</p>
-            <p><span class="text-green-400">✓</span> Server is running on port 3000</p>
+          <div class="font-mono text-sm p-4 space-y-1 bg-surface text-text">
+            <p><span class="text-success">✓</span> Build completed successfully</p>
+            <p><span class="text-warning">⚠</span> Unused variable detected</p>
+            <p><span class="text-error">✕</span> Failed to load resource</p>
+            <p class="text-muted">> Starting development server...</p>
+            <p><span class="text-success">✓</span> Server is running on port 3000</p>
           </div>
         </BottomBar>
       </div>
@@ -272,7 +272,7 @@ BottomBar documentation page — standardized structure
     <button class="p-3 rounded-full bg-muted hover:bg-muted/80 transition-colors" aria-label="Toggle chat">
       💬
     </button>
-    <button class="px-6 py-3 rounded-full bg-red-500 hover:bg-red-600 text-white transition-colors" aria-label="Leave meeting">
+    <button class="px-6 py-3 rounded-full bg-error hover:bg-error-hover text-white transition-colors" aria-label="Leave meeting">
       Leave
     </button>
   </div>
@@ -296,7 +296,7 @@ BottomBar documentation page — standardized structure
             <button class="p-3 rounded-full bg-muted hover:bg-muted/80 transition-colors" aria-label="Toggle chat">
               💬
             </button>
-            <button class="px-6 py-3 rounded-full bg-red-500 hover:bg-red-600 text-white transition-colors" aria-label="Leave meeting">
+            <button class="px-6 py-3 rounded-full bg-error hover:bg-error-hover text-white transition-colors" aria-label="Leave meeting">
               Leave
             </button>
           </div>
@@ -312,8 +312,8 @@ BottomBar documentation page — standardized structure
   {#snippet header()}
     <span class="text-sm font-medium">Video Player</span>
   {/snippet}
-  <div class="p-3 space-y-2 border-t border-border bg-gray-900 text-white">
-    <div class="w-full bg-gray-700 rounded-full h-1.5">
+  <div class="p-3 space-y-2 border-t border-border bg-surface text-text">
+    <div class="w-full bg-border rounded-full h-1.5">
       <div class="bg-primary-500 h-1.5 rounded-full" style="width: 45%"></div>
     </div>
     <div class="flex items-center justify-between">
@@ -321,7 +321,7 @@ BottomBar documentation page — standardized structure
         <button class="text-lg" aria-label="Previous">⏮</button>
         <button class="text-xl px-2" aria-label="Play">▶</button>
         <button class="text-lg" aria-label="Next">⏭</button>
-        <span class="text-xs text-gray-400">1:23 / 3:05</span>
+        <span class="text-xs text-muted">1:23 / 3:05</span>
       </div>
       <div class="flex items-center gap-2">
         <button class="text-sm" aria-label="Volume">🔊</button>
@@ -331,13 +331,13 @@ BottomBar documentation page — standardized structure
   </div>
 </BottomBar>`}>
     {#if showExamples}
-      <div class="h-[200px] bg-gray-950 relative border border-border rounded-lg overflow-hidden" data-testid="bottombar-video">
+      <div class="h-[200px] bg-surface relative border border-border rounded-lg overflow-hidden" data-testid="bottombar-video">
         <BottomBar height="auto" expanded={true}>
           {#snippet header()}
-            <span class="text-sm font-medium text-white">Video Player</span>
+            <span class="text-sm font-medium">Video Player</span>
           {/snippet}
-          <div class="p-3 space-y-2 border-t border-gray-700 bg-gray-900 text-white">
-            <div class="w-full bg-gray-700 rounded-full h-1.5">
+          <div class="p-3 space-y-2 border-t border-border bg-surface text-text">
+            <div class="w-full bg-border rounded-full h-1.5">
               <div class="bg-primary-500 h-1.5 rounded-full" style="width: 45%"></div>
             </div>
             <div class="flex items-center justify-between">
@@ -345,7 +345,7 @@ BottomBar documentation page — standardized structure
                 <button class="text-lg" aria-label="Previous">⏮</button>
                 <button class="text-xl px-2" aria-label="Play">▶</button>
                 <button class="text-lg" aria-label="Next">⏭</button>
-                <span class="text-xs text-gray-400">1:23 / 3:05</span>
+                <span class="text-xs text-muted">1:23 / 3:05</span>
               </div>
               <div class="flex items-center gap-2">
                 <button class="text-sm" aria-label="Volume">🔊</button>
@@ -373,7 +373,7 @@ BottomBar documentation page — standardized structure
     <div class="flex gap-2 p-3">
       <button class="px-3 py-1.5 text-sm bg-primary-500 text-white rounded hover:bg-primary-600">Edit</button>
       <button class="px-3 py-1.5 text-sm bg-muted rounded hover:bg-muted/80">Share</button>
-      <button class="px-3 py-1.5 text-sm text-red-500 hover:bg-red-50 rounded">Delete</button>
+      <button class="px-3 py-1.5 text-sm text-error hover:bg-error-bg rounded">Delete</button>
     </div>
   </BottomBar>
 </div>`}>
@@ -390,7 +390,7 @@ BottomBar documentation page — standardized structure
           <div class="flex gap-2 p-3">
             <button class="px-3 py-1.5 text-sm bg-primary-500 text-white rounded hover:bg-primary-600">Edit</button>
             <button class="px-3 py-1.5 text-sm bg-muted rounded hover:bg-muted/80">Share</button>
-            <button class="px-3 py-1.5 text-sm text-red-500 hover:bg-red-50 rounded">Delete</button>
+            <button class="px-3 py-1.5 text-sm text-error hover:bg-error-bg rounded">Delete</button>
           </div>
         </BottomBar>
       </div>

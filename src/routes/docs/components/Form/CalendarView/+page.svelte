@@ -46,10 +46,10 @@ const SELECTED = Temporal.PlainDate.from("2026-09-21")
 // Milestone-4 grouping demo: two fake calendars sharing one standup (iCal
 // UID dedup). Deep work and the dentist appointment are unshared.
 const GROUPING_EVENTS = [
-  { id: "work-standup", uid: "standup@google.com", title: "Standup", start: "2026-09-15T09:30", color: "#10b981" },
-  { id: "work-deep", title: "Deep work", start: "2026-09-16T14:00", color: "#6366f1" },
-  { id: "personal-standup", uid: "standup@google.com", title: "Standup", start: "2026-09-15T09:30", color: "#f59e0b" },
-  { id: "personal-dentist", title: "Dentist", start: "2026-09-17T11:00", color: "#ef4444" },
+  { id: "work-standup", uid: "standup@google.com", title: "Standup", start: "2026-09-15T09:30", color: "var(--color-success)" },
+  { id: "work-deep", title: "Deep work", start: "2026-09-16T14:00", color: "var(--color-secondary)" },
+  { id: "personal-standup", uid: "standup@google.com", title: "Standup", start: "2026-09-15T09:30", color: "var(--color-warning)" },
+  { id: "personal-dentist", title: "Dentist", start: "2026-09-17T11:00", color: "var(--color-error)" },
 ]
 
 /** Toggle state for the grouping demo. */
@@ -109,7 +109,7 @@ export async function load() {
 
 // +page.svelte — the component consumes plain data:
 const work: CalendarSource = {
-  id: "work", name: "Work", color: "#10b981",
+  id: "work", name: "Work", color: "var(--color-success)",
   fetchEvents: async (range) => (await fetch(serverUrl + "?from=" + range.start)).json(),
 }
 <CalendarView calendars={[work]} grouping />`
@@ -117,8 +117,8 @@ const work: CalendarSource = {
 // Milestone-7 drag demo: the consumer owns event state — `oneventmove`
 // rewrites the moved event's `start` and the chip re-renders in its new cell.
 let dragEvents = $state([
-  { id: "d1", title: "Planning session", start: "2026-09-15T10:00", color: "#6366f1" },
-  { id: "d2", title: "Team offsite", start: "2026-09-21", allDay: true, color: "#f59e0b" },
+  { id: "d1", title: "Planning session", start: "2026-09-15T10:00", color: "var(--color-secondary)" },
+  { id: "d2", title: "Team offsite", start: "2026-09-21", allDay: true, color: "var(--color-warning)" },
 ])
 
 /**
@@ -138,7 +138,7 @@ const CONNECTED_SOURCES: CalendarSource[] = [
   {
     id: "work",
     name: "Work",
-    color: "#10b981",
+    color: "var(--color-success)",
     fetchEvents: async ({ start, end }) => {
       await new Promise((r) => setTimeout(r, 30))
       return [
@@ -150,7 +150,7 @@ const CONNECTED_SOURCES: CalendarSource[] = [
   {
     id: "family",
     name: "Family",
-    color: "#f59e0b",
+    color: "var(--color-warning)",
     fetchEvents: async () => {
       await new Promise((r) => setTimeout(r, 10))
       return [
@@ -167,8 +167,8 @@ let sourceErrors = $state<string[]>([])
 // ── Views demo: consumer-owned events shown across all three views. ──
 let viewsMonth = $state(SEPTEMBER)
 let viewEvents: CalendarViewEvent[] = $state([
-  { id: "v-review", title: "Design review", start: "2026-09-16T14:00", color: "#6366f1" },
-  { id: "v-offsite", title: "Offsite", start: "2026-09-18", allDay: true, color: "#f59e0b" },
+  { id: "v-review", title: "Design review", start: "2026-09-16T14:00", color: "var(--color-secondary)" },
+  { id: "v-offsite", title: "Offsite", start: "2026-09-18", allDay: true, color: "var(--color-warning)" },
 ])
 
 // ── Playground (11.4): Google public holiday calendars + event sandbox. ──
@@ -206,10 +206,10 @@ function googleHolidaySource(id: string, name: string, color: string): CalendarS
 
 /** Holiday feeds offered in the playground (calendarIds are stable public slugs). */
 const PLAYGROUND_CALENDARS = [
-  { id: "en.usa#holiday@group.v.calendar.google.com", name: "US holidays", color: "#ef4444" },
-  { id: "en.uk#holiday@group.v.calendar.google.com", name: "UK holidays", color: "#3b82f6" },
-  { id: "en.german#holiday@group.v.calendar.google.com", name: "German holidays", color: "#f59e0b" },
-  { id: "en.christian#holiday@group.v.calendar.google.com", name: "Christian holidays", color: "#8b5cf6" },
+  { id: "en.usa#holiday@group.v.calendar.google.com", name: "US holidays", color: "var(--color-error)" },
+  { id: "en.uk#holiday@group.v.calendar.google.com", name: "UK holidays", color: "var(--color-info)" },
+  { id: "en.german#holiday@group.v.calendar.google.com", name: "German holidays", color: "var(--color-warning)" },
+  { id: "en.christian#holiday@group.v.calendar.google.com", name: "Christian holidays", color: "var(--color-primary)" },
 ]
 
 /** Multi-select state: which holiday feeds are toggled on. */
@@ -221,7 +221,7 @@ let playgroundView = $state<"month" | "week" | "day">("month")
 
 /** The sandbox's custom/random events (consumer-owned; drag rewrites starts). */
 let sandboxEvents: CalendarViewEvent[] = $state([
-  { id: "sb-1", title: "Kickoff", start: "2026-09-03T10:00", color: "#10b981" },
+  { id: "sb-1", title: "Kickoff", start: "2026-09-03T10:00", color: "var(--color-success)" },
 ])
 
 /**
@@ -243,7 +243,7 @@ function mulberry32(seed: number): () => number {
 /** Sprinkle counter — bumps the seed so repeated clicks add fresh events. */
 let sprinkleRun = 0
 
-const SANDBOX_COLORS = ["#6366f1", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4"]
+const SANDBOX_COLORS = ["var(--color-secondary)", "var(--color-success)", "var(--color-warning)", "var(--color-error)", "var(--color-primary)", "var(--color-primary-bold)"]
 const SANDBOX_ICONS = ["tabler:coffee", "tabler:calendar-star", "tabler:users", "tabler:flag"]
 
 /** Sprinkles 4 random events across the currently visible period (seeded). */
@@ -475,8 +475,8 @@ const events = parseICal(icsText, { defaultTz: "Europe/Berlin" })
 <ExampleTabs code={`<script lang="ts">
   let view = $state<'month' | 'week' | 'day'>("month")
   let events = $state([
-    { id: "v-review", title: "Design review", start: "2026-09-16T14:00", color: "#6366f1" },
-    { id: "v-offsite", title: "Offsite", start: "2026-09-18", allDay: true, color: "#f59e0b" },
+    { id: "v-review", title: "Design review", start: "2026-09-16T14:00", color: "var(--color-secondary)" },
+    { id: "v-offsite", title: "Offsite", start: "2026-09-18", allDay: true, color: "var(--color-warning)" },
   ])
 <\/script>
 
@@ -580,7 +580,7 @@ const events = parseICal(icsText, { defaultTz: "Europe/Berlin" })
 <ExampleTabs code={`<script lang="ts">
   // Consumer-owned state: oneventmove rewrites the event's start.
   let events = $state([
-    { id: "d1", title: "Planning session", start: "2026-09-15T10:00", color: "#6366f1" },
+    { id: "d1", title: "Planning session", start: "2026-09-15T10:00", color: "var(--color-secondary)" },
   ])
   function moveEvent(e: CustomEvent<EventMoveDetail>) {
     events = events.map((ev) =>
@@ -643,7 +643,7 @@ const ics = await fetch("https://caldav.icloud.com/published/…").then((r) => r
 const events = parseICal(ics, { defaultTz: "Europe/Berlin" })
 
 const family: CalendarSource = {
-  id: "family", name: "Family", color: "#f59e0b",
+  id: "family", name: "Family", color: "var(--color-warning)",
   fetchEvents: async () => events,
 }
 <CalendarView calendars={[family]} />`}</code></pre>

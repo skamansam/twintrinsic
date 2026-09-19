@@ -104,15 +104,15 @@
 </script>
 
 <!-- Build This Yourself Banner -->
-<div class="mb-8 bg-blue-50 dark:bg-blue-950 border-l-4 border-blue-500 p-4 rounded">
+<div class="mb-8 bg-info-bg border-l-4 border-info p-4 rounded">
 	<div class="flex items-center justify-between">
 		<div>
-			<h3 class="font-semibold text-blue-900 dark:text-blue-100">{m.exdash_banner_h()}</h3>
-			<p class="text-sm text-blue-800 dark:text-blue-200 mt-1">
+			<h3 class="font-semibold text-info-900 dark:text-info-100">{m.exdash_banner_h()}</h3>
+			<p class="text-sm text-info-800 dark:text-info-200 mt-1">
 				{m.exdash_banner_p()}
 			</p>
 		</div>
-		<a href="/docs/examples/dashboard/guide" class="ml-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium whitespace-nowrap transition-colors">
+		<a href="/docs/examples/dashboard/guide" class="ml-4 px-4 py-2 bg-info hover:bg-info-hover text-white rounded font-medium whitespace-nowrap transition-colors">
 			{m.ex_viewguide()}
 		</a>
 	</div>
@@ -121,18 +121,18 @@
 <div class="space-y-8">
 	<!-- Key Metrics Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_metrics()}</h2>
-		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+		<h2 class="text-2xl font-bold text-text">{m.exdash_sec_metrics()}</h2>
+		<div class="bg-surface rounded-lg border border-border p-6">
 			<MetricGrid columns={4} gap="md" items={statsCards} />
 		</div>
 	</section>
 
 	<!-- KPI Cards Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_kpi()}</h2>
+		<h2 class="text-2xl font-bold text-text">{m.exdash_sec_kpi()}</h2>
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 			{#each kpiData as kpi}
-				<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+				<div class="bg-surface rounded-lg border border-border p-6">
 					<KPICard {...kpi} />
 				</div>
 			{/each}
@@ -141,8 +141,8 @@
 
 	<!-- Sales Trends Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_sales()}</h2>
-		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+		<h2 class="text-2xl font-bold text-text">{m.exdash_sec_sales()}</h2>
+		<div class="bg-surface rounded-lg border border-border p-6">
 			<BarChart
 				series={salesData.series}
 				labels={salesData.labels}
@@ -158,8 +158,8 @@
 
 	<!-- Traffic Analysis Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_traffic()}</h2>
-		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+		<h2 class="text-2xl font-bold text-text">{m.exdash_sec_traffic()}</h2>
+		<div class="bg-surface rounded-lg border border-border p-6">
 			<AreaChart
 				series={trafficData.series}
 				labels={trafficData.labels}
@@ -176,8 +176,8 @@
 
 	<!-- Conversion Breakdown Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_conversion()}</h2>
-		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6 flex justify-center">
+		<h2 class="text-2xl font-bold text-text">{m.exdash_sec_conversion()}</h2>
+		<div class="bg-surface rounded-lg border border-border p-6 flex justify-center">
 			<DonutChart
 				data={conversionData.data}
 				labels={conversionData.labels}
@@ -190,9 +190,9 @@
 
 	<!-- Performance Metrics Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_perf()}</h2>
+		<h2 class="text-2xl font-bold text-text">{m.exdash_sec_perf()}</h2>
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-			<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+			<div class="bg-surface rounded-lg border border-border p-6">
 				<GaugeChart
 					value={75}
 					min={0}
@@ -203,7 +203,7 @@
 					size={200}
 				/>
 			</div>
-			<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+			<div class="bg-surface rounded-lg border border-border p-6">
 				<GaugeChart
 					value={92}
 					min={0}
@@ -214,7 +214,7 @@
 					size={200}
 				/>
 			</div>
-			<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
+			<div class="bg-surface rounded-lg border border-border p-6">
 				<GaugeChart
 					value={45}
 					min={0}
@@ -230,8 +230,8 @@
 
 	<!-- Progress Tracking Section -->
 	<section class="space-y-4">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{m.exdash_sec_resource()}</h2>
-		<div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6 space-y-6">
+		<h2 class="text-2xl font-bold text-text">{m.exdash_sec_resource()}</h2>
+		<div class="bg-surface rounded-lg border border-border p-6 space-y-6">
 			<ProgressMetric label="CPU Usage" value={65} max={100} color="primary" showPercentage={true} />
 			<ProgressMetric label="Memory Usage" value={78} max={100} color="warning" showPercentage={true} />
 			<ProgressMetric label="Disk Usage" value={45} max={100} color="success" showPercentage={true} />

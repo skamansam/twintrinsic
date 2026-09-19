@@ -131,7 +131,7 @@ import { m } from "$lib/paraglide/messages.js"
   <h3>{m.icon_ex_styled()}</h3>
   <ExampleTabs code={`<Icon name="home" color="red" />
 <Icon name="settings" color="blue" width="32px" height="32px" />
-<Icon name="star" color="yellow-500" />
+<Icon name="star" color="var(--color-warning)" />
 <Icon name="heart" color="pink" class="hover:scale-110 transition-transform" />`}>
     <div class="flex gap-6 items-center flex-wrap" data-testid="icon-styled">
       <div class="flex flex-col items-center gap-2">
@@ -143,7 +143,7 @@ import { m } from "$lib/paraglide/messages.js"
         <span class="text-xs text-muted">Blue</span>
       </div>
       <div class="flex flex-col items-center gap-2">
-        <Icon name="star" color="yellow-500" width="32px" height="32px" />
+        <Icon name="star" color="var(--color-warning)" width="32px" height="32px" />
         <span class="text-xs text-muted">Yellow</span>
       </div>
       <div class="flex flex-col items-center gap-2">

@@ -102,17 +102,17 @@
 </script>
 
 <!-- Build This Yourself Banner -->
-<div id="top" class="mb-8 bg-blue-50 dark:bg-blue-950 border-l-4 border-blue-500 p-4 rounded">
+<div id="top" class="mb-8 bg-info-bg border-l-4 border-info p-4 rounded">
   <div class="flex items-center justify-between">
     <div>
-      <h3 class="font-semibold text-blue-900 dark:text-blue-100">{m.exshop_banner_h()}</h3>
-      <p class="text-sm text-blue-800 dark:text-blue-200 mt-1">
+      <h3 class="font-semibold text-info-900 dark:text-info-100">{m.exshop_banner_h()}</h3>
+      <p class="text-sm text-info-800 dark:text-info-200 mt-1">
         {m.exshop_banner_p_1()}<code>Card</code>{m.exshop_banner_p_2()}<code>Checkbox</code>{m.exshop_banner_p_3()}<code>Slider</code>{m.exshop_banner_p_4()}<code>Rating</code>{m.exshop_banner_p_5()}<code>MenuItem</code>{m.exshop_banner_p_6()}
       </p>
     </div>
     <a
       href="/docs/examples/shopping/guide"
-      class="ml-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-medium whitespace-nowrap transition-colors"
+      class="ml-4 px-4 py-2 bg-info hover:bg-info-hover text-white rounded font-medium whitespace-nowrap transition-colors"
     >
       {m.ex_viewguide()}
     </a>
@@ -239,7 +239,7 @@
   >
     {m.exshop_backtotop()}
   </a>
-  <Footer class="block! px-0! py-0! bg-gray-900 text-white">
+  <Footer class="block! px-0! py-0! bg-surface text-text">
     {#snippet center()}
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-start">
         {#each footerColumns as column (column.title)}

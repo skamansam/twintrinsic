@@ -164,15 +164,15 @@ Game Map Example - Interactive map with markers, popups, and editing
 					<form class="space-y-3" onsubmit="return false;">
 						<div>
 							<label class="block text-xs font-medium mb-1">Name</label>
-							<input type="text" name="name" value="${marker.name}" class="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Marker name" />
+							<input type="text" name="name" value="${marker.name}" class="w-full px-2 py-1 border border-border rounded text-sm" placeholder="Marker name" />
 						</div>
 						<div>
 							<label class="block text-xs font-medium mb-1">Description</label>
-							<textarea name="description" class="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="Description" rows="2">${marker.description}</textarea>
+							<textarea name="description" class="w-full px-2 py-1 border border-border rounded text-sm" placeholder="Description" rows="2">${marker.description}</textarea>
 						</div>
 						<div>
 							<label class="block text-xs font-medium mb-1">Type</label>
-							<select name="type" class="w-full px-2 py-1 border border-gray-300 rounded text-sm">
+							<select name="type" class="w-full px-2 py-1 border border-border rounded text-sm">
 								<option value="treasure" ${marker.type === 'treasure' ? 'selected' : ''}>💎 Treasure</option>
 								<option value="enemy" ${marker.type === 'enemy' ? 'selected' : ''}>⚔️ Enemy</option>
 								<option value="npc" ${marker.type === 'npc' ? 'selected' : ''}>🧑 NPC</option>
@@ -180,8 +180,8 @@ Game Map Example - Interactive map with markers, popups, and editing
 							</select>
 						</div>
 						<div class="flex gap-2 pt-2">
-							<button type="button" data-action="save" class="flex-1 bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">Save</button>
-							<button type="button" data-action="delete" class="flex-1 bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700">Delete</button>
+							<button type="button" data-action="save" class="flex-1 bg-primary text-white px-3 py-1 rounded text-sm hover:bg-primary-hover">Save</button>
+							<button type="button" data-action="delete" class="flex-1 bg-error text-white px-3 py-1 rounded text-sm hover:bg-error-hover">Delete</button>
 						</div>
 					</form>
 				</div>
@@ -191,12 +191,12 @@ Game Map Example - Interactive map with markers, popups, and editing
 		return `
 			<div class="p-3 min-w-56">
 				<h3 class="font-bold text-lg mb-2">${marker.name}</h3>
-				<p class="text-sm text-gray-600 mb-3">${marker.description}</p>
+				<p class="text-sm text-muted mb-3">${marker.description}</p>
 				<div class="flex items-center gap-2 mb-4">
 					<span class="text-2xl">${getMarkerIcon(marker.type)}</span>
 					<span class="text-sm font-medium capitalize">${marker.type}</span>
 				</div>
-				<button type="button" data-action="edit" class="w-full bg-blue-600 text-white px-3 py-2 rounded text-sm hover:bg-blue-700">Edit</button>
+				<button type="button" data-action="edit" class="w-full bg-primary text-white px-3 py-2 rounded text-sm hover:bg-primary-hover">Edit</button>
 			</div>
 		`;
 	}
@@ -248,7 +248,7 @@ Game Map Example - Interactive map with markers, popups, and editing
 	<div class="grid grid-cols-1 gap-8 lg:grid-cols-4">
 		<!-- Map -->
 		<div class="lg:col-span-2">
-			<div class="not-prose mb-8 h-96 w-full rounded-lg border border-gray-200 overflow-hidden">
+			<div class="not-prose mb-8 h-96 w-full rounded-lg border border-border overflow-hidden">
 				<MapComponent
 					customImage={IMAGE_URL}
 					imageWidth={IMAGE_WIDTH}
@@ -276,14 +276,14 @@ Game Map Example - Interactive map with markers, popups, and editing
 
 		<!-- JSON Editor -->
 		<div class="lg:col-span-2">
-			<div class="not-prose rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900 h-96 flex flex-col">
+			<div class="not-prose rounded-lg border border-border bg-surface p-4 h-96 flex flex-col">
 				<h3 class="mb-3 text-lg font-semibold">{m.exmap_json_h()}</h3>
 				{#if jsonError}
-					<div class="mb-2 rounded bg-red-100 p-2 text-sm text-red-700 dark:bg-red-900 dark:text-red-200">
+					<div class="mb-2 rounded bg-error-bg text-error-text dark:bg-error-900 dark:text-error-200">
 						{jsonError}
 					</div>
 				{/if}
-				<div class="flex-1 overflow-hidden rounded border border-gray-300 dark:border-gray-600">
+				<div class="flex-1 overflow-hidden rounded border border-border dark:border-border">
 					<CodeEditor
 						code={jsonContent}
 						language="json"
@@ -294,7 +294,7 @@ Game Map Example - Interactive map with markers, popups, and editing
 						height="100%"
 					/>
 				</div>
-				<p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+				<p class="mt-2 text-xs text-muted">
 					{m.exmap_json_p()}
 				</p>
 			</div>

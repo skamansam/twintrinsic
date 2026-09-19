@@ -94,6 +94,11 @@
   --color-border: #e2e8f0;
   --color-shadow: rgba(0, 0, 0, 0.1);
 
+  /* Inverse chrome — dark panels/terminals/tooltips that stay dark in both
+   * modes (not overridden in the dark block below). */
+  --color-inverse: #0f172a;
+  --color-inverse-text: #f1f5f9;
+
   /* Semantic Colors */
   --color-primary: var(--color-primary-500);
   --color-primary-bg: var(--color-primary-50);
