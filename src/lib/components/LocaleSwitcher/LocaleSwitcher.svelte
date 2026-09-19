@@ -76,10 +76,16 @@ Usage:
     // source, so a consumer's build resolves it to THEIR
     // `src/lib/paraglide/runtime.js`; apps without the alias (or without
     // Paraglide) simply match nothing and the glob stays empty.
-    const glob = (
-      import.meta as { glob?: (pattern: string) => Record<string, () => Promise<unknown>> }
-    ).glob
-    const runtimeModules = glob?.("$lib/paraglide/runtime.js") ?? {}
+    // The call MUST stay literal: Vite's build-time transform keys on the
+    // `import.meta.glob(...)` call syntax itself — extracting it to a
+    // variable defeats the transform and the variable is `undefined` at
+    // runtime. try/catch guards non-Vite hosts.
+    let runtimeModules: Record<string, () => Promise<unknown>> = {}
+    try {
+      runtimeModules = import.meta.glob("$lib/paraglide/runtime.js")
+    } catch {
+      // Non-Vite host: no glob support.
+    }
     const loaders = Object.values(runtimeModules)
     if (loaders.length === 0) {
       runtime = undefined
@@ -96,8 +102,8 @@ Usage:
 
   /** Locales to display: explicit prop, or the runtime's list once loaded */
   const availableLocales = $derived(locales ?? runtime?.locales ?? [])
-  /** The active locale, re-read whenever the runtime resolves */
-  const activeLocale = $derived(runtime?.getLocale() ?? "")
+  /** The active locale, re-read whenever the runtime resolves. With an explicit `locales` prop but no runtime (e.g. static stories, non-Paraglide hosts) the first offered locale is the active default. */
+  const activeLocale = $derived(runtime?.getLocale() ?? locales?.[0] ?? "")
   /** True once the runtime has resolved AND exposed at least one locale */
   const ready = $derived(availableLocales.length > 0 && activeLocale !== "")
 

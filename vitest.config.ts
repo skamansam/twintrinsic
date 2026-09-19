@@ -198,6 +198,15 @@ export default defineConfig({
             // the vitest browser server for port 6006.
           }),
         ],
+        // Pre-declare the polyfill deps statically imported by Tooltip /
+        // src/lib/polyfills.ts. Left to lazy discovery they were bundled
+        // mid-run ("optimized dependencies changed. reloading"), aborting
+        // every in-flight sb-vitest dep request — all story files then
+        // failed to import. Note: root-level optimizeDeps does NOT reach
+        // this project server (see comment above), so the include lives here.
+        optimizeDeps: {
+          include: ["@oddbird/css-anchor-positioning", "@oddbird/popover-polyfill", "interestfor"],
+        },
         test: {
           name: "storybook",
           isolate: false,

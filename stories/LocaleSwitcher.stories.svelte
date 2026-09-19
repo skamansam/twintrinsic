@@ -19,7 +19,9 @@ const { Story } = defineMeta({
 <Story
   name="Buttons"
   play={async ({ canvas }) => {
-    await expect(canvas.getByRole("button", { name: "English" })).toHaveAttribute("aria-pressed", "true");
+    // findByRole: the locale list arrives via the Paraglide runtime's async
+    // dynamic import — getByRole would race ahead of it.
+    await expect(canvas.findByRole("button", { name: "English" })).resolves.toHaveAttribute("aria-pressed", "true");
     await expect(canvas.getByRole("button", { name: "Español" })).toHaveAttribute("aria-pressed", "false");
     await expect(canvas.getByRole("button", { name: "فارسی" })).toHaveAttribute("aria-pressed", "false");
   }}
@@ -29,7 +31,7 @@ const { Story } = defineMeta({
   name="Select"
   args={{ variant: "select" }}
   play={async ({ canvas }) => {
-    const select = canvas.getByRole("combobox");
+    const select = await canvas.findByRole("combobox");
     await expect(select).toBeInTheDocument();
     await expect(select).toHaveValue("en");
   }}
@@ -49,6 +51,6 @@ const { Story } = defineMeta({
   name="Custom Label"
   args={{ ariaLabel: "Pick a language" }}
   play={async ({ canvas }) => {
-    await expect(canvas.getByRole("group", { name: "Pick a language" })).toBeInTheDocument();
+    await expect(canvas.findByRole("group", { name: "Pick a language" })).resolves.toBeInTheDocument();
   }}
 />
