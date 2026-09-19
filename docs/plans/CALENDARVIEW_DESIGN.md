@@ -232,8 +232,13 @@ interface CalendarViewEvent {
 
 `eventNormalize.ts` expands each event into per-cell spans; an event
 covering N days occupies the leading cell's track and continues with
-`↔` continuation chips on subsequent days (phase 2: CSS grid sub-row
-lanes à la FullCalendar; phase 1 accepts stacked chips).
+`↔` continuation chips on subsequent days. ✅ Phase-2 sub-row lanes
+shipped (2026-09-18): `eventLanes.ts` (`assignEventLanes` /
+`computeWeekLanes`) packs overlapping multi-day spans into side-by-side
+CSS-grid lanes per week row (greedy interval coloring, longest-first at
+equal starts; single-day chips stay in the auto flow). Cells render a
+fixed set of lane tracks via `--lane-count` so lanes align across the
+week; continuation chips keep their event's lane.
 
 ---
 

@@ -494,6 +494,28 @@ const events = parseICal(icsText, { defaultTz: "Europe/Berlin" })
   </div>
 </ExampleTabs>
 
+<h3>{m.calendarview_ex_lanes()}</h3>
+<p>{m.calendarview_ex_lanes_p()}</p>
+<ExampleTabs code={`<CalendarView
+  month={Temporal.PlainDate.from('2026-09-01')}
+  events={[
+    { id: "offsite", title: "Offsite", start: "2026-09-08", end: "2026-09-10", allDay: true },
+    { id: "conf", title: "Conference", start: "2026-09-09", end: "2026-09-11", allDay: true },
+  ]}
+/>`} >
+  <div class="max-w-sm" data-testid="calendarview-lanes">
+    <CalendarView
+      month={SEPTEMBER}
+      maxEventsPerCell={3}
+      events={[
+        { id: "lane-offsite", title: "Offsite", start: "2026-09-08", end: "2026-09-10", allDay: true, color: "var(--color-success)" },
+        { id: "lane-conf", title: "Conference", start: "2026-09-09", end: "2026-09-11", allDay: true, color: "var(--color-info)" },
+        { id: "lane-note", title: "1:1 with Sam", start: "2026-09-09T15:00", color: "var(--color-secondary)" },
+      ]}
+    />
+  </div>
+</ExampleTabs>
+
 <h3>{m.calendarview_ex_views()}</h3>
 <p>{m.calendarview_ex_views_p()}</p>
 <ExampleTabs code={`<script lang="ts">

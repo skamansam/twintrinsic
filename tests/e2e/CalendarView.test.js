@@ -303,3 +303,30 @@ test.describe("CalendarView Google CSV import", () => {
     await expect(holiday).toHaveCount(2);
   });
 });
+
+test.describe("CalendarView sub-row lanes (phase 2)", () => {
+  test("overlapping multi-day spans render side by side in lanes", async ({ page }) => {
+    await page.goto("/docs/components/Form/CalendarView");
+    await waitForHydration(page);
+    const demo = page.getByTestId("calendarview-lanes");
+    await expect(demo).toBeVisible();
+
+    // Each span's chip appears on every covered day (3 and 3 cells).
+    await expect(demo.getByTestId("calendar-view-event-lane-offsite")).toHaveCount(3);
+    await expect(demo.getByTestId("calendar-view-event-lane-conf")).toHaveCount(3);
+
+    // Lanes are assigned: offsite row 1, conference row 2, the 1:1 stacks.
+    await expect(demo.getByTestId("calendar-view-event-lane-offsite").first()).toHaveAttribute(
+      "style",
+      /grid-row: 1/,
+    );
+    await expect(demo.getByTestId("calendar-view-event-lane-conf").first()).toHaveAttribute(
+      "style",
+      /grid-row: 2/,
+    );
+    await expect(demo.getByTestId("calendar-view-event-lane-note").first()).not.toHaveAttribute(
+      "style",
+      /grid-row/,
+    );
+  });
+});

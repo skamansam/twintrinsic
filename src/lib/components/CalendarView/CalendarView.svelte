@@ -74,6 +74,7 @@ import { tick } from "svelte"
 import Icon from "../Icon/Icon.svelte"
 import { buildMonthGrid, buildWeekGrid, monthTitle, resolveWeekStart, weekdayHeaders, type WeekStart } from "../../helpers/calendarGrid.js"
 import { eventsForDay, normalizeEvents, type CalendarViewEvent, type EventMoveDetail, type NormalizedEvent } from "../../helpers/eventNormalize.js"
+import { computeWeekLanes } from "../../helpers/eventLanes.js"
 import { connectCalendars, type CalendarSource, type CalendarsErrorDetail } from "../../helpers/connectCalendars.js"
 import { expandRecurrences } from "../../helpers/rruleExpand.js"
 import { groupEvents, sourceColors, sourceCount, type GroupedEvent } from "../../helpers/eventGroup.js"
@@ -345,6 +346,13 @@ const normalized = $derived.by(() => {
 })
 
 /**
+ * Sub-row lanes for multi-day spans (phase 2): per-week lane maps plus
+ * the grid-wide lane count, so overlapping spans render side by side and
+ * lanes stay aligned across the week row.
+ */
+const weekLanes = $derived(computeWeekLanes(rows, normalized))
+
+/**
  * Looks up the events covering a grid day, split into visible chips and
  * overflow for the "+N more" popover.
  * @param day - The grid cell day
@@ -364,6 +372,21 @@ function chipsFor(day: Temporal.PlainDate): { visible: NormalizedEvent[]; overfl
  */
 function isSpanStart(ne: NormalizedEvent, day: Temporal.PlainDate): boolean {
   return ne.startDay.equals(day)
+}
+
+/**
+ * CSS grid placement for a lane-assigned chip: its lane row, spanning
+ * the fixed slot row plus the flexible row below (see the
+ * `.calendar-view-chips` styles for the lane track model). Empty string
+ * for single-day chips, which stay in the normal stacked auto flow.
+ * @param weekIndex - Index of the week row the cell is in
+ * @param ne - The normalized event being rendered
+ * @returns A `grid-row` style fragment, or ""
+ */
+function chipLaneStyle(weekIndex: number, ne: NormalizedEvent): string {
+  const lane = weekLanes.maps[weekIndex]?.get(ne.event.id)
+  if (lane === undefined) return ""
+  return `grid-row: ${lane} / span 2;`
 }
 
 /**
@@ -548,6 +571,7 @@ function chipColor(ne: NormalizedEvent): string {
     </thead>
     <tbody>
       {#each rows as week, w (week[0].toString())}
+        {@const weekIndex = w}
         <tr>
           {#each week as day, d (day.toString())}
             {@const index = w * 7 + d}
@@ -578,6 +602,7 @@ function chipColor(ne: NormalizedEvent): string {
               >
                 {day.day}
               </button>
+              <div class="calendar-view-cellbody" style={`--lane-count: ${weekLanes.count};`}>
               {#if chipsFor(day).visible.length > 0 || chipsFor(day).overflow.length > 0}
                 {@const chips = chipsFor(day)}
                 <div class="calendar-view-chips">
@@ -590,7 +615,7 @@ function chipColor(ne: NormalizedEvent): string {
                       class:calendar-view-chip-continuation={!start}
                       class:calendar-view-chip-dragging={draggingId === ne.event.id}
                       class:calendar-view-chip-movable={dragEvents && start && selectedEventId === ne.event.id}
-                      style="--event-color: {chipColor(ne)}"
+                      style={`--event-color: ${chipColor(ne)}; ${chipLaneStyle(w, ne)}`}
                       aria-label={chipLabel(ne)}
                       title={ne.event.title}
                       draggable={dragEvents && start && (eventsDraggable?.(ne.event) ?? true)}
@@ -682,6 +707,7 @@ function chipColor(ne: NormalizedEvent): string {
                   {/if}
                 </div>
               {/if}
+              </div>
             </td>
           {/each}
         </tr>
@@ -740,8 +766,21 @@ function chipColor(ne: NormalizedEvent): string {
     @apply font-semibold;
   }
 
+  /* Per-cell body: the day number flows normally; the chips area below
+   * reserves `--lane-count` uniform slot rows so multi-day lanes align
+   * horizontally across the week row (single-day chips pack after them). */
+  .calendar-view-cellbody {
+    @apply flex flex-col;
+    min-height: calc(20px * var(--lane-count, 0) + var(--lane-count, 0) * 1px);
+  }
+
+  /* Chips area: a CSS grid whose first N rows are the lane tracks
+   * (20px each), followed by one auto row where non-lane (single-day)
+   * chips stack. Lane chips are placed with inline `grid-row`. */
   .calendar-view-chips {
-    @apply flex flex-col gap-px px-0.5 pb-0.5;
+    @apply grid items-start gap-px px-0.5 pb-0.5;
+    grid-template-rows: repeat(var(--lane-count, 0), 20px) auto;
+    grid-auto-flow: row;
   }
 
   .calendar-view-chip {

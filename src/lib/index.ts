@@ -141,6 +141,8 @@ export {
   parseICal,
   parseGoogleCsv,
   connectCalendars,
+  assignEventLanes,
+  computeWeekLanes,
   expandRecurrence,
   expandRecurrences,
   isCalendarSource,

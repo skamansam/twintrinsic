@@ -623,6 +623,11 @@
       "svelte": "./dist/helpers/parseGoogleCsv.js",
       "default": "./dist/helpers/parseGoogleCsv.js"
     },
+    "./helpers/eventLanes": {
+      "types": "./dist/helpers/eventLanes.d.ts",
+      "svelte": "./dist/helpers/eventLanes.js",
+      "default": "./dist/helpers/eventLanes.js"
+    },
     "./helpers/connectCalendars": {
       "types": "./dist/helpers/connectCalendars.d.ts",
       "svelte": "./dist/helpers/connectCalendars.js",

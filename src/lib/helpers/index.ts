@@ -18,6 +18,12 @@ export {
   type ParsedGoogleCsvEvent,
 } from "./parseGoogleCsv.js";
 export {
+  assignEventLanes,
+  computeWeekLanes,
+  type EventLanes,
+  type WeekLaneResult,
+} from "./eventLanes.js";
+export {
   connectCalendars,
   isCalendarSource,
   type CalendarSource,

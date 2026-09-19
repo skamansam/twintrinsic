@@ -726,3 +726,65 @@ describe("CalendarView views (month/week/day)", () => {
     expect(onmove).toHaveBeenCalledTimes(1);
   });
 });
+
+describe("CalendarView sub-row lanes (phase 2)", () => {
+  /** Week containing Sep 7–13, 2026 in the September 2026 grid. */
+  const OFFSITE = {
+    id: "offsite",
+    title: "Offsite",
+    start: "2026-09-08",
+    end: "2026-09-10",
+    allDay: true,
+  };
+  const CONFERENCE = {
+    id: "conference",
+    title: "Conference",
+    start: "2026-09-09",
+    end: "2026-09-11",
+    allDay: true,
+  };
+  const SINGLE = { id: "single", title: "Single", start: "2026-09-09T10:00" };
+
+  it("places overlapping multi-day events in different lane rows", async () => {
+    const { container } = await renderForSeptember({
+      events: [OFFSITE, CONFERENCE],
+    });
+    const offsite = container.querySelector(
+      '[data-testid="calendar-view-event-offsite"]',
+    ) as HTMLElement;
+    const conference = container.querySelector(
+      '[data-testid="calendar-view-event-conference"]',
+    ) as HTMLElement;
+    expect(offsite).toBeInTheDocument();
+    expect(conference).toBeInTheDocument();
+    // Lane 1 vs lane 2 via inline grid-row (read the raw attribute — the
+    // test DOM does not parse the grid-row shorthand into longhands).
+    expect(offsite.getAttribute("style")).toContain("grid-row: 1");
+    expect(conference.getAttribute("style")).toContain("grid-row: 2");
+  });
+
+  it("renders only the event's own chip in its lane on continuation days", async () => {
+    const { container } = await renderForSeptember({ events: [OFFSITE, CONFERENCE] });
+    // Sep 9: offsite continues (↔), conference starts — each in its own lane.
+    const cell = container
+      .querySelector('[data-testid="calendar-view-day-2026-09-09"]')
+      ?.closest("td");
+    expect(cell).toBeInTheDocument();
+    const offsiteChip = cell?.querySelector('[data-testid="calendar-view-event-offsite"]');
+    const conferenceChip = cell?.querySelector('[data-testid="calendar-view-event-conference"]');
+    expect(offsiteChip?.textContent).toContain("↔");
+    expect(conferenceChip?.textContent).not.toContain("↔");
+  });
+
+  it("keeps single-day chips out of the lane maps (auto flow)", async () => {
+    const { container } = await renderForSeptember({
+      events: [OFFSITE, CONFERENCE, SINGLE],
+      maxEventsPerCell: 3,
+    });
+    const single = container.querySelector(
+      '[data-testid="calendar-view-event-single"]',
+    ) as HTMLElement;
+    expect(single).toBeInTheDocument();
+    expect(single.getAttribute("style") ?? "").not.toContain("grid-row");
+  });
+});

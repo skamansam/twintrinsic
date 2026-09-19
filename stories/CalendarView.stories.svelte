@@ -24,6 +24,12 @@ const { Story } = defineMeta({
 /** Fixed visible month so story screenshots don't drift with the calendar. */
 const SEPTEMBER = TemporalPolyfill.PlainDate.from("2026-09-01")
 
+/** Two overlapping multi-day spans for the SubRowLanes story. */
+const LANE_EVENTS = [
+  { id: "lane-a", title: "Offsite", start: "2026-09-08", end: "2026-09-11", allDay: true, color: "#10b981" },
+  { id: "lane-b", title: "Conference", start: "2026-09-09", end: "2026-09-12", allDay: true, color: "#6366f1" },
+]
+
 /** Google-export-shaped feed: one recurring standup, one all-day offsite, one tentative. */
 const ICS_SAMPLE = `BEGIN:VCALENDAR
 PRODID:-//Google Inc//Google Calendar 70.9054//EN
@@ -468,6 +474,28 @@ const lockHolidays = (e) => !e.calendarId
     // Holidays are drag-locked; sandbox events are draggable.
     expect(canvas.getByTestId("calendar-view-event-hol-labor").getAttribute("draggable")).toBe("false")
     expect(canvas.getByTestId("calendar-view-event-sb-1").getAttribute("draggable")).toBe("true")
+  }}
+>
+  {#snippet children(args)}
+    <div style="min-height: 340px">
+      <CalendarView {...args} month={SEPTEMBER} />
+    </div>
+  {/snippet}
+</Story>
+
+<!-- Sub-row lanes: two overlapping multi-day spans share the same days and
+     render side by side in their assigned lanes (phase-2 close-out). -->
+<Story
+  name="SubRowLanes"
+  args={{
+    events: LANE_EVENTS,
+    maxEventsPerCell: 3,
+  }}
+  play={async ({ canvas }) => {
+    // Lane 1 vs lane 2 via inline grid-row placement (multi-day chips
+    // render in every covered cell — queryAll and assert the first).
+    expect(canvas.getAllByTestId("calendar-view-event-lane-a")[0].getAttribute("style")).toContain("grid-row: 1")
+    expect(canvas.getAllByTestId("calendar-view-event-lane-b")[0].getAttribute("style")).toContain("grid-row: 2")
   }}
 >
   {#snippet children(args)}
