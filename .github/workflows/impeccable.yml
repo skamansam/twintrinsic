@@ -1,0 +1,37 @@
+name: Impeccable
+
+# Design-quality gate. `impeccable detect` scans UI files changed in a PR
+# for anti-patterns and exits 2 when findings exist, failing the check.
+# Advisory findings never fail. Waive false positives where they live with
+# `impeccable-disable` comments, or repo-wide via `npx impeccable ignores`.
+# Pin bumped manually: keep in sync with the version used locally.
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  detect:
+    name: Scan changed UI files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Detect design anti-patterns
+        run: |
+          files=$(git diff --name-only --diff-filter=d "origin/${{ github.base_ref }}...HEAD" \
+            | grep -E '\.(svelte|vue|jsx|tsx|css|scss|html|ts|js)$' || true)
+          if [ -z "$files" ]; then
+            echo "No UI files changed; nothing to scan."
+            exit 0
+          fi
+          echo "Scanning changed files:"
+          echo "$files"
+          mapfile -t targets <<< "$files"
+          npx -y impeccable@4.1.0 detect "${targets[@]}"
