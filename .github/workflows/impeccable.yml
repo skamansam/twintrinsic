@@ -22,8 +22,8 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          # impeccable@4.1.0 requires Node 24 (devEngines.runtime).
-          node-version: "24"
+          # impeccable@4.1.0 pins Node 24.10.0 exactly via devEngines.runtime.
+          node-version: "24.10.0"
       - name: Detect design anti-patterns
         run: |
           files=$(git diff --name-only --diff-filter=d "origin/${{ github.base_ref }}...HEAD" \
