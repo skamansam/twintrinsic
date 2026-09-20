@@ -26,7 +26,6 @@ export const propsMetadata = [
 import Badge from "../Badge/Badge.svelte"
 import Tooltip from "../Tooltip/Tooltip.svelte"
 import { browserApisFor } from "./browserApiRegistry.js"
-import { m } from "$lib/paraglide/messages.js"
 
 interface Props {
   /** The component name to look up in the browser-API registry */
@@ -41,6 +40,39 @@ interface Props {
 
 let { component, class: className = "", id = crypto.randomUUID(), ...restProps }: Props = $props()
 
+/** Paraglide `m` message functions, resolved lazily so non-Paraglide apps still render */
+let messages = $state<Record<string, (params?: Record<string, unknown>) => string> | undefined>(
+  undefined,
+)
+
+$effect(() => {
+  // Same opt-in pattern as LanguagePicker/LocaleSwitcher: the glob resolves
+  // at build time in the consumer's app and stays empty when the host has no
+  // `src/lib/paraglide`, in which case the English fallbacks are used.
+  const glob = (
+    import.meta as { glob?: (pattern: string) => Record<string, () => Promise<unknown>> }
+  ).glob
+  const messageModules = glob?.("$lib/paraglide/messages.js") ?? {}
+  const loaders = Object.values(messageModules)
+  if (loaders.length === 0) return
+  loaders[0]()
+    .then((mod) => {
+      messages = (
+        mod as { m?: Record<string, (params?: Record<string, unknown>) => string> }
+      ).m
+    })
+    .catch(() => {
+      messages = undefined
+    })
+})
+
+/** Looks up a translated message, falling back to English when Paraglide is absent */
+function msg(key: string, params: Record<string, unknown> | undefined, fallback: string): string {
+  const fn = messages?.[key]
+  if (!fn) return fallback
+  return fn(params)
+}
+
 /** The registered APIs for this component (empty → renders nothing). */
 const apis = $derived(browserApisFor(component) ?? [])
 </script>
@@ -48,12 +80,28 @@ const apis = $derived(browserApisFor(component) ?? [])
 {#if apis.length > 0}
   <span {...restProps} {id} class="browser-api-badges inline-flex items-center gap-1 {className}">
     {#each apis as api (api.label)}
-      <Tooltip content={api.polyfill ? m.api_badge_polyfill({ api: api.polyfill }) : m.api_badge_nopolyfill()}>
+      <Tooltip
+        content={api.polyfill
+          ? msg(
+              "api_badge_polyfill",
+              { api: api.polyfill },
+              `Built on a native browser API. Twintrinsic ships no polyfill — if you target older browsers, install ${api.polyfill} yourself (e.g. as the first import of your app entry).`,
+            )
+          : msg(
+              "api_badge_nopolyfill",
+              undefined,
+              "Built on a native browser API. No polyfill is available — browsers without support cannot enable this feature.",
+            )}
+      >
         <a
           href={api.mdnUrl}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={m.api_badge_link({ api: api.label })}
+          aria-label={msg(
+            "api_badge_link",
+            { api: api.label },
+            `Learn more about the ${api.label} browser API (opens MDN in a new tab)`,
+          )}
         >
           <Badge pill outline variant="info">{api.label}</Badge>
         </a>

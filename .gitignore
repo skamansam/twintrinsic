@@ -41,3 +41,6 @@ static/storybook
 
 # Exports validation (scripts/validate-exports.mjs) temporary check files
 .tmp-exports-check/
+
+# Impeccable local-only detector ignores
+.impeccable/config.local.json

@@ -12,6 +12,37 @@ A Tailwind-based Svelte 5 component library emphasizing accessibility, extensibi
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the documentation/i18n (Paraglide) workflow, [AGENTS.md](AGENTS.md) for the coding standards (Svelte 5 runes, Tailwind, testing requirements), and [CHANGELOG.md](CHANGELOG.md) for release history.
 
+## Design Quality
+
+I really like to have good design that doesn't look like genAI wrote it. That said, some of my sites from before genAI was even a thing aren't passing the impeccable tests, so take it how you will. Regardless, I am enforcing a no-genAI  policy withj regards to how the docs site and the components look and feel.
+
+This project uses [impeccable](https://impeccable.style) to catch UI
+anti-patterns and design-quality issues in components and docs pages.
+Scan locally with:
+
+```bash
+npx impeccable detect src/
+```
+
+CI runs the same scan on UI files changed in each PR and fails on
+findings (`.github/workflows/impeccable.yml`). Waive a false positive
+where it lives with an inline `impeccable-disable` comment, or manage
+repo-wide ignores with `npx impeccable ignores` (stored in
+`.impeccable/config.json`). Agent skills live in the user-level install:
+`npx impeccable install --user`.
+
+## AI Policy
+
+AI is a tool, nothing more. Every human associated with a PR holds the
+responsibility for the code it contains — if it is bad code, or does not
+conform to the ideas set forth in this project, it will be rejected.
+
+I, Samuel "Skaman Sam" C Tyler, am the project lead. I have decades of PR
+reviews under my belt and can be fairly strict with submitted code. To
+that end, CI runs checks that catch overly generated code (see
+[Design Quality](#design-quality)) — your PRs must pass those checks in
+order to be merged.
+
 ## Philosophy
 
 Twintrinsic was created to provide a flexible, accessible UI library that extends HTML elements rather than replacing them. Since HTML elements already have built-in accessibility, using them as the foundation ensures better a11y support. Combined with Tailwind CSS for theming and customization, the name reflects this approach: `tailwind + intrinsic = twintrinsic`.

@@ -54,9 +54,6 @@ test.describe("docs research page", () => {
     // The h1 chrome renders through Paraglide
     await expect(page.locator("h1")).toHaveText("پژوهش");
     // Search placeholder is translated
-    await expect(page.getByRole("searchbox")).toHaveAttribute(
-      "placeholder",
-      /جست‌وجو/,
-    );
+    await expect(page.getByRole("searchbox")).toHaveAttribute("placeholder", /جست‌وجو/);
   });
 });

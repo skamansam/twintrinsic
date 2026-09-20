@@ -33,11 +33,17 @@ import EventsTable from "$lib/components/EventsTable/EventsTable.svelte"
 import PropsTable from "$lib/components/PropsTable/PropsTable.svelte"
 import * as CalendarViewModule from "$lib/components/CalendarView/CalendarView.svelte"
 import Container from "$lib/components/Container/Container.svelte"
-import { buildMonthGrid, buildWeekGrid } from "$lib/helpers/calendarGrid.js"
 import { parseICal } from "$lib/helpers/parseICal.js"
 import { parseGoogleCsv } from "$lib/helpers/parseGoogleCsv.js"
 import type { CalendarViewEvent, EventMoveDetail } from "$lib/helpers/eventNormalize.js"
 import type { CalendarSource } from "$lib/helpers/connectCalendars.js"
+import {
+  PLAYGROUND_CALENDARS,
+  SANDBOX_COLORS,
+  googleHolidaySource,
+  sprinkleEvents,
+  viewSpan,
+} from "../../../examples/playgroundHelpers"
 import { m } from "$lib/paraglide/messages.js"
 
 // Anchor dates for the demos — pinned so examples don't drift as months pass.
@@ -183,45 +189,8 @@ let viewEvents: CalendarViewEvent[] = $state([
 ])
 
 // ── Playground (11.4): Google public holiday calendars + event sandbox. ──
-
-/**
- * Builds a CalendarSource for one of Google's public holiday calendars.
- * The legacy GData JSON endpoints are retired; the current public feed is
- * plain iCalendar, so parseICal handles it and UID-based grouping works.
- * Fetches are cached per calendarId — repeat toggles don't re-hit the feed.
- * @param id - Google public calendarId (e.g. "en.usa#holiday@group.v.calendar.google.com")
- * @param name - Legend label shown next to the toggle
- * @param color - Source color for the calendar's chips
- */
-function googleHolidaySource(id: string, name: string, color: string): CalendarSource {
-  const cache = new Map<string, CalendarViewEvent[]>()
-  return {
-    id,
-    name,
-    color,
-    fetchEvents: async ({ start, end }) => {
-      const key = `${start.year}-${start.month}`
-      if (!cache.has(key)) {
-        // CORS-safe: the iCal fetch + parse happen server-side
-        // (src/routes/api/holidays/+server.ts, the M6 recipe).
-        const url = `/api/holidays?calendar=${encodeURIComponent(id)}&from=${start.toString()}&to=${end.toString()}`
-        cache.set(key, await fetch(url).then((r) => {
-          if (!r.ok) throw new Error(`holiday feed ${r.status}`)
-          return r.json()
-        }))
-      }
-      return cache.get(key) ?? []
-    },
-  }
-}
-
-/** Holiday feeds offered in the playground (calendarIds are stable public slugs). */
-const PLAYGROUND_CALENDARS = [
-  { id: "en.usa#holiday@group.v.calendar.google.com", name: "US holidays", color: "var(--color-error)" },
-  { id: "en.uk#holiday@group.v.calendar.google.com", name: "UK holidays", color: "var(--color-info)" },
-  { id: "en.german#holiday@group.v.calendar.google.com", name: "German holidays", color: "var(--color-warning)" },
-  { id: "en.christian#holiday@group.v.calendar.google.com", name: "Christian holidays", color: "var(--color-primary)" },
-]
+// Generators and holiday-feed sources live in ../examples/playgroundHelpers
+// (shared with the standalone /docs/examples/calendar example page).
 
 /** Multi-select state: which holiday feeds are toggled on. */
 let pickedCalendars = $state<string[]>([])
@@ -235,47 +204,12 @@ let sandboxEvents: CalendarViewEvent[] = $state([
   { id: "sb-1", title: "Kickoff", start: "2026-09-03T10:00", color: "var(--color-success)" },
 ])
 
-/**
- * Deterministic RNG for the sprinkle button (mulberry32) — same seed,
- * same events, so demos and e2e tests are reproducible.
- * @param seed - 32-bit seed
- */
-function mulberry32(seed: number): () => number {
-  let a = seed >>> 0
-  return () => {
-    a |= 0
-    a = (a + 0x6d2b79f5) | 0
-    let t = Math.imul(a ^ (a >>> 15), 1 | a)
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
-  }
-}
-
-/** Sprinkle counter — bumps the seed so repeated clicks add fresh events. */
+/** Sprinkle counter — 1-based; feeds the seeded generator (e2e-pinned ids). */
 let sprinkleRun = 0
-
-const SANDBOX_COLORS = ["var(--color-secondary)", "var(--color-success)", "var(--color-warning)", "var(--color-error)", "var(--color-primary)", "var(--color-primary-bold)"]
-const SANDBOX_ICONS = ["tabler:coffee", "tabler:calendar-star", "tabler:users", "tabler:flag"]
 
 /** Sprinkles 4 random events across the currently visible period (seeded). */
 function sprinkle() {
-  const rand = mulberry32(42 + sprinkleRun++)
-  const span = viewSpan(playgroundMonth, playgroundView)
-  const created = Array.from({ length: 4 }, (_, i) => {
-    const dayOffset = Math.floor(rand() * span.days)
-    const day = span.start.add({ days: dayOffset })
-    const timed = rand() > 0.35
-    const hour = 8 + Math.floor(rand() * 10)
-    return {
-      id: `sb-${sprinkleRun}-${i}`,
-      title: "Random event",
-      start: timed ? `${day.toString()}T${String(hour).padStart(2, "0")}:00` : day.toString(),
-      allDay: !timed,
-      color: SANDBOX_COLORS[Math.floor(rand() * SANDBOX_COLORS.length)],
-      icon: rand() > 0.5 ? SANDBOX_ICONS[Math.floor(rand() * SANDBOX_ICONS.length)] : undefined,
-      badge: rand() > 0.7 ? String(1 + Math.floor(rand() * 9)) : undefined,
-    }
-  })
+  const created = sprinkleEvents(++sprinkleRun, viewSpan(playgroundMonth, playgroundView))
   sandboxEvents = [...sandboxEvents, ...created]
 }
 
@@ -310,21 +244,6 @@ let selectedEvent: CalendarViewEvent | undefined = $state(undefined)
 
 /** The add-event form element (reset after submit). */
 let form: HTMLFormElement | undefined = $state()
-
-/**
- * The first/last day of the period currently displayed.
- * @param month - The visible anchor date
- * @param view - The active view
- */
-function viewSpan(month: Temporal.PlainDate, view: "month" | "week" | "day") {
-  if (view === "day") return { start: month, end: month, days: 1 }
-  if (view === "week") {
-    const week = buildWeekGrid(month, { weekStart: 0 })
-    return { start: week[0], end: week[6], days: 7 }
-  }
-  const grid = buildMonthGrid(month, { weekStart: 0 })
-  return { start: grid[0], end: grid[grid.length - 1], days: grid.length }
-}
 </script>
 
 <style lang="postcss">
