@@ -33,7 +33,7 @@
     "check:placeholders": "node scripts/check-test-placeholders.mjs",
     "format": "biome format --write .",
     "lint": "biome lint .",
-    "test:e2e": "playwright test",
+    "test:e2e": "playwright test --project=e2e",
     "test:compat": "playwright test --project=compat-chromium --project=compat-firefox --project=compat-webkit",
     "test:compat:merge": "node scripts/merge-browser-compat.mjs",
     "test:unit": "vitest run --project=unit",
@@ -757,7 +757,7 @@
       "twintrinsic"
     ],
     "overrides": {
-      "cookie": ">=0.7.0",
+      "cookie": "^0.7.0",
       "valibot": ">=1.4.2"
     }
   }
