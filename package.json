@@ -2,6 +2,14 @@
   "name": "twintrinsic",
   "version": "0.51.0",
   "license": "MIT",
+  "packageManager": "pnpm@10.24.0",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "24.10.0",
+      "onFail": "download"
+    }
+  },
   "scripts": {
     "dev": "vite dev",
     "build:llms": "node scripts/build-llms-txt.mjs",
@@ -10,7 +18,8 @@
     "build:lib": "svelte-kit sync && svelte-package",
     "build": "pnpm build:llms && vite build",
     "preview": "vite preview",
-    "prepare": "svelte-kit sync && svelte-package || echo ''",
+    "build:i18n": "paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide",
+    "prepare": "svelte-kit sync && paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide && svelte-package || echo ''",
     "prepack": "svelte-kit sync && svelte-package && publint",
     "version": "pnpm format",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -24,7 +33,7 @@
     "check:placeholders": "node scripts/check-test-placeholders.mjs",
     "format": "biome format --write .",
     "lint": "biome lint .",
-    "test:e2e": "playwright test",
+    "test:e2e": "playwright test --project=e2e",
     "test:compat": "playwright test --project=compat-chromium --project=compat-firefox --project=compat-webkit",
     "test:compat:merge": "node scripts/merge-browser-compat.mjs",
     "test:unit": "vitest run --project=unit",
@@ -33,8 +42,14 @@
     "storybook": "storybook dev -p 6006",
     "storybook:build": "rm -rf static/storybook && storybook build -o static/storybook"
   },
-  "files": ["dist", "!dist/**/*.test.*", "!dist/**/*.spec.*"],
-  "sideEffects": ["**/*.css"],
+  "files": [
+    "dist",
+    "!dist/**/*.test.*",
+    "!dist/**/*.spec.*"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "svelte": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
@@ -690,7 +705,7 @@
     "@storybook/sveltekit": "^10.5.8",
     "@sveltejs/adapter-netlify": "^6.0.4",
     "@sveltejs/adapter-vercel": "^6.3.4",
-    "@sveltejs/kit": "^2.70.2",
+    "@sveltejs/kit": "^2.70.3",
     "@sveltejs/package": "^2.5.8",
     "@sveltejs/vite-plugin-svelte": "^7.3.0",
     "@tailwindcss/forms": "^0.5.11",
@@ -701,9 +716,9 @@
     "@testing-library/user-event": "^14.6.4",
     "@types/leaflet": "^1.9.22",
     "@types/node": "^22.20.1",
-    "@vitest/browser": "^4.1.10",
-    "@vitest/browser-playwright": "^4.1.10",
-    "@vitest/coverage-v8": "^4.1.10",
+    "@vitest/browser": "^4.1.11",
+    "@vitest/browser-playwright": "^4.1.11",
+    "@vitest/coverage-v8": "^4.1.11",
     "globals": "^17.11.0",
     "interestfor": "^1.0.8",
     "jsdom": "^29.1.1",
@@ -716,9 +731,11 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "vite": "^8.2.1",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   },
-  "keywords": ["svelte"],
+  "keywords": [
+    "svelte"
+  ],
   "dependencies": {
     "@codemirror/lang-cpp": "^6.0.3",
     "@codemirror/lang-css": "^6.3.1",
@@ -744,6 +761,14 @@
     "prismjs": "^1.30.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "@tailwindcss/oxide", "twintrinsic"]
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "@tailwindcss/oxide",
+      "twintrinsic"
+    ],
+    "overrides": {
+      "cookie": "^0.7.0",
+      "valibot": ">=1.4.2"
+    }
   }
 }

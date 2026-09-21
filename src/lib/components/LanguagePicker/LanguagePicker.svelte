@@ -93,19 +93,30 @@ $effect(() => {
   // consumer's build resolves it to THEIR `src/lib/paraglide/runtime.js`;
   // apps without the alias (or without Paraglide) simply match nothing
   // and the glob stays empty.
-  const runtimeModules = import.meta.glob("$lib/paraglide/runtime.js")
+  // The call MUST stay literal: Vite's build-time transform keys on the
+  // `import.meta.glob(...)` call syntax itself — extracting it to a
+  // variable defeats the transform and the variable is `undefined` at
+  // runtime (which silently disabled Paraglide in every host). The
+  // try/catch guards non-Vite hosts, where `import.meta.glob` does not
+  // exist. See `src/lib/vite-client.d.ts` for the type surface.
+  let runtimeModules: Record<string, () => Promise<unknown>> = {}
+  try {
+    runtimeModules = import.meta.glob("$lib/paraglide/runtime.js")
+  } catch {
+    // Non-Vite host: no glob support, the picker hides itself.
+  }
   const loaders = Object.values(runtimeModules)
   if (loaders.length === 0) {
     runtime = undefined
-  } else {
-    loaders[0]()
-      .then((mod) => {
-        runtime = mod as unknown as ParaglideRuntime
-      })
-      .catch(() => {
-        runtime = undefined
-      })
+    return
   }
+  loaders[0]()
+    .then((mod) => {
+      runtime = mod as unknown as ParaglideRuntime
+    })
+    .catch(() => {
+      runtime = undefined
+    })
 })
 
 /** Locales to display: explicit prop, or the runtime's list once loaded */

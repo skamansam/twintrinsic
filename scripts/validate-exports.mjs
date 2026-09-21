@@ -129,7 +129,7 @@ writeFileSync(path.join(tmpDir, "exports-check.ts"), lines.join("\n"));
 // imports are still caught by this check.
 writeFileSync(
   path.join(tmpDir, "ambient.d.ts"),
-  '// Mirrors the `vite/client` css module declarations real consumers have.\ndeclare module "*.css";\n',
+  '// Mirrors the `vite/client` css module declarations real consumers have.\ndeclare module "*.css";\n'
 );
 writeFileSync(
   path.join(tmpDir, "tsconfig.json"),
@@ -138,8 +138,11 @@ writeFileSync(
       compilerOptions: {
         module: "esnext",
         moduleResolution: "bundler",
-        target: "es2022",
-        lib: ["es2022", "dom"],
+        target: "esnext",
+        // The Temporal-based helpers (CalendarView family) type against the
+        // global `Temporal` namespace, which ships in TypeScript's own
+        // lib.esnext.temporal (TS 5.9+) — matching a modern consumer.
+        lib: ["esnext", "dom"],
         strict: true,
         noEmit: true,
         skipLibCheck: false,
