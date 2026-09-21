@@ -5100,5 +5100,9 @@
   "research_related": "Componentes relacionados",
   "research_sources_legend": "Clave de fuentes",
   "research_sources_body": "Las citas hacen referencia a la tabla de fuentes de la lista de verificación: S1 WAI-ARIA APG, S2 MDN Web Docs, S3 Primer (GitHub), S4 Material Design 3, S5 modern-web-guidance, S6 Ant Design, S7 Carbon Design System.",
-  "research_sources_reference": "ver la tabla de referencia de fuentes de la lista de verificación."
+  "research_sources_reference": "ver la tabla de referencia de fuentes de la lista de verificación.",
+  "example_calendar_tz_heading": "Zonas horarias",
+  "example_calendar_tz_lede": "Los mismos instantes caen en días locales distintos según la zona. Elige una zona para reubicar los tres eventos de muestra; el momento de referencia cae el 1 de septiembre en Los Ángeles pero el 2 de septiembre en Tokio.",
+  "example_calendar_tz_zone": "Zona",
+  "example_calendar_tz_reference": "Instante de referencia"
 }

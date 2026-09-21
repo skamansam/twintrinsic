@@ -5100,5 +5100,9 @@
   "research_related": "کامپوننت‌های مرتبط",
   "research_sources_legend": "راهنمای منابع",
   "research_sources_body": "ارجاع‌ها به جدول منابع چک‌لیست اشاره دارند: S1 WAI-ARIA APG، S2 MDN Web Docs، S3 Primer (GitHub)، S4 Material Design 3، S5 modern-web-guidance، S6 Ant Design، S7 Carbon Design System.",
-  "research_sources_reference": "به جدول مرجع منابع چک‌لیست مراجعه کنید."
+  "research_sources_reference": "به جدول مرجع منابع چک‌لیست مراجعه کنید.",
+  "example_calendar_tz_heading": "منطقه‌های زمانی",
+  "example_calendar_tz_lede": "یک لحظهٔ زمانی بسته به منطقه، در روزهای محلی متفاوتی قرار می‌گیرد. منطقه‌ای را انتخاب کنید تا سه رویداد نمونه جابه‌جا شوند؛ لحظهٔ مرجع در لس‌آنجلس ۱ سپتامبر است اما در توکیو ۲ سپتامبر.",
+  "example_calendar_tz_zone": "منطقه",
+  "example_calendar_tz_reference": "لحظهٔ مرجع"
 }
