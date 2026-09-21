@@ -55,6 +55,7 @@ export { default as Input } from "./components/Form/Input.svelte";
 export { default as InputSwitch } from "./components/Form/InputSwitch.svelte";
 export { default as InvalidState } from "./components/Form/InvalidState.svelte";
 export { default as Knob } from "./components/Form/Knob.svelte";
+export { default as KanbanBoard } from "./components/Kanban/KanbanBoard.svelte";
 export { default as Listbox } from "./components/Form/Listbox.svelte";
 export { default as ListInput } from "./components/Form/ListInput.svelte";
 export { default as NumberInput } from "./components/Form/NumberInput.svelte";
@@ -143,12 +144,29 @@ export {
   connectCalendars,
   assignEventLanes,
   computeWeekLanes,
+  assignKanbanLanes,
+  cardColumnSpan,
+  cardExtentInColumn,
+  cardExtentInSpill,
+  cardTickExtent,
+  crossColumnEnd,
+  isSpilled,
+  snapTickValue,
+  tickBands,
+  tickPercentages,
   expandRecurrence,
   expandRecurrences,
   isCalendarSource,
   type CalendarInstant,
   type CalendarViewEvent,
   type CalendarSource,
+  type KanbanCardData,
+  type KanbanColumnData,
+  type KanbanMoveDetail,
+  type KanbanResizeDetail,
+  type KanbanTick,
+  type KanbanLanes,
+  type CrossColumnEnd,
   type NormalizedEvent,
   type ParsedRRule,
   type ParsedICalEvent,

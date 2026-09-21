@@ -135,6 +135,16 @@
       "svelte": "./dist/components/CalendarView/CalendarView.svelte",
       "default": "./dist/components/CalendarView/CalendarView.svelte"
     },
+    "./components/KanbanBoard": {
+      "types": "./dist/components/Kanban/KanbanBoard.svelte.d.ts",
+      "svelte": "./dist/components/Kanban/KanbanBoard.svelte",
+      "default": "./dist/components/Kanban/KanbanBoard.svelte"
+    },
+    "./helpers/kanbanLayout": {
+      "types": "./dist/helpers/kanbanLayout.d.ts",
+      "svelte": "./dist/helpers/kanbanLayout.js",
+      "default": "./dist/helpers/kanbanLayout.js"
+    },
     "./components/Card": {
       "types": "./dist/components/Card/Card.svelte.d.ts",
       "svelte": "./dist/components/Card/Card.svelte",
