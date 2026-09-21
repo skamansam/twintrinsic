@@ -173,6 +173,13 @@ const components = [
   { name: "Input", category: "Form", updated: true, apis: [
     { name: "HTML input element", implemented: true },
   ]},
+  { name: "KanbanBoard", category: "Form", updated: true, apis: [
+    { name: "HTML Drag and Drop API", implemented: true },
+    { name: "Pointer Events (card resize)", implemented: true },
+    { name: "ARIA grid pattern (APG)", implemented: true },
+    { name: "CSS Grid spanning overlay", implemented: true },
+    { name: "aria-live announcements", implemented: true },
+  ]},
   { name: "InputSwitch", category: "Form", updated: true, apis: [
     { name: "HTML checkbox input", implemented: true },
   ]},

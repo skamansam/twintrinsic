@@ -73,6 +73,7 @@ const siteMenu = $derived.by(() => {
       { title: "Game Map", link: "/docs/examples/game-map", icon: "map" },
       { title: "Shopping Page", link: "/docs/examples/shopping", icon: "shopping-cart" },
       { title: "Calendar", link: "/docs/examples/calendar", icon: "calendar-heart" },
+      { title: m.nav_kanban_example(), link: "/docs/examples/kanban", icon: "layout-kanban" },
     ],
   },
   {
@@ -172,6 +173,7 @@ const siteMenu = $derived.by(() => {
       { title: "ButtonGroup", link: "/docs/components/Button/ButtonGroup" },
       { title: "CalendarInput", link: "/docs/components/Form/CalendarInput" },
       { title: "CalendarView", link: "/docs/components/Form/CalendarView" },
+      { title: "KanbanBoard", link: "/docs/components/Kanban/KanbanBoard" },
       { title: "Checkbox", link: "/docs/components/Form/Checkbox" },
       { title: "ColorPicker", link: "/docs/components/Form/ColorPicker" },
       { title: "Combobox", link: "/docs/components/Form/Combobox" },

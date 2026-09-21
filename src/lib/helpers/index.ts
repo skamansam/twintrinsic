@@ -24,6 +24,29 @@ export {
   type WeekLaneResult,
 } from "./eventLanes.js";
 export {
+  assignKanbanLanes,
+  cardColumnSpan,
+  cardExtentInColumn,
+  cardExtentInSpill,
+  cardTickExtent,
+  crossColumnEnd,
+  isSpilled,
+  pointerTickOffset,
+  resizeTickExtent,
+  snapTickValue,
+  tickBands,
+  tickPercentages,
+  type CrossColumnEnd,
+  type KanbanLanes,
+} from "./kanbanLayout.js";
+export type {
+  KanbanCardData,
+  KanbanColumnData,
+  KanbanMoveDetail,
+  KanbanResizeDetail,
+  KanbanTick,
+} from "../components/Kanban/kanbanTypes.js";
+export {
   connectCalendars,
   isCalendarSource,
   type CalendarSource,

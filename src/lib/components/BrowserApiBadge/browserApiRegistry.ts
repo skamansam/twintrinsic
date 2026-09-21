@@ -46,6 +46,17 @@ export const browserApiRegistry: Record<string, BrowserApi[]> = {
       mdnUrl: "https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API",
     },
   ],
+  // HTML DnD for cross-column moves, Pointer Events for edge resizes
+  KanbanBoard: [
+    {
+      label: "Drag and Drop",
+      mdnUrl: "https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API",
+    },
+    {
+      label: "Pointer events",
+      mdnUrl: "https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events",
+    },
+  ],
   // Native date picker input
   CalendarInput: [
     {

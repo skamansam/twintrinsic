@@ -57,6 +57,7 @@ export const componentIcons: Record<string, string> = {
   TreeNode: "box",
   // Data display
   Avatar: "user",
+  KanbanBoard: "layout-kanban",
   AvatarGroup: "users",
   Badge: "award",
   Carousel: "slideshow",
